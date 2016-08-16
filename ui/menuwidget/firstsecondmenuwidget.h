@@ -41,7 +41,7 @@ public:
   QList<QListView*> menuList;
   QList<QStandardItemModel*> modelList;
 
-  void hideFirstMenuPage();
+  void hideFirstMenuBottomPage();
 
 private:
   void initUI();
@@ -49,7 +49,9 @@ private:
 private slots:
 
 public slots:
-//   void slot_getFirstMenuNum(int index);
+  void on_pushButton_bottom_clicked();
+  void on_pushButton_top_clicked();
+
 };
 
 #endif // FIRSTSECONDMENUWIDGET_H

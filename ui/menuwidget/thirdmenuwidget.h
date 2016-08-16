@@ -26,7 +26,6 @@ static QString THIRD_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_ME
     {"Group", "Display", "C-Scan Source", "Min Thickness\n(mm)", "Max Thickness\n(mm)", ""},
     {"Amplitude", "Depth", "TOFD", "", "", ""},
     {"Scan", "A", "B", "C", "", ""}
-
   }, //3
   {
     {"Group", "Group Mode", "Probe", "Wedge", "Define", "Auto Detect"},
