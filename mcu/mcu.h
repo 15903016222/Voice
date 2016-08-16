@@ -1,7 +1,10 @@
 #ifndef MCU_H
 #define MCU_H
 
-#include <QtSerialPort>
+#include <qmutex.h>
+#include "QtSerialPort"
+#include "stdint.h"
+#include <QDebug>
 
 class Mcu : public QSerialPort
 {
@@ -13,7 +16,7 @@ public:
     void query_temp() { write(m_queryTempData, sizeof(m_queryTempData)); }
     void query_battery() { write(m_queryBatteryData, sizeof(m_queryBatteryData)); }
     void query_brightness() { write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
-    void set_brightness(uint8_t light) { m_setBrightnessData[4]=light; write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
+    qint64 set_brightness(uint8_t light) { m_setBrightnessData[4]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
 
     enum EventType {
         TEMPERATURE,
@@ -39,7 +42,7 @@ private:
     static const char m_queryBrightnessData[6];
     static char m_setBrightnessData[7];
 
-    inline qint64 write(const char *data, qint64 len) { QMutexLocker locker(&wrMutex); return QIODevice::write(data, len); }
+    inline qint64 write(const char *data, qint64 len) {QMutexLocker locker(&wrMutex); return QIODevice::write(data, len); }
     void on_readyRead_event();
 };
 
