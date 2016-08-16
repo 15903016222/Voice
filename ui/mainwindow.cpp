@@ -103,6 +103,20 @@ void MainWindow::slot_setThirdMenuName(int index)
 {
   ui->widget_thirdMenu->setThirdMenuName(index, 0); //init
   firstMenuNum = index;
+  for(int j = 0; j < SECOND_MENU_NUMBER; j++)
+  {
+    if(SECOND_MENU_STRING[firstMenuNum][j] != NULL)
+    {
+      QModelIndex modelIndex = ui->widget_firstSecondMenu->modelList.at(firstMenuNum)->index(j, 0);
+      QStandardItem *item = ui->widget_firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(modelIndex);
+      if(item->row() == 0){
+        item->setForeground(QBrush(Qt::red));
+        ui->widget_firstSecondMenu->menuList.at(firstMenuNum)->setCurrentIndex(modelIndex);
+      }else{
+        item->setForeground(QBrush(Qt::yellow));
+      }
+    }
+  }
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -110,16 +124,19 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
   QStandardItem *item = ui->widget_firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
 
   secondMenuNum = item->row();
-//  qDebug()<<secondMenuNum;
 
   for(int j = 0; j < SECOND_MENU_NUMBER; j++)
   {
-    QModelIndex modelIndex = ui->widget_firstSecondMenu->modelList.at(firstMenuNum)->index(j, 0);
-    QStandardItem *item = ui->widget_firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(modelIndex);
-    if(modelIndex == index){
-      item->setForeground(QBrush(Qt::red));
-    }else{
-      item->setForeground(QBrush(Qt::yellow));
+    if(SECOND_MENU_STRING[firstMenuNum][j] != NULL)
+    {
+      QModelIndex modelIndex = ui->widget_firstSecondMenu->modelList.at(firstMenuNum)->index(j, 0);
+      QStandardItem *item = ui->widget_firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(modelIndex);
+      if(modelIndex == index){
+        item->setForeground(QBrush(Qt::red));
+        ui->widget_firstSecondMenu->menuList.at(firstMenuNum)->setCurrentIndex(modelIndex);
+      }else{
+        item->setForeground(QBrush(Qt::yellow));
+      }
     }
   }
   ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, secondMenuNum);
