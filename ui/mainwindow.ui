@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>864</width>
+    <height>644</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>32-64 New PA</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,1,20">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="frame_top">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="6,1">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="FourthMenuWidget" name="widgetTopLeft" native="true"/>
+       </item>
+       <item>
+        <widget class="IconsWidget" name="widgetTopRight" native="true"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="ShowInfoWidget" name="widgetShowInformation" native="true">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(98, 98, 98);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="framePlot">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QGst::Ui::VideoWidget" name="widgetUSView" native="true">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <layout class="QGridLayout" name="gridLayout" rowstretch="7,1" columnstretch="1,5">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0" rowspan="2">
+           <widget class="FirstSecondMenuWidget" name="widget_firstSecondMenu" native="true"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFrame" name="frame_showPlot"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="ThirdMenuWidget" name="widget_thirdMenu" native="true"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+   <zorder>framePlot</zorder>
+   <zorder>frame_top</zorder>
+   <zorder>widgetShowInformation</zorder>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ShowInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>showinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IconsWidget</class>
+   <extends>QWidget</extends>
+   <header>iconswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QGst::Ui::VideoWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">QGst/Ui/VideoWidget</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ThirdMenuWidget</class>
+   <extends>QWidget</extends>
+   <header>thirdmenuwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FourthMenuWidget</class>
+   <extends>QWidget</extends>
+   <header>fourthmenuwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FirstSecondMenuWidget</class>
+   <extends>QWidget</extends>
+   <header>firstsecondmenuwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>on_funcBtnClicked()</slot>
+  <slot>on_valueChanged()</slot>
+  <slot>on_funcBtnPressed()</slot>
+  <slot>on_titleItemPressed()</slot>
+  <slot>on_titleBtnPressed()</slot>
+ </slots>
+</ui>
