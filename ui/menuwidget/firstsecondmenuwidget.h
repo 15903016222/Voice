@@ -42,6 +42,7 @@ public:
   QList<QStandardItemModel*> modelList;
 
   void hideFirstMenuBottomPage();
+  bool hideTopMenu;
 
 private:
   void initUI();

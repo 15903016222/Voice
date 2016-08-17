@@ -11,6 +11,7 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
 
   ui->frame_top->hide();
   hideFirstMenuBottomPage();
+  hideTopMenu = false;
 
 }
 
@@ -21,14 +22,14 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
 
 void FirstSecondMenuWidget::hideFirstMenuBottomPage()
 {
-  ui->page_9->hide();
-  ui->page_8->hide();
-  ui->page_7->hide();
-  ui->page_6->hide();
   ui->toolBox->removeItem(8);
+  ui->page_9->hide();
   ui->toolBox->removeItem(7);
+  ui->page_8->hide();
   ui->toolBox->removeItem(6);
+  ui->page_7->hide();
   ui->toolBox->removeItem(5);
+  ui->page_6->hide();
 }
 
 void FirstSecondMenuWidget::initUI()
@@ -81,6 +82,7 @@ void FirstSecondMenuWidget::initUI()
 
 void FirstSecondMenuWidget::on_pushButton_bottom_clicked()
 {
+  hideTopMenu = true;
   ui->frame_bottom->hide();
   ui->frame_top->show();
 
@@ -97,10 +99,11 @@ void FirstSecondMenuWidget::on_pushButton_bottom_clicked()
   ui->page_7->show();
   ui->page_8->show();
   ui->page_9->show();
-  ui->toolBox->insertItem(6, ui->page_6, "Scan");
-  ui->toolBox->insertItem(7, ui->page_7, "Measurement");
-  ui->toolBox->insertItem(8, ui->page_8, "File/Report");
-  ui->toolBox->insertItem(9, ui->page_9, "Preference");
+  ui->toolBox->insertItem(1, ui->page_6, "Scan");
+  ui->toolBox->insertItem(2, ui->page_7, "Measurement");
+  ui->toolBox->insertItem(3, ui->page_8, "File/Report");
+  ui->toolBox->insertItem(4, ui->page_9, "Preference");
+
 }
 
 void FirstSecondMenuWidget::on_pushButton_top_clicked()
@@ -108,21 +111,14 @@ void FirstSecondMenuWidget::on_pushButton_top_clicked()
   ui->frame_top->hide();
   ui->frame_bottom->show();
 
-//  ui->toolBox->removeItem(8);
-//  ui->page_9->hide();
-//  ui->toolBox->removeItem(7);
-//  ui->page_8->hide();
-//  ui->toolBox->removeItem(6);
-//  ui->page_7->hide();
-//  ui->toolBox->removeItem(5);
-//  ui->page_6->hide();
+  ui->page_1->show();
+  ui->page_2->show();
+  ui->page_3->show();
+  ui->page_4->show();
+  ui->toolBox->insertItem(0, ui->page_1, "UT Settings");
+  ui->toolBox->insertItem(1, ui->page_2, "Gate/Curves");
+  ui->toolBox->insertItem(2, ui->page_3, "Display");
+  ui->toolBox->insertItem(3, ui->page_4, "Probe/Part");
 
-//  ui->page_1->show();
-//  ui->page_2->show();
-//  ui->page_3->show();
-//  ui->page_4->show();
-//  ui->toolBox->insertItem(1, ui->page_1, "UT Settings");
-//  ui->toolBox->insertItem(2, ui->page_2, "Gate/Curves");
-//  ui->toolBox->insertItem(3, ui->page_3, "Display");
-//  ui->toolBox->insertItem(4, ui->page_4, "Probe/Part");
+  hideFirstMenuBottomPage();
 }

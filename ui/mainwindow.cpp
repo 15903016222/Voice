@@ -101,8 +101,13 @@ void MainWindow::initUI()
 
 void MainWindow::slot_setThirdMenuName(int index)
 {
-  ui->widget_thirdMenu->setThirdMenuName(index, 0); //init
-  firstMenuNum = index;
+  if(ui->widget_firstSecondMenu->hideTopMenu)
+  {
+    firstMenuNum = index + 4;
+  }else{
+    firstMenuNum = index;
+  }
+  ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, 0); //init
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -110,7 +115,6 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
   QStandardItem *item = ui->widget_firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
 
   secondMenuNum = item->row();
-//  qDebug()<<secondMenuNum;
 
   for(int j = 0; j < SECOND_MENU_NUMBER; j++)
   {
