@@ -190,8 +190,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -243,8 +249,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -296,8 +308,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -349,8 +367,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -402,8 +426,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -455,8 +485,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -508,8 +544,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -561,8 +603,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -614,8 +662,14 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="spacing">
-             <number>15</number>
+             <number>20</number>
             </property>
            </widget>
           </item>
