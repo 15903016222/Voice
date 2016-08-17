@@ -8,10 +8,9 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
   ui->setupUi(this);
 
   initUI();
-
+  ui->toolBox->setCurrentIndex(0);
   QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
   menuList.at(0)->setCurrentIndex(initModelIndex);
-
 //  hideFirstMenuPage();
 
 }
@@ -38,6 +37,7 @@ void FirstSecondMenuWidget::initUI()
   {
     QListView* listView = findChild<QListView*>("listView_" + QString::number(i+1));
     listView->setStyleSheet("QListView{font: 13px}");
+    listView->adjustSize();
     menuList.append(listView);
 
     QStandardItemModel *standardItemModel = new QStandardItemModel(this);
