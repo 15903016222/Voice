@@ -6,6 +6,7 @@
 
 #include <QMainWindow>
 #include <QGst/Message>
+#include <QScrollArea>
 
 namespace Ui {
 class MainWindow;
@@ -31,7 +32,11 @@ private:
 
 public:
   CommonMenuWidget * commonMenuWidget;
+  FirstSecondMenuWidget *firstSecondMenu;
+
   void linkPluginsToConnectDevice();
+  void resizeEvent(QResizeEvent *event);
+  void arrowShowFlag();
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenSecondMenuFlag;
   bool hiddenThirdMenuFlag;
@@ -48,6 +53,8 @@ private slots:
   void slot_setThirdMenuName(int index);
   void slot_secondMenuItemClicked(QModelIndex index);
   void onGstBusMessage(const QGst::MessagePtr & message);
+  void slot_pushButton_top_Clicked();
+  void slot_pushButton_bottom_Clicked();
 
 };
 
