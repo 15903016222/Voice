@@ -101,12 +101,7 @@ void MainWindow::initUI()
 
 void MainWindow::slot_setThirdMenuName(int index)
 {
-  if(ui->widget_firstSecondMenu->hideTopMenu)
-  {
-    firstMenuNum = index + 4;
-  }else{
-    firstMenuNum = index;
-  }
+  firstMenuNum = index;
   ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, 0); //init
 }
 
