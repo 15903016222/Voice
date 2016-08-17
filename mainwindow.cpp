@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include <QDebug>
+#include <QTime>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 }
 
 MainWindow::~MainWindow()
@@ -13,64 +15,46 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+
     switch (event->key())
         {
-        case Qt::Key_P://power,
-            qDebug() << "key P";
+        case Qt::Key_C://core board temperature
+            emit Imx_Sig_Query_Core_Temp();
+            qDebug() << "Key_C, Query_Core_Temp";
             break;
-        case Qt::Key_B://battery 1
-            qDebug() << "key B";
+        case Qt::Key_F://FPGA temperature
+            emit Imx_Sig_Query_FPGA_Temp();
+            qDebug() << "Key_F, Query_FPGA_Temp";
             break;
-        case Qt::Key_C://battery 2
-            qDebug() << "key C";
+
+        case Qt::Key_D://POWERSUPPLY temperature
+            emit Imx_Sig_Query_PowerSupply_Temp();
+            qDebug() << "Key_D, Query_PowerSupply_Temp";
             break;
-        case Qt::Key_D://battery 3
-            qDebug() << "key D";
+        case Qt::Key_M://MCU temperature
+            emit Imx_Sig_Query_MCU_Temp();
+            qDebug() << "Key_M, Query_MCU_Temp";
+            break;
+
+        case Qt::Key_A://battery 1
+            emit Imx_Sig_Query_Battery();
+            qDebug() << "Key_A, Query_Battery";
+            break;
+        case Qt::Key_B://battery 2
+            emit Imx_Sig_Query_Battery2();
+            qDebug() << "Key_B, Query_Battery2";
+            break;
+        case Qt::Key_G://Query_Brightness, back light
+            emit Imx_Sig_Query_Brightness();
+            qDebug() << "key G, Query_Brightness";
             break;
         case Qt::Key_L://back light
-            qDebug() << "key L";
+            emit Imx_Sig_Set_Brightness(qrand()%100);
+            qDebug() << "key L, Set_Brightness";
             break;
-        case Qt::Key_T://temperue
-            qDebug() << "key T";
-            break;
-        case Qt::Key_A://probe
-            qDebug() << "key A";
-            break;
-        case Qt::Key_K://key
-            qDebug() << "key K";
-            break;
-        case Qt::Key_R://rotary
-            qDebug() << "key R";
-            break;
-        case Qt::Key_0:
-            qDebug() << "key 0";
-            break;
-        case Qt::Key_1:
-            qDebug() << "key 1";
-            break;
-        case Qt::Key_2:
-            qDebug() << "key 2";
-            break;
-        case Qt::Key_3:
-            qDebug() << "key 3";
-            break;
-        case Qt::Key_4:
-            qDebug() << "key 4";
-            break;
-        case Qt::Key_5:
-            qDebug() << "key 5";
-            break;
-        case Qt::Key_6:
-            qDebug() << "key 6";
-            break;
-        case Qt::Key_7:
-            qDebug() << "key 7";
-            break;
-        case Qt::Key_8:
-            qDebug() << "key 8";
-            break;
-        case Qt::Key_9:
-            qDebug() << "key 9";
+
+        default:
             break;
         }
+    /*发送信号*/
 }
