@@ -34,8 +34,7 @@ public:
         BRIGHTNESS,
         POWEROFF,
         KEY,
-        ROTARY_ADD,
-        ROTRRY_DEC,
+        ROTARY,
     };
 
 Q_SIGNALS:

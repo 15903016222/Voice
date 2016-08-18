@@ -73,18 +73,119 @@ void Mcu::on_readyRead_event()
 
     QByteArray byte = readAll();
     /*开始解析数据*/
-    if(byte.contains("$$")){
+
+    qDebug() << "byte size:" << byte.size() << endl;
+
+    if(byte.contains("$$P") || byte.contains("$$Q") || byte.contains("$$R") || byte.contains("$$S")){/*packet header correct*/
+        qDebug("In Contain!");
         m_recBuffer.clear();
-        m_recBuffer = byte.right(byte.indexOf("$$"));
+        m_recBuffer = byte.right(byte.size() - byte.indexOf("$$"));
+        qDebug() << "After In, m_recBuffer:" << m_recBuffer.toHex() << endl;
+
     }
-    else{
+    else{/*packet header dose not appear, append to the prvious array*/
+        qDebug("Not Contain!");
         m_recBuffer.append(byte);
+        if(m_recBuffer.contains("$$P") || m_recBuffer.contains("$$Q") || m_recBuffer.contains("$$R") || m_recBuffer.contains("$$S")){
+            m_recBuffer = m_recBuffer.right(m_recBuffer.size() - m_recBuffer.indexOf("$$"));
+        qDebug() << "After Not, m_recBuffer:" << m_recBuffer.toHex() << endl;
+        }
+
+
     }
 
-//    qDebug() << byte.size();
-    qDebug() << m_recBuffer.toHex();
-//    qDebug() << QVariant((unsigned char)byte[1]).toInt();
-//    qDebug() << byte.toHex();
+
+    if(m_recBuffer.indexOf("##") > -1){
+        if(m_recBuffer.indexOf("##") - m_recBuffer.indexOf("$$")<4){/*wrong length of pack!*/
+            m_recBuffer = m_recBuffer.right(m_recBuffer.size() - (m_recBuffer.indexOf("##")+2));
+            qDebug() << "m_recBuffer 01: " << m_recBuffer.toHex() << endl;
+        }
+        else{/*length of packet correct*/
+            qDebug() << "m_recBuffer 02: " << m_recBuffer.toHex() << endl;
+            switch(QVariant((unsigned char)m_recBuffer[2]).toInt())/*what type of packet??*/
+            {
+            qDebug() << "m_recBuffer[2]:" << QVariant((unsigned char)m_recBuffer[3]).toInt() << endl;
+            case 0x50:/*ack*/
+                switch(QVariant((unsigned char)m_recBuffer[3]).toInt())
+                {
+                case 0x10:/*core pcb temperature*/
+                    type = CORE_TEMPERATURE;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                case 0x11:/*FPGA temperature*/
+                    type = FPGA_TEMPERATURE;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                case 0x12:/*power supply temperature*/
+                    type = POWERSUPPLY_TEMPERATURE;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                case 0x13:/*MCU temperature*/
+                    type = MCU_TEMPERATURE;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                case 0x31:/*battery1 */
+                    type = CORE_TEMPERATURE;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                case 0x32:/*battery2 */
+                    type = CORE_TEMPERATURE;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                case 0x42:/*background brightness*/
+                    type = CORE_TEMPERATURE;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                default:/*wrong cmd*/
+                    qDebug() << "Wrong packet"<< endl;
+                    val = 0;
+                    break;
+                }
+
+                break;
+            case 0x51:/*key or rotary of poweroff request*/
+                switch(QVariant((unsigned char)m_recBuffer[3]).toInt())
+                {
+                case 0x21:/*key event*/
+                    type =KEY;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                case 0x22:/*rotary event*/
+                    type = ROTARY;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                case 0x41:/*power off request*/
+                    type = POWEROFF;
+                    val = QVariant(m_recBuffer[4]).toInt();
+                    break;
+                default:/*wrong cmd*/
+                    qDebug() << "Wrong packet"<< endl;
+                    val = 0;
+                    break;
+                }
+                break;
+
+
+            default:/*invalued type*/
+                break;
+
+            }
+            if(m_recBuffer.contains("###")){
+                m_recBuffer = m_recBuffer.right(m_recBuffer.size() - (m_recBuffer.indexOf("##")+3));
+            }
+                else{
+                m_recBuffer = m_recBuffer.right(m_recBuffer.size() - (m_recBuffer.indexOf("##")+2));
+            }
+            qDebug() << "type: " << type << "  val: " << val << endl;
+
+        }
+    }
+
+
+    qDebug() << "Org data: " << byte.toHex() << endl;
+
+    qDebug() << "m_recBuffer03" << m_recBuffer.toHex() << endl;
+
 
     /*发送信号*/
     emit event(type, val);
