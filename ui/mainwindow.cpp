@@ -126,34 +126,33 @@ void MainWindow::slot_setThirdMenuName(int index)
       }
     }
   }
-  int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
-  int scrollTopY = ui->scrollArea->geometry().y();
-  int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
-  int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
-  int toolBoxIndex = firstSecondMenu->toolBox.at(0)->currentIndex() + 1;
-  qDebug()<<menuBottomY;
-  qDebug()<<scrollBottomY;
-  if(toolBoxIndex > 2 && toolBoxIndex < FIRST_MENU_NUMBER - 1)
-  {
-    qDebug()<<toolBoxIndex;
-    if(toolBoxIndex < FIRST_MENU_NUMBER / 2 + 1)
-    {
-        if(menuTopY < scrollTopY)
-        {
-          ui->scrollArea->viewport()->scroll(0, 50);
-          qDebug()<<"up";
-        }
-    }
-    else
-    {
-      if(menuBottomY > scrollBottomY)
-      {
-        ui->scrollArea->viewport()->scroll(0, -200);
-        qDebug()<<"down";
-      }
-    }
-    arrowShowFlag();
-  }
+//  int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
+//  int scrollTopY = ui->scrollArea->geometry().y();
+//  int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
+//  int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
+//  int toolBoxIndex = firstSecondMenu->toolBox.at(0)->currentIndex() + 1;
+//  if(toolBoxIndex > 2 && toolBoxIndex < FIRST_MENU_NUMBER - 1)
+//  {
+//    qDebug()<<toolBoxIndex;
+//    if(toolBoxIndex < FIRST_MENU_NUMBER / 2 + 1)
+//    {
+//      if(menuTopY < scrollTopY)
+//      {
+//        ui->scrollArea->viewport()->scroll(0, 50);
+//        qDebug()<<"up";
+//      }
+//    }
+//    else
+//    {
+//      if(menuBottomY > scrollBottomY)
+//      {
+//        ui->scrollArea->viewport()->scroll(0, -200);
+//        qDebug()<<"down";
+//      }
+//    }
+
+//  }
+  arrowShowFlag();
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -219,9 +218,13 @@ void MainWindow::slot_pushButton_top_Clicked()
 {
   int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
   int scrollTopY = ui->scrollArea->geometry().y();
-  if(menuTopY < scrollTopY)
+  if(menuTopY < (scrollTopY -20))
   {
     ui->scrollArea->viewport()->scroll(0, 20);
+  }
+  else
+  {
+    ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
   }
   arrowShowFlag();
 }
@@ -230,9 +233,13 @@ void MainWindow::slot_pushButton_bottom_Clicked()
 {
   int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
   int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
-  if(menuBottomY > scrollBottomY)
+  if((menuBottomY - 20) > scrollBottomY)
   {
-    ui->scrollArea->viewport()->scroll(0, -20);
+      ui->scrollArea->viewport()->scroll(0, -20);
+  }
+  else
+  {
+      ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
   }
   arrowShowFlag();
 }
@@ -265,7 +272,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     commonMenuWidget->resize(width, height * 70 / 600);
     commonMenuWidget->move(0, height * 530 / 600);
   }
-
+  arrowShowFlag();
 }
 
 void MainWindow::arrowShowFlag()
@@ -282,7 +289,7 @@ void MainWindow::arrowShowFlag()
   {
     ui->pushButton_top->show();
   }
-  if(menuBottomY == scrollBottomY)
+  if(menuBottomY == scrollBottomY )
   {
     ui->pushButton_bottom->hide();
   }
