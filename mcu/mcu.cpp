@@ -2,19 +2,20 @@
 
 #define DEF_SERIAL_NODE "/dev/ttymxc2"
 #define DEF_PACKET_HEADER 0X24
+
 Mcu *Mcu::m_mcu = NULL;
 
-const char Mcu::m_queryBatteryData[7]={0x24, 0x24, 0x52, 0x31, 0x0, 0x23, 0x23};
-const char Mcu::m_queryBattery_2_Data[7]={0x24, 0x24, 0x52, 0x32, 0x0, 0x23, 0x23};
+const char Mcu::m_queryBatteryData[6]={0x24, 0x24, 0x52, 0x31, 0x23, 0x22};
+const char Mcu::m_queryBattery_2_Data[7]={0x24, 0x24, 0x52, 0x32, 0x00, 0x23, 0x23};
 
 
-const char Mcu::m_queryCoreTemperatureData[7]={0x24, 0x24, 0x52, 0x10, 0x0, 0x23, 0x23};
-const char Mcu::m_queryFPGATemperatureData[7]={0x24, 0x24, 0x52, 0x11, 0x0, 0x23, 0x23};
-const char Mcu::m_queryPowerSupplyTemperatureData[7]={0x24, 0x24, 0x52, 0x12, 0x0, 0x23, 0x23};
-const char Mcu::m_queryMCUTemperatureData[7]={0x24, 0x24, 0x52, 0x13, 0x0, 0x23, 0x23};
+const char Mcu::m_queryCoreTemperatureData[6]={0x24, 0x24, 0x52, 0x10, 0x23, 0x23};
+const char Mcu::m_queryFPGATemperatureData[6]={0x24, 0x24, 0x52, 0x11, 0x23, 0x23};
+const char Mcu::m_queryPowerSupplyTemperatureData[6]={0x24, 0x24, 0x52, 0x12, 0x23, 0x23};
+const char Mcu::m_queryMCUTemperatureData[6]={0x24, 0x24, 0x52, 0x13, 0x23, 0x23};
 
 char Mcu::m_setBrightnessData[7]={0x24, 0x24, 0x53, 0x42, 0x0, 0x23, 0x23};
-const char Mcu::m_queryBrightnessData[7]={0x24, 0x24, 0x52, 0x42, 0x0, 0x23, 0x23};
+const char Mcu::m_queryBrightnessData[6]={0x24, 0x24, 0x52, 0x42, 0x23, 0x23};
 
 Mcu::Mcu()
     :QSerialPort(DEF_SERIAL_NODE)
@@ -81,7 +82,6 @@ void Mcu::on_readyRead_event()
         m_recBuffer.clear();
         m_recBuffer = byte.right(byte.size() - byte.indexOf("$$"));
         qDebug() << "After In, m_recBuffer:" << m_recBuffer.toHex() << endl;
-
     }
     else{/*packet header dose not appear, append to the prvious array*/
         qDebug("Not Contain!");
@@ -94,7 +94,7 @@ void Mcu::on_readyRead_event()
 
     }
 
-
+judge_another_packet_label:
     if(m_recBuffer.indexOf("##") > -1){
         if(m_recBuffer.indexOf("##") - m_recBuffer.indexOf("$$")<4){/*wrong length of pack!*/
             m_recBuffer = m_recBuffer.right(m_recBuffer.size() - (m_recBuffer.indexOf("##")+2));
@@ -106,35 +106,53 @@ void Mcu::on_readyRead_event()
             {
             qDebug() << "m_recBuffer[2]:" << QVariant((unsigned char)m_recBuffer[3]).toInt() << endl;
             case 0x50:/*ack*/
+
                 switch(QVariant((unsigned char)m_recBuffer[3]).toInt())
                 {
                 case 0x10:/*core pcb temperature*/
+                    if(QVariant((unsigned char)m_recBuffer[5]).toInt() == 0x23)
+                    {
                     type = CORE_TEMPERATURE;
                     val = QVariant(m_recBuffer[4]).toInt();
+                    }
                     break;
                 case 0x11:/*FPGA temperature*/
+                    if(QVariant((unsigned char)m_recBuffer[5]).toInt() == 0x23)
+                    {
                     type = FPGA_TEMPERATURE;
                     val = QVariant(m_recBuffer[4]).toInt();
+                    }
                     break;
                 case 0x12:/*power supply temperature*/
+                    if(QVariant((unsigned char)m_recBuffer[5]).toInt() == 0x23)
+                    {
                     type = POWERSUPPLY_TEMPERATURE;
                     val = QVariant(m_recBuffer[4]).toInt();
+                    }
                     break;
                 case 0x13:/*MCU temperature*/
+                    if(QVariant((unsigned char)m_recBuffer[5]).toInt() == 0x23)
+                    {
                     type = MCU_TEMPERATURE;
                     val = QVariant(m_recBuffer[4]).toInt();
+                    }
                     break;
                 case 0x31:/*battery1 */
-                    type = CORE_TEMPERATURE;
+
+                    type = BATTERY1;
                     val = QVariant(m_recBuffer[4]).toInt();
                     break;
                 case 0x32:/*battery2 */
-                    type = CORE_TEMPERATURE;
+
+                    type = BATTERY2;
                     val = QVariant(m_recBuffer[4]).toInt();
                     break;
                 case 0x42:/*background brightness*/
-                    type = CORE_TEMPERATURE;
+                    if(QVariant((unsigned char)m_recBuffer[5]).toInt() == 0x23)
+                    {
+                    type = BRIGHTNESS;
                     val = QVariant(m_recBuffer[4]).toInt();
+                    }
                     break;
                 default:/*wrong cmd*/
                     qDebug() << "Wrong packet"<< endl;
@@ -189,4 +207,13 @@ void Mcu::on_readyRead_event()
 
     /*发送信号*/
     emit event(type, val);
+
+    if(m_recBuffer.size()>6)
+    {
+        if(m_recBuffer.contains("$$P") || m_recBuffer.contains("$$Q") || m_recBuffer.contains("$$R") || m_recBuffer.contains("$$S")){
+            m_recBuffer = m_recBuffer.right(byte.size() - m_recBuffer.indexOf("$$"));
+            goto judge_another_packet_label;
+        }
+    }
+
 }

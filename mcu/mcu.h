@@ -49,14 +49,14 @@ private:
     QMutex wrMutex;
 
     QByteArray m_recBuffer;
-    static const char m_queryBatteryData[7];
+    static const char m_queryBatteryData[6];
     static const char m_queryBattery_2_Data[7];
-    static const char m_queryBrightnessData[7];
+    static const char m_queryBrightnessData[6];
     static char m_setBrightnessData[7];
-    static const char m_queryCoreTemperatureData[7];
-    static const char m_queryFPGATemperatureData[7];
-    static const char m_queryPowerSupplyTemperatureData[7];
-    static const char m_queryMCUTemperatureData[7];
+    static const char m_queryCoreTemperatureData[6];
+    static const char m_queryFPGATemperatureData[6];
+    static const char m_queryPowerSupplyTemperatureData[6];
+    static const char m_queryMCUTemperatureData[6];
 
     inline qint64 write(const char *data, qint64 len) {QMutexLocker locker(&wrMutex); return QIODevice::write(data, len); }
     void on_readyRead_event();
