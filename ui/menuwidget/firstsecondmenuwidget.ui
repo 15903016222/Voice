@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>170</width>
-    <height>550</height>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
    <item row="0" column="0">
     <widget class="QFrame" name="frame_mainMenu">
      <property name="styleSheet">
-      <string notr="true">background-color: rgba(67, 67, 67, 0.5);</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -71,7 +71,7 @@
 background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
 stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-background-color: rgba(67, 67, 67, 0.5);
+background-color: rgba(67, 67, 67, 0);
 border-radius: 5px;
 color: white;
 }
@@ -85,15 +85,15 @@ color: red;
          <enum>QFrame::NoFrame</enum>
         </property>
         <property name="currentIndex">
-         <number>8</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_1">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>83</width>
-           <height>69</height>
+           <width>170</width>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -140,7 +140,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
@@ -151,8 +151,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>83</width>
-           <height>69</height>
+           <width>170</width>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -199,7 +199,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
@@ -210,8 +210,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>83</width>
-           <height>69</height>
+           <width>170</width>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -258,7 +258,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
@@ -269,8 +269,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>83</width>
-           <height>69</height>
+           <width>170</width>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -317,7 +317,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
@@ -328,8 +328,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>83</width>
-           <height>69</height>
+           <width>170</width>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -376,7 +376,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
@@ -387,8 +387,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>83</width>
-           <height>69</height>
+           <width>170</width>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -435,7 +435,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
@@ -446,8 +446,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>83</width>
-           <height>69</height>
+           <width>170</width>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -494,7 +494,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
@@ -505,8 +505,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>83</width>
-           <height>69</height>
+           <width>170</width>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -553,7 +553,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
@@ -565,7 +565,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>253</height>
+           <height>233</height>
           </rect>
          </property>
          <attribute name="label">
@@ -612,7 +612,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>4</number>
+             <number>8</number>
             </property>
            </widget>
           </item>
