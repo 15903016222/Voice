@@ -49,7 +49,7 @@ private:
     static Mcu *m_mcu;
     QMutex wrMutex;
 
-
+    QByteArray m_recBuffer;
     static const char m_queryBatteryData[7];
     static const char m_queryBattery_2_Data[7];
     static const char m_queryBrightnessData[7];

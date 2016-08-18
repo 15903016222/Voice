@@ -1,6 +1,7 @@
 #include "mcu.h"
 
 #define DEF_SERIAL_NODE "/dev/ttymxc2"
+#define DEF_PACKET_HEADER 0X24
 Mcu *Mcu::m_mcu = NULL;
 
 const char Mcu::m_queryBatteryData[7]={0x24, 0x24, 0x52, 0x31, 0x0, 0x23, 0x23};
@@ -19,7 +20,8 @@ Mcu::Mcu()
     :QSerialPort(DEF_SERIAL_NODE)
 {
     connect(this, &Mcu::readyRead, this, &Mcu::on_readyRead_event);
-
+    m_recBuffer.clear();
+    m_recBuffer.fill(0);
     setPortName(DEF_SERIAL_NODE);
     if(false == setBaudRate(QSerialPort::Baud115200)){
         qDebug("setBaudRate error!\n");
@@ -71,9 +73,19 @@ void Mcu::on_readyRead_event()
 
     QByteArray byte = readAll();
     /*开始解析数据*/
-    qDebug() << byte.size();
-    qDebug() << QVariant((unsigned char)byte[1]).toInt();
-    qDebug() << byte.toHex();
+    if(byte.contains("$$")){
+        m_recBuffer.clear();
+        m_recBuffer = byte.right(byte.indexOf("$$"));
+    }
+    else{
+        m_recBuffer.append(byte);
+    }
+
+//    qDebug() << byte.size();
+    qDebug() << m_recBuffer.toHex();
+//    qDebug() << QVariant((unsigned char)byte[1]).toInt();
+//    qDebug() << byte.toHex();
+
     /*发送信号*/
     emit event(type, val);
 }
