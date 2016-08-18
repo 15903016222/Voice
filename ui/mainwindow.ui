@@ -123,93 +123,137 @@
           </property>
           <item row="0" column="0" rowspan="2">
            <widget class="QWidget" name="widget_firstSecondMenu" native="true">
-            <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,26,1">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
              <property name="leftMargin">
-              <number>5</number>
+              <number>3</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
               <number>5</number>
              </property>
+             <property name="rightMargin">
+              <number>3</number>
+             </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>5</number>
              </property>
              <property name="spacing">
               <number>0</number>
              </property>
              <item row="0" column="0">
-              <widget class="QPushButton" name="pushButton_top">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QWidget" name="widget" native="true">
+               <property name="styleSheet">
+                <string notr="true">QWidget#widget
+{
+	background-color: rgba(67, 67, 67, 0.5);
+	border-radius:8px;
+}</string>
                </property>
-               <property name="text">
-                <string>UP</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QWidget" name="widget_scrollArea" native="true">
-               <layout class="QGridLayout" name="gridLayout_4">
+               <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,26,1">
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
                 <property name="topMargin">
-                 <number>0</number>
+                 <number>5</number>
                 </property>
                 <property name="rightMargin">
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <property name="horizontalSpacing">
                  <number>0</number>
                 </property>
-                <property name="spacing">
-                 <number>0</number>
+                <property name="verticalSpacing">
+                 <number>2</number>
                 </property>
                 <item row="0" column="0">
-                 <widget class="QScrollArea" name="scrollArea">
+                 <widget class="QPushButton" name="pushButton_top">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
+                  <property name="text">
+                   <string>UP</string>
                   </property>
-                  <property name="widgetResizable">
-                   <bool>true</bool>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QWidget" name="widget_scrollArea" native="true">
+                  <property name="styleSheet">
+                   <string notr="true">QWidget
+{
+	background-color: rgba(67, 67, 67, 0);
+
+}</string>
                   </property>
-                  <widget class="QWidget" name="scrollAreaWidgetContents">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>134</width>
-                     <height>514</height>
-                    </rect>
+                  <layout class="QGridLayout" name="gridLayout_4">
+                   <property name="leftMargin">
+                    <number>0</number>
                    </property>
-                  </widget>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item row="0" column="0">
+                    <widget class="QScrollArea" name="scrollArea">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::NoFrame</enum>
+                     </property>
+                     <property name="widgetResizable">
+                      <bool>true</bool>
+                     </property>
+                     <widget class="QWidget" name="scrollAreaWidgetContents">
+                      <property name="geometry">
+                       <rect>
+                        <x>0</x>
+                        <y>0</y>
+                        <width>138</width>
+                        <height>490</height>
+                       </rect>
+                      </property>
+                     </widget>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QPushButton" name="pushButton_bottom">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>DOWN</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QPushButton" name="pushButton_bottom">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>DOWN</string>
-               </property>
+               <zorder>pushButton_top</zorder>
+               <zorder>pushButton_bottom</zorder>
+               <zorder>widget_scrollArea</zorder>
               </widget>
              </item>
             </layout>
