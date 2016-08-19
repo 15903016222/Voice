@@ -5,6 +5,7 @@
 
 #include <QWidget>
 #include <QStandardItemModel>
+#include <QResizeEvent>
 
 #define THIRD_MENU_NUMBER 6
 
@@ -101,6 +102,11 @@ public:
   void setThirdMenuName(int i, int j);
   QStandardItemModel *model;
   void widgetStyleChoice(int i, int j, int k);
+  void resizeEvent(QResizeEvent *event);
+  int width;
+  int height;
+  int currFirstNum;
+  int currSecondNum;
 
 private:
 
