@@ -3,6 +3,7 @@
 
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
+#include "commonmenubutton.h"
 
 #include <QMainWindow>
 #include <QGst/Message>
@@ -33,10 +34,12 @@ private:
 public:
   CommonMenuWidget * commonMenuWidget;
   FirstSecondMenuWidget *firstSecondMenu;
+  CommonMenuButton *commonMenuButton;
 
   void linkPluginsToConnectDevice();
   void resizeEvent(QResizeEvent *event);
   void arrowShowFlag();
+
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenSecondMenuFlag;
   bool hiddenThirdMenuFlag;

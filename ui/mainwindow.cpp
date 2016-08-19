@@ -91,6 +91,10 @@ void MainWindow::initUI()
   hiddenThirdMenuFlag = false;
 
   firstSecondMenu = new FirstSecondMenuWidget(this);
+  commonMenuButton = new CommonMenuButton(this);
+  commonMenuButton->resize(25, 25);
+  commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
+  commonMenuButton->show();
 
   QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_setThirdMenuName(int)));
 
@@ -112,10 +116,8 @@ void MainWindow::slot_setThirdMenuName(int index)
 {
   ui->widget_thirdMenu->setThirdMenuName(index, 0); //init
   firstMenuNum = index;
-  for(int j = 0; j < SECOND_MENU_NUMBER; j++)
+  for(int j = 0; j < SECOND_MENU_STRING[firstMenuNum][SECOND_MENU_NUMBER].count(); j++)
   {
-    if(SECOND_MENU_STRING[firstMenuNum][j] != NULL)
-    {
       QModelIndex modelIndex = firstSecondMenu->modelList.at(firstMenuNum)->index(j, 0);
       QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(modelIndex);
       if(item->row() == 0){
@@ -124,7 +126,6 @@ void MainWindow::slot_setThirdMenuName(int index)
       }else{
         item->setForeground(QBrush(Qt::yellow));
       }
-    }
   }
 //  int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
 //  int scrollTopY = ui->scrollArea->geometry().y();
