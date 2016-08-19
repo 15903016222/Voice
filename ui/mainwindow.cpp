@@ -65,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent) :
   initUI();
 
   commonMenuWidget = new CommonMenuWidget(this);
-  commonMenuWidget->move(0, 530);
 
 }
 
@@ -157,6 +156,24 @@ void MainWindow::linkPluginsToConnectDevice()
   if(d_ptr->pipeline)
   {
     d_ptr->pipeline->setState(QGst::StatePlaying);
+  }
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+  int width = event->size().width();
+  int height = event->size().height();
+  int oldWidth = event->oldSize().width();
+  int oldHeight = event->oldSize().height();
+
+  if(oldWidth > 0 && oldHeight > 0)
+  {
+    commonMenuWidget->resize(width, height * 70 / 600);
+    commonMenuWidget->move(0, height * 530 / 600);
+  }else
+  {
+    commonMenuWidget->resize(width, height * 70 / 600);
+    commonMenuWidget->move(0, height * 530 / 600);
   }
 }
 

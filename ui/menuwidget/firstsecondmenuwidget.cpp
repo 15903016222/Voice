@@ -28,25 +28,9 @@ void FirstSecondMenuWidget::initUI()
     QListView* listView = findChild<QListView*>("listView_" + QString::number(i+1));
     menuList.append(listView);
 
-    QStandardItemModel *standardItemModel_1 = new QStandardItemModel(this);
-    QStandardItemModel *standardItemModel_2 = new QStandardItemModel(this);
-    QStandardItemModel *standardItemModel_3 = new QStandardItemModel(this);
-    QStandardItemModel *standardItemModel_4 = new QStandardItemModel(this);
-    QStandardItemModel *standardItemModel_5 = new QStandardItemModel(this);
-    QStandardItemModel *standardItemModel_6 = new QStandardItemModel(this);
-    QStandardItemModel *standardItemModel_7 = new QStandardItemModel(this);
-    QStandardItemModel *standardItemModel_8 = new QStandardItemModel(this);
-    QStandardItemModel *standardItemModel_9 = new QStandardItemModel(this);
-
-    modelList.append(standardItemModel_1);
-    modelList.append(standardItemModel_2);
-    modelList.append(standardItemModel_3);
-    modelList.append(standardItemModel_4);
-    modelList.append(standardItemModel_5);
-    modelList.append(standardItemModel_6);
-    modelList.append(standardItemModel_7);
-    modelList.append(standardItemModel_8);
-    modelList.append(standardItemModel_9);
+    QStandardItemModel *standardItemModel = new QStandardItemModel(this);
+    standardItemModel->setObjectName("standardItemModel_"+QString::number(i+1));
+    modelList.append(standardItemModel);
 
     QStringList secondMenuList;
     for(int j = 0; j < SECOND_MENU_NUMBER; j++)
@@ -62,24 +46,60 @@ void FirstSecondMenuWidget::initUI()
     QModelIndex initModelIndex = modelList.at(i)->index(0, 0);
     QStandardItem *initItem = modelList.at(i)->itemFromIndex(initModelIndex);
     initItem->setForeground(QBrush(Qt::red));
-
+    menuList.at(i)->setCurrentIndex(initModelIndex);
     menuList.at(i)->setModel(modelList.at(i));
   }
 }
 
 void FirstSecondMenuWidget::on_pushButton_bottom_clicked()
 {
-  ui->frame_top->show();
-//  if(ui->scrollArea->viewport()->depth() < 600)
+  int menuTopY = ui->frame_mainMenu->pos().y() + ui->scrollArea->geometry().y();
+  int scrollTopY = ui->scrollArea->geometry().y();
+
+  int menuBottomY = ui->scrollArea->viewport()->pos().y() + ui->scrollArea->viewport()->geometry().height();
+  int scrollBottomY = ui->scrollArea->geometry().height();
+
+  if(menuBottomY > scrollBottomY)
   {
     ui->scrollArea->viewport()->scroll(0, -50);
+    ui->frame_bottom->show();
+  }else if(menuBottomY == scrollBottomY)
+  {
+ //   ui->frame_bottom->hide();
+  }
+
+  if(menuTopY == scrollTopY)
+  {
+    ui->frame_top->hide();
+  }else
+  {
+    ui->frame_top->show();
   }
 }
 
 void FirstSecondMenuWidget::on_pushButton_top_clicked()
 {
-//  if(ui->scrollArea->viewport()->depth() < 600)
+  int menuTopY = ui->frame_mainMenu->pos().y() + ui->scrollArea->geometry().y();
+  int scrollTopY = ui->scrollArea->geometry().y();
+
+  int menuBottomY = ui->frame_mainMenu->pos().y() + ui->frame_mainMenu->geometry().height() + ui->scrollArea->geometry().y();
+  int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
+
+  if(menuTopY < scrollTopY)
   {
     ui->scrollArea->viewport()->scroll(0, 50);
+    ui->frame_top->show();
+  }else if(menuTopY == scrollTopY)
+  {
+    ui->frame_top->hide();
+  }
+
+  if(menuBottomY == scrollBottomY)
+  {
+    ui->pushButton_bottom->hide();
+  }
+  else
+  {
+    ui->pushButton_bottom->show();
   }
 }

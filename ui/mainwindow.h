@@ -32,6 +32,7 @@ private:
 public:
   CommonMenuWidget * commonMenuWidget;
   void linkPluginsToConnectDevice();
+  void resizeEvent(QResizeEvent *event);
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenSecondMenuFlag;
   bool hiddenThirdMenuFlag;
