@@ -114,9 +114,13 @@ void MainWindow::initUI()
 
 void MainWindow::slot_setThirdMenuName(int index)
 {
+  ui->widget_thirdMenu->setThirdMenuName(index, 0);
   firstMenuNum = index;
-  for(int j = 0; j < SECOND_MENU_STRING[firstMenuNum][SECOND_MENU_NUMBER].count(); j++)
+
+  for(int j = 0; j < SECOND_MENU_NUMBER; j++)
   {
+    if(SECOND_MENU_STRING[firstMenuNum][j] != NULL)
+    {
       QModelIndex modelIndex = firstSecondMenu->modelList.at(firstMenuNum)->index(j, 0);
       QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(modelIndex);
       if(item->row() == 0){
@@ -125,33 +129,8 @@ void MainWindow::slot_setThirdMenuName(int index)
       }else{
         item->setForeground(QBrush(Qt::yellow));
       }
+    }
   }
-//  int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
-//  int scrollTopY = ui->scrollArea->geometry().y();
-//  int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
-//  int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
-//  int toolBoxIndex = firstSecondMenu->toolBox.at(0)->currentIndex() + 1;
-//  if(toolBoxIndex > 2 && toolBoxIndex < FIRST_MENU_NUMBER - 1)
-//  {
-//    qDebug()<<toolBoxIndex;
-//    if(toolBoxIndex < FIRST_MENU_NUMBER / 2 + 1)
-//    {
-//      if(menuTopY < scrollTopY)
-//      {
-//        ui->scrollArea->viewport()->scroll(0, 50);
-//        qDebug()<<"up";
-//      }
-//    }
-//    else
-//    {
-//      if(menuBottomY > scrollBottomY)
-//      {
-//        ui->scrollArea->viewport()->scroll(0, -200);
-//        qDebug()<<"down";
-//      }
-//    }
-
-//  }
   arrowShowFlag();
 }
 
