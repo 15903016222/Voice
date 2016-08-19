@@ -48,8 +48,6 @@ private:
 private slots:
 
 public slots:
-  void on_pushButton_bottom_clicked();
-  void on_pushButton_top_clicked();
 
 };
 

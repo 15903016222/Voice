@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_4">
+  <layout class="QGridLayout" name="gridLayout_2">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="frame_mainMenu">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -38,7 +38,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+      <enum>QFrame::Plain</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout" stretch="100">
       <property name="spacing">
@@ -511,7 +511,13 @@ color: red;
            <height>233</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <attribute name="label">
+          <string>File/Report</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,5">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -571,10 +577,22 @@ color: red;
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="0" column="0">
-           <widget class="QFrame" name="frame_mainMenu">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgba(67, 67, 67, 0.5);</string>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>

@@ -144,7 +144,7 @@ private:
 
 
 public:
-  void initStandardModel(int i, int j);
+  void initStandardModel();
   void setThirdMenuName(int i, int j);
   QStandardItemModel *model;
   void widgetStyleChoice(int i, int j, int k);
