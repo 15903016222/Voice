@@ -11,6 +11,7 @@ ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
   ui->setupUi(this);
 
   initStandardModel(0, 0);
+  setThirdMenuName(0, 0);
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -22,7 +23,9 @@ void ThirdMenuWidget::initStandardModel(int i, int j)
 {
   model = new QStandardItemModel(1, THIRD_MENU_NUMBER, this);
   ui->tableView->setModel(model);
-  ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//  ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
+  ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
   ui->tableView->verticalHeader()->hide();
   ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -35,8 +38,6 @@ void ThirdMenuWidget::initStandardModel(int i, int j)
   {
     QModelIndex index = model->index(k, 0, QModelIndex());
     model->setData(index, k);
-
-    widgetStyleChoice(i, j, k);
   }
 
   ui->tableView->show();
@@ -44,12 +45,23 @@ void ThirdMenuWidget::initStandardModel(int i, int j)
 
 void ThirdMenuWidget::setThirdMenuName(int i, int j)
 {
+  currFirstNum = i;
+  currSecondNum = j;
+  model->clear();
   initStandardModel(i, j);
   for(int k = 0; k < THIRD_MENU_NUMBER; k ++)
   {
     if(THIRD_MENU_STRING[i][j][k] != NULL)
     {
       widgetStyleChoice(i, j, k);
+    }
+    else
+    {
+      model->setHeaderData(k, Qt::Horizontal, "");
+      QStandardItem *item = new QStandardItem(QString(tr("")));
+      model->setItem(0, k, item);
+      model->item(0, k)->setFlags(Qt::NoItemFlags);
+      model->item(0, k)->setBackground(QBrush(QColor(0, 130, 195, 0.5)));
     }
   }
 }
@@ -97,4 +109,13 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
   default:
     break;
   }
+}
+
+void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
+{
+    width = event->size().width();
+    height = event->size().height();
+    model->clear();
+    initStandardModel(currFirstNum, currSecondNum);
+    setThirdMenuName(currFirstNum, currSecondNum);
 }
