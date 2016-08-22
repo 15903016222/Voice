@@ -32,6 +32,10 @@ public:
   void setCommonMenuName();
   QStandardItemModel *model;
   void widgetStyleChoice(int k);
+  void resizeEvent(QResizeEvent *event);
+
+  int height;
+  int width;
 
 private:
 

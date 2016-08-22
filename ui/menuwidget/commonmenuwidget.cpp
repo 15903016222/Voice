@@ -4,6 +4,8 @@
 #include "doublespinboxdelegate.h"
 #include "comboboxdelegate.h"
 
+#include <QResizeEvent>
+
 CommonMenuWidget::CommonMenuWidget(QWidget *parent) :
   QWidget(parent),
   ui(new Ui::CommonMenuWidget)
@@ -23,7 +25,9 @@ void CommonMenuWidget::initStandardModel()
 {
   model = new QStandardItemModel(1, COMMON_MENU_NUMBER, this);
   ui->tableView->setModel(model);
-  ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//  ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
+  ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
   ui->tableView->verticalHeader()->hide();
   ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -113,3 +117,12 @@ void CommonMenuWidget::widgetStyleChoice(int k)
 //    show();
 //  }
 //}
+
+void CommonMenuWidget::resizeEvent(QResizeEvent *event)
+{
+    width = event->size().width();
+    height = event->size().height();
+    model->clear();
+    initStandardModel();
+    setCommonMenuName();
+}
