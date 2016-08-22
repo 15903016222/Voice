@@ -42,7 +42,7 @@ SOURCES += \
     ui/qitemdelegate/comboboxdelegate.cpp \
     ui/qitemdelegate/doublespinboxdelegate.cpp \
     ui/inputpanel/myinputpanel.cpp \
-    commonmenubutton.cpp
+    ui/commonmenubutton.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -55,7 +55,7 @@ HEADERS += \
     ui/qitemdelegate/comboboxdelegate.h \
     ui/qitemdelegate/doublespinboxdelegate.h \
     ui/inputpanel/myinputpanel.h \
-    commonmenubutton.h
+    ui/commonmenubutton.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -66,7 +66,7 @@ FORMS += \
     ui/menuwidget/fourthmenuwidget.ui \
     ui/menuwidget/commonmenuwidget.ui \
     ui/inputpanel/myinputpanel.ui \
-    commonmenubutton.ui
+    ui/commonmenubutton.ui
 
 win32 {
     CONFIG += windows link_prl

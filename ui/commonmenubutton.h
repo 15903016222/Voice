@@ -2,6 +2,7 @@
 #define COMMONMENUBUTTON_H
 
 #include <QWidget>
+#include <QPushButton>
 
 namespace Ui {
 class CommonMenuButton;
@@ -14,7 +15,7 @@ class CommonMenuButton : public QWidget
 public:
     explicit CommonMenuButton(QWidget *parent = 0);
     ~CommonMenuButton();
-    QList<QPushButton*> commonMenuButton;
+    QPushButton * pushButton_commonMenu;
 
 private:
     Ui::CommonMenuButton *ui;

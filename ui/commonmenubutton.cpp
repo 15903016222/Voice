@@ -6,6 +6,7 @@ CommonMenuButton::CommonMenuButton(QWidget *parent) :
     ui(new Ui::CommonMenuButton)
 {
     ui->setupUi(this);
+    pushButton_commonMenu = new QPushButton(ui->pushButton);
 }
 
 CommonMenuButton::~CommonMenuButton()
