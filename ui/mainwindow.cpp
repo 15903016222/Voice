@@ -66,9 +66,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
   initUI();
 
-  commonMenuWidget = new CommonMenuWidget(this);
-  commonMenuWidget->hide();
-
 }
 
 MainWindow::~MainWindow()
@@ -88,14 +85,15 @@ void MainWindow::initUI()
   ui->frame_showPlot->installEventFilter(this);
   ui->widget_thirdMenu->installEventFilter(this);
 
+  firstSecondMenu = new FirstSecondMenuWidget(this);
+  commonMenuWidget = new CommonMenuWidget(this);
+  commonMenuButton = new CommonMenuButton(this);
+  commonMenuButton->show();
+
   firstMenuNum = 0;
   secondMenuNum = 0;
   hiddenSecondMenuFlag = false;
   hiddenThirdMenuFlag = false;
-
-  firstSecondMenu = new FirstSecondMenuWidget(this);
-  commonMenuButton = new CommonMenuButton(this);
-  commonMenuButton->show();
   hiddenCommonMenuFlag = false;
 
   QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
@@ -111,7 +109,7 @@ void MainWindow::initUI()
   ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->scrollArea->setWidget(firstSecondMenu);
 
-  connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenu_Clicked()));
+  QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
 
 }
 
@@ -221,8 +219,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     commonMenuWidget->move(0, height * 530 / 600);
     commonMenuButton->resize(width * 25 / 800, height * 25 /600);
     commonMenuButton->move(width - commonMenuButton->geometry().width(), height - commonMenuButton->geometry().height());
-  }
-  else
+  }else
   {
     ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
     firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
@@ -256,20 +253,20 @@ void MainWindow::arrowShowFlag()
   }
 }
 
-void MainWindow::slot_pushButton_commonMenu_Clicked()
+void MainWindow::slot_pushButton_commonMenuClicked()
 {
   hiddenCommonMenuFlag = !hiddenCommonMenuFlag;
-  if(hiddenCommonMenuFlag)
+  if(!hiddenCommonMenuFlag)
   {
     ui->widget_firstSecondMenu->hide();
     ui->widget_thirdMenu->hide();
     commonMenuWidget->show();
-    commonMenuButton->raise();
-    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
+
+    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
   }else {
     commonMenuWidget->hide();
-    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
-  } 
+    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
+  }
 }
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
@@ -281,20 +278,21 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
       static bool flagShowPlotState = true;
       flagShowPlotState = !flagShowPlotState;
 
-      if (!flagShowPlotState)
+      if(!flagShowPlotState)
       {
         ui->widget_firstSecondMenu->show();
         ui->widget_thirdMenu->show();
         commonMenuWidget->hide();
-        hiddenCommonMenuFlag = false;
+        hiddenCommonMenuFlag = true;
+
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
-        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
+        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
         arrowShowFlag();
       }else{
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
-//        commonMenuWidget->show();
+        commonMenuWidget->show();
       }
     }
   }

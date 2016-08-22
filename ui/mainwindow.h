@@ -45,7 +45,6 @@ public:
   bool hiddenThirdMenuFlag;
   bool hiddenCommonMenuFlag;
 
-
   int firstMenuNum;
   int secondMenuNum;
 
@@ -58,9 +57,10 @@ private slots:
   void slot_firstMenuToolBoxCurrentChanged(int index);
   void slot_secondMenuItemClicked(QModelIndex index);
   void onGstBusMessage(const QGst::MessagePtr & message);
+
   void on_pushButton_top_clicked();
   void on_pushButton_bottom_clicked();
-  void slot_pushButton_commonMenu_Clicked();
+  void slot_pushButton_commonMenuClicked();
 
 };
 
