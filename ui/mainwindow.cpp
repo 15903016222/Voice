@@ -102,21 +102,20 @@ void MainWindow::initUI()
   {
     QObject::connect(firstSecondMenu->menuList.at(i), SIGNAL(clicked(QModelIndex)), this, SLOT(slot_secondMenuItemClicked(QModelIndex)));
   }
+
   ui->scrollArea = new QScrollArea(ui->widget_scrollArea);
   ui->scrollArea->setFrameShape(QFrame::NoFrame);
   ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->scrollArea->setWidget(firstSecondMenu);
-
 }
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 {
-  ui->widget_thirdMenu->setThirdMenuName(index, 0);
+  ui->widget_thirdMenu->setThirdMenuName(index, 0); //init
   firstMenuNum = index;
 
-  QModelIndex initModelIndex = firstSecondMenu->modelList.at(index)->index(0, 0);
-  firstSecondMenu->menuList.at(index)->setCurrentIndex(initModelIndex);
+  firstSecondMenu->initSecondMenuItem(firstMenuNum);
 
   arrowShowFlag();
 }

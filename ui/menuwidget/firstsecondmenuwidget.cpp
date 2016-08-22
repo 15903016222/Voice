@@ -32,6 +32,26 @@ void FirstSecondMenuWidget::setSecondMenuName(int i)
   }
 }
 
+void FirstSecondMenuWidget::initSecondMenuItem(int i)
+{
+  for(int j = 0; j < SECOND_MENU_NUMBER; j++)
+  {
+    if(SECOND_MENU_STRING[i][j] != NULL)
+    {
+      QModelIndex modelIndex = modelList.at(i)->index(j, 0);
+      QStandardItem *item = modelList.at(i)->itemFromIndex(modelIndex);
+
+      if(item->row() == 0)
+      {
+        item->setForeground(QBrush(Qt::red));
+        menuList.at(i)->setCurrentIndex(modelIndex);
+      }else{
+        item->setForeground(QBrush(Qt::yellow));
+      }
+    }
+  }
+}
+
 void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
 {
   for(int j = 0; j < SECOND_MENU_NUMBER; j++)
@@ -41,7 +61,8 @@ void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
       QModelIndex modelIndex = modelList.at(i)->index(j, 0);
       QStandardItem *item = modelList.at(i)->itemFromIndex(modelIndex);
 
-      if(modelIndex == index){
+      if(modelIndex == index)
+      {
         item->setForeground(QBrush(Qt::red));
       }else{
         item->setForeground(QBrush(Qt::yellow));
