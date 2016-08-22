@@ -28,7 +28,7 @@ INCLUDEPATH += $$PWD\ui
 INCLUDEPATH += $$PWD\ui\menuwidget
 INCLUDEPATH += $$PWD\ui\qitemdelegate
 INCLUDEPATH += $$PWD\ui\inputpanel
-
+INCLUDEPATH += $$PWD\ui\dialog
 
 SOURCES += \
     main.cpp \
@@ -42,7 +42,9 @@ SOURCES += \
     ui/qitemdelegate/comboboxdelegate.cpp \
     ui/qitemdelegate/doublespinboxdelegate.cpp \
     ui/inputpanel/myinputpanel.cpp \
-    ui/commonmenubutton.cpp
+    ui/commonmenubutton.cpp \
+    ui/menuwidget/topmenu.cpp \
+    ui/dialog/measurementdialog.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -55,7 +57,9 @@ HEADERS += \
     ui/qitemdelegate/comboboxdelegate.h \
     ui/qitemdelegate/doublespinboxdelegate.h \
     ui/inputpanel/myinputpanel.h \
-    ui/commonmenubutton.h
+    ui/commonmenubutton.h \
+    ui/menuwidget/topmenu.h \
+    ui/dialog/measurementdialog.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -66,7 +70,9 @@ FORMS += \
     ui/menuwidget/fourthmenuwidget.ui \
     ui/menuwidget/commonmenuwidget.ui \
     ui/inputpanel/myinputpanel.ui \
-    ui/commonmenubutton.ui
+    ui/commonmenubutton.ui \
+    ui/menuwidget/topmenu.ui \
+    ui/dialog/measurementdialog.ui
 
 win32 {
     CONFIG += windows link_prl
