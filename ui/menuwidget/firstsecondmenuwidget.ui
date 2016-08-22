@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>170</width>
-    <height>530</height>
+    <height>479</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,7 +95,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
@@ -154,7 +154,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
@@ -213,7 +213,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
@@ -272,7 +272,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
@@ -331,7 +331,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
@@ -390,7 +390,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
@@ -449,7 +449,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
@@ -508,7 +508,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
@@ -567,7 +567,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>233</height>
+           <height>182</height>
           </rect>
          </property>
          <attribute name="label">
