@@ -31,10 +31,7 @@ TopMenu :: ~TopMenu()
 {
     delete(ui);
 }
-//border-color: qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 170, 255, 255), stop:0.559322 rgba(255, 255, 255, 255));
-//border-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));
-//border-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));
-//border-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.559322 rgba(0, 130, 195, 255));
+
 void TopMenu::initUI()
 {
     ui->label_1->setText(tr("Gain-r\n(dB)"));
