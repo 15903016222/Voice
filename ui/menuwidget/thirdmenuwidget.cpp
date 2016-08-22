@@ -10,7 +10,7 @@ ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  initStandardModel(0, 0);
+  initStandardModel();
   setThirdMenuName(0, 0);
 }
 
@@ -19,7 +19,7 @@ ThirdMenuWidget::~ThirdMenuWidget()
   delete ui;
 }
 
-void ThirdMenuWidget::initStandardModel(int i, int j)
+void ThirdMenuWidget::initStandardModel()
 {
   model = new QStandardItemModel(1, THIRD_MENU_NUMBER, this);
   ui->tableView->setModel(model);
@@ -48,7 +48,7 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
   currFirstNum = i;
   currSecondNum = j;
   model->clear();
-  initStandardModel(i, j);
+  initStandardModel();
   for(int k = 0; k < THIRD_MENU_NUMBER; k ++)
   {
     if(THIRD_MENU_STRING[i][j][k] != NULL)
@@ -116,6 +116,6 @@ void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
     width = event->size().width();
     height = event->size().height();
     model->clear();
-    initStandardModel(currFirstNum, currSecondNum);
+    initStandardModel();
     setThirdMenuName(currFirstNum, currSecondNum);
 }

@@ -48,7 +48,7 @@ private:
 private slots:
 
 public slots:
-//   void slot_getFirstMenuNum(int index);
+
 };
 
 #endif // FIRSTSECONDMENUWIDGET_H
