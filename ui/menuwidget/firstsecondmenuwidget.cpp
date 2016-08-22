@@ -19,7 +19,6 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
   delete ui;
 }
 
-
 void FirstSecondMenuWidget::initUI()
 {
   toolBox.append(ui->toolBox);

@@ -15,7 +15,7 @@ class CommonMenuButton : public QWidget
 public:
     explicit CommonMenuButton(QWidget *parent = 0);
     ~CommonMenuButton();
-    QPushButton * pushButton_commonMenu;
+    QList<QPushButton *> pushButton_commonMenu;
 
 private:
     Ui::CommonMenuButton *ui;
