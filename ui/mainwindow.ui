@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>864</width>
-    <height>644</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -58,7 +58,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="FourthMenuWidget" name="widgetTopLeft" native="true"/>
+        <widget class="TopMenu" name="widgetTopLeft" native="true"/>
        </item>
        <item>
         <widget class="IconsWidget" name="widgetTopRight" native="true"/>
@@ -233,8 +233,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>167</width>
-                        <height>490</height>
+                        <width>154</width>
+                        <height>452</height>
                        </rect>
                       </property>
                      </widget>
@@ -310,9 +310,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>FourthMenuWidget</class>
+   <class>TopMenu</class>
    <extends>QWidget</extends>
-   <header>fourthmenuwidget.h</header>
+   <header>topmenu.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
