@@ -32,11 +32,15 @@ public:
   void setCommonMenuName();
   QStandardItemModel *model;
   void widgetStyleChoice(int k);
+  void resizeEvent(QResizeEvent *event);
+
+  int height;
+  int width;
 
 private:
 
 public slots:
-  void on_pushButton_clicked();
+//  void on_pushButton_clicked();
 
 };
 
