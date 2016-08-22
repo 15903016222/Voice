@@ -11,7 +11,6 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
   ui->toolBox->setCurrentIndex(0);
   QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
   menuList.at(0)->setCurrentIndex(initModelIndex);
-//  hideFirstMenuPage();
 
 }
 
@@ -20,14 +19,6 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
   delete ui;
 }
 
-void FirstSecondMenuWidget::hideFirstMenuPage()
-{
-  ui->page_9->hide();
-  ui->page_8->hide();
-  ui->page_7->hide();
-  ui->page_6->hide();
-
-}
 
 void FirstSecondMenuWidget::initUI()
 {

@@ -42,8 +42,6 @@ public:
   QList<QListView*> menuList;
   QList<QStandardItemModel*> modelList;
 
-  void hideFirstMenuPage();
-
 private:
   void initUI();
 
