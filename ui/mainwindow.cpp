@@ -108,6 +108,9 @@ void MainWindow::initUI()
   ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->scrollArea->setWidget(firstSecondMenu);
+
+  QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
+
 }
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
@@ -242,6 +245,22 @@ void MainWindow::arrowShowFlag()
     ui->pushButton_bottom->hide();
   }else{
     ui->pushButton_bottom->show();
+  }
+}
+
+void MainWindow::slot_pushButton_commonMenuClicked()
+{
+  hiddenCommonMenuFlag = !hiddenCommonMenuFlag;
+  if(hiddenCommonMenuFlag)
+  {
+    ui->widget_firstSecondMenu->hide();
+    ui->widget_thirdMenu->hide();
+    commonMenuWidget->show();
+  //  commonMenuButton->raise();
+    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
+  }else {
+    commonMenuWidget->hide();
+    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
   }
 }
 
