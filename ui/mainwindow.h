@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QGst/Message>
 #include <QScrollArea>
+#include <QStackedWidget>
 
 namespace Ui {
 class MainWindow;
@@ -35,6 +36,7 @@ public:
   CommonMenuWidget * commonMenuWidget;
   FirstSecondMenuWidget *firstSecondMenu;
   CommonMenuButton *commonMenuButton;
+  QStackedWidget *stackedWidget;
 
   void linkPluginsToConnectDevice();
   void resizeEvent(QResizeEvent *event);
@@ -58,6 +60,7 @@ private slots:
   void onGstBusMessage(const QGst::MessagePtr & message);
   void slot_pushButton_top_Clicked();
   void slot_pushButton_bottom_Clicked();
+  void slot_pushButton_commonMenu_Clicked();
 
 };
 

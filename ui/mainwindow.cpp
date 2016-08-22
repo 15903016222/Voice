@@ -81,6 +81,7 @@ void MainWindow::initUI()
 
   ui->widget_firstSecondMenu->hide();
   ui->widget_thirdMenu->hide();
+//  commonMenuWidget->hide();
 
   ui->frame_showPlot->installEventFilter(this);
   ui->widget_thirdMenu->installEventFilter(this);
@@ -90,6 +91,7 @@ void MainWindow::initUI()
   hiddenSecondMenuFlag = false;
   hiddenThirdMenuFlag = false;
 
+  stackedWidget = new QStackedWidget(this);
   firstSecondMenu = new FirstSecondMenuWidget(this);
   commonMenuButton = new CommonMenuButton(this);
   commonMenuButton->resize(25, 25);
@@ -110,14 +112,17 @@ void MainWindow::initUI()
 
   connect(ui->pushButton_top, SIGNAL(clicked()), this, SLOT(slot_pushButton_top_Clicked()));
   connect(ui->pushButton_bottom, SIGNAL(clicked()), this, SLOT(slot_pushButton_bottom_Clicked()));
+  connect(commonMenuButton->pushButton_commonMenu, SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenu_Clicked()));
 }
 
 void MainWindow::slot_setThirdMenuName(int index)
 {
   ui->widget_thirdMenu->setThirdMenuName(index, 0); //init
   firstMenuNum = index;
-  for(int j = 0; j < SECOND_MENU_STRING[firstMenuNum][SECOND_MENU_NUMBER].count(); j++)
+  for(int j = 0; j < SECOND_MENU_NUMBER; j++)
   {
+    if(SECOND_MENU_STRING[firstMenuNum][j] != NULL)
+    {
       QModelIndex modelIndex = firstSecondMenu->modelList.at(firstMenuNum)->index(j, 0);
       QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(modelIndex);
       if(item->row() == 0){
@@ -126,6 +131,7 @@ void MainWindow::slot_setThirdMenuName(int index)
       }else{
         item->setForeground(QBrush(Qt::yellow));
       }
+    }
   }
 //  int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
 //  int scrollTopY = ui->scrollArea->geometry().y();
@@ -300,6 +306,19 @@ void MainWindow::arrowShowFlag()
   }
 }
 
+void MainWindow::slot_pushButton_commonMenu_Clicked()
+{
+  static bool flagShowCommonState = true;
+  flagShowCommonState = !flagShowCommonState;
+  if (!flagShowCommonState) {
+    ui->widget_firstSecondMenu->hide();
+    ui->widget_thirdMenu->hide();
+    commonMenuWidget->show();
+  }else {
+    commonMenuWidget->hide();
+  }
+}
+
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
   if(object == ui->frame_showPlot)
@@ -318,7 +337,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
       }else {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
-        commonMenuWidget->show();
+//        commonMenuWidget->show();
       }
     }
   }
