@@ -8,7 +8,6 @@
 #include <QMainWindow>
 #include <QGst/Message>
 #include <QScrollArea>
-#include <QStackedWidget>
 
 namespace Ui {
 class MainWindow;
@@ -36,7 +35,6 @@ public:
   CommonMenuWidget * commonMenuWidget;
   FirstSecondMenuWidget *firstSecondMenu;
   CommonMenuButton *commonMenuButton;
-  QStackedWidget *stackedWidget;
 
   void linkPluginsToConnectDevice();
   void resizeEvent(QResizeEvent *event);
@@ -45,6 +43,8 @@ public:
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenSecondMenuFlag;
   bool hiddenThirdMenuFlag;
+  bool hiddenCommonMenuFlag;
+
 
   int firstMenuNum;
   int secondMenuNum;
