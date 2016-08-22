@@ -53,11 +53,11 @@ private:
 public slots:
 
 private slots:
-  void slot_setThirdMenuName(int index);
+  void slot_firstMenuToolBoxCurrentChanged(int index);
   void slot_secondMenuItemClicked(QModelIndex index);
   void onGstBusMessage(const QGst::MessagePtr & message);
-  void slot_pushButton_top_Clicked();
-  void slot_pushButton_bottom_Clicked();
+  void on_pushButton_top_clicked();
+  void on_pushButton_bottom_clicked();
 
 };
 

@@ -100,16 +100,16 @@ void CommonMenuWidget::widgetStyleChoice(int k)
   }
 }
 
-void CommonMenuWidget::on_pushButton_clicked()
-{
-  static bool flagShowWidget = true;
+//void CommonMenuWidget::on_pushButton_clicked()
+//{
+//  static bool flagShowWidget = true;
 
-  flagShowWidget = !flagShowWidget;
+//  flagShowWidget = !flagShowWidget;
 
-  if(!flagShowWidget)
-  {
-    hide();
-  }else{
-    show();
-  }
-}
+//  if(!flagShowWidget)
+//  {
+//    hide();
+//  }else{
+//    show();
+//  }
+//}

@@ -96,7 +96,7 @@ void MainWindow::initUI()
   commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
   commonMenuButton->show();
 
-  QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_setThirdMenuName(int)));
+  QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
 
   for(int i = 0; i < FIRST_MENU_NUMBER; i++)
   {
@@ -108,52 +108,25 @@ void MainWindow::initUI()
   ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->scrollArea->setWidget(firstSecondMenu);
 
-  connect(ui->pushButton_top, SIGNAL(clicked()), this, SLOT(slot_pushButton_top_Clicked()));
-  connect(ui->pushButton_bottom, SIGNAL(clicked()), this, SLOT(slot_pushButton_bottom_Clicked()));
 }
 
-void MainWindow::slot_setThirdMenuName(int index)
+void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 {
   ui->widget_thirdMenu->setThirdMenuName(index, 0);
   firstMenuNum = index;
 
-  for(int j = 0; j < SECOND_MENU_NUMBER; j++)
-  {
-    if(SECOND_MENU_STRING[firstMenuNum][j] != NULL)
-    {
-      QModelIndex modelIndex = firstSecondMenu->modelList.at(firstMenuNum)->index(j, 0);
-      QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(modelIndex);
-      if(item->row() == 0){
-        item->setForeground(QBrush(Qt::red));
-        firstSecondMenu->menuList.at(firstMenuNum)->setCurrentIndex(modelIndex);
-      }else{
-        item->setForeground(QBrush(Qt::yellow));
-      }
-    }
-  }
+  QModelIndex initModelIndex = firstSecondMenu->modelList.at(index)->index(0, 0);
+  firstSecondMenu->menuList.at(index)->setCurrentIndex(initModelIndex);
+
   arrowShowFlag();
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
 {
   QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
-
   secondMenuNum = item->row();
 
-  for(int j = 0; j < SECOND_MENU_NUMBER; j++)
-  {
-    if(SECOND_MENU_STRING[firstMenuNum][j] != NULL)
-    {
-      QModelIndex modelIndex = firstSecondMenu->modelList.at(firstMenuNum)->index(j, 0);
-      QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(modelIndex);
-      if(modelIndex == index){
-        item->setForeground(QBrush(Qt::red));
-        firstSecondMenu->menuList.at(firstMenuNum)->setCurrentIndex(modelIndex);
-      }else{
-        item->setForeground(QBrush(Qt::yellow));
-      }
-    }
-  }
+  firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
   ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, secondMenuNum);
 }
 
@@ -193,33 +166,33 @@ void MainWindow::linkPluginsToConnectDevice()
   }
 }
 
-void MainWindow::slot_pushButton_top_Clicked()
+void MainWindow::on_pushButton_top_clicked()
 {
   int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
   int scrollTopY = ui->scrollArea->geometry().y();
+
   if(menuTopY < (scrollTopY -20))
   {
     ui->scrollArea->viewport()->scroll(0, 20);
-  }
-  else
-  {
+  }else{
     ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
   }
+
   arrowShowFlag();
 }
 
-void MainWindow::slot_pushButton_bottom_Clicked()
+void MainWindow::on_pushButton_bottom_clicked()
 {
   int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
   int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
+
   if((menuBottomY - 20) > scrollBottomY)
   {
-      ui->scrollArea->viewport()->scroll(0, -20);
+    ui->scrollArea->viewport()->scroll(0, -20);
+  }else{
+    ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
   }
-  else
-  {
-      ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
-  }
+
   arrowShowFlag();
 }
 
@@ -233,19 +206,16 @@ void MainWindow::resizeEvent(QResizeEvent *event)
   if(oldWidth > 0 && oldHeight > 0)
   {
     ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
+
     if(ui->widget_scrollArea->geometry().height() < 600)
     {
-        firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / oldHeight);
-    }
-    else
-    {
-        firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
+      firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / oldHeight);
+    }else{
+      firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
     }
     commonMenuWidget->resize(width, height * 70 / 600);
     commonMenuWidget->move(0, height * 530 / 600);
-  }
-  else
-  {
+  }else{
     ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
     firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
     commonMenuWidget->resize(width, height * 70 / 600);
@@ -260,20 +230,18 @@ void MainWindow::arrowShowFlag()
   int scrollTopY = ui->scrollArea->geometry().y();
   int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
   int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
+
   if(menuTopY == scrollTopY)
   {
     ui->pushButton_top->hide();
-  }
-  else
-  {
+  }else{
     ui->pushButton_top->show();
   }
+
   if(menuBottomY == scrollBottomY )
   {
     ui->pushButton_bottom->hide();
-  }
-  else
-  {
+  }else{
     ui->pushButton_bottom->show();
   }
 }
@@ -286,14 +254,17 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     {
       static bool flagShowPlotState = true;
       flagShowPlotState = !flagShowPlotState;
-      if (!flagShowPlotState) {
+
+      if (!flagShowPlotState)
+      {
         ui->widget_firstSecondMenu->show();
         ui->widget_thirdMenu->show();
         commonMenuWidget->hide();
+
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
         arrowShowFlag();
-      }else {
+      }else{
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
         commonMenuWidget->show();
