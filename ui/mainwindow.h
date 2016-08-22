@@ -43,6 +43,8 @@ public:
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenSecondMenuFlag;
   bool hiddenThirdMenuFlag;
+  bool hiddenCommonMenuFlag;
+
 
   int firstMenuNum;
   int secondMenuNum;
@@ -58,6 +60,7 @@ private slots:
   void onGstBusMessage(const QGst::MessagePtr & message);
   void on_pushButton_top_clicked();
   void on_pushButton_bottom_clicked();
+  void slot_pushButton_commonMenu_Clicked();
 
 };
 

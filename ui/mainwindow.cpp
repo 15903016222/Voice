@@ -10,6 +10,8 @@
 #include <QGst/Bus>
 #include <QGst/Message>
 
+#include <QDebug>
+
 class MainWindowPrivate
 {
 public:
@@ -65,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
   initUI();
 
   commonMenuWidget = new CommonMenuWidget(this);
+  commonMenuWidget->hide();
 
 }
 
@@ -92,9 +95,8 @@ void MainWindow::initUI()
 
   firstSecondMenu = new FirstSecondMenuWidget(this);
   commonMenuButton = new CommonMenuButton(this);
-  commonMenuButton->resize(25, 25);
-  commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
   commonMenuButton->show();
+  hiddenCommonMenuFlag = false;
 
   QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
 
@@ -108,6 +110,9 @@ void MainWindow::initUI()
   ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->scrollArea->setWidget(firstSecondMenu);
+
+  connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenu_Clicked()));
+
 }
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
@@ -214,11 +219,17 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     }
     commonMenuWidget->resize(width, height * 70 / 600);
     commonMenuWidget->move(0, height * 530 / 600);
-  }else{
+    commonMenuButton->resize(width * 25 / 800, height * 25 /600);
+    commonMenuButton->move(width - commonMenuButton->geometry().width(), height - commonMenuButton->geometry().height());
+  }
+  else
+  {
     ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
     firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
     commonMenuWidget->resize(width, height * 70 / 600);
     commonMenuWidget->move(0, height * 530 / 600);
+    commonMenuButton->resize(25, 25);
+    commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
   }
   arrowShowFlag();
 }
@@ -245,6 +256,22 @@ void MainWindow::arrowShowFlag()
   }
 }
 
+void MainWindow::slot_pushButton_commonMenu_Clicked()
+{
+  hiddenCommonMenuFlag = !hiddenCommonMenuFlag;
+  if(hiddenCommonMenuFlag)
+  {
+    ui->widget_firstSecondMenu->hide();
+    ui->widget_thirdMenu->hide();
+    commonMenuWidget->show();
+    commonMenuButton->raise();
+    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
+  }else {
+    commonMenuWidget->hide();
+    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
+  } 
+}
+
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
   if(object == ui->frame_showPlot)
@@ -259,14 +286,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         ui->widget_firstSecondMenu->show();
         ui->widget_thirdMenu->show();
         commonMenuWidget->hide();
-
+        hiddenCommonMenuFlag = false;
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
+        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
         arrowShowFlag();
       }else{
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
-        commonMenuWidget->show();
+//        commonMenuWidget->show();
       }
     }
   }
