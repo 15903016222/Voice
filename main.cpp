@@ -28,6 +28,11 @@ int main(int argc, char *argv[])
     QObject::connect(&w, &MainWindow::Imx_Sig_Query_Battery2, stm32_serial_p, &Mcu::query_battery2);
     QObject::connect(&w, &MainWindow::Imx_Sig_Query_Brightness, stm32_serial_p, &Mcu::query_brightness);
     QObject::connect(&w, &MainWindow::Imx_Sig_Set_Brightness, stm32_serial_p, &Mcu::set_brightness);
+    /*just for test*/
+    QObject::connect(&w, &MainWindow::Imx_Sig_half1, stm32_serial_p, &Mcu::query_half1);
+    QObject::connect(&w, &MainWindow::Imx_Sig_half2, stm32_serial_p, &Mcu::query_half2);
+    QObject::connect(&w, &MainWindow::Imx_Sig_longdata, stm32_serial_p, &Mcu::query_longdata);
+    /*just for test end*/
     return a.exec();
 }
 

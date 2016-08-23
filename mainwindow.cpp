@@ -52,7 +52,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             emit Imx_Sig_Set_Brightness(qrand()%100);
             qDebug() << "key L, Set_Brightness";
             break;
-
+        case Qt::Key_X://half1 data fot test;
+            emit Imx_Sig_half1();
+            qDebug() << "key X, Imx_Sig_half1";
+            break;
+        case Qt::Key_Y://half2 data for test;
+            emit Imx_Sig_half2();
+            qDebug() << "key Y, Imx_Sig_half2";
+            break;
+        case Qt::Key_Z://longdata for test;
+            emit Imx_Sig_longdata();
+            qDebug() << "key Z, long data!";
+        break;
         default:
             break;
         }

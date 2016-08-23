@@ -31,9 +31,11 @@ Q_SIGNALS:
     void Imx_Sig_Probe();
     void Imx_Sig_Key();
     void Imx_Sig_Rotary();
-
-
-
+    /* just for test */
+    void Imx_Sig_half1();
+    void Imx_Sig_half2();
+    void Imx_Sig_longdata();
+    /* just for test end*/
 private:
     void keyPressEvent(QKeyEvent *event);
 };

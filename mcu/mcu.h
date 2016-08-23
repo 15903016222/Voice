@@ -4,6 +4,7 @@
 #include <qmutex.h>
 #include "QtSerialPort"
 #include "stdint.h"
+#include "QHash"
 #include <QDebug>
 
 class Mcu : public QSerialPort
@@ -13,7 +14,6 @@ public:
     static Mcu* get_mcu();
     static void destroyed();
 
-
     void query_core_temp() { write(m_queryCoreTemperatureData, sizeof(m_queryCoreTemperatureData)); }
     void query_FPGA_temp() { write(m_queryFPGATemperatureData, sizeof(m_queryFPGATemperatureData)); }
     void query_PowerSupply_temp() { write(m_queryPowerSupplyTemperatureData, sizeof(m_queryPowerSupplyTemperatureData)); }
@@ -21,24 +21,52 @@ public:
     void query_battery() { write(m_queryBatteryData, sizeof(m_queryBatteryData)); }
     void query_battery2() { write(m_queryBattery_2_Data, sizeof(m_queryBattery_2_Data)); }
     void query_brightness() { write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
-    qint64 set_brightness(uint8_t light) { m_setBrightnessData[4]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
+
+    void response_for_STM32_poweroff() { write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
+    qint64 set_brightness(uint8_t light) { m_setBrightnessData[5]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
+
+    /****** just for special test ******/
+    void query_half1() { write(m_queryBattery_2_Data, 3); }
+    void query_half2() { write(m_queryBattery_2_Data+3, 4); }
+    void query_longdata() { write(m_queryLongData, sizeof(m_queryLongData)); }
+    /****** just for special test end******/
 
 
     enum EventType {
-        CORE_TEMPERATURE,
-        FPGA_TEMPERATURE,
-        POWERSUPPLY_TEMPERATURE,
-        MCU_TEMPERATURE,
-        BATTERY1,
-        BATTERY2,
-        BRIGHTNESS,
-        POWEROFF,
-        KEY,
-        ROTARY,
+        CORE_TEMPERATURE,//核心板温度	0x10
+        FPGA_TEMPERATURE,//FPGA温度	0x11
+        POWERSUPPLY_TEMPERATURE,//电源温度	0x12
+        MCU_TEMPERATURE,//MCU温度	0x13
+        KEY,//按键	0x21
+        ROTARY,//飞梭	0x22
+        BATTERY1_STATUS,//1号电池状态	0x31
+        BATTERY2_STATUS,//2号电池状态	0x35
+        BATTERY1_QUANTITY,//1号电池电量	0x32
+        BATTERY2_QUANTITY,//2号电池电量	0x36
+        POWEROFF,//关机	0x41
+        BRIGHTNESS,//背光亮度	0x42
+        MAIN_APP_READY,//主程序启动通知	0x43
+        PAHSED_ARRAY_PROBE_MODEL,//相控阵探头型号	0x51
+        PAHSED_ARRAY_PROBE_SERIES,//相控阵探头系列	0x52
+        PAHSED_ARRAY_PROBE_TYPE,//相控阵探头类型	0x53
+        PAHSED_ARRAY_PROBE_FREQUNCY,//相控阵探头频率	0x54
+        PAHSED_ARRAY_PROBE_ELEMENTS_QTY,//相控阵探头阵元数	0x55
+        PAHSED_ARRAY_PROBE_ELEMENTS_DISTANCE,//相控阵探头阵元间距	0x56
+        PAHSED_ARRAY_PROBE_FERENCE_POINT,//相控阵探头参考点	0x57
+        NORMAL_PROBE_1_MODEL,//常规探头I型号	0x61
+        NORMAL_PROBE_1_SERIES,//常规探头I系列	0x62
+        NORMAL_PROBE_1_FRENQUNCY,//常规探头I频率	0x63
+        NORMAL_PROBE_1_SIZE,//常规探头I晶片尺寸	0x64
+        NORMAL_PROBE_2_MODEL,//常规探头Ii型号	0x71
+        NORMAL_PROBE_2_SERIES,//常规探头Ii系列	0x72
+        NORMAL_PROBE_2_FRENQUNCY,//常规探头iI频率	0x73
+        NORMAL_PROBE_2_SIZE,//常规探头Ii晶片尺寸	0x74
     };
 
+    QHash<EventType, uint8_t> m_CMDHash;
+
 Q_SIGNALS:
-    void event(EventType type, int val);
+    void event(EventType type, QByteArray &val);
 
 protected:
     Mcu();
@@ -47,19 +75,26 @@ protected:
 private:
     static Mcu *m_mcu;
     QMutex wrMutex;
-
     QByteArray m_recBuffer;
-    static const char m_queryBatteryData[6];
+    static const char m_queryBatteryData[7];
     static const char m_queryBattery_2_Data[7];
-    static const char m_queryBrightnessData[6];
-    static char m_setBrightnessData[7];
-    static const char m_queryCoreTemperatureData[6];
-    static const char m_queryFPGATemperatureData[6];
-    static const char m_queryPowerSupplyTemperatureData[6];
-    static const char m_queryMCUTemperatureData[6];
+    static const char m_queryBrightnessData[7];
+    static char m_setBrightnessData[8];
+    static const char m_queryCoreTemperatureData[7];
+    static const char m_queryFPGATemperatureData[7];
+    static const char m_queryPowerSupplyTemperatureData[7];
+    static const char m_queryMCUTemperatureData[7];
+    static const char m_respondSTM32PowerOffData[7];
+
+    /*just for test*/
+    static const char m_queryLongData[14];
+    /*juset for test end*/
 
     inline qint64 write(const char *data, qint64 len) {QMutexLocker locker(&wrMutex); return QIODevice::write(data, len); }
     void on_readyRead_event();
+    QByteArray findPacket(QByteArray &read_array);
+    void parsePacket(QByteArray &read_array);
+
 };
 
 
