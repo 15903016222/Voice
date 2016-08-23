@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>864</width>
-    <height>644</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -178,8 +178,11 @@
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
                   <property name="text">
-                   <string>UP</string>
+                   <string>up</string>
                   </property>
                  </widget>
                 </item>
@@ -233,8 +236,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>167</width>
-                        <height>490</height>
+                        <width>154</width>
+                        <height>452</height>
                        </rect>
                       </property>
                      </widget>
@@ -251,8 +254,11 @@
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
                   <property name="text">
-                   <string>DOWN</string>
+                   <string>down</string>
                   </property>
                  </widget>
                 </item>

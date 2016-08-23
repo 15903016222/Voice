@@ -24,10 +24,10 @@ PROJECT_DIR = $$PWD
 DEFINES += GST_DISABLE_XML
 DEFINES += GST_DISABLE_LOADSAVE
 
-INCLUDEPATH += $$PWD\ui
-INCLUDEPATH += $$PWD\ui\menuwidget
-INCLUDEPATH += $$PWD\ui\qitemdelegate
-INCLUDEPATH += $$PWD\ui\inputpanel
+INCLUDEPATH += $$PWD/ui
+INCLUDEPATH += $$PWD/ui/menuwidget
+INCLUDEPATH += $$PWD/ui/qitemdelegate
+INCLUDEPATH += $$PWD/ui/inputpanel
 
 
 SOURCES += \

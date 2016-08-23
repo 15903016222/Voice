@@ -1,5 +1,5 @@
 #include "thirdmenuwidget.h"
-#include "ui_Thirdmenuwidget.h"
+#include "ui_thirdmenuwidget.h"
 
 #include "doublespinboxdelegate.h"
 #include "comboboxdelegate.h"
