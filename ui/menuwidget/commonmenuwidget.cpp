@@ -33,7 +33,7 @@ void CommonMenuWidget::initStandardModel()
 
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
-                                                   "{font: 11pt 'Times New Roman';background-color:rgba(61, 61, 61, 0.4);"
+                                                   "{font: 11pt 'Times New Roman'; background-color: rgba(71, 122, 166, 0.4);;"
                                                    "color:rgba(255, 255, 255, 255); z}");
 
   for(int k = 0; k < COMMON_MENU_NUMBER; k++)

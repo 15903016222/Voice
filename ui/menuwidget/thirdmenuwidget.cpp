@@ -28,6 +28,7 @@ void ThirdMenuWidget::initStandardModel()
   ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
   ui->tableView->verticalHeader()->hide();
   ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);  //Qt-4.8.6
 
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"

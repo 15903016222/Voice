@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>955</width>
-    <height>129</height>
+    <width>868</width>
+    <height>108</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,7 +23,8 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgba(61, 61, 61, 0.4);</string>
+   <string notr="true">
+</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -50,7 +51,8 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgba(61, 61, 61, 0.4);</string>
+      <string notr="true">
+</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

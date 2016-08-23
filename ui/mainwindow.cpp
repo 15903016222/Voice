@@ -223,7 +223,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
     commonMenuWidget->resize(width, height * 70 / 600);
     commonMenuWidget->move(0, height * 530 / 600);
-    commonMenuButton->resize(25, 25);
+    commonMenuButton->resize(35, 35);
     commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
   }
   arrowShowFlag();
