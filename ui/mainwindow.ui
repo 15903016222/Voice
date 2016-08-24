@@ -23,7 +23,7 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,1,20">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="7,2,51">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -105,7 +105,7 @@
          <property name="styleSheet">
           <string notr="true">background-color: rgb(0, 0, 0);</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout" rowstretch="7,1" columnstretch="1,4">
+         <layout class="QGridLayout" name="gridLayout" rowstretch="44,7" columnstretch="1,4">
           <property name="leftMargin">
            <number>0</number>
           </property>

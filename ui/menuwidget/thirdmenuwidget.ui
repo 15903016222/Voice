@@ -23,8 +23,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -51,14 +50,20 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-</string>
+      <string notr="true">QTableView
+{
+	background-color:qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));
+	gridline-color: rgb(0, 0, 0);
+}</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
      </property>
      <property name="textElideMode">
       <enum>Qt::ElideMiddle</enum>
