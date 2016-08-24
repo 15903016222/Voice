@@ -179,6 +179,7 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
     if(event->type() == QEvent::MouseButtonPress)
     {
         MeasurementDialog *mDialog=new MeasurementDialog;
+        mDialog->setModal(true);
         mDialog->show();
 
     }
