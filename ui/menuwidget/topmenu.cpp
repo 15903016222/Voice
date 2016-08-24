@@ -1,6 +1,5 @@
 #include "topmenu.h"
 #include "ui_topmenu.h"
-#include "measurementdialog.h"
 #include "doublespinboxdelegate.h"
 
 #include <QFile>
@@ -178,11 +177,13 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
   {
     if(event->type() == QEvent::MouseButtonPress)
     {
-        MeasurementDialog *mDialog=new MeasurementDialog;
-        mDialog->setModal(true);
-        mDialog->show();
-
+      mDialog = new MeasurementDialog;
+      mDialog->setModal(true);
+      mDialog->setWindowFlags(Qt::FramelessWindowHint);
+      mDialog->show();
     }
-    return QWidget::eventFilter(object,event);
   }
+  return QWidget::eventFilter(object, event);
 }
+
+

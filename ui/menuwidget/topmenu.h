@@ -1,6 +1,8 @@
 #ifndef TOPMENU
 #define TOPMENU
 
+#include "measurementdialog.h"
+
 #include <QWidget>
 #include <QList>
 #include <QLabel>
@@ -19,6 +21,7 @@ public:
   ~TopMenu();
   QList<QLabel* > measurementLabelList;
   QStandardItemModel *model;
+  MeasurementDialog *mDialog;
 
   void initUI();
   void initGain_angle();
@@ -28,7 +31,6 @@ public:
 
 private:
   Ui::TopMenu *ui;
-
 };
 
 #endif // TOPMENU
