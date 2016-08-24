@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QGst/Message>
 #include <QScrollArea>
+#include <QMouseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -27,6 +28,8 @@ private:
 
 protected:
   MainWindowPrivate * const d_ptr;
+  void mousePressEvent(QMouseEvent *event);
+  void mouseMoveEvent(QMouseEvent *event);
 
 private:
   Q_DECLARE_PRIVATE(MainWindow)
@@ -45,9 +48,10 @@ public:
   bool hiddenThirdMenuFlag;
   bool hiddenCommonMenuFlag;
 
-
   int firstMenuNum;
   int secondMenuNum;
+  int mainMenuStartPos;
+  int mainMenuEndPos;
 
 private:
   void initUI();

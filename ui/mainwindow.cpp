@@ -9,6 +9,8 @@
 #include <QGst/ElementFactory>
 #include <QGst/Bus>
 #include <QGst/Message>
+#include <QSwipeGesture>
+#include <QPinchGesture>
 
 #include <QDebug>
 
@@ -242,11 +244,11 @@ void MainWindow::slot_pushButton_bottom_Clicked()
   int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
   if((menuBottomY - 20) > scrollBottomY)
   {
-      ui->scrollArea->viewport()->scroll(0, -20);
+    ui->scrollArea->viewport()->scroll(0, -20);
   }
   else
   {
-      ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
+    ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
   }
   arrowShowFlag();
 }
@@ -374,5 +376,55 @@ void MainWindow::onGstBusMessage(const QGst::MessagePtr &message)
     break;
   default:
     break;
+  }
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
+                           ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
+                           ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
+  if(scrollRect.contains(event->pos()))
+  {
+    mainMenuStartPos = event->pos().y();
+  }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
+                           ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
+                           ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
+  if(scrollRect.contains(event->pos()))
+  {
+    mainMenuEndPos = event->pos().y();
+    int scrollLength = mainMenuEndPos - mainMenuStartPos;
+    int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
+    int scrollTopY = ui->scrollArea->geometry().y();
+    int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
+    int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
+    if(scrollLength < 0)
+    {
+      if((menuBottomY + scrollLength) > scrollBottomY)
+      {
+        ui->scrollArea->viewport()->scroll(0, scrollLength);
+      }
+      else
+      {
+        ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
+      }
+    }
+    else
+    {
+      if((menuTopY + scrollLength) < scrollTopY)
+      {
+        ui->scrollArea->viewport()->scroll(0, scrollLength);
+      }
+      else
+      {
+        ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
+      }
+    }
+    arrowShowFlag();
   }
 }
