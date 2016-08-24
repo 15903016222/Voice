@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>170</width>
-    <height>479</height>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -87,7 +87,7 @@ color: red;
          <enum>QFrame::NoFrame</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_1">
          <property name="geometry">
@@ -95,7 +95,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">
@@ -154,7 +154,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">
@@ -213,7 +213,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">
@@ -272,7 +272,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">
@@ -331,7 +331,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">
@@ -390,7 +390,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">
@@ -449,7 +449,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">
@@ -508,7 +508,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">
@@ -567,7 +567,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>182</height>
+           <height>178</height>
           </rect>
          </property>
          <attribute name="label">

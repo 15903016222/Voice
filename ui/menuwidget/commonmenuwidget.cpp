@@ -33,8 +33,8 @@ void CommonMenuWidget::initStandardModel()
 
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
-                                                   "{font: 11pt 'Times New Roman'; background-color: rgba(71, 122, 166, 0.4);;"
-                                                   "color:rgba(255, 255, 255, 255); z}");
+                                                   "{font: 11pt 'Times New Roman'; background-color: rgb(71, 122, 166);"
+                                                   "color:rgb(255, 255, 255); z}");
 
   for(int k = 0; k < COMMON_MENU_NUMBER; k++)
   {
@@ -104,25 +104,11 @@ void CommonMenuWidget::widgetStyleChoice(int k)
   }
 }
 
-//void CommonMenuWidget::on_pushButton_clicked()
-//{
-//  static bool flagShowWidget = true;
-
-//  flagShowWidget = !flagShowWidget;
-
-//  if(!flagShowWidget)
-//  {
-//    hide();
-//  }else{
-//    show();
-//  }
-//}
-
 void CommonMenuWidget::resizeEvent(QResizeEvent *event)
 {
-    width = event->size().width();
-    height = event->size().height();
-    model->clear();
-    initStandardModel();
-    setCommonMenuName();
+  width = event->size().width();
+  height = event->size().height();
+  model->clear();
+  initStandardModel();
+  setCommonMenuName();
 }

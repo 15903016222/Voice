@@ -3,12 +3,12 @@
 
 #include <QMessageBox>
 
-#include <QGlib/Connect>
-#include <QGlib/Error>
-#include <QGst/Pipeline>
-#include <QGst/ElementFactory>
-#include <QGst/Bus>
-#include <QGst/Message>
+//#include <QGlib/Connect>
+//#include <QGlib/Error>
+//#include <QGst/Pipeline>
+//#include <QGst/ElementFactory>
+//#include <QGst/Bus>
+//#include <QGst/Message>
 
 class MainWindowPrivate
 {
@@ -21,33 +21,33 @@ public:
 
   ~MainWindowPrivate()
   {
-    if(pipeline)
-    {
-      pipeline->setState(QGst::StateNull);
-      pipeline.clear();
-    }
+//    if(pipeline)
+//    {
+//      pipeline->setState(QGst::StateNull);
+//      pipeline.clear();
+//    }
   }
 
-public:
-  void handlePipelineStateChange(const QGst::StateChangedMessagePtr & scm)
-  {
-    switch (scm->newState()) {
-    case QGst::StatePlaying:
-      //start the timer when the pipeline starts playing
-      break;
-    case QGst::StatePaused:
-      //stop the timer when the pipeline pauses
-      if(scm->oldState() == QGst::StatePlaying) {
+//public:
+//  void handlePipelineStateChange(const QGst::StateChangedMessagePtr & scm)
+//  {
+//    switch (scm->newState()) {
+//    case QGst::StatePlaying:
+//      //start the timer when the pipeline starts playing
+//      break;
+//    case QGst::StatePaused:
+//      //stop the timer when the pipeline pauses
+//      if(scm->oldState() == QGst::StatePlaying) {
 
-      }
-      break;
-    default:
-      break;
-    }
-  }
+//      }
+//      break;
+//    default:
+//      break;
+//    }
+ // }
   //  Members
-protected:
-  QGst::PipelinePtr pipeline;
+//protected:
+//  QGst::PipelinePtr pipeline;
 protected:
   MainWindow * const q_ptr;
 private:
@@ -75,7 +75,7 @@ MainWindow::~MainWindow()
 void MainWindow::initUI()
 {
   this->resize(800, 600);
-  linkPluginsToConnectDevice();
+ // linkPluginsToConnectDevice();
 
   ui->widget_firstSecondMenu->hide();
   ui->widget_thirdMenu->hide();
@@ -129,7 +129,7 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
   firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
   ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, secondMenuNum);
 }
-
+#if 0
 void MainWindow::linkPluginsToConnectDevice()
 {
   if(!d_ptr->pipeline)
@@ -165,6 +165,7 @@ void MainWindow::linkPluginsToConnectDevice()
     d_ptr->pipeline->setState(QGst::StatePlaying);
   }
 }
+#endif
 
 void MainWindow::on_pushButton_top_clicked()
 {
@@ -223,7 +224,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
     commonMenuWidget->resize(width, height * 70 / 600);
     commonMenuWidget->move(0, height * 530 / 600);
-    commonMenuButton->resize(35, 35);
+    commonMenuButton->resize(40, 40);
     commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
   }
   arrowShowFlag();
@@ -271,7 +272,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
   if(object == ui->frame_showPlot)
   {
-    if(event->type() == QEvent::MouseButtonDblClick)
+    if(event->type() == QEvent::MouseButtonPress) //QEvent::MouseButtonDblClick
     {
       static bool flagShowPlotState = true;
       flagShowPlotState = !flagShowPlotState;
@@ -297,6 +298,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
   return QWidget::eventFilter(object, event);
 }
 
+#if 0
 void MainWindow::onGstBusMessage(const QGst::MessagePtr &message)
 {
   switch (message->type()) {
@@ -318,5 +320,56 @@ void MainWindow::onGstBusMessage(const QGst::MessagePtr &message)
     break;
   default:
     break;
+  }
+}
+#endif
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() +
+                           ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
+                           ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
+  if(scrollRect.contains(event->pos()))
+  {
+    mainMenuStartPos = event->pos().y();
+  }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
+{
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() +
+                           ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
+                           ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
+  if(scrollRect.contains(moveEvent->pos()))
+  {
+    mainMenuEndPos = moveEvent->pos().y();
+    int scrollLength = mainMenuEndPos - mainMenuStartPos;
+    int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
+    int scrollTopY = ui->scrollArea->geometry().y();
+    int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
+    int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
+    if(scrollLength < 0)
+    {
+      if((menuBottomY + scrollLength) > scrollBottomY)
+      {
+        ui->scrollArea->viewport()->scroll(0, scrollLength);
+      }
+      else
+      {
+        ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
+      }
+    }
+    else
+    {
+      if((menuTopY + scrollLength) < scrollTopY)
+      {
+        ui->scrollArea->viewport()->scroll(0, scrollLength);
+      }
+      else
+      {
+        ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
+      }
+    }
+    arrowShowFlag();
   }
 }

@@ -65,6 +65,7 @@ protected:
 private slots:
     void saveFocusWidget(QWidget *oldFocus, QWidget *newFocus);
     void buttonClicked(QWidget *w);
+    void on_closeButton_clicked();
 
 private:
     Ui::MyInputPanelForm form;

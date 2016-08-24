@@ -63,7 +63,7 @@ void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
 
       if(modelIndex == index)
       {
-        item->setForeground(QBrush(Qt::red));
+        item->setForeground(QBrush(QColor(255, 0, 0)));
       }else{
         item->setForeground(QBrush(Qt::yellow));
       }

@@ -21,9 +21,9 @@ FourthMenuWidget::~FourthMenuWidget()
 
 void FourthMenuWidget::initGain_angle()
 {
-  ui->tableView_gain->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView_gain->verticalHeader()->setResizeMode(QHeaderView::Stretch);
   ui->tableView_gain->verticalHeader()->hide();
-  ui->tableView_gain->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView_gain->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
   ui->tableView_gain->horizontalHeader()->hide();
 
   QStandardItemModel *model_gain = new QStandardItemModel(1, 2, this);
@@ -43,9 +43,9 @@ void FourthMenuWidget::initGain_angle()
   ui->tableView_gain->show();
 
 
-  ui->tableView_angle->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView_angle->verticalHeader()->setResizeMode(QHeaderView::Stretch);
   ui->tableView_angle->verticalHeader()->hide();
-  ui->tableView_angle->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView_angle->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
   ui->tableView_angle->horizontalHeader()->hide();
 
   QStandardItemModel *model_angle = new QStandardItemModel(1, 1, this);
@@ -66,13 +66,13 @@ void FourthMenuWidget::initStandardModel()
 {
   model = new QStandardItemModel(1, 8, this);
   ui->tableView->setModel(model);
-  ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
   ui->tableView->verticalHeader()->hide();
-  ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
-                                                   "{font: 11pt 'Times New Roman';background-color:rgb(56, 56, 56);"
+                                                   "{font: 11pt 'Times New Roman'; background-color:rgb(71, 122, 166);"
                                                    "color:rgb(255, 255, 0); z}");
   for(int k = 0; k < 8; k++)
   {

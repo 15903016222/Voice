@@ -9,5 +9,7 @@
         <file>resources/second_menu.png</file>
         <file>resources/arrowDown.png</file>
         <file>resources/arrowUp.png</file>
+        <file>resources/down.png</file>
+        <file>resources/up.png</file>
     </qresource>
 </RCC>

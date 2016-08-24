@@ -131,3 +131,8 @@ void MyInputPanel::buttonClicked(QWidget *w)
 }
 
 //! [3]
+
+void MyInputPanel::on_closeButton_clicked()
+{
+  close();
+}

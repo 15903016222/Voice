@@ -6,8 +6,9 @@
 #include "commonmenubutton.h"
 
 #include <QMainWindow>
-#include <QGst/Message>
+//#include <QGst/Message>
 #include <QScrollArea>
+#include <QMouseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -27,6 +28,8 @@ private:
 
 protected:
   MainWindowPrivate * const d_ptr;
+  void mousePressEvent(QMouseEvent *event);
+  void mouseMoveEvent(QMouseEvent *moveEvent);
 
 private:
   Q_DECLARE_PRIVATE(MainWindow)
@@ -36,7 +39,7 @@ public:
   FirstSecondMenuWidget *firstSecondMenu;
   CommonMenuButton *commonMenuButton;
 
-  void linkPluginsToConnectDevice();
+//  void linkPluginsToConnectDevice();
   void resizeEvent(QResizeEvent *event);
   void arrowShowFlag();
 
@@ -47,6 +50,8 @@ public:
 
   int firstMenuNum;
   int secondMenuNum;
+  int mainMenuStartPos;
+  int mainMenuEndPos;
 
 private:
   void initUI();
@@ -56,7 +61,7 @@ public slots:
 private slots:
   void slot_firstMenuToolBoxCurrentChanged(int index);
   void slot_secondMenuItemClicked(QModelIndex index);
-  void onGstBusMessage(const QGst::MessagePtr & message);
+// void onGstBusMessage(const QGst::MessagePtr & message);
 
   void on_pushButton_top_clicked();
   void on_pushButton_bottom_clicked();

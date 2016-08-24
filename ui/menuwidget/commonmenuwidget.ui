@@ -23,7 +23,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgba(71, 122, 166, 0.4);</string>
+   <string notr="true">background-color: rgb(71, 122, 166);</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="100">
    <property name="spacing">
