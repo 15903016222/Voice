@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QDebug>
 #include <QTime>
+#include <unistd.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -63,6 +64,28 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Z://longdata for test;
             emit Imx_Sig_longdata();
             qDebug() << "key Z, long data!";
+        break;
+        case Qt::Key_0://longdata for test;
+            emit Imx_Sig_main_APP_ready();
+            qDebug() << "0:App ready";
+            usleep(10000);
+            emit Imx_Sig_Query_Core_Temp();
+            qDebug() << "0:q core tem";
+            usleep(10000);
+            emit Imx_Sig_Query_FPGA_Temp();
+            qDebug() << "0:q fpga";
+            usleep(10000);
+            emit Imx_Sig_Query_Battery();
+            qDebug() << "0:q batt";
+            usleep(10000);
+            emit Imx_Sig_Query_Battery2();
+            qDebug() << "0:q bat2";
+            usleep(10000);
+            emit Imx_Sig_Query_Brightness();
+            qDebug() << "0:q bright";
+            usleep(10000);
+            emit Imx_Sig_Set_Brightness(qrand()%100);
+            qDebug() << "key 0, long data!";
         break;
         default:
             break;

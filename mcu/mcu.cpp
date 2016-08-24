@@ -14,6 +14,8 @@ Mcu *Mcu::m_mcu = NULL;
 const char Mcu::m_queryBatteryData[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x32, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
 const char Mcu::m_queryBattery_2_Data[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x36, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
 
+const char Mcu::m_queryBatteryStatus[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x31, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryBattery_2_Status[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x35, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
 
 const char Mcu::m_queryCoreTemperatureData[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x10, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
 const char Mcu::m_queryFPGATemperatureData[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x11, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
@@ -23,7 +25,26 @@ const char Mcu::m_queryMCUTemperatureData[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_AR
 char Mcu::m_setBrightnessData[8]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x53, 0x01, 0x42, 0x0, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
 const char Mcu::m_queryBrightnessData[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x42, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
 
-const char Mcu::m_respondSTM32PowerOffData[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x50, 0x0, 0x41, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_respondSTM32PowerOffData[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x53, 0x0, 0x41, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_mainAPPReady[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x53, 0x0, 0x43, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+
+const char Mcu::m_queryPashedArrayProbeModel[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x51, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryPashedArrayProbeSeries[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x52, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryPashedArrayProbeType[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x53, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryPashedArrayProbeFreq[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x54, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryPashedArrayProbeElements[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x55, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryPashedArrayProbeElementsDist[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x56, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryPashedArrayProbeFerencePoint[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x57, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+
+const char Mcu::m_queryNormalProbe1Model[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x61, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryNormalProbe1Series[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x62, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryNormalProbe1Freq[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x63, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryNormalProbe1Size[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x64, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+
+const char Mcu::m_queryNormalProbe2Model[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x71, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryNormalProbe2Series[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x72, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryNormalProbe2Freq[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x73, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
+const char Mcu::m_queryNormalProbe2Size[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x74, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
 
 /* just for test */
 const char Mcu::m_queryLongData[14]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_HEADER, 0x23, 0x52, DEF_DATA_ARRAY_HEADER, 0x24, 0x80, 0x23};
@@ -85,7 +106,7 @@ void Mcu::parsePacket(QByteArray &read_array)
 
         sig_val = read_array.right(tmp_len+2);
         sig_val = sig_val.left(tmp_len);
-        qDebug() << "In parse, parse ok! [" << __func__ << "], L: " << __LINE__ << ", sig_val: " << sig_val.toHex() << endl;
+        qDebug() << "Parse OK,[" << __func__ << "], L: " << __LINE__ << ",type:"<< QVariant((unsigned char)read_array[4]).toUInt() << ",sig_val:" << sig_val.toHex() << endl;
         emit event(QVariant((unsigned char)read_array[4]).toUInt(), sig_val);
     }
 
@@ -141,7 +162,7 @@ findPacket_Judge_packet_label:
     tmp_array = read_array.right(read_array.size()-tmp_index_header);
     tmp_array = tmp_array.left(tmp_array.indexOf(DEF_PACKET_TAILER)+2);
     read_array = read_array.right(read_array.size()-tmp_index_tailer-2);
-    qDebug() << "corrent pkg found" << endl;
+    qDebug() << "Correct pkg found" << endl;
     return tmp_array;
     }
 

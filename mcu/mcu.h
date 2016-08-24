@@ -19,11 +19,21 @@ public:
     void query_PowerSupply_temp() { write(m_queryPowerSupplyTemperatureData, sizeof(m_queryPowerSupplyTemperatureData)); }
     void query_MCU_temp() { write(m_queryMCUTemperatureData, sizeof(m_queryMCUTemperatureData)); }
     void query_battery() { write(m_queryBatteryData, sizeof(m_queryBatteryData)); }
-    void query_battery2() { write(m_queryBattery_2_Data, sizeof(m_queryBattery_2_Data)); }
+    void query_battery2() { write(m_queryBattery_2_Data, sizeof(m_queryBattery_2_Data)); } 
+    void query_batteryStatus() { write(m_queryBatteryStatus, sizeof(m_queryBatteryStatus)); }
+    void query_battery2Status() { write(m_queryBattery_2_Status, sizeof(m_queryBattery_2_Status)); }
+    void set_mainAPPReady() { write(m_mainAPPReady, sizeof(m_mainAPPReady)); }
     void query_brightness() { write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
-
-    void response_for_STM32_poweroff() { write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
+    void response_for_STM32_poweroff(uint8_t event_type) { if(event_type==0x41) write(m_respondSTM32PowerOffData, sizeof(m_respondSTM32PowerOffData)); }
     qint64 set_brightness(uint8_t light) { m_setBrightnessData[5]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
+
+    void query_pashedArrayProbeModel()  { write(m_queryPashedArrayProbeModel, sizeof(m_queryPashedArrayProbeModel)); }
+    void query_pashedArrayProbeSeries()  { write(m_queryPashedArrayProbeSeries, sizeof(m_queryPashedArrayProbeSeries)); }
+    void query_pashedArrayProbeType()  { write(m_queryPashedArrayProbeType, sizeof(m_queryPashedArrayProbeType)); }
+    void query_pashedArrayProbeFreq()  { write(m_queryPashedArrayProbeFreq, sizeof(m_queryPashedArrayProbeFreq)); }
+    void query_pashedArrayProbeElements()  { write(m_queryPashedArrayProbeElements, sizeof(m_queryPashedArrayProbeElements)); }
+    void query_pashedArrayProbeElementsDistance()  { write(m_queryPashedArrayProbeElementsDist, sizeof(m_queryPashedArrayProbeElementsDist)); }
+    void query_pashedArrayProbeFerencePoint()  { write(m_queryPashedArrayProbeFerencePoint, sizeof(m_queryPashedArrayProbeFerencePoint)); }
 
     /****** just for special test ******/
     void query_half1() { write(m_queryBattery_2_Data, 3); }
@@ -83,6 +93,29 @@ private:
     static const char m_queryPowerSupplyTemperatureData[7];
     static const char m_queryMCUTemperatureData[7];
     static const char m_respondSTM32PowerOffData[7];
+
+    static const char m_queryBatteryStatus[7];
+    static const char m_queryBattery_2_Status[7];
+    static const char m_mainAPPReady[7];
+    static const char m_queryPashedArrayProbeModel[7];
+    static const char m_queryPashedArrayProbeSeries[7];
+    static const char m_queryPashedArrayProbeType[7];
+    static const char m_queryPashedArrayProbeFreq[7];
+    static const char m_queryPashedArrayProbeElements[7];
+    static const char m_queryPashedArrayProbeElementsDist[7];
+    static const char m_queryPashedArrayProbeFerencePoint[7];
+    static const char m_queryNormalProbe1Model[7];
+    static const char m_queryNormalProbe1Series[7];
+    static const char m_queryNormalProbe1Freq[7];
+    static const char m_queryNormalProbe1Size[7];
+    static const char m_queryNormalProbe2Model[7];
+    static const char m_queryNormalProbe2Series[7];
+    static const char m_queryNormalProbe2Freq[7];
+    static const char m_queryNormalProbe2Size[7];
+
+
+
+
 
     /*just for test*/
     static const char m_queryLongData[14];
