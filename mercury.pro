@@ -38,13 +38,12 @@ SOURCES += \
     ui/menuwidget/topmenu.cpp \
     ui/menuwidget/firstsecondmenuwidget.cpp \
     ui/menuwidget/thirdmenuwidget.cpp \
- #   ui/menuwidget/fourthmenuwidget.cpp \
     ui/menuwidget/commonmenuwidget.cpp \
     ui/menuwidget/commonmenubutton.cpp \
     ui/menuwidget/measurementdialog.cpp \
+    ui/menuwidget/myinputpanel.cpp \
     ui/qitemdelegate/comboboxdelegate.cpp \
-    ui/qitemdelegate/doublespinboxdelegate.cpp \
-    ui/inputpanel/myinputpanel.cpp
+    ui/qitemdelegate/doublespinboxdelegate.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -53,13 +52,12 @@ HEADERS += \
     ui/menuwidget/topmenu.h \
     ui/menuwidget/firstsecondmenuwidget.h \
     ui/menuwidget/thirdmenuwidget.h \
- #   ui/menuwidget/fourthmenuwidget.h \
     ui/menuwidget/commonmenuwidget.h \
     ui/menuwidget/commonmenubutton.h \
     ui/menuwidget/measurementdialog.h \
+    ui/menuwidget/myinputpanel.h \
     ui/qitemdelegate/comboboxdelegate.h \
-    ui/qitemdelegate/doublespinboxdelegate.h \
-    ui/inputpanel/myinputpanel.h
+    ui/qitemdelegate/doublespinboxdelegate.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -68,11 +66,10 @@ FORMS += \
     ui/menuwidget/topmenu.ui \
     ui/menuwidget/firstsecondmenuwidget.ui \
     ui/menuwidget/thirdmenuwidget.ui \
-#    ui/menuwidget/fourthmenuwidget.ui \
     ui/menuwidget/commonmenuwidget.ui \
     ui/menuwidget/commonmenubutton.ui \
     ui/menuwidget/measurementdialog.ui \
-    ui/inputpanel/myinputpanel.ui
+    ui/menuwidget/myinputpanel.ui
 
 win32 {
     CONFIG += windows link_prl

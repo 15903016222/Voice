@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>60</width>
-    <height>52</height>
+    <width>62</width>
+    <height>68</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -56,9 +56,9 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="widget_1" native="true">
      <property name="styleSheet">
-      <string notr="true">QWidget#widget
+      <string notr="true">QWidget#widget_1
 {
 	background-color: rgba(0, 130, 195);
     border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
@@ -100,14 +100,14 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QWidget" name="widget_3" native="true">
+       <widget class="QWidget" name="widget_battery_2" native="true">
         <property name="styleSheet">
          <string notr="true">border-image: url(:/file/resources/battery2.jpg);</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QWidget" name="widget_4" native="true">
+       <widget class="QWidget" name="widget_battery_1" native="true">
         <property name="styleSheet">
          <string notr="true">border-image: url(:/file/resources/battery1.jpg);</string>
         </property>
@@ -166,9 +166,12 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QWidget" name="widget_5" native="true">
+          <widget class="QPushButton" name="pushButton_set">
            <property name="styleSheet">
             <string notr="true">border-image: url(:/file/resources/set.png);</string>
+           </property>
+           <property name="text">
+            <string/>
            </property>
           </widget>
          </item>

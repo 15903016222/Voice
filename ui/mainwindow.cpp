@@ -275,9 +275,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     if(event->type() == QEvent::MouseButtonPress) //QEvent::MouseButtonDblClick
     {
       static bool flagShowPlotState = true;
-      flagShowPlotState = !flagShowPlotState;
-
-      if(!flagShowPlotState)
+      if(flagShowPlotState)
       {
         ui->widget_firstSecondMenu->show();
         ui->widget_thirdMenu->show();
@@ -293,6 +291,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         ui->widget_thirdMenu->hide();
         commonMenuWidget->show();
       }
+      flagShowPlotState = !flagShowPlotState;
     }
   }
   return QWidget::eventFilter(object, event);
@@ -337,7 +336,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
 {
-  QRect scrollRect = QRect(ui->widget_scrollArea->pos() +
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->frame->pos() +
                            ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                            ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
   if(scrollRect.contains(moveEvent->pos()))

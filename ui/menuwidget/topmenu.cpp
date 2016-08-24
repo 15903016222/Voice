@@ -144,8 +144,8 @@ void TopMenu::initGain_angle()
   model_gain->item(0, 1)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
   model_gain->item(0, 0)->setForeground(Qt::white);
   model_gain->item(0, 1)->setForeground(Qt::yellow);
-  model_gain->item(0, 0)->setFont(QFont("Sans Serif", 14));
-  model_gain->item(0, 1)->setFont(QFont("Sans Serif", 10));
+  model_gain->item(0, 0)->setFont(QFont("Times New Roman", 14));
+  model_gain->item(0, 1)->setFont(QFont("Times New Roman", 10));
   ui->tableView_gain->setItemDelegate(doubleSpinBox);
   ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
   ui->tableView_gain->show();
@@ -164,7 +164,7 @@ void TopMenu::initGain_angle()
   model_angle->setItem(0, item_angle);
   model_angle->item(0)->setTextAlignment(Qt::AlignCenter);
   model_angle->item(0)->setForeground(Qt::white);
-  model_angle->item(0)->setFont(QFont("Sans Serif", 14));
+  model_angle->item(0)->setFont(QFont("Times New Roman", 14));
   ui->tableView_angle->setItemDelegate(doubleSpinBox_angle);
   ui->tableView_angle->setEditTriggers(QAbstractItemView::CurrentChanged);
   ui->tableView_angle->show();

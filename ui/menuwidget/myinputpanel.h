@@ -51,26 +51,27 @@
 
 class MyInputPanel : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    MyInputPanel();
+  MyInputPanel();
 
 signals:
-    void characterGenerated(QChar character);
+  void characterGenerated(QChar character);
 
 protected:
-    bool event(QEvent *e);
+  bool event(QEvent *e);
 
 private slots:
-    void saveFocusWidget(QWidget *oldFocus, QWidget *newFocus);
-    void buttonClicked(QWidget *w);
-    void on_closeButton_clicked();
+  void saveFocusWidget(QWidget *oldFocus, QWidget *newFocus);
+  void buttonClicked(QWidget *w);
+
+  void on_closeButton_clicked();
 
 private:
-    Ui::MyInputPanelForm form;
-    QWidget *lastFocusedWidget;
-    QSignalMapper signalMapper;
+  Ui::MyInputPanelForm form;
+  QWidget *lastFocusedWidget;
+  QSignalMapper signalMapper;
 };
 
 //! [0]
