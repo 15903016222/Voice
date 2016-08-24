@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>170</width>
-    <height>475</height>
+    <height>504</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,7 +61,7 @@
         <property name="font">
          <font>
           <family>Times New Roman</family>
-          <pointsize>12</pointsize>
+          <pointsize>16</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -95,7 +95,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">
@@ -154,7 +154,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">
@@ -201,7 +201,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -213,7 +213,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">
@@ -272,7 +272,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">
@@ -319,7 +319,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -331,7 +331,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">
@@ -390,7 +390,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">
@@ -449,7 +449,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">
@@ -508,7 +508,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">
@@ -555,7 +555,7 @@ color: red;
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -567,7 +567,7 @@ color: red;
            <x>0</x>
            <y>0</y>
            <width>170</width>
-           <height>178</height>
+           <height>162</height>
           </rect>
          </property>
          <attribute name="label">

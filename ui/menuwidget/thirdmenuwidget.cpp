@@ -66,8 +66,8 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
       model->item(0, k)->setTextAlignment(Qt::AlignCenter);
       model->item(0, k)->setForeground(Qt::yellow);
       model->item(0, k)->setFont(QFont("Times New Roman", 11));
-    }
-    else
+      model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
+    }else
     {
       model->setHeaderData(k, Qt::Horizontal, "");
       QStandardItem *item = new QStandardItem(QString(tr("")));
@@ -117,9 +117,9 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
 
 void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
 {
-    width = event->size().width();
-    height = event->size().height();
-    model->clear();
-    initStandardModel();
-    setThirdMenuName(currFirstNum, currSecondNum);
+  width = event->size().width();
+  height = event->size().height();
+  model->clear();
+  initStandardModel();
+  setThirdMenuName(currFirstNum, currSecondNum);
 }
