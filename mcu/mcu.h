@@ -33,40 +33,38 @@ public:
 
 
     enum EventType {
-        CORE_TEMPERATURE,//核心板温度	0x10
-        FPGA_TEMPERATURE,//FPGA温度	0x11
-        POWERSUPPLY_TEMPERATURE,//电源温度	0x12
-        MCU_TEMPERATURE,//MCU温度	0x13
-        KEY,//按键	0x21
-        ROTARY,//飞梭	0x22
-        BATTERY1_STATUS,//1号电池状态	0x31
-        BATTERY2_STATUS,//2号电池状态	0x35
-        BATTERY1_QUANTITY,//1号电池电量	0x32
-        BATTERY2_QUANTITY,//2号电池电量	0x36
-        POWEROFF,//关机	0x41
-        BRIGHTNESS,//背光亮度	0x42
-        MAIN_APP_READY,//主程序启动通知	0x43
-        PAHSED_ARRAY_PROBE_MODEL,//相控阵探头型号	0x51
-        PAHSED_ARRAY_PROBE_SERIES,//相控阵探头系列	0x52
-        PAHSED_ARRAY_PROBE_TYPE,//相控阵探头类型	0x53
-        PAHSED_ARRAY_PROBE_FREQUNCY,//相控阵探头频率	0x54
-        PAHSED_ARRAY_PROBE_ELEMENTS_QTY,//相控阵探头阵元数	0x55
-        PAHSED_ARRAY_PROBE_ELEMENTS_DISTANCE,//相控阵探头阵元间距	0x56
-        PAHSED_ARRAY_PROBE_FERENCE_POINT,//相控阵探头参考点	0x57
-        NORMAL_PROBE_1_MODEL,//常规探头I型号	0x61
-        NORMAL_PROBE_1_SERIES,//常规探头I系列	0x62
-        NORMAL_PROBE_1_FRENQUNCY,//常规探头I频率	0x63
-        NORMAL_PROBE_1_SIZE,//常规探头I晶片尺寸	0x64
-        NORMAL_PROBE_2_MODEL,//常规探头Ii型号	0x71
-        NORMAL_PROBE_2_SERIES,//常规探头Ii系列	0x72
-        NORMAL_PROBE_2_FRENQUNCY,//常规探头iI频率	0x73
-        NORMAL_PROBE_2_SIZE,//常规探头Ii晶片尺寸	0x74
+        CORE_TEMPERATURE = 0x10,//核心板温度	0x10
+        FPGA_TEMPERATURE = 0x11,//FPGA温度	0x11
+        POWERSUPPLY_TEMPERATURE = 0x12,//电源温度	0x12
+        MCU_TEMPERATUREE = 0x13,//MCU温度	0x13
+        KEY = 0x21,//按键	0x21
+        ROTARY = 0x22,//飞梭	0x22
+        BATTERY1_STATUS = 0x31,//1号电池状态	0x31
+        BATTERY2_STATUS = 0x35,//2号电池状态	0x35
+        BATTERY1_QUANTITY = 0x32,//1号电池电量	0x32
+        BATTERY2_QUANTITY = 0x36,//2号电池电量	0x36
+        POWEROFF = 0x41,//关机	0x41
+        BRIGHTNESS = 0x42,//背光亮度	0x42
+        MAIN_APP_READY = 0x43,//主程序启动通知	0x43
+        PAHSED_ARRAY_PROBE_MODEL = 0x51,//相控阵探头型号	0x51
+        PAHSED_ARRAY_PROBE_SERIES = 0x52,//相控阵探头系列	0x52
+        PAHSED_ARRAY_PROBE_TYPE = 0x53,//相控阵探头类型	0x53
+        PAHSED_ARRAY_PROBE_FREQUNCY = 0x54,//相控阵探头频率	0x54
+        PAHSED_ARRAY_PROBE_ELEMENTS_QTY = 0x55,//相控阵探头阵元数	0x55
+        PAHSED_ARRAY_PROBE_ELEMENTS_DISTANCE = 0x56,//相控阵探头阵元间距	0x56
+        PAHSED_ARRAY_PROBE_FERENCE_POINT = 0x57,//相控阵探头参考点	0x57
+        NORMAL_PROBE_1_MODEL = 0x61,//常规探头I型号	0x61
+        NORMAL_PROBE_1_SERIES = 0x64,//常规探头I系列	0x62
+        NORMAL_PROBE_1_FRENQUNCY = 0x63,//常规探头I频率	0x63
+        NORMAL_PROBE_1_SIZE = 0x64,//常规探头I晶片尺寸	0x64
+        NORMAL_PROBE_2_MODEL = 0x71,//常规探头Ii型号	0x71
+        NORMAL_PROBE_2_SERIES = 0x72,//常规探头Ii系列	0x72
+        NORMAL_PROBE_2_FRENQUNCY = 0x73,//常规探头iI频率	0x73
+        NORMAL_PROBE_2_SIZE = 0x74,//常规探头Ii晶片尺寸	0x74
     };
 
-    QHash<EventType, uint8_t> m_CMDHash;
-
 Q_SIGNALS:
-    void event(EventType type, QByteArray &val);
+    void event(uint8_t type, QByteArray &val);
 
 protected:
     Mcu();
