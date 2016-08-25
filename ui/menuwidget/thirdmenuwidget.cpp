@@ -73,7 +73,7 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
       QStandardItem *item = new QStandardItem(QString(tr("")));
       model->setItem(0, k, item);
       model->item(0, k)->setFlags(Qt::NoItemFlags);
-      model->item(0, k)->setBackground(QBrush(QColor(0, 130, 195, 0.5)));
+      model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
     }
   }
 }

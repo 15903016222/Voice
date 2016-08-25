@@ -94,7 +94,6 @@ void MainWindow::initUI()
   firstMenuNum = 0;
   secondMenuNum = 0;
   hiddenFirstSecondMenuFlag = false;
-  hiddenThirdMenuFlag = false;
   hiddenCommonMenuFlag = false;
 
   QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));

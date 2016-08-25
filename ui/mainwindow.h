@@ -46,7 +46,6 @@ public:
 
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenFirstSecondMenuFlag;
-  bool hiddenThirdMenuFlag;
   bool hiddenCommonMenuFlag;
 
   int firstMenuNum;
