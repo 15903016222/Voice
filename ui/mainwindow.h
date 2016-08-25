@@ -4,6 +4,7 @@
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
+#include "topmenu.h"
 
 #include <QMainWindow>
 //#include <QGst/Message>
@@ -44,7 +45,7 @@ public:
   void arrowShowFlag();
 
   bool eventFilter(QObject *object, QEvent *event);
-  bool hiddenSecondMenuFlag;
+  bool hiddenFirstSecondMenuFlag;
   bool hiddenThirdMenuFlag;
   bool hiddenCommonMenuFlag;
 

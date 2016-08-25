@@ -64,6 +64,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
   initUI();
 
+  commonMenuWidget = new CommonMenuWidget(this);
+  commonMenuWidget->hide();
+
+  this->setWindowFlags(Qt::FramelessWindowHint);
 }
 
 MainWindow::~MainWindow()
@@ -84,13 +88,12 @@ void MainWindow::initUI()
   ui->widget_thirdMenu->installEventFilter(this);
 
   firstSecondMenu = new FirstSecondMenuWidget(this);
-  commonMenuWidget = new CommonMenuWidget(this);
   commonMenuButton = new CommonMenuButton(this);
   commonMenuButton->show();
 
   firstMenuNum = 0;
   secondMenuNum = 0;
-  hiddenSecondMenuFlag = false;
+  hiddenFirstSecondMenuFlag = false;
   hiddenThirdMenuFlag = false;
   hiddenCommonMenuFlag = false;
 
@@ -224,7 +227,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
     commonMenuWidget->resize(width, height * 70 / 600);
     commonMenuWidget->move(0, height * 530 / 600);
-    commonMenuButton->resize(40, 40);
+    commonMenuButton->resize(25, 25);
     commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
   }
   arrowShowFlag();
@@ -255,17 +258,19 @@ void MainWindow::arrowShowFlag()
 void MainWindow::slot_pushButton_commonMenuClicked()
 {
   hiddenCommonMenuFlag = !hiddenCommonMenuFlag;
-  if(!hiddenCommonMenuFlag)
+  if(hiddenCommonMenuFlag)
   {
     ui->widget_firstSecondMenu->hide();
     ui->widget_thirdMenu->hide();
+    hiddenFirstSecondMenuFlag = false;
     commonMenuWidget->show();
-
-    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
+    commonMenuButton->raise();
+    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
   }else {
     commonMenuWidget->hide();
-    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
-  }
+    commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
+    hiddenFirstSecondMenuFlag = false;
+  } 
 }
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
@@ -274,24 +279,21 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
   {
     if(event->type() == QEvent::MouseButtonPress) //QEvent::MouseButtonDblClick
     {
-      static bool flagShowPlotState = true;
-      if(flagShowPlotState)
+      hiddenFirstSecondMenuFlag = !hiddenFirstSecondMenuFlag;
+      if(hiddenFirstSecondMenuFlag)
       {
         ui->widget_firstSecondMenu->show();
         ui->widget_thirdMenu->show();
         commonMenuWidget->hide();
-        hiddenCommonMenuFlag = true;
-
+        hiddenCommonMenuFlag = false;
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
-        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
+        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
         arrowShowFlag();
       }else{
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
-        commonMenuWidget->show();
       }
-      flagShowPlotState = !flagShowPlotState;
     }
   }
   return QWidget::eventFilter(object, event);
@@ -372,3 +374,4 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
     arrowShowFlag();
   }
 }
+

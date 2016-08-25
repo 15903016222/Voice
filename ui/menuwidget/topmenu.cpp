@@ -61,9 +61,9 @@ void TopMenu::initUI()
         int index = str.indexOf("\n");
         text1 = str.left(index);
         text2 = str.right(str.length() - index - 1);
-        label->setText("<font color=yellow face='Times New Roman' style=font-size:12pt>"
+        label->setText("<font color=yellow face='Times New Roman' style=font-size:14pt>"
                        +text1+
-                       "</font><br><font color=yellow face='Times New Roman' style=font-size:8pt>"
+                       "</font><br><font color=yellow face='Times New Roman' style=font-size:10pt>"
                        +text2+"</font>");
       }
     }else if(i == 10)
@@ -81,9 +81,9 @@ void TopMenu::initUI()
         int index = str.indexOf("\n");
         text1 = str.left(index);
         text2 = str.right(str.length() - index - 1);
-        label->setText("<font color=yellow face='Times New Roman' style=font-size:12pt>"
+        label->setText("<font color=yellow face='Times New Roman' style=font-size:14pt>"
                        +text1+
-                       "</font><br><font color=yellow face='Times New Roman' style=font-size:8pt>"
+                       "</font><br><font color=yellow face='Times New Roman' style=font-size:10pt>"
                        +text2+"</font>");
       }
     }else
@@ -101,9 +101,9 @@ void TopMenu::initUI()
         int index = str.indexOf("\n");
         text1 = str.left(index);
         text2 = str.right(str.length() - index - 1);
-        label->setText("<font color=white face='Times New Roman' style='font-size:12pt'>"
+        label->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
                        +text1+
-                       "</font><br><font color=white face='Times New Roman' style='font-size:8pt'>"
+                       "</font><br><font color=white face='Times New Roman' style='font-size:10pt'>"
                        +text2+"</font>");
       }
       measurementLabelList.append(label);
@@ -174,14 +174,13 @@ void TopMenu::initGain_angle()
 bool TopMenu::eventFilter(QObject *object, QEvent *event)
 {
   if(object == measurementLabelList.at(0) ||
-            object == measurementLabelList.at(1) ||
-            object == measurementLabelList.at(2) ||
-            object == measurementLabelList.at(3) ||
-            object == measurementLabelList.at(4) ||
-            object == measurementLabelList.at(5) ||
-            object == measurementLabelList.at(6) ||
-            object == measurementLabelList.at(7) )
-
+     object == measurementLabelList.at(1) ||
+     object == measurementLabelList.at(2) ||
+     object == measurementLabelList.at(3) ||
+     object == measurementLabelList.at(4) ||
+     object == measurementLabelList.at(5) ||
+     object == measurementLabelList.at(6) ||
+     object == measurementLabelList.at(7) )
   {
 
     if(event->type() == QEvent::MouseButtonPress)
@@ -214,6 +213,12 @@ void TopMenu::changedLabelText(QString str)
                            "</font><br><font color=white face='Times New Roman' style='font-size:10pt'>"
                            +text2+"</font>");
         //仍需修改measurement_i的值
+      }
+      else
+      {
+        measurementLabelList.at(i)->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
+                                            +str+
+                                            "</font>");
       }
     }
   }

@@ -38,6 +38,9 @@ public:
 private slots:
   void changedLabelText(QString str);
 
+private slots:
+  void changedLabelText(QString str);
+
 };
 
 #endif // TOPMENU

@@ -52,7 +52,8 @@
      <property name="styleSheet">
       <string notr="true">QTableView
 {
-	background-color:qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));
+	
+	background-color: rgb(0, 60, 90);
 	gridline-color: rgb(0, 0, 0);
 }</string>
      </property>
