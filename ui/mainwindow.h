@@ -4,6 +4,7 @@
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
+#include "topmenu.h"
 
 #include <QMainWindow>
 //#include <QGst/Message>

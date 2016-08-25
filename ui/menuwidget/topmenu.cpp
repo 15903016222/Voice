@@ -220,6 +220,4 @@ void TopMenu::changedLabelText(QString str)
       }
     }
   }
-
-  return QWidget::eventFilter(object,event);
 }

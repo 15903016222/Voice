@@ -88,7 +88,6 @@ void MainWindow::initUI()
   ui->widget_thirdMenu->installEventFilter(this);
 
   firstSecondMenu = new FirstSecondMenuWidget(this);
-  commonMenuWidget = new CommonMenuWidget(this);
   commonMenuButton = new CommonMenuButton(this);
   commonMenuButton->show();
 
@@ -265,7 +264,7 @@ void MainWindow::slot_pushButton_commonMenuClicked()
     ui->widget_thirdMenu->hide();
     hiddenFirstSecondMenuFlag = false;
     commonMenuWidget->show();
-//    commonMenuButton->raise();
+    commonMenuButton->raise();
     commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
   }else {
     commonMenuWidget->hide();
@@ -328,7 +327,7 @@ void MainWindow::onGstBusMessage(const QGst::MessagePtr &message)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-  QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() +
                            ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                            ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
   if(scrollRect.contains(event->pos()))
@@ -339,7 +338,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
 {
-  QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() +
                            ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                            ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
   if(scrollRect.contains(moveEvent->pos()))
