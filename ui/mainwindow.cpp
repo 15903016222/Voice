@@ -325,7 +325,7 @@ void MainWindow::onGstBusMessage(const QGst::MessagePtr &message)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-  QRect scrollRect = QRect(ui->widget_scrollArea->pos() +
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
                            ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                            ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
   if(scrollRect.contains(event->pos()))
@@ -336,7 +336,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
 {
-  QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->frame->pos() +
+  QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
                            ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                            ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
   if(scrollRect.contains(moveEvent->pos()))
