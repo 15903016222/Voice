@@ -28,7 +28,7 @@ void MeasurementDialog::initUI()
 
   for(int i = 0; i < MEASUREMENT_NUMBER; i++)
   {
-    QString  str = MEASUREMENT_STRING[i];
+    QString str = MEASUREMENT_STRING[i];
     if(str.contains(" ") == true)
     {
       int index = str.indexOf(" ");
@@ -48,10 +48,6 @@ void MeasurementDialog::initUI()
       labelMap.insert(text, MEASUREMENT_STRING[i]);
     }
   }
-//  for(QMap<QString, QString>::const_iterator p = labelMap.constBegin(); p != labelMap.constEnd(); ++ p)
-//  {
-//    qDebug()<<p.key()<<":"<<p.value();
-//  }
 
   listView = new QListView(this);
   listView->resize(ui->scrollArea->geometry().width(), 800);
@@ -70,7 +66,7 @@ void MeasurementDialog::initUI()
     QStandardItem *item = new QStandardItem(string);
     measurementModel->appendRow(item);
     item->setForeground(QBrush(Qt::black));
-    item->setFont(QFont("Times New Roman", 12));
+    item->setFont(QFont("Times New Roman", 14));
   }
   listView->setModel(measurementModel);
   connect(listView, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
