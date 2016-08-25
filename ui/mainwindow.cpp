@@ -129,9 +129,10 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
   QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
   secondMenuNum = item->row();
 
-  firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
+ // firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
   ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, secondMenuNum);
 }
+
 #if 0
 void MainWindow::linkPluginsToConnectDevice()
 {
@@ -227,7 +228,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
     commonMenuWidget->resize(width, height * 70 / 600);
     commonMenuWidget->move(0, height * 530 / 600);
-    commonMenuButton->resize(25, 25);
+    commonMenuButton->resize(40, 40);
     commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
   }
   arrowShowFlag();
