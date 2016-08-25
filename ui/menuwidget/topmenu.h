@@ -36,10 +36,7 @@ public:
   bool eventFilter(QObject *object, QEvent *event);
 
 private slots:
-  void changedLabelText(QString str);
-
-private slots:
-  void changedLabelText(QString str);
+  void changeLabelText(QString str);
 
 };
 

@@ -19,11 +19,6 @@ TopMenu :: TopMenu(QWidget *parent) :
 
   initUI();
 
-  for(int i = 0; i < measurementLabelList.count(); i ++)
-  {
-    measurementLabelList.at(i)->installEventFilter(this);
-  }
-
   initGain_angle();
 
 }
@@ -45,9 +40,10 @@ void TopMenu::initUI()
   ui->label_8->setText(tr("S(m-r)\n(mm)"));
   ui->label_9->setText(tr("TCG-SL\n(±dB)"));
   ui->label_10->setText(tr("Angle\n(°)"));
+
   for(int i = 1; i <= 10; i ++)
   {
-    QLabel *label=findChild<QLabel*>("label_" + QString::number(i));
+    QLabel *label = findChild<QLabel*>("label_" + QString::number(i));
     if(i == 1)
     {
       label->setStyleSheet("QLabel{background-color:rgba(0, 130, 195);"
@@ -56,6 +52,7 @@ void TopMenu::initUI()
                            "stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
       QString str = label->text();
       QString text1, text2;
+
       if(str.contains("\n") == true)
       {
         int index = str.indexOf("\n");
@@ -86,8 +83,7 @@ void TopMenu::initUI()
                        "</font><br><font color=yellow face='Times New Roman' style=font-size:10pt>"
                        +text2+"</font>");
       }
-    }else
-    {
+    }else{
       label->setStyleSheet("QLabel{background-color:rgba(0, 130, 195);"
                            "line-height:80%;"
                            "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,"
@@ -96,6 +92,7 @@ void TopMenu::initUI()
                            "stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
       QString str = label->text();
       QString text1, text2;
+
       if(str.contains("\n") == true)
       {
         int index = str.indexOf("\n");
@@ -121,6 +118,11 @@ void TopMenu::initUI()
                          "stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 130, 195, 255));"
                          "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1,"
                          "stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 130, 195, 255));}");
+  }
+
+  for(int i = 0; i < measurementLabelList.count(); i ++)
+  {
+    measurementLabelList.at(i)->installEventFilter(this);
   }
 }
 
@@ -150,7 +152,6 @@ void TopMenu::initGain_angle()
   ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
   ui->tableView_gain->show();
 
-
   ui->tableView_angle->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
   ui->tableView_angle->verticalHeader()->hide();
   ui->tableView_angle->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -168,7 +169,6 @@ void TopMenu::initGain_angle()
   ui->tableView_angle->setItemDelegate(doubleSpinBox_angle);
   ui->tableView_angle->setEditTriggers(QAbstractItemView::CurrentChanged);
   ui->tableView_angle->show();
-
 }
 
 bool TopMenu::eventFilter(QObject *object, QEvent *event)
@@ -182,7 +182,6 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
      object == measurementLabelList.at(6) ||
      object == measurementLabelList.at(7) )
   {
-
     if(event->type() == QEvent::MouseButtonPress)
     {
       objectName = object->objectName();
@@ -190,13 +189,13 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
       mDialog->setModal(true);
       mDialog->setWindowFlags(Qt::FramelessWindowHint);
       mDialog->show();
-      connect(mDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(changedLabelText(QString)));
+      connect(mDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(changeLabelText(QString)));
     }
   }
   return QWidget::eventFilter(object, event);
 }
 
-void TopMenu::changedLabelText(QString str)
+void TopMenu::changeLabelText(QString str)
 {
   for(int i = 0; i < 8; i++)
   {
@@ -209,13 +208,11 @@ void TopMenu::changedLabelText(QString str)
         text1 = str.left(index);
         text2 = str.right(str.length() - index - 1);
         measurementLabelList.at(i)->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
-                           +text1+
-                           "</font><br><font color=white face='Times New Roman' style='font-size:10pt'>"
-                           +text2+"</font>");
-        //仍需修改measurement_i的值
+                                            +text1+
+                                            "</font><br><font color=white face='Times New Roman' style='font-size:10pt'>"
+                                            +text2+"</font>");
       }
-      else
-      {
+      else{
         measurementLabelList.at(i)->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
                                             +str+
                                             "</font>");
