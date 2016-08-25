@@ -2,13 +2,18 @@
 #include "ui_measurementdialog.h"
 
 MeasurementDialog::MeasurementDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::MeasurementDialog)
+  QDialog(parent),
+  ui(new Ui::MeasurementDialog)
 {
-    ui->setupUi(this);
+  ui->setupUi(this);
 }
 
 MeasurementDialog::~MeasurementDialog()
 {
-    delete ui;
+  delete ui;
+}
+
+void MeasurementDialog::on_pushButton_ok_clicked()
+{
+  close();
 }
