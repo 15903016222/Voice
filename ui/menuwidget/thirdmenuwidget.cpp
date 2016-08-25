@@ -1,5 +1,5 @@
 #include "thirdmenuwidget.h"
-#include "ui_Thirdmenuwidget.h"
+#include "ui_thirdmenuwidget.h"
 
 #include "doublespinboxdelegate.h"
 #include "comboboxdelegate.h"
@@ -28,6 +28,7 @@ void ThirdMenuWidget::initStandardModel()
   ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
   ui->tableView->verticalHeader()->hide();
   ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);  //Qt-4.8.6
 
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
@@ -65,8 +66,8 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
       model->item(0, k)->setTextAlignment(Qt::AlignCenter);
       model->item(0, k)->setForeground(Qt::yellow);
       model->item(0, k)->setFont(QFont("Times New Roman", 11));
-    }
-    else
+      model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
+    }else
     {
       model->setHeaderData(k, Qt::Horizontal, "");
       QStandardItem *item = new QStandardItem(QString(tr("")));
@@ -116,9 +117,9 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
 
 void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
 {
-    width = event->size().width();
-    height = event->size().height();
-    model->clear();
-    initStandardModel();
-    setThirdMenuName(currFirstNum, currSecondNum);
+  width = event->size().width();
+  height = event->size().height();
+  model->clear();
+  initStandardModel();
+  setThirdMenuName(currFirstNum, currSecondNum);
 }

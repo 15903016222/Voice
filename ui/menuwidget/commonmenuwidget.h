@@ -40,7 +40,7 @@ public:
 private:
 
 public slots:
-//  void on_pushButton_clicked();
+
 
 };
 

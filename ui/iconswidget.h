@@ -19,7 +19,6 @@ public:
 
 private:
   Ui::IconsWidget *ui;
-  MyInputPanel *myInputPanel;
 
 public:
   void iconsWidgetRetranslateUi();

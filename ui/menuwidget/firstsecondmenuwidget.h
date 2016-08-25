@@ -42,6 +42,10 @@ public:
   QList<QListView*> menuList;
   QList<QStandardItemModel*> modelList;
 
+  void setSecondMenuName(int i);
+  void initSecondMenuItem(int i);
+  void secondMenuItemClicked(int i, QModelIndex index);
+
 private:
   void initUI();
 

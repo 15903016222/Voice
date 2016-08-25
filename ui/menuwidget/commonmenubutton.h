@@ -10,15 +10,18 @@ class CommonMenuButton;
 
 class CommonMenuButton : public QWidget
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit CommonMenuButton(QWidget *parent = 0);
-    ~CommonMenuButton();
-    QList<QPushButton *> pushButton_commonMenu;
+  explicit CommonMenuButton(QWidget *parent = 0);
+  ~CommonMenuButton();
 
 private:
-    Ui::CommonMenuButton *ui;
+  Ui::CommonMenuButton *ui;
+
+public:
+  QList<QPushButton*> pushButton_commonMenu;
+
 };
 
 #endif // COMMONMENUBUTTON_H

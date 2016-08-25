@@ -2,10 +2,11 @@
 #include <QApplication>
 
 #include <QDir>
-#include <QGst/Init>
-#include <QGlib/Error>
-#include <gst/gstregistry.h>
+//#include <QGst/Init>
+//#include <QGlib/Error>
+//#include <gst/gstregistry.h>
 
+#if 0
 void dopplink_init_gst(int argc, char *argv[])
 {
 
@@ -30,21 +31,23 @@ void dopplink_init_gst(int argc, char *argv[])
     // FIXME: error handle
   }
 }
+#endif
 
 int main(int argc, char *argv[])
 {
   int r = 0;
   QApplication a(argc, argv);
-  dopplink_init_gst(argc, argv);
+  //dopplink_init_gst(argc, argv);
 
   {
     MainWindow w;
+    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     w.show();
 
     r = a.exec();
   }
 
-  QGst::cleanup();
+ // QGst::cleanup();
 
   return r;
 }

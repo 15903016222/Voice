@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/file">
-        <file>resources/battery1.jpg</file>
-        <file>resources/battery2.jpg</file>
         <file>resources/keyboard.png</file>
         <file>resources/set.png</file>
         <file>resources/buttonAfter.png</file>
@@ -9,5 +7,7 @@
         <file>resources/second_menu.png</file>
         <file>resources/arrowDown.png</file>
         <file>resources/arrowUp.png</file>
+        <file>resources/battery1.jpg</file>
+        <file>resources/battery2.jpg</file>
     </qresource>
 </RCC>

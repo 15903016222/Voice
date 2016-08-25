@@ -19,6 +19,11 @@ class TopMenu : public QWidget
 public:
   explicit TopMenu(QWidget *parent = 0);
   ~TopMenu();
+
+private:
+  Ui::TopMenu *ui;
+
+public:
   QList<QLabel* > measurementLabelList;
   QStandardItemModel *model;
   MeasurementDialog *mDialog;
@@ -31,7 +36,8 @@ public:
   bool eventFilter(QObject *object, QEvent *event);
 
 private:
-  Ui::TopMenu *ui;
+  MeasurementDialog *mDlg;
+
 
 private slots:
   void changedLabelText(QString str);

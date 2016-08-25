@@ -22,8 +22,7 @@ void IconsWidget::iconsWidgetRetranslateUi()
 void IconsWidget::on_pushButton_keyboard_clicked()
 {
   MyInputPanel myInputPanelDlg;
-  Qt::WindowFlags flags = Qt::Dialog | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint;
-  myInputPanelDlg.setWindowFlags( flags );
+  myInputPanelDlg.setWindowFlags(Qt::FramelessWindowHint);
   myInputPanelDlg.setModal(true);
   myInputPanelDlg.showNormal();
   myInputPanelDlg.exec();

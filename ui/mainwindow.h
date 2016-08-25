@@ -4,10 +4,9 @@
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
-#include "topmenu.h"
 
 #include <QMainWindow>
-#include <QGst/Message>
+//#include <QGst/Message>
 #include <QScrollArea>
 #include <QMouseEvent>
 
@@ -30,7 +29,7 @@ private:
 protected:
   MainWindowPrivate * const d_ptr;
   void mousePressEvent(QMouseEvent *event);
-  void mouseMoveEvent(QMouseEvent *event);
+  void mouseMoveEvent(QMouseEvent *moveEvent);
 
 private:
   Q_DECLARE_PRIVATE(MainWindow)
@@ -40,7 +39,7 @@ public:
   FirstSecondMenuWidget *firstSecondMenu;
   CommonMenuButton *commonMenuButton;
 
-  void linkPluginsToConnectDevice();
+//  void linkPluginsToConnectDevice();
   void resizeEvent(QResizeEvent *event);
   void arrowShowFlag();
 
@@ -60,12 +59,14 @@ private:
 public slots:
 
 private slots:
-  void slot_setThirdMenuName(int index);
+  void slot_firstMenuToolBoxCurrentChanged(int index);
   void slot_secondMenuItemClicked(QModelIndex index);
-  void onGstBusMessage(const QGst::MessagePtr & message);
-  void slot_pushButton_top_Clicked();
-  void slot_pushButton_bottom_Clicked();
-  void slot_pushButton_commonMenu_Clicked();
+// void onGstBusMessage(const QGst::MessagePtr & message);
+
+  void on_pushButton_top_clicked();
+  void on_pushButton_bottom_clicked();
+  void slot_pushButton_commonMenuClicked();
+
 };
 
 #endif // MAINWINDOW_H

@@ -58,6 +58,10 @@ void CommonMenuWidget::setCommonMenuName()
     if(COMMON_MENU_STRING[k] != NULL)
     {
       widgetStyleChoice(k);
+      model->item(0, k)->setTextAlignment(Qt::AlignCenter);
+      model->item(0, k)->setForeground(Qt::yellow);
+      model->item(0, k)->setFont(QFont("Times New Roman", 11));
+      model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
     }
   }
 }
@@ -73,9 +77,6 @@ void CommonMenuWidget::widgetStyleChoice(int k)
       model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
       QStandardItem *item = new QStandardItem(QString::number(0, 'f', 2));
       model->setItem(0, k, item);
-      model->item(0, k)->setTextAlignment(Qt::AlignCenter);
-      model->item(0, k)->setForeground(Qt::yellow);
-      model->item(0, k)->setFont(QFont("Times New Roman", 11));
       ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
       ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
       break;
@@ -86,9 +87,6 @@ void CommonMenuWidget::widgetStyleChoice(int k)
       model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
       QStandardItem *item = new QStandardItem(QString("off"));
       model->setItem(0, k, item);
-      model->item(0, k)->setTextAlignment(Qt::AlignCenter);
-      model->item(0, k)->setForeground(Qt::yellow);
-      model->item(0, k)->setFont(QFont("Times New Roman", 11));
       ui->tableView->setItemDelegateForColumn(k, comboBox);
       break;
     }
@@ -97,8 +95,6 @@ void CommonMenuWidget::widgetStyleChoice(int k)
       model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
       QStandardItem *item = new QStandardItem(QString("on"));
       model->setItem(0, k, item);
-      model->item(0, k)->setTextAlignment(Qt::AlignCenter);
-      model->item(0, k)->setFont(QFont("Times New Roman", 11));
       model->item(0, k)->setFlags(Qt::NoItemFlags);
       break;
     }
@@ -107,25 +103,11 @@ void CommonMenuWidget::widgetStyleChoice(int k)
   }
 }
 
-//void CommonMenuWidget::on_pushButton_clicked()
-//{
-//  static bool flagShowWidget = true;
-
-//  flagShowWidget = !flagShowWidget;
-
-//  if(!flagShowWidget)
-//  {
-//    hide();
-//  }else{
-//    show();
-//  }
-//}
-
 void CommonMenuWidget::resizeEvent(QResizeEvent *event)
 {
-    width = event->size().width();
-    height = event->size().height();
-    model->clear();
-    initStandardModel();
-    setCommonMenuName();
+  width = event->size().width();
+  height = event->size().height();
+  model->clear();
+  initStandardModel();
+  setCommonMenuName();
 }

@@ -101,9 +101,9 @@
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <widget class="QGst::Ui::VideoWidget" name="widgetUSView" native="true">
+        <widget class="QWidget" name="widgetUSView" native="true">
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">background-color: rgb(0, 0, 0);</string>
          </property>
          <layout class="QGridLayout" name="gridLayout" rowstretch="44,7" columnstretch="1,4">
           <property name="leftMargin">
@@ -118,7 +118,10 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <property name="spacing">
+          <property name="horizontalSpacing">
+           <number>3</number>
+          </property>
+          <property name="verticalSpacing">
            <number>0</number>
           </property>
           <item row="0" column="0" rowspan="2">
@@ -128,28 +131,32 @@
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
              <property name="leftMargin">
-              <number>3</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
-              <number>5</number>
+              <number>30</number>
              </property>
              <property name="rightMargin">
-              <number>3</number>
+              <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>5</number>
+              <number>0</number>
              </property>
              <property name="spacing">
               <number>0</number>
              </property>
              <item row="0" column="0">
-              <widget class="QWidget" name="widget" native="true">
+              <widget class="QFrame" name="frame">
                <property name="styleSheet">
-                <string notr="true">QWidget#widget
+                <string notr="true">background-color: rgb(37, 76, 124);
+QWidget#widget
 {
 	background-color: rgba(67, 67, 67, 0.5);
 	border-radius:8px;
 }</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,26,1">
                 <property name="leftMargin">
@@ -178,8 +185,11 @@
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
                   <property name="text">
-                   <string>UP</string>
+                   <string>up</string>
                   </property>
                  </widget>
                 </item>
@@ -233,8 +243,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>154</width>
-                        <height>440</height>
+                        <width>157</width>
+                        <height>430</height>
                        </rect>
                       </property>
                      </widget>
@@ -251,8 +261,11 @@
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
                   <property name="text">
-                   <string>DOWN</string>
+                   <string>down</string>
                   </property>
                  </widget>
                 </item>
@@ -269,7 +282,11 @@
            <widget class="QFrame" name="frame_showPlot"/>
           </item>
           <item row="1" column="1">
-           <widget class="ThirdMenuWidget" name="widget_thirdMenu" native="true"/>
+           <widget class="ThirdMenuWidget" name="widget_thirdMenu" native="true">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(71, 122, 166);</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -295,12 +312,6 @@
    <class>IconsWidget</class>
    <extends>QWidget</extends>
    <header>iconswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QGst::Ui::VideoWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">QGst/Ui/VideoWidget</header>
    <container>1</container>
   </customwidget>
   <customwidget>

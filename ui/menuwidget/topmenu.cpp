@@ -12,8 +12,8 @@
 #include <QEvent>
 
 TopMenu :: TopMenu(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TopMenu)
+  QWidget(parent),
+  ui(new Ui::TopMenu)
 {
   ui->setupUi(this);
 
@@ -33,9 +33,8 @@ TopMenu :: TopMenu(QWidget *parent) :
 }
 
 TopMenu :: ~TopMenu()
-
 {
-    delete(ui);
+  delete(ui);
 }
 
 void TopMenu::initUI()
@@ -56,27 +55,9 @@ void TopMenu::initUI()
     if(i == 1)
     {
       label->setStyleSheet("QLabel{background-color:rgba(0, 130, 195);"
-                                 "line-height:80%;"
-                                 "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
-      QString str = label->text();
-        QString text1, text2;
-        if(str.contains("\n") == true)
-        {
-            int index = str.indexOf("\n");
-            text1 = str.left(index);
-            text2 = str.right(str.length() - index - 1);
-            label->setText("<font color=yellow face='Times New Roman' style=font-size:14pt>"
-                           +text1+
-                           "</font><br><font color=yellow face='Times New Roman' style=font-size:10pt>"
-                           +text2+"</font>");
-        }
-    }
-    else if(i == 10)
-    {
-      label->setStyleSheet("QLabel{background-color:rgba(0, 130, 195);"
-                             "line-height:80%;"
-                             "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
-                             "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
+                           "line-height:80%;"
+                           "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,"
+                           "stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
       QString str = label->text();
       QString text1, text2;
       if(str.contains("\n") == true)
@@ -89,13 +70,34 @@ void TopMenu::initUI()
                        "</font><br><font color=yellow face='Times New Roman' style=font-size:10pt>"
                        +text2+"</font>");
       }
-    }
-    else
+    }else if(i == 10)
     {
       label->setStyleSheet("QLabel{background-color:rgba(0, 130, 195);"
-                             "line-height:80%;"
-                             "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
-                             "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
+                           "line-height:80%;"
+                           "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068,"
+                           "x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
+                           "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,"
+                           "stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
+      QString str = label->text();
+      QString text1, text2;
+      if(str.contains("\n") == true)
+      {
+        int index = str.indexOf("\n");
+        text1 = str.left(index);
+        text2 = str.right(str.length() - index - 1);
+        label->setText("<font color=yellow face='Times New Roman' style=font-size:14pt>"
+                       +text1+
+                       "</font><br><font color=yellow face='Times New Roman' style=font-size:10pt>"
+                       +text2+"</font>");
+      }
+    }else
+    {
+      label->setStyleSheet("QLabel{background-color:rgba(0, 130, 195);"
+                           "line-height:80%;"
+                           "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,"
+                           "y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
+                           "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,"
+                           "stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
       QString str = label->text();
       QString text1, text2;
       if(str.contains("\n") == true)
@@ -110,22 +112,25 @@ void TopMenu::initUI()
       }
       measurementLabelList.append(label);
     }
-
   }
 
   for(int i = 1; i <= 8; i++)
   {
-    QLabel *label=findChild<QLabel*>("measurement_" + QString::number(i));
-    label->setStyleSheet("QLabel{background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));"
-                             "font: 14pt 'Times New Roman';"
-                             "color: rgb(255, 255, 255);"
-                             "border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 130, 195, 255));"
-                             "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 130, 195, 255));}");
+    QLabel *label = findChild<QLabel*>("measurement_" + QString::number(i));
+    label->setStyleSheet("QLabel{background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,"
+                         "stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));"
+                         "font: 14pt 'Times New Roman';"
+                         "color: rgb(255, 255, 255);"
+                         "border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1,"
+                         "stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 130, 195, 255));"
+                         "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1,"
+                         "stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 130, 195, 255));}");
   }
 }
 
 void TopMenu::initGain_angle()
 {
+//  ui->tableView_gain->verticalHeader()->setResizeMode(QHeaderView::Stretch); //Qt4.8
   ui->tableView_gain->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
   ui->tableView_gain->verticalHeader()->hide();
   ui->tableView_gain->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -143,8 +148,8 @@ void TopMenu::initGain_angle()
   model_gain->item(0, 1)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
   model_gain->item(0, 0)->setForeground(Qt::white);
   model_gain->item(0, 1)->setForeground(Qt::yellow);
-  model_gain->item(0, 0)->setFont(QFont("Times New Roman", 11));
-  model_gain->item(0, 1)->setFont(QFont("Times New Roman", 9));
+  model_gain->item(0, 0)->setFont(QFont("Times New Roman", 14));
+  model_gain->item(0, 1)->setFont(QFont("Times New Roman", 10));
   ui->tableView_gain->setItemDelegate(doubleSpinBox);
   ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
   ui->tableView_gain->show();
@@ -163,7 +168,7 @@ void TopMenu::initGain_angle()
   model_angle->setItem(0, item_angle);
   model_angle->item(0)->setTextAlignment(Qt::AlignCenter);
   model_angle->item(0)->setForeground(Qt::white);
-  model_angle->item(0)->setFont(QFont("Times New Roman", 11));
+  model_angle->item(0)->setFont(QFont("Times New Roman", 14));
   ui->tableView_angle->setItemDelegate(doubleSpinBox_angle);
   ui->tableView_angle->setEditTriggers(QAbstractItemView::CurrentChanged);
   ui->tableView_angle->show();
@@ -173,14 +178,13 @@ void TopMenu::initGain_angle()
 bool TopMenu::eventFilter(QObject *object, QEvent *event)
 {
   if(object == measurementLabelList.at(0) ||
-            object == measurementLabelList.at(1) ||
-            object == measurementLabelList.at(2) ||
-            object == measurementLabelList.at(3) ||
-            object == measurementLabelList.at(4) ||
-            object == measurementLabelList.at(5) ||
-            object == measurementLabelList.at(6) ||
-            object == measurementLabelList.at(7) )
-
+     object == measurementLabelList.at(1) ||
+     object == measurementLabelList.at(2) ||
+     object == measurementLabelList.at(3) ||
+     object == measurementLabelList.at(4) ||
+     object == measurementLabelList.at(5) ||
+     object == measurementLabelList.at(6) ||
+     object == measurementLabelList.at(7) )
   {
 
     if(event->type() == QEvent::MouseButtonPress)
@@ -216,4 +220,6 @@ void TopMenu::changedLabelText(QString str)
       }
     }
   }
+
+  return QWidget::eventFilter(object,event);
 }
