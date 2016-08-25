@@ -35,12 +35,8 @@ public:
 
   bool eventFilter(QObject *object, QEvent *event);
 
-private:
-  MeasurementDialog *mDlg;
-
-
 private slots:
-  void changedLabelText(QString str);
+  void changeLabelText(QString str);
 
 };
 

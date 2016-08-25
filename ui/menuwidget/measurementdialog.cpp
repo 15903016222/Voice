@@ -1,13 +1,14 @@
 #include "measurementdialog.h"
 #include "ui_measurementdialog.h"
+
 #include "topmenu.h"
 
 #include <QDebug>
 #include <QStandardItemModel>
 
 MeasurementDialog::MeasurementDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::MeasurementDialog)
+  QDialog(parent),
+  ui(new Ui::MeasurementDialog)
 {
   ui->setupUi(this);
 
@@ -28,27 +29,23 @@ void MeasurementDialog::initUI()
 
   for(int i = 0; i < MEASUREMENT_NUMBER; i++)
   {
-    QString  str = MEASUREMENT_STRING[i];
+    QString str = MEASUREMENT_STRING[i];
+
     if(str.contains(" ") == true)
     {
       int index = str.indexOf(" ");
       QString text = str.left(index);
+
       if(str.contains("%") || MEASUREMENT_STRING[i].contains("Percentage"))
       {
         text = text + "\n(%)";
-      }
-      else if(str.contains("dB"))
-      {
+      }else if(str.contains("dB")){
         text = text + "\n(dB)";
-      }
-      else
-      {
+      }else{
         text = text + "\n(mm)";
       }
       labelMap.insert(text, str);
-    }
-    else
-    {
+    }else{
       labelMap.insert(str, str);
     }
   }
@@ -74,8 +71,9 @@ void MeasurementDialog::initUI()
     QStandardItem *item = new QStandardItem(string);
     measurementModel->appendRow(item);
     item->setForeground(QBrush(Qt::black));
-    item->setFont(QFont("Times New Roman", 12));
+    item->setFont(QFont("Times New Roman", 14));
   }
+
   listView->setModel(measurementModel);
   connect(listView, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
 }
@@ -99,5 +97,4 @@ void MeasurementDialog::slot_listViewItemClicked(QModelIndex index)
   changedFlag = true;
   QStandardItem *item = measurementModel->itemFromIndex(index);
   changedString = labelMap.key(item->text());
-
 }

@@ -78,7 +78,7 @@ void FirstSecondMenuWidget::initUI()
   for(int i = 0; i < FIRST_MENU_NUMBER; i++)
   {
     QListView* listView = findChild<QListView*>("listView_" + QString::number(i+1));
-    listView->setStyleSheet("QListView{font: 13px}");
+    listView->setStyleSheet("QListView{font: 14px}");
     listView->adjustSize();
     menuList.append(listView);
 
