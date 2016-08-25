@@ -33,11 +33,13 @@ void CommonMenuWidget::initStandardModel()
 
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
-                                                   "{font: 11pt 'Times New Roman';background-color: rgba(0, 130, 195, 255);"
+                                                   "{font: 13pt 'Times New Roman';background-color: rgba(0, 130, 195, 255);"
                                                    "color:rgba(255, 255, 255, 255);"
                                                    "border: 0px solid black;"
-                                                   "border-left:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.068, x2:0.5, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
-                                                   "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
+                                                   "border-left:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.068, x2:0.5, y2:0.75,"
+                                                   "stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
+                                                   "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,"
+                                                   "stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
 
   for(int k = 0; k < COMMON_MENU_NUMBER; k++)
   {
@@ -60,7 +62,7 @@ void CommonMenuWidget::setCommonMenuName()
       widgetStyleChoice(k);
       model->item(0, k)->setTextAlignment(Qt::AlignCenter);
       model->item(0, k)->setForeground(Qt::yellow);
-      model->item(0, k)->setFont(QFont("Times New Roman", 11));
+      model->item(0, k)->setFont(QFont("Times New Roman", 13));
       model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
     }
   }
