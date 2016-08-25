@@ -103,7 +103,10 @@
        <item row="0" column="0">
         <widget class="QWidget" name="widgetUSView" native="true">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 0, 0);</string>
+          <string notr="true">QWidget#widgetUSView
+{
+	background-color: rgb(0, 0, 0);
+}</string>
          </property>
          <layout class="QGridLayout" name="gridLayout" rowstretch="44,7" columnstretch="1,4">
           <property name="leftMargin">
@@ -131,7 +134,7 @@
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
              <property name="leftMargin">
-              <number>0</number>
+              <number>5</number>
              </property>
              <property name="topMargin">
               <number>30</number>
@@ -146,17 +149,14 @@
               <number>0</number>
              </property>
              <item row="0" column="0">
-              <widget class="QFrame" name="frame">
+              <widget class="QWidget" name="widget" native="true">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(37, 76, 124);
+                <string notr="true">
 QWidget#widget
 {
-	background-color: rgba(67, 67, 67, 0.5);
+	background-color: rgb(37, 76, 124);
 	border-radius:8px;
 }</string>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,26,1">
                 <property name="leftMargin">
@@ -243,8 +243,8 @@ QWidget#widget
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>157</width>
-                        <height>418</height>
+                        <width>154</width>
+                        <height>420</height>
                        </rect>
                       </property>
                      </widget>
