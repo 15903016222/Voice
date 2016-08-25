@@ -45,13 +45,17 @@ void MeasurementDialog::initUI()
       {
         text = text + "\n(mm)";
       }
-      labelMap.insert(text, MEASUREMENT_STRING[i]);
+      labelMap.insert(text, str);
+    }
+    else
+    {
+      labelMap.insert(str, str);
     }
   }
-//  for(QMap<QString, QString>::const_iterator p = labelMap.constBegin(); p != labelMap.constEnd(); ++ p)
-//  {
-//    qDebug()<<p.key()<<":"<<p.value();
-//  }
+  for(QMap<QString, QString>::const_iterator p = labelMap.constBegin(); p != labelMap.constEnd(); ++ p)
+  {
+    qDebug()<<p.key()<<":"<<p.value();
+  }
 
   listView = new QListView(this);
   listView->resize(ui->scrollArea->geometry().width(), 800);

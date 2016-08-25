@@ -218,6 +218,12 @@ void TopMenu::changedLabelText(QString str)
                            +text2+"</font>");
         //仍需修改measurement_i的值
       }
+      else
+      {
+        measurementLabelList.at(i)->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
+                                            +str+
+                                            "</font>");
+      }
     }
   }
 }
