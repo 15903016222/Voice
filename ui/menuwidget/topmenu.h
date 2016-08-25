@@ -26,6 +26,8 @@ private:
 public:
   QList<QLabel* > measurementLabelList;
   QStandardItemModel *model;
+  MeasurementDialog *mDialog;
+  QString objectName;
 
   void initUI();
   void initGain_angle();
@@ -33,9 +35,8 @@ public:
 
   bool eventFilter(QObject *object, QEvent *event);
 
-private:
-  MeasurementDialog *mDlg;
-
+private slots:
+  void changedLabelText(QString str);
 
 };
 

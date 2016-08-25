@@ -174,39 +174,47 @@ void TopMenu::initGain_angle()
 bool TopMenu::eventFilter(QObject *object, QEvent *event)
 {
   if(object == measurementLabelList.at(0) ||
-     object == measurementLabelList.at(1) ||
-     object == measurementLabelList.at(2) ||
-     object == measurementLabelList.at(3) ||
-     object == measurementLabelList.at(4) ||
-     object == measurementLabelList.at(5) ||
-     object == measurementLabelList.at(6) ||
-     object == measurementLabelList.at(7) )
+            object == measurementLabelList.at(1) ||
+            object == measurementLabelList.at(2) ||
+            object == measurementLabelList.at(3) ||
+            object == measurementLabelList.at(4) ||
+            object == measurementLabelList.at(5) ||
+            object == measurementLabelList.at(6) ||
+            object == measurementLabelList.at(7) )
+
   {
+
     if(event->type() == QEvent::MouseButtonPress)
     {
-      MeasurementDialog mDlg;
-      static bool showDlgState = false;
-
-      if(!showDlgState)
-      {
-          mDlg.setWindowFlags(Qt::FramelessWindowHint);
-          mDlg.setModal(true);
-          mDlg.showNormal();
-          mDlg.exec();
-
-      }else{
-          mDlg.close();
-
-      }
-      showDlgState = !showDlgState;
-//      MeasurementDialog mDlg;
-//      mDlg.setWindowFlags(Qt::FramelessWindowHint);
-//      mDlg.setModal(true);
-//      mDlg.showNormal();
-//      mDlg.exec();
-//    }
+      objectName = object->objectName();
+      mDialog = new MeasurementDialog;
+      mDialog->setModal(true);
+      mDialog->setWindowFlags(Qt::FramelessWindowHint);
+      mDialog->show();
+      connect(mDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(changedLabelText(QString)));
     }
   }
+  return QWidget::eventFilter(object, event);
+}
 
-  return QWidget::eventFilter(object,event);
+void TopMenu::changedLabelText(QString str)
+{
+  for(int i = 0; i < 8; i++)
+  {
+    if(measurementLabelList.at(i)->objectName() == objectName)
+    {
+      QString text1, text2;
+      if(str.contains("\n") == true)
+      {
+        int index = str.indexOf("\n");
+        text1 = str.left(index);
+        text2 = str.right(str.length() - index - 1);
+        measurementLabelList.at(i)->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
+                           +text1+
+                           "</font><br><font color=white face='Times New Roman' style='font-size:10pt'>"
+                           +text2+"</font>");
+        //仍需修改measurement_i的值
+      }
+    }
+  }
 }
