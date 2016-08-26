@@ -11,5 +11,9 @@
         <file>resources/battery2.jpg</file>
         <file>resources/BatteryIcon1.png</file>
         <file>resources/BatteryIcon2.png</file>
+        <file>resources/batteryIcon.jpg</file>
+        <file>resources/up.png</file>
+        <file>resources/down.png</file>
+        <file>resources/clock.png</file>
     </qresource>
 </RCC>

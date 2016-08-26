@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>139</width>
-    <height>140</height>
+    <height>100</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,7 +64,10 @@
     border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 }</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,2">
+      <property name="spacing">
+       <number>9</number>
+      </property>
       <item>
        <widget class="QPushButton" name="pushButton_keyboard">
         <property name="sizePolicy">
@@ -179,6 +182,12 @@
          </property>
          <item>
           <widget class="QPushButton" name="pushButton_set">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="styleSheet">
             <string notr="true">border-image: url(:/file/resources/set.png);</string>
            </property>
