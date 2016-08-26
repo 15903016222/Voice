@@ -36,7 +36,7 @@ void MeasurementDialog::initUI()
       int index = str.indexOf(" ");
       QString text = str.left(index);
 
-      if(str.contains("%") || MEASUREMENT_STRING[i].contains("Percentage"))
+      if(str.contains("%") || str.contains("Percentage"))
       {
         text = text + "\n(%)";
       }else if(str.contains("dB")){

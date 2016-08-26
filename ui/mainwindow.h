@@ -43,10 +43,13 @@ public:
 //  void linkPluginsToConnectDevice();
   void resizeEvent(QResizeEvent *event);
   void arrowShowFlag();
+  void paintBorder();
 
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenFirstSecondMenuFlag;
   bool hiddenCommonMenuFlag;
+  bool hiddenArrowFlag;
+  bool hiddenArrowDownFlag;
 
   int firstMenuNum;
   int secondMenuNum;
@@ -66,6 +69,10 @@ private slots:
   void on_pushButton_top_clicked();
   void on_pushButton_bottom_clicked();
   void slot_pushButton_commonMenuClicked();
+  void scrollMenu(int index);
+
+signals:
+  void clickedMenuIndex(int);
 
 };
 

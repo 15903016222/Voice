@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <QPainter>
 
 //#include <QGlib/Connect>
 //#include <QGlib/Error>
@@ -86,6 +87,7 @@ void MainWindow::initUI()
 
   ui->frame_showPlot->installEventFilter(this);
   ui->widget_thirdMenu->installEventFilter(this);
+  ui->widget_thirdMenu->tableView.at(0)->installEventFilter(this);
 
   firstSecondMenu = new FirstSecondMenuWidget(this);
   commonMenuButton = new CommonMenuButton(this);
@@ -95,6 +97,7 @@ void MainWindow::initUI()
   secondMenuNum = 0;
   hiddenFirstSecondMenuFlag = false;
   hiddenCommonMenuFlag = false;
+  hiddenArrowFlag = false;
 
   QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
 
@@ -110,7 +113,7 @@ void MainWindow::initUI()
   ui->scrollArea->setWidget(firstSecondMenu);
 
   QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
-
+  connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scrollMenu(int)));
 }
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
@@ -120,6 +123,9 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 
   firstSecondMenu->initSecondMenuItem(firstMenuNum);
 
+  hiddenArrowFlag = true;
+
+  emit clickedMenuIndex(firstMenuNum);
   arrowShowFlag();
 }
 
@@ -241,14 +247,27 @@ void MainWindow::arrowShowFlag()
 
   if(menuTopY == scrollTopY)
   {
-    ui->pushButton_top->hide();
+    if(hiddenArrowFlag == false)
+    {
+      ui->pushButton_top->hide();
+    }else{
+      ui->pushButton_top->show();
+      hiddenArrowFlag = false;
+    }
   }else{
     ui->pushButton_top->show();
   }
 
   if(menuBottomY == scrollBottomY )
   {
-    ui->pushButton_bottom->hide();
+    if(hiddenArrowFlag == false)
+    {
+      ui->pushButton_bottom->hide();
+    }
+    else{
+      ui->pushButton_bottom->show();
+      hiddenArrowFlag = false;
+    }
   }else{
     ui->pushButton_bottom->show();
   }
@@ -294,6 +313,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         ui->widget_thirdMenu->hide();
       }
     }
+  }
+//  if(object == ui->widget_thirdMenu->tableView.at(0) && event->type() == QEvent::Paint)
+  if(object == ui->frame_showPlot && event->type() == QEvent::Paint)
+  {
+    paintBorder();
   }
   return QWidget::eventFilter(object, event);
 }
@@ -374,3 +398,39 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
   }
 }
 
+void MainWindow::scrollMenu(int index)
+{
+  if(index >= 4 && index < 9)
+  {
+    ui->scrollArea->viewport()->scroll(0, -50);
+    ui->scrollArea->update();
+
+  }
+}
+
+void MainWindow::paintBorder()
+{
+  QPainter painter(ui->frame_showPlot);
+//  QLinearGradient linearGradientOne(QPointF(0, 0), QPointF(0, height * 25 / 70));
+//  linearGradientOne.setColorAt(0.158192, QColor(255, 255, 255));
+//  linearGradientOne.setColorAt(0.757062, QColor(0, 120, 195));
+//  QLinearGradient linearGradientTwo(QPointF(0, 0), QPointF(0, height * 25 / 70));
+//  linearGradientTwo.setColorAt(0.158192, QColor(0, 0, 0));
+//  linearGradientTwo.setColorAt(0.757062, QColor(0, 120, 195));
+//  painter.setBrush(linearGradientOne);
+
+//  for(int i = 0; i < 6; i ++)
+//  {
+//    painter.drawRect(i * width / 6, 0, 1, height);
+//  }
+//  painter.setBrush(linearGradientTwo);
+//  for(int i = 0; i < 6; i ++)
+//  {
+//    painter.drawRect((i + 1) * (width / 6), 0, 1, height);
+//  }
+
+  QPen pen(Qt::red, 10, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin);
+  painter.setPen(pen);
+  painter.drawRect(30, 0, 30, 70);
+  update();
+}
