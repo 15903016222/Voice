@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QObject::connect(&w, &MainWindow::Imx_Sig_Set_Brightness, stm32_serial_p, &Mcu::set_brightness);
     QObject::connect(&w, &MainWindow::Imx_Sig_main_APP_ready, stm32_serial_p, &Mcu::set_mainAPPReady);
 
-    QObject::connect(stm32_serial_p, &Mcu::event, stm32_serial_p, &Mcu::response_for_STM32_poweroff);
+
     /*just for test*/
     QObject::connect(&w, &MainWindow::Imx_Sig_half1, stm32_serial_p, &Mcu::query_half1);
     QObject::connect(&w, &MainWindow::Imx_Sig_half2, stm32_serial_p, &Mcu::query_half2);

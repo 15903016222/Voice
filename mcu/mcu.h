@@ -11,37 +11,6 @@ class Mcu : public QSerialPort
 {
     Q_OBJECT
 public:
-    static Mcu* get_mcu();
-    static void destroyed();
-
-    void query_core_temp() { write(m_queryCoreTemperatureData, sizeof(m_queryCoreTemperatureData)); }
-    void query_FPGA_temp() { write(m_queryFPGATemperatureData, sizeof(m_queryFPGATemperatureData)); }
-    void query_PowerSupply_temp() { write(m_queryPowerSupplyTemperatureData, sizeof(m_queryPowerSupplyTemperatureData)); }
-    void query_MCU_temp() { write(m_queryMCUTemperatureData, sizeof(m_queryMCUTemperatureData)); }
-    void query_battery() { write(m_queryBatteryData, sizeof(m_queryBatteryData)); }
-    void query_battery2() { write(m_queryBattery_2_Data, sizeof(m_queryBattery_2_Data)); } 
-    void query_batteryStatus() { write(m_queryBatteryStatus, sizeof(m_queryBatteryStatus)); }
-    void query_battery2Status() { write(m_queryBattery_2_Status, sizeof(m_queryBattery_2_Status)); }
-    void set_mainAPPReady() { write(m_mainAPPReady, sizeof(m_mainAPPReady)); }
-    void query_brightness() { write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
-    void response_for_STM32_poweroff(uint8_t event_type) { if(event_type==0x41) write(m_respondSTM32PowerOffData, sizeof(m_respondSTM32PowerOffData)); }
-    qint64 set_brightness(uint8_t light) { m_setBrightnessData[5]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
-
-    void query_pashedArrayProbeModel()  { write(m_queryPashedArrayProbeModel, sizeof(m_queryPashedArrayProbeModel)); }
-    void query_pashedArrayProbeSeries()  { write(m_queryPashedArrayProbeSeries, sizeof(m_queryPashedArrayProbeSeries)); }
-    void query_pashedArrayProbeType()  { write(m_queryPashedArrayProbeType, sizeof(m_queryPashedArrayProbeType)); }
-    void query_pashedArrayProbeFreq()  { write(m_queryPashedArrayProbeFreq, sizeof(m_queryPashedArrayProbeFreq)); }
-    void query_pashedArrayProbeElements()  { write(m_queryPashedArrayProbeElements, sizeof(m_queryPashedArrayProbeElements)); }
-    void query_pashedArrayProbeElementsDistance()  { write(m_queryPashedArrayProbeElementsDist, sizeof(m_queryPashedArrayProbeElementsDist)); }
-    void query_pashedArrayProbeFerencePoint()  { write(m_queryPashedArrayProbeFerencePoint, sizeof(m_queryPashedArrayProbeFerencePoint)); }
-
-    /****** just for special test ******/
-    void query_half1() { write(m_queryBattery_2_Data, 3); }
-    void query_half2() { write(m_queryBattery_2_Data+3, 4); }
-    void query_longdata() { write(m_queryLongData, sizeof(m_queryLongData)); }
-    /****** just for special test end******/
-
-
     enum EventType {
         CORE_TEMPERATURE = 0x10,//核心板温度	0x10
         FPGA_TEMPERATURE = 0x11,//FPGA温度	0x11
@@ -73,8 +42,39 @@ public:
         NORMAL_PROBE_2_SIZE = 0x74,//常规探头Ii晶片尺寸	0x74
     };
 
+    static Mcu* get_mcu();
+    static void destroyed();
+
+    void query_core_temp() { qDebug()<<__func__; write(m_queryCoreTemperatureData, sizeof(m_queryCoreTemperatureData)); }
+    void query_FPGA_temp() { qDebug()<<__func__; write(m_queryFPGATemperatureData, sizeof(m_queryFPGATemperatureData)); }
+    void query_PowerSupply_temp() { qDebug()<<__func__; write(m_queryPowerSupplyTemperatureData, sizeof(m_queryPowerSupplyTemperatureData)); }
+    void query_MCU_temp() { qDebug()<<__func__; write(m_queryMCUTemperatureData, sizeof(m_queryMCUTemperatureData)); }
+    void query_battery() { qDebug()<<__func__; write(m_queryBatteryData, sizeof(m_queryBatteryData)); }
+    void query_battery2() { qDebug()<<__func__; write(m_queryBattery_2_Data, sizeof(m_queryBattery_2_Data)); }
+    void query_batteryStatus() { qDebug()<<__func__; write(m_queryBatteryStatus, sizeof(m_queryBatteryStatus)); }
+    void query_battery2Status() { qDebug()<<__func__; write(m_queryBattery_2_Status, sizeof(m_queryBattery_2_Status)); }
+    void set_mainAPPReady() { qDebug()<<__func__; write(m_mainAPPReady, sizeof(m_mainAPPReady)); }
+    void query_brightness() { qDebug()<<__func__; write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
+    void set_poweroff(EventType event_type) { qDebug()<<__func__; if(event_type==0x41) write(m_respondSTM32PowerOffData, sizeof(m_respondSTM32PowerOffData)); }
+    qint64 set_brightness(uint8_t light) { qDebug()<<__func__; m_setBrightnessData[5]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
+
+    void query_pashedArrayProbeModel()  { qDebug()<<__func__; write(m_queryPashedArrayProbeModel, sizeof(m_queryPashedArrayProbeModel)); }
+    void query_pashedArrayProbeSeries()  { qDebug()<<__func__; write(m_queryPashedArrayProbeSeries, sizeof(m_queryPashedArrayProbeSeries)); }
+    void query_pashedArrayProbeType()  { qDebug()<<__func__; write(m_queryPashedArrayProbeType, sizeof(m_queryPashedArrayProbeType)); }
+    void query_pashedArrayProbeFreq()  { qDebug()<<__func__; write(m_queryPashedArrayProbeFreq, sizeof(m_queryPashedArrayProbeFreq)); }
+    void query_pashedArrayProbeElements()  { qDebug()<<__func__; write(m_queryPashedArrayProbeElements, sizeof(m_queryPashedArrayProbeElements)); }
+    void query_pashedArrayProbeElementsDistance()  {qDebug()<<__func__;  write(m_queryPashedArrayProbeElementsDist, sizeof(m_queryPashedArrayProbeElementsDist)); }
+    void query_pashedArrayProbeFerencePoint()  { qDebug()<<__func__; write(m_queryPashedArrayProbeFerencePoint, sizeof(m_queryPashedArrayProbeFerencePoint)); }
+
+    /****** just for special test ******/
+    void query_half1() { write(m_queryBattery_2_Data, 3); }
+    void query_half2() { write(m_queryBattery_2_Data+3, 4); }
+    void query_longdata() { write(m_queryLongData, sizeof(m_queryLongData)); }
+    /****** just for special test end******/
+
+
 Q_SIGNALS:
-    void event(uint8_t type, QByteArray &val);
+    void event(EventType type, QByteArray &val);
 
 protected:
     Mcu();

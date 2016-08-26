@@ -47,7 +47,7 @@ const char Mcu::m_queryNormalProbe2Freq[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRA
 const char Mcu::m_queryNormalProbe2Size[7]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, 0x74, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER};
 
 /* just for test */
-const char Mcu::m_queryLongData[14]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x52, 0x0, DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_HEADER, 0x23, 0x52, DEF_DATA_ARRAY_HEADER, 0x24, 0x80, 0x23};
+const char Mcu::m_queryLongData[14]={DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x0, 0xfe, DEF_DATA_ARRAY_HEADER, DEF_DATA_ARRAY_HEADER, 0x53, 0x0, 0x43, DEF_DATA_ARRAY_TAILER, DEF_DATA_ARRAY_TAILER, 0x80, 0x23};
 /* just for test end*/
 
 /********************************************************************/
@@ -97,8 +97,9 @@ void Mcu::parsePacket(QByteArray &read_array)
     int tmp_len;
 
     tmp_len = QVariant((unsigned char)read_array[3]).toInt();
-
     tmp_size = read_array.size();
+    qDebug() << "pkg size:" << tmp_size << endl;
+
     if(tmp_size<7){
         return;
     }
@@ -106,8 +107,8 @@ void Mcu::parsePacket(QByteArray &read_array)
 
         sig_val = read_array.right(tmp_len+2);
         sig_val = sig_val.left(tmp_len);
-        qDebug() << "Parse OK,[" << __func__ << "], L: " << __LINE__ << ",type:"<< QVariant((unsigned char)read_array[4]).toUInt() << ",sig_val:" << sig_val.toHex() << endl;
-        emit event(QVariant((unsigned char)read_array[4]).toUInt(), sig_val);
+        qDebug() << "Parse OK,[" << __func__ << "], L:_" << __LINE__ << "_, type:"<< read_array[4] << ",sig_val:" << sig_val.toHex() << endl;
+        emit event(static_cast<EventType>(QVariant((unsigned char)read_array[4]).toUInt()), sig_val);
     }
 
 }
@@ -124,16 +125,16 @@ QByteArray Mcu::findPacket(QByteArray &read_array)
 
 findPacket_Judge_packet_label:
 
-    qDebug() << "Into find pkg" << endl;
+    qDebug() << "finding pkg" << endl;
     tmp_index_header = read_array.indexOf(DEF_PACKET_HEADER);
     if(tmp_index_header<0){
-        qDebug() << "in Find pkg: index_Header -1 "<< endl;
+        qDebug() << "Find pkg: index_Header -1 "<< endl;
         tmp_array.clear();
         return tmp_array;
     }
     tmp_index_tailer = read_array.indexOf(DEF_PACKET_TAILER);
     if(tmp_index_tailer<0){
-        qDebug() << "in Find pkg: index_Tailer -1 "<< endl;
+        qDebug() << "Find pkg: index_Tailer -1 "<< endl;
         tmp_array.clear();
         return tmp_array;
     }
@@ -149,7 +150,7 @@ findPacket_Judge_packet_label:
     }
     else if(tmp_len_tailer1 !=0xfe || tmp_len_tailer2!=0xfe ){
         read_array = read_array.right(read_array.size()-tmp_index_header-2);
-        qDebug() << "in Find pkg: read_array: "<< read_array.toHex() << endl;
+        qDebug() << "Find pkg: read_array: "<< read_array.toHex() << endl;
         goto findPacket_Judge_packet_label;
     }
     else if(tmp_type>0x53 || tmp_type<0x4f){
