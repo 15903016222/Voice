@@ -104,6 +104,9 @@
          </property>
          <item>
           <widget class="QLabel" name="label_2">
+           <property name="styleSheet">
+            <string notr="true">border-image: url(:/file/resources/battery1.jpg);</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -111,6 +114,9 @@
          </item>
          <item>
           <widget class="QLabel" name="label_1">
+           <property name="styleSheet">
+            <string notr="true">border-image: url(:/file/resources/battery2.jpg);</string>
+           </property>
            <property name="text">
             <string/>
            </property>
