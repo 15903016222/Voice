@@ -4,6 +4,9 @@
 #include "doublespinboxdelegate.h"
 #include "comboboxdelegate.h"
 
+#include <QPainter>
+#include <QDebug>
+
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
   QWidget(parent),
   ui(new Ui::ThirdMenuWidget)
@@ -12,6 +15,9 @@ ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 
   initStandardModel();
   setThirdMenuName(0, 0);
+
+  tableView.append(ui->tableView);
+  ui->tableView->installEventFilter(this);
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -66,15 +72,18 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
       model->item(0, k)->setTextAlignment(Qt::AlignCenter);
       model->item(0, k)->setForeground(Qt::yellow);
       model->item(0, k)->setFont(QFont("Times New Roman", 11));
-      model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
     }else
     {
       model->setHeaderData(k, Qt::Horizontal, "");
       QStandardItem *item = new QStandardItem(QString(tr("")));
       model->setItem(0, k, item);
       model->item(0, k)->setFlags(Qt::NoItemFlags);
-      model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
     }
+    QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, height * 25 / 70));
+    linearGradient.setColorAt(0.4, QColor(0, 0, 0));
+    linearGradient.setColorAt(1, QColor(0, 120, 195));
+    linearGradient.setSpread(QGradient::PadSpread);
+    model->item(0, k)->setBackground(QBrush(linearGradient));
   }
 }
 
@@ -122,4 +131,39 @@ void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
   model->clear();
   initStandardModel();
   setThirdMenuName(currFirstNum, currSecondNum);
+}
+
+void ThirdMenuWidget::paintBorder()
+{
+  QPainter painter(ui->tableView);
+//  QLinearGradient linearGradientOne(QPointF(0, 0), QPointF(0, height * 25 / 70));
+//  linearGradientOne.setColorAt(0.158192, QColor(255, 255, 255));
+//  linearGradientOne.setColorAt(0.757062, QColor(0, 120, 195));
+//  QLinearGradient linearGradientTwo(QPointF(0, 0), QPointF(0, height * 25 / 70));
+//  linearGradientTwo.setColorAt(0.158192, QColor(0, 0, 0));
+//  linearGradientTwo.setColorAt(0.757062, QColor(0, 120, 195));
+//  painter.setBrush(linearGradientOne);
+
+//  for(int i = 0; i < 6; i ++)
+//  {
+//    painter.drawRect(i * width / 6, 0, 1, height);
+//  }
+//  painter.setBrush(linearGradientTwo);
+//  for(int i = 0; i < 6; i ++)
+//  {
+//    painter.drawRect((i + 1) * (width / 6), 0, 1, height);
+//  }
+  QPen pen(Qt::red, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+  painter.setPen(pen);
+  painter.drawRect(30, 0, 30, height);
+  update();
+}
+
+bool ThirdMenuWidget::eventFilter(QObject *object, QEvent *event)
+{
+  if(object == ui->tableView && event->type() == QEvent::Paint)
+  {
+    paintBorder();
+  }
+  return QWidget::eventFilter(object, event);
 }

@@ -6,6 +6,8 @@
 #include <QWidget>
 #include <QStandardItemModel>
 #include <QResizeEvent>
+#include <QPaintEvent>
+#include <QTableView>
 
 #define THIRD_MENU_NUMBER 6
 
@@ -149,10 +151,15 @@ public:
   QStandardItemModel *model;
   void widgetStyleChoice(int i, int j, int k);
   void resizeEvent(QResizeEvent *event);
+  void paintBorder();
+  bool eventFilter(QObject *object, QEvent *event);
+
   int width;
   int height;
   int currFirstNum;
   int currSecondNum;
+
+  QList<QTableView *> tableView;
 
 private:
 

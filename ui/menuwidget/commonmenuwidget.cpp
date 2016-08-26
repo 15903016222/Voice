@@ -61,7 +61,11 @@ void CommonMenuWidget::setCommonMenuName()
       model->item(0, k)->setTextAlignment(Qt::AlignCenter);
       model->item(0, k)->setForeground(Qt::yellow);
       model->item(0, k)->setFont(QFont("Times New Roman", 11));
-      model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
+      QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, 25));
+      linearGradient.setColorAt(0.4, QColor(0, 0, 0));
+      linearGradient.setColorAt(1,QColor(0, 120, 195));
+      linearGradient.setSpread(QGradient::PadSpread);
+      model->item(0, k)->setBackground(QBrush(linearGradient));
     }
   }
 }
