@@ -20,73 +20,73 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     switch (event->key())
         {
         case Qt::Key_C://core board temperature
-            emit Imx_Sig_Query_Core_Temp();
-            qDebug() << "Key_C, Query_Core_Temp";
+            emit imx_sig_query_core_temp();
+            qDebug() << "Key_C, Query_Core_temp";
             break;
         case Qt::Key_F://FPGA temperature
-            emit Imx_Sig_Query_FPGA_Temp();
-            qDebug() << "Key_F, Query_FPGA_Temp";
+            emit imx_sig_query_FPGA_temp();
+            qDebug() << "Key_F, Query_FPGA_temp";
             break;
 
         case Qt::Key_D://POWERSUPPLY temperature
-            emit Imx_Sig_Query_PowerSupply_Temp();
-            qDebug() << "Key_D, Query_PowerSupply_Temp";
+            emit imx_sig_query_power_supply_temp();
+            qDebug() << "Key_D, query_power_supply_temp";
             break;
         case Qt::Key_M://MCU temperature
-            emit Imx_Sig_Query_MCU_Temp();
-            qDebug() << "Key_M, Query_MCU_Temp";
+            emit imx_sig_query_MCU_temp();
+            qDebug() << "Key_M, Query_MCU_temp";
             break;
 
         case Qt::Key_A://battery 1
-            emit Imx_Sig_Query_Battery();
+            emit imx_sig_query_battery();
             qDebug() << "Key_A, Query_Battery";
             break;
         case Qt::Key_B://battery 2
-            emit Imx_Sig_Query_Battery2();
+            emit imx_sig_query_battery2();
             qDebug() << "Key_B, Query_Battery2";
             break;
         case Qt::Key_G://Query_Brightness, back light
-            emit Imx_Sig_Query_Brightness();
+            emit imx_sig_query_brightness();
             qDebug() << "key G, Query_Brightness";
             break;
         case Qt::Key_L://back light
-            emit Imx_Sig_Set_Brightness(qrand()%100);
+            emit imx_sig_set_brightness(qrand()%100);
             qDebug() << "key L, Set_Brightness";
             break;
         case Qt::Key_X://half1 data fot test;
-            emit Imx_Sig_half1();
-            qDebug() << "key X, Imx_Sig_half1";
+            emit imx_sig_half1();
+            qDebug() << "key X, imx_sig_half1";
             break;
         case Qt::Key_Y://half2 data for test;
-            emit Imx_Sig_half2();
-            qDebug() << "key Y, Imx_Sig_half2";
+            emit imx_sig_half2();
+            qDebug() << "key Y, imx_sig_half2";
             break;
         case Qt::Key_Z://longdata for test;
-            emit Imx_Sig_longdata();
+            emit imx_sig_longdata();
             qDebug() << "key Z, long data!";
         break;
         case Qt::Key_0://longdata for test;
-            emit Imx_Sig_main_APP_ready();
+            emit imx_sig_main_APP_ready();
             qDebug() << "0:App ready";
             usleep(20000);
-            emit Imx_Sig_Query_Core_Temp();
+            emit imx_sig_query_core_temp();
             qDebug() << "0:q core tem";
             usleep(20000);
-            emit Imx_Sig_Query_FPGA_Temp();
+            emit imx_sig_query_FPGA_temp();
             qDebug() << "0:q fpga temp";
             usleep(20000);
-            emit Imx_Sig_Query_Battery();
+            emit imx_sig_query_battery();
             qDebug() << "0:q batt";
             usleep(20000);
-            emit Imx_Sig_Query_Battery2();
+            emit imx_sig_query_battery2();
             qDebug() << "0:q bat2";
-            emit Imx_Sig_Query_BatteryStatus();
+            emit imx_sig_query_battery_status();
             qDebug() << "0:q bat2 status";
             usleep(20000);
-            emit Imx_Sig_Query_Brightness();
+            emit imx_sig_query_brightness();
             qDebug() << "0:query bright";
             usleep(20000);
-            emit Imx_Sig_Set_Brightness(qrand()%100);
+            emit imx_sig_set_brightness(qrand()%100);
             qDebug() << "key 0, set Brightness";
         break;
         default:

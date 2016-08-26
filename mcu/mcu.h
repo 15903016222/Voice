@@ -47,24 +47,24 @@ public:
 
     void query_core_temp() { qDebug()<<__func__; write(m_queryCoreTemperatureData, sizeof(m_queryCoreTemperatureData)); }
     void query_FPGA_temp() { qDebug()<<__func__; write(m_queryFPGATemperatureData, sizeof(m_queryFPGATemperatureData)); }
-    void query_PowerSupply_temp() { qDebug()<<__func__; write(m_queryPowerSupplyTemperatureData, sizeof(m_queryPowerSupplyTemperatureData)); }
+    void query_power_supply_temp() { qDebug()<<__func__; write(m_queryPowerSupplyTemperatureData, sizeof(m_queryPowerSupplyTemperatureData)); }
     void query_MCU_temp() { qDebug()<<__func__; write(m_queryMCUTemperatureData, sizeof(m_queryMCUTemperatureData)); }
     void query_battery() { qDebug()<<__func__; write(m_queryBatteryData, sizeof(m_queryBatteryData)); }
     void query_battery2() { qDebug()<<__func__; write(m_queryBattery_2_Data, sizeof(m_queryBattery_2_Data)); }
-    void query_batteryStatus() { qDebug()<<__func__; write(m_queryBatteryStatus, sizeof(m_queryBatteryStatus)); }
-    void query_battery2Status() { qDebug()<<__func__; write(m_queryBattery_2_Status, sizeof(m_queryBattery_2_Status)); }
-    void set_mainAPPReady() { qDebug()<<__func__; write(m_mainAPPReady, sizeof(m_mainAPPReady)); }
+    void query_battery_status() { qDebug()<<__func__; write(m_queryBatteryStatus, sizeof(m_queryBatteryStatus)); }
+    void query_battery2_status() { qDebug()<<__func__; write(m_queryBattery_2_Status, sizeof(m_queryBattery_2_Status)); }
+    void set_main_APP_ready() { qDebug()<<__func__; write(m_mainAPPReady, sizeof(m_mainAPPReady)); }
     void query_brightness() { qDebug()<<__func__; write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
     void set_poweroff(EventType event_type) { qDebug()<<__func__; if(event_type==0x41) write(m_respondSTM32PowerOffData, sizeof(m_respondSTM32PowerOffData)); }
     qint64 set_brightness(uint8_t light) { qDebug()<<__func__; m_setBrightnessData[5]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
 
-    void query_pashedArrayProbeModel()  { qDebug()<<__func__; write(m_queryPashedArrayProbeModel, sizeof(m_queryPashedArrayProbeModel)); }
-    void query_pashedArrayProbeSeries()  { qDebug()<<__func__; write(m_queryPashedArrayProbeSeries, sizeof(m_queryPashedArrayProbeSeries)); }
-    void query_pashedArrayProbeType()  { qDebug()<<__func__; write(m_queryPashedArrayProbeType, sizeof(m_queryPashedArrayProbeType)); }
-    void query_pashedArrayProbeFreq()  { qDebug()<<__func__; write(m_queryPashedArrayProbeFreq, sizeof(m_queryPashedArrayProbeFreq)); }
-    void query_pashedArrayProbeElements()  { qDebug()<<__func__; write(m_queryPashedArrayProbeElements, sizeof(m_queryPashedArrayProbeElements)); }
-    void query_pashedArrayProbeElementsDistance()  {qDebug()<<__func__;  write(m_queryPashedArrayProbeElementsDist, sizeof(m_queryPashedArrayProbeElementsDist)); }
-    void query_pashedArrayProbeFerencePoint()  { qDebug()<<__func__; write(m_queryPashedArrayProbeFerencePoint, sizeof(m_queryPashedArrayProbeFerencePoint)); }
+    void query_pashed_array_probe_model()  { qDebug()<<__func__; write(m_queryPashedArrayProbeModel, sizeof(m_queryPashedArrayProbeModel)); }
+    void query_pashed_array_probe_series()  { qDebug()<<__func__; write(m_queryPashedArrayProbeSeries, sizeof(m_queryPashedArrayProbeSeries)); }
+    void query_pashed_array_probe_type()  { qDebug()<<__func__; write(m_queryPashedArrayProbeType, sizeof(m_queryPashedArrayProbeType)); }
+    void query_pashed_array_probe_freq()  { qDebug()<<__func__; write(m_queryPashedArrayProbeFreq, sizeof(m_queryPashedArrayProbeFreq)); }
+    void query_pashed_array_probe_elements()  { qDebug()<<__func__; write(m_queryPashedArrayProbeElements, sizeof(m_queryPashedArrayProbeElements)); }
+    void query_pashed_array_probe_elements_distance()  {qDebug()<<__func__;  write(m_queryPashedArrayProbeElementsDist, sizeof(m_queryPashedArrayProbeElementsDist)); }
+    void query_pashed_array_probe_ference_point()  { qDebug()<<__func__; write(m_queryPashedArrayProbeFerencePoint, sizeof(m_queryPashedArrayProbeFerencePoint)); }
 
     /****** just for special test ******/
     void query_half1() { write(m_queryBattery_2_Data, 3); }

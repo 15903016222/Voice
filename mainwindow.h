@@ -16,31 +16,31 @@ public:
     ~MainWindow();
 
 Q_SIGNALS:
-    void Imx_Sig_Query_Core_Temp();
-    void Imx_Sig_Query_FPGA_Temp();
-    void Imx_Sig_Query_PowerSupply_Temp();
-    void Imx_Sig_Query_MCU_Temp();
+    void imx_sig_query_core_temp();
+    void imx_sig_query_FPGA_temp();
+    void imx_sig_query_power_supply_temp();
+    void imx_sig_query_MCU_temp();
 
-    void Imx_Sig_Query_Battery();
-    void Imx_Sig_Query_Battery2();
+    void imx_sig_query_battery();
+    void imx_sig_query_battery2();
 
-    void Imx_Sig_Query_BatteryStatus();
-    void Imx_Sig_Query_Battery2Status();
+    void imx_sig_query_battery_status();
+    void imx_sig_query_battery2_status();
 
-    void Imx_Sig_Query_Brightness();
-    void Imx_Sig_Set_Brightness(uint8_t light);
+    void imx_sig_query_brightness();
+    void imx_sig_set_brightness(uint8_t light);
 
-    void Imx_Sig_Poweroff();
-    void Imx_Sig_Key();
-    void Imx_Sig_Rotary();
-    void Imx_Sig_main_APP_ready();
-    void Imx_Sig_STM32_power_off();
+    void imx_sig_poweroff();
+    void imx_sig_key();
+    void imx_sig_rotary();
+    void imx_sig_main_APP_ready();
+    void imx_sig_STM32_power_off();
 
 
     /* just for test */
-    void Imx_Sig_half1();
-    void Imx_Sig_half2();
-    void Imx_Sig_longdata();
+    void imx_sig_half1();
+    void imx_sig_half2();
+    void imx_sig_longdata();
     /* just for test end*/
 private:
     void keyPressEvent(QKeyEvent *event);

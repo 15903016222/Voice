@@ -21,25 +21,25 @@ int main(int argc, char *argv[])
     Mcu *stm32_serial_p = Mcu::get_mcu();
     qDebug("get_mcu: %lu\n", (long unsigned int)stm32_serial_p);
 
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_Core_Temp, stm32_serial_p, &Mcu::query_core_temp);
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_FPGA_Temp, stm32_serial_p, &Mcu::query_FPGA_temp);
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_PowerSupply_Temp, stm32_serial_p, &Mcu::query_PowerSupply_temp);
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_MCU_Temp, stm32_serial_p, &Mcu::query_MCU_temp);
+    QObject::connect(&w, &MainWindow::imx_sig_query_core_temp, stm32_serial_p, &Mcu::query_core_temp);
+    QObject::connect(&w, &MainWindow::imx_sig_query_FPGA_temp, stm32_serial_p, &Mcu::query_FPGA_temp);
+    QObject::connect(&w, &MainWindow::imx_sig_query_power_supply_temp, stm32_serial_p, &Mcu::query_power_supply_temp);
+    QObject::connect(&w, &MainWindow::imx_sig_query_MCU_temp, stm32_serial_p, &Mcu::query_MCU_temp);
 
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_Battery, stm32_serial_p, &Mcu::query_battery);
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_Battery2, stm32_serial_p, &Mcu::query_battery2);
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_BatteryStatus, stm32_serial_p, &Mcu::query_batteryStatus);
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_Battery2Status, stm32_serial_p, &Mcu::query_battery2Status);
+    QObject::connect(&w, &MainWindow::imx_sig_query_battery, stm32_serial_p, &Mcu::query_battery);
+    QObject::connect(&w, &MainWindow::imx_sig_query_battery2, stm32_serial_p, &Mcu::query_battery2);
+    QObject::connect(&w, &MainWindow::imx_sig_query_battery_status, stm32_serial_p, &Mcu::query_battery_status);
+    QObject::connect(&w, &MainWindow::imx_sig_query_battery2_status, stm32_serial_p, &Mcu::query_battery2_status);
 
-    QObject::connect(&w, &MainWindow::Imx_Sig_Query_Brightness, stm32_serial_p, &Mcu::query_brightness);
-    QObject::connect(&w, &MainWindow::Imx_Sig_Set_Brightness, stm32_serial_p, &Mcu::set_brightness);
-    QObject::connect(&w, &MainWindow::Imx_Sig_main_APP_ready, stm32_serial_p, &Mcu::set_mainAPPReady);
+    QObject::connect(&w, &MainWindow::imx_sig_query_brightness, stm32_serial_p, &Mcu::query_brightness);
+    QObject::connect(&w, &MainWindow::imx_sig_set_brightness, stm32_serial_p, &Mcu::set_brightness);
+    QObject::connect(&w, &MainWindow::imx_sig_main_APP_ready, stm32_serial_p, &Mcu::set_main_APP_ready);
 
 
     /*just for test*/
-    QObject::connect(&w, &MainWindow::Imx_Sig_half1, stm32_serial_p, &Mcu::query_half1);
-    QObject::connect(&w, &MainWindow::Imx_Sig_half2, stm32_serial_p, &Mcu::query_half2);
-    QObject::connect(&w, &MainWindow::Imx_Sig_longdata, stm32_serial_p, &Mcu::query_longdata);
+    QObject::connect(&w, &MainWindow::imx_sig_half1, stm32_serial_p, &Mcu::query_half1);
+    QObject::connect(&w, &MainWindow::imx_sig_half2, stm32_serial_p, &Mcu::query_half2);
+    QObject::connect(&w, &MainWindow::imx_sig_longdata, stm32_serial_p, &Mcu::query_longdata);
     /*just for test end*/
     return a.exec();
 }
