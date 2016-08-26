@@ -108,7 +108,7 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
   case 3:
     {
       model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-      QStandardItem *item = new QStandardItem(QString(""));
+      QStandardItem *item = new QStandardItem(QString("Chinese"));
       model->setItem(0, k, item);
       break;
     }
