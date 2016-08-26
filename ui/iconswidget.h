@@ -22,6 +22,7 @@ private:
 
 public:
   void iconsWidgetRetranslateUi();
+  void showBattery();
 
 signals:
 
