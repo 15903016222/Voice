@@ -31,7 +31,7 @@
    </property>
    <item row="0" column="0">
     <widget class="QWidget" name="widget" native="true">
-     <layout class="QGridLayout" name="gridLayout_2" rowstretch="2,1" columnstretch="101,65,65,65,65,65,65,65,65,65">
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="3,2" columnstretch="101,65,65,65,65,65,65,65,65,65">
       <property name="leftMargin">
        <number>0</number>
       </property>
