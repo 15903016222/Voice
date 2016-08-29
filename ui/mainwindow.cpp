@@ -67,7 +67,6 @@ MainWindow::MainWindow(QWidget *parent) :
   commonMenuWidget = new CommonMenuWidget(this);
   commonMenuWidget->hide();
 
-  this->setWindowFlags(Qt::FramelessWindowHint);
 }
 
 MainWindow::~MainWindow()

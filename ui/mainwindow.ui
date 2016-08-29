@@ -220,14 +220,10 @@ QWidget#widget
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">color: rgb(37, 76, 124);</string>
+                      <string notr="true">border-image: url(:/file/resources/up.png);</string>
                      </property>
                      <property name="text">
                       <string/>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="mainwindow.qrc">
-                       <normaloff>:/file/resources/up.png</normaloff>:/file/resources/up.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -304,7 +300,7 @@ QWidget#widget
                         <x>0</x>
                         <y>0</y>
                         <width>155</width>
-                        <height>398</height>
+                        <height>422</height>
                        </rect>
                       </property>
                      </widget>
@@ -359,14 +355,10 @@ QWidget#widget
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true"/>
+                      <string notr="true">border-image: url(:/file/resources/down.png);</string>
                      </property>
                      <property name="text">
                       <string/>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="mainwindow.qrc">
-                       <normaloff>:/file/resources/down.png</normaloff>:/file/resources/down.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -447,9 +439,7 @@ QWidget#widget
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="mainwindow.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <slots>
   <slot>on_funcBtnClicked()</slot>

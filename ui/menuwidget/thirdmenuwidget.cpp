@@ -27,14 +27,6 @@ void ThirdMenuWidget::initStandardModel()
   ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
   ui->tableView->verticalHeader()->hide();
 
-#if QT_VERSION >= 0x050000
-  ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-#endif
-
-#if QT_VERSION < 0x050000
-  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-#endif
-
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
                                                    "{font: 13pt 'Times New Roman';"

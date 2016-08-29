@@ -28,6 +28,19 @@ void IconsWidget::on_pushButton_keyboard_clicked()
   myInputPanelDlg.exec();
 }
 
+void IconsWidget::on_pushButton_scan_clicked()
+{
+  static bool scan = false;
+  if(scan)
+  {
+    ui->pushButton_scan->setStyleSheet("QPushButton{border-image: url(:/file/resources/set.png)}");
+
+  }else{
+    ui->pushButton_scan->setStyleSheet("QPushButton{border-image: url(:/file/resources/clock.png)}");
+  }
+  scan = !scan;
+}
+
 void IconsWidget::showBattery()
 {
 #if 0

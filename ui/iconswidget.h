@@ -28,6 +28,7 @@ signals:
 
 public slots:
   void on_pushButton_keyboard_clicked();
+  void on_pushButton_scan_clicked();
 
 };
 
