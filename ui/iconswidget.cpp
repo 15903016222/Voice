@@ -30,6 +30,7 @@ void IconsWidget::on_pushButton_keyboard_clicked()
 
 void IconsWidget::showBattery()
 {
+#if 0
   SYSTEM_POWER_STATUS systemPowerSatus;
   GetSystemPowerStatus(&systemPowerSatus);
   int remaindPower = (int)systemPowerSatus.BatteryLifePercent;
@@ -59,4 +60,5 @@ void IconsWidget::showBattery()
     QPixmap pixmapBattery(":/file/resources/BatteryIcon1.png");
     ui->label_2->setPixmap(pixmapBattery);
   }
+#endif
 }

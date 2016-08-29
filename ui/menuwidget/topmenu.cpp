@@ -128,11 +128,18 @@ void TopMenu::initUI()
 
 void TopMenu::initGain_angle()
 {
-//  ui->tableView_gain->verticalHeader()->setResizeMode(QHeaderView::Stretch); //Qt4.8
-  ui->tableView_gain->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-  ui->tableView_gain->verticalHeader()->hide();
+#if QT_VERSION >= 0x050000
   ui->tableView_gain->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView_gain->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#endif
+
+#if QT_VERSION < 0x050000
+  ui->tableView_gain->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+  ui->tableView_gain->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
+
   ui->tableView_gain->horizontalHeader()->hide();
+  ui->tableView_gain->verticalHeader()->hide();
 
   QStandardItemModel *model_gain = new QStandardItemModel(1, 2, this);
   ui->tableView_gain->setModel(model_gain);
@@ -152,10 +159,18 @@ void TopMenu::initGain_angle()
   ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
   ui->tableView_gain->show();
 
-  ui->tableView_angle->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-  ui->tableView_angle->verticalHeader()->hide();
+#if QT_VERSION >= 0x050000
   ui->tableView_angle->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  ui->tableView_angle->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#endif
+
+#if QT_VERSION < 0x050000
+  ui->tableView_angle->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+  ui->tableView_angle->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
+
   ui->tableView_angle->horizontalHeader()->hide();
+  ui->tableView_angle->verticalHeader()->hide();
 
   QStandardItemModel *model_angle = new QStandardItemModel(1, 1, this);
   ui->tableView_angle->setModel(model_angle);

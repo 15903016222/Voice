@@ -25,11 +25,17 @@ void CommonMenuWidget::initStandardModel()
 {
   model = new QStandardItemModel(1, COMMON_MENU_NUMBER, this);
   ui->tableView->setModel(model);
-//  ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
   ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
   ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
   ui->tableView->verticalHeader()->hide();
+
+#if QT_VERSION >= 0x050000
   ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#endif
+
+#if QT_VERSION < 0x050000
+  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
 
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
