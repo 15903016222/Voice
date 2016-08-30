@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QStandardItemModel>
 
+#define TOP_MENU_NUMBER 10
+
 namespace Ui {
 class TopMenu;
 }
@@ -31,6 +33,7 @@ public:
 
   void reTranslatorTopMenuUi();
   void initUI();
+  void setTopMenuFont();
   void initGain_angle();
   void initStandardModel();
 

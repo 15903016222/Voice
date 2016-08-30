@@ -34,7 +34,6 @@
      <property name="styleSheet">
       <string notr="true">QLabel#label_1{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
 stop:0.158192 rgba(0, 130, 195, 255),
 stop:0.559322 rgba(0, 0, 0, 255));
@@ -42,7 +41,6 @@ stop:0.559322 rgba(0, 0, 0, 255));
 
 QLabel#label_10{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068,
 x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
@@ -51,7 +49,6 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 
 QLabel#label_2{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,
 y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
@@ -59,7 +56,6 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 }
 QLabel#label_3{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,
 y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
@@ -67,7 +63,6 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 }
 QLabel#label_4{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,
 y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
@@ -75,7 +70,6 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 }
 QLabel#label_5{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,
 y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
@@ -83,7 +77,6 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 }
 QLabel#label_6{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,
 y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
@@ -91,7 +84,6 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 }
 QLabel#label_7{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,
 y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
@@ -99,7 +91,6 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 }
 QLabel#label_8{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,
 y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
@@ -107,7 +98,6 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 }
 QLabel#label_9{
 background-color:rgba(0, 130, 195);
-line-height:80%;
 border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565,
 y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
 border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
