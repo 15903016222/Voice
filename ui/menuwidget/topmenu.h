@@ -29,7 +29,7 @@ public:
   MeasurementDialog *mDialog;
   QString objectName;
 
-  void updateTranslatorUi();
+  void reTranslatorTopMenuUi();
   void initUI();
   void initGain_angle();
   void initStandardModel();

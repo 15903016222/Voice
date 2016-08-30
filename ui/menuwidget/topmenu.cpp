@@ -28,7 +28,7 @@ TopMenu :: ~TopMenu()
   delete(ui);
 }
 
-void TopMenu::updateTranslatorUi()
+void TopMenu::reTranslatorTopMenuUi()
 {
   ui->retranslateUi(this);
 }

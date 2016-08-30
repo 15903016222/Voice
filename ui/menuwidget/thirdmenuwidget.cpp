@@ -19,7 +19,7 @@ ThirdMenuWidget::~ThirdMenuWidget()
   delete ui;
 }
 
-void ThirdMenuWidget::updateTranslatorUi()
+void ThirdMenuWidget::reTranslatorThirdMenuUi()
 {
   ui->retranslateUi(this);
 }
@@ -28,6 +28,13 @@ void ThirdMenuWidget::initStandardModel()
 {
   model = new QStandardItemModel(1, THIRD_MENU_NUMBER, this);
   ui->tableView->setModel(model);
+#if QT_VERSION >= 0x050000
+  ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#endif
+
+#if QT_VERSION < 0x050000
+  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
   ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
   ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
   ui->tableView->verticalHeader()->hide();

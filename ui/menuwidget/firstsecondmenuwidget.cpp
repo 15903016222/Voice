@@ -15,7 +15,7 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
   delete ui;
 }
 
-void FirstSecondMenuWidget::updateTranslatorUi()
+void FirstSecondMenuWidget::reTranslatorFirstSecondMenuUi()
 {
   ui->retranslateUi(this);
 }

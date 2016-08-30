@@ -26,9 +26,8 @@ public:
 private:
   Ui::CommonMenuWidget *ui;
 
-
 public:
-  void updateTranslatorUi();
+  void reTranslatorCommonMenuUi();
   void initStandardModel();
   void setCommonMenuName();
   QStandardItemModel *model;
@@ -39,6 +38,7 @@ public:
   int width;
 
 private:
+  QString commonMenuTr();
 
 public slots:
 

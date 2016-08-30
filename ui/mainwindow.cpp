@@ -89,6 +89,10 @@ void MainWindow::initUI()
   commonMenuButton = new CommonMenuButton(this);
   commonMenuButton->show();
 
+  translator = new QTranslator(this);
+  qApp->installTranslator(translator);
+  translatorChineseUI(); // default Chinese
+
   firstMenuNum = 0;
   secondMenuNum = 0;
   hiddenFirstSecondMenuFlag = false;
@@ -109,10 +113,6 @@ void MainWindow::initUI()
   ui->scrollArea->setWidget(firstSecondMenu);
 
   QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
-
-  translator = new QTranslator(this);
-  qApp->installTranslator(translator);
-  translatorChineseUI(); // default Chinese
 
 }
 
@@ -276,23 +276,25 @@ void MainWindow::slot_pushButton_commonMenuClicked()
   }
 }
 
+void MainWindow::updateTranslator()
+{
+  ui->retranslateUi(this);
+  ui->widgetTopLeft->reTranslatorTopMenuUi();
+  firstSecondMenu->reTranslatorFirstSecondMenuUi();
+  ui->widget_thirdMenu->reTranslatorThirdMenuUi();
+  commonMenuWidget->reTranslatorCommonMenuUi();
+}
+
 void MainWindow::translatorChineseUI()
 {
   translator->load(":/file/translator/phascanII_UI_Chinese.qm");
-  ui->retranslateUi(this);
-  ui->widgetTopLeft->updateTranslatorUi();
-  ui->widgetTopRight->updateTranslatorUi();
-  ui->widgetShowInformation->updateTranslatorUi();
-  firstSecondMenu->updateTranslatorUi();
-  ui->widget_thirdMenu->updateTranslatorUi();
-  commonMenuWidget->updateTranslatorUi();
-
+  updateTranslator();
 }
 
 void MainWindow::translatorEnglishUI()
 {
   translator->load(":/file/translator/phascanII_UI_English.qm");
-  ui->retranslateUi(this);
+  updateTranslator();
 }
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)

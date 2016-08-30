@@ -144,7 +144,7 @@ private:
 
 
 public:
-  void updateTranslatorUi();
+  void reTranslatorThirdMenuUi();
   void initStandardModel();
   void setThirdMenuName(int i, int j);
   QStandardItemModel *model;

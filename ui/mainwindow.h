@@ -44,6 +44,7 @@ public:
 //  void linkPluginsToConnectDevice();
   void resizeEvent(QResizeEvent *event);
   void arrowShowFlag();
+  void updateTranslator();
 
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenFirstSecondMenuFlag;
@@ -54,9 +55,6 @@ public:
   int secondMenuNum;
   int mainMenuStartPos;
   int mainMenuEndPos;
-
-  void translatorChineseUI();
-  void translatorEnglishUI();
 
 private:
   void initUI();
@@ -73,6 +71,8 @@ private slots:
   void on_pushButton_bottom_clicked();
   void slot_pushButton_commonMenuClicked();
 
+  void translatorChineseUI();
+  void translatorEnglishUI();
 
 };
 

@@ -13,12 +13,6 @@ IconsWidget::~IconsWidget()
   delete ui;
 }
 
-void IconsWidget::updateTranslatorUi()
-{
-  ui->retranslateUi(this);
-}
-
-
 void IconsWidget::on_pushButton_keyboard_clicked()
 {
   MyInputPanel myInputPanelDlg;

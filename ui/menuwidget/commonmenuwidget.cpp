@@ -21,7 +21,7 @@ CommonMenuWidget::~CommonMenuWidget()
   delete ui;
 }
 
-void CommonMenuWidget::updateTranslatorUi()
+void CommonMenuWidget::reTranslatorCommonMenuUi()
 {
   ui->retranslateUi(this);
 }
@@ -123,4 +123,11 @@ void CommonMenuWidget::resizeEvent(QResizeEvent *event)
   model->clear();
   initStandardModel();
   setCommonMenuName();
+}
+
+QString CommonMenuWidget::commonMenuTr()
+{
+  static const char *COMMON_MENU_STRING[COMMON_MENU_NUMBER] = {("Straightening"), "Straightening", "Straightening", "Remove Lateral",
+                                                               "Ref. Position\n(mm)", "Depth Cal.", QT_TR_NOOP("Wedge Sep.\n(mm)")};
+  return tr(COMMON_MENU_STRING[COMMON_MENU_NUMBER]);
 }
