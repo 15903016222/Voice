@@ -17,6 +17,8 @@ TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
     ui/translator/phascanII_UI_English.ts
 
+CODECFORTR = utf-8
+
 TARGET = Mercury
 TEMPLATE = app
 
