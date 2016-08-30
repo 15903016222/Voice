@@ -10,6 +10,7 @@
 //#include <QGst/Message>
 #include <QScrollArea>
 #include <QMouseEvent>
+#include <QtCore/QTranslator>
 
 namespace Ui {
 class MainWindow;
@@ -54,8 +55,12 @@ public:
   int mainMenuStartPos;
   int mainMenuEndPos;
 
+  void translatorChineseUI();
+  void translatorEnglishUI();
+
 private:
   void initUI();
+  QTranslator *translator;
 
 public slots:
 
@@ -67,6 +72,7 @@ private slots:
   void on_pushButton_top_clicked();
   void on_pushButton_bottom_clicked();
   void slot_pushButton_commonMenuClicked();
+
 
 };
 

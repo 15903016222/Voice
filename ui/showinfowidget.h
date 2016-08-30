@@ -19,6 +19,7 @@ private:
   Ui::ShowInfoWidget *ui;
 
 public:
+  void updateTranslatorUi();
   void displayTime();
   void initShowTime();
 

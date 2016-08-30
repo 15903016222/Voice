@@ -15,6 +15,11 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
   delete ui;
 }
 
+void FirstSecondMenuWidget::updateTranslatorUi()
+{
+  ui->retranslateUi(this);
+}
+
 void FirstSecondMenuWidget::setSecondMenuName(int i)
 {
   QStringList secondMenuList;
@@ -99,4 +104,20 @@ void FirstSecondMenuWidget::initUI()
   ui->toolBox->setCurrentIndex(0);
   QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
   menuList.at(0)->setCurrentIndex(initModelIndex);
+}
+
+QString FirstSecondMenuWidget::secondMenuTr()
+{
+  static const char *SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
+    {QT_TR_NOOP("General"), QT_TR_NOOP("Pulser"), "Receiver", "Advanced", ""},
+    {"Gate", "Alarm", "Output", "DAC", "TCG"},
+    {"Selection", "Color Setting", "Properties", "", ""},
+    {"Select", "Position", "FFT", "Part", "Advanced"},
+    {"Law Config", "Angle", "Aperture", "Focal Point", ""},
+    {"Inspection", "Encoder", "Area", "Start", ""},
+    {"Reading", "Cursors", "TOFD", "Flaw Record", ""},
+    {"File", "Save Mode", "Report", "Format", "User Field"},
+    {"Preference", "System", "Network", "Service", ""}
+  };
+  return tr(SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER]);
 }

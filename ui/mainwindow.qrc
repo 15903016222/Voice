@@ -15,5 +15,7 @@
         <file>resources/up.png</file>
         <file>resources/down.png</file>
         <file>resources/clock.png</file>
+        <file>translator/phascanII_UI_Chinese.qm</file>
+        <file>translator/phascanII_UI_English.qm</file>
     </qresource>
 </RCC>

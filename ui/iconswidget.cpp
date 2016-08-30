@@ -13,7 +13,7 @@ IconsWidget::~IconsWidget()
   delete ui;
 }
 
-void IconsWidget::iconsWidgetRetranslateUi()
+void IconsWidget::updateTranslatorUi()
 {
   ui->retranslateUi(this);
 }

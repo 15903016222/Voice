@@ -28,6 +28,11 @@ TopMenu :: ~TopMenu()
   delete(ui);
 }
 
+void TopMenu::updateTranslatorUi()
+{
+  ui->retranslateUi(this);
+}
+
 void TopMenu::initUI()
 {
   ui->label_1->setText(tr("Gain-r\n(dB)"));

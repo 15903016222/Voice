@@ -21,7 +21,7 @@ private:
   Ui::IconsWidget *ui;
 
 public:
-  void iconsWidgetRetranslateUi();
+  void updateTranslatorUi();
   void showBattery();
 
 signals:

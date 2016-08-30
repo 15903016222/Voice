@@ -21,6 +21,11 @@ CommonMenuWidget::~CommonMenuWidget()
   delete ui;
 }
 
+void CommonMenuWidget::updateTranslatorUi()
+{
+  ui->retranslateUi(this);
+}
+
 void CommonMenuWidget::initStandardModel()
 {
   model = new QStandardItemModel(1, COMMON_MENU_NUMBER, this);

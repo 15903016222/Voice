@@ -19,6 +19,11 @@ ThirdMenuWidget::~ThirdMenuWidget()
   delete ui;
 }
 
+void ThirdMenuWidget::updateTranslatorUi()
+{
+  ui->retranslateUi(this);
+}
+
 void ThirdMenuWidget::initStandardModel()
 {
   model = new QStandardItemModel(1, THIRD_MENU_NUMBER, this);

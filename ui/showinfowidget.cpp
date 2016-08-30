@@ -18,6 +18,11 @@ ShowInfoWidget::~ShowInfoWidget()
   delete ui;
 }
 
+void ShowInfoWidget::updateTranslatorUi()
+{
+  ui->retranslateUi(this);
+}
+
 
 void ShowInfoWidget::displayTime()
 {

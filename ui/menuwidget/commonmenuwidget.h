@@ -28,6 +28,7 @@ private:
 
 
 public:
+  void updateTranslatorUi();
   void initStandardModel();
   void setCommonMenuName();
   QStandardItemModel *model;
