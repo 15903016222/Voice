@@ -6,6 +6,16 @@
 
 #include <QResizeEvent>
 
+static const char* COMMON_MENU_STRING[COMMON_MENU_NUMBER] = {
+  QT_TRANSLATE_NOOP("CommonMenuWidget", "Straightening"),
+  QT_TRANSLATE_NOOP("CommonMenuWidget", "Straightening"),
+  QT_TRANSLATE_NOOP("CommonMenuWidget", "Straightening"),
+  QT_TRANSLATE_NOOP("CommonMenuWidget", "Remove Lateral"),
+  QT_TRANSLATE_NOOP("CommonMenuWidget", "Ref. Position\n(mm)"),
+  QT_TRANSLATE_NOOP("CommonMenuWidget", "Depth Cal."),
+  QT_TRANSLATE_NOOP("CommonMenuWidget", "Wedge Sep.\n(mm)")
+};
+
 CommonMenuWidget::CommonMenuWidget(QWidget *parent) :
   QWidget(parent),
   ui(new Ui::CommonMenuWidget)
@@ -81,7 +91,7 @@ void CommonMenuWidget::setCommonMenuName()
 
 void CommonMenuWidget::widgetStyleChoice(int k)
 {
-  model->setHeaderData(k, Qt::Horizontal, COMMON_MENU_STRING[k]);
+  model->setHeaderData(k, Qt::Horizontal, tr(COMMON_MENU_STRING[k]));
   switch(CHOICE_WIDGET_CHAR[k].toInt())
   {
   case 1:
@@ -123,11 +133,4 @@ void CommonMenuWidget::resizeEvent(QResizeEvent *event)
   model->clear();
   initStandardModel();
   setCommonMenuName();
-}
-
-QString CommonMenuWidget::commonMenuTr()
-{
-  static const char *COMMON_MENU_STRING[COMMON_MENU_NUMBER] = {("Straightening"), "Straightening", "Straightening", "Remove Lateral",
-                                                               "Ref. Position\n(mm)", "Depth Cal.", QT_TR_NOOP("Wedge Sep.\n(mm)")};
-  return tr(COMMON_MENU_STRING[COMMON_MENU_NUMBER]);
 }

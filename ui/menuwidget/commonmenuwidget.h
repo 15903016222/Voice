@@ -5,10 +5,6 @@
 #include <QStandardItemModel>
 
 #define COMMON_MENU_NUMBER 7
-
-static QString COMMON_MENU_STRING[COMMON_MENU_NUMBER] = {"Straightening", "Straightening", "Straightening", "Remove Lateral",
-                                                        "Ref. Position\n(mm)", "Depth Cal.", "Wedge Sep.\n(mm)"};
-
 static QString CHOICE_WIDGET_CHAR[COMMON_MENU_NUMBER] = {"2", "2", "2", "2", "1", "2", "1"}; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
 
 namespace Ui {
@@ -38,7 +34,6 @@ public:
   int width;
 
 private:
-  QString commonMenuTr();
 
 public slots:
 
