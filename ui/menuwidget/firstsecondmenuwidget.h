@@ -10,18 +10,6 @@
 #define FIRST_MENU_NUMBER 9
 #define SECOND_MENU_NUMBER 5
 
-static QString SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
-  {"General", "Pulser", "Receiver", "Advanced", ""},
-  {"Gate", "Alarm", "Output", "DAC", "TCG"},
-  {"Selection", "Color Setting", "Properties", "", ""},
-  {"Select", "Position", "FFT", "Part", "Advanced"},
-  {"Law Config", "Angle", "Aperture", "Focal Point", ""},
-  {"Inspection", "Encoder", "Area", "Start", ""},
-  {"Reading", "Cursors", "TOFD", "Flaw Record", ""},
-  {"File", "Save Mode", "Report", "Format", "User Field"},
-  {"Preference", "System", "Network", "Service", ""}
-};
-
 namespace Ui{
 class FirstSecondMenuWidget;
 }
@@ -49,7 +37,6 @@ public:
 
 private:
   void initUI();
-  QString secondMenuTr();
 
 private slots:
 
