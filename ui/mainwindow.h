@@ -10,7 +10,7 @@
 //#include <QGst/Message>
 #include <QScrollArea>
 #include <QMouseEvent>
-#include <QtCore/QTranslator>
+#include <QTranslator>
 
 namespace Ui {
 class MainWindow;
