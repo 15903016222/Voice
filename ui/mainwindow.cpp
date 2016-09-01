@@ -277,12 +277,12 @@ void MainWindow::slot_pushButton_commonMenuClicked()
 
 void MainWindow::updateTranslator()
 {
+  ui->retranslateUi(this);
   ui->widgetTopLeft->reTranslatorTopMenuUi();
   ui->widgetTopLeft->setTopMenuFont();
   firstSecondMenu->reTranslatorFirstSecondMenuUi();
   ui->widget_thirdMenu->reTranslatorThirdMenuUi();
   commonMenuWidget->reTranslatorCommonMenuUi();
-  ui->retranslateUi(this);
 }
 
 void MainWindow::translatorChineseUI()

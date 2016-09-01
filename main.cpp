@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 
   {
     MainWindow w;
-    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+ //   w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     w.show();
 
     r = a.exec();

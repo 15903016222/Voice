@@ -31,7 +31,7 @@ static const char* SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Law Config"),
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Angle"),
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Aperture"),
-    QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Focal Point"),
+    QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Focal Point")
   },
   {
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Inspection"),
@@ -43,7 +43,7 @@ static const char* SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Reading"),
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Cursors"),
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "TOFD"),
-    QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Flaw Record"),
+    QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Flaw Record")
   },
   {
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "File"),
@@ -59,14 +59,21 @@ static const char* SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
     QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Service")
   }
 };
+#include <QDebug>
 
 FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
   QWidget(parent),
   ui(new Ui::FirstSecondMenuWidget)
 {
   ui->setupUi(this);
-
+  qDebug()<<__func__<<tr(SECOND_MENU_STRING[1][1]);
   initUI();
+
+  /**/
+//  QList<QString> list;
+//  list.append(tr("Format"));
+//  list.append();
+
 }
 
 FirstSecondMenuWidget::~FirstSecondMenuWidget()
@@ -81,12 +88,16 @@ void FirstSecondMenuWidget::reTranslatorFirstSecondMenuUi()
 
 void FirstSecondMenuWidget::setSecondMenuName(int i)
 {
+ // QStringList list = firstMenuMap(name);
+ // QStringList::Iterator iter = list.
   QStringList secondMenuList;
   for(int j = 0; j < SECOND_MENU_NUMBER; j++)
   {
     if(SECOND_MENU_STRING[i][j] != NULL)
     {
+    //  qDebug()<<__func__<<tr(SECOND_MENU_STRING[i][j]);
       secondMenuList.append(tr(SECOND_MENU_STRING[i][j]));
+
       QString string = static_cast<QString>(secondMenuList.at(j));
 
       QStandardItem *item = new QStandardItem(string);
