@@ -16,27 +16,27 @@ class FirstSecondMenuWidget;
 
 class FirstSecondMenuWidget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit FirstSecondMenuWidget(QWidget *parent = 0);
-  ~FirstSecondMenuWidget();
+    explicit FirstSecondMenuWidget(QWidget *parent = 0);
+    ~FirstSecondMenuWidget();
 
 private:
-  Ui::FirstSecondMenuWidget *ui;
+    Ui::FirstSecondMenuWidget *ui;
 
 public:
-  QList<QToolBox*> toolBox;
-  QList<QListView*> menuList;
-  QList<QStandardItemModel*> modelList;
+    QList<QToolBox*> toolBox;
+    QList<QListView*> menuList;
+    QList<QStandardItemModel*> modelList;
 
-  void reTranslatorFirstSecondMenuUi();
-  void setSecondMenuName(int i);
-  void initSecondMenuItem(int i);
-  void secondMenuItemClicked(int i, QModelIndex index);
+    void reTranslatorFirstSecondMenuUi();
+    void setSecondMenuName(int i);
+    void initSecondMenuItem(int i);
+    void secondMenuItemClicked(int i, QModelIndex index);
 
 private:
-  void initUI();
+    void initUI();
 
 private slots:
 

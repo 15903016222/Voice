@@ -6,28 +6,28 @@
 #include <QWidget>
 
 namespace Ui {
-  class IconsWidget;
+class IconsWidget;
 }
 
 class IconsWidget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit IconsWidget(QWidget *parent = 0);
-  ~IconsWidget();
+    explicit IconsWidget(QWidget *parent = 0);
+    ~IconsWidget();
 
 private:
-  Ui::IconsWidget *ui;
+    Ui::IconsWidget *ui;
 
 public:
-  void showBattery();
+    void showBattery();
 
 signals:
 
 public slots:
-  void on_pushButton_keyboard_clicked();
-  void on_pushButton_scan_clicked();
+    void on_pushButton_keyboard_clicked();
+    void on_pushButton_scan_clicked();
 
 };
 

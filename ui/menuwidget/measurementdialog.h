@@ -15,35 +15,35 @@ class MeasurementDialog;
 
 class MeasurementDialog : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit MeasurementDialog(QWidget *parent = 0);
-  ~MeasurementDialog();
+    explicit MeasurementDialog(QWidget *parent = 0);
+    ~MeasurementDialog();
 
 private:
-  Ui::MeasurementDialog *ui;
+    Ui::MeasurementDialog *ui;
 
 public:
-  QList<QPushButton *> buttonList;
-  QListView *listView;
-  QStringList measurementList;
-  QStandardItemModel *measurementModel;
-  QMap<QString, QString> labelMap;
-  QString changedString;
+    QList<QPushButton *> buttonList;
+    QListView *listView;
+    QStringList measurementList;
+    QStandardItemModel *measurementModel;
+    QMap<QString, QString> labelMap;
+    QString changedString;
 
-  bool changedFlag;
+    bool changedFlag;
 
 private:
-  void initUI();
+    void initUI();
 
 signals:
-  void labelTextChanged(QString);
+    void labelTextChanged(QString);
 
 private slots:
-  void on_pushButton_cancel_clicked();
-  void on_pushButton_ok_clicked();
-  void slot_listViewItemClicked(QModelIndex index);
+    void on_pushButton_cancel_clicked();
+    void on_pushButton_ok_clicked();
+    void slot_listViewItemClicked(QModelIndex index);
 
 };
 

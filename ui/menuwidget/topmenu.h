@@ -16,31 +16,31 @@ class TopMenu;
 
 class TopMenu : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit TopMenu(QWidget *parent = 0);
-  ~TopMenu();
+    explicit TopMenu(QWidget *parent = 0);
+    ~TopMenu();
 
 private:
-  Ui::TopMenu *ui;
+    Ui::TopMenu *ui;
 
 public:
-  QList<QLabel* > measurementLabelList;
-  QStandardItemModel *model;
-  MeasurementDialog *mDialog;
-  QString objectName;
+    QList<QLabel* > measurementLabelList;
+    QStandardItemModel *model;
+    MeasurementDialog *mDialog;
+    QString objectName;
 
-  void reTranslatorTopMenuUi();
-  void initUI();
-  void setTopMenuFont();
-  void initGain_angle();
-  void initStandardModel();
+    void reTranslatorTopMenuUi();
+    void initUI();
+    void setTopMenuFont();
+    void initGain_angle();
+    void initStandardModel();
 
-  bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject *object, QEvent *event);
 
 private slots:
-  void changeLabelText(QString str);
+    void changeLabelText(QString str);
 
 };
 

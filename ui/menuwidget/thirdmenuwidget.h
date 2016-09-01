@@ -9,91 +9,91 @@
 
 #define THIRD_MENU_NUMBER 6
 static QString WIDGET_CHOICE_CHAR[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_MENU_NUMBER]={
-  {
-    {"1", "1", "1", "1", "1", "2"},
-    {"2", "1", "1", "1", "1"},
-    {"1", "2", "2", "2", "2"},
-    {"2", "2", "1", "1", "1"}
-  }, //1
-  {
-    {"2", "1", "1", "1", "1", "1"},
-    {"2", "2", "2", "2", "2", "2"},
-    {"2", "2", "1", "1", "1", "2"},
-    {"2"},
-    {"2"}
-  }, //2
-  {
-    {"2", "2", "2", "1", "1"},
-    {"1", "1", "1"},
-    {"2", "2", "2", "2"}
-  }, //3
-  {
-    {"2", "2", "2", "2", "2", "2"},
-    {"1", "1", "1"},
-    {"1", "1", "1", "2"},
-    {"2", "1", "1", "2", "2"},
-    {"2", "2"}
-  }, //4
-  {
-    {"2", "2", "2", "2"},
-    {"1", "1", "1"},
-    {"1", "1", "1", "1"},
-    {"2"}
-  }, //5
-  {
-    {"2", "2", "1", "1"},
-    {"2", "2", "1", "2", "1", "2"},
-    {"1", "1", "1", "1", "1", "1"},
-    {"2", "2"}
-  }, //6
-  {
-    {"2", "2", "2", "2", "2"},
-    {"2"},
-    {"2", "2", "2"},
-    {"2", "2", "2", "2", "2"}
-  }, //7
-  {
-    {"2", "2", "2"},
-    {"2", "2", "2", "2"},
-    {"2", "2", "1", "1", "1", "1"},
-    {"2", "2", "2", "2", "2", "2"},
-    {"2", "2", "1", "2", "2", "2"}
-  }, //8
-  {
-    {"2", "1", "2"},
-    {"2", "2", "3"},
-    {"2", "2"},
-    {"2", "2", "2", "2", "2", "1"}
-  } //9
+    {
+        {"1", "1", "1", "1", "1", "2"},
+        {"2", "1", "1", "1", "1"},
+        {"1", "2", "2", "2", "2"},
+        {"2", "2", "1", "1", "1"}
+    }, //1
+    {
+        {"2", "1", "1", "1", "1", "1"},
+        {"2", "2", "2", "2", "2", "2"},
+        {"2", "2", "1", "1", "1", "2"},
+        {"2"},
+        {"2"}
+    }, //2
+    {
+        {"2", "2", "2", "1", "1"},
+        {"1", "1", "1"},
+        {"2", "2", "2", "2"}
+    }, //3
+    {
+        {"2", "2", "2", "2", "2", "2"},
+        {"1", "1", "1"},
+        {"1", "1", "1", "2"},
+        {"2", "1", "1", "2", "2"},
+        {"2", "2"}
+    }, //4
+    {
+        {"2", "2", "2", "2"},
+        {"1", "1", "1"},
+        {"1", "1", "1", "1"},
+        {"2"}
+    }, //5
+    {
+        {"2", "2", "1", "1"},
+        {"2", "2", "1", "2", "1", "2"},
+        {"1", "1", "1", "1", "1", "1"},
+        {"2", "2"}
+    }, //6
+    {
+        {"2", "2", "2", "2", "2"},
+        {"2"},
+        {"2", "2", "2"},
+        {"2", "2", "2", "2", "2"}
+    }, //7
+    {
+        {"2", "2", "2"},
+        {"2", "2", "2", "2"},
+        {"2", "2", "1", "1", "1", "1"},
+        {"2", "2", "2", "2", "2", "2"},
+        {"2", "2", "1", "2", "2", "2"}
+    }, //8
+    {
+        {"2", "1", "2"},
+        {"2", "2", "3"},
+        {"2", "2"},
+        {"2", "2", "2", "2", "2", "1"}
+    } //9
 }; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
 
 namespace Ui {
-  class ThirdMenuWidget;
+class ThirdMenuWidget;
 }
 
 class ThirdMenuWidget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit ThirdMenuWidget(QWidget *parent = 0);
-  ~ThirdMenuWidget();
+    explicit ThirdMenuWidget(QWidget *parent = 0);
+    ~ThirdMenuWidget();
 
 private:
-  Ui::ThirdMenuWidget *ui;
+    Ui::ThirdMenuWidget *ui;
 
 
 public:
-  void reTranslatorThirdMenuUi();
-  void initStandardModel();
-  void setThirdMenuName(int i, int j);
-  QStandardItemModel *model;
-  void widgetStyleChoice(int i, int j, int k);
-  void resizeEvent(QResizeEvent *event);
-  int width;
-  int height;
-  int currFirstNum;
-  int currSecondNum;
+    void reTranslatorThirdMenuUi();
+    void initStandardModel();
+    void setThirdMenuName(int i, int j);
+    QStandardItemModel *model;
+    void widgetStyleChoice(int i, int j, int k);
+    void resizeEvent(QResizeEvent *event);
+    int width;
+    int height;
+    int currFirstNum;
+    int currSecondNum;
 
 private:
 
