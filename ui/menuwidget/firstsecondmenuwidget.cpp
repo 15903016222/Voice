@@ -66,14 +66,9 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     ui(new Ui::FirstSecondMenuWidget)
 {
     ui->setupUi(this);
-    qDebug()<<__func__<<tr(SECOND_MENU_STRING[1][1]);
+
+    qDebug()<<__func__<<tr(SECOND_MENU_STRING[0][0]);
     initUI();
-
-    /**/
-    //  QList<QString> list;
-    //  list.append(tr("Format"));
-    //  list.append();
-
 }
 
 FirstSecondMenuWidget::~FirstSecondMenuWidget()
@@ -84,6 +79,12 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
 void FirstSecondMenuWidget::reTranslatorFirstSecondMenuUi()
 {
     ui->retranslateUi(this);
+
+    for(int i = 0; i < FIRST_MENU_NUMBER; i++){
+        for(int j = 0; j < SECOND_MENU_NUMBER; j++){
+            qDebug()<<__func__<<tr(SECOND_MENU_STRING[i][j]);
+        }
+    }
 }
 
 void FirstSecondMenuWidget::setSecondMenuName(int i)
@@ -95,7 +96,6 @@ void FirstSecondMenuWidget::setSecondMenuName(int i)
     {
         if(SECOND_MENU_STRING[i][j] != NULL)
         {
-            //qDebug()<<__func__<<tr(SECOND_MENU_STRING[i][j]);
             secondMenuList.append(tr(SECOND_MENU_STRING[i][j]));
 
             QString string = static_cast<QString>(secondMenuList.at(j));

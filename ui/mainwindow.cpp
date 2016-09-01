@@ -86,6 +86,7 @@ void MainWindow::initUI()
     commonMenuWidget = new CommonMenuWidget(this);
     commonMenuWidget->hide();
     commonMenuButton = new CommonMenuButton(this);
+    commonMenuButton->resize(40, 40);
     commonMenuButton->show();
 
     translator = new QTranslator(this);
@@ -209,6 +210,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     int oldWidth = event->oldSize().width();
     int oldHeight = event->oldSize().height();
     int menuHeight = firstSecondMenu->geometry().height();
+
     if(oldWidth > 0 && oldHeight > 0)
     {
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
@@ -221,7 +223,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         }
         commonMenuWidget->resize(width, height * 70 / 600);
         commonMenuWidget->move(0, height * 530 / 600);
-        commonMenuButton->resize(width * 25 / 800, height * 25 /600);
         commonMenuButton->move(width - commonMenuButton->geometry().width(), height - commonMenuButton->geometry().height());
     }else
     {
@@ -229,7 +230,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
         commonMenuWidget->resize(width, height * 70 / 600);
         commonMenuWidget->move(0, height * 530 / 600);
-        commonMenuButton->resize(40, 40);
         commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
     }
     arrowShowFlag();
