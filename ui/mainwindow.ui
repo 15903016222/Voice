@@ -182,7 +182,7 @@ QWidget#widget
                   <property name="frameShadow">
                    <enum>QFrame::Raised</enum>
                   </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="5,4,5">
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
                    <property name="spacing">
                     <number>0</number>
                    </property>
@@ -199,19 +199,6 @@ QWidget#widget
                     <number>0</number>
                    </property>
                    <item>
-                    <spacer name="horizontalSpacer_1">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>25</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
                     <widget class="QPushButton" name="pushButton_top">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -220,31 +207,24 @@ QWidget#widget
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">border-image: url(:/file/resources/up.png);</string>
+                      <string notr="true">background-color: rgb(37, 76, 124);
+border:none;
+</string>
                      </property>
                      <property name="text">
                       <string/>
                      </property>
+                     <property name="icon">
+                      <iconset resource="mainwindow.qrc">
+                       <normaloff>:/file/resources/up.png</normaloff>:/file/resources/up.png</iconset>
+                     </property>
                      <property name="iconSize">
                       <size>
-                       <width>43</width>
-                       <height>24</height>
+                       <width>24</width>
+                       <height>12</height>
                       </size>
                      </property>
                     </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_2">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>26</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
                    </item>
                   </layout>
                  </widget>
@@ -300,7 +280,7 @@ QWidget#widget
                         <x>0</x>
                         <y>0</y>
                         <width>173</width>
-                        <height>422</height>
+                        <height>429</height>
                        </rect>
                       </property>
                      </widget>
@@ -317,7 +297,7 @@ QWidget#widget
                   <property name="frameShadow">
                    <enum>QFrame::Raised</enum>
                   </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="5,4,5">
+                  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4">
                    <property name="spacing">
                     <number>0</number>
                    </property>
@@ -334,19 +314,6 @@ QWidget#widget
                     <number>0</number>
                    </property>
                    <item>
-                    <spacer name="horizontalSpacer_3">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>55</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
                     <widget class="QPushButton" name="pushButton_bottom">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -355,31 +322,24 @@ QWidget#widget
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">border-image: url(:/file/resources/down.png);</string>
+                      <string notr="true">background-color: rgb(37, 76, 124);
+border:none;
+</string>
                      </property>
                      <property name="text">
                       <string/>
                      </property>
+                     <property name="icon">
+                      <iconset resource="mainwindow.qrc">
+                       <normaloff>:/file/resources/down.png</normaloff>:/file/resources/down.png</iconset>
+                     </property>
                      <property name="iconSize">
                       <size>
-                       <width>43</width>
-                       <height>24</height>
+                       <width>24</width>
+                       <height>12</height>
                       </size>
                      </property>
                     </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_4">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>55</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
                    </item>
                   </layout>
                  </widget>
@@ -439,7 +399,9 @@ QWidget#widget
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="mainwindow.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>on_funcBtnClicked()</slot>

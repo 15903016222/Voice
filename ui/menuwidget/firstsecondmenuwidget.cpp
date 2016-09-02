@@ -68,7 +68,7 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     ui->setupUi(this);
 
     toolBox.append(ui->toolBox);
-    qDebug()<<__func__<<tr(SECOND_MENU_STRING[0][0]);
+
    // initUI();
 }
 
@@ -81,11 +81,8 @@ void FirstSecondMenuWidget::reTranslatorFirstSecondMenuUi()
 {
     ui->retranslateUi(this);
 
-    for(int i = 0; i < FIRST_MENU_NUMBER; i++){
-        for(int j = 0; j < SECOND_MENU_NUMBER; j++){
-            qDebug()<<__func__<<tr(SECOND_MENU_STRING[i][j]);
-        }
-    }
+    qDebug()<<__func__<<tr(SECOND_MENU_STRING[0][0]);
+
 }
 
 void FirstSecondMenuWidget::setSecondMenuName(int i)
