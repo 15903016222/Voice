@@ -93,6 +93,8 @@ void MainWindow::initUI()
     qApp->installTranslator(translator);
     translatorChineseUI(); // default Chinese
 
+    firstSecondMenu->initUI();
+
     firstMenuNum = 0;
     secondMenuNum = 0;
     hiddenFirstSecondMenuFlag = false;

@@ -67,8 +67,9 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    toolBox.append(ui->toolBox);
     qDebug()<<__func__<<tr(SECOND_MENU_STRING[0][0]);
-    initUI();
+   // initUI();
 }
 
 FirstSecondMenuWidget::~FirstSecondMenuWidget()
@@ -148,8 +149,6 @@ void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
 
 void FirstSecondMenuWidget::initUI()
 {
-    toolBox.append(ui->toolBox);
-
     for(int i = 0; i < FIRST_MENU_NUMBER; i++)
     {
         QListView* listView = findChild<QListView*>("listView_" + QString::number(i+1));
@@ -157,8 +156,8 @@ void FirstSecondMenuWidget::initUI()
         listView->adjustSize();
         menuList.append(listView);
 
-        QStandardItemModel *standardItemModel = new QStandardItemModel(this);
-        standardItemModel->setObjectName("standardItemModel_"+QString::number(i+1));
+        standardItemModel = new QStandardItemModel(this);
+        standardItemModel->setObjectName("standardItemModel_" + QString::number(i+1));
         modelList.append(standardItemModel);
 
         setSecondMenuName(i);

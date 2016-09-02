@@ -29,14 +29,15 @@ public:
     QList<QToolBox*> toolBox;
     QList<QListView*> menuList;
     QList<QStandardItemModel*> modelList;
+    QStandardItemModel *standardItemModel;
 
+    void initUI();
     void reTranslatorFirstSecondMenuUi();
     void setSecondMenuName(int i);
     void initSecondMenuItem(int i);
     void secondMenuItemClicked(int i, QModelIndex index);
 
 private:
-    void initUI();
 
 private slots:
 
