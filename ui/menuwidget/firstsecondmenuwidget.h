@@ -7,6 +7,14 @@
 #include <QStandardItemModel>
 #include <QPushButton>
 
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QHash>
+#include <QFile>
+
 #define FIRST_MENU_NUMBER 9
 #define SECOND_MENU_NUMBER 5
 
@@ -41,10 +49,14 @@ public:
   QList<QToolBox*> toolBox;
   QList<QListView*> menuList;
   QList<QStandardItemModel*> modelList;
+  QStringList firstMenuData;
+  QVariantHash firstMenuHash;
 
   void setSecondMenuName(int i);
   void initSecondMenuItem(int i);
   void secondMenuItemClicked(int i, QModelIndex index);
+  void read_json_file(QFile *file);
+  QStringList get_second_menu_list(int i);
 
 private:
   void initUI();

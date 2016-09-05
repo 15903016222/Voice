@@ -10,4 +10,10 @@
         <file>resources/battery1.jpg</file>
         <file>resources/battery2.jpg</file>
     </qresource>
+    <qresource prefix="/json">
+        <file>resources/menuone.json</file>
+        <file>resources/menuthree.json</file>
+        <file>resources/menutwo.json</file>
+        <file>resources/menu.json</file>
+    </qresource>
 </RCC>
