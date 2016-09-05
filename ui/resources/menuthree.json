@@ -1,0 +1,895 @@
+{
+
+	"Gain": {
+		"style": "1",
+        "minimum": 10,
+        "maximum": 200,
+		"unit": "dB"
+	},
+	"Start": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Range": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Velocity": {
+		"style": "1",
+        "minimum": 635,
+        "maximum": 12540,
+		"unit": "m/s"
+	},
+	"Wedge Delay": {
+		"style": "1",
+		"unit": "μs"
+	},
+	"UT Unit": {
+		"style": "2",
+		"options": [
+			{
+				"UT Unit": "time"
+			},
+			{
+				"UT Unit": "sound path"
+			},
+			{
+				"UT Unit": "true depth"
+			}
+		]
+	},
+
+
+	"Tx/Rx Mode": {
+		"style": "2",
+		"options": [
+			{
+				"Tx/Rx Mode": "PC"
+			},
+			{
+				"Tx/Rx Mode": "PE"
+			},
+			{
+				"Tx/Rx Mode": "TT"
+			},
+			{
+				"Tx/Rx Mode": "TOFD"
+			}
+		]
+	},
+	"Pulser": {},
+	"Voltage": {
+		"style": "2",
+		"options": [
+			{
+				"Voltage": "50V"
+			},
+			{
+				"Voltage": "100V"
+			},
+			{
+				"Voltage": "200V"
+			}
+		]
+	},
+	"PW": {
+		"style": "1",
+        "minimum": 30,
+        "maximum": 500,
+		"unit": "ns"
+	},
+	"PRF": {
+		"style": "2",
+		"options": []
+	},
+
+
+	"Receiver": {},
+	"Filter": {
+		"style": "2",
+		"options": [
+			{
+				"Filter": "none"
+			},
+			{
+				"Filter": "1M"
+			},
+			{
+				"Filter": "1.5-2.5M"
+			},
+			{
+				"Filter": "3-5M"
+			},
+			{
+				"Filter": "7.5M"
+			},
+			{
+				"Filter": "more than 10M"
+			}
+		]
+	},
+	"Rectifier": {
+		"style": "2",
+		"options": [
+			{
+				"Rectifier": "RF"
+			},
+			{
+				"Rectifier": "FW"
+			},
+			{
+				"Rectifier": "HW+"
+			},
+			{
+				"Rectifier": "HW-"
+			}
+		]
+	},
+	"Video Filter": {
+        "style": "3",
+		"label": [
+			{
+				"Video Filter": "on"
+			},
+			{
+				"Video Filter": "off"
+			}
+		]
+	},
+	"Averaging": {
+		"style": "2",
+		"options": [
+			{
+                "Averaging": "1"
+			},
+			{
+                "Averaging": "2"
+			},
+			{
+                "Averaging": "4"
+			},
+			{
+                "Averaging": "8"
+			},
+			{
+                "Averaging": "16"
+			}
+		]
+	},
+
+
+	"Set 80%": {
+		"style": "button"
+	},
+	"dB Ref.": {
+		"style": "button"
+	},
+	"Point Qty.": {
+		"style": "1"
+	},
+	"Scale Factor": {},
+	"Sum Gain": {},
+
+
+	"Gate": {
+		"style": "2",
+		"options": [
+			{
+				"Gate": "A"
+			},
+			{
+				"Gate": "B"
+			},
+			{
+				"Gate": "I"
+			},
+			{
+				"Gate": "off"
+			}
+		]
+	},
+	"Start": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Width": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Threshold": {
+		"style": "1",
+		"unit": "%"
+	},
+	"Synchro": {
+		"style": "2",
+		"options": [
+			{},
+			{},
+			{}
+		]
+	},
+
+
+	"Alarm": {
+		"style": "2",
+		"options": [
+			{
+				"Alarm": "1"
+			},
+			{
+				"Alarm": "2"
+			},
+			{
+				"Alarm": "3"
+			}
+		]
+	},
+	"Switch": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Group A": {},
+	"Condition": {},
+	"Operator": {},
+
+
+	"Output": {},
+	"Sound": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Delay": {},
+	"Hold Time": {},
+	"Group": {},
+	"Data": {},
+
+      "DAC": {},
+       "TCG": {},
+
+
+	"Group": {
+		"style": "2",
+		"options": []
+	},
+	"Display": {
+		"style": "2",
+		"options": [
+			{
+				"Display": "A"
+			},
+			{
+				"Display": "AB"
+			},
+			{
+				"Display": "AS"
+			},
+			{
+				"Display": "ABC"
+			},
+			{
+				"Display": "ABS"
+			},
+			{
+				"Display": "ASC"
+			},
+			{
+				"Display": "SAAA"
+			},
+			{
+				"Display": "SACC"
+			}
+		]
+	},
+	"C-scan Source": {
+		"style": "2",
+		"options": [
+			{
+				"C-scan Source": "A%"
+			},
+			{
+				"C-scan Source": "B%"
+			},
+			{
+				"C-scan Source": "Thickness"
+			},
+			{
+				"C-scan Source": "I/"
+			}
+		]
+	},
+	"Min Thickness": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Max Thickness": {
+		"style": "1",
+		"unit": "mm"
+	},
+
+
+	"Amplitude": {},
+	"Depth": {},
+	"TOFD": {},
+
+
+	"Scan": {
+		"style": "2",
+		"options": [
+			{
+				"Scan": "A"
+			},
+			{
+				"Scan": "B"
+			},
+			{
+				"Scan": "C"
+			}
+		]
+	},
+	
+
+	"Group": {
+		"style": "2",
+		"options": []
+	},
+	"Group Mode": {},
+	"Probe": {
+		"style": "ProbeDialog"
+	},
+	"Wedge": {
+		"style": "WedgeDialog"
+	},
+	"Define": {
+		"style": "2",
+		"options": [
+			{
+				"Define": "Probe"
+			},
+			{
+				"Define": "Wedge"
+			}
+		]
+	},
+	"Auto Detect": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+
+
+	"Scan Offset": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Index Offset": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Skew": {
+		"style": "1",
+		"unit": "°"
+	},
+
+
+	"Gain": {
+		"style": "1",
+        "minimum": 0,
+        "maximum": 100,
+		"unit": "dB"
+	},
+	"Start": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Width": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Switch": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	
+
+	"Geometry": {
+		"style": "2",
+		"options": [
+			{
+				"Geometry": "Plate"
+			},
+			{
+				"Geometry": "ID"
+			},
+			{
+				"Geometry": "OD"
+			}
+		]
+	},
+	"Thickness": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Diameter": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Material": {
+		"style": "2",
+		"options": []
+	},
+	"Overlay": {},
+	
+
+	"Load Part": {
+		"style": "button"
+	},
+	"Clear Part": {
+		"style": "button"
+	},
+
+
+	"Law Type": {
+		"style": "2",
+		"options": [
+			{
+				"Law Type": "Azimuthal"
+			},
+			{
+				"Law Type": "Linear"
+			}
+		]
+	},
+	"Pulse Connection": {},
+	"Receiver Connection": {},
+	"Wave Type": {
+		"style": "2",
+		"options": [
+			{
+				"Wave Type": "LW"
+			},
+			{
+				"Wave Type": "SW"
+			}
+		]
+	},
+
+
+	"Min. Angle": {
+		"style": "1",
+		"unit": "°"
+	},
+	"Max. Angle": {
+		"style": "1",
+		"unit": "°"
+	},
+	"Angle Step": {
+		"style": "1",
+		"unit": "°"
+	},
+
+
+	"Apeture": {
+		"style": "1"
+	},
+	"First Element": {
+		"style": "1"
+	},
+	"Last Element": {
+		"style": "1"
+	},
+	"AElement Step": {
+		"style": "1"
+	},
+
+
+	"Type": {},
+
+
+	"Scan": {
+		"style": "2",
+		"options": [
+			{
+				"Scan": "Time"
+			},
+			{
+				"Scan": "Encoder 1"
+			},
+			{
+				"Scan": "Encoder 2"
+			}
+		]
+	},
+	"Type": {
+		"style": "2",
+		"options": [
+			{
+				"Type": "One Line"
+			},
+			{
+				"Type": "Raster Scan"
+			},
+			{
+				"Type": "Helicoidal Scan"
+			}
+		]
+	},
+	"Max Scan Speed": {
+		"style": "1"
+	},
+	"Max Scan Speed(rpm)": {
+		"style": "1"
+	},
+	
+
+	"Encoder": {
+		"style": "2",
+		"options": [
+			{
+				"Encoder": "1"
+			},
+			{
+				"Encoder": "2"
+			}
+		]
+	},
+	"Encoder Type": {
+		"style": "2",
+		"options": [
+			{
+				"Encoder Type": "Up"
+			},
+			{
+				"Encoder Type": "Down"
+			},
+			{
+				"Encoder Type": "Quad"
+			}
+		]
+	},
+	"Resolution": {},
+	"Polarity": {
+		"style": "2",
+		"options": [
+			{
+				"Polarity": "Normal"
+			},
+			{
+				"Polarity": "Reverse"
+			}
+		]
+	},
+	"Origin": {},
+	"Preset": {
+		"style": "button"
+	},
+
+
+	"Scan Start": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Scan End": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Scan Resolution": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Index Start": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Index End": {
+		"style": "1",
+		"unit": "mm"
+	},
+	"Index Resolution": {
+		"style": "1",
+		"unit": "mm"
+	},
+
+
+	"Start": {},
+	"Pause": {},
+
+
+	"Reading Group": {},
+	"Field 1": {},
+	"Field 2": {},
+	"Field 3": {},
+	"Field 4": {},
+
+
+	"Selection": {
+		"style": "2",
+		"options": [
+			{
+				"Cursors": "A"
+			},
+			{
+				"Cursors": "B"
+			},
+			{
+				"Cursors": "C"
+			},
+			{
+				"Cursors": "S"
+			},
+			{
+				"Cursors": "Data"
+			}
+		]
+	},
+
+
+	"Select": {
+		"style": "2",
+		"options": [
+			{
+				"Select": "TOFD Settings"
+			},
+			{
+				"Select": "TOFD Analysis"
+			}
+		]
+	},
+
+
+	"Add/Delete": {},
+	"Flaw Image": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Comment": {},
+	"Diaplay Table": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Export Record": {
+		"style": "button"
+	},
+
+
+
+	"Save Setup As": {
+		"style": "button"
+	},
+	"Open": {
+		"style": "button"
+	},
+	"File Manager": {
+		"style": "button"
+	},
+
+
+	"Storage": {
+		"style": "2",
+		"options": [
+			{
+				"Storage": "SD"
+			},
+			{
+				"Storage": "SSG"
+			},
+			{
+				"Storage": "U Storage"
+			}
+		]
+	},
+	"Save Mode": {
+		"style": "2",
+		"options": [
+			{
+				"Save Mode": "Inspection Data"
+			},
+			{
+				"Save Mode": "Inspection Table"
+			},
+			{
+				"Save Mode": "Screen"
+			},
+			{
+				"Save Mode": "Report"
+			}
+		]
+	},
+	"Save Data": {
+		"style": "button"
+	},
+	"File Name": {
+		"style": "inputDialog"
+	},
+
+
+	"Template": {
+		"style": "2"
+	},
+	"Report Name": {
+		"style": "inputDialog"
+	},
+	"Customer": {
+		"style": "inputDialog"
+	},
+	"Part Name": {
+		"style": "inputDialog"
+	},
+	"Part Number": {
+		"style": "inputDialog"
+	},
+	"Create": {
+		"style": "button"
+	},
+
+
+	"Probe/Wedge Info": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Inspection Info": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Scan Info": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Encoder Info": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"DAC/TCG Info": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Flaw Record Table": {
+        "style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+
+
+	"Select": {},
+	"Enable": {},
+	"Label": {
+		"style": "inputDialog"
+	},
+	"Content": {
+		"style": "inputDialog"
+	},
+	"Edit Note": {
+		"style": "inputDialog"
+	},
+	"Print": {
+		"style": "button"
+	},
+
+
+
+	"Units": {
+		"style": "2",
+		"options": [
+			{
+				"Units": "mm"
+			},
+			{
+				"Units": "inch"
+			}
+		]
+	},
+	"Bright": {},
+	"Opacity": {},
+
+	"Clock Set": {
+		"style": "clockDialog"
+	},
+	"Date Set": {
+		"style": "DateDialog"
+	},
+	"Language": {
+		"style": "2",
+		"options": [
+			{
+				"Language": "English"
+			},
+			{
+				"Language": "Chinese"
+			}
+		]
+	},
+
+
+	"IP Address": {},
+	"Subnet Mask": {},
+
+
+	"System Information": {},
+	"Cert Import": {},
+	"SW Update": {},
+	"HW Update": {},
+	"Reset Configuration": {},
+	"About": {}
+
+}
