@@ -28,9 +28,8 @@ DEFINES += GST_DISABLE_LOADSAVE
 
 INCLUDEPATH += $$PWD/ui
 INCLUDEPATH += $$PWD/ui/menuwidget
+INCLUDEPATH += $$PWD/ui/dialogwidget
 INCLUDEPATH += $$PWD/ui/qitemdelegate
-INCLUDEPATH += $$PWD/ui/inputpanel
-
 
 SOURCES += \
     main.cpp \
@@ -42,8 +41,9 @@ SOURCES += \
     ui/menuwidget/thirdmenuwidget.cpp \
     ui/menuwidget/commonmenuwidget.cpp \
     ui/menuwidget/commonmenubutton.cpp \
-    ui/menuwidget/measurementdialog.cpp \
-    ui/menuwidget/myinputpanel.cpp \
+    ui/dialogwidget/measurementdialog.cpp \
+    ui/dialogwidget/myinputpanel.cpp \
+    ui/dialogwidget/timesetdialog.cpp \
     ui/qitemdelegate/comboboxdelegate.cpp \
     ui/qitemdelegate/doublespinboxdelegate.cpp
 
@@ -56,8 +56,9 @@ HEADERS += \
     ui/menuwidget/thirdmenuwidget.h \
     ui/menuwidget/commonmenuwidget.h \
     ui/menuwidget/commonmenubutton.h \
-    ui/menuwidget/measurementdialog.h \
-    ui/menuwidget/myinputpanel.h \
+    ui/dialogwidget/measurementdialog.h \
+    ui/dialogwidget/myinputpanel.h \
+    ui/dialogwidget/timesetdialog.h \
     ui/qitemdelegate/comboboxdelegate.h \
     ui/qitemdelegate/doublespinboxdelegate.h
 
@@ -70,8 +71,9 @@ FORMS += \
     ui/menuwidget/thirdmenuwidget.ui \
     ui/menuwidget/commonmenuwidget.ui \
     ui/menuwidget/commonmenubutton.ui \
-    ui/menuwidget/measurementdialog.ui \
-    ui/menuwidget/myinputpanel.ui
+    ui/dialogwidget/measurementdialog.ui \
+    ui/dialogwidget/myinputpanel.ui \
+    ui/dialogwidget/timesetdialog.ui
 
 win32 {
     CONFIG += windows link_prl

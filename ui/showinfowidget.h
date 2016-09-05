@@ -21,6 +21,9 @@ private:
 public:
     void displayTime();
     void initShowTime();
+    bool eventFilter(QObject *object, QEvent *event);
+
+    bool showDlg;
 
 signals:
 
