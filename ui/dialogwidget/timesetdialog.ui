@@ -68,13 +68,16 @@
         </property>
         <property name="dateTime">
          <datetime>
-          <hour>11</hour>
-          <minute>30</minute>
+          <hour>0</hour>
+          <minute>0</minute>
           <second>0</second>
           <year>2016</year>
           <month>9</month>
           <day>5</day>
          </datetime>
+        </property>
+        <property name="displayFormat">
+         <string>yyyy/MM/dd</string>
         </property>
        </widget>
       </item>
@@ -97,15 +100,11 @@
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+        <property name="displayFormat">
+         <string>hh:mm:ss</string>
+        </property>
         <property name="timeSpec">
          <enum>Qt::LocalTime</enum>
-        </property>
-        <property name="time">
-         <time>
-          <hour>11</hour>
-          <minute>30</minute>
-          <second>8</second>
-         </time>
         </property>
        </widget>
       </item>

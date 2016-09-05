@@ -4,7 +4,8 @@
 #include "timesetdialog.h"
 
 #include <QTimer>
-#include <QDateTime>
+//#include <QDateTime>
+
 
 ShowInfoWidget::ShowInfoWidget(QWidget *parent) :
     QWidget(parent),
@@ -38,6 +39,11 @@ void ShowInfoWidget::initShowTime()
     timer->start(500);
 }
 
+void ShowInfoWidget::slotUpdateTime()
+{
+    displayTime();
+}
+
 bool ShowInfoWidget::eventFilter(QObject *object, QEvent *event)
 {
     if(object == ui->label_5_showDateTime)
@@ -56,9 +62,4 @@ bool ShowInfoWidget::eventFilter(QObject *object, QEvent *event)
         }
     }
     return QWidget::eventFilter(object, event);
-}
-
-void ShowInfoWidget::slotUpdateTime()
-{
-    displayTime();
 }

@@ -1,9 +1,6 @@
 #include "timesetdialog.h"
 #include "ui_timesetdialog.h"
 
-#include <QDate>
-#include <QTime>
-
 TimeSetDialog::TimeSetDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TimeSetDialog)
@@ -23,26 +20,28 @@ void TimeSetDialog::initUI()
     ui->dateEdit->setDate(QDate::currentDate());
     ui->timeEdit->setTime(QTime::currentTime());
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timeOutSlot()));
+//    QTimer *timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(timeOutSlot()));
 
-    timer->start(1000);
+//    timer->start(1000);
 
 }
 
-//void TimeSetDialog::on_dateEdit_dateChanged(QDate)
-//{
+void TimeSetDialog::on_dateEdit_dateChanged(QDate date)
+{
+    date = ui->dateEdit->date();
+}
 
-//}
-
-//void TimeSetDialog::on_timeEdit_dateChanged(QDate)
-//{
-
-//}
+void TimeSetDialog::on_timeEdit_timeChanged(QTime time)
+{
+    time = ui->timeEdit->time();
+}
 
 void TimeSetDialog::on_pushButton_ok_clicked()
 {
-    close();
+    ui->dateEdit->setReadOnly(true);
+    ui->timeEdit->setReadOnly(true);
+  //  close();
 
 }
 

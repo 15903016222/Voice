@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QTimer>
+#include <QDate>
+#include <QTime>
 
 namespace Ui {
 class TimeSetDialog;
@@ -28,8 +30,8 @@ private:
 signals:
 
 private slots:
-  //  void on_dateEdit_dateChanged(QDate);
-  //  void on_timeEdit_dateChanged(QDate);
+    void on_dateEdit_dateChanged(QDate date);
+    void on_timeEdit_timeChanged(QTime time);
     void on_pushButton_ok_clicked();
     void timeOutSlot();
 
