@@ -43,7 +43,8 @@ SOURCES += \
     ui/menuwidget/measurementdialog.cpp \
     ui/menuwidget/myinputpanel.cpp \
     ui/qitemdelegate/comboboxdelegate.cpp \
-    ui/qitemdelegate/doublespinboxdelegate.cpp
+    ui/qitemdelegate/doublespinboxdelegate.cpp \
+    ui/qitemdelegate/pushbuttondelegate.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -57,7 +58,8 @@ HEADERS += \
     ui/menuwidget/measurementdialog.h \
     ui/menuwidget/myinputpanel.h \
     ui/qitemdelegate/comboboxdelegate.h \
-    ui/qitemdelegate/doublespinboxdelegate.h
+    ui/qitemdelegate/doublespinboxdelegate.h \
+    ui/qitemdelegate/pushbuttondelegate.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -162,3 +164,9 @@ linux {
 }
 
 message($$CONFIG)
+
+DISTFILES += \
+    ui/resources/menu.json \
+    ui/resources/menuone.json \
+    ui/resources/menuthree.json \
+    ui/resources/menutwo.json
