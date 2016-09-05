@@ -78,13 +78,13 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
     delete ui;
 }
 
-void FirstSecondMenuWidget::reTranslatorFirstSecondMenuUi()
-{
-    ui->retranslateUi(this);
+//void FirstSecondMenuWidget::reTranslatorFirstSecondMenuUi()
+//{
+//    ui->retranslateUi(this);
 
-    qDebug()<<__func__<<tr(SECOND_MENU_STRING[0][0]);
+//    qDebug()<<__func__<<tr(SECOND_MENU_STRING[0][0]);
 
-}
+//}
 
 void FirstSecondMenuWidget::setSecondMenuName(int i)
 {

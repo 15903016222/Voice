@@ -93,7 +93,7 @@ void MainWindow::initUI()
     qApp->installTranslator(translator);
     translatorChineseUI(); // default Chinese
 
-    firstSecondMenu->initUI();
+//    firstSecondMenu->initUI();
 
     firstMenuNum = 0;
     secondMenuNum = 0;
@@ -115,7 +115,7 @@ void MainWindow::initUI()
     ui->scrollArea->setWidget(firstSecondMenu);
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
-    connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scrollMenu(int)));
+    connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
 }
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
@@ -293,7 +293,7 @@ void MainWindow::updateTranslator()
     ui->retranslateUi(this);
     ui->widgetTopLeft->reTranslatorTopMenuUi();
     ui->widgetTopLeft->setTopMenuFont();
-    firstSecondMenu->reTranslatorFirstSecondMenuUi();
+//    firstSecondMenu->reTranslatorFirstSecondMenuUi();
     ui->widget_thirdMenu->reTranslatorThirdMenuUi();
     commonMenuWidget->reTranslatorCommonMenuUi();
 }
@@ -412,7 +412,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
     }
 }
 
-void MainWindow::scrollMenu(int index)
+void MainWindow::scroll_menu(int index)
 {
   if(index >= 4 && index < 9)
   {

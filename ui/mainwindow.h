@@ -50,6 +50,7 @@ public:
     bool hiddenFirstSecondMenuFlag;
     bool hiddenThirdMenuFlag;
     bool hiddenCommonMenuFlag;
+    bool hiddenArrowFlag;
 
     int firstMenuNum;
     int secondMenuNum;
@@ -70,9 +71,13 @@ private slots:
     void on_pushButton_top_clicked();
     void on_pushButton_bottom_clicked();
     void slot_pushButton_commonMenuClicked();
+    void scroll_menu(int index);
 
     void translatorChineseUI();
     void translatorEnglishUI();
+
+signals:
+    void clickedMenuIndex(int);
 
 };
 
