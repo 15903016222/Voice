@@ -6,7 +6,6 @@
 #include <QWidget>
 #include <QStandardItemModel>
 #include <QResizeEvent>
-#include <QPaintEvent>
 #include <QTableView>
 
 #define THIRD_MENU_NUMBER 6
@@ -130,36 +129,39 @@ static QString WIDGET_CHOICE_CHAR[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_M
 }; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
 
 namespace Ui {
-  class ThirdMenuWidget;
+    class ThirdMenuWidget;
 }
 
 class ThirdMenuWidget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit ThirdMenuWidget(QWidget *parent = 0);
-  ~ThirdMenuWidget();
+    explicit ThirdMenuWidget(QWidget *parent = 0);
+    ~ThirdMenuWidget();
 
 private:
-  Ui::ThirdMenuWidget *ui;
+    Ui::ThirdMenuWidget *ui;
 
 
 public:
-  void initStandardModel();
-  void setThirdMenuName(int i, int j);
-  QStandardItemModel *model;
-  void widgetStyleChoice(int i, int j, int k);
-  void resizeEvent(QResizeEvent *event);
-  void paintBorder();
-  bool eventFilter(QObject *object, QEvent *event);
+    void initStandardModel();
+    void setThirdMenuName(int i, int j);
+    void widgetStyleChoice(int i, int j, int k);
+    void resizeEvent(QResizeEvent *event);
+    QVariantHash read_json_file(QFile *file);
+    QJsonObject get_json_object(QFile *file);
+    QJsonObject get_fourth_object_list(QString string, QJsonObject jsonObject);
 
-  int width;
-  int height;
-  int currFirstNum;
-  int currSecondNum;
+    int width;
+    int height;
+    int currFirstNum;
+    int currSecondNum;
 
-  QList<QTableView *> tableView;
+    QStandardItemModel *model;
+    QVariantHash thirdMenuHash;
+    QVariantHash fourthMenuHash;
+    FirstSecondMenuWidget *widget;
 
 private:
 
