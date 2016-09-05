@@ -43,7 +43,6 @@ public:
 //  void linkPluginsToConnectDevice();
   void resizeEvent(QResizeEvent *event);
   void arrowShowFlag();
-  void paintBorder();
 
   bool eventFilter(QObject *object, QEvent *event);
   bool hiddenFirstSecondMenuFlag;
