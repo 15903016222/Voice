@@ -39,6 +39,11 @@ void CommonMenuWidget::initStandardModel()
                                                    "border-left:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.068, x2:0.5, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
                                                    "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
 
+  ui->tableView->setStyleSheet("QTableView::item{"
+                               "border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgb(255, 255, 255), stop:0.757062 rgb(0, 120, 195));"
+                               "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgb(0, 0, 0), stop:0.757062 rgb(0, 120, 195));}");
+
+
   for(int k = 0; k < COMMON_MENU_NUMBER; k++)
   {
     QModelIndex index = model->index(k, 0, QModelIndex());
