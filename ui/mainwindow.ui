@@ -108,7 +108,7 @@
 	background-color: rgb(0, 0, 0);
 }</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout" rowstretch="44,7" columnstretch="1,4">
+         <layout class="QGridLayout" name="gridLayout" rowstretch="44,7" columnstretch="2,7">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -134,7 +134,7 @@
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
              <property name="leftMargin">
-              <number>5</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>30</number>
@@ -158,7 +158,10 @@ QWidget#widget
 	border-radius:8px;
 }</string>
                </property>
-               <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,26,1">
+               <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,18,1">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -171,29 +174,62 @@ QWidget#widget
                 <property name="bottomMargin">
                  <number>5</number>
                 </property>
-                <property name="horizontalSpacing">
-                 <number>0</number>
-                </property>
-                <property name="verticalSpacing">
-                 <number>2</number>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pushButton_top">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
+                <item>
+                 <widget class="QFrame" name="frame_up">
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
                   </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
                   </property>
-                  <property name="text">
-                   <string>up</string>
-                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_top">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(37, 76, 124);
+border:none;
+</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="mainwindow.qrc">
+                       <normaloff>:/file/resources/up.png</normaloff>:/file/resources/up.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>24</width>
+                       <height>12</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
                 </item>
-                <item row="1" column="0">
+                <item>
                  <widget class="QWidget" name="widget_scrollArea" native="true">
                   <property name="styleSheet">
                    <string notr="true">QWidget
@@ -243,8 +279,8 @@ QWidget#widget
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>155</width>
-                        <height>418</height>
+                        <width>178</width>
+                        <height>416</height>
                        </rect>
                       </property>
                      </widget>
@@ -253,26 +289,62 @@ QWidget#widget
                   </layout>
                  </widget>
                 </item>
-                <item row="2" column="0">
-                 <widget class="QPushButton" name="pushButton_bottom">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
+                <item>
+                 <widget class="QFrame" name="frame_down">
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
                   </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
                   </property>
-                  <property name="text">
-                   <string>down</string>
-                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_bottom">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(37, 76, 124);
+border:none;
+</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="mainwindow.qrc">
+                       <normaloff>:/file/resources/down.png</normaloff>:/file/resources/down.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>24</width>
+                       <height>12</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
                 </item>
                </layout>
-               <zorder>pushButton_top</zorder>
-               <zorder>pushButton_bottom</zorder>
-               <zorder>widget_scrollArea</zorder>
               </widget>
              </item>
             </layout>
@@ -327,7 +399,9 @@ QWidget#widget
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="mainwindow.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>on_funcBtnClicked()</slot>

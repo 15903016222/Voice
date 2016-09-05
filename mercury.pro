@@ -14,8 +14,10 @@ RESOURCES += ui/mainwindow.qrc
 
 TR_EXCLUDE += $$(BOOST_INCLUDE_PATH)/*
 TRANSLATIONS += \
-    translator/newpa_ui_zh_cn.ts \
-    translator/newpa_ui_en.ts
+    ui/translator/phascanII_UI_Chinese.ts \
+    ui/translator/phascanII_UI_English.ts
+
+CODECFORTR = utf-8
 
 TARGET = Mercury
 TEMPLATE = app

@@ -18,48 +18,37 @@
 #define FIRST_MENU_NUMBER 9
 #define SECOND_MENU_NUMBER 5
 
-static QString SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
-  {"General", "Pulser", "Receiver", "Advanced", ""},
-  {"Gate", "Alarm", "Output", "DAC", "TCG"},
-  {"Selection", "Color Setting", "Properties", "", ""},
-  {"Select", "Position", "FFT", "Part", "Advanced"},
-  {"Law Config", "Angle", "Aperture", "Focal Point", ""},
-  {"Inspection", "Encoder", "Area", "Start", ""},
-  {"Reading", "Cursors", "TOFD", "Flaw Record", ""},
-  {"File", "Save Mode", "Report", "Format", "User Field"},
-  {"Preference", "System", "Network", "Service", ""}
-};
-
 namespace Ui{
 class FirstSecondMenuWidget;
 }
 
 class FirstSecondMenuWidget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit FirstSecondMenuWidget(QWidget *parent = 0);
-  ~FirstSecondMenuWidget();
+    explicit FirstSecondMenuWidget(QWidget *parent = 0);
+    ~FirstSecondMenuWidget();
 
 private:
-  Ui::FirstSecondMenuWidget *ui;
+    Ui::FirstSecondMenuWidget *ui;
 
 public:
-  QList<QToolBox*> toolBox;
-  QList<QListView*> menuList;
-  QList<QStandardItemModel*> modelList;
-  QStringList firstMenuData;
-  QVariantHash firstMenuHash;
+    QList<QToolBox*> toolBox;
+    QList<QListView*> menuList;
+    QList<QStandardItemModel*> modelList;
+    QStringList firstMenuData;
+    QVariantHash firstMenuHash;
 
-  void setSecondMenuName(int i);
-  void initSecondMenuItem(int i);
-  void secondMenuItemClicked(int i, QModelIndex index);
-  void read_json_file(QFile *file);
-  QStringList get_second_menu_list(int i);
+    void setSecondMenuName(int i);
+    void initSecondMenuItem(int i);
+    void secondMenuItemClicked(int i, QModelIndex index);
+    void read_json_file(QFile *file);
+    void initUI();
+    void reTranslatorFirstSecondMenuUi();
+    QStringList get_second_menu_list(int i);
 
 private:
-  void initUI();
 
 private slots:
 
