@@ -1,6 +1,8 @@
 #ifndef SHOWINFOWIDGET_H
 #define SHOWINFOWIDGET_H
 
+#include "timesetdialog.h"
+
 #include <QWidget>
 
 namespace Ui {
@@ -17,18 +19,25 @@ public:
 
 private:
     Ui::ShowInfoWidget *ui;
+    TimeSetDialog setTimeDlg;
+    QTimer *timer;
 
 public:
-    void displayTime();
     void initShowTime();
     bool eventFilter(QObject *object, QEvent *event);
-
     bool showDlg;
+//    QDate date;
+//    QTime time;
+//    QString str_date;
+//    QString str_time;
+//    QString dateTime;
 
 signals:
 
 public slots:
     void slotUpdateTime();
+    void slotPushButton_ok();
+    void slotEditTime();
 
 };
 

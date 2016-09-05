@@ -5,6 +5,9 @@
 #include <QTimer>
 #include <QDate>
 #include <QTime>
+#include <QPushButton>
+#include <QDateEdit>
+#include <QTimeEdit>
 
 namespace Ui {
 class TimeSetDialog;
@@ -22,7 +25,9 @@ private:
     Ui::TimeSetDialog *ui;
 
 public:
-
+    QList<QPushButton*> pushButton_ok;
+    QList<QDateEdit*> dateEdit;
+    QList<QTimeEdit*> timeEdit;
 
 private:
     void initUI();
@@ -32,9 +37,6 @@ signals:
 private slots:
     void on_dateEdit_dateChanged(QDate date);
     void on_timeEdit_timeChanged(QTime time);
-    void on_pushButton_ok_clicked();
-    void timeOutSlot();
-
 };
 
 #endif // TIMESETDIALOG_H

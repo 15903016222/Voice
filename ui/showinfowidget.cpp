@@ -1,11 +1,7 @@
 #include "showinfowidget.h"
 #include "ui_showinfowidget.h"
 
-#include "timesetdialog.h"
-
 #include <QTimer>
-//#include <QDateTime>
-
 
 ShowInfoWidget::ShowInfoWidget(QWidget *parent) :
     QWidget(parent),
@@ -13,10 +9,13 @@ ShowInfoWidget::ShowInfoWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+  //  timer = new QTimer(this);
     ui->label_5_showDateTime->installEventFilter(this);
     showDlg = false;
 
     initShowTime();
+
+    connect(setTimeDlg.pushButton_ok.at(0), SIGNAL(clicked()), this, SLOT(slotPushButton_ok()));
 }
 
 ShowInfoWidget::~ShowInfoWidget()
@@ -24,24 +23,50 @@ ShowInfoWidget::~ShowInfoWidget()
     delete ui;
 }
 
-void ShowInfoWidget::displayTime()
-{
-    QDateTime time = QDateTime::currentDateTime();
-    QString str_time = time.toString("yyyy-MM-dd hh:mm:ss");
-    ui->label_5_showDateTime->setText(str_time);
-}
-
 void ShowInfoWidget::initShowTime()
 {
-    displayTime();
-    QTimer *timer = new QTimer(this);
+    timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(slotUpdateTime()));
     timer->start(500);
 }
 
 void ShowInfoWidget::slotUpdateTime()
 {
-    displayTime();
+    QDateTime time = QDateTime::currentDateTime();
+
+    QString str_time = time.toString("yyyy-MM-dd hh:mm:ss");
+
+    ui->label_5_showDateTime->setText(str_time);
+}
+
+void ShowInfoWidget::slotPushButton_ok()
+{
+    timer->stop();
+    connect(timer, SIGNAL(timeout()), this, SLOT(slotEditTime()));
+    timer->start(1000);
+
+    setTimeDlg.close();
+}
+
+void ShowInfoWidget::slotEditTime()
+{
+//    date = setTimeDlg.dateEdit.at(0)->date();
+//    time = setTimeDlg.timeEdit.at(0)->time();
+//    QTime time1(23, 59, 59);
+
+//    if(time == time1)
+//    {
+//     date = date.addDays(1);
+//    }
+//    time = time.addSecs(1);
+
+//    str_date = date.toString("yyyy-MM-dd");
+//    str_time = time.toString("hh:mm:ss");
+
+//    dateTime.append(str_date);
+//    dateTime.append(" ");
+//    dateTime.append(str_time);
+//    ui->label_5_showDateTime->setText(dateTime);
 }
 
 bool ShowInfoWidget::eventFilter(QObject *object, QEvent *event)
@@ -52,7 +77,6 @@ bool ShowInfoWidget::eventFilter(QObject *object, QEvent *event)
         {
             if(!showDlg){
                 showDlg = true;
-                TimeSetDialog setTimeDlg;
                 setTimeDlg.setWindowFlags(Qt::FramelessWindowHint);
                 setTimeDlg.setModal(true);
                 setTimeDlg.showNormal();
