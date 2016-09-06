@@ -14,8 +14,6 @@ ShowInfoWidget::ShowInfoWidget(QWidget *parent) :
 
     initShowTime();
 
-    connect(setTimeDlg.dateEdit.at(0), SIGNAL(dateChanged(QDate)), this, SLOT(slot_dateEdit_dateChanged(QDate)));
-    connect(setTimeDlg.timeEdit.at(0), SIGNAL(timeChanged(QTime)), this, SLOT(slot_timeEdit_timeChanged(QTime)));
     connect(setTimeDlg.pushButton_ok.at(0), SIGNAL(clicked()), this, SLOT(slotPushButton_ok()));
 }
 
@@ -42,9 +40,11 @@ void ShowInfoWidget::slotUpdateTime()
 
 void ShowInfoWidget::slotPushButton_ok()
 {
-//    QTimer *timer1 = new QTimer(this);
-//    connect(timer1, SIGNAL(timeout()), this, SLOT(slotEditTime()));
-//    timer1->start();
+    QTimer *timer1 = new QTimer(this);
+    connect(setTimeDlg.dateEdit.at(0), SIGNAL(dateChanged(QDate)), this, SLOT(slot_dateEdit_dateChanged(QDate)));
+    connect(setTimeDlg.timeEdit.at(0), SIGNAL(timeChanged(QTime)), this, SLOT(slot_timeEdit_timeChanged(QTime)));
+    connect(timer1, SIGNAL(timeout()), this, SLOT(slotEditTime()));
+    timer1->start();
 
     setTimeDlg.close();
 }
