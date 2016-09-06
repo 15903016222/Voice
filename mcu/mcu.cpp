@@ -14,41 +14,12 @@
 
 Mcu *Mcu::m_mcu = NULL;
 
-const char Mcu::m_queryFstBattery[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x52, 0x0, 0x32, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_querySndBattery[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x36, PKG_END_CHAR, PKG_END_CHAR};
-
-const char Mcu::m_queryFstBatteryStatus[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x31, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_querySndBattery_Status[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x35, PKG_END_CHAR, PKG_END_CHAR};
-
-const char Mcu::m_queryCoreTemperatureData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryFPGATemperatureData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x11, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryPowerSupplyTemperatureData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x12, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryMCUTemperatureData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x13, PKG_END_CHAR, PKG_END_CHAR};
+char Mcu::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 
 char Mcu::m_setBrightnessData[8]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x53, 0x01, 0x42, 0x0, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryBrightnessData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x42, PKG_END_CHAR, PKG_END_CHAR};
 
-const char Mcu::m_respondSTM32PowerOffData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x53, 0x0, 0x41, PKG_END_CHAR, PKG_END_CHAR};
+const char Mcu::m_setPoweroff[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x53, 0x0, 0x41, PKG_END_CHAR, PKG_END_CHAR};
 const char Mcu::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x53, 0x0, 0x43, PKG_END_CHAR, PKG_END_CHAR};
-
-const char Mcu::m_queryPashedArrayProbeModel[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x51, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryPashedArrayProbeSeries[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x52, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryPashedArrayProbeType[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x53, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryPashedArrayProbeFreq[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x54, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryPashedArrayProbeElements[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x55, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryPashedArrayProbeElementsDist[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x56, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryPashedArrayProbeFerencePoint[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x57, PKG_END_CHAR, PKG_END_CHAR};
-
-const char Mcu::m_queryNormalProbe1Model[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x61, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryNormalProbe1Series[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x62, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryNormalProbe1Freq[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x63, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryNormalProbe1Size[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x64, PKG_END_CHAR, PKG_END_CHAR};
-
-const char Mcu::m_queryNormalProbe2Model[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x71, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryNormalProbe2Series[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x72, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryNormalProbe2Freq[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x73, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryNormalProbe2Size[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x74, PKG_END_CHAR, PKG_END_CHAR};
-
 
 Mcu::Mcu()
     :QSerialPort(UART_DEVICE)
@@ -89,7 +60,7 @@ void Mcu::parse_packet(QByteArray &pkg)
     }
 
     QByteArray data = pkg.mid(PKG_HEADER_LEN, pkg.at(3));
-    emit event((EventType)pkg.at(4), data);
+    emit event((PkgCmd)pkg.at(4), data);
 }
 
 QByteArray Mcu::find_packet(QByteArray &data)
@@ -137,6 +108,7 @@ void Mcu::on_readyRead_event()
         if (data.isEmpty()) {
             break;
         }
+        qDebug()<<__func__<<endl<<data.toHex();
         parse_packet(data);
     }
 }
