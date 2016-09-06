@@ -31,11 +31,16 @@ void ShowInfoWidget::initShowTime()
 
 void ShowInfoWidget::slotUpdateTime()
 {
-    QDateTime time = QDateTime::currentDateTime();
-
-    QString str_time = time.toString("yyyy-MM-dd hh:mm:ss");
-
-    ui->label_5_showDateTime->setText(str_time);
+ //   QDateTime time = QDateTime::currentDateTime();
+ //   QString str_time = time.toString("yyyy-MM-dd hh:mm:ss");
+ //   ui->label_5_showDateTime->setText(str_time);
+    str_date = QDate::currentDate().toString("yyyy-MM-dd");
+    str_time = QTime::currentTime().toString("hh:mm:ss");
+    QString dateTime;
+    dateTime.append(str_date);
+    dateTime.append(" ");
+    dateTime.append(str_time);
+    ui->label_5_showDateTime->setText(dateTime);
 }
 
 void ShowInfoWidget::slotPushButton_ok()
@@ -62,8 +67,8 @@ void ShowInfoWidget::slotEditTime()
     }
     time = time.addSecs(1);
 
-    QString str_date = date.toString("yyyy-MM-dd");
-    QString str_time = time.toString("hh:mm:ss");
+    str_date = date.toString("yyyy-MM-dd");
+    str_time = time.toString("hh:mm:ss");
     QString dateTime;
     dateTime.append(str_date);
     dateTime.append(" ");
@@ -74,27 +79,13 @@ void ShowInfoWidget::slotEditTime()
 void ShowInfoWidget::slot_dateEdit_dateChanged(QDate date)
 {
     timer->stop();
-    QString str_date = date.toString("yyyy-MM-dd");
-    QString str_time = QTime::currentTime().toString("hh:mm:ss");
-    QString dateTime;
-    dateTime.append(str_date);
-    dateTime.append(" ");
-    dateTime.append(str_time);
-    ui->label_5_showDateTime->setText(dateTime);
-    timer->start();
+    str_date = date.toString("yyyy-MM-dd");
 }
 
 void ShowInfoWidget::slot_timeEdit_timeChanged(QTime time)
 {
     timer->stop();
-    QString str_date = QDate::currentDate().toString("yyyy-MM-dd");
-    QString str_time = time.toString("hh:mm:ss");
-    QString dateTime;
-    dateTime.append(str_date);
-    dateTime.append(" ");
-    dateTime.append(str_time);
-    ui->label_5_showDateTime->setText(dateTime);
-    timer->start();
+    str_time = time.toString("hh:mm:ss");
 }
 
 bool ShowInfoWidget::eventFilter(QObject *object, QEvent *event)

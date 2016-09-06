@@ -26,6 +26,8 @@ public:
     void initShowTime();
     bool eventFilter(QObject *object, QEvent *event);
     bool showDlg;
+    QString str_date;
+    QString str_time;
 
 signals:
 
