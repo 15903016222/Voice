@@ -62,14 +62,14 @@ public:
     void query_fpga_temp() { write(m_queryFPGATemperatureData, sizeof(m_queryFPGATemperatureData)); }
     void query_power_temp() { write(m_queryPowerSupplyTemperatureData, sizeof(m_queryPowerSupplyTemperatureData)); }
     void query_mcu_temp() { write(m_queryMCUTemperatureData, sizeof(m_queryMCUTemperatureData)); }
-    void query_battery() { write(m_queryBatteryData, sizeof(m_queryBatteryData)); }
-    void query_battery2() { write(m_queryBattery_2_Data, sizeof(m_queryBattery_2_Data)); }
-    void query_battery_status() { write(m_queryBatteryStatus, sizeof(m_queryBatteryStatus)); }
-    void query_battery2_status() { write(m_queryBattery_2_Status, sizeof(m_queryBattery_2_Status)); }
+    void query_first_battery() { write(m_queryFstBattery, sizeof(m_queryFstBattery)); }
+    void query_second_battery() { write(m_querySndBattery, sizeof(m_querySndBattery)); }
+    void query_first_battery_status() { write(m_queryFstBatteryStatus, sizeof(m_queryFstBatteryStatus)); }
+    void query_second_battery_status() { write(m_querySndBattery_Status, sizeof(m_querySndBattery_Status)); }
     void notify_started() { write(m_nofityStarted, sizeof(m_nofityStarted)); }
     void query_brightness() { write(m_queryBrightnessData, sizeof(m_queryBrightnessData)); }
     void set_poweroff() { write(m_respondSTM32PowerOffData, sizeof(m_respondSTM32PowerOffData)); }
-    qint64 set_brightness(uint8_t light) { m_setBrightnessData[5]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
+    qint64 set_brightness(uchar light) { m_setBrightnessData[5]=light; return write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
 
     void query_pa_probe_model()  { write(m_queryPashedArrayProbeModel, sizeof(m_queryPashedArrayProbeModel)); }
     void query_pa_probe_series()  { write(m_queryPashedArrayProbeSeries, sizeof(m_queryPashedArrayProbeSeries)); }
@@ -91,8 +91,8 @@ private:
     static Mcu *m_mcu;
     QMutex m_wrMutex;
     QByteArray m_recBuffer;
-    static const char m_queryBatteryData[7];
-    static const char m_queryBattery_2_Data[7];
+    static const char m_queryFstBattery[7];
+    static const char m_querySndBattery[7];
     static const char m_queryBrightnessData[7];
     static char m_setBrightnessData[8];
     static const char m_queryCoreTemperatureData[7];
@@ -101,8 +101,8 @@ private:
     static const char m_queryMCUTemperatureData[7];
     static const char m_respondSTM32PowerOffData[7];
 
-    static const char m_queryBatteryStatus[7];
-    static const char m_queryBattery_2_Status[7];
+    static const char m_queryFstBatteryStatus[7];
+    static const char m_querySndBattery_Status[7];
     static const char m_nofityStarted[7];
     static const char m_queryPashedArrayProbeModel[7];
     static const char m_queryPashedArrayProbeSeries[7];

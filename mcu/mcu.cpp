@@ -1,5 +1,7 @@
 #include "mcu.h"
 
+#include <QDebug>
+
 #define UART_DEVICE         "/dev/ttymxc2"
 #define PKG_BEGIN_STRING    "\xff\xff"
 #define PKG_END_STRING      "\xfe\xfe"
@@ -12,11 +14,11 @@
 
 Mcu *Mcu::m_mcu = NULL;
 
-const char Mcu::m_queryBatteryData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x52, 0x0, 0x32, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryBattery_2_Data[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x36, PKG_END_CHAR, PKG_END_CHAR};
+const char Mcu::m_queryFstBattery[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x52, 0x0, 0x32, PKG_END_CHAR, PKG_END_CHAR};
+const char Mcu::m_querySndBattery[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x36, PKG_END_CHAR, PKG_END_CHAR};
 
-const char Mcu::m_queryBatteryStatus[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x31, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_queryBattery_2_Status[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x35, PKG_END_CHAR, PKG_END_CHAR};
+const char Mcu::m_queryFstBatteryStatus[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x31, PKG_END_CHAR, PKG_END_CHAR};
+const char Mcu::m_querySndBattery_Status[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x35, PKG_END_CHAR, PKG_END_CHAR};
 
 const char Mcu::m_queryCoreTemperatureData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 const char Mcu::m_queryFPGATemperatureData[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x11, PKG_END_CHAR, PKG_END_CHAR};
@@ -109,7 +111,7 @@ QByteArray Mcu::findPacket(QByteArray &data)
         if (begin > end) {
             data = data.mid(begin);
             continue;
-        } else if ( 0 != data.indexOf(PKG_END_STRING, begin+PKG_HEADER_LEN+data.at(begin+3)) ) {
+        } else if ( end != begin+PKG_HEADER_LEN+data.at(begin+3) ) {
             data = data.mid(begin+PKG_BEING_STRING_LEN);
             continue;
         } else {
