@@ -82,7 +82,7 @@ Mcu::Mcu()
 
 }
 
-void Mcu::parsePacket(QByteArray &pkg)
+void Mcu::parse_packet(QByteArray &pkg)
 {
     if (pkg.size() != (pkg.at(3)+PKG_HEADER_LEN+PKG_END_STRING_LEN)) {
         return;
@@ -92,7 +92,7 @@ void Mcu::parsePacket(QByteArray &pkg)
     emit event((EventType)pkg.at(4), data);
 }
 
-QByteArray Mcu::findPacket(QByteArray &data)
+QByteArray Mcu::find_packet(QByteArray &data)
 {
     int begin;
     int end;
@@ -133,10 +133,10 @@ void Mcu::on_readyRead_event()
     m_recBuffer.append(data);
 
     while(1) {
-        data = findPacket(m_recBuffer);
+        data = find_packet(m_recBuffer);
         if (data.isEmpty()) {
             break;
         }
-        parsePacket(data);
+        parse_packet(data);
     }
 }

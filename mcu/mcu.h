@@ -123,8 +123,8 @@ private:
     qint64 write(const char *data, qint64 len) { QMutexLocker locker(&m_wrMutex); return QIODevice::write(data, len); }
     void on_readyRead_event();
 
-    QByteArray findPacket(QByteArray &data);
-    void parsePacket(QByteArray &pkg);
+    QByteArray find_packet(QByteArray &data);
+    void parse_packet(QByteArray &pkg);
 
 };
 
