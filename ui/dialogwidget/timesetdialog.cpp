@@ -23,14 +23,5 @@ void TimeSetDialog::initUI()
 
     ui->dateEdit->setDate(QDate::currentDate());
     ui->timeEdit->setTime(QTime::currentTime());
-}
-
-void TimeSetDialog::on_dateEdit_dateChanged(QDate date)
-{
-    date = ui->dateEdit->date();
-}
-
-void TimeSetDialog::on_timeEdit_timeChanged(QTime time)
-{
-    time = ui->timeEdit->time();
+    ui->dateEdit->setCalendarPopup(true);
 }

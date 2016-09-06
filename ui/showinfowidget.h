@@ -26,11 +26,6 @@ public:
     void initShowTime();
     bool eventFilter(QObject *object, QEvent *event);
     bool showDlg;
-//    QDate date;
-//    QTime time;
-//    QString str_date;
-//    QString str_time;
-//    QString dateTime;
 
 signals:
 
@@ -38,6 +33,8 @@ public slots:
     void slotUpdateTime();
     void slotPushButton_ok();
     void slotEditTime();
+    void slot_dateEdit_dateChanged(QDate date);
+    void slot_timeEdit_timeChanged(QTime time);
 
 };
 

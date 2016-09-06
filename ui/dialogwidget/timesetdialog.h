@@ -34,9 +34,8 @@ private:
 
 signals:
 
-private slots:
-    void on_dateEdit_dateChanged(QDate date);
-    void on_timeEdit_timeChanged(QTime time);
+public slots:
+
 };
 
 #endif // TIMESETDIALOG_H
