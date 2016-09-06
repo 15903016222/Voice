@@ -268,11 +268,17 @@ QWidget(parent),
 	widget = new FirstSecondMenuWidget;
 
 	QFile *fileOne = new QFile(":/json/resources/menutwo.json");
-	thirdMenuHash = read_json_file(fileOne);
+    fileOne->open(QIODevice::ReadOnly | QIODevice::Text);
+    QString stringOne = fileOne->readAll();
+    thirdMenuHash = read_json_file(stringOne);
+    jsonObjectOne = get_json_object(stringOne);
 	fileOne->close();
 
-	QFile *fileTwo = new QFile(":/json/resources/menuthree.json");
-	fourthMenuHash = read_json_file(fileTwo);
+    QFile *fileTwo = new QFile(":/json/resources/menuthree.json");
+    fileTwo->open(QIODevice::ReadOnly | QIODevice::Text);
+    QString stringTwo = fileTwo->readAll();
+    fourthMenuHash = read_json_file(stringTwo);
+    jsonObjectTwo = get_json_object(stringTwo);
 	fileTwo->close();
 
 	initStandardModel();
@@ -309,11 +315,11 @@ void ThirdMenuWidget::initStandardModel()
 		QModelIndex index = model->index(k, 0, QModelIndex());
 		model->setData(index, k);
 	}
-	ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
-	ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
-	ui->tableView->verticalHeader()->hide();
-	ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-	//  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);  //Qt-4.8.6
+//	ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
+//	ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
+//	ui->tableView->verticalHeader()->hide();
+//	ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//	//  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);  //Qt-4.8.6
 
 	ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
@@ -337,11 +343,10 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
 	currSecondNum = j;
 	model->clear();
 	initStandardModel();
-	QVariantList variantList = thirdMenuHash.values(widget->get_second_menu_list(i).at(j));
-	QStringList stringList = variantList.at(0).toStringList();
+    QStringList thirdStringList = get_third_menu_list(i, j);
 	for(int k = 0; k < THIRD_MENU_NUMBER; k ++)
 	{
-		if(stringList.count() >= k + 1)
+        if(thirdStringList.count() >= k + 1)
 		{
 			widgetStyleChoice(i, j, k);
 			model->item(0, k)->setTextAlignment(Qt::AlignCenter);
@@ -367,157 +372,184 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
 
 void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
 {
-	QVariantList thirdVariantList = thirdMenuHash.values(widget->get_second_menu_list(i).at(j));
-	QStringList thirdStringList = thirdVariantList.at(0).toStringList();
+    QStringList thirdStringList = get_third_menu_list(i, j);
 
-	QFile *file = new QFile(":/json/resources/menuthree.json");
-	QJsonObject jsonObject = get_json_object(file);
-	file->close();
-	QJsonObject subObject = get_fourth_object_list(thirdStringList.at(k), jsonObject);
-	if(subObject.contains("unit")) {
-		model->setHeaderData(k, Qt::Horizontal, QString(thirdStringList.at(k) + "\n(" + subObject["unit"].toString() + ")"));
-	} else {
-		model->setHeaderData(k, Qt::Horizontal, thirdStringList.at(k));
-	}
+    QString firstMenuString = widget->firstMenuData.at(i);
+    QString secondMenuString = widget->get_second_menu_list(i).at(j);
 
-	if(subObject.contains("style")) {
-		switch(subObject["style"].toString().toInt()) {
-		case 1: {
-			int minimum = subObject["minimum"].toInt();
-			int maximum = subObject["maximum"].toInt();
-			QList<int> rangeList;
-			rangeList.append(minimum);
-			rangeList.append(maximum);
+    QJsonObject subObject = get_subsidiary_object(thirdStringList.at(k), jsonObjectTwo);
+    if(subObject.contains(firstMenuString + "_" + secondMenuString)) {
+        subObject = get_subsidiary_object(firstMenuString + "_" + secondMenuString, subObject);
+    } else {
 
-			DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
-			doubleSpinBox->set_number_range(rangeList);
+    }
+    if(subObject.contains("unit")) {
+        model->setHeaderData(k, Qt::Horizontal, QString(thirdStringList.at(k) + "\n(" + subObject["unit"].toString() + ")"));
+    } else {
+        model->setHeaderData(k, Qt::Horizontal, thirdStringList.at(k));
+    }
 
-			model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-			QStandardItem *item = new QStandardItem(QString::number((minimum + maximum) / 2, 'f', 2));
-			model->setItem(0, k, item);
-			ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
-			ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
-			break;
-				}
-		case 2: {
-			QVariantList tmpList = subObject["options"].toArray().toVariantList();
-			QStringList optionList;
-			if(tmpList.size() != 0) {
-				for(int index = 0; index < tmpList.size(); index ++) {
-					QMap<QString, QVariant> map = tmpList.at(index).toMap();
-					QVariant result = map.value(thirdStringList.at(k));
-					optionList.append(result.toString());
-				}
-			} else {
-				optionList.append("");
-			}
+    if(subObject.contains("style")) {
+        switch(subObject["style"].toString().toInt()) {
+            case 1: {
+                int minimum = subObject["minimum"].toInt();
+                int maximum = subObject["maximum"].toInt();
+                QList<int> rangeList;
+                rangeList.append(minimum);
+                rangeList.append(maximum);
 
-			ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
-			comboBox->set_comboBox_item_list(optionList);
+                DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
+                doubleSpinBox->set_number_range(rangeList);
 
-			model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-			QStandardItem *item = new QStandardItem(optionList.at(0));
-			model->setItem(0, k, item);
-			ui->tableView->setItemDelegateForColumn(k, comboBox);
-			break;
-				}
-		case 3: {
-			//切换字on/off
-			QVariantList tmpList = subObject["label"].toArray().toVariantList();
-			QStringList switchList;
-			if(tmpList.size() != 0) {
-				for(int index = 0; index < tmpList.size(); index ++) {
-					QMap<QString, QVariant> map = tmpList.at(index).toMap();
-					QVariant result = map.value(thirdStringList.at(k));
-					switchList.append(result.toString());
-				}
-			} else {
-				switchList.append("");
-			}
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+                QStandardItem *item = new QStandardItem(QString::number((minimum + maximum) / 2, 'f', 2));
+                model->setItem(0, k, item);
+                ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
+                ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
+                break;
+            }
+            case 2: {
+                QVariantList tmpList = subObject["options"].toArray().toVariantList();
+                QStringList optionList;
+                QStringList abbreviationList;
+                qDebug() << tmpList.size();
+                if(tmpList.size() != 0) {
+                    for(int index = 0; index < tmpList.size(); index ++) {
+                        QMap<QString, QVariant> map = tmpList.at(index).toMap();
+                        qDebug() << map;
+                        QVariant result = map.value(thirdStringList.at(k));
+                        optionList.append(result.toString());
+                        if(map.contains("ShortText")) {
+                            QVariant shortText = map.value("ShortText");
+                            abbreviationList.append(shortText.toString());
+                        } else {
+                            abbreviationList.append(optionList.at(index));
+                        }
+                    }
+                } else {
+                    optionList.append("");
+                    abbreviationList.append("");
+                }
 
-			PushButtonDelegate *pushButton = new PushButtonDelegate(this);
+                ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
+                comboBox->set_comboBox_item_list(optionList);
+                comboBox->set_model_item_list(abbreviationList);
+
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+                QStandardItem *item = new QStandardItem(abbreviationList.at(0));
+                model->setItem(0, k, item);
+                ui->tableView->setItemDelegateForColumn(k, comboBox);
+                break;
+            }
+            case 3: {
+                //切换字on/off
+                QVariantList tmpList = subObject["label"].toArray().toVariantList();
+                QStringList switchList;
+                if(tmpList.size() != 0) {
+                    for(int index = 0; index < tmpList.size(); index ++) {
+                    QMap<QString, QVariant> map = tmpList.at(index).toMap();
+                    QVariant result = map.value(thirdStringList.at(k));
+                    switchList.append(result.toString());
+                    }
+                } else {
+                    switchList.append("");
+                }
+
+                PushButtonDelegate *pushButton = new PushButtonDelegate(this);
 
 
-			model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-			QStandardItem *item = new QStandardItem(QString("on"));
-			model->setItem(0, k, item);
-			//          model->item(0, k)->setFlags(Qt::ItemIsEnabled);
-			ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
-			ui->tableView->setItemDelegateForColumn(k, pushButton);
-			break;
-				}
-		case 0: {
-			model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-			QStandardItem *item = new QStandardItem(QString(""));
-			model->setItem(0, k, item);
-			model->item(0, k)->setFlags(Qt::NoItemFlags);
-			break;
-				}
-		default:
-			break;
-
-		}
-	} else {
-		model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-		QStandardItem *item = new QStandardItem(QString(""));
-		model->setItem(0, k, item);
-		model->item(0, k)->setFlags(Qt::NoItemFlags);
-	}
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+                QStandardItem *item = new QStandardItem(QString("on"));
+                model->setItem(0, k, item);
+                //          model->item(0, k)->setFlags(Qt::ItemIsEnabled);
+                ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
+                ui->tableView->setItemDelegateForColumn(k, pushButton);
+                break;
+            }
+            case 0: {
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+                QStandardItem *item = new QStandardItem(QString(""));
+                model->setItem(0, k, item);
+                model->item(0, k)->setFlags(Qt::NoItemFlags);
+                break;
+            }
+            default:
+                break;
+        }
+    } else {
+        model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        QStandardItem *item = new QStandardItem(QString(""));
+        model->setItem(0, k, item);
+        model->item(0, k)->setFlags(Qt::NoItemFlags);
+    }
 }
 
 void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
 {
-	width = event->size().width();
-	height = event->size().height();
-	model->clear();
-	initStandardModel();
-	setThirdMenuName(currFirstNum, currSecondNum);
+    width = event->size().width();
+    height = event->size().height();
+    model->clear();
+    initStandardModel();
+    setThirdMenuName(currFirstNum, currSecondNum);
 }
 
-QVariantHash ThirdMenuWidget::read_json_file(QFile *file)
+QVariantHash ThirdMenuWidget::read_json_file(QString string)
 {
-	file->open(QIODevice::ReadOnly | QIODevice::Text);
-	QString str = file->readAll();
-	QJsonParseError error;
-	QJsonDocument jsonDocument = QJsonDocument::fromJson(str.toUtf8(), &error);
-	QVariantHash variantHash;
-	if(error.error == QJsonParseError::NoError) {
-		if(!(jsonDocument.isNull() || jsonDocument.isEmpty())) {
-			if(jsonDocument.isObject()) {
-				QJsonObject jsonObject = jsonDocument.object();
-				variantHash = jsonObject.toVariantHash();
-			} else if(jsonDocument.isArray()) {
-			}
-		}
-	} else {
-		qDebug() << "Error Type" << error.error;
-		qDebug() << "Error Message:" << error.errorString();
-	}
-	return variantHash;
+    QJsonParseError error;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(string.toUtf8(), &error);
+    QVariantHash variantHash;
+    if(error.error == QJsonParseError::NoError) {
+        if(!(jsonDocument.isNull() || jsonDocument.isEmpty())) {
+            if(jsonDocument.isObject()) {
+                QJsonObject jsonObject = jsonDocument.object();
+                variantHash = jsonObject.toVariantHash();
+            } else if(jsonDocument.isArray()) {
+
+            }
+        }
+    } else {
+//        qDebug() << "FileName: " << file->fileName();
+        qDebug() << "Error Type" << error.error;
+        qDebug() << "Error Message:" << error.errorString();
+    }
+    return variantHash;
 }
 
-QJsonObject ThirdMenuWidget::get_json_object(QFile *file)
+QJsonObject ThirdMenuWidget::get_json_object(QString string)
 {
-	file->open(QIODevice::ReadOnly | QIODevice::Text);
-	QString str = file->readAll();
-	QJsonParseError error;
-	QJsonDocument jsonDocument = QJsonDocument::fromJson(str.toUtf8(), &error);
-	QJsonObject jsonObject;
-	if(error.error == QJsonParseError::NoError) {
-		if(!(jsonDocument.isNull() || jsonDocument.isEmpty())) {
-			if(jsonDocument.isObject()) {
-				jsonObject = jsonDocument.object();
-			} else if(jsonDocument.isArray()) {
-			}
-		}
-	} else {
-		qDebug() << "Error Type" << error.error;
-		qDebug() << "Error Message:" << error.errorString();
-	}
-	return jsonObject;
+    QJsonParseError error;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(string.toUtf8(), &error);
+    QJsonObject jsonObject;
+    if(error.error == QJsonParseError::NoError) {
+        if(!(jsonDocument.isNull() || jsonDocument.isEmpty())) {
+            if(jsonDocument.isObject()) {
+                jsonObject = jsonDocument.object();
+            } else if(jsonDocument.isArray()) {
+
+            }
+        }
+    } else {
+//        qDebug() << "FileName: " << file->fileName();
+        qDebug() << "Error Type" << error.error;
+        qDebug() << "Error Message:" << error.errorString();
+    }
+    return jsonObject;
 }
 
-QJsonObject ThirdMenuWidget::get_fourth_object_list(QString string, QJsonObject jsonObject)
+bool ThirdMenuWidget::get_json_document_type(QString string, QJsonObject jsonObject)
+{
+    bool isObjectFlag;
+    if(jsonObject.contains(string)) {
+        if(jsonObject[string].isObject()) {
+            isObjectFlag = true;
+        } else if(jsonObject[string].isArray()) {
+            isObjectFlag = false;
+        }
+    }
+    return isObjectFlag;
+}
+
+QJsonObject ThirdMenuWidget::get_subsidiary_object(QString string, QJsonObject jsonObject)
 {
 	QJsonObject subObject;
 	if(jsonObject.contains(string)) {
@@ -526,6 +558,43 @@ QJsonObject ThirdMenuWidget::get_fourth_object_list(QString string, QJsonObject 
 		}
 	}
 	return subObject;
+}
+
+QJsonArray ThirdMenuWidget::get_subsidiary_array(QString string, QJsonObject jsonObject)
+{
+    QJsonArray subArray;
+    if(jsonObject.contains(string)) {
+        if(jsonObject[string].isArray()) {
+            subArray = jsonObject[string].toArray();
+        }
+    }
+    return subArray;
+}
+
+QStringList ThirdMenuWidget::get_third_menu_list(int i, int j)
+{
+    QStringList stringList;
+    QString firstMenuString = widget->firstMenuData.at(i);
+    QString secondMenuString = widget->get_second_menu_list(i).at(j);
+    if(get_json_document_type(secondMenuString, jsonObjectOne) == true) {
+        if(get_json_document_type(firstMenuString, jsonObjectOne[secondMenuString].toObject()) == false) {
+            QVariantList variantList = get_subsidiary_array(firstMenuString, jsonObjectOne[secondMenuString].toObject()).toVariantList();
+            for(int k = 0; k < variantList.size(); k ++) {
+                stringList.append(variantList.at(k).toString());
+            }
+        }
+    } else {
+        QVariantList variantList = thirdMenuHash.values(secondMenuString);
+        stringList = variantList.at(0).toStringList();
+    }
+    return stringList;
+}
+
+bool ThirdMenuWidget::eventFilter(QObject *object, QEvent *event)
+{
+
+
+    return QWidget::eventFilter(object, event);
 }
 
 //void ThirdMenuWidget::paintBorder()

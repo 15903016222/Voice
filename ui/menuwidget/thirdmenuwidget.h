@@ -91,9 +91,14 @@ public:
     void widgetStyleChoice(int i, int j, int k);
     void resizeEvent(QResizeEvent *event);
 
-    QVariantHash read_json_file(QFile *file);
-    QJsonObject get_json_object(QFile *file);
-    QJsonObject get_fourth_object_list(QString string, QJsonObject jsonObject);
+    bool get_json_document_type(QString string, QJsonObject jsonObject);
+    bool eventFilter(QObject *object, QEvent *event);
+
+    QVariantHash read_json_file(QString string);
+    QJsonObject get_json_object(QString string);
+    QJsonObject get_subsidiary_object(QString string, QJsonObject jsonObject);
+    QJsonArray get_subsidiary_array(QString string, QJsonObject jsonObject);
+    QStringList get_third_menu_list(int i, int j);
 
     int width;
     int height;
@@ -104,6 +109,8 @@ public:
     QVariantHash thirdMenuHash;
     QVariantHash fourthMenuHash;
     FirstSecondMenuWidget *widget;
+    QJsonObject jsonObjectOne;
+    QJsonObject jsonObjectTwo;
 
 private:
 

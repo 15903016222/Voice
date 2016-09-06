@@ -136,7 +136,7 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
     secondMenuNum = item->row();
 
-    // firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
+    firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
     ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, secondMenuNum);
 }
 
