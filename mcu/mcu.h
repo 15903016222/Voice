@@ -37,7 +37,7 @@ public:
         BATTERY2_QUANTITY           = 0x36, /* 2号电池电量 */
         POWEROFF                    = 0x41, /* 关机 */
         BRIGHTNESS                  = 0x42, /* 背光亮度 */
-        MAIN_APP_READY              = 0x43, /* 主程序启动通知 */
+        NOTIFY_STARTED              = 0x43, /* 主程序启动通知 */
         PA_PROBE_MODEL              = 0x51, /* 相控阵探头型号 */
         PA_PROBE_SERIES             = 0x52, /* 相控阵探头系列 */
         PA_PROBE_TYPE               = 0x53, /* 相控阵探头类型 */

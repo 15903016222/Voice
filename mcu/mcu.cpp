@@ -16,10 +16,10 @@ Mcu *Mcu::m_mcu = NULL;
 
 char Mcu::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 
-char Mcu::m_setBrightnessData[8]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x53, 0x01, 0x42, 0x0, PKG_END_CHAR, PKG_END_CHAR};
+char Mcu::m_setBrightnessData[8]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::SettingPkg, 0x01, Mcu::BRIGHTNESS, 0x0, PKG_END_CHAR, PKG_END_CHAR};
 
-const char Mcu::m_setPoweroff[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x53, 0x0, 0x41, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, 0x53, 0x0, 0x43, PKG_END_CHAR, PKG_END_CHAR};
+const char Mcu::m_setPoweroff[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::SettingPkg, 0x0, Mcu::POWEROFF, PKG_END_CHAR, PKG_END_CHAR};
+const char Mcu::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::SettingPkg, 0x0, Mcu::NOTIFY_STARTED, PKG_END_CHAR, PKG_END_CHAR};
 
 Mcu::Mcu()
     :QSerialPort(UART_DEVICE)
