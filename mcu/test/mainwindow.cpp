@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonSndBattery, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery);
     connect(ui->pushButtonSndBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery_status);
     connect(ui->pushButtonPowerOff, &QPushButton::clicked, m_mcu, &Mcu::set_poweroff);
+    connect(ui->pushButtonStarted, &QPushButton::clicked, m_mcu, &Mcu::notify_started);
+    connect(ui->verticalSliderBrightness, &QSlider::valueChanged, m_mcu, &Mcu::set_brightness);
 
     connect(m_mcu, &Mcu::event, this, &MainWindow::on_mcu_event);
 }

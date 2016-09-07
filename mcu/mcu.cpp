@@ -108,7 +108,7 @@ void Mcu::on_readyRead_event()
         if (data.isEmpty()) {
             break;
         }
-        qDebug()<<__func__<<endl<<data.toHex();
+        qDebug()<<"Packet:"<<data.toHex();
         parse_packet(data);
     }
 }
