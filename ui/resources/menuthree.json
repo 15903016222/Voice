@@ -5,14 +5,50 @@
             "style": "1",
             "minimum": 0,
             "maximum": 100,
-            "unit": "dB"
+            "unit": "dB",
+            "decimal": 1,
+            "steps": [
+                {
+                    "Gain": "0.1"
+                },
+                {
+                    "Gain": "0.5"
+                },
+                {
+                    "Gain": "1.0"
+                },
+                {
+                    "Gain": "2.0"
+                },
+                {
+                    "Gain": "6.0"
+                }
+            ]
         },
         "Probe/Part_FFT": {
             "parent": "Probe/Part_FFT",
             "style": "1",
             "minimum": 0,
             "maximum": 100,
-            "unit": "dB"
+            "unit": "dB",
+            "decimal": 1,
+            "steps": [
+                {
+                    "Gain": "0.1"
+                },
+                {
+                    "Gain": "0.5"
+                },
+                {
+                    "Gain": "1.0"
+                },
+                {
+                    "Gain": "2.0"
+                },
+                {
+                    "Gain": "6.0"
+                }
+            ]
         }
     },
     "Start": {
@@ -21,24 +57,85 @@
             "style": "1",
             "minimum": 0,
             "condition": "('Start' + 'Range') <= 'Velocity' * 9900",
-            "unit": "mm"
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
         },
         "Gate/Curves_Gate": {
             "parent": "Gate/Curves_Gate",
             "style": "1",
             "minimum": 0,
             "maximum": 16000,
-            "unit": "mm"
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
         },
         "Probe/Part_FFT": {
             "parent": "Probe/Part_FFT",
             "style": "1",
             "minimum": 0,
             "maximum": 16000,
-            "unit": "mm"
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
         },
         "Scan_Start": {
-            "parent": "Scan_Start"
+            "parent": "Scan_Start",
+            "style": "1",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
         }
     },
     "Range": {
@@ -46,20 +143,62 @@
         "style": "1",
         "minimum": 0,
         "condition": "('Start' + 'Range') <= 'Velocity' * 9900",
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Range": "0.10"
+            },
+            {
+                "Range": "1.00"
+            },
+            {
+                "Range": "10.0"
+            },
+            {
+                "Range": "100.0"
+            }
+        ]
     },
     "Velocity": {
         "parent": "UT Settings_General",
         "style": "1",
         "minimum": 635,
         "maximum": 12540,
-        "unit": "m/s"
+        "unit": "m/s",
+        "decimal": 1,
+        "steps": [
+            {
+                "Velocity": "1.0"
+            },
+            {
+                "Velocity": "10.0"
+            },
+            {
+                "Velocity": "100.0"
+            },
+            {
+                "Velocity": "1000.0"
+            }
+        ]
     },
     "Wedge Delay": {
         "parent": "UT Settings_General",
         "style": "1",
         "minimum": 0,
-        "unit": "μs"
+        "unit": "μs",
+        "decimal": 2,
+        "steps": [
+            {
+                "Wedge Delay": "0.01"
+            },
+            {
+                "Wedge Delay": "0.10"
+            },
+            {
+                "Wedge Delay": "1.00"
+            }
+        ]
     },
     "UT Unit": {
         "parent": "UT Settings_General",
@@ -98,7 +237,19 @@
         "parent": "UT Settings_Pulser",
         "style": "1",
         "minimum": 1,
-        "maximum": 113
+        "maximum": 113,
+        "decimal": 0,
+        "steps": [
+            {
+                "Pulser": "1"
+            },
+            {
+                "Pulser": "10"
+            },
+            {
+                "Pulser": "100"
+            }
+        ]
     },
     "Voltage": {
         "parent": "UT Settings_Pulser",
@@ -120,7 +271,19 @@
         "style": "1",
         "minimum": 30,
         "maximum": 500,
-        "unit": "ns"
+        "unit": "ns",
+        "decimal": 1,
+        "steps": [
+            {
+                "PW": "2.5"
+            },
+            {
+                "PW": "10"
+            },
+            {
+                "PW": "25"
+            }
+        ]
     },
     "PRF": {
         "parent": "UT Settings_Pulser",
@@ -252,7 +415,25 @@
     },
     "Sum Gain": {
         "parent": "UT Settings_Advanced",
-        "style": "1"
+        "style": "1",
+        "decimal": 1,
+        "steps": [
+            {
+                "Sum Gain": "0.1"
+            },
+            {
+                "Sum Gain": "0.5"
+            },
+            {
+                "Sum Gain": "1.0"
+            },
+            {
+                "Sum Gain": "2.0"
+            },
+            {
+                "Sum Gain": "6.0"
+            }
+        ]
     },
     "Gate": {
         "parent": "Gate/Curves_Gate",
@@ -276,14 +457,46 @@
         "Gate/Curves_Gate": {
             "parent": "Gate/Curves_Gate",
             "style": "1",
-            "unit": "mm"
+            "minimum": 0.05,
+            "maximum": 525,
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Width": "0.01"
+                },
+                {
+                    "Width": "0.10"
+                },
+                {
+                    "Width": "1.00"
+                },
+                {
+                    "Width": "10.00"
+                }
+            ]
         },
         "Probe/Part_FFT": {
             "parent": "Probe/Part_FFT",
             "style": "1",
-            "minimum": 0.02,
-            "maximum": 288.1,
-            "unit": "mm"
+            "minimum": 0.05,
+            "maximum": 525,
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Width": "0.01"
+                },
+                {
+                    "Width": "0.10"
+                },
+                {
+                    "Width": "1.00"
+                },
+                {
+                    "Width": "10.00"
+                }
+            ]
         }
     },
     "Threshold": {
@@ -291,7 +504,16 @@
         "style": "1",
         "minimum": 0,
         "maximum": 100,
-        "unit": "%"
+        "unit": "%",
+        "decimal": 0,
+        "steps": [
+            {
+                "Threshold": "1"
+            },
+            {
+                "Threshold": "10"
+            }
+        ]
     },
     "Synchro": {
         "parent": "Gate/Curves_Gate",
@@ -452,14 +674,38 @@
         "style": "1",
         "minimum": 0,
         "maximum": 5000,
-        "unit": "ms"
+        "unit": "ms",
+        "decimal": 2,
+        "steps": [
+            {
+                "Delay": "0.10"
+            },
+            {
+                "Delay": "1.00"
+            },
+            {
+                "Delay": "10.00"
+            }
+        ]
     },
     "Hold Time": {
         "parent": "Gate/Curves_Output",
         "style": "1",
         "minimum": 0,
         "maximum": 5000,
-        "unit": "ms"
+        "unit": "ms",
+        "decimal": 2,
+        "steps": [
+            {
+                "Hold Time": "0.10"
+            },
+            {
+                "Hold Time": "1.00"
+            },
+            {
+                "Hold Time": "10.00"
+            }
+        ]
     },
     "Group": {
         "Gate/Curves_Output": {
@@ -792,18 +1038,48 @@
         "style": "1",
         "minimum": -10000,
         "maximum": 10000,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 1,
+        "steps": [
+            {
+                "Scan Offset": "0.1"
+            },
+            {
+                "Scan Offset": "1.0"
+            },
+            {
+                "Scan Offset": "5.0"
+            },
+            {
+                "Scan Offset": "10.0"
+            }
+        ]
     },
     "Index Offset": {
         "parent": "Probe/Part_Position",
         "style": "1",
         "minimum": -10000,
         "maximum": 1000000,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 1,
+        "steps": [
+            {
+                "Index Offset": "0.1"
+            },
+            {
+                "Index Offset": "1.0"
+            },
+            {
+                "Index Offset": "5.0"
+            },
+            {
+                "Index Offset": "10.0"
+            }
+        ]
     },
     "Skew": {
         "parent": "Probe/Part_Position",
-        "style": "1",
+        "style": "2",
         "options": [
             {
                 "Skew": "0.0"
@@ -840,12 +1116,36 @@
         "style": "1",
         "minimum": 0.05,
         "maximum": 1000,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Thickness": "0.10"
+            },
+            {
+                "Thickness": "1.00"
+            },
+            {
+                "Thickness": "10.00"
+            }
+        ]
     },
     "Diameter": {
         "parent": "Probe/Part_Part",
         "style": "1",
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Diameter": "0.10"
+            },
+            {
+                "Diameter": "1.00"
+            },
+            {
+                "Diameter": "10.0"
+            }
+        ]
     },
     "Material": {
         "parent": "Probe/Part_Part",
@@ -952,10 +1252,31 @@
         "parent": "Focal Law_Law Config",
         "style": "1",
         "minimum": 1,
-        "maximum": 113
+        "maximum": 113,
+        "decimal": 0,
+        "steps": [
+            {
+                "Pulse Connection": "1"
+            },
+            {
+                "Pulse Connection": "10"
+            }
+        ]
     },
     "Receiver Connection": {
-        "parent": "Focal Law_Law Config"
+        "parent": "Focal Law_Law Config",
+        "style": "1",
+        "minimum": 1,
+        "maximum": 113,
+        "decimal": 0,
+        "steps": [
+            {
+                "Receiver Connection": "1"
+            },
+            {
+                "Receiver Connection": "10"
+            }
+        ]
     },
     "Wave Type": {
         "parent": "Focal Law_Law Config",
@@ -974,37 +1295,103 @@
         "style": "1",
         "minimum": 25,
         "maximum": 75,
-        "unit": "°"
+        "unit": "°",
+        "decimal": 0,
+        "steps": [
+            {
+                "Min. Angle": "1"
+            },
+            {
+                "Min. Angle": "5"
+            },
+            {
+                "Min. Angle": "10"
+            }
+        ]
     },
     "Max. Angle": {
         "parent": "Focal Law_Angle",
         "style": "1",
         "minimum": 25,
         "maximum": 75,
-        "unit": "°"
+        "unit": "°",
+        "decimal": 0,
+        "steps": [
+            {
+                "Max. Angle": "1"
+            },
+            {
+                "Max. Angle": "5"
+            },
+            {
+                "Max. Angle": "10"
+            }
+        ]
     },
     "Angle Step": {
         "parent": "Focal Law_Angle",
         "style": "1",
         "minimum": 1,
         "maximum": 10,
-        "unit": "°"
+        "unit": "°",
+        "decimal": 0,
+        "steps": [
+            {
+                "Angle Step": "1"
+            }
+        ]
     },
     "Apeture": {
         "parent": "Focal Law_Apeture",
-        "style": "1"
+        "style": "1",
+        "decimal": 0,
+        "steps": [
+            {
+                "Apeture": "1"
+            },
+            {
+                "Apeture": "5"
+            }
+        ]
     },
     "First Element": {
         "parent": "Focal Law_Apeture",
-        "style": "1"
+        "style": "1",
+        "decimal": 0,
+        "steps": [
+            {
+                "First Element": "1"
+            },
+            {
+                "First Element": "5"
+            }
+        ]
     },
     "Last Element": {
         "parent": "Focal Law_Apeture",
-        "style": "1"
+        "style": "1",
+        "decimal": 0,
+        "steps": [
+            {
+                "Last Element": "1"
+            },
+            {
+                "Last Element": "5"
+            }
+        ]
     },
     "Element Step": {
         "parent": "Focal Law_Apeture",
-        "style": "1"
+        "style": "1",
+        "decimal": 0,
+        "steps": [
+            {
+                "Element Step": "1"
+            },
+            {
+                "Element Step": "5"
+            }
+        ]
     },
     "Type": {
         "Focal Law_Focal Point": {
@@ -1047,32 +1434,116 @@
     "Position Start": {
         "parent": "Facal Law_Focal Point",
         "style": "1",
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Position Start": "0.01"
+            },
+            {
+                "Position Start": "0.10"
+            },
+            {
+                "Position Start": "1.00"
+            },
+            {
+                "Position Start": "10.00"
+            }
+        ]
     },
     "Position End": {
         "parent": "Facal Law_Focal Point",
         "style": "1",
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Position End": "0.01"
+            },
+            {
+                "Position End": "0.10"
+            },
+            {
+                "Position End": "1.00"
+            },
+            {
+                "Position End": "10.00"
+            }
+        ]
     },
     "Offset Start": {
         "parent": "Facal Law_Focal Point",
         "style": "1",
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Offset Start": "0.01"
+            },
+            {
+                "Offset Start": "0.10"
+            },
+            {
+                "Offset Start": "1.00"
+            },
+            {
+                "Offset Start": "10.00"
+            }
+        ]
     },
     "Offset End": {
         "parent": "Facal Law_Focal Point",
         "style": "1",
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Offset End": "0.01"
+            },
+            {
+                "Offset End": "0.10"
+            },
+            {
+                "Offset End": "1.00"
+            },
+            {
+                "Offset End": "10.00"
+            }
+        ]
     },
     "Max Scan Speed": {
         "parent": "Scan_Inspection",
         "style": "1",
-        "unit": "mm/s"
+        "unit": "mm/s",
+        "decimal": 2,
+        "steps": [
+            {
+                "Max Scan Speed": "1.00"
+            },
+            {
+                "Max Scan Speed": "10.00"
+            },
+            {
+                "Max Scan Speed": "100.00"
+            }
+        ]
     },
     "Max Scan Speed(rpm)": {
         "parent": "Scan_Inspection",
         "style": "1",
-        "unit": "mm/s"
+        "unit": "mm/s",
+        "decimal": 2,
+        "steps": [
+            {
+                "Max Scan Speed(rpm)": "1.00"
+            },
+            {
+                "Max Scan Speed(rpm)": "10.00"
+            },
+            {
+                "Max Scan Speed(rpm)": "100.00"
+            }
+        ]
     },
     "Encoder": {
         "parent": "Scan_Encoder",
@@ -1122,7 +1593,25 @@
         "style": "1",
         "minimum": 0,
         "maximum": 1000,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Origin": "0.01"
+            },
+            {
+                "Origin": "0.10"
+            },
+            {
+                "Origin": "1.00"
+            },
+            {
+                "Origin": "10.00"
+            },
+            {
+                "Origin": "100.00"
+            }
+        ]
     },
     "Preset": {
         "parent": "Scan_Encoder",
@@ -1133,42 +1622,137 @@
         "style": "1",
         "minimum": 0,
         "maximum": 10000,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Scan Start": "10.00"
+            },
+            {
+                "Scan Start": "100.00"
+            },
+            {
+                "Scan Start": "1000.00"
+            },
+            {
+                "Scan Start": "10000.00"
+            }
+        ]
     },
     "Scan End": {
         "parent": "Scan_Area",
         "style": "1",
         "minimum": 0,
         "maximum": 10000,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Scan End": "10.00"
+            },
+            {
+                "Scan End": "100.00"
+            },
+            {
+                "Scan End": "1000.00"
+            },
+            {
+                "Scan End": "10000.00"
+            }
+        ]
     },
     "Scan Resolution": {
         "parent": "Scan_Area",
         "style": "1",
         "minimum": 0,
         "maximum": 100,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Scan Resolution": "0.01"
+            },
+            {
+                "Scan Resolution": "0.10"
+            },
+            {
+                "Scan Resolution": "0.50"
+            },
+            {
+                "Scan Resolution": "1.00"
+            },
+            {
+                "Scan Resolution": "10.00"
+            }
+        ]
     },
     "Index Start": {
         "parent": "Scan_Area",
         "style": "1",
         "minimum": 0,
         "maximum": 10000,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Index Start": "10.00"
+            },
+            {
+                "Index Start": "100.00"
+            },
+            {
+                "Index Start": "1000.00"
+            },
+            {
+                "Index Start": "10000.00"
+            }
+        ]
     },
     "Index End": {
         "parent": "Scan_Area",
         "style": "1",
         "minimum": 0,
         "maximum": 10000,
-        "unit": "mm"
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Index End": "10.00"
+            },
+            {
+                "Index End": "100.00"
+            },
+            {
+                "Index End": "1000.00"
+            },
+            {
+                "Index End": "10000.00"
+            }
+        ]
     },
     "Index Resolution": {
         "parent": "Scan_Area",
         "style": "1",
         "minimum": 0,
         "maximum": 100,
-        "unit": "mm"
+        "unit": "mm",
+        "steps": [
+            {
+                "Index Resolution": "0.01"
+            },
+            {
+                "Index Resolution": "0.10"
+            },
+            {
+                "Index Resolution": "0.50"
+            },
+            {
+                "Index Resolution": "1.00"
+            },
+            {
+                "Index Resolution": "10.00"
+            }
+        ]
     },
     "Pause": {
         "parent": "Scan_Start",
@@ -1212,25 +1796,73 @@
                         "style": "1",
                         "minimum": 0,
                         "maximum": 100,
-                        "unit": "%"
+                        "unit": "%",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "%(r)": "0.1"
+                            },
+                            {
+                                "%(r)": "1.0"
+                            },
+                            {
+                                "%(r)": "10.0"
+                            }
+                        ]
                     },
                     "%(m)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 100,
-                        "unit": "%"
+                        "unit": "%",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "%(m)": "0.1"
+                            },
+                            {
+                                "%(m)": "1.0"
+                            },
+                            {
+                                "%(m)": "10.0"
+                            }
+                        ]
                     },
                     "U(r)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 2,
+                        "steps": [
+                            {
+                                "U(r)": "0.1"
+                            },
+                            {
+                                "U(r)": "1.0"
+                            },
+                            {
+                                "U(r)": "10.0"
+                            }
+                        ]
                     },
                     "U(m)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 2,
+                        "steps": [
+                            {
+                                "U(m)": "0.1"
+                            },
+                            {
+                                "U(m)": "1.0"
+                            },
+                            {
+                                "U(m)": "10.0"
+                            }
+                        ]
                     }
                 }
             },
@@ -1241,25 +1873,79 @@
                         "style": "1",
                         "minimum": 0,
                         "maximum": 1000,
-                        "unit": "s"
+                        "unit": "s",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "S(r)": "0.1"
+                            },
+                            {
+                                "S(r)": "0.5"
+                            },
+                            {
+                                "S(r)": "1.0"
+                            },
+                            {
+                                "S(r)": "5.0"
+                            }
+                        ]
                     },
                     "S(m)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 1000,
-                        "unit": "s"
+                        "unit": "s",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "S(m)": "0.1"
+                            },
+                            {
+                                "S(m)": "0.5"
+                            },
+                            {
+                                "S(m)": "1.0"
+                            },
+                            {
+                                "S(m)": "5.0"
+                            }
+                        ]
                     },
                     "U(r)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 2,
+                        "steps": [
+                            {
+                                "U(r)": "0.1"
+                            },
+                            {
+                                "U(r)": "1.0"
+                            },
+                            {
+                                "U(r)": "10.0"
+                            }
+                        ]
                     },
                     "U(m)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 2,
+                        "steps": [
+                            {
+                                "U(m)": "0.1"
+                            },
+                            {
+                                "U(m)": "1.0"
+                            },
+                            {
+                                "U(m)": "10.0"
+                            }
+                        ]
                     }
                 }
             },
@@ -1270,25 +1956,85 @@
                         "style": "1",
                         "minimum": 0,
                         "maximum": 1000,
-                        "unit": "s"
+                        "unit": "s",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "S(r)": "0.1"
+                            },
+                            {
+                                "S(r)": "0.5"
+                            },
+                            {
+                                "S(r)": "1.0"
+                            },
+                            {
+                                "S(r)": "5.0"
+                            }
+                        ]
                     },
                     "S(m)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 1000,
-                        "unit": "s"
+                        "unit": "s",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "S(m)": "0.1"
+                            },
+                            {
+                                "S(m)": "0.5"
+                            },
+                            {
+                                "S(m)": "1.0"
+                            },
+                            {
+                                "S(m)": "5.0"
+                            }
+                        ]
                     },
                     "I(r)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "I(r)": "0.1"
+                            },
+                            {
+                                "I(r)": "0.5"
+                            },
+                            {
+                                "I(r)": "1.0"
+                            },
+                            {
+                                "I(r)": "5.0"
+                            }
+                        ]
                     },
                     "I(m)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "I(m)": "0.1"
+                            },
+                            {
+                                "I(m)": "0.5"
+                            },
+                            {
+                                "I(m)": "1.0"
+                            },
+                            {
+                                "I(m)": "5.0"
+                            }
+                        ]
                     }
                 }
             },
@@ -1297,31 +2043,91 @@
                 "S-Scan": {
                     "Angle": {
                         "style": "1",
-                        "unit": "°"
+                        "unit": "°",
+                        "decimal": 0,
+                        "steps": [
+                            {
+                                "Angle": "1"
+                            }
+                        ]
                     },
                     "U(r)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 2,
+                        "steps": [
+                            {
+                                "U(r)": "0.1"
+                            },
+                            {
+                                "U(r)": "1.0"
+                            },
+                            {
+                                "U(r)": "10.0"
+                            }
+                        ]
                     },
                     "U(m)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 2,
+                        "steps": [
+                            {
+                                "U(m)": "0.1"
+                            },
+                            {
+                                "U(m)": "1.0"
+                            },
+                            {
+                                "U(m)": "10.0"
+                            }
+                        ]
                     },
                     "I(r)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "I(r)": "0.1"
+                            },
+                            {
+                                "I(r)": "0.5"
+                            },
+                            {
+                                "I(r)": "1.0"
+                            },
+                            {
+                                "I(r)": "5.0"
+                            }
+                        ]
                     },
                     "I(m)": {
                         "style": "1",
                         "minimum": 0,
                         "maximum": 2000,
-                        "unit": "mm"
+                        "unit": "mm",
+                        "decimal": 1,
+                        "steps": [
+                            {
+                                "I(m)": "0.1"
+                            },
+                            {
+                                "I(m)": "0.5"
+                            },
+                            {
+                                "I(m)": "1.0"
+                            },
+                            {
+                                "I(m)": "5.0"
+                            }
+                        ]
                     }
                 }
             },
@@ -1659,14 +2465,32 @@
         "style": "1",
         "minimum": 1,
         "maximum": 100,
-        "unit": "%"
+        "unit": "%",
+        "decimal": 0,
+        "steps": [
+            {
+                "Bright": "1"
+            },
+            {
+                "Bright": "10"
+            }
+        ]
     },
     "Opacity": {
         "parent": "Preference_Preference",
         "style": "1",
         "minimum": 1,
         "maximum": 100,
-        "unit": "%"
+        "unit": "%",
+        "decimal": 0,
+        "steps": [
+            {
+                "Opacity": "1"
+            },
+            {
+                "Opacity": "10"
+            }
+        ]
     },
     "Clock Set": {
         "parent": "Preference_System",
