@@ -1,4 +1,4 @@
-#include "mcu.h"
+#include "mcu_imx.h"
 
 #include <QDebug>
 
@@ -12,19 +12,19 @@
 #define PKG_HEADER_LEN      (5)
 
 
-Mcu *Mcu::m_mcu = NULL;
+McuImx *McuImx::m_mcu = NULL;
 
-char Mcu::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
+char McuImx::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 
-char Mcu::m_setBrightnessData[8]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::SettingPkg, 0x01, Mcu::BRIGHTNESS, 0x0, PKG_END_CHAR, PKG_END_CHAR};
+char McuImx::m_setBrightnessData[8]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, Mcu::BRIGHTNESS, 0x0, PKG_END_CHAR, PKG_END_CHAR};
 
-const char Mcu::m_setPoweroff[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::SettingPkg, 0x0, Mcu::POWEROFF, PKG_END_CHAR, PKG_END_CHAR};
-const char Mcu::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, Mcu::SettingPkg, 0x0, Mcu::NOTIFY_STARTED, PKG_END_CHAR, PKG_END_CHAR};
+const char McuImx::m_setPoweroff[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x0, Mcu::POWEROFF, PKG_END_CHAR, PKG_END_CHAR};
+const char McuImx::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x0, Mcu::NOTIFY_STARTED, PKG_END_CHAR, PKG_END_CHAR};
 
-Mcu::Mcu()
-    :QSerialPort(UART_DEVICE)
+McuImx::McuImx()
+    :Mcu(UART_DEVICE)
 {
-    connect(this, &Mcu::readyRead, this, &Mcu::on_readyRead_event);
+    connect(this, &McuImx::readyRead, this, &McuImx::on_readyRead_event);
     m_recBuffer.clear();
 
     if ( ! setBaudRate(QSerialPort::Baud115200) ) {
@@ -53,17 +53,17 @@ Mcu::Mcu()
 
 }
 
-void Mcu::parse_packet(QByteArray &pkg)
+void McuImx::parse_packet(QByteArray &pkg)
 {
     if (pkg.size() != (pkg.at(3)+PKG_HEADER_LEN+PKG_END_STRING_LEN)) {
         return;
     }
 
     QByteArray data = pkg.mid(PKG_HEADER_LEN, pkg.at(3));
-    emit event((PkgCmd)pkg.at(4), data);
+    emit event((Cmd)pkg.at(4), data);
 }
 
-QByteArray Mcu::find_packet(QByteArray &data)
+QByteArray McuImx::find_packet(QByteArray &data)
 {
     int begin;
     int end;
@@ -93,7 +93,7 @@ QByteArray Mcu::find_packet(QByteArray &data)
     }
 }
 
-void Mcu::on_readyRead_event()
+void McuImx::on_readyRead_event()
 {
     QByteArray data = readAll();
 

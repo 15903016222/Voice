@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "../mcu.h"
+#include "../mcu_imx.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +17,7 @@ public:
     ~MainWindow();
 
 protected:
-    void on_mcu_event(Mcu::PkgCmd type, QByteArray &data);
+    void on_mcu_event(Mcu::Cmd type, QByteArray &data);
 
 private:
     Ui::MainWindow *ui;

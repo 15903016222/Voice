@@ -5,7 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    m_mcu = Mcu::get_mcu();
+    m_mcu = McuImx::get_instance();
     ui->setupUi(this);
 
     connect(ui->pushButtonCoreTemp, &QPushButton::clicked, m_mcu, &Mcu::query_core_temp);
@@ -28,7 +28,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_mcu_event(Mcu::PkgCmd type, QByteArray &data)
+void MainWindow::on_mcu_event(Mcu::Cmd type, QByteArray &data)
 {
     switch (type) {
     case Mcu::CORE_TEMPERATURE:
