@@ -23,11 +23,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     ../mcu_imx.cpp \
-    ../mcu_omap.cpp
+    ../mcu_omap.cpp \
+    ../mcu.cpp
 
 HEADERS  += mainwindow.h \
     ../mcu.h \
     ../mcu_imx.h \
-    ../mcu_omap.h
+    ../mcu_omap.h \
+    ../mcu_p.h
 
 FORMS    += mainwindow.ui

@@ -1,12 +1,15 @@
 #ifndef __MCU_H__
 #define __MCU_H__
 
-#include <QSerialPort>
 #include <QByteArray>
+#include <QSharedPointer>
 
-class Mcu : public QSerialPort
+class McuPrivate;
+
+class Mcu : public QObject
 {
     Q_OBJECT
+    Q_DECLARE_PRIVATE(Mcu)
 public:
     enum Cmd {
         CORE_TEMPERATURE            = 0x10, /* 核心板温度 */
@@ -39,34 +42,59 @@ public:
         NORMAL_PROBE_2_SIZE         = 0x74, /* 常规探头Ii晶片尺寸 */
     };
 
-    explicit Mcu(const QString &name):QSerialPort(name) {}
-    virtual ~Mcu() {}
-
-    virtual void query_core_temp() {}
-    virtual void query_fpga_temp() {}
-    virtual void query_power_temp() {}
-    virtual void query_mcu_temp() {}
-    virtual void query_first_battery() {}
-    virtual void query_second_battery() {}
-    virtual void query_first_battery_status() {}
-    virtual void query_second_battery_status() {}
-    virtual void query_brightness() {}
+    void query_core_temp();
+    void query_fpga_temp();
+    void query_power_temp();
+    void query_mcu_temp();
+    void query_first_battery();
+    void query_second_battery();
+    void query_first_battery_status();
+    void query_second_battery_status();
+    void query_brightness();
 
     /* pa probe query */
-    virtual void query_pa_probe_model() {}
-    virtual void query_pa_probe_series() {}
-    virtual void query_pa_probe_type() {}
-    virtual void query_pa_probe_freq() {}
-    virtual void query_pa_probe_elements() {}
-    virtual void query_pa_probe_elements_distance() {}
-    virtual void query_pa_probe_ference_point() {}
+    void query_pa_probe_model();
+    void query_pa_probe_series();
+    void query_pa_probe_type();
+    void query_pa_probe_freq();
+    void query_pa_probe_elements();
+    void query_pa_probe_elements_distance();
+    void query_pa_probe_ference_point();
 
-    virtual void notify_started() {}
-    virtual void set_poweroff() {}
-    virtual void set_brightness(uchar light) { Q_UNUSED(light); }
+    void notify_started() {}
+    void set_poweroff() {}
+    void set_brightness(uchar light) { Q_UNUSED(light); }
+
+    static Mcu* get_instance();
+    static void destroyed();
 
 Q_SIGNALS:
     void event(Cmd cmd, QByteArray &val);
+
+protected:
+    explicit Mcu();
+    virtual ~Mcu(){}
+
+private:
+    static Mcu* m_mcu;
+    QSharedPointer<McuPrivate> d_ptr;
+
 };
 
-#endif // MCU_H
+inline Mcu* Mcu::get_instance()
+{
+    if (m_mcu == NULL) {
+        m_mcu = new Mcu();
+    }
+    return m_mcu;
+}
+
+inline void Mcu::destroyed()
+{
+    if (m_mcu) {
+        delete m_mcu;
+        m_mcu = NULL;
+    }
+}
+
+#endif

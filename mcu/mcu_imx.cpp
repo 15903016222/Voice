@@ -16,15 +16,15 @@ McuImx *McuImx::m_mcuImx = NULL;
 
 char McuImx::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 
-char McuImx::m_setBrightnessData[8]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, Mcu::BRIGHTNESS, 0x0, PKG_END_CHAR, PKG_END_CHAR};
+char McuImx::m_setBrightnessData[8]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
 
-const char McuImx::m_setPoweroff[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x0, Mcu::POWEROFF, PKG_END_CHAR, PKG_END_CHAR};
-const char McuImx::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x0, Mcu::NOTIFY_STARTED, PKG_END_CHAR, PKG_END_CHAR};
+const char McuImx::m_setPoweroff[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x0, 0, PKG_END_CHAR, PKG_END_CHAR};
+const char McuImx::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x0, 0, PKG_END_CHAR, PKG_END_CHAR};
 
 McuImx::McuImx()
-    :Mcu(UART_DEVICE)
+    : McuPrivate(UART_DEVICE)
 {
-//    connect(this, &McuImx::readyRead, this, &McuImx::on_readyRead_event);
+    connect(this, SIGNAL(readyRead()), this, SLOT(on_readyRead_event()));
     m_recBuffer.clear();
 
     if ( ! setBaudRate(QSerialPort::Baud115200) ) {
@@ -60,7 +60,7 @@ void McuImx::parse_packet(QByteArray &pkg)
     }
 
     QByteArray data = pkg.mid(PKG_HEADER_LEN, pkg.at(3));
-    emit event((Cmd)pkg.at(4), data);
+    emit event((Mcu::Cmd)pkg.at(4), data);
 }
 
 QByteArray McuImx::find_packet(QByteArray &data)

@@ -1,11 +1,11 @@
 #ifndef __MCU_OMAP_H__
 #define __MCU_OMAP_H__
 
-#include "mcu.h"
+#include "mcu_p.h"
 
 //#include <QSeri
 
-class McuOmap : public Mcu
+class McuOmap
 {
 public:
     McuOmap* get_instance();
