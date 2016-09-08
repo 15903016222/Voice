@@ -7,9 +7,12 @@ Mcu* Mcu::m_mcu = NULL;
 Mcu::Mcu()
     :QObject(), d_ptr(McuImx::get_instance())
 {
-//    d_ptr = McuImx::get_instance();
+    connect(d_ptr, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SIGNAL(event(Mcu::Cmd,QByteArray&)));
+}
 
-    connect(d_ptr.data(), SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SIGNAL(event(Cmd,QByteArray&)));
+Mcu::~Mcu()
+{
+    d_ptr->destroyed();
 }
 
 void Mcu::query_core_temp()

@@ -1,8 +1,8 @@
 #ifndef __MCU_H__
 #define __MCU_H__
 
+#include <QObject>
 #include <QByteArray>
-#include <QSharedPointer>
 
 class McuPrivate;
 
@@ -69,15 +69,15 @@ public:
     static void destroyed();
 
 Q_SIGNALS:
-    void event(Cmd cmd, QByteArray &val);
+    void event(Mcu::Cmd cmd, QByteArray &val);
 
 protected:
     explicit Mcu();
-    virtual ~Mcu(){}
+    virtual ~Mcu();
 
 private:
     static Mcu* m_mcu;
-    QSharedPointer<McuPrivate> d_ptr;
+    McuPrivate *d_ptr;
 
 };
 
