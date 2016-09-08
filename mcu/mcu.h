@@ -1,7 +1,7 @@
 #ifndef __MCU_H__
 #define __MCU_H__
 
-#include <QtSerialPort>
+#include <QSerialPort>
 #include <QByteArray>
 
 class Mcu : public QSerialPort

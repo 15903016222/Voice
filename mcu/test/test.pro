@@ -4,7 +4,15 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport
+QT      += core gui
+
+equals(QT_MAJOR_VERSION, 5) {
+    QT      += serialport
+}
+
+equals(QT_MAJOR_VERSION, 4) {
+    CONFIG  += serialport
+}
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

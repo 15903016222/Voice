@@ -12,7 +12,7 @@
 #define PKG_HEADER_LEN      (5)
 
 
-McuImx *McuImx::m_mcu = NULL;
+McuImx *McuImx::m_mcuImx = NULL;
 
 char McuImx::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 
@@ -24,7 +24,7 @@ const char McuImx::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::S
 McuImx::McuImx()
     :Mcu(UART_DEVICE)
 {
-    connect(this, &McuImx::readyRead, this, &McuImx::on_readyRead_event);
+//    connect(this, &McuImx::readyRead, this, &McuImx::on_readyRead_event);
     m_recBuffer.clear();
 
     if ( ! setBaudRate(QSerialPort::Baud115200) ) {

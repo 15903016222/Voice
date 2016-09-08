@@ -8,19 +8,19 @@ MainWindow::MainWindow(QWidget *parent) :
     m_mcu = McuImx::get_instance();
     ui->setupUi(this);
 
-    connect(ui->pushButtonCoreTemp, &QPushButton::clicked, m_mcu, &Mcu::query_core_temp);
-    connect(ui->pushButtonFpgaTemp, &QPushButton::clicked, m_mcu, &Mcu::query_fpga_temp);
-    connect(ui->pushButtonPowerTemp, &QPushButton::clicked, m_mcu, &Mcu::query_power_temp);
-    connect(ui->pushButtonMcuTemp, &QPushButton::clicked, m_mcu, &Mcu::query_mcu_temp);
-    connect(ui->pushButtonFstBattery, &QPushButton::clicked, m_mcu, &Mcu::query_first_battery);
-    connect(ui->pushButtonFstBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_first_battery_status);
-    connect(ui->pushButtonSndBattery, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery);
-    connect(ui->pushButtonSndBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery_status);
-    connect(ui->pushButtonPowerOff, &QPushButton::clicked, m_mcu, &Mcu::set_poweroff);
-    connect(ui->pushButtonStarted, &QPushButton::clicked, m_mcu, &Mcu::notify_started);
-    connect(ui->verticalSliderBrightness, &QSlider::valueChanged, m_mcu, &Mcu::set_brightness);
+//    connect(ui->pushButtonCoreTemp, &QPushButton::clicked, m_mcu, &Mcu::query_core_temp);
+//    connect(ui->pushButtonFpgaTemp, &QPushButton::clicked, m_mcu, &Mcu::query_fpga_temp);
+//    connect(ui->pushButtonPowerTemp, &QPushButton::clicked, m_mcu, &Mcu::query_power_temp);
+//    connect(ui->pushButtonMcuTemp, &QPushButton::clicked, m_mcu, &Mcu::query_mcu_temp);
+//    connect(ui->pushButtonFstBattery, &QPushButton::clicked, m_mcu, &Mcu::query_first_battery);
+//    connect(ui->pushButtonFstBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_first_battery_status);
+//    connect(ui->pushButtonSndBattery, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery);
+//    connect(ui->pushButtonSndBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery_status);
+//    connect(ui->pushButtonPowerOff, &QPushButton::clicked, m_mcu, &Mcu::set_poweroff);
+//    connect(ui->pushButtonStarted, &QPushButton::clicked, m_mcu, &Mcu::notify_started);
+//    connect(ui->verticalSliderBrightness, &QSlider::valueChanged, m_mcu, &Mcu::set_brightness);
 
-    connect(m_mcu, &Mcu::event, this, &MainWindow::on_mcu_event);
+//    connect(m_mcu, &Mcu::event, this, &MainWindow::on_mcu_event);
 }
 
 MainWindow::~MainWindow()

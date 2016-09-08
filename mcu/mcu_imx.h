@@ -3,6 +3,8 @@
 
 #include "mcu.h"
 
+#include <QMutex>
+
 /**
  * package format
  * -------------------------------------------------------
@@ -53,7 +55,7 @@ protected:
     ~McuImx() { close(); }
 
 private:
-    static McuImx *m_mcu;
+    static McuImx *m_mcuImx;
     QMutex m_wrMutex;
     QByteArray m_recBuffer;
     static char m_queryPkg[7];
@@ -72,17 +74,17 @@ private:
 
 inline McuImx* McuImx::get_instance()
 {
-    if (m_mcu == NULL) {
-        m_mcu = new McuImx();
+    if (m_mcuImx == NULL) {
+        m_mcuImx = new McuImx();
     }
-    return m_mcu;
+    return m_mcuImx;
 }
 
 inline void McuImx::destroyed()
 {
-    if (m_mcu) {
-        delete m_mcu;
-        m_mcu = NULL;
+    if (m_mcuImx) {
+        delete m_mcuImx;
+        m_mcuImx = NULL;
     }
 }
 
