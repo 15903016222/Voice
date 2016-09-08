@@ -31,6 +31,10 @@ INCLUDEPATH += $$PWD/ui/menuwidget
 INCLUDEPATH += $$PWD/ui/qitemdelegate
 INCLUDEPATH += $$PWD/ui/inputpanel
 
+#INCLUDEPATH += $$PWD/lib/qjson/lib
+
+#LIBS +=-L$$PWD/lib/qjson/lib -lqjson-qt5.dll.a
+#LIBS +=-L$$PWD/lib/qjson/lib/libqjson-qt5.dll
 
 SOURCES += \
     main.cpp \
@@ -46,7 +50,7 @@ SOURCES += \
     ui/menuwidget/myinputpanel.cpp \
     ui/qitemdelegate/comboboxdelegate.cpp \
     ui/qitemdelegate/doublespinboxdelegate.cpp \
-    ui/qitemdelegate/pushbuttondelegate.cpp
+    ui/qitemdelegate/pushbuttondelegate.cpp \
 
 HEADERS += \
     ui/mainwindow.h \
@@ -61,7 +65,7 @@ HEADERS += \
     ui/menuwidget/myinputpanel.h \
     ui/qitemdelegate/comboboxdelegate.h \
     ui/qitemdelegate/doublespinboxdelegate.h \
-    ui/qitemdelegate/pushbuttondelegate.h
+    ui/qitemdelegate/pushbuttondelegate.h \
 
 FORMS += \
     ui/mainwindow.ui \
@@ -172,3 +176,9 @@ DISTFILES += \
     ui/resources/menuone.json \
     ui/resources/menuthree.json \
     ui/resources/menutwo.json
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+
+INCLUDEPATH += $$PWD/lib/qjson/lib
+DEPENDPATH += $$PWD/lib/qjson/lib

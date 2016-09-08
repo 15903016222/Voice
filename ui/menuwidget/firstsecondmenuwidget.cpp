@@ -1,6 +1,10 @@
 #include "firstsecondmenuwidget.h"
 #include "ui_firstsecondmenuwidget.h"
 
+#include "parser.h"
+
+#include <QVariant>
+
 static const char* SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
     {
         QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "General"),
@@ -69,6 +73,7 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
 
     QFile *file = new QFile(":/json/resources/menuone.json");
     read_json_file(file);
+
 
     initUI();
 }
@@ -141,7 +146,7 @@ void FirstSecondMenuWidget::initUI()
 
     for(int i = 0; i < FIRST_MENU_NUMBER; i++)
     {
-        QListView* listView = findChild<QListView*>("listView_" + QString::number(i+1));
+        QListView* listView = findChild<QListView*>("listView_" + QString::number(i + 1));
         listView->setStyleSheet("QListView{font: 14px}");
         listView->adjustSize();
         menuList.append(listView);
@@ -149,7 +154,7 @@ void FirstSecondMenuWidget::initUI()
         firstMenuData.append(ui->toolBox->itemText(i));
 
         QStandardItemModel *standardItemModel = new QStandardItemModel(this);
-        standardItemModel->setObjectName("standardItemModel_"+QString::number(i+1));
+        standardItemModel->setObjectName("standardItemModel_"+QString::number(i + 1));
         modelList.append(standardItemModel);
 
         setSecondMenuName(i);
@@ -166,29 +171,53 @@ void FirstSecondMenuWidget::initUI()
     menuList.at(0)->setCurrentIndex(initModelIndex);
 }
 
+
 void FirstSecondMenuWidget::read_json_file(QFile *file)
 {
+//#if QT_VERSION >= 0x050000
+//    file->open(QIODevice::ReadOnly | QIODevice::Text);
+//    QString str = file->readAll();
+//    QJsonParseError error;
+//    QJsonDocument jsonDocument = QJsonDocument::fromJson(str.toUtf8(), &error);
+//    if(error.error == QJsonParseError::NoError) {
+//        if(!(jsonDocument.isNull() || jsonDocument.isEmpty())) {
+//            if(jsonDocument.isObject()) {
+//                QJsonObject jsonObject = jsonDocument.object();
+//                firstMenuHash = jsonObject.toVariantHash();
+//            } else if(jsonDocument.isArray()) {
+
+//            }
+//        }
+//    } else {
+
+//    }
+//#endif
+
+//#if QT_VERSION < 0x050000
+    QJson::Parser parser;
+    bool ok;
     file->open(QIODevice::ReadOnly | QIODevice::Text);
     QString str = file->readAll();
-    QJsonParseError error;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(str.toUtf8(), &error);
-    if(error.error == QJsonParseError::NoError) {
-        if(!(jsonDocument.isNull() || jsonDocument.isEmpty())) {
-            if(jsonDocument.isObject()) {
-                QJsonObject jsonObject = jsonDocument.object();
-                firstMenuHash = jsonObject.toVariantHash();
-            } else if(jsonDocument.isArray()) {
-
-            }
-        }
-    } else {
-
+    QVariant variant = parser.parse(str.toUtf8(), &ok);
+    firstMenuMap = variant.toMap();
+    if(!ok) {
+        qDebug() << "An error occured during parsing.";
     }
+//#endif
 }
 
 QStringList FirstSecondMenuWidget::get_second_menu_list(int i)
 {
-    QVariantList variantList = firstMenuHash.values(firstMenuData.at(i));
-    QStringList stringList = variantList.at(0).toStringList();
+//#if QT_VERSION >= 0x050000
+//    QVariantList variantList = firstMenuHash.values(firstMenuData.at(i));
+//    QStringList stringList = variantList.at(0).toStringList();
+//    return stringList;
+//
+//#endif
+
+//#if QT_VERSION < 0x050000
+    QVariantList variantList = firstMenuMap.values(firstMenuData.at(i));
+    QStringList stringList  = variantList.at(0).toStringList();
     return stringList;
+//#endif
 }

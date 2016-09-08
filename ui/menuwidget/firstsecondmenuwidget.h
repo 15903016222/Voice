@@ -7,12 +7,20 @@
 #include <QStandardItemModel>
 #include <QPushButton>
 
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QJsonValue>
-#include <QJsonObject>
-#include <QJsonParseError>
-#include <QHash>
+//#if QT_VERSION >= 0x050000
+//#include <QJsonDocument>
+//#include <QJsonArray>
+//#include <QJsonValue>
+//#include <QJsonObject>
+//#include <QJsonParseError>
+//#include <QHash>
+//#endif
+
+//#if QT_VERSION < 0x050000
+//#include "parser.h"
+#include <QMap>
+//#endif
+
 #include <QFile>
 
 #define FIRST_MENU_NUMBER 9
@@ -37,16 +45,23 @@ public:
     QList<QToolBox*> toolBox;
     QList<QListView*> menuList;
     QList<QStandardItemModel*> modelList;
-    QStringList firstMenuData;
-    QVariantHash firstMenuHash;
+    QStringList firstMenuData;   
 
     void setSecondMenuName(int i);
     void initSecondMenuItem(int i);
     void secondMenuItemClicked(int i, QModelIndex index);
-    void read_json_file(QFile *file);
     void initUI();
     void reTranslatorFirstSecondMenuUi();
+    void read_json_file(QFile *file);
     QStringList get_second_menu_list(int i);
+
+//#if QT_VERSION >= 0x050000
+//    QVariantHash firstMenuHash;
+//#endif
+
+//#if QT_VERSION < 0x050000
+    QVariantMap firstMenuMap;
+//#endif
 
 private:
 

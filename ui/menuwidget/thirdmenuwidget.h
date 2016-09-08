@@ -94,28 +94,32 @@ public:
     bool get_json_document_type(QString string, QJsonObject jsonObject);
     bool eventFilter(QObject *object, QEvent *event);
 
-    QVariantHash read_json_file(QString string);
-    QJsonObject get_json_object(QString string);
-    QJsonObject get_subsidiary_object(QString string, QJsonObject jsonObject);
-    QJsonArray get_subsidiary_array(QString string, QJsonObject jsonObject);
+//    QVariantHash read_json_file(QString string);
+//    QJsonObject get_json_object(QString string);
+//    QJsonObject get_subsidiary_object(QString string, QJsonObject jsonObject);
+//    QJsonArray get_subsidiary_array(QString string, QJsonObject jsonObject);
     QStringList get_third_menu_list(int i, int j);
-
+    QVariantMap read_json_file(QString string);
     int width;
     int height;
     int currFirstNum;
     int currSecondNum;
 
     QStandardItemModel *model;
-    QVariantHash thirdMenuHash;
-    QVariantHash fourthMenuHash;
+//    QVariantHash thirdMenuHash;
+//    QVariantHash fourthMenuHash;
     FirstSecondMenuWidget *widget;
-    QJsonObject jsonObjectOne;
-    QJsonObject jsonObjectTwo;
+//    QJsonObject jsonObjectOne;
+//    QJsonObject jsonObjectTwo;
+    QVariantMap thirdMenuMap;
+    QVariantMap fourthMenuMap;
 
 private:
 
 public slots:
 
+private slots:
+    void on_tableView_clicked(const QModelIndex &index);
 };
 
 #endif // THIRDMENUWIDGET_H
