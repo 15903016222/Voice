@@ -290,18 +290,18 @@ void MainWindow::slot_pushButton_commonMenuClicked()
 
 void MainWindow::updateTranslator()
 {
-    ui->retranslateUi(this);
-    ui->widgetTopLeft->reTranslatorTopMenuUi();
+//    ui->retranslateUi(this);
+//    ui->widgetTopLeft->reTranslatorTopMenuUi();
     ui->widgetTopLeft->setTopMenuFont();
 //    firstSecondMenu->reTranslatorFirstSecondMenuUi();
     ui->widget_thirdMenu->reTranslatorThirdMenuUi();
-    commonMenuWidget->reTranslatorCommonMenuUi();
+//    commonMenuWidget->reTranslatorCommonMenuUi();
 }
 
 void MainWindow::translatorChineseUI()
 {
-    translator->load(":/file/translator/phascanII_UI_Chinese.qm");
-    updateTranslator();
+//    translator->load(":/file/translator/phascanII_UI_Chinese.qm");
+//    updateTranslator();
 }
 
 void MainWindow::translatorEnglishUI()
