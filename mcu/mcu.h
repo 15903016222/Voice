@@ -65,12 +65,14 @@ public:
     void query_pa_probe_elements_distance();
     void query_pa_probe_ference_point();
 
-    void notify_started();
-    void set_poweroff();
-    void set_brightness(uchar light);
-
     static Mcu* get_instance();
     static void destroyed();
+
+public slots:
+    void notify_started();
+    void set_poweroff();
+    void set_brightness(int light);
+
 
 Q_SIGNALS:
     void event(Mcu::Cmd cmd, QByteArray &val);

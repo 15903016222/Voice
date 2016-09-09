@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_mcu, &Mcu::event, this, &MainWindow::do_mcu_event);
 #else
     connect(m_mcu, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SLOT(do_mcu_event(Mcu::Cmd,QByteArray&)));
+    connect(ui->verticalSliderBrightness, SIGNAL(valueChanged(int)), m_mcu, SLOT(set_brightness(int)));
 #endif
 }
 

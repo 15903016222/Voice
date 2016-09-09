@@ -4,7 +4,7 @@
 #define TTY_DEV1    "/dev/ttyS1"
 
 McuOmap::McuOmap()
-    :McuPrivate(TTY_DEV0), m_ttyDev1(TTY_DEV1)
+    :McuPrivate(TTY_DEV0), m_ttyDev1(TTY_DEV1), m_brightness(70)
 {
     /* ttyS0 setting */
     connect(this, SIGNAL(readyRead()), this, SLOT(on_readyRead_event()));
@@ -59,6 +59,30 @@ McuOmap::McuOmap()
     }
 }
 
+void McuOmap::query(Mcu::Cmd cmd)
+{
+    switch (cmd) {
+    case Mcu::BRIGHTNESS:
+        QByteArray data(&m_brightness, 1);
+        emit event(Mcu::BRIGHTNESS, data);
+        break;
+    default:
+        break;
+    }
+}
+
+void McuOmap::set(Mcu::Cmd cmd, char value)
+{
+    if (cmd == Mcu::BRIGHTNESS) {
+        m_ttyDev1.write(&value, 1);
+        m_brightness = value;
+    }
+}
+
+void McuOmap::on_readyRead_event()
+{
+
+}
 
 void McuOmap::on_ttyDev1_readyRead_event()
 {

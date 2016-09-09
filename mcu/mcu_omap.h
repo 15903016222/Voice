@@ -9,12 +9,14 @@ class McuOmap : public McuPrivate
 public:
     McuOmap();
     ~McuOmap(){}
-    void query(Mcu::Cmd cmd) { Q_UNUSED(cmd); }
-    void set(Mcu::Cmd cmd, char value) { Q_UNUSED(cmd); Q_UNUSED(value); }
+    void query(Mcu::Cmd cmd);
+    void set(Mcu::Cmd cmd, char value);
 private:
     QSerialPort m_ttyDev1;
+    char m_brightness;
+
 private slots:
-    void on_readyRead_event() {}
+    void on_readyRead_event();
     void on_ttyDev1_readyRead_event();
 };
 

@@ -118,7 +118,7 @@ void Mcu::set_poweroff()
     d_ptr->set(POWEROFF, 0);
 }
 
-void Mcu::set_brightness(uchar light)
+void Mcu::set_brightness(int light)
 {
     d_ptr->set(BRIGHTNESS, (char)light);
 }
