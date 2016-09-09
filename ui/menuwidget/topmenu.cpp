@@ -16,9 +16,6 @@ TopMenu :: TopMenu(QWidget *parent) :
     ui(new Ui::TopMenu)
 {
     ui->setupUi(this);
-    thirdMenuWidget = new ThirdMenuWidget(this);
-    thirdMenuWidget->hide();
-
     initUI();
 
     initGain_angle();
@@ -100,7 +97,6 @@ void TopMenu::initGain_angle()
     QVariantMap variantMapGain = thirdMenuWidget->get_fourth_menu_map(fourthMap, "Gain", "UT Settings_General");
 //    QVariantMap variantMapAngle = thirdMenuWidget->get_fourth_menu_map(fourthMap, QString("Angle"), QString("Measurement_Cursors"));
     QVariantMap variantMapAngle = thirdMenuWidget->get_fourth_menu_map(fourthMap, QString("Min. Angle"), QString("Focal Law_Angle"));
-    qDebug() << variantMapGain;
     file->close();
 
     int decimalGain = variantMapGain["decimal"].toInt();

@@ -290,6 +290,8 @@ QWidget(parent),
 
 	initStandardModel();
 	setThirdMenuName(0, 0);
+
+    connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -375,7 +377,7 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
         model->item(0, k)->setBackground(QBrush(linearGradient));
 	}
 	ui->tableView->show();
-    connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
+
 }
 
 void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
@@ -559,7 +561,9 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
             model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
-    }
+        qDebug() << stepIndex;
+        qDebug() << stringList;
+    }   
 }
 
 QVariantMap ThirdMenuWidget::get_fourth_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
