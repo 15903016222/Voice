@@ -17,11 +17,6 @@ McuImx *McuImx::m_mcuImx = NULL;
 char McuImx::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 char McuImx::m_setPkg[8] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
 
-char McuImx::m_setBrightnessData[8]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
-
-const char McuImx::m_setPoweroff[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x0, 0, PKG_END_CHAR, PKG_END_CHAR};
-const char McuImx::m_nofityStarted[7]={PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x0, 0, PKG_END_CHAR, PKG_END_CHAR};
-
 McuImx::McuImx()
     : McuPrivate(UART_DEVICE)
 {

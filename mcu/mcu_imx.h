@@ -4,7 +4,7 @@
 #include "mcu_p.h"
 
 #include <QMutex>
-
+#include <QDebug>
 /**
  * package format
  * -------------------------------------------------------
@@ -27,10 +27,7 @@ public:
     static void destroyed();
 
     void query(Mcu::Cmd cmd) { m_queryPkg[4] = cmd; write(m_queryPkg, sizeof(m_queryPkg)); }
-    void set(Mcu::Cmd cmd, char value) { m_queryPkg[4] = cmd; m_queryPkg[5] = value; }
-//    void notify_started()   { write(m_nofityStarted, sizeof(m_nofityStarted)); }
-//    void set_poweroff()     { write(m_setPoweroff, sizeof(m_setPoweroff)); }
-//    void set_brightness(uchar light) { m_setBrightnessData[5]=light; write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
+    void set(Mcu::Cmd cmd, char value) { m_setPkg[4] = cmd; m_setPkg[5] = value; write(m_setPkg, sizeof(m_setPkg));}
 
 protected:
     McuImx();
@@ -42,11 +39,8 @@ private:
     QByteArray m_recBuffer;
     static char m_queryPkg[7];
     static char m_setPkg[8];
-    static char m_setBrightnessData[8];
-    static const char m_setPoweroff[7];
-    static const char m_nofityStarted[7];
 
-    qint64 write(const char *data, qint64 len) { QMutexLocker locker(&m_wrMutex); return QIODevice::write(data, len); }
+    qint64 write(const char *data, qint64 len) { qDebug()<<"send pkg:"<<QByteArray(data, len).toHex(); QMutexLocker locker(&m_wrMutex); return QIODevice::write(data, len); }
 
     QByteArray find_packet(QByteArray &data);
     void parse_packet(QByteArray &pkg);
