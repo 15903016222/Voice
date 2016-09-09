@@ -12,7 +12,6 @@ Mcu::Mcu()
 
 Mcu::~Mcu()
 {
-    d_ptr->destroyed();
 }
 
 void Mcu::query_core_temp()
@@ -93,5 +92,20 @@ void Mcu::query_pa_probe_elements_distance()
 void Mcu::query_pa_probe_ference_point()
 {
     d_ptr->query(PA_PROBE_FERENCE_POINT);
+}
+
+void Mcu::notify_started()
+{
+    d_ptr->set(NOTIFY_STARTED, 0);
+}
+
+void Mcu::set_poweroff()
+{
+    d_ptr->set(POWEROFF, 0);
+}
+
+void Mcu::set_brightness(uchar light)
+{
+    d_ptr->set(BRIGHTNESS, (char)light);
 }
 

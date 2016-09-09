@@ -9,7 +9,6 @@ class McuPrivate;
 class Mcu : public QObject
 {
     Q_OBJECT
-    Q_DECLARE_PRIVATE(Mcu)
 public:
     enum Cmd {
         CORE_TEMPERATURE            = 0x10, /* 核心板温度 */
@@ -61,9 +60,9 @@ public:
     void query_pa_probe_elements_distance();
     void query_pa_probe_ference_point();
 
-    void notify_started() {}
-    void set_poweroff() {}
-    void set_brightness(uchar light) { Q_UNUSED(light); }
+    void notify_started();
+    void set_poweroff();
+    void set_brightness(uchar light);
 
     static Mcu* get_instance();
     static void destroyed();

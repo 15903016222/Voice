@@ -12,7 +12,7 @@ public:
     McuPrivate(const QString &name) : QSerialPort(name) {}
     virtual ~McuPrivate() {}
     virtual void query(Mcu::Cmd cmd) = 0;
-    virtual void set(Mcu::Cmd cmd, int value) {Q_UNUSED(cmd); Q_UNUSED(value);}
+    virtual void set(Mcu::Cmd cmd, char value) = 0;
 Q_SIGNALS:
     void event(Mcu::Cmd cmd, QByteArray &val);
 };

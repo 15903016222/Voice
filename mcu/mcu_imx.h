@@ -27,7 +27,7 @@ public:
     static void destroyed();
 
     void query(Mcu::Cmd cmd) { m_queryPkg[4] = cmd; write(m_queryPkg, sizeof(m_queryPkg)); }
-    void set(Mcu::Cmd cmd, int value) { Q_UNUSED(cmd); Q_UNUSED(value);}
+    void set(Mcu::Cmd cmd, char value) { m_queryPkg[4] = cmd; m_queryPkg[5] = value; }
 //    void notify_started()   { write(m_nofityStarted, sizeof(m_nofityStarted)); }
 //    void set_poweroff()     { write(m_setPoweroff, sizeof(m_setPoweroff)); }
 //    void set_brightness(uchar light) { m_setBrightnessData[5]=light; write(m_setBrightnessData, sizeof(m_setBrightnessData)); }
@@ -41,6 +41,7 @@ private:
     QMutex m_wrMutex;
     QByteArray m_recBuffer;
     static char m_queryPkg[7];
+    static char m_setPkg[8];
     static char m_setBrightnessData[8];
     static const char m_setPoweroff[7];
     static const char m_nofityStarted[7];
