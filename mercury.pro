@@ -116,6 +116,12 @@ win32 {
     LIBS += -lgobject-2.0
     LIBS += -lglib-2.0
     DEFINES += QtGStreamer_Static
+
+    CONFIG(release, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+    else:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+
+    INCLUDEPATH += $$PWD/lib/qjson/lib
+    DEPENDPATH += $$PWD/lib/qjson/lib
 }
 
 macx {
@@ -148,6 +154,11 @@ macx {
 
     # boost
     INCLUDEPATH += /usr/local/include
+
+    LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
+
+    INCLUDEPATH += $$PWD/lib/qjson/lib
+    DEPENDPATH += $$PWD/lib/qjson/lib
 }
 
 linux {
@@ -167,6 +178,11 @@ linux {
 
     LIBS += -L$$PROJECT_DIR/libs/linux/qtgstreamer/lib
     LIBS += -lQt5GLib-2.0 -lQt5GStreamer-1.0 -lQt5GStreamerUi-1.0
+
+    LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
+
+    INCLUDEPATH += $$PWD/lib/qjson/lib
+    DEPENDPATH += $$PWD/lib/qjson/lib
 }
 
 message($$CONFIG)
@@ -176,9 +192,3 @@ DISTFILES += \
     ui/resources/menuone.json \
     ui/resources/menuthree.json \
     ui/resources/menutwo.json
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
-
-INCLUDEPATH += $$PWD/lib/qjson/lib
-DEPENDPATH += $$PWD/lib/qjson/lib
