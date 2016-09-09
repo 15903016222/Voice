@@ -12,6 +12,7 @@ equals(QT_MAJOR_VERSION, 5) {
 
 equals(QT_MAJOR_VERSION, 4) {
     CONFIG  += serialport
+    QMAKE_CXXFLAGS += -Wno-psabi
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

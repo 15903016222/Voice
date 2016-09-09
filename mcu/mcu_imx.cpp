@@ -1,7 +1,5 @@
 #include "mcu_imx.h"
 
-#include <QDebug>
-
 #define UART_DEVICE         "/dev/ttymxc2"
 #define PKG_BEGIN_STRING    "\xff\xff"
 #define PKG_END_STRING      "\xfe\xfe"
@@ -10,9 +8,6 @@
 #define PKG_BEGIN_CHAR      ((char)0xff)
 #define PKG_END_CHAR        ((char)0xfe)
 #define PKG_HEADER_LEN      (5)
-
-
-McuImx *McuImx::m_mcuImx = NULL;
 
 char McuImx::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 char McuImx::m_setPkg[8] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
@@ -104,7 +99,6 @@ void McuImx::on_readyRead_event()
         if (data.isEmpty()) {
             break;
         }
-        qDebug()<<"Packet:"<<data.toHex();
         parse_packet(data);
     }
 }

@@ -1,17 +1,27 @@
 
 #include "mcu.h"
 #include "mcu_imx.h"
+#include "mcu_omap.h"
 
 Mcu* Mcu::m_mcu = NULL;
 
 Mcu::Mcu()
-    :QObject(), d_ptr(McuImx::get_instance())
+    :QObject()
 {
-    connect(d_ptr, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SIGNAL(event(Mcu::Cmd,QByteArray&)));
+#ifdef IMX
+    d_ptr = new McuImx();
+#else /*Phascan*/
+    d_ptr = new McuOmap();
+#endif
+
+    if ( ! connect(d_ptr, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SIGNAL(event(Mcu::Cmd,QByteArray&))) ) {
+        qDebug("failed");
+    }
 }
 
 Mcu::~Mcu()
 {
+    delete d_ptr;
 }
 
 void Mcu::query_core_temp()

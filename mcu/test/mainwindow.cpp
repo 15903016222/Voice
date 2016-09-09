@@ -21,9 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonStarted, &QPushButton::clicked, m_mcu, &Mcu::notify_started);
     connect(ui->verticalSliderBrightness, &QSlider::valueChanged, m_mcu, &Mcu::set_brightness);
 
-    connect(m_mcu, &Mcu::event, this, &MainWindow::on_mcu_event);
+    connect(m_mcu, &Mcu::event, this, &MainWindow::do_mcu_event);
 #else
-    connect(m_mcu, SIGNAL(event(Cmd,QByteArray&)), this, SLOT(on_mcu_event));
+    connect(m_mcu, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SLOT(do_mcu_event(Mcu::Cmd,QByteArray&)));
 #endif
 }
 
@@ -32,7 +32,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_mcu_event(Mcu::Cmd type, QByteArray &data)
+void MainWindow::do_mcu_event(Mcu::Cmd type, QByteArray &data)
 {
     switch (type) {
     case Mcu::CORE_TEMPERATURE:

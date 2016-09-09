@@ -17,7 +17,7 @@ public:
     ~MainWindow();
 
 protected slots:
-    void on_mcu_event(Mcu::Cmd type, QByteArray &data);
+    void do_mcu_event(Mcu::Cmd type, QByteArray &data);
 
 private:
     Ui::MainWindow *ui;

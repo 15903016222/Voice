@@ -3,37 +3,21 @@
 
 #include "mcu_p.h"
 
-//#include <QSeri
-
-class McuOmap
+class McuOmap : public McuPrivate
 {
+    Q_OBJECT
 public:
-    McuOmap* get_instance();
-    void destroyed();
-
-protected:
     McuOmap();
-    ~McuOmap() {}
-
+    ~McuOmap(){}
+    void query(Mcu::Cmd cmd) { Q_UNUSED(cmd); }
+    void set(Mcu::Cmd cmd, char value) { Q_UNUSED(cmd); Q_UNUSED(value); }
 private:
-    static McuOmap *m_mcuOmap;
+    QSerialPort m_ttyDev1;
+private slots:
+    void on_readyRead_event() {}
+    void on_ttyDev1_readyRead_event();
 };
 
-inline McuOmap* McuOmap::get_instance()
-{
-    if (m_mcuOmap == NULL) {
-        m_mcuOmap = new McuOmap();
-    }
-    return m_mcuOmap;
-}
-
-inline void McuOmap::destroyed()
-{
-    if (m_mcuOmap) {
-        delete m_mcuOmap;
-        m_mcuOmap = NULL;
-    }
-}
 
 
 #endif
