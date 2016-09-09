@@ -358,7 +358,7 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
             widgetStyleChoice(i, j, k);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setForeground(Qt::yellow);
-            model->item(0, k)->setFont(QFont("Times New Roman", 11));
+            model->item(0, k)->setFont(QFont("Times New Roman", 12));
         } else
         {
             model->setHeaderData(k, Qt::Horizontal, "");
@@ -375,62 +375,37 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
         model->item(0, k)->setBackground(QBrush(linearGradient));
 	}
 	ui->tableView->show();
+    connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 }
 
 void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
 {
-    QStringList thirdStringList = get_third_menu_list(i, j);
-
     QString firstMenuString = widget->firstMenuData.at(i);
     QString secondMenuString = widget->get_second_menu_list(i).at(j);
+    QString thirdMenuString = get_third_menu_list(i, j).at(k);
 
-    QVariantMap subVariantMap;
-    if(!fourthMenuMap[thirdStringList.at(k)].toMap().isEmpty()) {
-        QVariantMap variantMap = fourthMenuMap[thirdStringList.at(k)].toMap();
-        if(!variantMap[firstMenuString + "_" + secondMenuString].toMap().isEmpty()) {
-            subVariantMap = variantMap[firstMenuString + "_" + secondMenuString].toMap();
-        } else {
-            subVariantMap = variantMap;
-        }
-    }
+    QVariantMap subVariantMap = get_fourth_menu_map(fourthMenuMap, thirdMenuString, firstMenuString + "_" + secondMenuString);
 
     if(subVariantMap.contains("unit")) {
-        model->setHeaderData(k, Qt::Horizontal, QString(thirdStringList.at(k) + "\n(" + subVariantMap["unit"].toString() + ")"));
+        model->setHeaderData(k, Qt::Horizontal, QString(thirdMenuString + "\n(" + subVariantMap["unit"].toString() + ")"));
     } else {
-        model->setHeaderData(k, Qt::Horizontal, thirdStringList.at(k));
+        model->setHeaderData(k, Qt::Horizontal, thirdMenuString);
     }
 
     if(subVariantMap.contains("style")) {
         switch(subVariantMap["style"].toString().toInt()) {
             case 1: {
-                int minimum = subVariantMap["minimum"].toInt();
-                int maximum = subVariantMap["maximum"].toInt();
+                QList<int> rangeList = get_spinBox_range_list(subVariantMap);
+                QStringList stepList = get_spinBox_step_list(subVariantMap, thirdMenuString);
                 int decimal = subVariantMap["decimal"].toInt();
-                QList<int> rangeList;
-                rangeList.append(minimum);
-                rangeList.append(maximum);
-
-                QVariantList tmpList = subVariantMap["steps"].toList();
-                QStringList stepList;
-                if(tmpList.size() != 0) {
-                    for(int index = 0; index < tmpList.size(); index ++) {
-                        QMap<QString, QVariant> map = tmpList.at(index).toMap();
-                        QVariant result = map.value(thirdStringList.at(k));
-                        stepList.append(result.toString());
-                    }
-                } else {
-                    stepList.append("");
-                }
 
                 DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
-                doubleSpinBox->setObjectName("doubleSpinBoxDelegate_" + QString::number(k + 1));
                 doubleSpinBox->set_number_range(rangeList);
                 doubleSpinBox->set_number_step_list(stepList);
                 doubleSpinBox->set_number_step(stepList.at(0));
-                doubleSpinBox->set_decimal_amount(decimal);
-
+                doubleSpinBox->set_decimal_amount(decimal);               
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                QStandardItem *item = new QStandardItem(QString::number((minimum + maximum) / 2, 'f', decimal));
+                QStandardItem *item = new QStandardItem(QString::number((rangeList.at(0) + rangeList.at(1)) / 2, 'f', decimal));
                 model->setItem(0, k, item);
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
@@ -438,32 +413,14 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
                 break;
             }
             case 2: {
-                QVariantList tmpList = subVariantMap["options"].toList();
-                QStringList optionList;
-                QStringList abbreviationList;
-                if(tmpList.size() != 0) {
-                    for(int index = 0; index < tmpList.size(); index ++) {
-                        QMap<QString, QVariant> map = tmpList.at(index).toMap();
-                        QVariant result = map.value(thirdStringList.at(k));
-                        optionList.append(result.toString());
-                        if(map.contains("ShortText")) {
-                            QVariant shortText = map.value("ShortText");
-                            abbreviationList.append(shortText.toString());
-                        } else {
-                            abbreviationList.append(optionList.at(index));
-                        }
-                    }
-                } else {
-                    optionList.append("");
-                    abbreviationList.append("");
-                }
+                QList<QStringList> list = get_comboBox_option_list(subVariantMap, thirdMenuString);
 
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
-                comboBox->set_comboBox_item_list(optionList);
-                comboBox->set_model_item_list(abbreviationList);
+                comboBox->set_comboBox_item_list(list.at(0));
+                comboBox->set_model_item_list(list.at(1));
 
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                QStandardItem *item = new QStandardItem(abbreviationList.at(0));
+                QStandardItem *item = new QStandardItem(list.at(1).at(0));
                 model->setItem(0, k, item);
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
                 break;
@@ -475,7 +432,7 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
                 if(tmpList.size() != 0) {
                     for(int index = 0; index < tmpList.size(); index ++) {
                     QMap<QString, QVariant> map = tmpList.at(index).toMap();
-                    QVariant result = map.value(thirdStringList.at(k));
+                    QVariant result = map.value(thirdMenuString);
                     switchList.append(result.toString());
                     }
                 } else {
@@ -484,9 +441,8 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
 
                 PushButtonDelegate *pushButton = new PushButtonDelegate(this);
 
-
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                QStandardItem *item = new QStandardItem(QString("on"));
+                QStandardItem *item = new QStandardItem(QString("On"));
                 model->setItem(0, k, item);
                 //          model->item(0, k)->setFlags(Qt::ItemIsEnabled);
                 ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
@@ -575,15 +531,12 @@ bool ThirdMenuWidget::eventFilter(QObject *object, QEvent *event)
     return QWidget::eventFilter(object, event);
 }
 
-void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
+void ThirdMenuWidget::onHeaderClicked(int index)
 {
 //    点击表头更改spinbox的步进及表头文字
-    QStandardItem *item = model->itemFromIndex(index);
-    int currentColumn = item->column();
-    QString currentHeaderText =  model->horizontalHeaderItem(currentColumn)->text();
+    QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
     if(currentHeaderText.contains("(")) {
-        qDebug() << "1";
-        DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(currentColumn));
+        DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex;
         QStringList stringList = doubleSpinBox->stepList;
@@ -593,16 +546,88 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
                 break;
             }
         }
+        QString headerText;
+        if(currentHeaderText.contains("Δ")) {
+            headerText = currentHeaderText.left(currentHeaderText.indexOf("Δ"));
+        } else {
+            headerText = currentHeaderText;
+        }
         if(stepIndex == stringList.count() - 1) {
             doubleSpinBox->set_number_step(stringList.at(0));
-            model->setHeaderData(currentColumn, Qt::Horizontal,QString(currentHeaderText + "△" + stringList.at(0)));
+            model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(0)));
         } else {
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
-            model->setHeaderData(currentColumn, Qt::Horizontal,QString(currentHeaderText + "△" + stringList.at(stepIndex + 1)));
+            model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
     }
 }
 
+QVariantMap ThirdMenuWidget::get_fourth_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
+{
+    QVariantMap subVariantMap;
+    if(!variantMap[thirdMenuString].toMap().isEmpty()) {
+        QVariantMap map = variantMap[thirdMenuString].toMap();
+        if(!map[subString].toMap().isEmpty()) {
+            subVariantMap = map[subString].toMap();
+        } else {
+            subVariantMap = map;
+        }
+    }
+    return subVariantMap;
+}
+
+QList<int> ThirdMenuWidget::get_spinBox_range_list(QVariantMap variantMap)
+{
+    int minimum = variantMap["minimum"].toInt();
+    int maximum = variantMap["maximum"].toInt();
+    QList<int> rangeList;
+    rangeList.append(minimum);
+    rangeList.append(maximum);
+    return rangeList;
+}
+
+QStringList ThirdMenuWidget::get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString)
+{
+    QVariantList tmpList = variantMap["steps"].toList();
+    QStringList stepList;
+    if(tmpList.size() != 0) {
+        for(int index = 0; index < tmpList.size(); index ++) {
+            QMap<QString, QVariant> map = tmpList.at(index).toMap();
+            QVariant result = map.value(thirdMenuString);
+            stepList.append(result.toString());
+        }
+    } else {
+        stepList.append("");
+    }
+    return stepList;
+}
+
+QList<QStringList> ThirdMenuWidget::get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString)
+{
+    QVariantList tmpList = variantMap["options"].toList();
+    QStringList optionList;
+    QStringList abbreviationList;
+    QList<QStringList> list;
+    if(tmpList.size() != 0) {
+        for(int index = 0; index < tmpList.size(); index ++) {
+            QMap<QString, QVariant> map = tmpList.at(index).toMap();
+            QVariant result = map.value(thirdMenuString);
+            optionList.append(result.toString());
+            if(map.contains("ShortText")) {
+                QVariant shortText = map.value("ShortText");
+                abbreviationList.append(shortText.toString());
+            } else {
+                abbreviationList.append(optionList.at(index));
+            }
+        }
+    } else {
+        optionList.append("");
+        abbreviationList.append("");
+    }
+    list.append(optionList);
+    list.append(abbreviationList);
+    return list;
+}
 
 //#if QT_VERSION >= 0x050000
 //void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
@@ -842,4 +867,6 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
 //  }
 //  return QWidget::eventFilter(object, event);
 //}
+
+
 

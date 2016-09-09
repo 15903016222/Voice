@@ -9,64 +9,64 @@
 #include <QTableView>
 
 #define THIRD_MENU_NUMBER 6
-static QString WIDGET_CHOICE_CHAR[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_MENU_NUMBER]={
-    {
-        {"1", "1", "1", "1", "1", "2"},
-        {"2", "1", "1", "1", "1"},
-        {"1", "2", "2", "2", "2"},
-        {"2", "2", "1", "1", "1"}
-    }, //1
-    {
-        {"2", "1", "1", "1", "1", "1"},
-        {"2", "2", "2", "2", "2", "2"},
-        {"2", "2", "1", "1", "1", "2"},
-        {"2"},
-        {"2"}
-    }, //2
-    {
-        {"2", "2", "2", "1", "1"},
-        {"1", "1", "1"},
-        {"2", "2", "2", "2"}
-    }, //3
-    {
-        {"2", "2", "2", "2", "2", "2"},
-        {"1", "1", "1"},
-        {"1", "1", "1", "2"},
-        {"2", "1", "1", "2", "2"},
-        {"2", "2"}
-    }, //4
-    {
-        {"2", "2", "2", "2"},
-        {"1", "1", "1"},
-        {"1", "1", "1", "1"},
-        {"2"}
-    }, //5
-    {
-        {"2", "2", "1", "1"},
-        {"2", "2", "1", "2", "1", "2"},
-        {"1", "1", "1", "1", "1", "1"},
-        {"2", "2"}
-    }, //6
-    {
-        {"2", "2", "2", "2", "2"},
-        {"2"},
-        {"2", "2", "2"},
-        {"2", "2", "2", "2", "2"}
-    }, //7
-    {
-        {"2", "2", "2"},
-        {"2", "2", "2", "2"},
-        {"2", "2", "1", "1", "1", "1"},
-        {"2", "2", "2", "2", "2", "2"},
-        {"2", "2", "1", "2", "2", "2"}
-    }, //8
-    {
-        {"2", "1", "2"},
-        {"2", "2", "3"},
-        {"2", "2"},
-        {"2", "2", "2", "2", "2", "1"}
-    } //9
-}; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
+//static QString WIDGET_CHOICE_CHAR[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_MENU_NUMBER]={
+//    {
+//        {"1", "1", "1", "1", "1", "2"},
+//        {"2", "1", "1", "1", "1"},
+//        {"1", "2", "2", "2", "2"},
+//        {"2", "2", "1", "1", "1"}
+//    }, //1
+//    {
+//        {"2", "1", "1", "1", "1", "1"},
+//        {"2", "2", "2", "2", "2", "2"},
+//        {"2", "2", "1", "1", "1", "2"},
+//        {"2"},
+//        {"2"}
+//    }, //2
+//    {
+//        {"2", "2", "2", "1", "1"},
+//        {"1", "1", "1"},
+//        {"2", "2", "2", "2"}
+//    }, //3
+//    {
+//        {"2", "2", "2", "2", "2", "2"},
+//        {"1", "1", "1"},
+//        {"1", "1", "1", "2"},
+//        {"2", "1", "1", "2", "2"},
+//        {"2", "2"}
+//    }, //4
+//    {
+//        {"2", "2", "2", "2"},
+//        {"1", "1", "1"},
+//        {"1", "1", "1", "1"},
+//        {"2"}
+//    }, //5
+//    {
+//        {"2", "2", "1", "1"},
+//        {"2", "2", "1", "2", "1", "2"},
+//        {"1", "1", "1", "1", "1", "1"},
+//        {"2", "2"}
+//    }, //6
+//    {
+//        {"2", "2", "2", "2", "2"},
+//        {"2"},
+//        {"2", "2", "2"},
+//        {"2", "2", "2", "2", "2"}
+//    }, //7
+//    {
+//        {"2", "2", "2"},
+//        {"2", "2", "2", "2"},
+//        {"2", "2", "1", "1", "1", "1"},
+//        {"2", "2", "2", "2", "2", "2"},
+//        {"2", "2", "1", "2", "2", "2"}
+//    }, //8
+//    {
+//        {"2", "1", "2"},
+//        {"2", "2", "3"},
+//        {"2", "2"},
+//        {"2", "2", "2", "2", "2", "1"}
+//    } //9
+//}; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
 
 namespace Ui {
     class ThirdMenuWidget;
@@ -100,6 +100,11 @@ public:
 //    QJsonArray get_subsidiary_array(QString string, QJsonObject jsonObject);
     QStringList get_third_menu_list(int i, int j);
     QVariantMap read_json_file(QString string);
+    QVariantMap get_fourth_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString);
+    QList<int> get_spinBox_range_list(QVariantMap variantMap);
+    QStringList get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString);
+    QList<QStringList> get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString);
+
     int width;
     int height;
     int currFirstNum;
@@ -119,7 +124,7 @@ private:
 public slots:
 
 private slots:
-    void on_tableView_clicked(const QModelIndex &index);
+    void onHeaderClicked(int index);
 };
 
 #endif // THIRDMENUWIDGET_H
