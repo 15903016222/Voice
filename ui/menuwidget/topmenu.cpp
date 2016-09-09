@@ -16,6 +16,8 @@ TopMenu :: TopMenu(QWidget *parent) :
     ui(new Ui::TopMenu)
 {
     ui->setupUi(this);
+    thirdMenuWidget = new ThirdMenuWidget(this);
+    thirdMenuWidget->hide();
 
     initUI();
 
