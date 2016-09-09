@@ -10,6 +10,11 @@ class Mcu : public QObject
 {
     Q_OBJECT
 public:
+    enum McuType {
+        MCU_IMX,
+        MCU_OMAP
+    };
+
     enum Cmd {
         CORE_TEMPERATURE            = 0x10, /* 核心板温度 */
         FPGA_TEMPERATURE            = 0x11, /* FPGA温度 */

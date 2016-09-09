@@ -1,16 +1,20 @@
 
 #include "mcu.h"
+
+#ifdef PHASCAN_II
 #include "mcu_imx.h"
+#else
 #include "mcu_omap.h"
+#endif
 
 Mcu* Mcu::m_mcu = NULL;
 
 Mcu::Mcu()
     :QObject()
 {
-#ifdef IMX
+#ifdef PHASCAN_II
     d_ptr = new McuImx();
-#else /*Phascan*/
+#else /*PHASCAN*/
     d_ptr = new McuOmap();
 #endif
 
