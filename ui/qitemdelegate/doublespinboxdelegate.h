@@ -4,6 +4,7 @@
 #include <QItemDelegate>
 #include <QWidget>
 #include <QList>
+#include <QDoubleSpinBox>
 
 class DoubleSpinBoxDelegate : public QItemDelegate
 {
@@ -20,6 +21,7 @@ public:
     void set_number_step(QString string);
     QString get_number_step();
     void set_decimal_amount(int amount);
+    QList<QDoubleSpinBox*> spinBoxList;
 
     QList<int> rangeList;
     QStringList stepList;

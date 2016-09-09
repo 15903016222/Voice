@@ -1,6 +1,7 @@
 #include "doublespinboxdelegate.h"
 
 #include <QDoubleSpinBox>
+#include <QDebug>
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QItemDelegate(parent)
@@ -18,6 +19,8 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
         editor->setMaximum(rangeList.at(1));
     }
     editor->setSingleStep(step.toFloat());
+    editor->setDecimals(decimalAmount);
+    (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
     return editor;
     Q_UNUSED(index);
     Q_UNUSED(option);
@@ -57,6 +60,11 @@ void DoubleSpinBoxDelegate::set_number_step_list(QStringList stringList)
 void DoubleSpinBoxDelegate::set_number_step(QString string)
 {
     step = string;
+//    if(spinBoxList.size() != 0) {
+//        QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+//        qDebug() << "list count : " << spinBoxList.count();
+//        doubleSpinBox->setSingleStep(string.toFloat());
+//    }
 }
 
 QString DoubleSpinBoxDelegate::get_number_step()

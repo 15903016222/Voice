@@ -23,7 +23,7 @@ void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     if (!button) {
         button = new QStyleOptionButton();
         button->rect = option.rect.adjusted(0, 0, 0, 0);
-        button->text = "on";
+        button->text = "On";
         button->state |= QStyle::State_Enabled;
         button->palette=palette;
         (const_cast<PushButtonDelegate *>(this))->buttonMap.insert(index, button);
@@ -37,7 +37,7 @@ void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     painter->fillRect(option.rect, QBrush(linearGradient));
     painter->restore();
 
-    drawDisplay(painter, option, option.rect, tr("on"));
+    drawDisplay(painter, option, option.rect, tr("On"));
     QApplication::style()->drawControl(QStyle::CE_PushButtonLabel, button, painter);
 }
 
@@ -58,9 +58,9 @@ bool PushButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
             buttonMap.value(index)->state &= (~QStyle::State_Sunken);
 
             if(switchFlag == true) {
-                buttonMap.value(index)->text = "off";
+                buttonMap.value(index)->text = "Off";
             } else {
-                buttonMap.value(index)->text = "on";
+                buttonMap.value(index)->text = "On";
             }
             switchFlag = !switchFlag;
         }
@@ -78,7 +78,7 @@ QSize PushButtonDelegate::sizeHint(const QStyleOptionViewItem &option, const QMo
 
 void PushButtonDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const
 {
-    QFont font("Times New Roman", 11, false, false);
+    QFont font("Times New Roman", 12, false, false);
     painter->setFont(font);
     Q_UNUSED(option);
     Q_UNUSED(rect);
@@ -87,7 +87,7 @@ void PushButtonDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewIt
 
 void PushButtonDelegate::setSwitchFlag(QModelIndex index)
 {
-    if(buttonMap.value(index)->text == "on") {
+    if(buttonMap.value(index)->text == "On") {
         switchFlag = true;
     } else {
         switchFlag = false;
