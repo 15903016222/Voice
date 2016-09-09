@@ -5,7 +5,7 @@
 #include <QStandardItemModel>
 
 #define COMMON_MENU_NUMBER 7
-static QString CHOICE_WIDGET_CHAR[COMMON_MENU_NUMBER] = {"2", "2", "2", "2", "1", "2", "1"}; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
+static QString CHOICE_WIDGET_CHAR[COMMON_MENU_NUMBER] = {"3", "3", "3", "3", "1", "3", "1"}; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
 
 namespace Ui {
 class CommonMenuWidget;
