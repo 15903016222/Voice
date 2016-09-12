@@ -60,11 +60,11 @@ void DoubleSpinBoxDelegate::set_number_step_list(QStringList stringList)
 void DoubleSpinBoxDelegate::set_number_step(QString string)
 {
     step = string;
-//    if(spinBoxList.size() != 0) {
-//        QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-//        qDebug() << "list count : " << spinBoxList.count();
-//        doubleSpinBox->setSingleStep(string.toFloat());
-//    }
+    if(spinBoxList.size() != 0) {
+        QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+        qDebug() << "list count : " << spinBoxList.count();
+        doubleSpinBox->setSingleStep(string.toFloat());
+    }
 }
 
 QString DoubleSpinBoxDelegate::get_number_step()

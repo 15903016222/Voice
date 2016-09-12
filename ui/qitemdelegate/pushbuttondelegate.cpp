@@ -12,7 +12,6 @@
 PushButtonDelegate::PushButtonDelegate(QObject *parent) :
 QItemDelegate(parent)
 {
-	//    m_Button->setStyleSheet("QPushButton{border:0px;border-radius:0px;color:yellow;font: 10pt 'Levenim MT';background-color:rgba(90, 90, 90, 225);}");
 }
 
 void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -97,70 +96,7 @@ void PushButtonDelegate::setSwitchFlag(QModelIndex index)
 
 PushButtonDelegate::~PushButtonDelegate()
 {
-//	QPainter *painter;
-//	foreach(QStyleOptionButton *button, buttonMap.values())
-//	{
-//		painter->eraseRect(button->rect);
-//	}
-//	qDebug() << "erase painter.";
+
 }
 
-
-//QWidget *PushButtonDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
-//{
-//    QPushButton *editor = new QPushButton(parent);
-//    editor->setText("on");
-
-//    (const_cast<PushButtonDelegate *>(this))->modelIndex.append(index);
-//    (const_cast<PushButtonDelegate *>(this))->buttonMap.insert(index, editor);
-//    editor->installEventFilter(parent);
-//    return editor;
-
-//    Q_UNUSED(index);
-//    Q_UNUSED(option);
-//}
-
-//void PushButtonDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
-//{
-//    QString value = index.model()->data(index,Qt::EditRole).toString();
-//    QPushButton *pushButton = static_cast<QPushButton*>(editor);
-//    pushButton->setText(value);
-//}
-
-//void PushButtonDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
-//{
-//    QPushButton *pushButton = static_cast<QPushButton*>(editor);
-//    QString text = pushButton->text();
-//    model->setData(index, text, Qt::EditRole);
-//}
-
-//void PushButtonDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
-//{
-//    Q_UNUSED(index);
-//    editor->setGeometry(option.rect);
-//}
-
-//void PushButtonDelegate::change_editor_text(QModelIndex index)
-//{
-//    bool switchFlag;
-//    if(buttonMap.value(index)->text() == "on") {
-//        switchFlag = true;
-//    } else {
-//        switchFlag = false;
-//    }
-//    if(switchFlag == true) {
-//        buttonMap.value(index)->setText("off");
-//    } else {
-//        buttonMap.value(index)->setText("on");
-//    }
-//    switchFlag = !switchFlag;
-//}
-
-//bool PushButtonDelegate::eventFilter(QObject *object, QEvent *event)
-//{
-//    if(event->type() == QEvent::MouseButtonPress && object == buttonMap.value(modelIndex.at(0))) {
-//        change_editor_text(modelIndex.at(0));
-//    }
-//    return QObject::eventFilter(object, event);
-//}
 

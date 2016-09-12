@@ -74,7 +74,6 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     QFile *file = new QFile(":/json/resources/menuone.json");
     read_json_file(file);
 
-
     initUI();
 }
 
@@ -95,15 +94,16 @@ void FirstSecondMenuWidget::setSecondMenuName(int i)
 {
     QStringList secondMenuList;
     QStringList stringList = get_second_menu_list(i);
+
     for(int j = 0; j < stringList.count(); j++)
     {
-      secondMenuList.append(stringList.at(j));
+        secondMenuList.append(stringList.at(j));
 
-      QString string = static_cast<QString>(secondMenuList.at(j));
+        QString string = static_cast<QString>(secondMenuList.at(j));
 
-      QStandardItem *item = new QStandardItem(string);
-      modelList.at(i)->appendRow(item);
-      item->setForeground(QBrush(Qt::yellow));
+        QStandardItem *item = new QStandardItem(string);
+        modelList.at(i)->appendRow(item);
+        item->setForeground(QBrush(Qt::yellow));
     }
 }
 
@@ -120,8 +120,13 @@ void FirstSecondMenuWidget::initSecondMenuItem(int i)
             menuList.at(i)->setCurrentIndex(modelIndex);
         } else {
             item->setForeground(QBrush(Qt::yellow));
-         }
+        }
     }
+
+    int height = 0;
+    height = menuList.at(i)->fontMetrics().height() * stringList.count() + (menuList.at(i)->spacing() * 2) * stringList.count();
+    int mainMenuHeight = this->height() - (menuList.at(i)->height() - height - menuList.at(i)->spacing());
+    this->resize(this->width(), mainMenuHeight);
 }
 
 void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
@@ -136,7 +141,7 @@ void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
             item->setForeground(QBrush(Qt::red));
         } else {
             item->setForeground(QBrush(Qt::yellow));
-         }
+        }
     }
 }
 
@@ -147,8 +152,7 @@ void FirstSecondMenuWidget::initUI()
     for(int i = 0; i < FIRST_MENU_NUMBER; i++)
     {
         QListView* listView = findChild<QListView*>("listView_" + QString::number(i + 1));
-        listView->setStyleSheet("QListView{font: 14px}");
-        listView->adjustSize();
+        listView->setStyleSheet("QListView{font: 14pt 'Times New Roman'}");
         menuList.append(listView);
 
         firstMenuData.append(ui->toolBox->itemText(i));
@@ -164,9 +168,9 @@ void FirstSecondMenuWidget::initUI()
         initItem->setForeground(QBrush(Qt::red));
         menuList.at(i)->setCurrentIndex(initModelIndex);
         menuList.at(i)->setModel(modelList.at(i));   
-     }
+    }
 
-    ui->toolBox->setCurrentIndex(0);
+    initSecondMenuItem(0);
     QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
     menuList.at(0)->setCurrentIndex(initModelIndex);
 }

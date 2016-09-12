@@ -72,7 +72,7 @@ border-image: url(:/file/resources/arrowDown.png);
 background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
 stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-background-color: rgba(0, 0, 0);
+background-color: rgba(67, 67, 67, 0);
 border-radius: 5px;
 color: white;
 }
@@ -81,14 +81,6 @@ QToolBox::tab:selected {
 border-image: url(:/file/resources/arrowUp.png);
 font: italic, &quot;Times New Roman&quot;, bold, 12px;
 color: red;
-}
-
-QToolBox QWidget {
-background-color: rgb(255, 255, 255);
-}
-
-QToolBox QListView {
-background-color: rgb(0, 0, 0);
 }</string>
         </property>
         <property name="frameShape">

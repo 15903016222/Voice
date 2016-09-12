@@ -33,7 +33,6 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         for(int i = 0; i < itemList.count(); i ++) {
             editor->addItem(itemList.at(i));
             int width = editor->fontMetrics().width(editor->itemText(i));
-            qDebug() << "width : " << width;
             if(maxSize < width) {
                 maxSize = width;
             }

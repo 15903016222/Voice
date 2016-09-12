@@ -332,7 +332,7 @@ void ThirdMenuWidget::initStandardModel()
 
 	ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
-		"{font: 11pt 'Times New Roman';"
+        "{font: 13pt 'Times New Roman';"
 		"background-color: rgba(0, 130, 195, 255);"
 		"color: rgba(255, 255, 255, 255);"
 		"border: 0px solid black;"
