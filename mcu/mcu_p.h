@@ -3,13 +3,12 @@
 #define __MCU_P_H__
 
 #include "mcu.h"
-#include <QSerialPort>
 
-class McuPrivate : public QSerialPort
+class McuPrivate : public QObject
 {
     Q_OBJECT
 public:
-    McuPrivate(const QString &name) : QSerialPort(name) {}
+    explicit McuPrivate(QObject *parent=0) : QObject(parent) {}
     virtual ~McuPrivate() {}
     virtual void query(Mcu::Cmd cmd) = 0;
     virtual void set(Mcu::Cmd cmd, char value) = 0;

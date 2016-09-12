@@ -13,32 +13,32 @@ char McuImx::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 
 char McuImx::m_setPkg[8] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
 
 McuImx::McuImx()
-    : McuPrivate(UART_DEVICE)
+    : McuPrivate(), m_tty(UART_DEVICE)
 {
-    connect(this, SIGNAL(readyRead()), this, SLOT(on_readyRead_event()));
+    connect(&m_tty, SIGNAL(readyRead()), this, SLOT(on_readyRead_event()));
     m_recBuffer.clear();
 
-    if ( ! setBaudRate(QSerialPort::Baud115200) ) {
+    if ( ! m_tty.setBaudRate(QSerialPort::Baud115200) ) {
         qDebug("setBaudRate error!\n");
     }
 
-    if ( ! setDataBits(QSerialPort::Data8) ) {
+    if ( ! m_tty.setDataBits(QSerialPort::Data8) ) {
         qDebug("setDataBits error!\n");
     }
 
-    if ( ! setFlowControl(QSerialPort::NoFlowControl) ) {
+    if ( ! m_tty.setFlowControl(QSerialPort::NoFlowControl) ) {
         qDebug("setFlowControl error!\n");
     }
 
-    if ( ! setStopBits(QSerialPort::OneStop) ) {
+    if ( ! m_tty.setStopBits(QSerialPort::OneStop) ) {
         qDebug("setStopBits error!\n");
     }
 
-    if ( ! setParity(QSerialPort::NoParity) ) {
+    if ( ! m_tty.setParity(QSerialPort::NoParity) ) {
         qDebug("setParity error!\n");
     }
 
-    if ( ! open(QIODevice::ReadWrite) ) {
+    if ( ! m_tty.open(QIODevice::ReadWrite) ) {
         qDebug("Serial Open Error!\n");
     }
 
@@ -86,7 +86,7 @@ QByteArray McuImx::find_packet(QByteArray &data)
 
 void McuImx::on_readyRead_event()
 {
-    QByteArray data = readAll();
+    QByteArray data = m_tty.readAll();
 
     if (data.isEmpty()) {
         return;

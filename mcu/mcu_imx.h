@@ -3,6 +3,7 @@
 
 #include "mcu_p.h"
 
+#include <QSerialPort>
 #include <QMutex>
 #include <QDebug>
 /**
@@ -29,12 +30,13 @@ public:
     void set(Mcu::Cmd cmd, char value) { m_setPkg[4] = cmd; m_setPkg[5] = value; write(m_setPkg, sizeof(m_setPkg));}
 
 private:
+    QSerialPort m_tty;
     QMutex m_wrMutex;
     QByteArray m_recBuffer;
     static char m_queryPkg[7];
     static char m_setPkg[8];
 
-    qint64 write(const char *data, qint64 len) { QMutexLocker locker(&m_wrMutex); return QIODevice::write(data, len); }
+    qint64 write(const char *data, qint64 len) { QMutexLocker locker(&m_wrMutex); return m_tty.write(data, len); }
 
     QByteArray find_packet(QByteArray &data);
     void parse_packet(QByteArray &pkg);

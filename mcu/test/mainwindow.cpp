@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #else
     connect(m_mcu, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SLOT(do_mcu_event(Mcu::Cmd,QByteArray&)));
     connect(ui->verticalSliderBrightness, SIGNAL(valueChanged(int)), m_mcu, SLOT(set_brightness(int)));
+    connect(ui->pushButtonPowerOff, SIGNAL(clicked(bool)), m_mcu, SLOT(set_poweroff()));
 #endif
 }
 

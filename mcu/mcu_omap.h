@@ -3,21 +3,30 @@
 
 #include "mcu_p.h"
 
+#include <QSerialPort>
+
 class McuOmap : public McuPrivate
 {
     Q_OBJECT
+
 public:
     McuOmap();
-    ~McuOmap(){}
+
     void query(Mcu::Cmd cmd);
     void set(Mcu::Cmd cmd, char value);
+
 private:
-    QSerialPort m_ttyDev1;
-    char m_brightness;
+    QSerialPort m_ttyS0;
+    QSerialPort m_ttyS1;
+
+    char m_brightness;      /* used by ttyS1 */
+    QByteArray m_buffer;    /* used by ttyS1 */
+
+    void init_tty(QSerialPort &tty);
 
 private slots:
-    void on_readyRead_event();
-    void on_ttyDev1_readyRead_event();
+    void on_ttyS0_readyRead_event();
+    void on_ttyS1_readyRead_event();
 };
 
 

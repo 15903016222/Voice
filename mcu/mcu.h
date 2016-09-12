@@ -46,6 +46,13 @@ public:
         NORMAL_PROBE_2_SIZE         = 0x74, /* 常规探头Ii晶片尺寸 */
     };
 
+    enum BatteryStatus {
+        DISCHARGE,
+        CHARGE,
+        NO_BATTERY,
+        BATTERY_NO_WORK
+    };
+
     void query_core_temp();
     void query_fpga_temp();
     void query_power_temp();

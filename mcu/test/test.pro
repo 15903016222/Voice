@@ -8,11 +8,13 @@ QT      += core gui
 
 equals(QT_MAJOR_VERSION, 5) {
     QT      += serialport
+    DEFINES += PHASCAN_II
 }
 
 equals(QT_MAJOR_VERSION, 4) {
     CONFIG  += serialport
     QMAKE_CXXFLAGS += -Wno-psabi
+    DEFINES += PHASCAN
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
