@@ -25,13 +25,24 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 		"selection-color:yellow;}"
 		"QComboBox QAbstractItemView::item{height:30px}");
 
+    int maxSize = 0;
     if(itemList.empty()) {
         editor->addItem("on");
         editor->addItem("off");
     } else {
         for(int i = 0; i < itemList.count(); i ++) {
             editor->addItem(itemList.at(i));
+            int width = editor->fontMetrics().width(editor->itemText(i));
+            qDebug() << "width : " << width;
+            if(maxSize < width) {
+                maxSize = width;
+            }
          }
+    }
+    if(minimumContentLength < maxSize) {
+        editor->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    } else {
+        editor->setMinimumContentsLength(minimumContentLength);
     }
 
     return editor;
@@ -85,4 +96,9 @@ int ComboBoxDelegate::find_list_index(QStringList stringList, QString string) co
         }
     }
     return index;
+}
+
+void ComboBoxDelegate::set_minimum_contents_length(int width)
+{
+    minimumContentLength = width;
 }

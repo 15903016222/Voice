@@ -420,6 +420,7 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 comboBox->set_comboBox_item_list(list.at(0));
                 comboBox->set_model_item_list(list.at(1));
+                comboBox->set_minimum_contents_length(width / 6);
 
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 QStandardItem *item = new QStandardItem(list.at(1).at(0));

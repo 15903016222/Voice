@@ -18,10 +18,12 @@ public:
 
     void set_comboBox_item_list(QStringList stringList);
     void set_model_item_list(QStringList stringList);
+    void set_minimum_contents_length(int width);
     int find_list_index(QStringList stringList, QString string) const;
 
     QStringList itemList;
     QStringList modelItemList;
+    int minimumContentLength;
 };
 
 #endif // COMBOBOXDELEGATE_H
