@@ -72,7 +72,7 @@ border-image: url(:/file/resources/arrowDown.png);
 background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
 stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-background-color: rgba(67, 67, 67, 0);
+background-color: rgba(0, 0, 0);
 border-radius: 5px;
 color: white;
 }
@@ -81,6 +81,14 @@ QToolBox::tab:selected {
 border-image: url(:/file/resources/arrowUp.png);
 font: italic, &quot;Times New Roman&quot;, bold, 12px;
 color: red;
+}
+
+QToolBox QWidget {
+background-color: rgb(255, 255, 255);
+}
+
+QToolBox QListView {
+background-color: rgb(0, 0, 0);
 }</string>
         </property>
         <property name="frameShape">
@@ -138,11 +146,23 @@ color: red;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -153,8 +173,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>158</width>
-           <height>167</height>
+           <width>161</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label">
@@ -200,6 +220,15 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
             <property name="spacing">
              <number>6</number>
             </property>
@@ -212,8 +241,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>158</width>
-           <height>167</height>
+           <width>161</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label">
@@ -259,8 +288,17 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -271,8 +309,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>158</width>
-           <height>167</height>
+           <width>161</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label">
@@ -318,6 +356,15 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
             <property name="spacing">
              <number>6</number>
             </property>
@@ -330,8 +377,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>158</width>
-           <height>167</height>
+           <width>161</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label">
@@ -377,8 +424,17 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -389,8 +445,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>158</width>
-           <height>167</height>
+           <width>161</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label">
@@ -436,8 +492,17 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -448,8 +513,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>158</width>
-           <height>167</height>
+           <width>161</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label">
@@ -495,8 +560,17 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -507,8 +581,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>158</width>
-           <height>167</height>
+           <width>161</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label">
@@ -554,6 +628,15 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
             <property name="spacing">
              <number>6</number>
             </property>
@@ -566,8 +649,8 @@ color: red;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>158</width>
-           <height>167</height>
+           <width>161</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label">
@@ -613,8 +696,20 @@ color: red;
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditKeyPressed</set>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Fixed</enum>
+            </property>
             <property name="spacing">
-             <number>8</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
