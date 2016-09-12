@@ -814,7 +814,7 @@
         "style": "2",
         "options": [
             {
-                "Display": "A Scan",
+                "Display": "A A-Scan",
                 "ShortText": "A"
             },
             {
@@ -2453,7 +2453,7 @@
         "style": "2",
         "options": [
             {
-                "Units": "millimeters"
+                "Units": "Millimeters"
             },
             {
                 "Units": "Inches"
