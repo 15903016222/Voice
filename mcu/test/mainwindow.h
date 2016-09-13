@@ -17,7 +17,8 @@ public:
     ~MainWindow();
 
 protected slots:
-    void do_mcu_event(Mcu::Cmd type, QByteArray &data);
+    void do_battery_status_event(int index, Mcu::BatteryStatus status);
+    void do_temperature_event(Mcu::TemperatureType type, int value);
 
 private:
     Ui::MainWindow *ui;

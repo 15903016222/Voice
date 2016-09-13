@@ -23,9 +23,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(m_mcu, &Mcu::event, this, &MainWindow::do_mcu_event);
 #else
-    connect(m_mcu, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SLOT(do_mcu_event(Mcu::Cmd,QByteArray&)));
     connect(ui->verticalSliderBrightness, SIGNAL(valueChanged(int)), m_mcu, SLOT(set_brightness(int)));
     connect(ui->pushButtonPowerOff, SIGNAL(clicked(bool)), m_mcu, SLOT(set_poweroff()));
+
+    connect(m_mcu, SIGNAL(key_event(int)), ui->labelKey, SLOT(setNum(int)));
+    connect(m_mcu, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int,Mcu::BatteryStatus)));
+    connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType,int)), this, SLOT(do_temperature_event(Mcu::TemperatureType,int)));
 #endif
 }
 
@@ -34,38 +37,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::do_mcu_event(Mcu::Cmd type, QByteArray &data)
+void MainWindow::do_battery_status_event(int index, Mcu::BatteryStatus status)
 {
-    switch (type) {
-    case Mcu::CORE_TEMPERATURE:
-        ui->labelCoreTemp->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    case Mcu::MCU_TEMPERATUREE:
-        ui->labelMcuTemp->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    case Mcu::FPGA_TEMPERATURE:
-        ui->labelFpgaTemp->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    case Mcu::POWER_TEMPERATURE:
-        ui->labelPowerTemp->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    case Mcu::BATTERY1_STATUS:
-        ui->labelFstBatteryStatus->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    case Mcu::BATTERY1_QUANTITY:
-        ui->labelFstBattery->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    case Mcu::BATTERY2_STATUS:
-        ui->labelSndBatteryStatus->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    case Mcu::BATTERY2_QUANTITY:
-        ui->labelSndBattery->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    case Mcu::KEY:
-    case Mcu::ROTARY:
-        ui->labelKey->setText(QString::number(data.toHex().toInt(0, 16)));
-        break;
-    default:
-        break;
+    static QString statusList[4] = {"Discharge", "Charge", "No Battery", "No work"};
+    if (index == 0) {
+        ui->labelFstBatteryStatus->setText(statusList[status]);
+    } else if (index == 1) {
+        ui->labelSndBatteryStatus->setText(statusList[status]);
+    }
+}
+
+void MainWindow::do_temperature_event(Mcu::TemperatureType type, int value)
+{
+    if (type == Mcu::TEMPERATURE_CPU) {
+        ui->labelCoreTemp->setNum(value);
+    } else if (type == Mcu::TEMPERATURE_FPGA) {
+        ui->labelFpgaTemp->setNum(value);
+    } else if (type == Mcu::TEMPERATURE_MCU) {
+        ui->labelMcuTemp->setNum(value);
+    } else if (type == Mcu::TEMPERATURE_POWER) {
+        ui->labelPowerTemp->setNum(value);
     }
 }

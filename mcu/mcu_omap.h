@@ -4,6 +4,7 @@
 #include "mcu_p.h"
 
 #include <QSerialPort>
+#include <QMap>
 
 class McuOmap : public McuPrivate
 {
@@ -21,6 +22,9 @@ private:
 
     char m_brightness;      /* used by ttyS1 */
     QByteArray m_buffer;    /* used by ttyS1 */
+
+    QMap<int, Mcu::BatteryStatus> m_statusMap;
+    Mcu::BatteryStatus m_batteryStatus[2];
 
     void init_tty(QSerialPort &tty);
 

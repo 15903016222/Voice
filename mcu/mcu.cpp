@@ -18,9 +18,11 @@ Mcu::Mcu()
     d_ptr = new McuOmap();
 #endif
 
-    if ( ! connect(d_ptr, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SIGNAL(event(Mcu::Cmd,QByteArray&))) ) {
-        qDebug("failed");
-    }
+    connect(d_ptr, SIGNAL(key_event(int)), this, SIGNAL(key_event(int)));
+    connect(d_ptr, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)), this, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)));
+    connect(d_ptr, SIGNAL(temperature_event(Mcu::TemperatureType,int)), this, SIGNAL(temperature_event(Mcu::TemperatureType,int)));
+
+    connect(d_ptr, SIGNAL(event(Mcu::Cmd,QByteArray&)), this, SIGNAL(event(Mcu::Cmd,QByteArray&)));
 }
 
 Mcu::~Mcu()

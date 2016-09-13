@@ -53,6 +53,13 @@ public:
         BATTERY_NO_WORK
     };
 
+    enum TemperatureType {
+        TEMPERATURE_CPU,
+        TEMPERATURE_FPGA,
+        TEMPERATURE_MCU,
+        TEMPERATURE_POWER
+    };
+
     void query_core_temp();
     void query_fpga_temp();
     void query_power_temp();
@@ -83,6 +90,9 @@ public slots:
 
 Q_SIGNALS:
     void event(Mcu::Cmd cmd, QByteArray &val);
+    void key_event(int value);
+    void battery_status_event(int index, Mcu::BatteryStatus status);
+    void temperature_event(Mcu::TemperatureType type, int value);
 
 protected:
     explicit Mcu();
