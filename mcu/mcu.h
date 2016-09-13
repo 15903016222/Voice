@@ -104,6 +104,7 @@ Q_SIGNALS:
     void battery_status_event(int index, Mcu::BatteryStatus status);
     void battery_quantity_event(int index, int value);
     void temperature_event(Mcu::TemperatureType type, int value);
+    void pa_probe_event(Mcu::PaProbeAttrType type, const QByteArray &data);
 
 protected:
     explicit Mcu();

@@ -20,9 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonPowerOff, &QPushButton::clicked, m_mcu, &Mcu::set_poweroff);
     connect(ui->pushButtonStarted, &QPushButton::clicked, m_mcu, &Mcu::notify_started);
     connect(ui->verticalSliderBrightness, &QSlider::valueChanged, m_mcu, &Mcu::set_brightness);
+#endif
 
-    connect(m_mcu, &Mcu::event, this, &MainWindow::do_mcu_event);
-#else
     connect(ui->verticalSliderBrightness, SIGNAL(valueChanged(int)), m_mcu, SLOT(set_brightness(int)));
     connect(ui->pushButtonPowerOff, SIGNAL(clicked(bool)), m_mcu, SLOT(set_poweroff()));
 
@@ -30,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_mcu, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int,Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int,int)), this, SLOT(do_battery_quantity_event(int,int)));
     connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType,int)), this, SLOT(do_temperature_event(Mcu::TemperatureType,int)));
-#endif
 }
 
 MainWindow::~MainWindow()

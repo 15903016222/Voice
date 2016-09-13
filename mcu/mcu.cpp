@@ -22,6 +22,7 @@ Mcu::Mcu()
     connect(d_ptr, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)), this, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)));
     connect(d_ptr, SIGNAL(battery_quantity_event(int,int)), this, SIGNAL(battery_quantity_event(int,int)));
     connect(d_ptr, SIGNAL(temperature_event(Mcu::TemperatureType,int)), this, SIGNAL(temperature_event(Mcu::TemperatureType,int)));
+    connect(d_ptr, SIGNAL(pa_probe_event(Mcu::PaProbeAttrType,QByteArray&)), this, SIGNAL(pa_probe_event(Mcu::PaProbeAttrType,QByteArray&)));
 }
 
 Mcu::~Mcu()

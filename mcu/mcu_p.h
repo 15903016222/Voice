@@ -19,7 +19,7 @@ Q_SIGNALS:
     void battery_status_event(int index, Mcu::BatteryStatus);
     void battery_quantity_event(int index, int quantity);
     void temperature_event(Mcu::TemperatureType type, int value);
-    void pa_probe_event(Mcu::PaProbeAttrType type, QByteArray &data);
+    void pa_probe_event(Mcu::PaProbeAttrType type, const QByteArray &data);
     void poweroff_event();
 };
 
