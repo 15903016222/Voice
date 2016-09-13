@@ -54,8 +54,7 @@ void McuOmap::init_tty(QSerialPort &tty)
 void McuOmap::query(Mcu::Cmd cmd)
 {
     if ( Mcu::BRIGHTNESS == cmd ) {
-        QByteArray data(&m_brightness, 1);
-        emit event(Mcu::BRIGHTNESS, data);
+        emit brightness_event(m_brightness);
     }
 }
 
@@ -104,8 +103,7 @@ void McuOmap::on_ttyS0_readyRead_event()
 
     if (m_buffer.at(1) == 0x55 && m_buffer.at(2) == 0x55) {
         if (m_buffer.at(27) == 0xaa) {
-            QByteArray s;
-            emit event(Mcu::POWEROFF, s);
+            emit poweroff_event();
         }
         /* first battery */
         emit battery_quantity_event(0, m_buffer.mid(3, 2).toHex().toInt(0, 16));

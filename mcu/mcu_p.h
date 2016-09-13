@@ -13,11 +13,14 @@ public:
     virtual void query(Mcu::Cmd cmd) = 0;
     virtual void set(Mcu::Cmd cmd, char value) = 0;
 Q_SIGNALS:
-    void event(Mcu::Cmd cmd, QByteArray &val);
+//    void event(Mcu::Cmd cmd, QByteArray &val);
+    void brightness_event(int val);
     void key_event(int val);
     void battery_status_event(int index, Mcu::BatteryStatus);
     void battery_quantity_event(int index, int quantity);
     void temperature_event(Mcu::TemperatureType type, int value);
+    void pa_probe_event(Mcu::PaProbeAttrType type, QByteArray &data);
+    void poweroff_event();
 };
 
 #endif /* end of __MCU_P_H__ */

@@ -51,7 +51,46 @@ void McuImx::parse_packet(QByteArray &pkg)
     }
 
     QByteArray data = pkg.mid(PKG_HEADER_LEN, pkg.at(3));
-    emit event((Mcu::Cmd)pkg.at(4), data);
+    switch (pkg.at(4)) {
+    case Mcu::KEY:
+    case Mcu::ROTARY:
+        emit key_event(data.toHex().toInt(0, 16));
+        break;
+    case Mcu::BATTERY1_QUANTITY:
+        emit battery_quantity_event(0, data.toHex().toInt(0, 16));
+        break;
+    case Mcu::BATTERY1_STATUS:
+        emit battery_status_event(0, (Mcu::BatteryStatus)data.toHex().toInt(0, 16));
+        break;
+    case Mcu::BATTERY2_QUANTITY:
+        emit battery_quantity_event(1, data.toHex().toInt(0, 16));
+        break;
+    case Mcu::BATTERY2_STATUS:
+        emit battery_status_event(1, (Mcu::BatteryStatus)data.toHex().toInt(0, 16));
+        break;
+    case Mcu::BRIGHTNESS:
+        emit brightness_event(data.toHex().toInt(0, 16));
+        break;
+    case Mcu::CORE_TEMPERATURE:
+    case Mcu::FPGA_TEMPERATURE:
+    case Mcu::MCU_TEMPERATUREE:
+    case Mcu::POWER_TEMPERATURE:
+        emit temperature_event((Mcu::TemperatureType)pkg.at(4), data.toHex().toInt(0, 16));
+        break;
+    case Mcu::PA_PROBE_MODEL:
+    case Mcu::PA_PROBE_SERIES:
+    case Mcu::PA_PROBE_TYPE:
+    case Mcu::PA_PROBE_FREQ:
+    case Mcu::PA_PROBE_ELEMENTS_QTY:
+    case Mcu::PA_PROBE_ELEMENTS_DISTANCE:
+    case Mcu::PA_PROBE_FERENCE_POINT:
+        emit pa_probe_event((Mcu::PaProbeAttrType)pkg.at(4), data);
+        break;
+    case Mcu::POWEROFF:
+        emit poweroff_event();
+    default:
+        break;
+    }
 }
 
 QByteArray McuImx::find_packet(QByteArray &data)
