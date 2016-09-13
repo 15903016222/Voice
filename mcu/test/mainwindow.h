@@ -18,6 +18,7 @@ public:
 
 protected slots:
     void do_battery_status_event(int index, Mcu::BatteryStatus status);
+    void do_battery_quantity_event(int index, int value);
     void do_temperature_event(Mcu::TemperatureType type, int value);
 
 private:

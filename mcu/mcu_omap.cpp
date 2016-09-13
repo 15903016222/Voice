@@ -12,9 +12,7 @@ McuOmap::McuOmap()
     m_statusMap.insert(0x00, Mcu::NO_BATTERY);
     m_statusMap.insert(0x80, Mcu::CHARGE);
     m_statusMap.insert(0xc0, Mcu::DISCHARGE);
-
-    m_batteryStatus[0] = Mcu::NO_BATTERY;
-    m_batteryStatus[1] = Mcu::NO_BATTERY;
+    m_statusMap.insert(0xe0, Mcu::BATTERY_FULL);
 
     init_tty(m_ttyS0);
     init_tty(m_ttyS1);
@@ -110,18 +108,14 @@ void McuOmap::on_ttyS0_readyRead_event()
             emit event(Mcu::POWEROFF, s);
         }
         /* first battery */
-        QByteArray s = m_buffer.mid(3, 1);
-        emit event(Mcu::BATTERY1_QUANTITY, s);
+        emit battery_quantity_event(0, m_buffer.mid(3, 2).toHex().toInt(0, 16));
 
-        int c = m_buffer.at(6);
-        emit battery_status_event(0, m_statusMap[c]);
+        emit battery_status_event(0, m_statusMap[m_buffer.at(6)]);
 
         /* second battery */
-        s = m_buffer.mid(9, 2);
-        emit event(Mcu::BATTERY2_QUANTITY, s);
+        emit battery_quantity_event(1, m_buffer.mid(9, 2).toHex().toInt(0, 16));
 
-        c = m_buffer.at(12);
-        emit battery_status_event(1, m_statusMap[c]);
+        emit battery_status_event(1, m_statusMap[m_buffer.at(12)]);
 
         /* temperature */
         emit temperature_event(Mcu::TEMPERATURE_POWER,m_buffer.mid(15, 2).toHex().toInt(0, 16)>>7);

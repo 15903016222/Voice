@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(m_mcu, SIGNAL(key_event(int)), ui->labelKey, SLOT(setNum(int)));
     connect(m_mcu, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int,Mcu::BatteryStatus)));
+    connect(m_mcu, SIGNAL(battery_quantity_event(int,int)), this, SLOT(do_battery_quantity_event(int,int)));
     connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType,int)), this, SLOT(do_temperature_event(Mcu::TemperatureType,int)));
 #endif
 }
@@ -39,11 +40,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::do_battery_status_event(int index, Mcu::BatteryStatus status)
 {
-    static QString statusList[4] = {"Discharge", "Charge", "No Battery", "No work"};
+    static QString statusList[4] = {"Discharge", "Charge", "No Battery", "Full"};
     if (index == 0) {
         ui->labelFstBatteryStatus->setText(statusList[status]);
     } else if (index == 1) {
         ui->labelSndBatteryStatus->setText(statusList[status]);
+    }
+}
+
+void MainWindow::do_battery_quantity_event(int index, int value)
+{
+    if (index == 0) {
+        ui->labelFstBattery->setNum(value);
+    } else if (index == 1) {
+        ui->labelSndBattery->setNum(value);
     }
 }
 

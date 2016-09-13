@@ -24,7 +24,6 @@ private:
     QByteArray m_buffer;    /* used by ttyS1 */
 
     QMap<int, Mcu::BatteryStatus> m_statusMap;
-    Mcu::BatteryStatus m_batteryStatus[2];
 
     void init_tty(QSerialPort &tty);
 

@@ -50,6 +50,7 @@ public:
         DISCHARGE,
         CHARGE,
         NO_BATTERY,
+        BATTERY_FULL,
         BATTERY_NO_WORK
     };
 
@@ -89,9 +90,9 @@ public slots:
 
 
 Q_SIGNALS:
-    void event(Mcu::Cmd cmd, QByteArray &val);
     void key_event(int value);
     void battery_status_event(int index, Mcu::BatteryStatus status);
+    void battery_quantity_event(int index, int value);
     void temperature_event(Mcu::TemperatureType type, int value);
 
 protected:
