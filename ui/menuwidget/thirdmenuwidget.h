@@ -9,64 +9,6 @@
 #include <QTableView>
 
 #define THIRD_MENU_NUMBER 6
-//static QString WIDGET_CHOICE_CHAR[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_MENU_NUMBER]={
-//    {
-//        {"1", "1", "1", "1", "1", "2"},
-//        {"2", "1", "1", "1", "1"},
-//        {"1", "2", "2", "2", "2"},
-//        {"2", "2", "1", "1", "1"}
-//    }, //1
-//    {
-//        {"2", "1", "1", "1", "1", "1"},
-//        {"2", "2", "2", "2", "2", "2"},
-//        {"2", "2", "1", "1", "1", "2"},
-//        {"2"},
-//        {"2"}
-//    }, //2
-//    {
-//        {"2", "2", "2", "1", "1"},
-//        {"1", "1", "1"},
-//        {"2", "2", "2", "2"}
-//    }, //3
-//    {
-//        {"2", "2", "2", "2", "2", "2"},
-//        {"1", "1", "1"},
-//        {"1", "1", "1", "2"},
-//        {"2", "1", "1", "2", "2"},
-//        {"2", "2"}
-//    }, //4
-//    {
-//        {"2", "2", "2", "2"},
-//        {"1", "1", "1"},
-//        {"1", "1", "1", "1"},
-//        {"2"}
-//    }, //5
-//    {
-//        {"2", "2", "1", "1"},
-//        {"2", "2", "1", "2", "1", "2"},
-//        {"1", "1", "1", "1", "1", "1"},
-//        {"2", "2"}
-//    }, //6
-//    {
-//        {"2", "2", "2", "2", "2"},
-//        {"2"},
-//        {"2", "2", "2"},
-//        {"2", "2", "2", "2", "2"}
-//    }, //7
-//    {
-//        {"2", "2", "2"},
-//        {"2", "2", "2", "2"},
-//        {"2", "2", "1", "1", "1", "1"},
-//        {"2", "2", "2", "2", "2", "2"},
-//        {"2", "2", "1", "2", "2", "2"}
-//    }, //8
-//    {
-//        {"2", "1", "2"},
-//        {"2", "2", "3"},
-//        {"2", "2"},
-//        {"2", "2", "2", "2", "2", "1"}
-//    } //9
-//}; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
 
 namespace Ui {
     class ThirdMenuWidget;
@@ -88,7 +30,7 @@ public:
     void reTranslatorThirdMenuUi();
     void initStandardModel();
     void setThirdMenuName(int i, int j);
-    void widgetStyleChoice(int i, int j, int k);
+    void widgetStyleChoice(int k);
     void resizeEvent(QResizeEvent *event);
 
     bool get_json_document_type(QString string, QJsonObject jsonObject);
@@ -98,12 +40,14 @@ public:
 //    QJsonObject get_json_object(QString string);
 //    QJsonObject get_subsidiary_object(QString string, QJsonObject jsonObject);
 //    QJsonArray get_subsidiary_array(QString string, QJsonObject jsonObject);
-    QStringList get_third_menu_list(int i, int j);
+    QStringList get_third_menu_list();
     QVariantMap read_json_file(QString string);
-    QVariantMap get_fourth_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString);
+    QVariantMap get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString);
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
     QStringList get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString);
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString);
+    QString set_long_contents_header(int index, QString string);
+    void cache_menu_data();
 
     int width;
     int height;
@@ -118,6 +62,10 @@ public:
 //    QJsonObject jsonObjectTwo;
     QVariantMap thirdMenuMap;
     QVariantMap fourthMenuMap;
+    QVariantMap menuCacheMap;
+    QString firstMenuString;
+    QString secondMenuString;
+    QString relatedMenuString;
 
 private:
 
@@ -125,6 +73,7 @@ public slots:
 
 private slots:
     void onHeaderClicked(int index);
+    void change_related_third_menu_data(QString string);
 };
 
 #endif // THIRDMENUWIDGET_H

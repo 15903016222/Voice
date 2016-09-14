@@ -5,260 +5,263 @@
 #include "comboboxdelegate.h"
 #include "pushbuttondelegate.h"
 
+#include "serializer.h"
+
 #include <QDebug>
 #include <QPainter>
-#include "parser.h"
+#include <QTextStream>
+#include <QFileInfo>
 
-static const char* THIRD_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_MENU_NUMBER] = {
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Gain\n(dB)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Start\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Range\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Velocity\n(m/s)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Wedge Delay\n(μs)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "UT Unit")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Tx/Rx mode"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Pulser\n(1 to 128)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Voltage\n(V)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "PW\n(ns)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "PRF")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Receiver\n(1 to 128)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Filter"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Rectifier"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Video Filter"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Averaging")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Set 80%"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "dB Ref."),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Points Qty."),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scale\nFactor"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Sum Gain")
-        }
-    }, //1
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Gate"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Start\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Width\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Threshold\n(%)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Synchro"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Measure Mode")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Alarm"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Switch"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group\nA"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Condition1"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Operator"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Condition2")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Output"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Sound"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Delay\n(ms)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Hold Time\n(ms)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Data")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Mode")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Mode")
-        }
-    }, //2
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Display"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "C-Scan\nSource"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Min Thickness\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Max Thickness\n(mm)")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Amplitude"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Depth"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "TOFD")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan"),
-            "A", "B", "C"
-        }
-    }, //3
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group Mode"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Probe"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Wedge"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Define"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Auto\nDetect")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan Offset\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Index Offset\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Skew\n(°)")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Gain\n(dB)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Start\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Width\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Switch")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Geometry"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Thickness\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Diameter"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Material"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Overlay")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Load\nPart"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Clear\nPart")
-        }
-    }, //4
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Law Type"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Pulse\nConnection"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Receiver\nConnection"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Wave Type")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Min. Angle\n(°)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Max. Angle\n(°)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Angle Step\n(°)")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Aperture"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "First\nElement"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Last\nElement"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Element Step")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Type.")
-        }
-    }, //5
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Type"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Max Scan\nSpeed"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Max Scan\nSpeed(rpm)")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Encoder"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Encoder\nType"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Resolution"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Polarity"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Origin"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Preset")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan Start\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan End\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan Resolution\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Index Start\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Index End\n(mm)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Index Resolution\n(mm)")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Start"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Pause")
-        }
-    }, //6
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Reading\nGroup"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Field1"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Field2"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Field3"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Field4")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Selection")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Select"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "TOFD\nSettings"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "TOFD\nAnalysis")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Add/Delete"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Flaw Image"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Comment"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Display\nTable"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Export\nTable")
-        }
-    }, //7
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Save Setup As"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Open"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "File Manager")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Storage"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Save Mode"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Save Data"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "File Name")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Template"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Report Name"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Customer"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Part Name"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Part Number"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Create")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Probe/Wedge\nInfo"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Inspection\nInfo"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan\nInfo"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Encoder\nInfo"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "DAC/TCG\nInfo"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Flaw Record\nTable")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Select"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Enable"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Label"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Content"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Edit Note"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Print")
-        }
-    }, //8
-    {
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Units"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Bright\n(%)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Opacity")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Clock Set\n(HH:MM:SS)"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Date Set"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Language")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "IP\nAddress"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Subnet\nMask")
-        },
-        {
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "System\nInfomation"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Cert\nImport"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "SW\nUpdate"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "HW\nUpdate"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Reset\nConfiguration"),
-            QT_TRANSLATE_NOOP("ThirdMenuWidget", "About")
-        }
-    } //9
-};
+//static const char* THIRD_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_MENU_NUMBER] = {
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Gain\n(dB)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Start\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Range\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Velocity\n(m/s)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Wedge Delay\n(μs)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "UT Unit")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Tx/Rx mode"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Pulser\n(1 to 128)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Voltage\n(V)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "PW\n(ns)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "PRF")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Receiver\n(1 to 128)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Filter"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Rectifier"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Video Filter"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Averaging")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Set 80%"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "dB Ref."),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Points Qty."),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scale\nFactor"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Sum Gain")
+//        }
+//    }, //1
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Gate"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Start\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Width\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Threshold\n(%)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Synchro"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Measure Mode")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Alarm"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Switch"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group\nA"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Condition1"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Operator"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Condition2")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Output"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Sound"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Delay\n(ms)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Hold Time\n(ms)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Data")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Mode")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Mode")
+//        }
+//    }, //2
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Display"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "C-Scan\nSource"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Min Thickness\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Max Thickness\n(mm)")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Amplitude"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Depth"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "TOFD")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan"),
+//            "A", "B", "C"
+//        }
+//    }, //3
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Group Mode"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Probe"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Wedge"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Define"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Auto\nDetect")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan Offset\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Index Offset\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Skew\n(°)")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Gain\n(dB)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Start\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Width\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Switch")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Geometry"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Thickness\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Diameter"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Material"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Overlay")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Load\nPart"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Clear\nPart")
+//        }
+//    }, //4
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Law Type"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Pulse\nConnection"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Receiver\nConnection"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Wave Type")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Min. Angle\n(°)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Max. Angle\n(°)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Angle Step\n(°)")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Aperture"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "First\nElement"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Last\nElement"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Element Step")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Type.")
+//        }
+//    }, //5
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Type"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Max Scan\nSpeed"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Max Scan\nSpeed(rpm)")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Encoder"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Encoder\nType"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Resolution"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Polarity"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Origin"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Preset")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan Start\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan End\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan Resolution\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Index Start\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Index End\n(mm)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Index Resolution\n(mm)")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Start"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Pause")
+//        }
+//    }, //6
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Reading\nGroup"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Field1"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Field2"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Field3"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Field4")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Selection")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Select"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "TOFD\nSettings"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "TOFD\nAnalysis")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Add/Delete"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Flaw Image"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Comment"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Display\nTable"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Export\nTable")
+//        }
+//    }, //7
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Save Setup As"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Open"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "File Manager")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Storage"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Save Mode"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Save Data"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "File Name")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Template"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Report Name"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Customer"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Part Name"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Part Number"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Create")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Probe/Wedge\nInfo"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Inspection\nInfo"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Scan\nInfo"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Encoder\nInfo"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "DAC/TCG\nInfo"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Flaw Record\nTable")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Select"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Enable"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Label"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Content"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Edit Note"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Print")
+//        }
+//    }, //8
+//    {
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Units"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Bright\n(%)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Opacity")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Clock Set\n(HH:MM:SS)"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Date Set"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Language")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "IP\nAddress"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Subnet\nMask")
+//        },
+//        {
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "System\nInfomation"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Cert\nImport"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "SW\nUpdate"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "HW\nUpdate"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "Reset\nConfiguration"),
+//            QT_TRANSLATE_NOOP("ThirdMenuWidget", "About")
+//        }
+//    } //9
+//};
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
@@ -288,10 +291,17 @@ QWidget(parent),
     fourthMenuMap = read_json_file(stringTwo);
 	fileTwo->close();
 
+//    QFile *fileThree = new QFile(":/json/resources/menucache.json");
+//    fileThree->open(QIODevice::ReadOnly | QIODevice::Text);
+//    QString stringThree = fileThree->readAll();
+//    menuCacheMap = read_json_file(stringThree);
+//    fileThree->close();
+
 	initStandardModel();
 	setThirdMenuName(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
+
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -352,12 +362,14 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
 	currSecondNum = j;
 	model->clear();
 	initStandardModel();
-    QStringList thirdStringList = get_third_menu_list(i, j);
+    firstMenuString = widget->firstMenuData.at(i);
+    secondMenuString = widget->get_second_menu_list(i).at(j);
+    QStringList thirdStringList = get_third_menu_list();
 	for(int k = 0; k < THIRD_MENU_NUMBER; k ++)
 	{
         if(thirdStringList.count() >= k + 1)
         {
-            widgetStyleChoice(i, j, k);
+            widgetStyleChoice(k);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setForeground(Qt::yellow);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
@@ -374,24 +386,26 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
         linearGradient.setColorAt(0.4, QColor(0, 0, 0));
         linearGradient.setColorAt(1, QColor(0, 120, 195));
         linearGradient.setSpread(QGradient::PadSpread);
-        model->item(0, k)->setBackground(QBrush(linearGradient));
+        model->item(0, k)->setBackground(QBrush(linearGradient));       
 	}
+
 	ui->tableView->show();
 
 }
 
-void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
+void ThirdMenuWidget::widgetStyleChoice(int k)
 {
-    QString firstMenuString = widget->firstMenuData.at(i);
-    QString secondMenuString = widget->get_second_menu_list(i).at(j);
-    QString thirdMenuString = get_third_menu_list(i, j).at(k);
+    QString thirdMenuString = get_third_menu_list().at(k);
+    QString subString = firstMenuString + "_" + secondMenuString;
 
-    QVariantMap subVariantMap = get_fourth_menu_map(fourthMenuMap, thirdMenuString, firstMenuString + "_" + secondMenuString);
+    QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
+    QVariantMap subCacheMap = get_sub_menu_map(menuCacheMap, thirdMenuString, subString);
 
+    QString newThirdMenuString = set_long_contents_header(k, thirdMenuString);
     if(subVariantMap.contains("unit")) {
-        model->setHeaderData(k, Qt::Horizontal, QString(thirdMenuString + "\n(" + subVariantMap["unit"].toString() + ")"));
+        model->setHeaderData(k, Qt::Horizontal, QString(newThirdMenuString + "\n(" + subVariantMap["unit"].toString() + ")"));
     } else {
-        model->setHeaderData(k, Qt::Horizontal, thirdMenuString);
+        model->setHeaderData(k, Qt::Horizontal, newThirdMenuString);
     }
 
     if(subVariantMap.contains("style")) {
@@ -406,12 +420,19 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
                 doubleSpinBox->set_number_step_list(stepList);
                 doubleSpinBox->set_number_step(stepList.at(0));
                 doubleSpinBox->set_decimal_amount(decimal);               
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                QStandardItem *item = new QStandardItem(QString::number((rangeList.at(0) + rangeList.at(1)) / 2, 'f', decimal));
+
+                QStandardItem *item;
+                if(subCacheMap.contains(thirdMenuString)) {
+                    item = new QStandardItem(QString::number(subCacheMap[thirdMenuString].toString().toFloat(), 'f', decimal));
+                } else {
+                    item = new QStandardItem(QString::number((rangeList.at(0) + rangeList.at(1)) / 2, 'f', decimal));
+                }
+
                 model->setItem(0, k, item);
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
-
                 break;
             }
             case 2: {
@@ -420,12 +441,19 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 comboBox->set_comboBox_item_list(list.at(0));
                 comboBox->set_model_item_list(list.at(1));
-                comboBox->set_minimum_contents_length(width / 6);
+                comboBox->set_minimum_contents_length(width / 6);                
 
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                QStandardItem *item = new QStandardItem(list.at(1).at(0));
+                QStandardItem *item;
+                if(subCacheMap.contains(thirdMenuString)) {
+                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
+                } else {
+                    item = new QStandardItem(list.at(1).at(0));
+                }
+
                 model->setItem(0, k, item);
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
+                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(comboBox_current_text(QString)), this, SLOT(change_related_third_menu_data(QString)));
                 break;
             }
             case 3: {
@@ -444,10 +472,15 @@ void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)
 
                 PushButtonDelegate *pushButton = new PushButtonDelegate(this);
 
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                QStandardItem *item = new QStandardItem(QString("On"));
+                QStandardItem *item;
+                if(subCacheMap.contains(thirdMenuString)) {
+                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
+                } else {
+                    item = new QStandardItem(QString("On"));
+                }
+
                 model->setItem(0, k, item);
-                //          model->item(0, k)->setFlags(Qt::ItemIsEnabled);
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
                 break;
@@ -491,12 +524,10 @@ QVariantMap ThirdMenuWidget::read_json_file(QString string)
     return variantMap;
 }
 
-QStringList ThirdMenuWidget::get_third_menu_list(int i, int j)
+QStringList ThirdMenuWidget::get_third_menu_list()
 {
 //#if QT_VERSION >= 0x050000
 //    QStringList stringList;
-//    QString firstMenuString = widget->firstMenuData.at(i);
-//    QString secondMenuString = widget->get_second_menu_list(i).at(j);
 //    if(get_json_document_type(secondMenuString, jsonObjectOne) == true) {
 //        if(get_json_document_type(firstMenuString, jsonObjectOne[secondMenuString].toObject()) == false) {
 //            QVariantList variantList = get_subsidiary_array(firstMenuString, jsonObjectOne[secondMenuString].toObject()).toVariantList();
@@ -513,14 +544,25 @@ QStringList ThirdMenuWidget::get_third_menu_list(int i, int j)
 
 //#if QT_VERSION < 0x050000
     QStringList stringList;
-    QString firstMenuString = widget->firstMenuData.at(i);
-    QString secondMenuString = widget->get_second_menu_list(i).at(j);
+    QVariantList variantList;
     if(!thirdMenuMap[secondMenuString].toMap().isEmpty()) {
         QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
-        QVariantList variantList = variantMap.values(firstMenuString);
-        stringList = variantList.at(0).toStringList();
+        if(variantMap.contains(firstMenuString)) {
+            variantList = variantMap.values(firstMenuString);
+            stringList = variantList.at(0).toStringList();
+        } else if(variantMap.contains("first third_menu")) {
+            QString string = variantMap.value("first third_menu").toString();
+            QVariantMap firstThirdMenuMap = get_sub_menu_map(fourthMenuMap, string, firstMenuString + "_" + secondMenuString);
+            QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap, string).at(1);
+            if(relatedMenuString == NULL || !otherThirdMenuList.contains(relatedMenuString)) {
+                variantList = variantMap.values(otherThirdMenuList.at(0));
+            } else {
+                variantList = variantMap.values(relatedMenuString);
+            }
+            stringList = variantList.at(0).toStringList();
+        }
     } else {
-        QVariantList variantList = thirdMenuMap.values(secondMenuString);
+        variantList = thirdMenuMap.values(secondMenuString);
         stringList = variantList.at(0).toStringList();
     }
     return stringList;
@@ -562,12 +604,11 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
             model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
-        qDebug() << stepIndex;
-        qDebug() << stringList;
     }   
 }
 
-QVariantMap ThirdMenuWidget::get_fourth_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
+
+QVariantMap ThirdMenuWidget::get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
 {
     QVariantMap subVariantMap;
     if(!variantMap[thirdMenuString].toMap().isEmpty()) {
@@ -632,6 +673,111 @@ QList<QStringList> ThirdMenuWidget::get_comboBox_option_list(QVariantMap variant
     list.append(optionList);
     list.append(abbreviationList);
     return list;
+}
+
+QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
+{
+//    qDebug() << ":" << ui->tableView->horizontalHeader()->fontMetrics().width(string);
+//    qDebug() << string;
+//    qDebug() << width/6;
+    QString newString;
+    if(ui->tableView->horizontalHeader()->fontMetrics().width(string) >= width / 6) {
+        QString leftText, rightText;
+        if(string.contains(" ")) {
+            int index = string.indexOf(" ");
+            leftText = string.left(index);
+            rightText = string.right(string.length() - index - 1);
+//            model->setHeaderData(index, Qt::Horizontal, leftText + "\n" + rightText);
+            newString = leftText + "\n" + rightText;
+        }
+    } else {
+        newString = string;
+    }
+    return newString;
+}
+
+void ThirdMenuWidget::cache_menu_data()
+{
+//    QJson::Serializer serializer;
+//    bool ok;
+
+//    QVariantList menuCacheList;
+//    for(int k = 0; k < get_third_menu_list().count(); k ++) {
+//        QString thirdMenuString = get_third_menu_list().at(k);
+//        QVariantMap subCacheMap = get_sub_menu_map(menuCacheMap, thirdMenuString, firstMenuString + "_" + secondMenuString);
+//        if(subCacheMap.contains(thirdMenuString)) {
+//            subCacheMap.remove(thirdMenuString);
+//        } else {
+//            subCacheMap.insert(thirdMenuString, model->item(0, k)->text());
+//        }
+//        menuCacheList.append(subCacheMap);
+//    }
+
+//    QByteArray json = serializer.serialize(menuCacheList, &ok);
+//    if(ok) {
+//        qDebug() << json;
+//        QFile file("./ui/resources/menuchace.json");
+//        QFileInfo fileInfo(file);
+//        QString filePath;
+//        file.close();
+//        filePath = fileInfo.absoluteFilePath();
+//        qDebug() << filePath;
+//        QFile *fileAbsolute = new QFile(filePath);
+//        if(!fileAbsolute->open(QIODevice::ReadWrite | QIODevice::Text)) {
+//            qDebug() << "Open failed.";
+//            qDebug() << fileAbsolute->permissions();
+//        }
+//        qDebug() << fileAbsolute->readAll();
+//        QTextStream out(fileAbsolute);
+//        out << json << "\n";
+//        out.flush();
+//        file->close();
+//        fileAbsolute->close();
+//    } else {
+//        qCritical() << "Something went wrong:" << serializer.errorMessage();
+//    }
+}
+
+void ThirdMenuWidget::change_related_third_menu_data(QString string)
+{
+    QStringList thirdStringList;
+    if(!thirdMenuMap[secondMenuString].toMap().isEmpty()) {
+        QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
+        if(variantMap.contains("first third_menu")) {
+            QString thirdMenuString = variantMap.value("first third_menu").toString();
+            QVariantMap firstThirdMenuMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, firstMenuString + "_" + secondMenuString);
+            QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap, thirdMenuString).at(1);
+            if(otherThirdMenuList.contains(string)) {
+                relatedMenuString = string;
+                QVariantList variantList = variantMap.values(string);
+                thirdStringList = variantList.at(0).toStringList();
+            }
+
+        }
+    }
+    for(int k = 1; k < THIRD_MENU_NUMBER; k ++)
+    {
+        if(thirdStringList.count() >= k + 1)
+        {
+            widgetStyleChoice(k);
+            model->item(0, k)->setTextAlignment(Qt::AlignCenter);
+            model->item(0, k)->setForeground(Qt::yellow);
+            model->item(0, k)->setFont(QFont("Times New Roman", 12));
+        } else
+        {
+            model->setHeaderData(k, Qt::Horizontal, "");
+            ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
+            QStandardItem *item = new QStandardItem(QString(tr("")));
+            ui->tableView->setItemDelegateForColumn(k, comboBox);
+            model->setItem(0, k, item);
+            model->item(0, k)->setFlags(Qt::NoItemFlags);
+        }
+        QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, height * 25 / 70));
+        linearGradient.setColorAt(0.4, QColor(0, 0, 0));
+        linearGradient.setColorAt(1, QColor(0, 120, 195));
+        linearGradient.setSpread(QGradient::PadSpread);
+        model->item(0, k)->setBackground(QBrush(linearGradient));
+    }
 }
 
 //#if QT_VERSION >= 0x050000

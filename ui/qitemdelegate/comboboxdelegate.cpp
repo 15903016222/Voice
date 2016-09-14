@@ -44,6 +44,7 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         editor->setMinimumContentsLength(minimumContentLength);
     }
 
+    connect(editor, SIGNAL(currentTextChanged(QString)), this, SLOT(commit_and_close_editor(QString)));
     return editor;
 
     Q_UNUSED(index);
@@ -100,4 +101,12 @@ int ComboBoxDelegate::find_list_index(QStringList stringList, QString string) co
 void ComboBoxDelegate::set_minimum_contents_length(int width)
 {
     minimumContentLength = width;
+}
+
+void ComboBoxDelegate::commit_and_close_editor(const QString &str)
+{
+    QComboBox *editor = qobject_cast<QComboBox*>(sender());
+    emit commitData(editor);
+    emit closeEditor(editor);
+    emit comboBox_current_text(str);
 }

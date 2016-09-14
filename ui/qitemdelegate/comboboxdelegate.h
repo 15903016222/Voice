@@ -24,6 +24,12 @@ public:
     QStringList itemList;
     QStringList modelItemList;
     int minimumContentLength;
+
+signals:
+    void comboBox_current_text(QString);
+
+private slots:
+    void commit_and_close_editor(const QString &str);
 };
 
 #endif // COMBOBOXDELEGATE_H
