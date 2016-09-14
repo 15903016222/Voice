@@ -365,32 +365,9 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
     firstMenuString = widget->firstMenuData.at(i);
     secondMenuString = widget->get_second_menu_list(i).at(j);
     QStringList thirdStringList = get_third_menu_list();
-	for(int k = 0; k < THIRD_MENU_NUMBER; k ++)
-	{
-        if(thirdStringList.count() >= k + 1)
-        {
-            widgetStyleChoice(k);
-            model->item(0, k)->setTextAlignment(Qt::AlignCenter);
-            model->item(0, k)->setForeground(Qt::yellow);
-            model->item(0, k)->setFont(QFont("Times New Roman", 12));
-        } else
-        {
-            model->setHeaderData(k, Qt::Horizontal, "");
-            ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
-            QStandardItem *item = new QStandardItem(QString(tr("")));
-            ui->tableView->setItemDelegateForColumn(k, comboBox);
-            model->setItem(0, k, item);
-            model->item(0, k)->setFlags(Qt::NoItemFlags);
-        }
-        QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, height * 25 / 70));
-        linearGradient.setColorAt(0.4, QColor(0, 0, 0));
-        linearGradient.setColorAt(1, QColor(0, 120, 195));
-        linearGradient.setSpread(QGradient::PadSpread);
-        model->item(0, k)->setBackground(QBrush(linearGradient));       
-	}
+    set_model_item(0, thirdStringList.count());
 
 	ui->tableView->show();
-
 }
 
 void ThirdMenuWidget::widgetStyleChoice(int k)
@@ -480,8 +457,8 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 }
 
                 model->setItem(0, k, item);
+                model->item(0, k)->setFlags(Qt::NoItemFlags);
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
                 break;
             }
@@ -545,26 +522,22 @@ QStringList ThirdMenuWidget::get_third_menu_list()
 //#if QT_VERSION < 0x050000
     QStringList stringList;
     QVariantList variantList;
-    if(!thirdMenuMap[secondMenuString].toMap().isEmpty()) {
-        QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
-        if(variantMap.contains(firstMenuString)) {
-            variantList = variantMap.values(firstMenuString);
-            stringList = variantList.at(0).toStringList();
-        } else if(variantMap.contains("first third_menu")) {
-            QString string = variantMap.value("first third_menu").toString();
-            QVariantMap firstThirdMenuMap = get_sub_menu_map(fourthMenuMap, string, firstMenuString + "_" + secondMenuString);
-            QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap, string).at(1);
-            if(relatedMenuString == NULL || !otherThirdMenuList.contains(relatedMenuString)) {
-                variantList = variantMap.values(otherThirdMenuList.at(0));
-            } else {
-                variantList = variantMap.values(relatedMenuString);
-            }
-            stringList = variantList.at(0).toStringList();
+    QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
+    if(!variantMap.isEmpty() && variantMap.contains(firstMenuString)) {
+        variantList = variantMap.values(firstMenuString);
+    } else if(!variantMap.isEmpty() && variantMap.contains("first third_menu")) {
+        QString string = variantMap.value("first third_menu").toString();
+        QVariantMap firstThirdMenuMap = get_sub_menu_map(fourthMenuMap, string, firstMenuString + "_" + secondMenuString);
+        QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap, string).at(1);
+        if(relatedMenuString == NULL || !otherThirdMenuList.contains(relatedMenuString)) {
+            variantList = variantMap.values(otherThirdMenuList.at(0));
+        } else {
+            variantList = variantMap.values(relatedMenuString);
         }
     } else {
         variantList = thirdMenuMap.values(secondMenuString);
-        stringList = variantList.at(0).toStringList();
     }
+    stringList = variantList.at(0).toStringList();
     return stringList;
 //#endif
 }
@@ -696,6 +669,42 @@ QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
     return newString;
 }
 
+void ThirdMenuWidget::change_related_third_menu_data(QString string)
+{
+    QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
+    if(!variantMap.isEmpty() && variantMap.contains("first third_menu")) {
+        relatedMenuString = string;
+        QVariantList variantList = variantMap.values(string);
+        QStringList thirdStringList = variantList.at(0).toStringList();
+
+        set_model_item(1, thirdStringList.count());
+    }
+}
+
+void ThirdMenuWidget::set_model_item(int startIndex, int count)
+{
+    for(int k = startIndex; k < THIRD_MENU_NUMBER; k ++) {
+        if(count >= k + 1) {
+            widgetStyleChoice(k);
+            model->item(0, k)->setTextAlignment(Qt::AlignCenter);
+            model->item(0, k)->setForeground(Qt::yellow);
+            model->item(0, k)->setFont(QFont("Times New Roman", 12));
+        } else {
+            model->setHeaderData(k, Qt::Horizontal, "");
+            ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
+            QStandardItem *item = new QStandardItem(QString(tr("")));
+            ui->tableView->setItemDelegateForColumn(k, comboBox);
+            model->setItem(0, k, item);
+            model->item(0, k)->setFlags(Qt::NoItemFlags);
+        }
+        QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, height * 25 / 70));
+        linearGradient.setColorAt(0.4, QColor(0, 0, 0));
+        linearGradient.setColorAt(1, QColor(0, 120, 195));
+        linearGradient.setSpread(QGradient::PadSpread);
+        model->item(0, k)->setBackground(QBrush(linearGradient));
+    }
+}
+
 void ThirdMenuWidget::cache_menu_data()
 {
 //    QJson::Serializer serializer;
@@ -738,47 +747,6 @@ void ThirdMenuWidget::cache_menu_data()
 //    }
 }
 
-void ThirdMenuWidget::change_related_third_menu_data(QString string)
-{
-    QStringList thirdStringList;
-    if(!thirdMenuMap[secondMenuString].toMap().isEmpty()) {
-        QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
-        if(variantMap.contains("first third_menu")) {
-            QString thirdMenuString = variantMap.value("first third_menu").toString();
-            QVariantMap firstThirdMenuMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, firstMenuString + "_" + secondMenuString);
-            QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap, thirdMenuString).at(1);
-            if(otherThirdMenuList.contains(string)) {
-                relatedMenuString = string;
-                QVariantList variantList = variantMap.values(string);
-                thirdStringList = variantList.at(0).toStringList();
-            }
-
-        }
-    }
-    for(int k = 1; k < THIRD_MENU_NUMBER; k ++)
-    {
-        if(thirdStringList.count() >= k + 1)
-        {
-            widgetStyleChoice(k);
-            model->item(0, k)->setTextAlignment(Qt::AlignCenter);
-            model->item(0, k)->setForeground(Qt::yellow);
-            model->item(0, k)->setFont(QFont("Times New Roman", 12));
-        } else
-        {
-            model->setHeaderData(k, Qt::Horizontal, "");
-            ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
-            QStandardItem *item = new QStandardItem(QString(tr("")));
-            ui->tableView->setItemDelegateForColumn(k, comboBox);
-            model->setItem(0, k, item);
-            model->item(0, k)->setFlags(Qt::NoItemFlags);
-        }
-        QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, height * 25 / 70));
-        linearGradient.setColorAt(0.4, QColor(0, 0, 0));
-        linearGradient.setColorAt(1, QColor(0, 120, 195));
-        linearGradient.setSpread(QGradient::PadSpread);
-        model->item(0, k)->setBackground(QBrush(linearGradient));
-    }
-}
 
 //#if QT_VERSION >= 0x050000
 //void ThirdMenuWidget::widgetStyleChoice(int i, int j, int k)

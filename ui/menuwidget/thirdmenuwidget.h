@@ -32,6 +32,7 @@ public:
     void setThirdMenuName(int i, int j);
     void widgetStyleChoice(int k);
     void resizeEvent(QResizeEvent *event);
+    void set_model_item(int startIndex, int count);
 
     bool get_json_document_type(QString string, QJsonObject jsonObject);
     bool eventFilter(QObject *object, QEvent *event);
