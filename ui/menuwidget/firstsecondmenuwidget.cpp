@@ -1,8 +1,6 @@
 #include "firstsecondmenuwidget.h"
 #include "ui_firstsecondmenuwidget.h"
 
-#include <QVariant>
-
 //static const char* SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
 //    {
 //        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "General"),

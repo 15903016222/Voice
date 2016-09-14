@@ -12,7 +12,7 @@ QMAKE_CFLAGS += -std=gnu99
 
 RESOURCES += ui/mainwindow.qrc
 
-TR_EXCLUDE += $$(BOOST_INCLUDE_PATH)/*
+
 TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
     ui/translator/phascanII_UI_English.ts
@@ -23,8 +23,7 @@ TARGET = Mercury
 TEMPLATE = app
 
 PROJECT_DIR = $$PWD
-DEFINES += GST_DISABLE_XML
-DEFINES += GST_DISABLE_LOADSAVE
+
 
 INCLUDEPATH += $$PWD/ui
 INCLUDEPATH += $$PWD/ui/menuwidget

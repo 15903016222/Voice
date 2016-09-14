@@ -4,7 +4,6 @@
 #include "topmenu.h"
 
 #include <QDebug>
-#include <QStandardItemModel>
 
 #define MEASUREMENT_NUMBER 54
 static const char* MEASUREMENT_STRING[MEASUREMENT_NUMBER] =

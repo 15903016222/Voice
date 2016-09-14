@@ -3,7 +3,6 @@
 
 #include <QItemDelegate>
 #include <QWidget>
-#include <QList>
 #include <QDoubleSpinBox>
 
 class DoubleSpinBoxDelegate : public QItemDelegate
@@ -27,6 +26,12 @@ public:
     QStringList stepList;
     QString step;
     int decimalAmount;
+
+signals:
+    void editorHeaderText(QStringList);
+
+private slots:
+    void commit_and_close_editor();
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

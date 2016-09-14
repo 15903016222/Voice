@@ -18,7 +18,7 @@
 
 //#if QT_VERSION < 0x050000
 #include "parser.h"
-#include <QMap>
+
 //#endif
 
 #include <QFile>

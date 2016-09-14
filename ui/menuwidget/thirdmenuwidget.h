@@ -5,8 +5,6 @@
 
 #include <QWidget>
 #include <QStandardItemModel>
-#include <QResizeEvent>
-#include <QTableView>
 
 #define THIRD_MENU_NUMBER 6
 
@@ -75,6 +73,7 @@ public slots:
 private slots:
     void onHeaderClicked(int index);
     void change_related_third_menu_data(QString string);
+    void set_header_text(QStringList stringList) const ;
 };
 
 #endif // THIRDMENUWIDGET_H

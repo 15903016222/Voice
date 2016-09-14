@@ -1,6 +1,5 @@
 #include "doublespinboxdelegate.h"
 
-#include <QDoubleSpinBox>
 #include <QDebug>
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
@@ -21,6 +20,12 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
     editor->setSingleStep(step.toFloat());
     editor->setDecimals(decimalAmount);
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
+    connect(editor, SIGNAL(editingFinished()), this, SLOT(commit_and_close_editor()));
+    QStringList sendList;
+//    sendList.append(static_cast<QString>(const_cast<int>(index.column())));
+//    sendList.append(step);
+//    qDebug() << sendList;
+//    emit editorHeaderText(sendList);
     return editor;
     Q_UNUSED(index);
     Q_UNUSED(option);
@@ -60,11 +65,11 @@ void DoubleSpinBoxDelegate::set_number_step_list(QStringList stringList)
 void DoubleSpinBoxDelegate::set_number_step(QString string)
 {
     step = string;
-    if(spinBoxList.size() != 0) {
-        QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-        qDebug() << "list count : " << spinBoxList.count();
-        doubleSpinBox->setSingleStep(string.toFloat());
-    }
+//    if(spinBoxList.size() != 0) {
+//        QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+//        qDebug() << "list count : " << spinBoxList.count();
+//        doubleSpinBox->setSingleStep(string.toFloat());
+//    }
 }
 
 QString DoubleSpinBoxDelegate::get_number_step()
@@ -75,4 +80,11 @@ QString DoubleSpinBoxDelegate::get_number_step()
 void DoubleSpinBoxDelegate::set_decimal_amount(int amount)
 {
     decimalAmount = amount;
+}
+
+void DoubleSpinBoxDelegate::commit_and_close_editor()
+{
+    QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox*>(sender());
+    emit commitData(editor);
+//    emit closeEditor(editor);
 }

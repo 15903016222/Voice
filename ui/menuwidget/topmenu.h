@@ -5,7 +5,6 @@
 #include "thirdmenuwidget.h"
 
 #include <QWidget>
-#include <QList>
 #include <QLabel>
 #include <QStandardItemModel>
 

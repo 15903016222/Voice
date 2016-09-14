@@ -11,6 +11,7 @@
 #include <QPainter>
 #include <QTextStream>
 #include <QFileInfo>
+#include <QResizeEvent>
 
 //static const char* THIRD_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_MENU_NUMBER] = {
 //    {
@@ -410,6 +411,7 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
 
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
+                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(editorHeaderText(QStringList)), this, SLOT(set_header_text(QStringList)));
                 break;
             }
             case 2: {
@@ -580,6 +582,10 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }   
 }
 
+void ThirdMenuWidget::set_header_text(QStringList stringList) const
+{
+    qDebug() << "receiver:" <<stringList;
+}
 
 QVariantMap ThirdMenuWidget::get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
 {

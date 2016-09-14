@@ -3,7 +3,6 @@
 
 #include <QItemDelegate>
 #include <QWidget>
-#include <QStringList>
 
 class ComboBoxDelegate : public QItemDelegate
 {

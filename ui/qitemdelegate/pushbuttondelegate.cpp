@@ -2,11 +2,8 @@
 
 #include <QApplication>
 #include <QMouseEvent>
-#include <QDialog>
 #include <QPainter>
 #include <QStyleOption>
-#include <QDesktopWidget>
-#include <QPushButton>
 #include <QDebug>
 
 PushButtonDelegate::PushButtonDelegate(QObject *parent) :

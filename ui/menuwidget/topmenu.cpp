@@ -4,12 +4,6 @@
 #include "doublespinboxdelegate.h"
 
 #include <QFile>
-#include <QString>
-#include <QLabel>
-#include <QTextDocument>
-#include <QTextBlockFormat>
-#include <QDebug>
-#include <QEvent>
 
 TopMenu :: TopMenu(QWidget *parent) :
     QWidget(parent),

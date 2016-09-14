@@ -4,9 +4,6 @@
 #include <QDialog>
 #include <QPushButton>
 #include <QListView>
-#include <QString>
-#include <QStringList>
-#include <QMap>
 #include <QStandardItemModel>
 
 namespace Ui {
