@@ -1,68 +1,66 @@
 #include "firstsecondmenuwidget.h"
 #include "ui_firstsecondmenuwidget.h"
 
-#include "parser.h"
-
 #include <QVariant>
 
-static const char* SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "General"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Pulser"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Receiver"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Advanced")
-    },
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Gate"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Alarm"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Output"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "DAC"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "TCG")
-    },
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Selection"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Color Setting"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Properties")
-    },
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Select"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Position"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "FFT"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Part"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Advanced")
-    },
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Law Config"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Angle"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Aperture"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Focal Point")
-    },
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Inspection"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Encoder"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Area"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Start")
-    },
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Reading"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Cursors"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "TOFD"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Flaw Record")
-    },
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "File"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Save Mode"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Report"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Format"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "User Field")
-    },
-    {
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Preference"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "System"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Network"),
-        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Service")
-    }
-};
+//static const char* SECOND_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER] = {
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "General"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Pulser"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Receiver"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Advanced")
+//    },
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Gate"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Alarm"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Output"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "DAC"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "TCG")
+//    },
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Selection"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Color Setting"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Properties")
+//    },
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Select"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Position"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "FFT"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Part"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Advanced")
+//    },
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Law Config"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Angle"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Aperture"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Focal Point")
+//    },
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Inspection"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Encoder"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Area"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Start")
+//    },
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Reading"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Cursors"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "TOFD"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Flaw Record")
+//    },
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "File"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Save Mode"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Report"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Format"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "User Field")
+//    },
+//    {
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Preference"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "System"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Network"),
+//        QT_TRANSLATE_NOOP("FirstSecondMenuWidget", "Service")
+//    }
+//};
 #include <QDebug>
 
 FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
