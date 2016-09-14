@@ -94,9 +94,9 @@ void TopMenu::initGain_angle()
     file->open(QIODevice::ReadOnly | QIODevice::Text);
     QString string = file->readAll();
     QVariantMap fourthMap = thirdMenuWidget->read_json_file(string);
-    QVariantMap variantMapGain = thirdMenuWidget->get_fourth_menu_map(fourthMap, "Gain", "UT Settings_General");
+    QVariantMap variantMapGain = thirdMenuWidget->get_sub_menu_map(fourthMap, "Gain", "UT Settings_General");
 //    QVariantMap variantMapAngle = thirdMenuWidget->get_fourth_menu_map(fourthMap, QString("Angle"), QString("Measurement_Cursors"));
-    QVariantMap variantMapAngle = thirdMenuWidget->get_fourth_menu_map(fourthMap, QString("Min. Angle"), QString("Focal Law_Angle"));
+    QVariantMap variantMapAngle = thirdMenuWidget->get_sub_menu_map(fourthMap, QString("Min. Angle"), QString("Focal Law_Angle"));
     file->close();
 
     int decimalGain = variantMapGain["decimal"].toInt();
@@ -144,7 +144,6 @@ void TopMenu::initGain_angle()
 //    QStringList stepList = thirdMenuWidget->get_spinBox_step_list(variantMap, "Angle");
     QStringList stepListAngle = thirdMenuWidget->get_spinBox_step_list(variantMapAngle, "Min. Angle");
 
-
     DoubleSpinBoxDelegate *doubleSpinBoxAngle = new DoubleSpinBoxDelegate(this);
     doubleSpinBoxAngle->set_number_range(rangeListAngle);
     doubleSpinBoxAngle->set_number_step_list(stepListAngle);
@@ -157,7 +156,7 @@ void TopMenu::initGain_angle()
     model_angle->item(0)->setForeground(Qt::white);
     model_angle->item(0)->setFont(QFont("Times New Roman", 14));
     ui->tableView_angle->setItemDelegate(doubleSpinBoxAngle);
-    ui->tableView_angle->setEditTriggers(QAbstractItemView::CurrentChanged);
+//    ui->tableView_angle->setEditTriggers(QAbstractItemView::CurrentChanged);
     ui->tableView_angle->show();
 }
 
