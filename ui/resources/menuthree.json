@@ -136,29 +136,75 @@
                     "Start": "100.0"
                 }
             ]
-        }
+        },
+		"Measurement_TOFD": {
+			"parent": "Measurement_TOFD",
+			"style": "1",
+            "minimum": 0,
+            "maximum": 16000,
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
+		}
     },
     "Range": {
-        "parent": "UT Settings_General",
-        "style": "1",
-        "minimum": 0,
-        "condition": "('Start' + 'Range') <= 'Velocity' * 9900",
-        "unit": "mm",
-        "decimal": 2,
-        "steps": [
-            {
-                "Range": "0.10"
-            },
-            {
-                "Range": "1.00"
-            },
-            {
-                "Range": "10.0"
-            },
-            {
-                "Range": "100.0"
-            }
-        ]
+        "UT Settings_General": {
+			"parent": "UT Settings_General",
+			"style": "1",
+			"minimum": 0,
+			"condition": "('Start' + 'Range') <= 'Velocity' * 9900",
+			"unit": "mm",
+			"decimal": 2,
+			"steps": [
+				{
+					"Range": "0.10"
+				},
+				{
+					"Range": "1.00"
+				},
+				{
+					"Range": "10.0"
+				},
+				{
+					"Range": "100.0"
+				}
+			]
+		},
+		"Measurement_TOFD": {
+			"parent": "Measurement_TOFD",
+			"style": "1",
+			"minimum": 0,
+			"condition": "('Start' + 'Range') <= 'Velocity' * 9900",
+			"unit": "mm",
+			"decimal": 2,
+			"steps": [
+				{
+					"Range": "0.10"
+				},
+				{
+					"Range": "1.00"
+				},
+				{
+					"Range": "10.0"
+				},
+				{
+					"Range": "100.0"
+				}
+			]
+		}
     },
     "Velocity": {
         "parent": "UT Settings_General",
@@ -387,7 +433,15 @@
     },
     "dB Ref.": {
         "parent": "UT Settings_Advanced",
-        "style": "button"
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
     },
     "Point Qty.": {
         "parent": "UT Settings_Advanced",
@@ -519,9 +573,15 @@
         "parent": "Gate/Curves_Gate",
         "style": "2",
         "options": [
-            {},
-            {},
-            {}
+            {
+                "Synchro": "Gate A"
+            },
+            {
+                "Synchro": "Gate I"
+            },
+            {
+                "Synchro": "Pulse"
+            }
         ]
     },
     "Measure Mode": {
@@ -865,12 +925,12 @@
             }
         ]
     },
-    "Min Thickness": {
+    "Min.Thickness": {
         "parent": "Display_Selection",
         "style": "1",
         "unit": "mm"
     },
-    "Max Thickness": {
+    "Max.Thickness": {
         "parent": "Display_Selection",
         "style": "1",
         "unit": "mm"
@@ -890,76 +950,13 @@
             "style": "2",
             "options": [
                 {
-                    "Scan": "A-Scan",
-                    "Color": {
-                        "style": "2",
-                        "options": [
-                            {
-                                "Color": "Blue"
-                            },
-                            {
-                                "Color": "Green"
-                            },
-                            {
-                                "Color": "Red"
-                            },
-                            {
-                                "Color": "Yellow"
-                            },
-                            {
-                                "Color": "Black"
-                            },
-                            {
-                                "Color": "White"
-                            }
-                        ]
-                    },
-                    "Envelope": {
-                        "style": "2",
-                        "options": [
-                            {
-                                "Envelope": "None"
-                            },
-                            {
-                                "Envelope": "Infinite"
-                            }
-                        ]
-                    },
-                    "Peak Holding": {},
-                    "Reference Holding": {}
+                    "Scan": "A-Scan"
                 },
                 {
-                    "Scan": "B-Scan",
-                    "Compression": {
-                        "style": "1",
-                        "minimum": 0.1
-                    }
+                    "Scan": "B-Scan"
                 },
                 {
-                    "Scan": "C-Scan",
-                    "Ratio 1:1": {
-                        "style": "3",
-                        "label": [
-                            {
-                                "Switch": "on"
-                            },
-                            {
-                                "Switch": "off"
-                            }
-                        ]
-                    },
-                    "C-Scan Mode": {},
-                    "Compression": {
-                        "style": "3",
-                        "label": [
-                            {
-                                "Switch": "on"
-                            },
-                            {
-                                "Switch": "off"
-                            }
-                        ]
-                    }
+                    "Scan": "C-Scan"
                 }
             ]
         },
@@ -978,6 +975,77 @@
                 }
             ]
         }
+    },
+    "Color": {
+        "parent": "Display_Properties",
+        "style": "2",
+        "options": [
+            {
+                "Color": "Blue"
+            },
+            {
+                "Color": "Green"
+            },
+            {
+                "Color": "Red"
+            },
+            {
+                "Color": "Yellow"
+            },
+            {
+                "Color": "Black"
+            },
+            {
+                "Color": "White"
+            }
+        ]
+    },
+    "Envelope": {
+        "parent": "Display_Properties",
+        "style": "2",
+        "options": [
+            {
+                "Envelope": "None"
+            },
+            {
+                "Envelope": "Infinite"
+            }
+        ]
+    },
+    "Peak Holding": {
+        "parent": "Display_Properties"
+    },
+    "Reference Holding": {
+        "parent": "Display_Properties"
+    },
+    "Compression": {
+        "Display_Properties": {
+            "parent": "Display_Properties",
+            "style": "3",
+            "label": [
+                {
+                    "Switch": "on"
+                },
+                {
+                    "Switch": "off"
+                }
+            ]
+        }
+    },
+    "Ratio 1:1": {
+        "parent": "Display_Properties",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "C-Scan Mode": {
+        "parent": "Display_Properties"
     },
     "Group Mode": {
         "parent": "Probe/Part_Select",
@@ -1790,349 +1858,194 @@
         "style": "2",
         "options": [
             {
-                "Cursors": "A-Scan",
-                "A-Scan": {
-                    "%(r)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 100,
-                        "unit": "%",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "%(r)": "0.1"
-                            },
-                            {
-                                "%(r)": "1.0"
-                            },
-                            {
-                                "%(r)": "10.0"
-                            }
-                        ]
-                    },
-                    "%(m)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 100,
-                        "unit": "%",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "%(m)": "0.1"
-                            },
-                            {
-                                "%(m)": "1.0"
-                            },
-                            {
-                                "%(m)": "10.0"
-                            }
-                        ]
-                    },
-                    "U(r)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 2,
-                        "steps": [
-                            {
-                                "U(r)": "0.1"
-                            },
-                            {
-                                "U(r)": "1.0"
-                            },
-                            {
-                                "U(r)": "10.0"
-                            }
-                        ]
-                    },
-                    "U(m)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 2,
-                        "steps": [
-                            {
-                                "U(m)": "0.1"
-                            },
-                            {
-                                "U(m)": "1.0"
-                            },
-                            {
-                                "U(m)": "10.0"
-                            }
-                        ]
-                    }
-                }
+                "Selection": "A-Scan"
             },
             {
-                "Cursors": "B-Scan",
-                "B-Scan": {
-                    "S(r)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 1000,
-                        "unit": "s",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "S(r)": "0.1"
-                            },
-                            {
-                                "S(r)": "0.5"
-                            },
-                            {
-                                "S(r)": "1.0"
-                            },
-                            {
-                                "S(r)": "5.0"
-                            }
-                        ]
-                    },
-                    "S(m)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 1000,
-                        "unit": "s",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "S(m)": "0.1"
-                            },
-                            {
-                                "S(m)": "0.5"
-                            },
-                            {
-                                "S(m)": "1.0"
-                            },
-                            {
-                                "S(m)": "5.0"
-                            }
-                        ]
-                    },
-                    "U(r)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 2,
-                        "steps": [
-                            {
-                                "U(r)": "0.1"
-                            },
-                            {
-                                "U(r)": "1.0"
-                            },
-                            {
-                                "U(r)": "10.0"
-                            }
-                        ]
-                    },
-                    "U(m)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 2,
-                        "steps": [
-                            {
-                                "U(m)": "0.1"
-                            },
-                            {
-                                "U(m)": "1.0"
-                            },
-                            {
-                                "U(m)": "10.0"
-                            }
-                        ]
-                    }
-                }
+                "Selection": "B-Scan"
             },
             {
-                "Cursors": "C-Scan",
-                "C-Scan": {
-                    "S(r)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 1000,
-                        "unit": "s",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "S(r)": "0.1"
-                            },
-                            {
-                                "S(r)": "0.5"
-                            },
-                            {
-                                "S(r)": "1.0"
-                            },
-                            {
-                                "S(r)": "5.0"
-                            }
-                        ]
-                    },
-                    "S(m)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 1000,
-                        "unit": "s",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "S(m)": "0.1"
-                            },
-                            {
-                                "S(m)": "0.5"
-                            },
-                            {
-                                "S(m)": "1.0"
-                            },
-                            {
-                                "S(m)": "5.0"
-                            }
-                        ]
-                    },
-                    "I(r)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "I(r)": "0.1"
-                            },
-                            {
-                                "I(r)": "0.5"
-                            },
-                            {
-                                "I(r)": "1.0"
-                            },
-                            {
-                                "I(r)": "5.0"
-                            }
-                        ]
-                    },
-                    "I(m)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "I(m)": "0.1"
-                            },
-                            {
-                                "I(m)": "0.5"
-                            },
-                            {
-                                "I(m)": "1.0"
-                            },
-                            {
-                                "I(m)": "5.0"
-                            }
-                        ]
-                    }
-                }
+                "Selection": "C-Scan"
             },
             {
-                "Cursors": "S-Scan",
-                "S-Scan": {
-                    "Angle": {
-                        "style": "1",
-                        "unit": "°",
-                        "decimal": 0,
-                        "steps": [
-                            {
-                                "Angle": "1"
-                            }
-                        ]
-                    },
-                    "U(r)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 2,
-                        "steps": [
-                            {
-                                "U(r)": "0.1"
-                            },
-                            {
-                                "U(r)": "1.0"
-                            },
-                            {
-                                "U(r)": "10.0"
-                            }
-                        ]
-                    },
-                    "U(m)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 2,
-                        "steps": [
-                            {
-                                "U(m)": "0.1"
-                            },
-                            {
-                                "U(m)": "1.0"
-                            },
-                            {
-                                "U(m)": "10.0"
-                            }
-                        ]
-                    },
-                    "I(r)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "I(r)": "0.1"
-                            },
-                            {
-                                "I(r)": "0.5"
-                            },
-                            {
-                                "I(r)": "1.0"
-                            },
-                            {
-                                "I(r)": "5.0"
-                            }
-                        ]
-                    },
-                    "I(m)": {
-                        "style": "1",
-                        "minimum": 0,
-                        "maximum": 2000,
-                        "unit": "mm",
-                        "decimal": 1,
-                        "steps": [
-                            {
-                                "I(m)": "0.1"
-                            },
-                            {
-                                "I(m)": "0.5"
-                            },
-                            {
-                                "I(m)": "1.0"
-                            },
-                            {
-                                "I(m)": "5.0"
-                            }
-                        ]
-                    }
-                }
+                "Selection": "S-Scan"
             },
             {
-                "Cursors": "Data"
+                "Selection": "Data"
+            }
+        ]
+    },
+    "%(r)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 100,
+        "unit": "%",
+        "decimal": 1,
+        "steps": [
+            {
+                "%(r)": "0.1"
+            },
+            {
+                "%(r)": "1.0"
+            },
+            {
+                "%(r)": "10.0"
+            }
+        ]
+    },
+    "%(m)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 100,
+        "unit": "%",
+        "decimal": 1,
+        "steps": [
+            {
+                "%(m)": "0.1"
+            },
+            {
+                "%(m)": "1.0"
+            },
+            {
+                "%(m)": "10.0"
+            }
+        ]
+    },
+    "U(r)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 2000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "U(r)": "0.1"
+            },
+            {
+                "U(r)": "1.0"
+            },
+            {
+                "U(r)": "10.0"
+            }
+        ]
+    },
+    "U(m)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 2000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "U(m)": "0.1"
+            },
+            {
+                "U(m)": "1.0"
+            },
+            {
+                "U(m)": "10.0"
+            }
+        ]
+    },
+    "S(r)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 1000,
+        "unit": "s",
+        "decimal": 1,
+        "steps": [
+            {
+                "S(r)": "0.1"
+            },
+            {
+                "S(r)": "0.5"
+            },
+            {
+                "S(r)": "1.0"
+            },
+            {
+                "S(r)": "5.0"
+            }
+        ]
+    },
+    "S(m)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 1000,
+        "unit": "s",
+        "decimal": 1,
+        "steps": [
+            {
+                "S(m)": "0.1"
+            },
+            {
+                "S(m)": "0.5"
+            },
+            {
+                "S(m)": "1.0"
+            },
+            {
+                "S(m)": "5.0"
+            }
+        ]
+    },
+    "I(r)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 2000,
+        "unit": "mm",
+        "decimal": 1,
+        "steps": [
+            {
+                "I(r)": "0.1"
+            },
+            {
+                "I(r)": "0.5"
+            },
+            {
+                "I(r)": "1.0"
+            },
+            {
+                "I(r)": "5.0"
+            }
+        ]
+    },
+    "I(m)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 2000,
+        "unit": "mm",
+        "decimal": 1,
+        "steps": [
+            {
+                "I(m)": "0.1"
+            },
+            {
+                "I(m)": "0.5"
+            },
+            {
+                "I(m)": "1.0"
+            },
+            {
+                "I(m)": "5.0"
+            }
+        ]
+    },
+    "Angle": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "unit": "°",
+        "decimal": 0,
+        "steps": [
+            {
+                "Angle": "1"
             }
         ]
     },
@@ -2142,60 +2055,10 @@
             "style": "2",
             "options": [
                 {
-                    "Select": "TOFD Settings",
-                    "TOFD Settings": {
-                        "Wedge Sep.": {},
-                        "Layer Depth": {},
-                        "TOFD Calculator": {},
-                        "Start": {},
-                        "Range": {}
-                    }
+                    "Select": "TOFD Settings"
                 },
                 {
-                    "Select": "TOFD Analysis",
-                    "TOFD Analysis": {
-                        "Straightening": {
-                            "parent": "Measurement_TOFD",
-                            "style": "3",
-                            "label": [
-                                {
-                                    "Switch": "on"
-                                },
-                                {
-                                    "Switch": "off"
-                                }
-                            ]
-                        },
-                        "Remove Lateral": {
-                            "parent": "Measurement_TOFD",
-                            "style": "3",
-                            "label": [
-                                {
-                                    "Switch": "on"
-                                },
-                                {
-                                    "Switch": "off"
-                                }
-                            ]
-                        },
-                        "Ref.Position": {
-                            "parent": "Measurement_TOFD",
-                            "style": "1",
-                            "unit": "mm"
-                        },
-                        "Depth Calibration": {
-                            "parent": "Measurement_TOFD",
-                            "style": "3",
-                            "label": [
-                                {
-                                    "Switch": "on"
-                                },
-                                {
-                                    "Switch": "off"
-                                }
-                            ]
-                        }
-                    }
+                    "Select": "TOFD Analysis"
                 }
             ]
         },
@@ -2236,6 +2099,56 @@
             ]
         }
     },
+	"Wedge Sep.": {
+		"parent": "Measurement_TOFD"
+	},
+	"Layer Depth": {
+		"parent": "Measurement_TOFD"
+	},
+	"TOFD Calculator": {
+		"parent": "Measurement_TOFD"
+	},                       
+	"Straightening": {
+		"parent": "Measurement_TOFD",
+		"style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Remove Lateral": {
+		"parent": "Measurement_TOFD",
+		"style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Ref.Position": {
+		"parent": "Measurement_TOFD",
+		"style": "1",
+		"unit": "mm"
+	},
+	"Depth Calibration": {
+		"parent": "Measurement_TOFD",
+		"style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
     "Add/Delete": {
         "parent": "Measurement_Flaw Record"
     },

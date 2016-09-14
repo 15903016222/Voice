@@ -67,17 +67,34 @@
         "Group",
         "Display",
         "C-scan Source",
-        "Min Thickness",
-        "Max Thickness"
+        "Min.Thickness",
+        "Max.Thickness"
     ],
     "Color Settings": [
         "Amplitude",
         "Depth",
         "TOFD"
     ],
-    "Properties": [
-        "Scan"
-    ],
+    "Properties": {
+        "first third_menu": "Scan",
+        "A-Scan": [
+			"Scan",
+			"Color",
+			"Envelope",
+			"Peak Holding",
+			"Reference Holding"
+		],
+		"B-Scan": [
+			"Scan",
+			"Compression"
+		],
+		"C-Scan": [
+			"Scan",
+			"Ratio 1:1",
+			"C-Scan Mode",
+			"Compression"
+		]
+    },
     "Select": [
         "Group",
         "Group Mode",
@@ -161,12 +178,57 @@
         "Field 3",
         "Field 4"
     ],
-    "Cursors": [
-        "Selection"
-    ],
-    "TOFD": [
-        "Select"
-    ],
+    "Cursors": {
+        "first third_menu": "Selection",
+		"A-Scan": [
+			"Selection",
+			"%(r)",
+			"%(m)",
+			"U(r)",
+			"U(m)"
+		],
+		"B-Scan": [
+			"Selection",
+			"S(r)",
+			"S(m)",
+			"U(r)",
+			"U(m)"
+		],
+		"C-Scan": [
+			"Selection",
+			"S(r)",
+			"S(m)",
+			"I(r)",
+			"I(m)"
+		],
+		"S-Scan": [
+			"Selection",
+			"Angle",
+			"U(r)",
+			"U(m)",
+			"I(r)",
+			"I(m)"
+		],
+		"Data": []
+    },
+    "TOFD": {
+        "first third_menu": "Select",
+		"TOFD Settings": [
+			"Select",
+			"Wedge Sep.",
+			"Layer Depth",
+			"TOFD Calculator",
+			"Start",
+			"Range"
+		],
+		"TOFD Analysis": [
+			"Select",
+			"Straightening",
+			"Remove Lateral",
+			"Ref.Position",
+			"Depth Calibration"
+		]
+    },
     "Flaw Record": [
         "Add/Delete",
         "Flaw Image",
