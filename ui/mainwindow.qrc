@@ -23,5 +23,6 @@
         <file>resources/menuthree.json</file>
         <file>resources/menutwo.json</file>
         <file>resources/menu.json</file>
+        <file>resources/menucache.json</file>
     </qresource>
 </RCC>
