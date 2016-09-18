@@ -157,10 +157,10 @@ macx {
 #    # boost
 #    INCLUDEPATH += /usr/local/include
 
-    LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
+#    LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
 
-    INCLUDEPATH += $$PWD/lib/qjson/lib
-    DEPENDPATH += $$PWD/lib/qjson/lib
+#    INCLUDEPATH += $$PWD/lib/qjson/lib
+#    DEPENDPATH += $$PWD/lib/qjson/lib
 }
 
 linux {
@@ -181,10 +181,10 @@ linux {
 #    LIBS += -L$$PROJECT_DIR/libs/linux/qtgstreamer/lib
 #    LIBS += -lQt5GLib-2.0 -lQt5GStreamer-1.0 -lQt5GStreamerUi-1.0
 
-    LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
+#    LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
 
-    INCLUDEPATH += $$PWD/lib/qjson/lib
-    DEPENDPATH += $$PWD/lib/qjson/lib
+#    INCLUDEPATH += $$PWD/lib/qjson/lib
+#    DEPENDPATH += $$PWD/lib/qjson/lib
 }
 
 message($$CONFIG)
@@ -195,3 +195,9 @@ DISTFILES += \
     ui/resources/menuthree.json \
     ui/resources/menutwo.json \
     ui/resources/menucache.json
+
+
+unix: LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
+
+INCLUDEPATH += $$PWD/lib/qjson/lib
+DEPENDPATH += $$PWD/lib/qjson/lib
