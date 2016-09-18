@@ -12,6 +12,8 @@ QMAKE_CFLAGS += -std=gnu99
 
 RESOURCES += ui/mainwindow.qrc
 
+#CONFIG+=precompile_header
+#PRECOMPILED_HEADER=stable.h
 
 TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
@@ -30,11 +32,6 @@ INCLUDEPATH += $$PWD/ui/menuwidget
 INCLUDEPATH += $$PWD/ui/qitemdelegate
 INCLUDEPATH += $$PWD/ui/inputpanel
 
-#INCLUDEPATH += $$PWD/lib/qjson/lib
-
-#LIBS +=-L$$PWD/lib/qjson/lib -lqjson-qt5.dll.a
-#LIBS +=-L$$PWD/lib/qjson/lib/libqjson-qt5.dll
-
 SOURCES += \
     main.cpp \
     ui/mainwindow.cpp \
@@ -50,6 +47,7 @@ SOURCES += \
     ui/qitemdelegate/comboboxdelegate.cpp \
     ui/qitemdelegate/doublespinboxdelegate.cpp \
     ui/qitemdelegate/pushbuttondelegate.cpp \
+    ui/menuwidget/probedialog.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -65,6 +63,7 @@ HEADERS += \
     ui/qitemdelegate/comboboxdelegate.h \
     ui/qitemdelegate/doublespinboxdelegate.h \
     ui/qitemdelegate/pushbuttondelegate.h \
+    ui/menuwidget/probedialog.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -76,7 +75,8 @@ FORMS += \
     ui/menuwidget/commonmenuwidget.ui \
     ui/menuwidget/commonmenubutton.ui \
     ui/menuwidget/measurementdialog.ui \
-    ui/menuwidget/myinputpanel.ui
+    ui/menuwidget/myinputpanel.ui \
+    ui/menuwidget/probedialog.ui
 
 win32 {
 #    CONFIG += windows link_prl

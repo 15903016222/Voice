@@ -4,6 +4,7 @@
 #include "doublespinboxdelegate.h"
 #include "comboboxdelegate.h"
 #include "pushbuttondelegate.h"
+#include "probedialog.h"
 
 #include "serializer.h"
 
@@ -464,6 +465,19 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
                 break;
             }
+            case 4: {
+
+                QStandardItem *item;
+                if(subCacheMap.contains(thirdMenuString)) {
+                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
+                } else {
+                    item = new QStandardItem("");
+                }
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+                model->setItem(0, k, item);
+                model->item(0, k)->setFlags(Qt::NoItemFlags);
+                break;
+            }
             case 0: {
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 QStandardItem *item = new QStandardItem(QString(""));
@@ -553,9 +567,13 @@ bool ThirdMenuWidget::eventFilter(QObject *object, QEvent *event)
 
 void ThirdMenuWidget::onHeaderClicked(int index)
 {
-//    点击表头更改spinbox的步进及表头文字
-    QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
-    if(currentHeaderText.contains("(")) {
+    QString thirdMenuString = get_third_menu_list().at(index);
+    QString subString = firstMenuString + "_" + secondMenuString;
+    QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
+
+    if(subVariantMap["style"].toString().toInt() == 1) {
+        //    点击表头更改spinbox的步进及表头文字
+        QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex;
@@ -579,7 +597,11 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
             model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
-    }   
+    } else if(subVariantMap["style"].toString().toInt() == 4) {
+        //    点击表头弹出探头选择对话框
+        ProbeDialog *probeDialog = new ProbeDialog(this);
+        probeDialog->show();
+    }
 }
 
 void ThirdMenuWidget::set_header_text(QStringList stringList) const
