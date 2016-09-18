@@ -15,7 +15,7 @@ private Q_SLOTS:
     void cleanupTestCase();
     void testSet();
 private:
-    Gpio m_gpio;
+    Gpio *m_gpio;
 };
 
 TestGpio::TestGpio()
@@ -34,10 +34,10 @@ void TestGpio::cleanupTestCase()
 
 void TestGpio::testSet()
 {
-    QVERIFY2(m_gpio.set(Gpio::PIN_43, Gpio::HIGHT), "Failure");
-    QVERIFY2(m_gpio.set(Gpio::PIN_43, Gpio::LOW), "Failure");
-    QVERIFY2(m_gpio.set(Gpio::PIN_61, Gpio::HIGHT), "Failure");
-    QVERIFY2(m_gpio.set(Gpio::PIN_61, Gpio::LOW), "Failure");
+    QVERIFY2(m_gpio->set(Gpio::PIN_43, Gpio::HIGHT), "Failure");
+    QVERIFY2(m_gpio->set(Gpio::PIN_43, Gpio::LOW), "Failure");
+    QVERIFY2(m_gpio->set(Gpio::PIN_61, Gpio::HIGHT), "Failure");
+    QVERIFY2(m_gpio->set(Gpio::PIN_61, Gpio::LOW), "Failure");
 }
 
 QTEST_APPLESS_MAIN(TestGpio)

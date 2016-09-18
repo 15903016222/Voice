@@ -2,7 +2,6 @@
 #define __GPIO_H__
 
 #include <QMutex>
-#include <QAtomicPointer>
 
 struct GpioPrivate;
 
@@ -23,17 +22,18 @@ public:
         HIGHT
     };
 
-    static Gpio& get_gpio();
+    static Gpio* get_gpio();
+    static void destroy();
 
     bool set(GpioPin pinNo, PinState state);
-    ~Gpio();
 
 protected:
     explicit Gpio();
+    ~Gpio();
 
 private:
     static QMutex m_mutex;
-    static QAtomicPointer<Gpio> m_gpio;
+    static Gpio *m_gpio;
     GpioPrivate *d;
 };
 

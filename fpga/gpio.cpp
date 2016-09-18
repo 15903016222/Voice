@@ -17,18 +17,28 @@
 
 struct GpioPrivate {
     int fd;
+    QMutex mutex;
 };
 
 QMutex Gpio::m_mutex;
-QAtomicPointer<Gpio> Gpio::m_gpio = 0;
+Gpio *Gpio::m_gpio = NULL;
 
-Gpio& Gpio::get_gpio()
+Gpio *Gpio::get_gpio()
 {
     QMutexLocker locker(&m_mutex);
-    if (m_gpio.testAndSetOrdered(0, 0)) {
-        m_gpio.testAndSetOrdered(0, new Gpio());
+    if (m_gpio == NULL) {
+        m_gpio = new Gpio();
     }
-    return *m_gpio;
+    return m_gpio;
+}
+
+void Gpio::destroy()
+{
+    QMutexLocker locker(&m_mutex);
+    if (m_gpio != NULL) {
+        delete m_gpio;
+    }
+    m_gpio = NULL;
 }
 
 Gpio::Gpio()
@@ -42,14 +52,13 @@ Gpio::Gpio()
 
 Gpio::~Gpio()
 {
-    QMutexLocker locker(&m_mutex);
     ::close(d->fd);
     d->fd = -1;
 }
 
 bool Gpio::set(GpioPin pinNo, PinState state)
 {
-    QMutexLocker locker(&m_mutex);
+    QMutexLocker locker(&d->mutex);
     if (d->fd<0) {
         return false;
     }
