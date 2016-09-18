@@ -1,6 +1,9 @@
 #ifndef __GPIO_H__
 #define __GPIO_H__
 
+#include <QMutex>
+#include <QAtomicPointer>
+
 struct GpioPrivate;
 
 class Gpio
@@ -20,34 +23,18 @@ public:
         HIGHT
     };
 
-    static Gpio* get_instance();
-    static void destroyed();
+    static Gpio& get_gpio();
 
     bool set(GpioPin pinNo, PinState state);
+    ~Gpio();
 
 protected:
     explicit Gpio();
-    virtual ~Gpio();
 
 private:
-    static Gpio *m_gpio;
+    static QMutex m_mutex;
+    static QAtomicPointer<Gpio> m_gpio;
     GpioPrivate *d;
 };
-
-inline Gpio* Gpio::get_instance()
-{
-    if (m_gpio == nullptr) {
-        m_gpio = new Gpio();
-    }
-    return m_gpio;
-}
-
-inline void Gpio::destroyed()
-{
-    if (m_gpio) {
-        delete m_gpio;
-        m_gpio = nullptr;
-    }
-}
 
 #endif
