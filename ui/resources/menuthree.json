@@ -1075,7 +1075,7 @@
     },
     "Wedge": {
         "parent": "Probe/Part_Select",
-        "style": "WedgeDialog"
+        "style": "5"
     },
     "Define": {
         "parent": "Probe/Part_Select",

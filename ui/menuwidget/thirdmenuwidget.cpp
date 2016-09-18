@@ -5,6 +5,7 @@
 #include "comboboxdelegate.h"
 #include "pushbuttondelegate.h"
 #include "probedialog.h"
+#include "wedgedialog.h"
 
 #include "serializer.h"
 
@@ -466,13 +467,26 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 break;
             }
             case 4: {
-
                 QStandardItem *item;
                 if(subCacheMap.contains(thirdMenuString)) {
                     item = new QStandardItem(subCacheMap[thirdMenuString].toString());
                 } else {
                     item = new QStandardItem("");
                 }
+
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+                model->setItem(0, k, item);
+                model->item(0, k)->setFlags(Qt::NoItemFlags);
+                break;
+            }
+            case 5: {
+                QStandardItem *item;
+                if(subCacheMap.contains(thirdMenuString)) {
+                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
+                } else {
+                    item = new QStandardItem("");
+                }
+
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 model->setItem(0, k, item);
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
@@ -601,6 +615,10 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         //    点击表头弹出探头选择对话框
         ProbeDialog *probeDialog = new ProbeDialog(this);
         probeDialog->show();
+    } else if(subVariantMap["style"].toString().toInt() == 5) {
+        //    点击表头弹出探头选择对话框
+        WedgeDialog *wedgeDialog = new WedgeDialog(this);
+        wedgeDialog->show();
     }
 }
 

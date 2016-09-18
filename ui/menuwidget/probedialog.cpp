@@ -6,6 +6,7 @@ ProbeDialog::ProbeDialog(QWidget *parent) :
     ui(new Ui::ProbeDialog)
 {
     ui->setupUi(this);
+    setWindowTitle("Probe Choice Dialog");
 }
 
 ProbeDialog::~ProbeDialog()

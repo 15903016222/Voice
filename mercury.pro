@@ -47,7 +47,8 @@ SOURCES += \
     ui/qitemdelegate/comboboxdelegate.cpp \
     ui/qitemdelegate/doublespinboxdelegate.cpp \
     ui/qitemdelegate/pushbuttondelegate.cpp \
-    ui/menuwidget/probedialog.cpp
+    ui/menuwidget/probedialog.cpp \
+    ui/menuwidget/wedgedialog.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -63,7 +64,8 @@ HEADERS += \
     ui/qitemdelegate/comboboxdelegate.h \
     ui/qitemdelegate/doublespinboxdelegate.h \
     ui/qitemdelegate/pushbuttondelegate.h \
-    ui/menuwidget/probedialog.h
+    ui/menuwidget/probedialog.h \
+    ui/menuwidget/wedgedialog.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -76,7 +78,8 @@ FORMS += \
     ui/menuwidget/commonmenubutton.ui \
     ui/menuwidget/measurementdialog.ui \
     ui/menuwidget/myinputpanel.ui \
-    ui/menuwidget/probedialog.ui
+    ui/menuwidget/probedialog.ui \
+    ui/menuwidget/wedgedialog.ui
 
 win32 {
 #    CONFIG += windows link_prl
