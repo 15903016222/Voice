@@ -19,15 +19,19 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
     }
     editor->setSingleStep(step.toFloat());
     editor->setDecimals(decimalAmount);
+
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
     connect(editor, SIGNAL(editingFinished()), this, SLOT(commit_and_close_editor()));
+
     QStringList sendList;
-//    sendList.append(static_cast<QString>(const_cast<int>(index.column())));
-//    sendList.append(step);
-//    qDebug() << sendList;
-//    emit editorHeaderText(sendList);
+    sendList.append(QString::number(index.column()));
+    sendList.append(step);
+    emit createEditorHeaderText(sendList);
+//    QString string = sendList.at(0);
+//    const int column = index.column();
+//    pColumn = const_cast<int*>(&column);
+
     return editor;
-    Q_UNUSED(index);
     Q_UNUSED(option);
 }
 
@@ -86,5 +90,6 @@ void DoubleSpinBoxDelegate::commit_and_close_editor()
 {
     QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox*>(sender());
     emit commitData(editor);
-//    emit closeEditor(editor);
+    emit closeEditor(editor);
+//    emit closeEditorHeaderText(pColumn);
 }

@@ -415,7 +415,8 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
 
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
-                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(editorHeaderText(QStringList)), this, SLOT(set_header_text(QStringList)));
+                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
+//                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditorHeaderText(int)), this, SLOT(set_header_text_close(int)));
                 break;
             }
             case 2: {
@@ -654,9 +655,28 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
 }
 
-void ThirdMenuWidget::set_header_text(QStringList stringList) const
+void ThirdMenuWidget::set_header_text_create(QStringList stringList) const
 {
-    qDebug() << "receiver:" <<stringList;
+    QString string = stringList.at(0);
+    int index = string.toInt();
+    QString headerText;
+    QString currentHeaderText = model->horizontalHeaderItem(index)->text();
+    if(currentHeaderText.contains("Δ")) {
+        headerText = currentHeaderText.left(currentHeaderText.indexOf("Δ"));
+    } else {
+        headerText = currentHeaderText;
+    }
+    model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(1)));
+}
+
+void ThirdMenuWidget::set_header_text_close(int index) const
+{
+//    QString currentHeaderText = model->horizontalHeaderItem(index)->text();
+//    if(currentHeaderText.contains("Δ")) {
+//        model->setHeaderData(index, Qt::Horizontal,QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
+//    } else {
+//        model->setHeaderData(index, Qt::Horizontal,QString(currentHeaderText));
+//    }
 }
 
 QVariantMap ThirdMenuWidget::get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)

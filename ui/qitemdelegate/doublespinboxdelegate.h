@@ -25,10 +25,12 @@ public:
     QList<int> rangeList;
     QStringList stepList;
     QString step;
+    int *pColumn;
     int decimalAmount;
 
 signals:
-    void editorHeaderText(QStringList);
+    void createEditorHeaderText(QStringList) const;
+    void closeEditorHeaderText(int*) const;
 
 private slots:
     void commit_and_close_editor();
