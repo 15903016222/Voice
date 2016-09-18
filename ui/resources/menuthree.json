@@ -2166,7 +2166,7 @@
     },
     "Comment": {
         "parent": "Measurement_Flaw Record",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Diaplay Table": {
         "parent": "Measurement_Flaw Record",
@@ -2235,7 +2235,7 @@
     },
     "File Name": {
         "parent": "File/Report_Save Mode",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Template": {
         "parent": "File/Report_Report",
@@ -2243,19 +2243,19 @@
     },
     "Report Name": {
         "parent": "File/Report_Report",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Customer": {
         "parent": "File/Report_Report",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Part Name": {
         "parent": "File/Report_Report",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Part Number": {
         "parent": "File/Report_Report",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Create": {
         "parent": "File/Report_Report",
@@ -2347,15 +2347,15 @@
     },
     "Label": {
         "parent": "File/Report_User Field",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Content": {
         "parent": "File/Report_User Field",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Edit Note": {
         "parent": "File/Report_User Field",
-        "style": "inputDialog"
+        "style": "6"
     },
     "Print": {
         "parent": "File/Report_User Field",

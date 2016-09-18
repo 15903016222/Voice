@@ -6,6 +6,7 @@
 #include "pushbuttondelegate.h"
 #include "probedialog.h"
 #include "wedgedialog.h"
+#include "myinputpanel.h"
 
 #include "serializer.h"
 
@@ -391,6 +392,7 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
     if(subVariantMap.contains("style")) {
         switch(subVariantMap["style"].toString().toInt()) {
             case 1: {
+                //SpinBox
                 QList<int> rangeList = get_spinBox_range_list(subVariantMap);
                 QStringList stepList = get_spinBox_step_list(subVariantMap, thirdMenuString);
                 int decimal = subVariantMap["decimal"].toInt();
@@ -417,6 +419,7 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 break;
             }
             case 2: {
+                //ComboBox
                 QList<QStringList> list = get_comboBox_option_list(subVariantMap, thirdMenuString);
 
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
@@ -466,45 +469,69 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
                 break;
             }
-            case 4: {
-                QStandardItem *item;
-                if(subCacheMap.contains(thirdMenuString)) {
-                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
-                } else {
-                    item = new QStandardItem("");
-                }
+//            case 4: {
+//                //探头选择对话框
+//                QStandardItem *item;
+//                if(subCacheMap.contains(thirdMenuString)) {
+//                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
+//                } else {
+//                    item = new QStandardItem("");
+//                }
 
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                model->setItem(0, k, item);
-                model->item(0, k)->setFlags(Qt::NoItemFlags);
-                break;
-            }
-            case 5: {
-                QStandardItem *item;
-                if(subCacheMap.contains(thirdMenuString)) {
-                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
-                } else {
-                    item = new QStandardItem("");
-                }
+//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                model->setItem(0, k, item);
+//                model->item(0, k)->setFlags(Qt::NoItemFlags);
+//                break;
+//            }
+//            case 5: {
+//                //楔块选择对话框
+//                QStandardItem *item;
+//                if(subCacheMap.contains(thirdMenuString)) {
+//                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
+//                } else {
+//                    item = new QStandardItem("");
+//                }
 
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-                model->setItem(0, k, item);
-                model->item(0, k)->setFlags(Qt::NoItemFlags);
-                break;
-            }
-            case 0: {
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                model->setItem(0, k, item);
+//                model->item(0, k)->setFlags(Qt::NoItemFlags);
+//                break;
+//            }
+//            case 6: {
+//                //软键盘输入
+//                QStandardItem *item;
+//                if(subCacheMap.contains(thirdMenuString)) {
+//                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
+//                } else {
+//                    item = new QStandardItem("");
+//                }
+
+//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                model->setItem(0, k, item);
+//                model->item(0, k)->setFlags(Qt::NoItemFlags);
+//                break;
+//            }
+            case 0: {                
                 QStandardItem *item = new QStandardItem(QString(""));
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 model->setItem(0, k, item);
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
                 break;
             }
             default:
+                ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
+                QStandardItem *item = new QStandardItem(QString(""));
+                ui->tableView->setItemDelegateForColumn(k, comboBox);
+                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+                model->setItem(0, k, item);
+                model->item(0, k)->setFlags(Qt::NoItemFlags);
                 break;
         }
-    } else {
-        model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    } else {        
+        ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
         QStandardItem *item = new QStandardItem(QString(""));
+        ui->tableView->setItemDelegateForColumn(k, comboBox);
+        model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         model->setItem(0, k, item);
         model->item(0, k)->setFlags(Qt::NoItemFlags);
     }
@@ -619,6 +646,11 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         //    点击表头弹出探头选择对话框
         WedgeDialog *wedgeDialog = new WedgeDialog(this);
         wedgeDialog->show();
+    } else if(subVariantMap["style"].toString().toInt() == 6) {
+        //    点击表头弹出探头选择对话框
+        MyInputPanel inputPanel;
+        inputPanel.showNormal();
+        inputPanel.exec();
     }
 }
 
