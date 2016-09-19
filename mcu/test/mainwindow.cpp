@@ -5,7 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    m_mcu = Mcu::get_instance();
+    m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
@@ -17,15 +17,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonFstBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_first_battery_status);
     connect(ui->pushButtonSndBattery, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery);
     connect(ui->pushButtonSndBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery_status);
-    connect(ui->pushButtonPowerOff, &QPushButton::clicked, m_mcu, &Mcu::set_poweroff);
     connect(ui->pushButtonStarted, &QPushButton::clicked, m_mcu, &Mcu::notify_started);
-    connect(ui->verticalSliderBrightness, &QSlider::valueChanged, m_mcu, &Mcu::set_brightness);
 #endif
 
-    connect(ui->verticalSliderBrightness, SIGNAL(valueChanged(int)), m_mcu, SLOT(set_brightness(int)));
+    connect(m_mcu, SIGNAL(key_event(int)), ui->labelKey, SLOT(setNum(int)));
+
     connect(ui->pushButtonPowerOff, SIGNAL(clicked(bool)), m_mcu, SLOT(set_poweroff()));
 
-    connect(m_mcu, SIGNAL(key_event(int)), ui->labelKey, SLOT(setNum(int)));
+    connect(ui->verticalSliderBrightness, SIGNAL(valueChanged(int)), this, SLOT(do_verticalSliderBrightness_value_changed(int)));
     connect(m_mcu, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int,Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int,int)), this, SLOT(do_battery_quantity_event(int,int)));
     connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType,int)), this, SLOT(do_temperature_event(Mcu::TemperatureType,int)));
@@ -34,6 +33,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::do_verticalSliderBrightness_value_changed(int value)
+{
+    m_mcu->set_brightness((char)value);
 }
 
 void MainWindow::do_battery_status_event(int index, Mcu::BatteryStatus status)

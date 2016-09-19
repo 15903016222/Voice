@@ -2,19 +2,13 @@
 #define __MCU_H__
 
 #include <QObject>
+#include <QMutex>
 #include <QByteArray>
-
-class McuPrivate;
 
 class Mcu : public QObject
 {
     Q_OBJECT
 public:
-    enum McuType {
-        MCU_IMX,
-        MCU_OMAP
-    };
-
     enum Cmd {
         CORE_TEMPERATURE            = 0x10, /* 核心板温度 */
         FPGA_TEMPERATURE            = 0x11, /* FPGA温度 */
@@ -71,65 +65,50 @@ public:
         PA_PROBE_FERENCE_POINT_ATTR = PA_PROBE_FERENCE_POINT
     };
 
-    void query_core_temp();
-    void query_fpga_temp();
-    void query_power_temp();
-    void query_mcu_temp();
-    void query_first_battery();
-    void query_second_battery();
-    void query_first_battery_status();
-    void query_second_battery_status();
-    void query_brightness();
+    virtual void query_core_temp()              = 0;
+    virtual void query_fpga_temp()              = 0;
+    virtual void query_power_temp()             = 0;
+    virtual void query_mcu_temp()               = 0;
+    virtual void query_first_battery()          = 0;
+    virtual void query_second_battery()         = 0;
+    virtual void query_first_battery_status()   = 0;
+    virtual void query_second_battery_status()  = 0;
+    virtual void query_brightness()             = 0;
 
     /* pa probe query */
-    void query_pa_probe_model();
-    void query_pa_probe_series();
-    void query_pa_probe_type();
-    void query_pa_probe_freq();
-    void query_pa_probe_elements();
-    void query_pa_probe_elements_distance();
-    void query_pa_probe_ference_point();
+    virtual void query_pa_probe_model()         = 0;
+    virtual void query_pa_probe_series()        = 0;
+    virtual void query_pa_probe_type()          = 0;
+    virtual void query_pa_probe_freq()          = 0;
+    virtual void query_pa_probe_elements()      = 0;
+    virtual void query_pa_probe_elements_distance() = 0;
+    virtual void query_pa_probe_ference_point()     = 0;
 
-    static Mcu* get_instance();
+    static Mcu* get_mcu();
     static void destroyed();
 
 public slots:
-    void notify_started();
-    void set_poweroff();
-    void set_brightness(int light);
+    virtual void notify_started()   = 0;
+    virtual void set_poweroff()     = 0;
+    virtual void set_brightness(char light)  = 0;
 
 
 Q_SIGNALS:
     void key_event(int value);
+    void brightness_event(int value);
     void battery_status_event(int index, Mcu::BatteryStatus status);
     void battery_quantity_event(int index, int value);
     void temperature_event(Mcu::TemperatureType type, int value);
     void pa_probe_event(Mcu::PaProbeAttrType type, const QByteArray &data);
+    void poweroff_event(void);
 
 protected:
-    explicit Mcu();
-    virtual ~Mcu();
+    explicit Mcu() {}
+    virtual ~Mcu() {}
 
 private:
+    static QMutex m_mutex;
     static Mcu* m_mcu;
-    McuPrivate *d_ptr;
-
 };
-
-inline Mcu* Mcu::get_instance()
-{
-    if (m_mcu == NULL) {
-        m_mcu = new Mcu();
-    }
-    return m_mcu;
-}
-
-inline void Mcu::destroyed()
-{
-    if (m_mcu) {
-        delete m_mcu;
-        m_mcu = NULL;
-    }
-}
 
 #endif

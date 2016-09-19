@@ -1,7 +1,7 @@
 #ifndef __MCU_IMX_H__
 #define __MCU_IMX_H__
 
-#include "mcu_p.h"
+#include "mcu.h"
 
 #include <QSerialPort>
 #include <QMutex>
@@ -13,7 +13,7 @@
  * -------------------------------------------------------
  */
 
-class McuImx : public McuPrivate
+class McuImx : public Mcu
 {
     Q_OBJECT
 public:
@@ -25,9 +25,27 @@ public:
     };
 
     McuImx();
+    void query_core_temp()          { query(CORE_TEMPERATURE); }
+    void query_fpga_temp()          { query(FPGA_TEMPERATURE); }
+    void query_power_temp()         { query(POWER_TEMPERATURE);}
+    void query_mcu_temp()           { query(MCU_TEMPERATUREE); }
+    void query_first_battery()      { query(BATTERY1_QUANTITY); }
+    void query_second_battery()     { query(BATTERY2_QUANTITY); }
+    void query_first_battery_status() { query(BATTERY1_STATUS); }
+    void query_second_battery_status(){ query(BATTERY2_STATUS); }
+    void query_brightness()         { query(BRIGHTNESS); }
+    void query_pa_probe_model()     { query(PA_PROBE_MODEL); }
+    void query_pa_probe_series()    { query(PA_PROBE_SERIES);}
+    void query_pa_probe_type()      { query(PA_PROBE_TYPE); }
+    void query_pa_probe_freq()      { query(PA_PROBE_FREQ); }
+    void query_pa_probe_elements()  { query(PA_PROBE_ELEMENTS_QTY); }
+    void query_pa_probe_elements_distance() { query(PA_PROBE_ELEMENTS_DISTANCE); }
+    void query_pa_probe_ference_point()     { query(PA_PROBE_FERENCE_POINT); }
+    void notify_started()           { set(NOTIFY_STARTED, 0); }
+    void set_poweroff()             { set(POWEROFF, 0); }
+    void set_brightness(char light)  { set(BRIGHTNESS, light); }
 
-    void query(Mcu::Cmd cmd) { m_queryPkg[4] = cmd; write(m_queryPkg, sizeof(m_queryPkg)); }
-    void set(Mcu::Cmd cmd, char value) { m_setPkg[4] = cmd; m_setPkg[5] = value; write(m_setPkg, sizeof(m_setPkg));}
+
 
 private:
     QSerialPort m_tty;
@@ -40,6 +58,9 @@ private:
 
     QByteArray find_packet(QByteArray &data);
     void parse_packet(QByteArray &pkg);
+
+    void query(Mcu::Cmd cmd) { m_queryPkg[4] = cmd; write(m_queryPkg, sizeof(m_queryPkg)); }
+    void set(Mcu::Cmd cmd, char value) { m_setPkg[4] = cmd; m_setPkg[5] = value; write(m_setPkg, sizeof(m_setPkg));}
 
 private slots:
     void on_readyRead_event();

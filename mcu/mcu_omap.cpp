@@ -6,8 +6,7 @@
 #define TTY_DEV1    "/dev/ttyS1"
 
 McuOmap::McuOmap()
-    :McuPrivate(), m_ttyS0(TTY_DEV0), m_ttyS1(TTY_DEV1),
-      m_brightness(70)
+    :Mcu(), m_ttyS0(TTY_DEV0), m_ttyS1(TTY_DEV1), m_brightness(70)
 {
     m_statusMap.insert(0x00, Mcu::NO_BATTERY);
     m_statusMap.insert(0x80, Mcu::CHARGE);
@@ -48,30 +47,6 @@ void McuOmap::init_tty(QSerialPort &tty)
 
     if ( ! tty.setParity(QSerialPort::NoParity) ) {
         qDebug("setParity error!\n");
-    }
-}
-
-void McuOmap::query(Mcu::Cmd cmd)
-{
-    if ( Mcu::BRIGHTNESS == cmd ) {
-        emit brightness_event(m_brightness);
-    }
-}
-
-void McuOmap::set(Mcu::Cmd cmd, char value)
-{
-    if ( Mcu::BRIGHTNESS == cmd ) {
-        m_ttyS1.write(&value, 1);
-        m_brightness = value;
-    } else if ( Mcu::POWEROFF == cmd ) {
-        qDebug("poweroff");
-        value = 0xaa;
-        m_ttyS1.write(&value, 1);
-        m_ttyS1.write(&value, 1);
-        m_ttyS1.write(&value, 1);
-    } else if ( Mcu::PA_PROBE_MODEL ) {
-        value = 0xcc;
-        m_ttyS1.write(&value, 1);
     }
 }
 

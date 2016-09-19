@@ -13,7 +13,7 @@ char McuImx::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 
 char McuImx::m_setPkg[8] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
 
 McuImx::McuImx()
-    : McuPrivate(), m_tty(UART_DEVICE)
+    : Mcu(), m_tty(UART_DEVICE)
 {
     connect(&m_tty, SIGNAL(readyRead()), this, SLOT(on_readyRead_event()));
     m_recBuffer.clear();
