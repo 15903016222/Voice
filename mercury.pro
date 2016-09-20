@@ -8,8 +8,6 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QMAKE_CFLAGS += -std=gnu99
-
 RESOURCES += ui/mainwindow.qrc
 
 TRANSLATIONS += \
@@ -91,9 +89,7 @@ DISTFILES += \
     ui/resources/menucache.json
 
 win32 {
-  #  LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
-    CONFIG(release, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
-    else:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+    LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
 }
 
 unix {
