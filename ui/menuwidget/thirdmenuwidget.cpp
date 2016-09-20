@@ -38,6 +38,8 @@ QWidget(parent),
     fourthMenuMap = read_json_file(stringTwo);
 	fileTwo->close();
 
+    height= 70;
+
 	initStandardModel();
 	setThirdMenuName(0, 0);
 
