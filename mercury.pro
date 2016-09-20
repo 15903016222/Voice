@@ -12,7 +12,6 @@ QMAKE_CFLAGS += -std=gnu99
 
 RESOURCES += ui/mainwindow.qrc
 
-TR_EXCLUDE += $$(BOOST_INCLUDE_PATH)/*
 TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
     ui/translator/phascanII_UI_English.ts
@@ -23,13 +22,14 @@ TARGET = Mercury
 TEMPLATE = app
 
 PROJECT_DIR = $$PWD
-DEFINES += GST_DISABLE_XML
-DEFINES += GST_DISABLE_LOADSAVE
 
 INCLUDEPATH += $$PWD/ui
 INCLUDEPATH += $$PWD/ui/menuwidget
 INCLUDEPATH += $$PWD/ui/dialogwidget
 INCLUDEPATH += $$PWD/ui/qitemdelegate
+
+INCLUDEPATH += $$PWD/lib/qjson/lib
+DEPENDPATH += $$PWD/lib/qjson/lib
 
 SOURCES += \
     main.cpp \
@@ -44,8 +44,11 @@ SOURCES += \
     ui/dialogwidget/measurementdialog.cpp \
     ui/dialogwidget/myinputpanel.cpp \
     ui/dialogwidget/timesetdialog.cpp \
+    ui/dialogwidget/probedialog.cpp \
+    ui/dialogwidget/wedgedialog.cpp \
     ui/qitemdelegate/comboboxdelegate.cpp \
-    ui/qitemdelegate/doublespinboxdelegate.cpp
+    ui/qitemdelegate/doublespinboxdelegate.cpp \
+    ui/qitemdelegate/pushbuttondelegate.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -59,8 +62,11 @@ HEADERS += \
     ui/dialogwidget/measurementdialog.h \
     ui/dialogwidget/myinputpanel.h \
     ui/dialogwidget/timesetdialog.h \
+    ui/dialogwidget/probedialog.h \
+    ui/dialogwidget/wedgedialog.h \
     ui/qitemdelegate/comboboxdelegate.h \
-    ui/qitemdelegate/doublespinboxdelegate.h
+    ui/qitemdelegate/doublespinboxdelegate.h \
+    ui/qitemdelegate/pushbuttondelegate.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -73,96 +79,26 @@ FORMS += \
     ui/menuwidget/commonmenubutton.ui \
     ui/dialogwidget/measurementdialog.ui \
     ui/dialogwidget/myinputpanel.ui \
-    ui/dialogwidget/timesetdialog.ui
+    ui/dialogwidget/timesetdialog.ui \
+    ui/dialogwidget/probedialog.ui \
+    ui/dialogwidget/wedgedialog.ui
+
+DISTFILES += \
+    ui/resources/menu.json \
+    ui/resources/menuone.json \
+    ui/resources/menuthree.json \
+    ui/resources/menutwo.json \
+    ui/resources/menucache.json
 
 win32 {
-    CONFIG += windows link_prl
-    # boost
-    INCLUDEPATH += $$(BOOST_INCLUDE_PATH)
-    LIBS += -L$$(BOOST_LIB_PATH)
-    # LIBS += -lfooo # add fooo library
-
-    # GStreamer
-    INCLUDEPATH += $$(GSTREAMER_INCLUDE_PATH)
-    INCLUDEPATH += $$(GSTREAMER_INCLUDE_PATH)\\gstreamer-1.0
-    INCLUDEPATH += $$(GSTREAMER_INCLUDE_PATH)\\glib-2.0
-    INCLUDEPATH += $$(GSTREAMER_GLIB2_PRIVATE_INCLUDE_PATH)
-    INCLUDEPATH += $$(GSTREAMER_PRIVATE_INCLUDE_PATH)
-
-    LIBS += -L $$(GSTREAMER_LIB_PATH)
-
-    # Qt5Gstreamer
-    INCLUDEPATH += $$PROJECT_DIR\\lib\\win32\\Qt5GStreamer\\include
-    LIBS += -L$$PROJECT_DIR\\lib\\win32\\Qt5GStreamer\\lib
-
-    CONFIG(debug, debug|release){
-        LIBS += -lQt5GStreamerUid
-        LIBS += -lQt5GStreamerd
-        LIBS += -lQt5GLibd
-    }else{
-        LIBS += -lQt5GStreamerUi
-        LIBS += -lQt5GStreamer
-        LIBS += -lQt5GLib
-    }
-
-    LIBS += -lgstreamer-1.0
-    LIBS += -lgstvideo-1.0
-    LIBS += -lgstaudio-1.0
-    LIBS += -lgstpbutils-1.0
-    LIBS += -lgobject-2.0
-    LIBS += -lglib-2.0
-    DEFINES += QtGStreamer_Static
+  #  LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+    CONFIG(release, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+    else:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
 }
 
-macx {
-    CONFIG += app_bundle
-
-    GSTREAM_FRAMEWORK_PATH=/Library/Frameworks/GStreamer.framework/Versions/Current
-    QTSTREAMER_LIB_BASE_PATH=$$PROJECT_DIR/lib/osx/gstreamer
-
-    message($$PROJECT_DIR)
-
-    QMAKE_LFLAGS += -F$$PROJECT_DIR/lib/osx/gstreamer
-    QMAKE_LFLAGS += -F/Library/Frameworks
-
-    LIBS += -framework GStreamer
-    LIBS += -framework QGlib
-    LIBS += -framework QtGStreamer
-    LIBS += -framework QtGStreamerUi
-
-    INCLUDEPATH += $$GSTREAM_FRAMEWORK_PATH/Headers
-    INCLUDEPATH += $$QTSTREAMER_LIB_BASE_PATH/QtGStreamer.framework/Headers
-    INCLUDEPATH += $$QTSTREAMER_LIB_BASE_PATH/QtGStreamerUi.framework/Headers
-    INCLUDEPATH += $$QTSTREAMER_LIB_BASE_PATH/QGLib.framework/Headers
-
-    FRAMEWORKS_FILES  = $$QTSTREAMER_LIB_BASE_PATH/QGLib.framework
-    FRAMEWORKS_FILES += $$QTSTREAMER_LIB_BASE_PATH/QtGStreamer.framework
-    FRAMEWORKS.files += $$QTSTREAMER_LIB_BASE_PATH/QtGStreamerUi.framework
-
-    FRAMEWORKS.path = Contents/Frameworks
-    QMAKE_BUNDLE_DATA += FRAMEWORKS
-
-    # boost
-    INCLUDEPATH += /usr/local/include
-}
-
-linux {
-
-    CONFIG += c++14
-
-    CONFIG += link_pkgconfig
-    PKGCONFIG += gstreamer-1.0
-
-    INCLUDEPATH += $$PROJECT_DIR/libs/linux/qtgstreamer/include/Qt5GStreamer
-
-    message($$PROJECT_DIR/libs/linux/qtgstreamer/include/Qt5Gstreamer)
-
-    # boost
-    INCLUDEPATH += /usr/include
-    INCLUDEPATH += /usr/local/include
-
-    LIBS += -L$$PROJECT_DIR/libs/linux/qtgstreamer/lib
-    LIBS += -lQt5GLib-2.0 -lQt5GStreamer-1.0 -lQt5GStreamerUi-1.0
+unix {
+    LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
+    PRE_TARGETDEPS += $$PWD/lib/qjson/lib/libqjson.a
 }
 
 message($$CONFIG)

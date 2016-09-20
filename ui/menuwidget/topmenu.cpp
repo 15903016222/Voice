@@ -4,19 +4,12 @@
 #include "doublespinboxdelegate.h"
 
 #include <QFile>
-#include <QString>
-#include <QLabel>
-#include <QTextDocument>
-#include <QTextBlockFormat>
-#include <QDebug>
-#include <QEvent>
 
 TopMenu :: TopMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TopMenu)
 {
     ui->setupUi(this);
-
     initUI();
 
     initGain_angle();
@@ -91,9 +84,27 @@ void TopMenu::initGain_angle()
     QStandardItemModel *model_gain = new QStandardItemModel(1, 2, this);
     ui->tableView_gain->setModel(model_gain);
 
-    DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
-    QStandardItem *item_gain1 = new QStandardItem(QString::number(100, 'f', 1));
-    QStandardItem *item_gain2 = new QStandardItem("(" + QString::number(10, 'f', 2) + ")");
+    QFile *file = new QFile(":/json/resources/menuthree.json");
+    file->open(QIODevice::ReadOnly | QIODevice::Text);
+    QString string = file->readAll();
+    QVariantMap fourthMap = thirdMenuWidget->read_json_file(string);
+    QVariantMap variantMapGain = thirdMenuWidget->get_sub_menu_map(fourthMap, "Gain", "UT Settings_General");
+//    QVariantMap variantMapAngle = thirdMenuWidget->get_fourth_menu_map(fourthMap, QString("Angle"), QString("Measurement_Cursors"));
+    QVariantMap variantMapAngle = thirdMenuWidget->get_sub_menu_map(fourthMap, QString("Min. Angle"), QString("Focal Law_Angle"));
+    file->close();
+
+    int decimalGain = variantMapGain["decimal"].toInt();
+    QList<int> rangeListGain = thirdMenuWidget->get_spinBox_range_list(variantMapGain);
+    QStringList stepListGain = thirdMenuWidget->get_spinBox_step_list(variantMapGain, "Gain");
+
+    DoubleSpinBoxDelegate *doubleSpinBoxOne = new DoubleSpinBoxDelegate(this);
+    doubleSpinBoxOne->set_number_range(rangeListGain);
+    doubleSpinBoxOne->set_number_step_list(stepListGain);
+    doubleSpinBoxOne->set_number_step(stepListGain.at(0));
+    doubleSpinBoxOne->set_decimal_amount(decimalGain);
+
+    QStandardItem *item_gain1 = new QStandardItem(QString::number(100, 'f', decimalGain));
+    QStandardItem *item_gain2 = new QStandardItem("(" + QString::number(10, 'f', decimalGain) + ")");
     model_gain->setItem(0, 0, item_gain1);
     model_gain->setItem(0, 1, item_gain2);
     model_gain->item(0, 0)->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
@@ -102,7 +113,7 @@ void TopMenu::initGain_angle()
     model_gain->item(0, 1)->setForeground(Qt::yellow);
     model_gain->item(0, 0)->setFont(QFont("Times New Roman", 14));
     model_gain->item(0, 1)->setFont(QFont("Times New Roman", 10));
-    ui->tableView_gain->setItemDelegate(doubleSpinBox);
+    ui->tableView_gain->setItemDelegate(doubleSpinBoxOne);
     ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
     ui->tableView_gain->show();
 
@@ -122,14 +133,24 @@ void TopMenu::initGain_angle()
     QStandardItemModel *model_angle = new QStandardItemModel(1, 1, this);
     ui->tableView_angle->setModel(model_angle);
 
-    DoubleSpinBoxDelegate *doubleSpinBox_angle = new DoubleSpinBoxDelegate(this);
-    QStandardItem *item_angle = new QStandardItem(QString::number(70, 'f', 1));
+    int decimalAngle = variantMapAngle["decimal"].toInt();
+    QList<int> rangeListAngle = thirdMenuWidget->get_spinBox_range_list(variantMapAngle);
+//    QStringList stepList = thirdMenuWidget->get_spinBox_step_list(variantMap, "Angle");
+    QStringList stepListAngle = thirdMenuWidget->get_spinBox_step_list(variantMapAngle, "Min. Angle");
+
+    DoubleSpinBoxDelegate *doubleSpinBoxAngle = new DoubleSpinBoxDelegate(this);
+    doubleSpinBoxAngle->set_number_range(rangeListAngle);
+    doubleSpinBoxAngle->set_number_step_list(stepListAngle);
+    doubleSpinBoxAngle->set_number_step(stepListAngle.at(0));
+    doubleSpinBoxAngle->set_decimal_amount(decimalAngle);
+
+    QStandardItem *item_angle = new QStandardItem(QString::number(70, 'f', decimalAngle));
     model_angle->setItem(0, item_angle);
     model_angle->item(0)->setTextAlignment(Qt::AlignCenter);
     model_angle->item(0)->setForeground(Qt::white);
     model_angle->item(0)->setFont(QFont("Times New Roman", 14));
-    ui->tableView_angle->setItemDelegate(doubleSpinBox_angle);
-    ui->tableView_angle->setEditTriggers(QAbstractItemView::CurrentChanged);
+    ui->tableView_angle->setItemDelegate(doubleSpinBoxAngle);
+//    ui->tableView_angle->setEditTriggers(QAbstractItemView::CurrentChanged);
     ui->tableView_angle->show();
 }
 

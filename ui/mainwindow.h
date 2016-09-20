@@ -7,7 +7,6 @@
 #include "topmenu.h"
 
 #include <QMainWindow>
-//#include <QGst/Message>
 #include <QScrollArea>
 #include <QMouseEvent>
 #include <QTranslator>
@@ -41,7 +40,6 @@ public:
     FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
 
-    //  void linkPluginsToConnectDevice();
     void resizeEvent(QResizeEvent *event);
     void arrowShowFlag();
     void updateTranslator();
@@ -50,6 +48,7 @@ public:
     bool hiddenFirstSecondMenuFlag;
     bool hiddenThirdMenuFlag;
     bool hiddenCommonMenuFlag;
+    bool hiddenArrowFlag;
 
     int firstMenuNum;
     int secondMenuNum;
@@ -65,14 +64,17 @@ public slots:
 private slots:
     void slot_firstMenuToolBoxCurrentChanged(int index);
     void slot_secondMenuItemClicked(QModelIndex index);
-    // void onGstBusMessage(const QGst::MessagePtr & message);
 
     void on_pushButton_top_clicked();
     void on_pushButton_bottom_clicked();
     void slot_pushButton_commonMenuClicked();
+    void scroll_menu(int index);
 
     void translatorChineseUI();
     void translatorEnglishUI();
+
+signals:
+    void clickedMenuIndex(int);
 
 };
 

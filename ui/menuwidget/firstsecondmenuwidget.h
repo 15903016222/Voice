@@ -1,11 +1,14 @@
 #ifndef FIRSTSECONDMENUWIDGET_H
 #define FIRSTSECONDMENUWIDGET_H
 
+#include "parser.h"
+
 #include <QWidget>
 #include <QToolBox>
 #include <QListView>
 #include <QStandardItemModel>
 #include <QPushButton>
+#include <QFile>
 
 #define FIRST_MENU_NUMBER 9
 #define SECOND_MENU_NUMBER 5
@@ -29,13 +32,18 @@ public:
     QList<QToolBox*> toolBox;
     QList<QListView*> menuList;
     QList<QStandardItemModel*> modelList;
-    QStandardItemModel *standardItemModel;
+    QStringList firstMenuData;
 
-    void initUI();
-    void reTranslatorFirstSecondMenuUi();
     void setSecondMenuName(int i);
     void initSecondMenuItem(int i);
     void secondMenuItemClicked(int i, QModelIndex index);
+    void initUI();
+    void reTranslatorFirstSecondMenuUi();
+    void read_json_file(QFile *file);
+    QStringList get_second_menu_list(int i);
+
+    QVariantMap firstMenuMap;
+
 
 private:
 

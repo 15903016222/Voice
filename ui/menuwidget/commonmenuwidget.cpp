@@ -3,6 +3,7 @@
 
 #include "doublespinboxdelegate.h"
 #include "comboboxdelegate.h"
+#include "pushbuttondelegate.h"
 
 #include <QResizeEvent>
 
@@ -40,6 +41,7 @@ void CommonMenuWidget::initStandardModel()
 {
     model = new QStandardItemModel(1, COMMON_MENU_NUMBER, this);
     ui->tableView->setModel(model);
+//  ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
     ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
     ui->tableView->verticalHeader()->hide();
@@ -83,8 +85,12 @@ void CommonMenuWidget::setCommonMenuName()
             widgetStyleChoice(k);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setForeground(Qt::yellow);
-            model->item(0, k)->setFont(QFont("Times New Roman", 13));
-            model->item(0, k)->setBackground(QBrush(QColor(0, 0, 63, 255)));
+            model->item(0, k)->setFont(QFont("Times New Roman", 12));
+            QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, height * 25 / 70));
+            linearGradient.setColorAt(0.4, QColor(0, 0, 0));
+            linearGradient.setColorAt(1, QColor(0, 120, 195));
+            linearGradient.setSpread(QGradient::PadSpread);
+            model->item(0, k)->setBackground(QBrush(linearGradient));
         }
     }
 }
@@ -96,9 +102,24 @@ void CommonMenuWidget::widgetStyleChoice(int k)
     {
     case 1:
     {
+        QList<int> rangeList;
+        rangeList.append(0.00);
+        rangeList.append(100.00);
+        QStringList stepList;
+        stepList.append("0.01");
+        stepList.append("0.10");
+        stepList.append("1.00");
+        stepList.append("10.00");
+        int decimal = 2;
+
         DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
+        doubleSpinBox->set_number_range(rangeList);
+        doubleSpinBox->set_number_step_list(stepList);
+        doubleSpinBox->set_number_step(stepList.at(0));
+        doubleSpinBox->set_decimal_amount(decimal);
+
         model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-        QStandardItem *item = new QStandardItem(QString::number(0, 'f', 2));
+        QStandardItem *item = new QStandardItem(QString::number(0, 'f', decimal));
         model->setItem(0, k, item);
         ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
         ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
@@ -106,14 +127,28 @@ void CommonMenuWidget::widgetStyleChoice(int k)
     }
     case 2:
     {
+
         ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
+
         model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-        QStandardItem *item = new QStandardItem(QString("off"));
+        QStandardItem *item = new QStandardItem(QString("On"));
         model->setItem(0, k, item);
         ui->tableView->setItemDelegateForColumn(k, comboBox);
         break;
     }
     case 3:
+    {
+        PushButtonDelegate *pushButton = new PushButtonDelegate(this);
+
+        model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        QStandardItem *item = new QStandardItem(QString("on"));
+        model->setItem(0, k, item);
+//          model->item(0, k)->setFlags(Qt::ItemIsEnabled);
+        ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
+        ui->tableView->setItemDelegateForColumn(k, pushButton);
+        break;
+    }
+    case 0:
     {
         model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         QStandardItem *item = new QStandardItem(QString("on"));

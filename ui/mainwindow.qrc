@@ -18,4 +18,11 @@
         <file>translator/phascanII_UI_Chinese.qm</file>
         <file>translator/phascanII_UI_English.qm</file>
     </qresource>
+    <qresource prefix="/json">
+        <file>resources/menuone.json</file>
+        <file>resources/menuthree.json</file>
+        <file>resources/menutwo.json</file>
+        <file>resources/menu.json</file>
+        <file>resources/menucache.json</file>
+    </qresource>
 </RCC>

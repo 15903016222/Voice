@@ -3,13 +3,6 @@
 
 #include <QMessageBox>
 
-//#include <QGlib/Connect>
-//#include <QGlib/Error>
-//#include <QGst/Pipeline>
-//#include <QGst/ElementFactory>
-//#include <QGst/Bus>
-//#include <QGst/Message>
-
 class MainWindowPrivate
 {
 public:
@@ -21,33 +14,9 @@ public:
 
     ~MainWindowPrivate()
     {
-        //    if(pipeline)
-        //    {
-        //      pipeline->setState(QGst::StateNull);
-        //      pipeline.clear();
-        //    }
+
     }
 
-    //public:
-    //  void handlePipelineStateChange(const QGst::StateChangedMessagePtr & scm)
-    //  {
-    //    switch (scm->newState()) {
-    //    case QGst::StatePlaying:
-    //      //start the timer when the pipeline starts playing
-    //      break;
-    //    case QGst::StatePaused:
-    //      //stop the timer when the pipeline pauses
-    //      if(scm->oldState() == QGst::StatePlaying) {
-
-    //      }
-    //      break;
-    //    default:
-    //      break;
-    //    }
-    // }
-    //  Members
-    //protected:
-    //  QGst::PipelinePtr pipeline;
 protected:
     MainWindow * const q_ptr;
 private:
@@ -74,7 +43,6 @@ MainWindow::~MainWindow()
 void MainWindow::initUI()
 {
     this->resize(800, 600);
-    // linkPluginsToConnectDevice();
 
     ui->widget_firstSecondMenu->hide();
     ui->widget_thirdMenu->hide();
@@ -91,9 +59,8 @@ void MainWindow::initUI()
 
     translator = new QTranslator(this);
     qApp->installTranslator(translator);
-    translatorChineseUI(); // default Chinese
-
-    firstSecondMenu->initUI();
+//    translatorChineseUI(); // default Chinese
+//    firstSecondMenu->initUI();
 
     firstMenuNum = 0;
     secondMenuNum = 0;
@@ -115,7 +82,7 @@ void MainWindow::initUI()
     ui->scrollArea->setWidget(firstSecondMenu);
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
-
+    connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
 }
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
@@ -125,6 +92,9 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 
     firstSecondMenu->initSecondMenuItem(firstMenuNum);
 
+    hiddenArrowFlag = true;
+
+    emit clickedMenuIndex(firstMenuNum);
     arrowShowFlag();
 }
 
@@ -133,47 +103,9 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
     secondMenuNum = item->row();
 
-    // firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
+    firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
     ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, secondMenuNum);
 }
-
-#if 0
-void MainWindow::linkPluginsToConnectDevice()
-{
-    if(!d_ptr->pipeline)
-    {
-        d_ptr->pipeline = QGst::Pipeline::create();
-
-        QGst::ElementPtr bin;
-        QGst::ElementPtr videosink;
-
-        try {
-            bin = QGst::Bin::fromDescription("sathidsrc vid=0xc251 pid=0x1707 !satanyscandec name=devicedec !satarender");
-
-            videosink = QGst::ElementFactory::make("qt5videosink");
-
-            ui->widgetUSView->setVideoSink(videosink);
-
-            // watch the bus
-            QGst::BusPtr bus = d_ptr->pipeline->bus();
-            bus->addSignalWatch();
-            QGlib::connect(bus, "message", this, &MainWindow::onGstBusMessage );
-
-            d_ptr->pipeline->add(bin);
-            d_ptr->pipeline->add(videosink);
-            bin->link(videosink);
-
-        } catch(const QGlib::Error & error){
-            QMessageBox::critical(this, tr("Programer Error"), tr("One ore more required elements are missing, Please try reinstall. Aborting..."));
-        }
-    }
-
-    if(d_ptr->pipeline)
-    {
-        d_ptr->pipeline->setState(QGst::StatePlaying);
-    }
-}
-#endif
 
 void MainWindow::on_pushButton_top_clicked()
 {
@@ -244,17 +176,25 @@ void MainWindow::arrowShowFlag()
     int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
     int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
 
-    if(menuTopY == scrollTopY)
-    {
-        ui->pushButton_top->hide();
-    }else{
+    if(menuTopY == scrollTopY) {
+        if(hiddenArrowFlag == false) {
+              ui->pushButton_top->hide();
+        } else {
+            ui->pushButton_top->show();
+            hiddenArrowFlag = false;
+         }
+    } else {
         ui->pushButton_top->show();
     }
 
-    if(menuBottomY == scrollBottomY )
-    {
-        ui->pushButton_bottom->hide();
-    }else{
+    if(menuBottomY == scrollBottomY ) {
+        if(hiddenArrowFlag == false) {
+            ui->pushButton_bottom->hide();
+        } else {
+            ui->pushButton_bottom->show();
+            hiddenArrowFlag = false;
+         }
+    } else {
         ui->pushButton_bottom->show();
     }
 }
@@ -325,32 +265,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     return QWidget::eventFilter(object, event);
 }
 
-#if 0
-void MainWindow::onGstBusMessage(const QGst::MessagePtr &message)
-{
-    switch (message->type()) {
-    case QGst::MessageEos: //End of stream. We reached the end of the file.
-        d_ptr->pipeline->setState(QGst::StateNull);
-        break;
-    case QGst::MessageError: //Some error occurred.
-        d_ptr->pipeline->setState(QGst::StateNull);
-
-        QMessageBox::information(this, tr("Runtime hint"), tr("Connected device error. Did you connect the device!"));
-
-        d_ptr->pipeline.clear();
-        ui->widgetUSView->releaseVideoSink();
-        break;
-    case QGst::MessageStateChanged: //The element in message->source() has changed state
-        if (message->source() == d_ptr->pipeline) {
-            d_ptr->handlePipelineStateChange(message.staticCast<QGst::StateChangedMessage>());
-        }
-        break;
-    default:
-        break;
-    }
-}
-#endif
-
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
@@ -399,5 +313,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
         }
         arrowShowFlag();
     }
+}
+
+void MainWindow::scroll_menu(int index)
+{
+  if(index >= 4 && index < 9)
+  {
+    ui->scrollArea->viewport()->scroll(0, -50);
+    ui->scrollArea->update();
+  }
 }
 
