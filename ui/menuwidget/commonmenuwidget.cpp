@@ -23,7 +23,7 @@ CommonMenuWidget::CommonMenuWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     this->resize(800, 72);
-
+    height = this->geometry().height();
     initStandardModel();
 }
 
