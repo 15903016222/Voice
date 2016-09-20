@@ -119,10 +119,7 @@ void FirstSecondMenuWidget::initSecondMenuItem(int i)
         }
     }
 
-    int height = 0;
-    height = menuList.at(i)->fontMetrics().height() * stringList.count() + (menuList.at(i)->spacing() * 2) * stringList.count();
-    int mainMenuHeight = this->height() - (menuList.at(i)->height() - height - menuList.at(i)->spacing());
-    this->resize(this->width(), mainMenuHeight);
+    resize_height(i);
 }
 
 void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
@@ -220,4 +217,13 @@ QStringList FirstSecondMenuWidget::get_second_menu_list(int i)
     QStringList stringList  = variantList.at(0).toStringList();
     return stringList;
 //#endif
+}
+
+void FirstSecondMenuWidget::resize_height(int i)
+{
+    QStringList stringList = get_second_menu_list(i);
+    int height = 0;
+    height = menuList.at(i)->fontMetrics().height() * stringList.count() + (menuList.at(i)->spacing() * 2) * stringList.count();
+    int mainMenuHeight = this->height() - (menuList.at(i)->height() - height - menuList.at(i)->spacing());
+    this->resize(this->width(), mainMenuHeight);
 }

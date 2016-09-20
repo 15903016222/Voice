@@ -53,6 +53,7 @@ public:
     void initUI();
     void reTranslatorFirstSecondMenuUi();
     void read_json_file(QFile *file);
+    void resize_height(int i);
     QStringList get_second_menu_list(int i);
 
 //#if QT_VERSION >= 0x050000
