@@ -48,7 +48,14 @@ void MainWindow::initUI()
     ui->frame_showPlot->installEventFilter(this);
     ui->widget_thirdMenu->installEventFilter(this);
 
+    firstMenuNum = 0;
+    secondMenuNum = 0;
+    hiddenFirstSecondMenuFlag = false;
+    hiddenThirdMenuFlag = false;
+    hiddenCommonMenuFlag = false;
+
     firstSecondMenu = new FirstSecondMenuWidget(this);
+ //   firstSecondMenu->resize_height(firstMenuNum);
     commonMenuWidget = new CommonMenuWidget(this);
     commonMenuWidget->hide();
     commonMenuButton = new CommonMenuButton(this);
@@ -59,12 +66,6 @@ void MainWindow::initUI()
     qApp->installTranslator(translator);
 //    translatorChineseUI(); // default Chinese
 //    firstSecondMenu->initUI();
-
-    firstMenuNum = 0;
-    secondMenuNum = 0;
-    hiddenFirstSecondMenuFlag = false;
-    hiddenThirdMenuFlag = false;
-    hiddenCommonMenuFlag = false;
 
     QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
 

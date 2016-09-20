@@ -42,7 +42,7 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         editor->setMinimumContentsLength(minimumContentLength);
     }
 
-    connect(editor, SIGNAL(currentTextChanged(QString)), this, SLOT(commit_and_close_editor(QString)));
+    connect(editor, SIGNAL(activated(QString)), this, SLOT(commit_and_close_editor(QString)));
     return editor;
 
     Q_UNUSED(index);
@@ -86,7 +86,7 @@ void ComboBoxDelegate::set_model_item_list(QStringList stringList)
 
 int ComboBoxDelegate::find_list_index(QStringList stringList, QString string) const
 {
-    int index;
+    int index = 0;
     for(int i = 0; i < stringList.count(); i ++) {
         if(string == stringList.at(i)) {
             index = i;
