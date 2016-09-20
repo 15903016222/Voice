@@ -334,26 +334,28 @@ void ThirdMenuWidget::initStandardModel()
     ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
     ui->tableView->verticalHeader()->hide();
 
+    ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
 	for(int k = 0; k < THIRD_MENU_NUMBER; k++)
 	{
 		QModelIndex index = model->index(k, 0, QModelIndex());
 		model->setData(index, k);
 	}
 
-	ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-	ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
+    ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
         "{font: 13pt 'Times New Roman';"
-		"background-color: rgba(0, 130, 195, 255);"
-		"color: rgba(255, 255, 255, 255);"
-		"border: 0px solid black;"
-		"border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
-		"border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
+        "background-color: rgba(0, 130, 195, 255);"
+        "color: rgba(255, 255, 255, 255);"
+        "border: 0px solid black;"
+        "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
+        "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
 
-	ui->tableView->setStyleSheet("QTableView::item{"
-		"border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 120, 195, 255));"
-		"border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 120, 195, 255));}");
+    ui->tableView->setStyleSheet("QTableView::item{"
+        "border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 120, 195, 255));"
+        "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 120, 195, 255));}");
 
-	//  ui->tableView->show();
+
+//    ui->tableView->show();
 }
 
 void ThirdMenuWidget::setThirdMenuName(int i, int j)
@@ -366,7 +368,6 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
     secondMenuString = widget->get_second_menu_list(i).at(j);
     QStringList thirdStringList = get_third_menu_list();
     set_model_item(0, thirdStringList.count());
-
 	ui->tableView->show();
 }
 
@@ -620,7 +621,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 //        QDoubleSpinBox *editor = static_cast<QDoubleSpinBox*>(doubleSpinBox->createEditor(ui->tableView, option, modelIndex));
 //        qDebug() << editor->geometry();
 
-//        const QItemEditorFactory *factory = QItemEditorFactory::defaultFactory();
+//       const QItemEditorFactory *factory = doubleSpinBox->editorFactory;
 //        qDebug() << "userType:" << modelIndex.data(Qt::EditRole).userType();
 //        QWidget *w = factory->createEditor(modelIndex.data(Qt::EditRole).userType(), ui->tableView);
 //        w->show();
