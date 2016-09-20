@@ -100,19 +100,17 @@ void McuOmap::on_ttyS0_readyRead_event()
         return;
     }
 
-    qDebug()<<__LINE__<<m_buffer.size()<<":"<<m_buffer.toHex();
-
     if (m_buffer.at(1) == 0x55 && m_buffer.at(2) == 0x55) {
         if (m_buffer.at(27) == 0xaa) {
             emit poweroff_event();
         }
         /* first battery */
-        emit battery_quantity_event(0, m_buffer.mid(3, 2).toHex().toInt(0, 16));
+        emit battery_quantity_event(0, m_buffer.mid(4, 1).toHex().toInt(0, 16));
 
         emit battery_status_event(0, m_statusMap[m_buffer.at(6)]);
 
         /* second battery */
-        emit battery_quantity_event(1, m_buffer.mid(9, 2).toHex().toInt(0, 16));
+        emit battery_quantity_event(1, m_buffer.mid(10, 1).toHex().toInt(0, 16));
 
         emit battery_status_event(1, m_statusMap[m_buffer.at(12)]);
 
@@ -126,7 +124,6 @@ void McuOmap::on_ttyS0_readyRead_event()
 
 
     } else if (m_buffer.at(1) == 0x53 && m_buffer.at(2) == 0x53) {
-        qDebug()<<"size"<<m_buffer.size();
         if (m_buffer.size() < 549) {
             return;
         }

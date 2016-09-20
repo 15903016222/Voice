@@ -44,15 +44,16 @@ McuImx::McuImx()
 
 }
 
-void McuImx::query_pa_probe()
+void McuImx::query_probe()
 {
+    m_probeFlag = 1;
     query(PA_PROBE_MODEL);
-    query(PA_PROBE_SERIES);
+    query(PA_PROBE_SERIAL);
     query(PA_PROBE_TYPE);
     query(PA_PROBE_FREQ);
     query(PA_PROBE_ELEMENTS_QTY);
     query(PA_PROBE_ELEMENTS_DISTANCE);
-    query(PA_PROBE_FERENCE_POINT);
+    query(PA_PROBE_REFERENCE_POINT);
 }
 
 void McuImx::parse_packet(QByteArray &pkg)
@@ -63,46 +64,69 @@ void McuImx::parse_packet(QByteArray &pkg)
 
     QByteArray data = pkg.mid(PKG_HEADER_LEN, pkg.at(3));
     switch (pkg.at(4)) {
-    case Mcu::KEY:
+    case KEY:
         emit key_event(data.toHex().toInt(0, 16));
         break;
-    case Mcu::ROTARY:
+    case ROTARY:
         emit rotary_event((Mcu::RotaryType)(data.toHex().toInt(0, 16)));
         break;
-    case Mcu::BATTERY1_QUANTITY:
+    case BATTERY1_QUANTITY:
         emit battery_quantity_event(0, data.toHex().toInt(0, 16));
         break;
-    case Mcu::BATTERY1_STATUS:
+    case BATTERY1_STATUS:
         emit battery_status_event(0, (Mcu::BatteryStatus)data.toHex().toInt(0, 16));
         break;
-    case Mcu::BATTERY2_QUANTITY:
+    case BATTERY2_QUANTITY:
         emit battery_quantity_event(1, data.toHex().toInt(0, 16));
         break;
-    case Mcu::BATTERY2_STATUS:
+    case BATTERY2_STATUS:
         emit battery_status_event(1, (Mcu::BatteryStatus)data.toHex().toInt(0, 16));
         break;
-    case Mcu::BRIGHTNESS:
+    case BRIGHTNESS:
         emit brightness_event(data.toHex().toInt(0, 16));
         break;
-    case Mcu::CORE_TEMPERATURE:
-    case Mcu::FPGA_TEMPERATURE:
-    case Mcu::MCU_TEMPERATUREE:
-    case Mcu::POWER_TEMPERATURE:
+    case CORE_TEMPERATURE:
+    case FPGA_TEMPERATURE:
+    case MCU_TEMPERATUREE:
+    case POWER_TEMPERATURE:
         emit temperature_event((Mcu::TemperatureType)pkg.at(4), data.toHex().toInt(0, 16));
         break;
-    case Mcu::PA_PROBE_MODEL:
-    case Mcu::PA_PROBE_SERIES:
-    case Mcu::PA_PROBE_TYPE:
-    case Mcu::PA_PROBE_FREQ:
-    case Mcu::PA_PROBE_ELEMENTS_QTY:
-    case Mcu::PA_PROBE_ELEMENTS_DISTANCE:
-    case Mcu::PA_PROBE_FERENCE_POINT:
-//        emit probe_event();
+    case PA_PROBE_MODEL:
+        m_probeFlag <<= 1;
+        m_probe.set_model(data);
         break;
-    case Mcu::POWEROFF:
+    case PA_PROBE_SERIAL:
+        m_probeFlag <<= 1;
+        m_probe.set_serial(data);
+        break;
+    case PA_PROBE_TYPE:
+        m_probeFlag <<= 1;
+        m_probe.set_type((Probe::ProbeType)data.toHex().toInt(0, 16));
+        break;
+    case PA_PROBE_FREQ:
+        m_probeFlag <<= 1;
+        m_probe.set_freq(data.toHex().toInt(0, 16));
+        break;
+    case PA_PROBE_ELEMENTS_QTY:
+        m_probeFlag <<= 1;
+        m_probe.set_elements_quantity(data.toHex().toInt(0, 16));
+        break;
+    case PA_PROBE_ELEMENTS_DISTANCE:
+        m_probeFlag <<= 1;
+        m_probe.set_pitch(data.toHex().toInt(0, 16));
+        break;
+    case PA_PROBE_REFERENCE_POINT:
+        m_probeFlag <<= 1;
+        m_probe.set_reference_point(data.toHex().toInt(0, 16));
+        break;
+    case POWEROFF:
         emit poweroff_event();
     default:
         break;
+    }
+
+    if (m_probeFlag == 0x80) {
+        emit probe_event(m_probe);
     }
 }
 

@@ -26,16 +26,16 @@ public:
     void set_serial(const QString& serial) { m_serial = serial; }
 
     int elements_quantity() const { return m_elemQty; }
-    void set_elements_quantity(uint qty) { m_elemQty = qty; }
+    void set_elements_quantity(int qty) { m_elemQty = qty; }
 
     int pitch() const { return m_pitch; }
-    void set_pitch(uint pitch) { m_pitch = pitch; }
+    void set_pitch(int pitch) { m_pitch = pitch; }
 
     int freq() const { return m_freq; }
-    void set_freq(uint freq) { m_freq = freq; }
+    void set_freq(int freq) { m_freq = freq; }
 
     int reference_point() const { return m_point; }
-    void set_reference_point(uint point)  { m_point = point; }
+    void set_reference_point(int point)  { m_point = point; }
 
 private:
     ProbeType m_type;
