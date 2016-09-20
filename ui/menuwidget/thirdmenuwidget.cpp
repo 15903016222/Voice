@@ -30,8 +30,6 @@ QWidget(parent),
     fourthMenuMap = read_json_file(stringTwo);
 	fileTwo->close();
 
-    height= 70;
-
 	initStandardModel();
 	setThirdMenuName(0, 0);
 
@@ -60,6 +58,7 @@ void ThirdMenuWidget::initStandardModel()
 #if QT_VERSION < 0x050000
     ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
+    height = this->geometry().height();
     ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
     ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
     ui->tableView->verticalHeader()->hide();
@@ -273,7 +272,10 @@ bool ThirdMenuWidget::eventFilter(QObject *object, QEvent *event)
 
 void ThirdMenuWidget::onHeaderClicked(int index)
 {
-    QString thirdMenuString = get_third_menu_list().at(index);
+    QString thirdMenuString;
+    if(get_third_menu_list().count() > index) {
+        thirdMenuString = get_third_menu_list().at(index);
+    }
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
