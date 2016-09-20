@@ -32,6 +32,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     ../mcu.h \
     ../mcu_imx.h \
-    ../mcu_omap.h
+    ../mcu_omap.h \
+    ../probe.h
 
 FORMS    += mainwindow.ui

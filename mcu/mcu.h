@@ -1,9 +1,10 @@
 #ifndef __MCU_H__
 #define __MCU_H__
 
+#include "probe.h"
+
 #include <QObject>
 #include <QMutex>
-#include <QByteArray>
 
 class Mcu : public QObject
 {
@@ -36,8 +37,13 @@ public:
         NORMAL_PROBE_1_SIZE         = 0x64, /* 常规探头I晶片尺寸 */
         NORMAL_PROBE_2_MODEL        = 0x71, /* 常规探头Ii型号 */
         NORMAL_PROBE_2_SERIES       = 0x72, /* 常规探头Ii系列 */
-        NORMAL_PROBE_2_FRENQUNCY    = 0x73, /* 常规探头iI频率 */
+        NORMAL_PROBE_2_FREQUENCY    = 0x73, /* 常规探头Ii频率 */
         NORMAL_PROBE_2_SIZE         = 0x74, /* 常规探头Ii晶片尺寸 */
+    };
+
+    enum RotaryType {
+        ROTARY_UP,
+        ROTARY_DOWN
     };
 
     enum BatteryStatus {
@@ -55,16 +61,6 @@ public:
         TEMPERATURE_POWER   = POWER_TEMPERATURE
     };
 
-    enum PaProbeAttrType {
-        PA_PROBE_MODEL_ATTR         = PA_PROBE_MODEL,
-        PA_PROBE_SERIES_ATTR        = PA_PROBE_SERIES,
-        PA_PROBE_TYPE_ATTR          = PA_PROBE_TYPE,
-        PA_PROBE_FREQ_ATTR          = PA_PROBE_FREQ,
-        PA_PROBE_ELEMENTS_QTY_ATTR  = PA_PROBE_ELEMENTS_QTY,
-        PA_PROBE_ELEMENTS_DISTANCE_ATTR = PA_PROBE_ELEMENTS_DISTANCE,
-        PA_PROBE_FERENCE_POINT_ATTR = PA_PROBE_FERENCE_POINT
-    };
-
     virtual void query_core_temp()              = 0;
     virtual void query_fpga_temp()              = 0;
     virtual void query_power_temp()             = 0;
@@ -74,15 +70,7 @@ public:
     virtual void query_first_battery_status()   = 0;
     virtual void query_second_battery_status()  = 0;
     virtual void query_brightness()             = 0;
-
-    /* pa probe query */
-    virtual void query_pa_probe_model()         = 0;
-    virtual void query_pa_probe_series()        = 0;
-    virtual void query_pa_probe_type()          = 0;
-    virtual void query_pa_probe_freq()          = 0;
-    virtual void query_pa_probe_elements()      = 0;
-    virtual void query_pa_probe_elements_distance() = 0;
-    virtual void query_pa_probe_ference_point()     = 0;
+    virtual void query_probe()                  = 0;
 
     static Mcu* get_mcu();
     static void destroyed();
@@ -95,11 +83,12 @@ public slots:
 
 Q_SIGNALS:
     void key_event(int value);
+    void rotary_event(Mcu::RotaryType type);
     void brightness_event(int value);
     void battery_status_event(int index, Mcu::BatteryStatus status);
     void battery_quantity_event(int index, int value);
     void temperature_event(Mcu::TemperatureType type, int value);
-    void pa_probe_event(Mcu::PaProbeAttrType type, const QByteArray &data);
+    void probe_event(const Probe& probe);
     void poweroff_event(void);
 
 protected:

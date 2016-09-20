@@ -5,6 +5,32 @@
 #define TTY_DEV0    "/dev/ttyS0"
 #define TTY_DEV1    "/dev/ttyS1"
 
+/* Probe */
+struct ProbeData
+{
+    char            res0[4];        /* reserve */
+    char            res1[2];        /* reserve */
+    unsigned char	paType;         /* PA probe type, 1:Custom; 3:angle beam; 5:Contact; 6:Immersion */
+    char            res2;           /* reserve */
+    unsigned char	utType;         /* UT probe type, 1:n/a; 0:converntional */
+    char            res3;           /* reserve */
+    char            model[20];		/* Model */
+    char            serial[20];		/* Serial */
+    unsigned char	elemQty;		/* Elements Qty */
+    unsigned char	freq2;			/* UT 时候 频率是 (freq2 << 8) + elem_qty */
+    unsigned int	pitch;			/* Elements distance, unit is 0.001mm, range is 0.01~65.00mm, Elemet_size when UT*/
+    unsigned int	res4;           /* reserve */
+    unsigned short  res5;           /* reserve */
+    unsigned short	freq;           /* Frequency */
+    unsigned int	res6[75];       /* reserve */
+    unsigned short  res7;           /* reserve */
+    unsigned short  res8;           /* reserve */
+    unsigned short  res9;           /* reserve */
+    unsigned short	point;          /* Reference Point */
+    unsigned int	res10[36];      /* reserve */
+};
+
+
 McuOmap::McuOmap()
     :Mcu(), m_ttyS0(TTY_DEV0), m_ttyS1(TTY_DEV1), m_brightness(70)
 {
@@ -100,7 +126,22 @@ void McuOmap::on_ttyS0_readyRead_event()
 
 
     } else if (m_buffer.at(1) == 0x53 && m_buffer.at(2) == 0x53) {
-
+        qDebug()<<"size"<<m_buffer.size();
+        if (m_buffer.size() < 549) {
+            return;
+        }
+        const ProbeData *probeData = (ProbeData *)m_buffer.mid(3).constData();
+        Probe probe;
+        probe.set_type((Probe::ProbeType)probeData->paType);
+//        qDebug()<<"ut type"<<probe->utType;
+        probe.set_model(probeData->model);
+        probe.set_serial(probeData->serial);
+        probe.set_elements_quantity(probeData->elemQty);
+//        qDebug()<<"freq2"<<probe->freq2;
+        probe.set_pitch(probeData->pitch);
+        probe.set_freq(probeData->freq);
+        probe.set_reference_point(probeData->point);
+        emit probe_event(probe);
     }
 
     m_buffer.clear();
@@ -113,6 +154,12 @@ void McuOmap::on_ttyS1_readyRead_event()
     while ( ! data.isEmpty() ) {
         key = data.at(0);
         data = data.mid(1);
-        emit key_event(key);
+        if (key == 216) {
+            emit rotary_event(Mcu::ROTARY_DOWN);
+        } else if (key == 208) {
+            emit rotary_event(Mcu::ROTARY_UP);
+        } else {
+            emit key_event(key);
+        }
     }
 }

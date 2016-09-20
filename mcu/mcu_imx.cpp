@@ -44,6 +44,17 @@ McuImx::McuImx()
 
 }
 
+void McuImx::query_pa_probe()
+{
+    query(PA_PROBE_MODEL);
+    query(PA_PROBE_SERIES);
+    query(PA_PROBE_TYPE);
+    query(PA_PROBE_FREQ);
+    query(PA_PROBE_ELEMENTS_QTY);
+    query(PA_PROBE_ELEMENTS_DISTANCE);
+    query(PA_PROBE_FERENCE_POINT);
+}
+
 void McuImx::parse_packet(QByteArray &pkg)
 {
     if (pkg.size() != (pkg.at(3)+PKG_HEADER_LEN+PKG_END_STRING_LEN)) {
@@ -53,8 +64,10 @@ void McuImx::parse_packet(QByteArray &pkg)
     QByteArray data = pkg.mid(PKG_HEADER_LEN, pkg.at(3));
     switch (pkg.at(4)) {
     case Mcu::KEY:
-    case Mcu::ROTARY:
         emit key_event(data.toHex().toInt(0, 16));
+        break;
+    case Mcu::ROTARY:
+        emit rotary_event((Mcu::RotaryType)(data.toHex().toInt(0, 16)));
         break;
     case Mcu::BATTERY1_QUANTITY:
         emit battery_quantity_event(0, data.toHex().toInt(0, 16));
@@ -84,7 +97,7 @@ void McuImx::parse_packet(QByteArray &pkg)
     case Mcu::PA_PROBE_ELEMENTS_QTY:
     case Mcu::PA_PROBE_ELEMENTS_DISTANCE:
     case Mcu::PA_PROBE_FERENCE_POINT:
-        emit pa_probe_event((Mcu::PaProbeAttrType)pkg.at(4), data);
+//        emit probe_event();
         break;
     case Mcu::POWEROFF:
         emit poweroff_event();

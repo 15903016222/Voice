@@ -34,18 +34,10 @@ public:
     void query_first_battery_status() { query(BATTERY1_STATUS); }
     void query_second_battery_status(){ query(BATTERY2_STATUS); }
     void query_brightness()         { query(BRIGHTNESS); }
-    void query_pa_probe_model()     { query(PA_PROBE_MODEL); }
-    void query_pa_probe_series()    { query(PA_PROBE_SERIES);}
-    void query_pa_probe_type()      { query(PA_PROBE_TYPE); }
-    void query_pa_probe_freq()      { query(PA_PROBE_FREQ); }
-    void query_pa_probe_elements()  { query(PA_PROBE_ELEMENTS_QTY); }
-    void query_pa_probe_elements_distance() { query(PA_PROBE_ELEMENTS_DISTANCE); }
-    void query_pa_probe_ference_point()     { query(PA_PROBE_FERENCE_POINT); }
+    void query_pa_probe();
     void notify_started()           { set(NOTIFY_STARTED, 0); }
     void set_poweroff()             { set(POWEROFF, 0); }
     void set_brightness(char light)  { set(BRIGHTNESS, light); }
-
-
 
 private:
     QSerialPort m_tty;

@@ -17,10 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonFstBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_first_battery_status);
     connect(ui->pushButtonSndBattery, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery);
     connect(ui->pushButtonSndBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery_status);
-    connect(ui->pushButtonStarted, &QPushButton::clicked, m_mcu, &Mcu::notify_started);
 #endif
 
     connect(m_mcu, SIGNAL(key_event(int)), ui->labelKey, SLOT(setNum(int)));
+    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
     connect(ui->pushButtonPowerOff, SIGNAL(clicked(bool)), m_mcu, SLOT(set_poweroff()));
 
@@ -28,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_mcu, SIGNAL(battery_status_event(int,Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int,Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int,int)), this, SLOT(do_battery_quantity_event(int,int)));
     connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType,int)), this, SLOT(do_temperature_event(Mcu::TemperatureType,int)));
+    connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
+
+
+    ui->verticalSliderBrightness->setValue(90);
 }
 
 MainWindow::~MainWindow()
@@ -38,6 +42,17 @@ MainWindow::~MainWindow()
 void MainWindow::do_verticalSliderBrightness_value_changed(int value)
 {
     m_mcu->set_brightness((char)value);
+}
+
+void MainWindow::do_rotary_event(Mcu::RotaryType type)
+{
+    int i = ui->verticalSliderBrightness->value();
+    if (type == Mcu::ROTARY_UP) {
+        ++i;
+    } else {
+        --i;
+    }
+    ui->verticalSliderBrightness->setValue(i);
 }
 
 void MainWindow::do_battery_status_event(int index, Mcu::BatteryStatus status)
@@ -70,4 +85,21 @@ void MainWindow::do_temperature_event(Mcu::TemperatureType type, int value)
     } else if (type == Mcu::TEMPERATURE_POWER) {
         ui->labelPowerTemp->setNum(value);
     }
+}
+
+void MainWindow::do_probe_event(const Probe &probe)
+{
+    ui->labelProbeType->setNum(probe.type());
+    ui->labelProbeModel->setText(probe.model());
+    ui->labelProbeSerial->setText(probe.serial());
+    ui->labelProbePitch->setNum(probe.pitch());
+    ui->labelProbeFreq->setNum(probe.freq());
+    ui->labelProbePoint->setNum(probe.reference_point());
+    ui->labelProbeElemQty->setNum(probe.elements_quantity());
+}
+
+void MainWindow::on_pushButtonStarted_clicked()
+{
+     m_mcu->notify_started();
+     m_mcu->query_probe();
 }

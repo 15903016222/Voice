@@ -21,13 +21,7 @@ public:
     void query_first_battery_status() { }
     void query_second_battery_status(){ }
     void query_brightness();
-    void query_pa_probe_model()     { }
-    void query_pa_probe_series()    { }
-    void query_pa_probe_type()      { }
-    void query_pa_probe_freq()      { }
-    void query_pa_probe_elements()  { }
-    void query_pa_probe_elements_distance() { }
-    void query_pa_probe_ference_point()     { }
+    void query_probe();
     void notify_started() {}
     void set_poweroff();
     void set_brightness(char light);
@@ -57,6 +51,12 @@ inline void McuOmap::set_brightness(char light)
 {
     m_ttyS1.write(&light, 1);
     m_brightness = light;
+}
+
+inline void McuOmap::query_probe()
+{
+    char data = 0xcc;
+    m_ttyS1.write(&data, 1);
 }
 
 inline void McuOmap::set_poweroff()
