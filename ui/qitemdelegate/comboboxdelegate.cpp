@@ -1,7 +1,6 @@
 #include "comboboxdelegate.h"
 
 #include <QComboBox>
-#include <QDebug>
 
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
     QItemDelegate(parent)

@@ -4,9 +4,7 @@
 #include "measurementdialog.h"
 #include "thirdmenuwidget.h"
 
-#include <QWidget>
 #include <QLabel>
-#include <QStandardItemModel>
 
 #define TOP_MENU_NUMBER 10
 

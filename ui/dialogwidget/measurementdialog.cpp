@@ -1,11 +1,6 @@
 #include "measurementdialog.h"
 #include "ui_measurementdialog.h"
 
-#include "topmenu.h"
-
-#include <QDebug>
-#include <QStandardItemModel>
-
 #define MEASUREMENT_NUMBER 54
 static const char* MEASUREMENT_STRING[MEASUREMENT_NUMBER] =
 {

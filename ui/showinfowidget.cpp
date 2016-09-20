@@ -31,9 +31,6 @@ void ShowInfoWidget::initShowTime()
 
 void ShowInfoWidget::slotUpdateTime()
 {
- //   QDateTime time = QDateTime::currentDateTime();
- //   QString str_time = time.toString("yyyy-MM-dd hh:mm:ss");
- //   ui->label_5_showDateTime->setText(str_time);
     str_date = QDate::currentDate().toString("yyyy-MM-dd");
     str_time = QTime::currentTime().toString("hh:mm:ss");
     QString dateTime;
@@ -48,7 +45,7 @@ void ShowInfoWidget::slotPushButton_ok()
     QTimer *timer1 = new QTimer(this);
     connect(setTimeDlg.dateEdit.at(0), SIGNAL(dateChanged(QDate)), this, SLOT(slot_dateEdit_dateChanged(QDate)));
     connect(setTimeDlg.timeEdit.at(0), SIGNAL(timeChanged(QTime)), this, SLOT(slot_timeEdit_timeChanged(QTime)));
-    connect(timer1, SIGNAL(timeout()), this, SLOT(slotEditTime()));
+ //   connect(timer1, SIGNAL(timeout()), this, SLOT(slotEditTime()));
     timer1->start();
 
     setTimeDlg.close();

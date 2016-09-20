@@ -1,8 +1,6 @@
 #include "firstsecondmenuwidget.h"
 #include "ui_firstsecondmenuwidget.h"
 
-#include <QDebug>
-
 FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FirstSecondMenuWidget)
@@ -118,10 +116,6 @@ void FirstSecondMenuWidget::read_json_file(QFile *file)
     QString str = file->readAll();
     QVariant variant = parser.parse(str.toUtf8(), &ok);
     firstMenuMap = variant.toMap();
-
-    if(!ok) {
-        qDebug() << "An error occured during parsing.";
-    }
 }
 
 QStringList FirstSecondMenuWidget::get_second_menu_list(int i)

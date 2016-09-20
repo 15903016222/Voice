@@ -2,7 +2,6 @@
 #define COMBOBOXDELEGATE_H
 
 #include <QItemDelegate>
-#include <QWidget>
 
 class ComboBoxDelegate : public QItemDelegate
 {

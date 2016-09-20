@@ -3,8 +3,6 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QPainter>
-#include <QStyleOption>
-#include <QDebug>
 
 PushButtonDelegate::PushButtonDelegate(QObject *parent) :
 QItemDelegate(parent)
@@ -39,14 +37,6 @@ void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
 bool PushButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-	//    if (event->type() == QEvent::MouseButtonPress) {
-
-	//        QMouseEvent* e =(QMouseEvent*)event;
-
-	//        if (option.rect.adjusted(4, 4, -4, -4).contains(e->x(), e->y()) && m_btns.contains(index)) {
-	//            m_btns.value(index)->state |= QStyle::State_Sunken;
-	//        }
-	//    }
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* e =(QMouseEvent*)event;
         setSwitchFlag(index);

@@ -19,19 +19,8 @@ public:
 	void setSwitchFlag(QModelIndex index);
 	QMap<QModelIndex, QStyleOptionButton*> buttonMap;
 
-	//    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	//    void setEditorData(QWidget *editor, const QModelIndex &index) const;
-	//    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
-	//    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-
-
 	QPushButton *pushButton;
 	QList<QModelIndex> modelIndex;
-	//    QMap<QModelIndex, QPushButton*> buttonMap;
-
-	//    void change_editor_text(QModelIndex index);
-	//    bool eventFilter(QObject *object, QEvent *event);
-
 
 };
 

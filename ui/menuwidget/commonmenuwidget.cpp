@@ -144,7 +144,7 @@ void CommonMenuWidget::widgetStyleChoice(int k)
         model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         QStandardItem *item = new QStandardItem(QString("on"));
         model->setItem(0, k, item);
-//          model->item(0, k)->setFlags(Qt::ItemIsEnabled);
+
         ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
         ui->tableView->setItemDelegateForColumn(k, pushButton);
         break;

@@ -8,14 +8,6 @@
 #include "wedgedialog.h"
 #include "myinputpanel.h"
 
-#include "serializer.h"
-
-#include <QDebug>
-#include <QPainter>
-#include <QTextStream>
-#include <QFileInfo>
-#include <QResizeEvent>
-
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
 	ui(new Ui::ThirdMenuWidget)

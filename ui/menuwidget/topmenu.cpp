@@ -3,8 +3,6 @@
 
 #include "doublespinboxdelegate.h"
 
-#include <QFile>
-
 TopMenu :: TopMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TopMenu)

@@ -4,11 +4,8 @@
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
-#include "topmenu.h"
 
 #include <QMainWindow>
-#include <QScrollArea>
-#include <QMouseEvent>
 #include <QTranslator>
 
 namespace Ui {

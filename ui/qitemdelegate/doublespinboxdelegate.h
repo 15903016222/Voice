@@ -2,7 +2,6 @@
 #define DOUBLESPINBOXDELEGATE_H
 
 #include <QItemDelegate>
-#include <QWidget>
 #include <QDoubleSpinBox>
 
 class DoubleSpinBoxDelegate : public QItemDelegate

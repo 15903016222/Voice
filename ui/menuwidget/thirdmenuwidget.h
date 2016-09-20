@@ -3,9 +3,6 @@
 
 #include "firstsecondmenuwidget.h"
 
-#include <QWidget>
-#include <QStandardItemModel>
-
 #define THIRD_MENU_NUMBER 6
 
 namespace Ui {
