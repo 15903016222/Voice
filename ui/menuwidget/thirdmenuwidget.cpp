@@ -11,10 +11,10 @@
 #include "serializer.h"
 
 #include <QDebug>
-#include <QPainter>
 #include <QTextStream>
 #include <QFileInfo>
 #include <QResizeEvent>
+#include <QItemEditorFactory>
 
 //static const char* THIRD_MENU_STRING[FIRST_MENU_NUMBER][SECOND_MENU_NUMBER][THIRD_MENU_NUMBER] = {
 //    {
@@ -301,6 +301,7 @@ QWidget(parent),
 //    menuCacheMap = read_json_file(stringThree);
 //    fileThree->close();
 
+    height = this->geometry().height();
 	initStandardModel();
 	setThirdMenuName(0, 0);
 
@@ -322,27 +323,22 @@ void ThirdMenuWidget::initStandardModel()
 {
     model = new QStandardItemModel(1, THIRD_MENU_NUMBER, this);
     ui->tableView->setModel(model);
-//#if QT_VERSION >= 0x050000
-//    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-//#endif
+#if QT_VERSION >= 0x050000
+    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#endif
 
-//#if QT_VERSION < 0x050000
-//    ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-//#endif
-//    ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
-//    ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
-//    ui->tableView->verticalHeader()->hide();
+#if QT_VERSION < 0x050000
+    ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
+    ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
+    ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
+    ui->tableView->verticalHeader()->hide();
 
 	for(int k = 0; k < THIRD_MENU_NUMBER; k++)
 	{
 		QModelIndex index = model->index(k, 0, QModelIndex());
 		model->setData(index, k);
 	}
-    ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
-    ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
-    ui->tableView->verticalHeader()->hide();
-    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    //  ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);  //Qt-4.8.6
 
 	ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
@@ -609,14 +605,27 @@ bool ThirdMenuWidget::eventFilter(QObject *object, QEvent *event)
 
 void ThirdMenuWidget::onHeaderClicked(int index)
 {
-    QString thirdMenuString = get_third_menu_list().at(index);
+    QString thirdMenuString;
+    if(get_third_menu_list().count() > index) {
+       thirdMenuString  = get_third_menu_list().at(index);
+    }
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
     if(subVariantMap["style"].toString().toInt() == 1) {
-        //    点击表头更改spinbox的步进及表头文字
-        QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
+        //createEditor
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+//        const QStyleOptionViewItem option;
+//        const QModelIndex modelIndex = model->item(0, index)->index();
+//        QDoubleSpinBox *editor = static_cast<QDoubleSpinBox*>(doubleSpinBox->createEditor(ui->tableView, option, modelIndex));
+//        qDebug() << editor->geometry();
+
+//        const QItemEditorFactory *factory = QItemEditorFactory::defaultFactory();
+//        qDebug() << "userType:" << modelIndex.data(Qt::EditRole).userType();
+//        QWidget *w = factory->createEditor(modelIndex.data(Qt::EditRole).userType(), ui->tableView);
+//        w->show();
+        //点击表头更改spinbox的步进及表头文字
+        QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex;
         QStringList stringList = doubleSpinBox->stepList;
@@ -639,16 +648,19 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
             model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
+    } else if(subVariantMap["style"].toString().toInt() == 2) {
+//        ComboBoxDelegate *comboBoxSpinBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+//        comboBoxSpinBox->comboBoxList.at(comboBoxSpinBox->comboBoxList.count() - 1)->showPopup();
     } else if(subVariantMap["style"].toString().toInt() == 4) {
-        //    点击表头弹出探头选择对话框
+        //点击表头弹出探头选择对话框
         ProbeDialog *probeDialog = new ProbeDialog(this);
         probeDialog->show();
     } else if(subVariantMap["style"].toString().toInt() == 5) {
-        //    点击表头弹出探头选择对话框
+        //点击表头弹出楔块选择对话框
         WedgeDialog *wedgeDialog = new WedgeDialog(this);
         wedgeDialog->show();
     } else if(subVariantMap["style"].toString().toInt() == 6) {
-        //    点击表头弹出探头选择对话框
+        //点击表头弹出软键盘
         MyInputPanel inputPanel;
         inputPanel.showNormal();
         inputPanel.exec();
