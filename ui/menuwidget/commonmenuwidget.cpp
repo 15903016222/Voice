@@ -253,12 +253,9 @@ void CommonMenuWidget::set_header_text_close(QWidget *editor)
 {
     int editorPosX = editor->x() + editor->width();
     int column = editorPosX / (width / COMMON_MENU_NUMBER) - 1;
-    qDebug() << "2";
     QString currentHeaderText = model->horizontalHeaderItem(column)->text();
-    qDebug() << currentHeaderText;
     if(currentHeaderText.contains("Δ")) {
         model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
-        qDebug() << currentHeaderText.left(currentHeaderText.indexOf("Δ"));
     } else {
         model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText));
     }

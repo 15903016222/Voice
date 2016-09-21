@@ -30,33 +30,31 @@ void TopMenu::initUI()
 {
     setTopMenuFont();
 
-    for(int i = 1; i < TOP_MENU_NUMBER; i ++)
-    {
+    for(int i = 1; i < TOP_MENU_NUMBER; i ++) {
         measurementLabelList.at(i)->installEventFilter(this);
     }
 }
 
 void TopMenu::setTopMenuFont()
 {
-    for(int i = 1; i <= TOP_MENU_NUMBER; i ++){
+    for(int i = 1; i <= TOP_MENU_NUMBER; i ++) {
         QLabel *label = findChild<QLabel*>("label_" + QString::number(i));
         measurementLabelList.append(label);
 
         QString str = label->text();
         QString text1, text2;
 
-        if(str.contains("\n") == true)
-        {
+        if(str.contains("\n") == true) {
             int index = str.indexOf("\n");
             text1 = str.left(index);
             text2 = str.right(str.length() - index - 1);
 
-            if(i == 1 || i == TOP_MENU_NUMBER){
+            if(i == 1 || i == TOP_MENU_NUMBER) {
                 label->setText("<font color=yellow face='Times New Roman' style=font-size:14pt>"
                                +text1+
                                "</font><br><font color=yellow face='Times New Roman' style=font-size:12pt>"
                                +text2+"</font>");
-            }else{
+            } else {
                 label->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
                                +text1+
                                "</font><br><font color=white face='Times New Roman' style='font-size:12pt'>"
@@ -165,8 +163,7 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             object == measurementLabelList.at(7) ||
             object == measurementLabelList.at(8))
     {
-        if(event->type() == QEvent::MouseButtonPress)
-        {
+        if(event->type() == QEvent::MouseButtonPress) {
             objectName = object->objectName();
             mDialog = new MeasurementDialog;
             mDialog->setModal(true);
@@ -180,13 +177,10 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
 
 void TopMenu::changeLabelText(QString str)
 {
-    for(int i = 1; i < TOP_MENU_NUMBER; i++)
-    {
-        if(measurementLabelList.at(i)->objectName() == objectName)
-        {
+    for(int i = 1; i < TOP_MENU_NUMBER; i++) {
+        if(measurementLabelList.at(i)->objectName() == objectName ){
             QString text1, text2;
-            if(str.contains("\n") == true)
-            {
+            if(str.contains("\n") == true) {
                 int index = str.indexOf("\n");
                 text1 = str.left(index);
                 text2 = str.right(str.length() - index - 1);
@@ -194,12 +188,12 @@ void TopMenu::changeLabelText(QString str)
                                                     +text1+
                                                     "</font><br><font color=white face='Times New Roman' style='font-size:12pt'>"
                                                     +text2+"</font>");
-            }
-            else{
+            } else {
                 measurementLabelList.at(i)->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
                                                     +str+
                                                     "</font>");
             }
+            break;
         }
     }
 }

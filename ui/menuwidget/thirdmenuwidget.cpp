@@ -7,6 +7,7 @@
 #include "probedialog.h"
 #include "wedgedialog.h"
 #include "myinputpanel.h"
+#include "measurementdialog.h"
 
 #include "serializer.h"
 
@@ -630,10 +631,10 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         }
         if(stepIndex == stringList.count() - 1) {
             doubleSpinBox->set_number_step(stringList.at(0));
-            model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(0)));
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(0)));
         } else {
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
-            model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
     } else if(subVariantMap["style"].toString().toInt() == 2) {
         QModelIndex modelIndex = model->item(0, index)->index();
@@ -651,6 +652,12 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         MyInputPanel inputPanel;
         inputPanel.showNormal();
         inputPanel.exec();
+    } else if(subVariantMap["style"].toString().toInt() == 7) {
+        //点击表头弹出测量值选择对话框
+        MeasurementDialog *measurementDialog = new MeasurementDialog(this);
+        measurementDialog->show();
+        measurementIndex = index;
+        connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
     }
 }
 
@@ -665,7 +672,7 @@ void ThirdMenuWidget::set_header_text_create(QStringList stringList) const
     } else {
         headerText = currentHeaderText;
     }
-    model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(1)));
+    model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(1)));
 }
 
 void ThirdMenuWidget::set_header_text_close(QWidget *editor)
@@ -674,9 +681,9 @@ void ThirdMenuWidget::set_header_text_close(QWidget *editor)
     int column = editorPosX / (width / THIRD_MENU_NUMBER) - 1;
     QString currentHeaderText = model->horizontalHeaderItem(column)->text();
     if(currentHeaderText.contains("Δ")) {
-        model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
+        model->setHeaderData(column, Qt::Horizontal, QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
     } else {
-        model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText));
+        model->setHeaderData(column, Qt::Horizontal, QString(currentHeaderText));
     }
 }
 
@@ -816,6 +823,16 @@ void ThirdMenuWidget::set_model_item(int startIndex, int count)
         linearGradient.setColorAt(1, QColor(0, 120, 195));
         linearGradient.setSpread(QGradient::PadSpread);
         model->item(0, k)->setBackground(QBrush(linearGradient));
+    }
+}
+
+void ThirdMenuWidget::change_measurement_label(QString string)
+{
+    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+        if(i == measurementIndex) {
+            model->setHeaderData(measurementIndex, Qt::Horizontal, string);
+            break;
+        }
     }
 }
 

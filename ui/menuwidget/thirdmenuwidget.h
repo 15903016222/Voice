@@ -62,6 +62,7 @@ public:
     QString firstMenuString;
     QString secondMenuString;
     QString relatedMenuString;
+    int measurementIndex;
 
 private:
 
@@ -72,8 +73,8 @@ private slots:
     void change_related_third_menu_data(QString string);
     void set_header_text_create(QStringList stringList) const ;
     void set_header_text_close(QWidget *editor) ;
-
     void on_tableView_clicked(const QModelIndex &index);
+    void change_measurement_label(QString string);
 };
 
 #endif // THIRDMENUWIDGET_H
