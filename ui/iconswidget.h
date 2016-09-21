@@ -3,6 +3,8 @@
 
 #include "myinputpanel.h"
 
+#include "mcu.h"
+
 #include <QWidget>
 
 namespace Ui {
@@ -19,15 +21,18 @@ public:
 
 private:
     Ui::IconsWidget *ui;
+    Mcu *m_mcu;
 
 public:
-    void showBattery();
 
 signals:
 
 public slots:
     void on_pushButton_keyboard_clicked();
     void on_pushButton_scan_clicked();
+    void do_temperature_event(Mcu::TemperatureType type, int value);
+    void do_battery_status_event(int index, Mcu::BatteryStatus status);
+    void do_battery_quantity_event(int index, int value);
 
 };
 

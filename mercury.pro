@@ -25,6 +25,7 @@ INCLUDEPATH += $$PWD/ui
 INCLUDEPATH += $$PWD/ui/menuwidget
 INCLUDEPATH += $$PWD/ui/dialogwidget
 INCLUDEPATH += $$PWD/ui/qitemdelegate
+INCLUDEPATH += $$PWD/mcu
 
 INCLUDEPATH += $$PWD/lib/qjson/lib
 DEPENDPATH += $$PWD/lib/qjson/lib
@@ -64,7 +65,8 @@ HEADERS += \
     ui/dialogwidget/wedgedialog.h \
     ui/qitemdelegate/comboboxdelegate.h \
     ui/qitemdelegate/doublespinboxdelegate.h \
-    ui/qitemdelegate/pushbuttondelegate.h
+    ui/qitemdelegate/pushbuttondelegate.h \
+    mcu/mcu.h
 
 FORMS += \
     ui/mainwindow.ui \
