@@ -430,7 +430,6 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 } else {
                     item = new QStandardItem(list.at(1).at(0));
                 }
-
                 model->setItem(0, k, item);
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
@@ -596,13 +595,6 @@ QStringList ThirdMenuWidget::get_third_menu_list()
 //#endif
 }
 
-bool ThirdMenuWidget::eventFilter(QObject *object, QEvent *event)
-{
-
-
-    return QWidget::eventFilter(object, event);
-}
-
 void ThirdMenuWidget::onHeaderClicked(int index)
 {
     QString thirdMenuString;
@@ -678,14 +670,19 @@ void ThirdMenuWidget::set_header_text_create(QStringList stringList) const
 
 void ThirdMenuWidget::set_header_text_close(QWidget *editor)
 {
-    int editorPosY = editor->x() + editor->width();
-    int column = editorPosY / (width / 6) - 1;
+    int editorPosX = editor->x() + editor->width();
+    int column = editorPosX / (width / 6) - 1;
     QString currentHeaderText = model->horizontalHeaderItem(column)->text();
     if(currentHeaderText.contains("Δ")) {
         model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
     } else {
         model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText));
     }
+}
+
+void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
+{
+
 }
 
 QVariantMap ThirdMenuWidget::get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
@@ -757,9 +754,6 @@ QList<QStringList> ThirdMenuWidget::get_comboBox_option_list(QVariantMap variant
 
 QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
 {
-//    qDebug() << ":" << ui->tableView->horizontalHeader()->fontMetrics().width(string);
-//    qDebug() << string;
-//    qDebug() << width/6;
     QString newString;
     if(ui->tableView->horizontalHeader()->fontMetrics().width(string) >= width / 6) {
         QString leftText, rightText;
@@ -779,7 +773,7 @@ QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
 void ThirdMenuWidget::change_related_third_menu_data(QString string)
 {
     QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
-    if(!variantMap.isEmpty() && variantMap.contains("first third_menu")) {
+    if(!variantMap.isEmpty() && variantMap.contains("first third_menu") && variantMap.contains(string)) {
         relatedMenuString = string;
         QVariantList variantList = variantMap.values(string);
         QStringList thirdStringList = variantList.at(0).toStringList();
@@ -1093,6 +1087,7 @@ void ThirdMenuWidget::cache_menu_data()
 //  }
 //  return QWidget::eventFilter(object, event);
 //}
+
 
 
 
