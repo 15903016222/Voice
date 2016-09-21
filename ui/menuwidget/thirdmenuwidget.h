@@ -32,7 +32,7 @@ public:
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, int count);
 
-    bool get_json_document_type(QString string, QJsonObject jsonObject);
+//    bool get_json_document_type(QString string, QJsonObject jsonObject);
     bool eventFilter(QObject *object, QEvent *event);
 
 //    QVariantHash read_json_file(QString string);
@@ -75,6 +75,7 @@ private slots:
     void change_related_third_menu_data(QString string);
     void set_header_text_create(QStringList stringList) const ;
     void set_header_text_close(int index) const ;
+
 };
 
 #endif // THIRDMENUWIDGET_H

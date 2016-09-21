@@ -306,7 +306,6 @@ QWidget(parent),
 	setThirdMenuName(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
-
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -354,8 +353,6 @@ void ThirdMenuWidget::initStandardModel()
         "border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 120, 195, 255));"
         "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 120, 195, 255));}");
 
-
-//    ui->tableView->show();
 }
 
 void ThirdMenuWidget::setThirdMenuName(int i, int j)
@@ -411,7 +408,7 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
-                ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
+                ui->tableView->setEditTriggers(QAbstractItemView::SelectedClicked);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
 //                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditorHeaderText(int)), this, SLOT(set_header_text_close(int)));
                 break;
@@ -609,23 +606,18 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     QString thirdMenuString;
     if(get_third_menu_list().count() > index) {
        thirdMenuString  = get_third_menu_list().at(index);
+    } else {
+        return;
     }
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
-    if(subVariantMap["style"].toString().toInt() == 1) {
-        //createEditor
-        DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
-//        const QStyleOptionViewItem option;
-//        const QModelIndex modelIndex = model->item(0, index)->index();
-//        QDoubleSpinBox *editor = static_cast<QDoubleSpinBox*>(doubleSpinBox->createEditor(ui->tableView, option, modelIndex));
-//        qDebug() << editor->geometry();
+    if(subVariantMap["style"].toString().toInt() == 1) {    
+        QModelIndex modelIndex = model->item(0, index)->index();
+        ui->tableView->edit(modelIndex);
 
-//       const QItemEditorFactory *factory = doubleSpinBox->editorFactory;
-//        qDebug() << "userType:" << modelIndex.data(Qt::EditRole).userType();
-//        QWidget *w = factory->createEditor(modelIndex.data(Qt::EditRole).userType(), ui->tableView);
-//        w->show();
         //点击表头更改spinbox的步进及表头文字
+        DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex;
@@ -650,8 +642,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
     } else if(subVariantMap["style"].toString().toInt() == 2) {
-//        ComboBoxDelegate *comboBoxSpinBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
-//        comboBoxSpinBox->comboBoxList.at(comboBoxSpinBox->comboBoxList.count() - 1)->showPopup();
+        QModelIndex modelIndex = model->item(0, index)->index();
+        ui->tableView->edit(modelIndex);
     } else if(subVariantMap["style"].toString().toInt() == 4) {
         //点击表头弹出探头选择对话框
         ProbeDialog *probeDialog = new ProbeDialog(this);
