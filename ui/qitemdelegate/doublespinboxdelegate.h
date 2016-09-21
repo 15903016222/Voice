@@ -2,7 +2,6 @@
 #define DOUBLESPINBOXDELEGATE_H
 
 #include <QItemDelegate>
-#include <QWidget>
 #include <QDoubleSpinBox>
 
 class DoubleSpinBoxDelegate : public QItemDelegate
@@ -17,20 +16,19 @@ public:
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void set_number_range(QList<int> list);
     void set_number_step_list(QStringList stringList);
-    void set_number_step(QString string);
-    QString get_number_step();
+    void set_number_step(QString string);   
     void set_decimal_amount(int amount);
-    QList<QDoubleSpinBox*> spinBoxList;
+    QString get_number_step();
 
+    QList<QDoubleSpinBox*> spinBoxList;
     QList<int> rangeList;
     QStringList stepList;
     QString step;
-    int *pColumn;
     int decimalAmount;
 
 signals:
     void createEditorHeaderText(QStringList) const;
-    void closeEditorHeaderText(int*) const;
+    void closeEditorHeaderText(QModelIndex) const;
 
 private slots:
     void commit_and_close_editor();

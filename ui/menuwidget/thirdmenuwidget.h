@@ -74,7 +74,7 @@ private slots:
     void onHeaderClicked(int index);
     void change_related_third_menu_data(QString string);
     void set_header_text_create(QStringList stringList) const ;
-    void set_header_text_close(int index) const ;
+    void set_header_text_close(QWidget *editor) ;
 
 };
 

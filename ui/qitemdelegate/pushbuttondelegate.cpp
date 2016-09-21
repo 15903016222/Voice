@@ -62,7 +62,6 @@ bool PushButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
         }
     }
     model->setData(index, buttonMap.value(index)->text, Qt::EditRole);
-    Q_UNUSED(model);
     return true;
 }
 

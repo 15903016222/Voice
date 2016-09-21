@@ -43,7 +43,6 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         editor->setMinimumContentsLength(minimumContentLength);
     }
 
-    (const_cast<ComboBoxDelegate *>(this))->comboBoxList.append(editor);
     connect(editor, SIGNAL(activated(QString)), this, SLOT(commit_and_close_editor(QString)));
     return editor;
 

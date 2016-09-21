@@ -306,6 +306,7 @@ QWidget(parent),
 	setThirdMenuName(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
+
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -408,9 +409,10 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
-                ui->tableView->setEditTriggers(QAbstractItemView::SelectedClicked);
+                ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
-//                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditorHeaderText(int)), this, SLOT(set_header_text_close(int)));
+                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
+//                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditorHeaderText(QModelIndex)), this, SLOT(set_header_text_close(const QModelIndex)));
                 break;
             }
             case 2: {
@@ -674,14 +676,16 @@ void ThirdMenuWidget::set_header_text_create(QStringList stringList) const
     model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(1)));
 }
 
-void ThirdMenuWidget::set_header_text_close(int index) const
+void ThirdMenuWidget::set_header_text_close(QWidget *editor)
 {
-//    QString currentHeaderText = model->horizontalHeaderItem(index)->text();
-//    if(currentHeaderText.contains("Δ")) {
-//        model->setHeaderData(index, Qt::Horizontal,QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
-//    } else {
-//        model->setHeaderData(index, Qt::Horizontal,QString(currentHeaderText));
-//    }
+    int editorPosY = editor->x() + editor->width();
+    int column = editorPosY / (width / 6) - 1;
+    QString currentHeaderText = model->horizontalHeaderItem(column)->text();
+    if(currentHeaderText.contains("Δ")) {
+        model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
+    } else {
+        model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText));
+    }
 }
 
 QVariantMap ThirdMenuWidget::get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
