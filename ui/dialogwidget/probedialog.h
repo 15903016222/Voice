@@ -28,12 +28,13 @@ public:
   //  QList<QListView*> listView_1;
     QListView *listView_1;
     QListView *listView_2;
-    QStringList probeTypeList;
-    QStringList probeList;
+
     QStandardItemModel *probeTypeModel;
     QStandardItemModel *probeModel;
-    QMap<QString, QString> labelMap;
-    QString changedString;
+    QList<QStandardItemModel*> probeModelList;
+
+//    QMap<QString, QString> labelMap;
+//    QString changedString;
 
     void insertProbe(int i);
     int currentIndex;

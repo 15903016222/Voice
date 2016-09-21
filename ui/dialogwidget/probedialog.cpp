@@ -3,10 +3,9 @@
 
 #define PROBE_NUMBER 9
 static QString PROBETYPE_STRING[PROBETYPE_NUMBER] = {
-    "B10", "B12", "B23", "B26", "B40", "B44", "B46", "B54", "B55", "B56", "B57", "B58"
+    "B10", "B12", "B23", "B26", "B40", "B44", "B46", "B54", "B55", "B56", "B57", "B58",
     "B60", "B7", "D1", "D10", "D2", "D3", "D4", "D57", "D6", "D62", "D7", "user"
 };
-static QString USER[] = {"This group contains all user-defined ultrasonic phased array probes"};
 
 static QString PROBE_STRING[PROBETYPE_NUMBER][PROBE_NUMBER] = {
     {
@@ -145,7 +144,9 @@ void ProbeDialog::initUI()
 {
 //    buttonList.append(ui->pushButton_cancel);
 //    buttonList.append(ui->pushButton_ok);
+
     probeTypeModel = new QStandardItemModel(this);
+    QStringList probeTypeList;
 
     for(int i = 0; i < PROBETYPE_NUMBER; i++){
         probeTypeList.append(PROBETYPE_STRING[i]);
@@ -155,6 +156,10 @@ void ProbeDialog::initUI()
         probeTypeModel->appendRow(item);
         item->setForeground(QBrush(Qt::black));
         item->setFont(QFont("Times New Roman", 14));
+
+        probeModel = new QStandardItemModel(this);
+        probeModel->setObjectName("standardItemModel_" + QString::number(i));
+        probeModelList.append(probeModel);
     }
 
     listView_1 = new QListView(this);
@@ -173,14 +178,14 @@ void ProbeDialog::initUI()
 
 void ProbeDialog::insertProbe(int i)
 {
-    probeModel = new QStandardItemModel(this);
+    QStringList probeList;
     for(int j = 0; j < PROBE_NUMBER; j++){
-        if(PROBE_STRING[i][PROBE_NUMBER] != NULL){
+        if(PROBE_STRING[i][j] != NULL){
             probeList.append(PROBE_STRING[i][j]);
 
             QString string = static_cast<QString>(probeList.at(j));
             QStandardItem *item = new QStandardItem(string);
-            probeModel->appendRow(item);
+            probeModelList.at(i)->appendRow(item);
             item->setForeground(QBrush(Qt::black));
             item->setFont(QFont("Times New Roman", 14));
         }
@@ -192,14 +197,22 @@ void ProbeDialog::insertProbe(int i)
     ui->scrollArea_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_2->setWidget(listView_2);
-    listView_2->setModel(probeModel);
+    listView_2->setModel(probeModelList.at(i));
 }
 
 void ProbeDialog::slot_listViewItemClicked(QModelIndex index)
 {
-   // probeModel->clear();
     QStandardItem *item = probeTypeModel->itemFromIndex(index);
     currentIndex = item->row();
 
     insertProbe(currentIndex);
+    ui->label->clear();
+
+    if(currentIndex < PROBETYPE_NUMBER-1){
+
+        ui->label->setText(tr("Ultrasonic phased array probe family."));
+    }else if(currentIndex == PROBETYPE_NUMBER-1){
+
+        ui->label->setText(tr("This group contains all user-defined \nultrasonic phased array probes."));
+    }
 }
