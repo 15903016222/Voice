@@ -307,16 +307,18 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         }
     } else if(subVariantMap["style"].toString().toInt() == 4) {
         //    点击表头弹出探头选择对话框
-        ProbeDialog *probeDialog = new ProbeDialog(this);
-        probeDialog->show();
+        ProbeDialog probeDialog;
+        probeDialog.setWindowFlags(Qt::FramelessWindowHint);
+        probeDialog.exec();
     } else if(subVariantMap["style"].toString().toInt() == 5) {
         //    点击表头弹出探头选择对话框
-        WedgeDialog *wedgeDialog = new WedgeDialog(this);
-        wedgeDialog->show();
+        WedgeDialog wedgeDialog;
+        wedgeDialog.setWindowFlags(Qt::FramelessWindowHint);
+        wedgeDialog.exec();
     } else if(subVariantMap["style"].toString().toInt() == 6) {
-        //    点击表头弹出探头选择对话框
+        //    点击表头弹出键盘输入框
         MyInputPanel inputPanel;
-        inputPanel.showNormal();
+        inputPanel.setWindowFlags(Qt::FramelessWindowHint);
         inputPanel.exec();
     }
 }
