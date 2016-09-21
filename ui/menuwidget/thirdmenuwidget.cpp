@@ -682,7 +682,20 @@ void ThirdMenuWidget::set_header_text_close(QWidget *editor)
 
 void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
 {
+    QString thirdMenuString;
+    if(get_third_menu_list().count() > index.column()) {
+       thirdMenuString  = get_third_menu_list().at(index.column());
+    } else {
+        return;
+    }
+    QString subString = firstMenuString + "_" + secondMenuString;
+    QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
+    if(subVariantMap["style"].toString().toInt() == 1) {
+        ui->tableView->edit(index);
+    } else if(subVariantMap["style"].toString().toInt() == 2) {
+        ui->tableView->edit(index);
+    }
 }
 
 QVariantMap ThirdMenuWidget::get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)

@@ -31,10 +31,7 @@ public:
     void widgetStyleChoice(int k);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, int count);
-
 //    bool get_json_document_type(QString string, QJsonObject jsonObject);
-    bool eventFilter(QObject *object, QEvent *event);
-
 //    QVariantHash read_json_file(QString string);
 //    QJsonObject get_json_object(QString string);
 //    QJsonObject get_subsidiary_object(QString string, QJsonObject jsonObject);
@@ -76,6 +73,7 @@ private slots:
     void set_header_text_create(QStringList stringList) const ;
     void set_header_text_close(QWidget *editor) ;
 
+    void on_tableView_clicked(const QModelIndex &index);
 };
 
 #endif // THIRDMENUWIDGET_H
