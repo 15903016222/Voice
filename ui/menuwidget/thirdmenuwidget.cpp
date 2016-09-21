@@ -671,7 +671,7 @@ void ThirdMenuWidget::set_header_text_create(QStringList stringList) const
 void ThirdMenuWidget::set_header_text_close(QWidget *editor)
 {
     int editorPosX = editor->x() + editor->width();
-    int column = editorPosX / (width / 6) - 1;
+    int column = editorPosX / (width / THIRD_MENU_NUMBER) - 1;
     QString currentHeaderText = model->horizontalHeaderItem(column)->text();
     if(currentHeaderText.contains("Δ")) {
         model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
