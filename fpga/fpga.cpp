@@ -19,8 +19,10 @@ Fpga *Fpga::get_fpga(void)
     if (m_fpga == NULL) {
 #ifdef PHASCAN_II
         m_fpga = new ImxFpga());
-#else /* PHASCAN */
+#elif PHASCAN
         m_fpga = new OmapFpga();
+#else
+#error("Not Specify Device")
 #endif
     }
 
