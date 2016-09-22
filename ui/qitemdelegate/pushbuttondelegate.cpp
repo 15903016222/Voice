@@ -5,7 +5,7 @@
 #include <QPainter>
 
 PushButtonDelegate::PushButtonDelegate(QObject *parent) :
-QItemDelegate(parent)
+QStyledItemDelegate(parent)
 {
 }
 
@@ -24,11 +24,28 @@ void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     }
     painter->save();
 
+    QRectF rectangle = option.rect;
+    QRectF rectangleLeft = QRectF(rectangle.x(), rectangle.y(), 1, rectangle.height());
+    QRectF rectangleRight = QRectF(rectangle.x() + rectangle.width() - 1, rectangle.y(), 1, rectangle.height());
+
     QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, 25));
     linearGradient.setColorAt(0.4, QColor(0, 0, 0));
     linearGradient.setColorAt(1, QColor(0, 120, 195));
     linearGradient.setSpread(QGradient::PadSpread);
-    painter->fillRect(option.rect, QBrush(linearGradient));
+    painter->fillRect(rectangle, QBrush(linearGradient));
+
+    QLinearGradient linearGradientLeft(QPointF(0, 0), QPointF(0, 25));
+    linearGradientLeft.setColorAt(0.3, QColor(255, 255, 255));
+    linearGradientLeft.setColorAt(1, QColor(0, 120, 195));
+    linearGradientLeft.setSpread(QGradient::PadSpread);
+    painter->fillRect(rectangleLeft, QBrush(linearGradientLeft));
+
+    QLinearGradient linearGradientRight(QPointF(0, 0), QPointF(0, 25));
+    linearGradientRight.setColorAt(0.3, QColor(0, 0, 0));
+    linearGradientRight.setColorAt(1, QColor(0, 120, 195));
+    linearGradientRight.setSpread(QGradient::PadSpread);
+    painter->fillRect(rectangleRight, QBrush(linearGradientRight));
+
     painter->restore();
 
     drawDisplay(painter, option, option.rect, tr("On"));
@@ -52,7 +69,6 @@ bool PushButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
         }
     }
     model->setData(index, buttonMap.value(index)->text, Qt::EditRole);
-    Q_UNUSED(model);
     return true;
 }
 

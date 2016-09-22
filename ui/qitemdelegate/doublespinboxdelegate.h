@@ -1,10 +1,10 @@
 #ifndef DOUBLESPINBOXDELEGATE_H
 #define DOUBLESPINBOXDELEGATE_H
 
-#include <QItemDelegate>
+#include <QStyledItemDelegate>
 #include <QDoubleSpinBox>
 
-class DoubleSpinBoxDelegate : public QItemDelegate
+class DoubleSpinBoxDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 

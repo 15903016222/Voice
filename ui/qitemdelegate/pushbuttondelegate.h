@@ -1,10 +1,9 @@
-#ifndef PUSHBOTTONDELEGATE
-#define PUSHBOTTONDELEGATE
+#ifndef PUSHBUTTONDELEGATE
+#define PUSHBUTTONDELEGATE
 
-#include <QItemDelegate>
-#include <QPushButton>
+#include <QStyledItemDelegate>
 
-class PushButtonDelegate : public QItemDelegate
+class PushButtonDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 
@@ -19,9 +18,6 @@ public:
 	void setSwitchFlag(QModelIndex index);
 	QMap<QModelIndex, QStyleOptionButton*> buttonMap;
 
-	QPushButton *pushButton;
-	QList<QModelIndex> modelIndex;
-
 };
 
-#endif // PUSHBOTTONDELEGATE
+#endif // PUSHBUTTONDELEGATE

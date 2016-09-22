@@ -9,6 +9,7 @@
 #include "myinputpanel.h"
 #include "measurementdialog.h"
 
+
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
 	ui(new Ui::ThirdMenuWidget)
@@ -31,8 +32,8 @@ QWidget(parent),
     fourthMenuMap = read_json_file(stringTwo);
 	fileTwo->close();
 
-	initStandardModel();
-	setThirdMenuName(0, 0);
+    initStandardModel();
+    setThirdMenuName(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 
@@ -63,14 +64,7 @@ void ThirdMenuWidget::initStandardModel()
     ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
     ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
     ui->tableView->verticalHeader()->hide();
-
     ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-
-	for(int k = 0; k < THIRD_MENU_NUMBER; k++)
-	{
-		QModelIndex index = model->index(k, 0, QModelIndex());
-		model->setData(index, k);
-	}
 
     ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
         "{font: 13pt 'Times New Roman';"
@@ -80,10 +74,19 @@ void ThirdMenuWidget::initStandardModel()
         "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
         "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
 
-    ui->tableView->setStyleSheet("QTableView::item{"
-        "border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 120, 195, 255));"
-        "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 120, 195, 255));}");
+    ui->tableView->setStyleSheet("QTableView::item"
+        "{font: 12pt 'Times New Roman';"
+        "color: yellow;"
+        "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));"
+        "border-left:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(255, 255, 255, 255), stop:1 rgba(0, 120, 195, 255));"
+        "border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));}");
 
+    for(int k = 0; k < THIRD_MENU_NUMBER; k++)
+    {
+        QModelIndex index = model->index(k, 0, QModelIndex());
+        model->setData(index, k);
+    }
+    ui->tableView->show();
 }
 
 void ThirdMenuWidget::setThirdMenuName(int i, int j)
@@ -91,12 +94,12 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
 	currFirstNum = i;
 	currSecondNum = j;
 	model->clear();
-	initStandardModel();
+    initStandardModel();
+
     firstMenuString = widget->firstMenuData.at(i);
     secondMenuString = widget->get_second_menu_list(i).at(j);
     QStringList thirdStringList = get_third_menu_list();
     set_model_item(0, thirdStringList.count());
-	ui->tableView->show();
 }
 
 void ThirdMenuWidget::widgetStyleChoice(int k)
@@ -225,8 +228,6 @@ void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
 {
     width = event->size().width();
     height = event->size().height();
-    model->clear();
-    initStandardModel();
     setThirdMenuName(currFirstNum, currSecondNum);
 }
 
@@ -236,9 +237,7 @@ QVariantMap ThirdMenuWidget::read_json_file(QString string)
     bool ok;
     QVariant variant = parser.parse(string.toUtf8(), &ok);
     QVariantMap variantMap = variant.toMap();
-    if(!ok) {
-        qDebug() << "An error occured during parsing.";
-    }
+
     return variantMap;
 }
 
@@ -310,23 +309,24 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         ui->tableView->edit(modelIndex);
     } else if(subVariantMap["style"].toString().toInt() == 4) {
         //点击表头弹出探头选择对话框
-        ProbeDialog probeDialog;
-        probeDialog.setWindowFlags(Qt::FramelessWindowHint);
-        probeDialog.exec();
+        ProbeDialog *probeDialog = new ProbeDialog(this);
+        probeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        probeDialog->show();
     } else if(subVariantMap["style"].toString().toInt() == 5) {
         //点击表头弹出楔块选择对话框
-        WedgeDialog wedgeDialog;
-        wedgeDialog.setWindowFlags(Qt::FramelessWindowHint);
-        wedgeDialog.exec();
+        WedgeDialog *wedgeDialog = new WedgeDialog(this);
+        wedgeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        wedgeDialog->show();
     } else if(subVariantMap["style"].toString().toInt() == 6) {
         //点击表头弹出软键盘
         MyInputPanel inputPanel;
         inputPanel.setWindowFlags(Qt::FramelessWindowHint);
+        inputPanel.showNormal();
         inputPanel.exec();
     } else if(subVariantMap["style"].toString().toInt() == 7) {
         //点击表头弹出测量值选择对话框
         MeasurementDialog *measurementDialog = new MeasurementDialog(this);
-       // measurementDialog->setWindowFlags(Qt::FramelessWindowHint);
+        measurementDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         measurementDialog->show();
 
         measurementIndex = index;
@@ -451,7 +451,7 @@ QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
     if(ui->tableView->horizontalHeader()->fontMetrics().width(string) >= width / 6) {
         QString leftText, rightText;
         if(string.contains(" ")) {
-            int index = string.indexOf(" ");
+            index = string.indexOf(" ");
             leftText = string.left(index);
             rightText = string.right(string.length() - index - 1);
 //            model->setHeaderData(index, Qt::Horizontal, leftText + "\n" + rightText);
@@ -481,7 +481,6 @@ void ThirdMenuWidget::set_model_item(int startIndex, int count)
         if(count >= k + 1) {
             widgetStyleChoice(k);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
-            model->item(0, k)->setForeground(Qt::yellow);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
         } else {
             model->setHeaderData(k, Qt::Horizontal, "");
@@ -491,11 +490,6 @@ void ThirdMenuWidget::set_model_item(int startIndex, int count)
             model->setItem(0, k, item);
             model->item(0, k)->setFlags(Qt::NoItemFlags);
         }
-        QLinearGradient linearGradient(QPointF(0, 0), QPointF(0, height * 25 / 70));
-        linearGradient.setColorAt(0.4, QColor(0, 0, 0));
-        linearGradient.setColorAt(1, QColor(0, 120, 195));
-        linearGradient.setSpread(QGradient::PadSpread);
-        model->item(0, k)->setBackground(QBrush(linearGradient));
     }
 }
 

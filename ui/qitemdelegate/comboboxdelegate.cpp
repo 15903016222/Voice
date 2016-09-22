@@ -3,7 +3,7 @@
 #include <QComboBox>
 
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
-    QItemDelegate(parent)
+    QStyledItemDelegate(parent)
 {
 
 }
