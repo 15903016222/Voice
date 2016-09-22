@@ -403,6 +403,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     } else if(subVariantMap["style"].toString().toInt() == 7) {
         //点击表头弹出测量值选择对话框
         MeasurementDialog *measurementDialog = new MeasurementDialog(this);
+        measurementDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         measurementDialog->show();
         measurementIndex = index;
         connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));

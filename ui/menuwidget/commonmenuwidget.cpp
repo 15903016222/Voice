@@ -85,10 +85,8 @@ void CommonMenuWidget::initStandardModel()
 void CommonMenuWidget::setCommonMenuName()
 {
     initStandardModel();
-    for(int k = 0; k < COMMON_MENU_NUMBER; k ++)
-    {
-        if(COMMON_MENU_STRING[k] != NULL)
-        {
+    for(int k = 0; k < COMMON_MENU_NUMBER; k ++) {
+        if(COMMON_MENU_STRING[k] != NULL) {
             widgetStyleChoice(k);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
@@ -99,10 +97,8 @@ void CommonMenuWidget::setCommonMenuName()
 void CommonMenuWidget::widgetStyleChoice(int k)
 {
     model->setHeaderData(k, Qt::Horizontal, tr(COMMON_MENU_STRING[k]));
-    switch(CHOICE_WIDGET_CHAR[k].toInt())
-    {
-    case 1:
-    {
+    switch(CHOICE_WIDGET_CHAR[k].toInt()) {
+    case 1: {
         QList<int> rangeList;
         rangeList.append(0.00);
         rangeList.append(100.00);
@@ -128,8 +124,7 @@ void CommonMenuWidget::widgetStyleChoice(int k)
         connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
         break;
     }
-    case 2:
-    {
+    case 2: {
 
         ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
 
@@ -140,20 +135,17 @@ void CommonMenuWidget::widgetStyleChoice(int k)
         connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(comboBox_current_text(QString)), this, SLOT(change_related_third_menu_data(QString)));
         break;
     }
-    case 3:
-    {
+    case 3: {
         PushButtonDelegate *pushButton = new PushButtonDelegate(this);
 
         model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         QStandardItem *item = new QStandardItem(QString("on"));
         model->setItem(0, k, item);
-//          model->item(0, k)->setFlags(Qt::ItemIsEnabled);
-        ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
+        model->item(0, k)->setFlags(Qt::NoItemFlags);
         ui->tableView->setItemDelegateForColumn(k, pushButton);
         break;
     }
-    case 0:
-    {
+    case 0: {
         model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         QStandardItem *item = new QStandardItem(QString("on"));
         model->setItem(0, k, item);
