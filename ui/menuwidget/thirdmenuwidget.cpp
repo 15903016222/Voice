@@ -7,6 +7,7 @@
 #include "probedialog.h"
 #include "wedgedialog.h"
 #include "myinputpanel.h"
+#include "measurementdialog.h"
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
@@ -63,24 +64,25 @@ void ThirdMenuWidget::initStandardModel()
     ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
     ui->tableView->verticalHeader()->hide();
 
+    ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
 	for(int k = 0; k < THIRD_MENU_NUMBER; k++)
 	{
 		QModelIndex index = model->index(k, 0, QModelIndex());
 		model->setData(index, k);
 	}
 
-	ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-	ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
+    ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
         "{font: 13pt 'Times New Roman';"
-		"background-color: rgba(0, 130, 195, 255);"
-		"color: rgba(255, 255, 255, 255);"
-		"border: 0px solid black;"
-		"border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
-		"border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
+        "background-color: rgba(0, 130, 195, 255);"
+        "color: rgba(255, 255, 255, 255);"
+        "border: 0px solid black;"
+        "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));"
+        "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));}");
 
-	ui->tableView->setStyleSheet("QTableView::item{"
-		"border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 120, 195, 255));"
-		"border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 120, 195, 255));}");
+    ui->tableView->setStyleSheet("QTableView::item{"
+        "border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 120, 195, 255));"
+        "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 120, 195, 255));}");
 
 }
 
@@ -94,7 +96,6 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
     secondMenuString = widget->get_second_menu_list(i).at(j);
     QStringList thirdStringList = get_third_menu_list();
     set_model_item(0, thirdStringList.count());
-
 	ui->tableView->show();
 }
 
@@ -147,7 +148,8 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
-//                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditorHeaderText(int)), this, SLOT(set_header_text_close(int)));
+                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
+//                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditorHeaderText(QModelIndex)), this, SLOT(set_header_text_close(const QModelIndex)));
                 break;
             }
             case 2: {
@@ -165,7 +167,6 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 } else {
                     item = new QStandardItem(list.at(1).at(0));
                 }
-
                 model->setItem(0, k, item);
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
@@ -201,7 +202,6 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
                 break;
             }
-
             default:
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 QStandardItem *item = new QStandardItem(QString(""));
@@ -265,26 +265,26 @@ QStringList ThirdMenuWidget::get_third_menu_list()
     return stringList;
 }
 
-bool ThirdMenuWidget::eventFilter(QObject *object, QEvent *event)
-{
-    return QWidget::eventFilter(object, event);
-}
-
 void ThirdMenuWidget::onHeaderClicked(int index)
 {
     QString thirdMenuString;
     if(get_third_menu_list().count() > index) {
-        thirdMenuString = get_third_menu_list().at(index);
+       thirdMenuString  = get_third_menu_list().at(index);
+    } else {
+        return;
     }
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
     if(subVariantMap["style"].toString().toInt() == 1) {
-        //    点击表头更改spinbox的步进及表头文字
-        QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
+        QModelIndex modelIndex = model->item(0, index)->index();
+        ui->tableView->edit(modelIndex);
+
+        //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
-        int stepIndex = 0;
+        int stepIndex;
         QStringList stringList = doubleSpinBox->stepList;
         for(int i = 0; i < stringList.count(); i ++) {
             if(currentStep == stringList.at(i)) {
@@ -300,26 +300,37 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         }
         if(stepIndex == stringList.count() - 1) {
             doubleSpinBox->set_number_step(stringList.at(0));
-            model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(0)));
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(0)));
         } else {
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
-            model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
+    } else if(subVariantMap["style"].toString().toInt() == 2) {
+        QModelIndex modelIndex = model->item(0, index)->index();
+        ui->tableView->edit(modelIndex);
     } else if(subVariantMap["style"].toString().toInt() == 4) {
-        //    点击表头弹出探头选择对话框
+        //点击表头弹出探头选择对话框
         ProbeDialog probeDialog;
         probeDialog.setWindowFlags(Qt::FramelessWindowHint);
         probeDialog.exec();
     } else if(subVariantMap["style"].toString().toInt() == 5) {
-        //    点击表头弹出探头选择对话框
+        //点击表头弹出楔块选择对话框
         WedgeDialog wedgeDialog;
         wedgeDialog.setWindowFlags(Qt::FramelessWindowHint);
         wedgeDialog.exec();
     } else if(subVariantMap["style"].toString().toInt() == 6) {
-        //    点击表头弹出键盘输入框
+        //点击表头弹出软键盘
         MyInputPanel inputPanel;
         inputPanel.setWindowFlags(Qt::FramelessWindowHint);
         inputPanel.exec();
+    } else if(subVariantMap["style"].toString().toInt() == 7) {
+        //点击表头弹出测量值选择对话框
+        MeasurementDialog *measurementDialog = new MeasurementDialog(this);
+       // measurementDialog->setWindowFlags(Qt::FramelessWindowHint);
+        measurementDialog->show();
+
+        measurementIndex = index;
+        connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
     }
 }
 
@@ -334,7 +345,7 @@ void ThirdMenuWidget::set_header_text_create(QStringList stringList) const
     } else {
         headerText = currentHeaderText;
     }
-    model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(1)));
+    model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(1)));
 }
 
 void ThirdMenuWidget::set_header_text_close(QWidget *editor)
@@ -440,7 +451,7 @@ QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
     if(ui->tableView->horizontalHeader()->fontMetrics().width(string) >= width / 6) {
         QString leftText, rightText;
         if(string.contains(" ")) {
-            index = string.indexOf(" ");
+            int index = string.indexOf(" ");
             leftText = string.left(index);
             rightText = string.right(string.length() - index - 1);
 //            model->setHeaderData(index, Qt::Horizontal, leftText + "\n" + rightText);
@@ -455,7 +466,7 @@ QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
 void ThirdMenuWidget::change_related_third_menu_data(QString string)
 {
     QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
-    if(!variantMap.isEmpty() && variantMap.contains("first third_menu")) {
+    if(!variantMap.isEmpty() && variantMap.contains("first third_menu") && variantMap.contains(string)) {
         relatedMenuString = string;
         QVariantList variantList = variantMap.values(string);
         QStringList thirdStringList = variantList.at(0).toStringList();

@@ -28,8 +28,6 @@ public:
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, int count);
 
-    bool eventFilter(QObject *object, QEvent *event);
-
     QStringList get_third_menu_list();
     QVariantMap read_json_file(QString string);
     QVariantMap get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString);
