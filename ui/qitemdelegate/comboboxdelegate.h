@@ -1,10 +1,10 @@
 #ifndef COMBOBOXDELEGATE_H
 #define COMBOBOXDELEGATE_H
 
-#include <QItemDelegate>
+#include <QStyledItemDelegate>
 #include <QWidget>
 
-class ComboBoxDelegate : public QItemDelegate
+class ComboBoxDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 

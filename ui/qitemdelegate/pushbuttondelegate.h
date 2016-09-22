@@ -1,10 +1,10 @@
 #ifndef PUSHBOTTONDELEGATE
 #define PUSHBOTTONDELEGATE
 
-#include <QItemDelegate>
+#include <QStyledItemDelegate>
 #include <QPushButton>
 
-class PushButtonDelegate : public QItemDelegate
+class PushButtonDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 

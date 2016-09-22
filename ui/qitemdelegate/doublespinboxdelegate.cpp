@@ -3,7 +3,7 @@
 #include <QDebug>
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
-    QItemDelegate(parent)
+    QStyledItemDelegate(parent)
 {
 }
 

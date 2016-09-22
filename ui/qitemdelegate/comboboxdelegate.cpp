@@ -4,7 +4,7 @@
 #include <QDebug>
 
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
-    QItemDelegate(parent)
+    QStyledItemDelegate(parent)
 {
 
 }
@@ -15,14 +15,14 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 
     editor->setFont(QFont("Times New Roman", 12));
     editor->setStyleSheet("QComboBox{"
-		"background-color:qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));"
-		"color: yellow;"
-		"selection-background-color: rgba(0, 130, 195, 0);"
-		"selection-color: yellow;}"
-		"QComboBox::drop-down{border-style:none;}"
-		"QComboBox QAbstractItemView{background-color:rgb(0, 130, 195);"
-		"selection-color:yellow;}"
-		"QComboBox QAbstractItemView::item{height:30px}");
+        "background-color:qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));"
+        "color: yellow;"
+        "selection-background-color: rgba(0, 130, 195, 0);"
+        "selection-color: yellow;}"
+        "QComboBox::drop-down{border-style:none;}"
+        "QComboBox QAbstractItemView{background-color:rgb(0, 130, 195);"
+        "selection-color:yellow;}"
+        "QComboBox QAbstractItemView::item{height:30px}");
 
     int maxSize = 0;
     if(itemList.empty()) {
