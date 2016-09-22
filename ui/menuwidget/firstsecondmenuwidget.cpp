@@ -78,6 +78,8 @@ void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
 
 void FirstSecondMenuWidget::initUI()
 {
+    toolBox.append(ui->toolBox);
+
     for(int i = 0; i < FIRST_MENU_NUMBER; i++)
     {
         QListView* listView = findChild<QListView*>("listView_" + QString::number(i + 1));

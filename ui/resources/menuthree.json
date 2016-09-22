@@ -1839,19 +1839,19 @@
     },
     "Field 1": {
         "parent": "Measurement_Reading",
-        "style": "MeasurementDialog"
+        "style": "7"
     },
     "Field 2": {
         "parent": "Measurement_Reading",
-        "style": "MeasurementDialog"
+        "style": "7"
     },
     "Field 3": {
         "parent": "Measurement_Reading",
-        "style": "MeasurementDialog"
+        "style": "7"
     },
     "Field 4": {
         "parent": "Measurement_Reading",
-        "style": "MeasurementDialog"
+        "style": "7"
     },
     "Selection": {
         "parent": "Measurement_Cursors",

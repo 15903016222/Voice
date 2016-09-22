@@ -118,6 +118,8 @@ void MeasurementDialog::initUI()
     listView = new QListView(this);
     listView->resize(ui->scrollArea->geometry().width(), 800);
     listView->setSpacing(3);
+    listView->setEditTriggers(QAbstractItemView::EditKeyPressed);
+
     ui->scrollArea->setFrameShape(QFrame::NoFrame);
     ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

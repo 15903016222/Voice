@@ -37,6 +37,7 @@ public:
     QStringList get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString);
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString);
     QString set_long_contents_header(int index, QString string);
+    void cache_menu_data();
 
     int width;
     int height;
@@ -44,6 +45,8 @@ public:
     int currSecondNum;
 
     QStandardItemModel *model;
+//    QVariantHash thirdMenuHash;
+//    QVariantHash fourthMenuHash;
     FirstSecondMenuWidget *widget;
 
     QVariantMap thirdMenuMap;
@@ -52,6 +55,7 @@ public:
     QString firstMenuString;
     QString secondMenuString;
     QString relatedMenuString;
+    int measurementIndex;
 
 private:
 
@@ -61,6 +65,9 @@ private slots:
     void onHeaderClicked(int index);
     void change_related_third_menu_data(QString string);
     void set_header_text_create(QStringList stringList) const ;
+    void set_header_text_close(QWidget *editor) ;
+    void on_tableView_clicked(const QModelIndex &index);
+    void change_measurement_label(QString string);
 };
 
 #endif // THIRDMENUWIDGET_H
