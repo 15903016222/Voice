@@ -25,11 +25,17 @@ private:
 
 public:
   //  QList<QPushButton *> buttonList;
-    QListView *listView;
-    QStringList wedgeTypeList;
+    QListView *listView_1;
+    QListView *listView_2;
+
+   // QStringList wedgeTypeList;
     QStandardItemModel *wedgeTypeModel;
-    QMap<QString, QString> labelMap;
-    QString changedString;
+    QStandardItemModel *wedgeModel;
+    QList<QStandardItemModel*> wedgeModelList;
+//    QMap<QString, QString> labelMap;
+//    QString changedString;
+    void insertWedge(int i);
+    int currentIndex;
 
 private slots:
 //    void on_pushButton_cancel_clicked();

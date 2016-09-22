@@ -205,6 +205,7 @@ void ProbeDialog::slot_listViewItemClicked(QModelIndex index)
     QStandardItem *item = probeTypeModel->itemFromIndex(index);
     currentIndex = item->row();
 
+    probeModelList.at(currentIndex)->clear();
     insertProbe(currentIndex);
     ui->label->clear();
 
