@@ -179,15 +179,6 @@ void CommonMenuWidget::resizeEvent(QResizeEvent *event)
 
 void CommonMenuWidget::onHeaderClicked(int index)
 {
-//    QString thirdMenuString;
-//    if(get_third_menu_list().count() > index) {
-//       thirdMenuString  = get_third_menu_list().at(index);
-//    } else {
-//        return;
-//    }
-//    QString subString = firstMenuString + "_" + secondMenuString;
-//    QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
-
     if(CHOICE_WIDGET_CHAR[index].toInt() == 1) {
         QModelIndex modelIndex = model->item(0, index)->index();
         ui->tableView->edit(modelIndex);
