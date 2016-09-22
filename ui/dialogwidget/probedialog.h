@@ -24,24 +24,16 @@ private:
     void initUI();
 
 public:
-  //  QList<QPushButton *> buttonList;
-  //  QList<QListView*> listView_1;
     QListView *listView_1;
     QListView *listView_2;
-
     QStandardItemModel *probeTypeModel;
     QStandardItemModel *probeModel;
     QList<QStandardItemModel*> probeModelList;
-
-//    QMap<QString, QString> labelMap;
-//    QString changedString;
 
     void insertProbe(int i);
     int currentIndex;
 
 private slots:
-//    void on_pushButton_cancel_clicked();
-//    void on_pushButton_ok_clicked();
     void slot_listViewItemClicked(QModelIndex index);
 };
 

@@ -24,22 +24,16 @@ private:
     void initUI();
 
 public:
-  //  QList<QPushButton *> buttonList;
     QListView *listView_1;
     QListView *listView_2;
-
-   // QStringList wedgeTypeList;
     QStandardItemModel *wedgeTypeModel;
     QStandardItemModel *wedgeModel;
     QList<QStandardItemModel*> wedgeModelList;
-//    QMap<QString, QString> labelMap;
-//    QString changedString;
+
     void insertWedge(int i);
     int currentIndex;
 
 private slots:
-//    void on_pushButton_cancel_clicked();
-//    void on_pushButton_ok_clicked();
     void slot_listViewItemClicked(QModelIndex index);
 };
 

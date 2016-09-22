@@ -37,7 +37,6 @@ public:
     QStringList get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString);
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString);
     QString set_long_contents_header(int index, QString string);
-    void cache_menu_data();
 
     int width;
     int height;
@@ -45,8 +44,6 @@ public:
     int currSecondNum;
 
     QStandardItemModel *model;
-//    QVariantHash thirdMenuHash;
-//    QVariantHash fourthMenuHash;
     FirstSecondMenuWidget *widget;
 
     QVariantMap thirdMenuMap;

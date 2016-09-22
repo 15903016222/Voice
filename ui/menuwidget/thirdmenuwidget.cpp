@@ -337,6 +337,36 @@ void ThirdMenuWidget::set_header_text_create(QStringList stringList) const
     model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(1)));
 }
 
+void ThirdMenuWidget::set_header_text_close(QWidget *editor)
+{
+    int editorPosX = editor->x() + editor->width();
+    int column = editorPosX / (width / THIRD_MENU_NUMBER) - 1;
+    QString currentHeaderText = model->horizontalHeaderItem(column)->text();
+    if(currentHeaderText.contains("Δ")) {
+        model->setHeaderData(column, Qt::Horizontal, QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));
+    } else {
+        model->setHeaderData(column, Qt::Horizontal, QString(currentHeaderText));
+    }
+}
+
+void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
+{
+    QString thirdMenuString;
+    if(get_third_menu_list().count() > index.column()) {
+       thirdMenuString  = get_third_menu_list().at(index.column());
+    } else {
+        return;
+    }
+    QString subString = firstMenuString + "_" + secondMenuString;
+    QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
+
+    if(subVariantMap["style"].toString().toInt() == 1) {
+        ui->tableView->edit(index);
+    } else if(subVariantMap["style"].toString().toInt() == 2) {
+        ui->tableView->edit(index);
+    }
+}
+
 QVariantMap ThirdMenuWidget::get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
 {
     QVariantMap subVariantMap;
@@ -455,5 +485,15 @@ void ThirdMenuWidget::set_model_item(int startIndex, int count)
         linearGradient.setColorAt(1, QColor(0, 120, 195));
         linearGradient.setSpread(QGradient::PadSpread);
         model->item(0, k)->setBackground(QBrush(linearGradient));
+    }
+}
+
+void ThirdMenuWidget::change_measurement_label(QString string)
+{
+    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+        if(i == measurementIndex) {
+            model->setHeaderData(measurementIndex, Qt::Horizontal, string);
+            break;
+        }
     }
 }

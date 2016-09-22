@@ -43,7 +43,6 @@ public:
     QStringList get_second_menu_list(int i);
     QVariantMap firstMenuMap;
 
-
 private:
 
 private slots:

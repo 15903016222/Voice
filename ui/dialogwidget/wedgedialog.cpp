@@ -210,10 +210,8 @@ void WedgeDialog::slot_listViewItemClicked(QModelIndex index)
     ui->label->clear();
 
     if(currentIndex < WEDGETYPE_NUMBER-1){
-
         ui->label->setText(tr("Ultrasonic phased array wedge family."));
     }else if(currentIndex == WEDGETYPE_NUMBER-1){
-
         ui->label->setText(tr("This group contains all user-defined \nultrasonic phased array wedges."));
     }
 }
