@@ -31,10 +31,12 @@ public:
     QList<QStandardItemModel*> probeModelList;
 
     void insertProbe(int i);
-    int currentIndex;
+    int listView_1CurrentIndex;
+    int listView_2CurrentIndex;
 
 private slots:
-    void slot_listViewItemClicked(QModelIndex index);
+    void slot_listView_1ItemClicked(QModelIndex index);
+    void slot_listView_2ItemClicked(QModelIndex index);
 };
 
 #endif // PROBEDIALOG_H

@@ -13,7 +13,7 @@ static QString PROBE_STRING[PROBETYPE_NUMBER][PROBE_NUMBER] = {
         "1L16-1.0-10-B10.opp",
         "2.25L16-1.0-10-B10.opp",
         "2.25L32-0.5-10-B10.opp",
-        "2.25L16-1.0-12-B10.opp",
+        "2.5L16-1.0-12-B10.opp",
         "4L16-1.0-10-B10.opp",
         "4L32-0.5-10-B10.opp",
         "5L32-0.5-10-B10.opp",
@@ -127,6 +127,126 @@ static QString PROBE_STRING[PROBETYPE_NUMBER][PROBE_NUMBER] = {
     }
 };
 
+static const char* PROBEINFO_STRING[PROBETYPE_NUMBER][PROBE_NUMBER] = {
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 10L16-1.0-10-B10\nFreq.: 10.00MHz    Element Qty.: 16\nPitch: 1.000 mm    Ref.Point: -18.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 1L16-1.0-10-B10\nFreq.: 1.00MHz    Element Qty.: 16\nPitch: 1.000 mm    Ref.Point: -18.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 2.25L16-1.0-10-B10\nFreq.: 2.25MHz    Element Qty.: 16\nPitch: 1.000 mm    Ref.Point: -18.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 2.25L32-0.5-10-B10\nFreq.: 2.25MHz    Element Qty.: 32\nPitch: 0.500 mm    Ref.Point: -18.25 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 2.5L16-1.0-12-B10\nFreq.: 2.50MHz    Element Qty.: 16\nPitch: 1.000 mm    Ref.Point: -18.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 4L16-1.0-10-B10\nFreq.: 4.00MHz    Element Qty.: 16\nPitch: 1.000 mm    Ref.Point: -18.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 4L32-0.5-10-B10\nFreq.: 4.00MHz    Element Qty.: 32\nPitch: 0.500 mm    Ref.Point: -18.25 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 5L32-0.5-10-B10\nFreq.: 5.00MHz    Element Qty.: 32\nPitch: 0.500 mm    Ref.Point: -18.25 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model: 7.5L32-0.5-10-B10\nFreq.: 7.50MHz    Element Qty.: 32\nPitch: 0.500 mm    Ref.Point: -18.25 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2L8-1.0-10-B12\nFreq.: 2.00MHz    Element Qty.: 8\nPitch: 1.000 mm    Ref.Point: -11.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2L8-1.0-9-B12\nFreq.: 2.00MHz    Element Qty.: 8\nPitch: 1.000 mm    Ref.Point: -11.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:4L16-0.5-10-B12\nFreq.: 4.00MHz    Element Qty.: 16\nPitch: 0.500 mm    Ref.Point: -11.25 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:4L16-0.5-9-B12\nFreq.: 4.00MHz    Element Qty.: 16\nPitch: 0.500 mm    Ref.Point: -11.25 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:4L8-1.0-9-B12\nFreq.: 4.00MHz    Element Qty.: 8\nPitch: 1.000 mm    Ref.Point: -11.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5L16-0.5-10-B12\nFreq.: 7.50MHz    Element Qty.: 16\nPitch: 0.500 mm    Ref.Point: -11.25 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5L60-1.0-10-B23\nFreq.: 7.50MHz    Element Qty.: 60\nPitch: 1.000 mm    Ref.Point: -63.50 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:1L64-1.0-10-B26\nFreq.: 1.00MHz    Element Qty.: 64\nPitch: 1.000 mm    Ref.Point: -0.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L64-1.0-10-B26\nFreq.: 5.00MHz    Element Qty.: 64\nPitch: 1.000 mm    Ref.Point: -0.00 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.25L32-0.8-12-B40\nFreq.: 2.25MHz    Element Qty.: 32\nPitch: 0.800 mm    Ref.Point: -28.90 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L32-0.8-12-B40\nFreq.: 5.00MHz    Element Qty.: 32\nPitch: 0.800 mm    Ref.Point: -28.90 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10L64-0.8-12-B44\nFreq.: 10.00MHz    Element Qty.: 64\nPitch: 0.800 mm    Ref.Point: -53.70 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.5L64-0.8-10-B44\nFreq.: 2.500MHz    Element Qty.: 64\nPitch: 0.800 mm    Ref.Point: -53.70 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L64-0.8-10-B44\nFreq.: 5.00MHz    Element Qty.: 64\nPitch: 0.800 mm    Ref.Point: -53.70 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5L64-0.8-10-B44\nFreq.: 7.50MHz    Element Qty.: 64\nPitch: 0.800 mm    Ref.Point: -53.70 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L16-0.6-10-B46\nFreq.: 5.00MHz    Element Qty.: 16\nPitch: 0.599 mm    Ref.Point: -19.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L32-0.31-10-B46\nFreq.: 5.00MHz    Element Qty.: 32\nPitch: 0.308 mm    Ref.Point: -19.30 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5L32-0.31-10-B46\nFreq.: 7.50MHz    Element Qty.: 32\nPitch: 0.309 mm    Ref.Point: -19.30 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10L10-0.6-5-B54\nFreq.: 10.00MHz    Element Qty.: 10\nPitch: 0.598 mm    Ref.Point: -9.20 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L10-0.6-5-B54\nFreq.: 5.00MHz    Element Qty.: 10\nPitch: 0.598 mm    Ref.Point: -9.20 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10L10-0.31-5-B55\nFreq.: 10.00MHz    Element Qty.: 16\nPitch: 0.308 mm    Ref.Point: -6.33 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L10-0.31-5-B55\nFreq.: 5.00MHz    Element Qty.: 16\nPitch: 0.309 mm    Ref.Point: -6.33 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10L16-0.6-10-B56\nFreq.: 10.00MHz    Element Qty.: 16\nPitch: 0.597 mm    Ref.Point: -12.50 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10L32-0.31-10-B56\nFreq.: 10.00MHz    Element Qty.: 32\nPitch: 0.309 mm    Ref.Point: -12.80 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L16-0.6-10-B56\nFreq.: 5.00MHz    Element Qty.: 16\nPitch: 0.599 mm    Ref.Point: -12.50 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5L16-0.6-10-B56\nFreq.: 7.50MHz    Element Qty.: 16\nPitch: 0.598 mm    Ref.Point: -12.50 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10L64-0.6-10-B57\nFreq.: 10.00MHz    Element Qty.: 64\nPitch: 0.597 mm    Ref.Point: -41.40 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.25L48-0.8-10-B57\nFreq.: 2.25MHz    Element Qty.: 48\nPitch: 0.800 mm    Ref.Point: -41.30 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.2L48-0.8-10-B57\nFreq.: 2.20MHz    Element Qty.: 48\nPitch: 0.800 mm    Ref.Point: -41.30 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:3.5L64-0.6-10-B57\nFreq.: 3.50MHz    Element Qty.: 64\nPitch: 0.599 mm    Ref.Point: -41.40 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L64-0.6-10-B57\nFreq.: 5.00MHz    Element Qty.: 64\nPitch: 0.598 mm    Ref.Point: -41.40 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.25L16-1.0-16-B58\nFreq.: 2.25MHz    Element Qty.: 16\nPitch: 1.000 mm    Ref.Point: -24.50 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L16-1.0-16-B58\nFreq.: 5.00MHz    Element Qty.: 16\nPitch: 1.000 mm    Ref.Point: -24.50 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10L128-0.8-10-B60\nFreq.: 10.00MHz    Element Qty.: 128\nPitch: 0.800 mm    Ref.Point: -0.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2L128-0.8-10-B60\nFreq.: 2.00MHz    Element Qty.: 128\nPitch: 0.800 mm    Ref.Point: -0.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L128-0.8-10-B60\nFreq.: 5.00MHz    Element Qty.: 128\nPitch: 0.800 mm    Ref.Point: -0.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5L128-0.8-10-B60\nFreq.: 7.50MHz    Element Qty.: 128\nPitch: 0.800 mm    Ref.Point: -0.00 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L64-0.6-10-B7\nFreq.: 5.00MHz    Element Qty.: 64\nPitch: 0.598 mm    Ref.Point: -40.90 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L64-0.6-12-B7\nFreq.: 5.00MHz    Element Qty.: 64\nPitch: 0.599 mm    Ref.Point: -40.90 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.25L16-0.6-10-D1\nFreq.: 2.25MHz    Element Qty.: 16\nPitch: 0.598 mm    Ref.Point: -12.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.5L16-1.0-9-D1\nFreq.: 2.50MHz    Element Qty.: 8\nPitch: 1.000 mm    Ref.Point: -11.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L16-0.6-10-D1\nFreq.: 5.00MHz    Element Qty.: 16\nPitch: 0.598 mm    Ref.Point: -12.00 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10S16-0.5-10-D10\nFreq.: 10.00MHz    Element Qty.: 16\nPitch: 0.500 mm    Ref.Point: -13.64 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10S32-0.25-10-D10\nFreq.: 10.00MHz    Element Qty.: 32\nPitch: 0.250 mm    Ref.Point: -13.77 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5S16-0.5-10-D10\nFreq.: 5.00MHz    Element Qty.: 16\nPitch: 0.500 mm    Ref.Point: -13.64 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5S16-0.5-10-D10\nFreq.: 7.50MHz    Element Qty.: 16\nPitch: 0.500 mm    Ref.Point: -13.64 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5S32-0.25-10-D10\nFreq.: 7.50MHz    Element Qty.: 32\nPitch: 0.250 mm    Ref.Point: -13.77 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:4L32-0.5-10-D2\nFreq.: 4.00MHz    Element Qty.: 32\nPitch: 0.500 mm    Ref.Point: -18.25 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L32-0.5-10-D2\nFreq.: 5.00MHz    Element Qty.: 32\nPitch: 0.500 mm    Ref.Point: -18.25 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5L32-0.5-10-D2\nFreq.: 7.50MHz    Element Qty.: 32\nPitch: 0.500 mm    Ref.Point: -18.25 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:10L64-0.6-12-D3\nFreq.: 10.00MHz    Element Qty.: 64\nPitch: 0.596 mm    Ref.Point: -41.40 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.25L64-0.6-10-D3\nFreq.: 2.25MHz    Element Qty.: 64\nPitch: 0.598 mm    Ref.Point: -41.40 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L64-0.6-10-D3\nFreq.: 50.00MHz    Element Qty.: 64\nPitch: 0.597 mm    Ref.Point: -41.40 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L10-0.6-6-D4\nFreq.: 5.00MHz    Element Qty.: 10\nPitch: 0.598 mm    Ref.Point: -9.20 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:1.5L16-2.0-10-D57\nFreq.: 1.50MHz    Element Qty.: 16\nPitch: 2.000 mm    Ref.Point: -35.00 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L32-1.0-10-D57\nFreq.: 5.00MHz    Element Qty.: 32\nPitch: 1.000 mm    Ref.Point: -35.50 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L64-0.5-10-D57\nFreq.: 5.00MHz    Element Qty.: 64\nPitch: 0.500 mm    Ref.Point: -35.75 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:7.5L32-1.0-10-D57\nFreq.: 7.50MHz    Element Qty.: 32\nPitch: 1.000 mm    Ref.Point: -35.50 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.25L32-1.0-20-D6\nFreq.: 2.25MHz    Element Qty.: 32\nPitch: 1.000 mm    Ref.Point: -33.50 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:2.25L64-0.75-12-D62\nFreq.: 2.25MHz    Element Qty.: 64\nPitch: 0.750 mm    Ref.Point: -50.12 mm"),
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L64-0.6-10-D62\nFreq.: 5.00MHz    Element Qty.: 64\nPitch: 0.599 mm    Ref.Point: -50.70 mm")
+    },
+    {
+        QT_TRANSLATE_NOOP("ProbeDialog", "Model:5L128-0.75-10-D7\nFreq.: 5.00MHz    Element Qty.: 128\nPitch: 0.750 mm    Ref.Point: -0.00 mm")
+    }
+};
+
 ProbeDialog::ProbeDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ProbeDialog)
@@ -168,9 +288,9 @@ void ProbeDialog::initUI()
     ui->scrollArea_1->setWidget(listView_1);
     listView_1->setModel(probeTypeModel);
 
-    currentIndex = 0;
-    insertProbe(currentIndex);
-    connect(listView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
+    listView_1CurrentIndex = 0;
+    insertProbe(listView_1CurrentIndex);
+    connect(listView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_1ItemClicked(QModelIndex)));
 }
 
 void ProbeDialog::insertProbe(int i)
@@ -195,20 +315,33 @@ void ProbeDialog::insertProbe(int i)
     ui->scrollArea_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_2->setWidget(listView_2);
     listView_2->setModel(probeModelList.at(i));
+
+    connect(listView_2, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_2ItemClicked(QModelIndex)));
 }
 
-void ProbeDialog::slot_listViewItemClicked(QModelIndex index)
+void ProbeDialog::slot_listView_1ItemClicked(QModelIndex index)
 {
     QStandardItem *item = probeTypeModel->itemFromIndex(index);
-    currentIndex = item->row();
+    listView_1CurrentIndex = item->row();
 
-    probeModelList.at(currentIndex)->clear();
-    insertProbe(currentIndex);
+    probeModelList.at(listView_1CurrentIndex)->clear();
+    insertProbe(listView_1CurrentIndex);
     ui->label->clear();
 
-    if(currentIndex < PROBETYPE_NUMBER-1){
+    if(listView_1CurrentIndex < PROBETYPE_NUMBER-1){
         ui->label->setText(tr("Ultrasonic phased array probe family."));
-    }else if(currentIndex == PROBETYPE_NUMBER-1){
+    }else if(listView_1CurrentIndex == PROBETYPE_NUMBER-1){
         ui->label->setText(tr("This group contains all user-defined \nultrasonic phased array probes."));
     }
+    ui->label->setAlignment(Qt::AlignCenter);
+}
+
+void ProbeDialog::slot_listView_2ItemClicked(QModelIndex index)
+{
+    QStandardItem *item = probeModelList.at(listView_1CurrentIndex)->itemFromIndex(index);
+    listView_2CurrentIndex = item->row();
+
+    ui->label->clear();
+    ui->label->setText(tr(PROBEINFO_STRING[listView_1CurrentIndex][listView_2CurrentIndex]));
+    ui->label->setAlignment(Qt::AlignLeft);
 }

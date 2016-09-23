@@ -6,6 +6,17 @@
 
 QT       += core gui
 
+equals(QT_MAJOR_VERSION, 5) {
+    QT      += serialport
+    DEFINES += PHASCAN_II
+}
+
+equals(QT_MAJOR_VERSION, 4) {
+    CONFIG  += serialport
+    QMAKE_CXXFLAGS += -Wno-psabi
+    DEFINES += PHASCAN
+}
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 RESOURCES += ui/mainwindow.qrc
@@ -47,7 +58,10 @@ SOURCES += \
     ui/dialogwidget/wedgedialog.cpp \
     ui/qitemdelegate/comboboxdelegate.cpp \
     ui/qitemdelegate/doublespinboxdelegate.cpp \
-    ui/qitemdelegate/pushbuttondelegate.cpp
+    ui/qitemdelegate/pushbuttondelegate.cpp \
+    mcu/mcu.cpp \
+    mcu/mcu_imx.cpp \
+    mcu/mcu_omap.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -66,7 +80,10 @@ HEADERS += \
     ui/qitemdelegate/comboboxdelegate.h \
     ui/qitemdelegate/doublespinboxdelegate.h \
     ui/qitemdelegate/pushbuttondelegate.h \
-    mcu/mcu.h
+    mcu/mcu.h \
+    mcu/mcu_imx.h \
+    mcu/mcu_omap.h \
+    mcu/probe.h
 
 FORMS += \
     ui/mainwindow.ui \

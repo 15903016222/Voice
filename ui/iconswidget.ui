@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>166</width>
-    <height>78</height>
+    <width>189</width>
+    <height>88</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -91,27 +91,24 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="frame_batteryIcon">
+       <widget class="QFrame" name="frame_battery">
         <property name="styleSheet">
          <string notr="true"/>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <property name="spacing">
-          <number>3</number>
-         </property>
+        <layout class="QGridLayout" name="gridLayout_4" columnstretch="3,1">
          <property name="leftMargin">
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>3</number>
+          <number>9</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>3</number>
+          <number>0</number>
          </property>
-         <item>
+         <item row="0" column="0">
           <widget class="QLabel" name="label_battery1">
            <property name="styleSheet">
             <string notr="true">border-image: url(:/file/resources/battery1.jpg);</string>
@@ -121,13 +118,123 @@
            </property>
           </widget>
          </item>
-         <item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_battery1_quantity">
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>120</red>
+                 <green>120</green>
+                 <blue>120</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+           <property name="font">
+            <font>
+             <family>Aharoni</family>
+             <pointsize>8</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
           <widget class="QLabel" name="label_battery2">
            <property name="styleSheet">
             <string notr="true">border-image: url(:/file/resources/battery2.jpg);</string>
            </property>
            <property name="text">
             <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_battery2_quantity">
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>120</red>
+                 <green>120</green>
+                 <blue>120</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+           <property name="font">
+            <font>
+             <family>Aharoni</family>
+             <pointsize>8</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -230,7 +337,7 @@
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QLabel" name="label_ref">
+          <widget class="QLabel" name="label_1">
            <property name="palette">
             <palette>
              <active>
@@ -285,7 +392,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLabel" name="label_tcg">
+          <widget class="QLabel" name="label_2">
            <property name="palette">
             <palette>
              <active>
@@ -340,7 +447,7 @@
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QLabel" name="label_temperature">
+          <widget class="QLabel" name="label_3">
            <property name="palette">
             <palette>
              <active>
@@ -395,7 +502,7 @@
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="label_sv">
+          <widget class="QLabel" name="label_4">
            <property name="palette">
             <palette>
              <active>
@@ -450,7 +557,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLabel" name="label_w">
+          <widget class="QLabel" name="label_5">
            <property name="palette">
             <palette>
              <active>
@@ -505,7 +612,7 @@
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="label_6">
            <property name="palette">
             <palette>
              <active>
