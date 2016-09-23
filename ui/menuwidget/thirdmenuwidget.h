@@ -3,9 +3,6 @@
 
 #include "firstsecondmenuwidget.h"
 
-#include <QWidget>
-#include <QStandardItemModel>
-
 #define THIRD_MENU_NUMBER 6
 
 namespace Ui {
@@ -23,7 +20,6 @@ public:
 private:
     Ui::ThirdMenuWidget *ui;
 
-
 public:
     void reTranslatorThirdMenuUi();
     void initStandardModel();
@@ -31,11 +27,7 @@ public:
     void widgetStyleChoice(int k);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, int count);
-//    bool get_json_document_type(QString string, QJsonObject jsonObject);
-//    QVariantHash read_json_file(QString string);
-//    QJsonObject get_json_object(QString string);
-//    QJsonObject get_subsidiary_object(QString string, QJsonObject jsonObject);
-//    QJsonArray get_subsidiary_array(QString string, QJsonObject jsonObject);
+
     QStringList get_third_menu_list();
     QVariantMap read_json_file(QString string);
     QVariantMap get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString);
@@ -43,7 +35,6 @@ public:
     QStringList get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString);
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString);
     QString set_long_contents_header(int index, QString string);
-    void cache_menu_data();
 
     int width;
     int height;
@@ -51,11 +42,8 @@ public:
     int currSecondNum;
 
     QStandardItemModel *model;
-//    QVariantHash thirdMenuHash;
-//    QVariantHash fourthMenuHash;
     FirstSecondMenuWidget *widget;
-//    QJsonObject jsonObjectOne;
-//    QJsonObject jsonObjectTwo;
+
     QVariantMap thirdMenuMap;
     QVariantMap fourthMenuMap;
     QVariantMap menuCacheMap;

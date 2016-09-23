@@ -1,26 +1,12 @@
 #ifndef FIRSTSECONDMENUWIDGET_H
 #define FIRSTSECONDMENUWIDGET_H
 
+#include "parser.h"
+
 #include <QWidget>
 #include <QToolBox>
 #include <QListView>
 #include <QStandardItemModel>
-#include <QPushButton>
-
-//#if QT_VERSION >= 0x050000
-//#include <QJsonDocument>
-//#include <QJsonArray>
-//#include <QJsonValue>
-//#include <QJsonObject>
-//#include <QJsonParseError>
-//#include <QHash>
-//#endif
-
-//#if QT_VERSION < 0x050000
-#include "parser.h"
-
-//#endif
-
 #include <QFile>
 
 #define FIRST_MENU_NUMBER 9
@@ -45,7 +31,7 @@ public:
     QList<QToolBox*> toolBox;
     QList<QListView*> menuList;
     QList<QStandardItemModel*> modelList;
-    QStringList firstMenuData;   
+    QStringList firstMenuData;
 
     void setSecondMenuName(int i);
     void initSecondMenuItem(int i);
@@ -55,14 +41,7 @@ public:
     void read_json_file(QFile *file);
     void resize_height(int i);
     QStringList get_second_menu_list(int i);
-
-//#if QT_VERSION >= 0x050000
-//    QVariantHash firstMenuHash;
-//#endif
-
-//#if QT_VERSION < 0x050000
     QVariantMap firstMenuMap;
-//#endif
 
 private:
 

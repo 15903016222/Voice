@@ -1,5 +1,5 @@
-#ifndef PUSHBOTTONDELEGATE
-#define PUSHBOTTONDELEGATE
+#ifndef PUSHBUTTONDELEGATE
+#define PUSHBUTTONDELEGATE
 
 #include <QStyledItemDelegate>
 
@@ -20,4 +20,4 @@ public:
 
 };
 
-#endif // PUSHBOTTONDELEGATE
+#endif // PUSHBUTTONDELEGATE

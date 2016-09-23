@@ -1,7 +1,5 @@
 #include "doublespinboxdelegate.h"
 
-#include <QDebug>
-
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {

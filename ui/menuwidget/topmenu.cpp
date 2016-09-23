@@ -3,8 +3,6 @@
 
 #include "doublespinboxdelegate.h"
 
-#include <QFile>
-
 TopMenu :: TopMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TopMenu)
@@ -37,7 +35,7 @@ void TopMenu::initUI()
 
 void TopMenu::setTopMenuFont()
 {
-    for(int i = 1; i <= TOP_MENU_NUMBER; i ++) {
+    for(int i = 1; i <= TOP_MENU_NUMBER; i ++){
         QLabel *label = findChild<QLabel*>("label_" + QString::number(i));
         measurementLabelList.append(label);
 
@@ -49,12 +47,12 @@ void TopMenu::setTopMenuFont()
             text1 = str.left(index);
             text2 = str.right(str.length() - index - 1);
 
-            if(i == 1 || i == TOP_MENU_NUMBER) {
+            if(i == 1 || i == TOP_MENU_NUMBER){
                 label->setText("<font color=yellow face='Times New Roman' style=font-size:14pt>"
                                +text1+
                                "</font><br><font color=yellow face='Times New Roman' style=font-size:12pt>"
                                +text2+"</font>");
-            } else {
+            }else{
                 label->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
                                +text1+
                                "</font><br><font color=white face='Times New Roman' style='font-size:12pt'>"

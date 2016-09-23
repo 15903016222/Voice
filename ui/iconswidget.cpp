@@ -6,6 +6,10 @@ IconsWidget::IconsWidget(QWidget *parent) :
     ui(new Ui::IconsWidget)
 {
     ui->setupUi(this);
+
+//    connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
+//    connect(m_mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
+//    connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
 }
 
 IconsWidget::~IconsWidget()
@@ -35,37 +39,35 @@ void IconsWidget::on_pushButton_scan_clicked()
     scan = !scan;
 }
 
-void IconsWidget::showBattery()
+void IconsWidget::do_temperature_event(Mcu::TemperatureType type, int value)
 {
-#if 0
-    SYSTEM_POWER_STATUS systemPowerSatus;
-    GetSystemPowerStatus(&systemPowerSatus);
-    int remaindPower = (int)systemPowerSatus.BatteryLifePercent;
+    if (type == Mcu::TEMPERATURE_CPU) {
+        ui->label_temperature->setNum(value);
+    } /*else if (type == Mcu::TEMPERATURE_FPGA) {
+        ui->labelFpgaTemp->setNum(value);
+    } else if (type == Mcu::TEMPERATURE_MCU) {
+        ui->labelMcuTemp->setNum(value);
+    } else if (type == Mcu::TEMPERATURE_POWER) {
+        ui->labelPowerTemp->setNum(value);
+    }*/
 
-    if(remaindPower > 75)
-    {
-        QPixmap pixmapBattery(":/file/resources/battery2.jpg");
-        ui->label_2->setPixmap(pixmapBattery);
+}
+
+void IconsWidget::do_battery_status_event(int index, Mcu::BatteryStatus status)
+{
+    static QString statusList[4] = {"Discharge", "Charge", "No Battery", "Full"};
+    if (index == 0) {
+        ui->label_battery1->setText(statusList[status]);
+    } else if (index == 1) {
+        ui->label_battery2->setText(statusList[status]);
     }
-    else if(remaindPower > 50 && remaindPower <= 75)
-    {
-        QPixmap pixmapBattery(":/file/resources/BatteryIcon2.png");
-        ui->label_1->setPixmap(pixmapBattery);
+}
+
+void IconsWidget::do_battery_quantity_event(int index, int value)
+{
+    if (index == 0) {
+        ui->label_battery1->setNum(value);
+    } else if (index == 1) {
+        ui->label_battery2->setNum(value);
     }
-    else if(remaindPower > 25 && remaindPower <= 50)
-    {
-        QPixmap pixmapBattery(":/file/resources/BatteryIcon1.png");
-        ui->label_1->setPixmap(pixmapBattery);
-    }
-    else if(remaindPower > 0 && remaindPower <= 25)
-    {
-        QPixmap pixmapBattery(":/file/resources/BatteryIcon1.png");
-        ui->label_1->setPixmap(pixmapBattery);
-    }
-    else
-    {
-        QPixmap pixmapBattery(":/file/resources/BatteryIcon1.png");
-        ui->label_2->setPixmap(pixmapBattery);
-    }
-#endif
 }

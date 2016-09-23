@@ -2,7 +2,6 @@
 #define COMBOBOXDELEGATE_H
 
 #include <QStyledItemDelegate>
-#include <QWidget>
 
 class ComboBoxDelegate : public QStyledItemDelegate
 {
@@ -14,6 +13,7 @@ public:
     void setEditorData(QWidget *editor, const QModelIndex &index)const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index)const;
+
     void set_comboBox_item_list(QStringList stringList);
     void set_model_item_list(QStringList stringList);
     void set_minimum_contents_length(int width);

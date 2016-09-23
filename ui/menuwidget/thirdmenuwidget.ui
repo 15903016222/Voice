@@ -74,7 +74,7 @@
          <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
-         <string notr="true">QTableView{	
+         <string notr="true">QTableView{
 	background-color: rgba(255, 255, 255, 0)
 }
 </string>

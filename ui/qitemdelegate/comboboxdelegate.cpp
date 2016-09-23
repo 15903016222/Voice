@@ -1,7 +1,6 @@
 #include "comboboxdelegate.h"
 
 #include <QComboBox>
-#include <QDebug>
 
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -71,6 +70,7 @@ void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 void ComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     editor->setGeometry(option.rect);
+
     Q_UNUSED(index);
 }
 
@@ -86,7 +86,7 @@ void ComboBoxDelegate::set_model_item_list(QStringList stringList)
 
 int ComboBoxDelegate::find_list_index(QStringList stringList, QString string) const
 {
-    int index;
+    int index = 0;
     for(int i = 0; i < stringList.count(); i ++) {
         if(string == stringList.at(i)) {
             index = i;
