@@ -8,6 +8,7 @@
 #include "wedgedialog.h"
 #include "myinputpanel.h"
 #include "measurementdialog.h"
+#include "inputpanelcontext.h"
 
 #include "serializer.h"
 
@@ -217,6 +218,35 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
                 break;
             }
+//            case 6: {
+//                //切换字on/off
+//                QVariantList tmpList = subVariantMap["label"].toList();
+//                QStringList switchList;
+//                if(tmpList.size() != 0) {
+//                    for(int index = 0; index < tmpList.size(); index ++) {
+//                    QMap<QString, QVariant> map = tmpList.at(index).toMap();
+//                    QVariant result = map.value(thirdMenuString);
+//                    switchList.append(result.toString());
+//                    }
+//                } else {
+//                    switchList.append("");
+//                }
+
+//                PushButtonDelegate *pushButton = new PushButtonDelegate(this);
+
+//                QStandardItem *item;
+//                if(subCacheMap.contains(thirdMenuString)) {
+//                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
+//                } else {
+//                    item = new QStandardItem(QString("On"));
+//                }
+
+//                model->setItem(0, k, item);
+//                model->item(0, k)->setFlags(Qt::NoItemFlags);
+//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                ui->tableView->setItemDelegateForColumn(k, pushButton);
+//                break;
+//            }
             default:
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 QStandardItem *item = new QStandardItem(QString(""));
@@ -333,10 +363,17 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         wedgeDialog->show();
     } else if(subVariantMap["style"].toString().toInt() == 6) {
         //点击表头弹出软键盘
-        MyInputPanel inputPanel;
-        inputPanel.setWindowFlags(Qt::FramelessWindowHint);
-        inputPanel.showNormal();
-        inputPanel.exec();
+//        MyInputPanel inputPanel;
+//        inputPanel.setWindowFlags(Qt::FramelessWindowHint);
+//        inputPanel.showNormal();
+//        inputPanel.exec();
+        InputPanelContext *inputPanel = new InputPanelContext(this);
+        inputPanel->show();
+
+
+        inputIndex = index;
+        connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
+
     } else if(subVariantMap["style"].toString().toInt() == 7) {
         //点击表头弹出测量值选择对话框
         MeasurementDialog *measurementDialog = new MeasurementDialog(this);
@@ -517,8 +554,18 @@ void ThirdMenuWidget::change_measurement_label(QString string)
     }
 }
 
-void ThirdMenuWidget::cache_menu_data()
+void ThirdMenuWidget::set_edited_text(QString string)
 {
+    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+        if(i == inputIndex) {
+            model->item(0, i)->setText(string);
+            break;
+        }
+    }
+}
+
+//void ThirdMenuWidget::cache_menu_data()
+//{
 //    QJson::Serializer serializer;
 //    bool ok;
 
@@ -557,4 +604,4 @@ void ThirdMenuWidget::cache_menu_data()
 //    } else {
 //        qCritical() << "Something went wrong:" << serializer.errorMessage();
 //    }
-}
+//}
