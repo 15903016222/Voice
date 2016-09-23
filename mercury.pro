@@ -32,6 +32,9 @@ INCLUDEPATH += $$PWD/ui/menuwidget
 INCLUDEPATH += $$PWD/ui/qitemdelegate
 INCLUDEPATH += $$PWD/ui/inputpanel
 
+INCLUDEPATH += $$PWD/lib/qjson/lib
+DEPENDPATH += $$PWD/lib/qjson/lib
+
 SOURCES += \
     main.cpp \
     ui/mainwindow.cpp \
@@ -119,11 +122,12 @@ win32 {
 #    LIBS += -lglib-2.0
 #    DEFINES += QtGStreamer_Static
 
-    CONFIG(release, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
-    else:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+#    CONFIG(release, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
+#    else:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
 
-    INCLUDEPATH += $$PWD/lib/qjson/lib
-    DEPENDPATH += $$PWD/lib/qjson/lib
+#    INCLUDEPATH += $$PWD/lib/qjson/lib
+#    DEPENDPATH += $$PWD/lib/qjson/lib
+    LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
 }
 
 macx {
@@ -198,6 +202,3 @@ DISTFILES += \
 
 
 unix: LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
-
-INCLUDEPATH += $$PWD/lib/qjson/lib
-DEPENDPATH += $$PWD/lib/qjson/lib
