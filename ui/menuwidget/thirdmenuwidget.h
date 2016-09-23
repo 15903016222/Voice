@@ -55,6 +55,9 @@ public:
 
 private:
 
+signals:
+    void inputItemCurrentText(QString);
+
 public slots:
 
 private slots:

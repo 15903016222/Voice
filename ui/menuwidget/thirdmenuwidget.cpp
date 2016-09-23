@@ -218,35 +218,6 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
                 break;
             }
-//            case 6: {
-//                //切换字on/off
-//                QVariantList tmpList = subVariantMap["label"].toList();
-//                QStringList switchList;
-//                if(tmpList.size() != 0) {
-//                    for(int index = 0; index < tmpList.size(); index ++) {
-//                    QMap<QString, QVariant> map = tmpList.at(index).toMap();
-//                    QVariant result = map.value(thirdMenuString);
-//                    switchList.append(result.toString());
-//                    }
-//                } else {
-//                    switchList.append("");
-//                }
-
-//                PushButtonDelegate *pushButton = new PushButtonDelegate(this);
-
-//                QStandardItem *item;
-//                if(subCacheMap.contains(thirdMenuString)) {
-//                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
-//                } else {
-//                    item = new QStandardItem(QString("On"));
-//                }
-
-//                model->setItem(0, k, item);
-//                model->item(0, k)->setFlags(Qt::NoItemFlags);
-//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-//                ui->tableView->setItemDelegateForColumn(k, pushButton);
-//                break;
-//            }
             default:
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 QStandardItem *item = new QStandardItem(QString(""));
@@ -367,11 +338,14 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 //        inputPanel.setWindowFlags(Qt::FramelessWindowHint);
 //        inputPanel.showNormal();
 //        inputPanel.exec();
-        InputPanelContext *inputPanel = new InputPanelContext(this);
+        InputPanelContext *inputPanel = new InputPanelContext(this);       
+        inputPanel->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         inputPanel->show();
 
-
-        inputIndex = index;
+        inputIndex = index;        
+        connect(this, SIGNAL(inputItemCurrentText(QString)), inputPanel, SLOT(set_item_current_text(QString)));
+        QString text = model->item(0, index)->text();
+        emit inputItemCurrentText(text);
         connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
 
     } else if(subVariantMap["style"].toString().toInt() == 7) {
