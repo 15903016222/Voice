@@ -38,8 +38,11 @@ public:
 
     bool eventFilter(QObject *object, QEvent *event);
 
+signals:
+    void currentDialogIndex(QString);
+
 private slots:
-    void changeLabelText(QString str);
+    void changeLabelText(QString str);    
 
 };
 

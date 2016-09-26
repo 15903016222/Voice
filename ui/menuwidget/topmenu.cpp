@@ -3,6 +3,9 @@
 
 #include "doublespinboxdelegate.h"
 
+#include <QLabel>
+#include <QDebug>
+
 TopMenu :: TopMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TopMenu)
@@ -167,6 +170,23 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             mDialog->setModal(true);
             mDialog->setWindowFlags(Qt::FramelessWindowHint);
             mDialog->show();
+
+            connect(this, SIGNAL(currentDialogIndex(QString)), mDialog, SLOT(set_current_index(QString)));
+            QLabel *label = qobject_cast<QLabel*>(object);
+            QString string = label->text();
+            if(string.contains("<font color=white face='Times New Roman' style='font-size:14pt'>")) {
+                QString string1 = "<font color=white face='Times New Roman' style='font-size:14pt'>";
+                QString text1 = string.right(string.length() - string.indexOf(string1) - string1.length());
+                QString text2;
+                if(text1.contains("</font><br>")) {
+                    text2 = text1.left(text1.indexOf("</font><br>"));
+                } else if(text1.contains("</font>")) {
+                    text2 = text1.left(text1.indexOf("</font>"));
+                }
+                emit currentDialogIndex(text2);
+            } else {
+                emit currentDialogIndex(string);
+            }
             connect(mDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(changeLabelText(QString)));
         }
     }
