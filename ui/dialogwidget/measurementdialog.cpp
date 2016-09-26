@@ -1,6 +1,8 @@
 #include "measurementdialog.h"
 #include "ui_measurementdialog.h"
 
+#include <QDebug>
+
 #define MEASUREMENT_NUMBER 54
 static const char* MEASUREMENT_STRING[MEASUREMENT_NUMBER] =
 {
@@ -84,8 +86,7 @@ void MeasurementDialog::initUI()
 
     measurementModel = new QStandardItemModel(this);
 
-    for(int i = 0; i < MEASUREMENT_NUMBER; i++)
-    {
+    for(int i = 0; i < MEASUREMENT_NUMBER; i++) {
         measurementList.append(tr(MEASUREMENT_STRING[i]));
 
         QString string = static_cast<QString>(measurementList.at(i));
@@ -96,21 +97,19 @@ void MeasurementDialog::initUI()
 
         QString str = MEASUREMENT_STRING[i];
 
-        if(str.contains(" ") == true)
-        {
+        if(str.contains(" ") == true) {
             int index = str.indexOf(" ");
             QString text = str.left(index);
 
-            if(str.contains("%") || str.contains("Percentage"))
-            {
+            if(str.contains("%") || str.contains("Percentage")) {
                 text = text + "\n(%)";
-            }else if(str.contains("dB")){
+            } else if(str.contains("dB")) {
                 text = text + "\n(dB)";
-            }else{
+            } else {
                 text = text + "\n(mm)";
             }
             labelMap.insert(text, tr(MEASUREMENT_STRING[i]));
-        }else{
+        } else {
             labelMap.insert(str, tr(MEASUREMENT_STRING[i]));
         }
     }
@@ -136,8 +135,7 @@ void MeasurementDialog::on_pushButton_cancel_clicked()
 
 void MeasurementDialog::on_pushButton_ok_clicked()
 {
-    if(changedFlag)
-    {
+    if(changedFlag) {
         close();
         emit labelTextChanged(changedString);
     }
@@ -146,6 +144,30 @@ void MeasurementDialog::on_pushButton_ok_clicked()
 void MeasurementDialog::slot_listViewItemClicked(QModelIndex index)
 {
     changedFlag = true;
-    QStandardItem *item = measurementModel->itemFromIndex(index);
-    changedString = labelMap.key(item->text());
+    for(int i = 0; i < MEASUREMENT_NUMBER; i++) {
+        QModelIndex modelIndex = measurementModel->index(i, 0);
+        QStandardItem *item = measurementModel->itemFromIndex(modelIndex);
+
+        if(modelIndex == index) {
+            item->setForeground(QBrush(Qt::red));
+            listView->setCurrentIndex(index);
+            changedString = labelMap.key(item->text());
+        } else {
+            item->setForeground(QBrush(Qt::black));
+        }
+    }
+}
+
+void MeasurementDialog::set_current_index(QString string)
+{
+    for(int i = 0; i < MEASUREMENT_NUMBER; i ++) {
+        QString longString = MEASUREMENT_STRING[i];
+        if(longString.contains(string)) {
+            QStandardItem *item = measurementModel->item(i);
+            QModelIndex modelIndex = measurementModel->indexFromItem(item);
+            listView->setCurrentIndex(modelIndex);
+            item->setForeground(QBrush(Qt::red));
+            break;
+        }
+    }
 }
