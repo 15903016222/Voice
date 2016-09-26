@@ -4,7 +4,7 @@
 #ifdef PHASCAN_II
 #include "imx_fpga.h"
 #else /* PHASCAN */
-#include "omap_fpga.h"
+#include "phascan_fpga.h"
 #endif
 
 #include <QDebug>
@@ -20,7 +20,7 @@ Fpga *Fpga::get_fpga(void)
 #ifdef PHASCAN_II
         m_fpga = new ImxFpga());
 #elif PHASCAN
-        m_fpga = new OmapFpga();
+        m_fpga = new PhascanFpga();
 #else
 #error("Not Specify Device")
 #endif

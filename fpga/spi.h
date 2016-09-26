@@ -1,8 +1,9 @@
 #ifndef SPI_H
 #define SPI_H
 
-#include <QIODevice>
 #include <QFile>
+#include <QMutex>
+
 class Spi : public QFile
 {
     Q_OBJECT
@@ -16,11 +17,8 @@ public:
     };
 
     Spi():QFile() {}
-//    bool open()
     bool set_mode(SpiMode mode);
     SpiMode mode();
-
-private:
 };
 
 #endif // SPI_H

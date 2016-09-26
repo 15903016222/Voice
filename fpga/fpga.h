@@ -78,7 +78,7 @@ public:
     virtual bool alarm_output2_enable() const = 0;
     virtual bool alarm_output3_enable() const = 0;
     virtual bool alarm_analog1_enable() const = 0;
-    virtual bool alarm_analog1_enable() const = 0;
+    virtual bool alarm_analog2_enable() const = 0;
     virtual short alarm_output1_logic_group() const = 0;    /* 16组报警逻辑组使能位 */
     virtual short alarm_output2_logic_group() const = 0;
     virtual short alarm_output3_logic_group() const = 0;
@@ -115,8 +115,8 @@ public:
     virtual int alarm_output2_hold_time() const = 0;        /* 保持时间，单位us */
     virtual int alarm_output3_hold_time() const = 0;        /* 保持时间，单位us */
 
-    virtual short alarm_analog1_logic_group() const = 0;    /* 16组报警逻辑组使能位 */
-    virtual short alarm_analog2_logic_group() const = 0;    /* 16组报警逻辑组使能位 */
+//    virtual short alarm_analog1_logic_group() const = 0;    /* 16组报警逻辑组使能位 */
+//    virtual short alarm_analog2_logic_group() const = 0;    /* 16组报警逻辑组使能位 */
 
     enum AnalogType {
         ANALOG_GATE_A       = 0b001,                        /* A闸门峰值 */
@@ -129,72 +129,13 @@ public:
     virtual int factor_echo() const = 0;                    /* 回波数 */
 
     /* Group */
-    virtual int freq_band(int group) const = 0;             /* 频带选择 */
-    virtual bool video_filter(int group) const = 0;         /* 视频滤波 */
-    enum RectifierType {
-        RF,
-        POSITIVE_HW,
-        NEGATIVE_HW,
-        FULL_WAVE
-    };
-    virtual RectifierType rectifier(int group) const = 0;
-    virtual int compress_rato(int group) const = 0;
-    virtual int gain(int group) const = 0;
-    virtual int thickness_factor(int group) const = 0;
-    virtual bool ut1(int group) const = 0;
-    virtual bool ut2(int group) const = 0;
-    virtual bool pa(int group) const = 0;
-    virtual int sum_gain(int group) const = 0;
-    virtual int sample_range(int group) const = 0;
-    virtual int point_qty(int group) const = 0;
-    virtual int tcg_point_qty(int group) const = 0;
-    virtual int tcg(int group) const = 0;
-    virtual int rx_time(int group) const = 0;
-    virtual int idel_time(int group) const = 0;
-    virtual int gate_a_height(int group) const = 0;
-    virtual int gate_a_logic(int group) const = 0;
-    virtual int gate_b_height(int group) const = 0;
-    virtual int gate_b_logic(int group) const = 0;
-    virtual int gate_i_height(int group) const = 0;
-    virtual int gate_i_logic(int group) const = 0;
-    virtual int thickness_min(int group) const = 0;
-    virtual int reject(int group) const = 0;
-    virtual int sample_start(int group) const = 0;
-    virtual int average(int group) const = 0;
-    virtual int thickness_max(int group) const = 0;
-    virtual int thickness_source(int group) const = 0;
-    virtual int tx_end(int group) = 0;
-    virtual int tx_start(int group) = 0;
 
-    /* Focal Law */
-    virtual int gain_offset(int beam) const = 0;
-    virtual int group_id(int beam) const = 0;
-    virtual int all_beam_info(int beam) const = 0;
-    virtual int beam_delay(int beam) const = 0;
-    virtual int gate_a_start(int beam) const = 0;
-    virtual int gate_a_end(int beam) const = 0;
-    virtual int gate_b_start(int beam) const = 0;
-    virtual int gate_b_end(int beam) const = 0;
-    virtual int gate_i_start(int beam) const = 0;
-    virtual int gate_i_end(int beam) const = 0;
-    virtual int tx(int beam) const = 0;
-    virtual int rx(int beam) const = 0;
-    virtual int64_t rx_sel(int beam) const = 0;
-    virtual int64_t tx_sel(int beam) const = 0;
-    virtual int tx_delay(int beam, int channel) const = 0;
-    virtual int rx_delay(int beam, int channel) const = 0;
-    virtual int tcg_position(int beam, int point) const = 0;
-    virtual int tcg_pregain(int beam, int point) const = 0;
-    virtual int tcg_slope(int beam, int point) const = 0;
-    virtual int tcg_flag(int beam, int point) const = 0;
 
+    virtual bool send(const char *data, int len) = 0;
 
 protected:
     Fpga() {}
-//    Fpga(const Fpga& fpga){Q_UNUSED(fpga);}
-//    Fpga & operator=(const Fpga &fpga) {Q_UNUSED(fpga);}
     virtual ~Fpga() {}
-
 
 private:
     static QMutex m_mutex;
