@@ -24,6 +24,11 @@ private:
     Mcu *m_mcu;
 
 public:
+    int status_batteryFirst;
+    int status_batterySecond;
+
+    void insert_battery1_icon(int value);
+    void insert_battery2_icon(int value);
 
 signals:
 

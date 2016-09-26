@@ -114,6 +114,9 @@ win32 {
 unix {
     LIBS += -L$$PWD/lib/qjson/lib/ -lqjson
     PRE_TARGETDEPS += $$PWD/lib/qjson/lib/libqjson.a
+
+    INCLUDEPATH += /stuff/bitbake/bin/tmp/sysroots/i686-linux/usr/qt-4.8.6/lib/
+    LIBS += -lQtGui
 }
 
 message($$CONFIG)

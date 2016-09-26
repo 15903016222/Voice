@@ -111,7 +111,7 @@
          <item row="0" column="0">
           <widget class="QLabel" name="label_battery1">
            <property name="styleSheet">
-            <string notr="true">border-image: url(:/file/resources/battery1.jpg);</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string/>
@@ -176,7 +176,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="label_battery2">
            <property name="styleSheet">
-            <string notr="true">border-image: url(:/file/resources/battery2.jpg);</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string/>
