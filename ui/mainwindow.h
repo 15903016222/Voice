@@ -60,7 +60,8 @@ private:
     Mcu *m_mcu;
 
 protected slots:
-    void menuKey(int key);
+    void menu_iconKey(int key);
+    void menu_key(int key);
 
 private slots:
     void slot_firstMenuToolBoxCurrentChanged(int index);

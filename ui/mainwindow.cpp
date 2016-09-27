@@ -32,7 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     initUI();
 
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(menuKey(int)));
+    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(menu_iconKey(int)));
+    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(menu_key(int)));
 }
 
 MainWindow::~MainWindow()
@@ -89,11 +90,19 @@ void MainWindow::initUI()
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
 }
 
-void MainWindow::menuKey(int key)
+void MainWindow::menu_iconKey(int key)
 {
     if(key == 227){
         show_hidden_Menu();
     }
+}
+
+void MainWindow::menu_key(int key)
+{
+    if(key == 210){
+        show_hidden_Menu();
+    }
+
 }
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
