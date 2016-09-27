@@ -8,11 +8,7 @@
 #include "wedgedialog.h"
 #include "myinputpanel.h"
 #include "measurementdialog.h"
-
 #include "inputpanelcontext.h"
-#include "serializer.h"
-
-#include <QResizeEvent>
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
@@ -287,7 +283,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
-        int stepIndex;
+        int stepIndex = 0;
         QStringList stringList = doubleSpinBox->stepList;
         for(int i = 0; i < stringList.count(); i ++) {
             if(currentStep == stringList.at(i)) {
@@ -457,6 +453,7 @@ QList<QStringList> ThirdMenuWidget::get_comboBox_option_list(QVariantMap variant
 
 QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
 {
+    Q_UNUSED(index);
     QString newString;
     if(ui->tableView->horizontalHeader()->fontMetrics().width(string) >= width / 6) {
         QString leftText, rightText;

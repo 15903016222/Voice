@@ -174,7 +174,7 @@ void CommonMenuWidget::onHeaderClicked(int index)
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
-        int stepIndex;
+        int stepIndex = 0;
         QStringList stringList = doubleSpinBox->stepList;
         for(int i = 0; i < stringList.count(); i ++) {
             if(currentStep == stringList.at(i)) {
