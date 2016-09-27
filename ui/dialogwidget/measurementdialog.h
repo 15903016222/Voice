@@ -40,6 +40,7 @@ private slots:
     void on_pushButton_cancel_clicked();
     void on_pushButton_ok_clicked();
     void slot_listViewItemClicked(QModelIndex index);
+    void set_current_index(QString string);
 
 };
 

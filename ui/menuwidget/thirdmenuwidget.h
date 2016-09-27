@@ -40,19 +40,23 @@ public:
     int height;
     int currFirstNum;
     int currSecondNum;
+    int measurementIndex;
+    int inputIndex;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
-
     QVariantMap thirdMenuMap;
     QVariantMap fourthMenuMap;
     QVariantMap menuCacheMap;
     QString firstMenuString;
     QString secondMenuString;
     QString relatedMenuString;
-    int measurementIndex;
+
 
 private:
+
+signals:
+    void inputItemCurrentText(QString);
 
 public slots:
 
@@ -63,6 +67,7 @@ private slots:
     void set_header_text_close(QWidget *editor) ;
     void on_tableView_clicked(const QModelIndex &index);
     void change_measurement_label(QString string);
+    void set_edited_text(QString string);
 };
 
 #endif // THIRDMENUWIDGET_H

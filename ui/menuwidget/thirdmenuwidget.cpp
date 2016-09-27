@@ -9,6 +9,10 @@
 #include "myinputpanel.h"
 #include "measurementdialog.h"
 
+#include "inputpanelcontext.h"
+#include "serializer.h"
+
+#include <QResizeEvent>
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
@@ -30,7 +34,7 @@ QWidget(parent),
     QString stringTwo = fileTwo->readAll();
 
     fourthMenuMap = read_json_file(stringTwo);
-	fileTwo->close();
+    fileTwo->close();
 
     initStandardModel();
     setThirdMenuName(0, 0);
@@ -319,10 +323,16 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         wedgeDialog->show();
     } else if(subVariantMap["style"].toString().toInt() == 6) {
         //点击表头弹出软键盘
-        MyInputPanel inputPanel;
-        inputPanel.setWindowFlags(Qt::FramelessWindowHint);
-        inputPanel.showNormal();
-        inputPanel.exec();
+        InputPanelContext *inputPanel = new InputPanelContext(this);
+        inputPanel->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        inputPanel->show();
+
+        inputIndex = index;
+        connect(this, SIGNAL(inputItemCurrentText(QString)), inputPanel, SLOT(set_item_current_text(QString)));
+        QString text = model->item(0, index)->text();
+        emit inputItemCurrentText(text);
+        connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
+
     } else if(subVariantMap["style"].toString().toInt() == 7) {
         //点击表头弹出测量值选择对话框
         MeasurementDialog *measurementDialog = new MeasurementDialog(this);
@@ -451,9 +461,9 @@ QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
     if(ui->tableView->horizontalHeader()->fontMetrics().width(string) >= width / 6) {
         QString leftText, rightText;
         if(string.contains(" ")) {
-            index = string.indexOf(" ");
-            leftText = string.left(index);
-            rightText = string.right(string.length() - index - 1);
+            int blankIndex = string.indexOf(" ");
+            leftText = string.left(blankIndex);
+            rightText = string.right(string.length() - blankIndex - 1);
 //            model->setHeaderData(index, Qt::Horizontal, leftText + "\n" + rightText);
             newString = leftText + "\n" + rightText;
         }
@@ -498,6 +508,16 @@ void ThirdMenuWidget::change_measurement_label(QString string)
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
         if(i == measurementIndex) {
             model->setHeaderData(measurementIndex, Qt::Horizontal, string);
+            break;
+        }
+    }
+}
+
+void ThirdMenuWidget::set_edited_text(QString string)
+{
+    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+        if(i == inputIndex) {
+            model->item(0, i)->setText(string);
             break;
         }
     }
