@@ -59,7 +59,7 @@ void IconsWidget::do_temperature_event(Mcu::TemperatureType type, int value)
     if (type == Mcu::TEMPERATURE_CPU) {
         QString temp_cpu;
         temp_cpu.append("c:");
-        temp_cpu.append(QString::number((double)value, 'f', 1));
+        temp_cpu.append(QString::number((double)value, 'f', 0));
         temp_cpu.append("°C");
         ui->label_1->setText(temp_cpu);
     } else if (type == Mcu::TEMPERATURE_FPGA) {
@@ -104,7 +104,7 @@ void IconsWidget::insert_battery1_icon(int value)
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b7.png);");
         }else if(value >= 80 && value < 90){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b8.png);");
-        }else if(value >= 90 && value < 100){
+        }else if(value >= 90 && value <= 100){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b9.png);");
         }
     }else if(status_batteryFirst == 1){
@@ -127,7 +127,7 @@ void IconsWidget::insert_battery1_icon(int value)
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc7.png);");
         }else if(value >= 80 && value < 90){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc8.png);");
-        }else if(value >= 90 && value < 100){
+        }else if(value >= 90 && value <= 100){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc9.png);");
         }
     }else if(status_batteryFirst == 2){

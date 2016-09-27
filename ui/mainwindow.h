@@ -54,14 +54,18 @@ public:
     int mainMenuStartPos;
     int mainMenuEndPos;
 
+    int keyValue;
+
 private:
     void initUI();
     QTranslator *translator;
     Mcu *m_mcu;
 
+
 protected slots:
-    void menu_iconKey(int key);
-    void menu_key(int key);
+    void keyBottom_menu(int key);
+    void keyLeft_menu(int key);
+    void keyLeft_back(int key);
 
 private slots:
     void slot_firstMenuToolBoxCurrentChanged(int index);
