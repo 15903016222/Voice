@@ -21,7 +21,7 @@ public:
 
 private:
     Ui::ProbeDialog *ui;
-    void initUI();
+    void init_ui();
 
 public:
     QListView *listView_1;
@@ -30,7 +30,7 @@ public:
     QStandardItemModel *probeModel;
     QList<QStandardItemModel*> probeModelList;
 
-    void insertProbe(int i);
+    void insert_probe(int i);
     int currentIndex;
 
 private slots:

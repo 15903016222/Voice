@@ -46,8 +46,8 @@ QWidget(parent),
 //    fileThree->close();
 
     height = this->geometry().height();
-    initStandardModel();
-    setThirdMenuName(0, 0);
+    init_standard_model();
+    set_third_menu_name(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 
@@ -58,12 +58,12 @@ ThirdMenuWidget::~ThirdMenuWidget()
     delete ui;
 }
 
-void ThirdMenuWidget::reTranslatorThirdMenuUi()
+void ThirdMenuWidget::retranslate_third_menu_ui()
 {
     ui->retranslateUi(this);
 }
 
-void ThirdMenuWidget::initStandardModel()
+void ThirdMenuWidget::init_standard_model()
 {
     model = new QStandardItemModel(1, THIRD_MENU_NUMBER, this);
     ui->tableView->setModel(model);
@@ -102,12 +102,12 @@ void ThirdMenuWidget::initStandardModel()
     ui->tableView->show();
 }
 
-void ThirdMenuWidget::setThirdMenuName(int i, int j)
+void ThirdMenuWidget::set_third_menu_name(int i, int j)
 {
 	currFirstNum = i;
 	currSecondNum = j;
 	model->clear();
-    initStandardModel();
+    init_standard_model();
 
     firstMenuString = widget->firstMenuData.at(i);
     secondMenuString = widget->get_second_menu_list(i).at(j);
@@ -115,7 +115,7 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
     set_model_item(0, thirdStringList.count());
 }
 
-void ThirdMenuWidget::widgetStyleChoice(int k)
+void ThirdMenuWidget::choose_widget_style(int k)
 {
     QString thirdMenuString = get_third_menu_list().at(k);
     QString subString = firstMenuString + "_" + secondMenuString;
@@ -241,7 +241,7 @@ void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
 {
     width = event->size().width();
     height = event->size().height();
-    setThirdMenuName(currFirstNum, currSecondNum);
+    set_third_menu_name(currFirstNum, currSecondNum);
 }
 
 QVariantMap ThirdMenuWidget::read_json_file(QString string)
@@ -504,7 +504,7 @@ void ThirdMenuWidget::set_model_item(int startIndex, int count)
 {
     for(int k = startIndex; k < THIRD_MENU_NUMBER; k ++) {
         if(count >= k + 1) {
-            widgetStyleChoice(k);
+            choose_widget_style(k);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
         } else {

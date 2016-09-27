@@ -24,7 +24,7 @@ CommonMenuWidget::CommonMenuWidget(QWidget *parent) :
     ui->setupUi(this);
     this->resize(800, 70);
     height = this->geometry().height();
-    setCommonMenuName();
+    set_common_menu_name();
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 
@@ -35,12 +35,12 @@ CommonMenuWidget::~CommonMenuWidget()
     delete ui;
 }
 
-void CommonMenuWidget::reTranslatorCommonMenuUi()
+void CommonMenuWidget::retranslate_common_menu_ui()
 {
     ui->retranslateUi(this);
 }
 
-void CommonMenuWidget::initStandardModel()
+void CommonMenuWidget::init_standard_model()
 {
     model = new QStandardItemModel(1, COMMON_MENU_NUMBER, this);
     ui->tableView->setModel(model);
@@ -81,19 +81,19 @@ void CommonMenuWidget::initStandardModel()
     ui->tableView->show();
 }
 
-void CommonMenuWidget::setCommonMenuName()
+void CommonMenuWidget::set_common_menu_name()
 {
-    initStandardModel();
+    init_standard_model();
     for(int k = 0; k < COMMON_MENU_NUMBER; k ++) {
         if(COMMON_MENU_STRING[k] != NULL) {
-            widgetStyleChoice(k);
+            choose_widget_style(k);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
         }
     }
 }
 
-void CommonMenuWidget::widgetStyleChoice(int k)
+void CommonMenuWidget::choose_widget_style(int k)
 {
     model->setHeaderData(k, Qt::Horizontal, tr(COMMON_MENU_STRING[k]));
     switch(CHOICE_WIDGET_CHAR[k].toInt()) {
@@ -160,7 +160,7 @@ void CommonMenuWidget::resizeEvent(QResizeEvent *event)
 {
     width = event->size().width();
     height = event->size().height();
-    setCommonMenuName();
+    set_common_menu_name();
 }
 
 void CommonMenuWidget::onHeaderClicked(int index)

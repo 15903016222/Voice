@@ -11,9 +11,9 @@ TopMenu :: TopMenu(QWidget *parent) :
     ui(new Ui::TopMenu)
 {
     ui->setupUi(this);
-    initUI();
+    init_ui();
 
-    initGain_angle();
+    init_gain_angle();
 
 }
 
@@ -22,21 +22,21 @@ TopMenu :: ~TopMenu()
     delete(ui);
 }
 
-void TopMenu::reTranslatorTopMenuUi()
+void TopMenu::retranslate_top_menu_ui()
 {
     ui->retranslateUi(this);
 }
 
-void TopMenu::initUI()
+void TopMenu::init_ui()
 {
-    setTopMenuFont();
+    set_top_menu_font();
 
     for(int i = 1; i < TOP_MENU_NUMBER; i ++) {
         measurementLabelList.at(i)->installEventFilter(this);
     }
 }
 
-void TopMenu::setTopMenuFont()
+void TopMenu::set_top_menu_font()
 {
     for(int i = 1; i <= TOP_MENU_NUMBER; i ++){
         QLabel *label = findChild<QLabel*>("label_" + QString::number(i));
@@ -65,7 +65,7 @@ void TopMenu::setTopMenuFont()
     }
 }
 
-void TopMenu::initGain_angle()
+void TopMenu::init_gain_angle()
 {
 #if QT_VERSION >= 0x050000
     ui->tableView_gain->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);

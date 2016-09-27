@@ -132,7 +132,7 @@ ProbeDialog::ProbeDialog(QWidget *parent) :
     ui(new Ui::ProbeDialog)
 {
     ui->setupUi(this);
-    initUI();
+    init_ui();
 }
 
 ProbeDialog::~ProbeDialog()
@@ -140,7 +140,7 @@ ProbeDialog::~ProbeDialog()
     delete ui;
 }
 
-void ProbeDialog::initUI()
+void ProbeDialog::init_ui()
 {
     probeTypeModel = new QStandardItemModel(this);
     QStringList probeTypeList;
@@ -169,11 +169,11 @@ void ProbeDialog::initUI()
     listView_1->setModel(probeTypeModel);
 
     currentIndex = 0;
-    insertProbe(currentIndex);
+    insert_probe(currentIndex);
     connect(listView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
 }
 
-void ProbeDialog::insertProbe(int i)
+void ProbeDialog::insert_probe(int i)
 {
     QStringList probeList;
     for(int j = 0; j < PROBE_NUMBER; j++){
@@ -203,7 +203,7 @@ void ProbeDialog::slot_listViewItemClicked(QModelIndex index)
     currentIndex = item->row();
 
     probeModelList.at(currentIndex)->clear();
-    insertProbe(currentIndex);
+    insert_probe(currentIndex);
     ui->label->clear();
 
     if(currentIndex < PROBETYPE_NUMBER-1){

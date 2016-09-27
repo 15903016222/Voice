@@ -31,7 +31,7 @@ public:
     bool changedFlag;
 
 private:
-    void initUI();
+    void init_ui();
 
 signals:
     void labelTextChanged(QString);

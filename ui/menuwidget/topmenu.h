@@ -30,11 +30,10 @@ public:
     QString objectName;
     ThirdMenuWidget *thirdMenuWidget;
 
-    void reTranslatorTopMenuUi();
-    void initUI();
-    void setTopMenuFont();
-    void initGain_angle();
-    void initStandardModel();
+    void retranslate_top_menu_ui();
+    void init_ui();
+    void set_top_menu_font();
+    void init_gain_angle();
 
     bool eventFilter(QObject *object, QEvent *event);
 

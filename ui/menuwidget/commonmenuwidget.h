@@ -23,11 +23,11 @@ private:
     Ui::CommonMenuWidget *ui;
 
 public:
-    void reTranslatorCommonMenuUi();
-    void initStandardModel();
-    void setCommonMenuName();
+    void retranslate_common_menu_ui();
+    void init_standard_model();
+    void set_common_menu_name();
     QStandardItemModel *model;
-    void widgetStyleChoice(int k);
+    void choose_widget_style(int k);
     void resizeEvent(QResizeEvent *event);
 
     int height;
