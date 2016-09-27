@@ -27,9 +27,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     d_ptr(new MainWindowPrivate(this))
 {
+    m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
     initUI();
+
+    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(menuKey(int)));
 }
 
 MainWindow::~MainWindow()
@@ -55,7 +58,9 @@ void MainWindow::initUI()
     hiddenCommonMenuFlag = false;
 
     firstSecondMenu = new FirstSecondMenuWidget(this);
- //   firstSecondMenu->resize_height(firstMenuNum);
+#if (QT_VERSION <= QT_VERSION_CHECK(5,0,0))
+    firstSecondMenu->resize_height(firstMenuNum);
+#endif
     commonMenuWidget = new CommonMenuWidget(this);
     commonMenuWidget->hide();
     commonMenuButton = new CommonMenuButton(this);
@@ -82,6 +87,13 @@ void MainWindow::initUI()
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
+}
+
+void MainWindow::menuKey(int key)
+{
+    if(key == 227){
+        show_hidden_Menu();
+    }
 }
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
@@ -244,21 +256,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     {
         if(event->type() == QEvent::MouseButtonPress) //QEvent::MouseButtonDblClick
         {
-            hiddenFirstSecondMenuFlag = !hiddenFirstSecondMenuFlag;
-            if(hiddenFirstSecondMenuFlag)
-            {
-                ui->widget_firstSecondMenu->show();
-                ui->widget_thirdMenu->show();
-                commonMenuWidget->hide();
-                hiddenCommonMenuFlag = false;
-                ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
-                firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
-                commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
-                arrowShowFlag();
-            }else{
-                ui->widget_firstSecondMenu->hide();
-                ui->widget_thirdMenu->hide();
-            }
+            show_hidden_Menu();
         }
     }
     return QWidget::eventFilter(object, event);
@@ -311,6 +309,25 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
             }
         }
         arrowShowFlag();
+    }
+}
+
+void MainWindow::show_hidden_Menu()
+{
+    hiddenFirstSecondMenuFlag = !hiddenFirstSecondMenuFlag;
+    if(hiddenFirstSecondMenuFlag)
+    {
+        ui->widget_firstSecondMenu->show();
+        ui->widget_thirdMenu->show();
+        commonMenuWidget->hide();
+        hiddenCommonMenuFlag = false;
+        ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
+        firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
+        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
+        arrowShowFlag();
+    }else{
+        ui->widget_firstSecondMenu->hide();
+        ui->widget_thirdMenu->hide();
     }
 }
 

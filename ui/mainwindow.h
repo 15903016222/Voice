@@ -4,6 +4,7 @@
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
+#include "mcu.h"
 
 #include <QMainWindow>
 #include <QTranslator>
@@ -37,6 +38,7 @@ public:
     FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
 
+    void show_hidden_Menu();
     void resizeEvent(QResizeEvent *event);
     void arrowShowFlag();
     void updateTranslator();
@@ -55,8 +57,10 @@ public:
 private:
     void initUI();
     QTranslator *translator;
+    Mcu *m_mcu;
 
-public slots:
+protected slots:
+    void menuKey(int key);
 
 private slots:
     void slot_firstMenuToolBoxCurrentChanged(int index);
