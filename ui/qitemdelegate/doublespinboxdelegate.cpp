@@ -3,6 +3,8 @@
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
+    m_mcu = Mcu::get_mcu();
+    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 }
 
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -85,4 +87,19 @@ void DoubleSpinBoxDelegate::commit_and_close_editor()
     QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
+}
+
+void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
+{
+    if(spinBoxList.size() != 0) {
+        QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+        double value = doubleSpinBox->value();
+
+        if (type == Mcu::ROTARY_UP) {
+            value = value + 1;
+        } else {
+            value = value - 1;
+        }
+        doubleSpinBox->setValue(value);
+    }
 }

@@ -1,6 +1,8 @@
 #ifndef DOUBLESPINBOXDELEGATE_H
 #define DOUBLESPINBOXDELEGATE_H
 
+#include "mcu.h"
+
 #include <QStyledItemDelegate>
 #include <QDoubleSpinBox>
 
@@ -26,12 +28,16 @@ public:
     QString step;
     int decimalAmount;
 
+private:
+    Mcu *m_mcu;
+
 signals:
     void createEditorHeaderText(QStringList) const;
     void closeEditorHeaderText(QModelIndex) const;
 
 private slots:
     void commit_and_close_editor();
+    void do_rotary_event(Mcu::RotaryType type);
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

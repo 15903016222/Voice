@@ -60,7 +60,7 @@ void MainWindow::initUI()
     hiddenCommonMenuFlag = false;
 
     firstSecondMenu = new FirstSecondMenuWidget(this);
-#if (QT_VERSION <= QT_VERSION_CHECK(5,0,0))
+#if QT_VERSION <= QT_VERSION_CHECK(5, 0, 0)
     firstSecondMenu->resize_height(firstMenuNum);
 #endif
     commonMenuWidget = new CommonMenuWidget(this);
