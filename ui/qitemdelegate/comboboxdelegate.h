@@ -1,6 +1,9 @@
 #ifndef COMBOBOXDELEGATE_H
 #define COMBOBOXDELEGATE_H
 
+#include "mcu.h"
+
+#include <QComboBox>
 #include <QStyledItemDelegate>
 
 class ComboBoxDelegate : public QStyledItemDelegate
@@ -19,15 +22,20 @@ public:
     void set_minimum_contents_length(int width);
     int find_list_index(QStringList stringList, QString string) const;
 
+    QList<QComboBox*> comboBoxList;
     QStringList itemList;
     QStringList modelItemList;
     int minimumContentLength;
+
+private:
+    Mcu *m_mcu;
 
 signals:
     void comboBox_current_text(QString);
 
 private slots:
     void commit_and_close_editor(const QString &str);
+    void do_rotary_event(Mcu::RotaryType type);
 };
 
 #endif // COMBOBOXDELEGATE_H

@@ -38,6 +38,8 @@ signals:
 private slots:
     void commit_and_close_editor();
     void do_rotary_event(Mcu::RotaryType type);
+    void key_sure(int key);
+    void editFinished();
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

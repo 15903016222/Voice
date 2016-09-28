@@ -1,10 +1,10 @@
 #include "comboboxdelegate.h"
 
-#include <QComboBox>
-
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
+    m_mcu = Mcu::get_mcu();
+  //  connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
 }
 
@@ -22,6 +22,8 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         "QComboBox QAbstractItemView{background-color:rgb(0, 130, 195);"
         "selection-color:yellow;}"
         "QComboBox QAbstractItemView::item{height:30px}");
+
+    (const_cast<ComboBoxDelegate *>(this))->comboBoxList.append(editor);
 
     int maxSize = 0;
     if(itemList.empty()) {
@@ -107,4 +109,29 @@ void ComboBoxDelegate::commit_and_close_editor(const QString &str)
     emit commitData(editor);
     emit closeEditor(editor);
     emit comboBox_current_text(str);
+}
+
+void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
+{
+  //  if(comboBoxList.size() != 0){
+        QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
+        int index = comboBox->currentIndex();
+
+        if(modelItemList.count() > 1){
+            if (type == Mcu::ROTARY_UP) {
+                if(index == 0){
+                    index = modelItemList.count() - 1;
+                }else {
+                    index = index - 1;
+                }
+            } else {
+                if(index == modelItemList.count() - 1){
+                    index = 0;
+                }else {
+                    index = index + 1;
+                }
+            }
+        }
+        comboBox->setCurrentIndex(index);
+  //  }
 }

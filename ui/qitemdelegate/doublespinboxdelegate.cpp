@@ -5,6 +5,7 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
 {
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(key_sure(int)));
 }
 
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -102,4 +103,22 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
         }
         doubleSpinBox->setValue(value);
     }
+}
+
+#include <QShortcut>
+void DoubleSpinBoxDelegate::key_sure(int key)
+{
+    if(key == 214){
+        if(spinBoxList.size() != 0) {
+            QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
+        }
+      //  QShortcut *key_return = new QShortcut(QKeySequence(Qt::Key_Return), doubleSpinBox);
+      //  connect(key_return, SIGNAL(activated()), this, SLOT());
+    }
+}
+
+void DoubleSpinBoxDelegate::editFinished()
+{
+
 }
