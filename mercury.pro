@@ -60,6 +60,7 @@ SOURCES += \
     ui/qitemdelegate/doublespinboxdelegate.cpp \
     ui/qitemdelegate/pushbuttondelegate.cpp \
     ui/dialogwidget/inputpanelcontext.cpp \
+    ui/dialogwidget/verticalsliderdialog.cpp \
     mcu/mcu.cpp \
     mcu/mcu_imx.cpp \
     mcu/mcu_omap.cpp
@@ -82,6 +83,7 @@ HEADERS += \
     ui/qitemdelegate/doublespinboxdelegate.h \
     ui/qitemdelegate/pushbuttondelegate.h \
     ui/dialogwidget/inputpanelcontext.h \
+    ui/dialogwidget/verticalsliderdialog.h \
     mcu/mcu.h \
     mcu/mcu_imx.h \
     mcu/mcu_omap.h \
@@ -101,7 +103,8 @@ FORMS += \
     ui/dialogwidget/timesetdialog.ui \
     ui/dialogwidget/probedialog.ui \
     ui/dialogwidget/wedgedialog.ui \
-    ui/dialogwidget/inputpanelcontext.ui
+    ui/dialogwidget/inputpanelcontext.ui \
+    ui/dialogwidget/verticalsliderdialog.ui
 
 DISTFILES += \
     ui/resources/menu.json \

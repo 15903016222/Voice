@@ -42,6 +42,7 @@ public:
     int currSecondNum;
     int measurementIndex;
     int inputIndex;
+    int brightIndex;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -68,6 +69,7 @@ private slots:
     void on_tableView_clicked(const QModelIndex &index);
     void change_measurement_label(QString string);
     void set_edited_text(QString string);
+    void setBrightValue(int value);
 };
 
 #endif // THIRDMENUWIDGET_H

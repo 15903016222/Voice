@@ -9,6 +9,7 @@
 #include "myinputpanel.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
+#include "verticalsliderdialog.h"
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
@@ -304,6 +305,17 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
+
+        if(currentHeaderText.contains("Bright")) {
+            VerticalSliderDialog *verticalSliderDialog = new VerticalSliderDialog(this);
+            verticalSliderDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+            verticalSliderDialog->show();
+
+            brightIndex = index;
+            QString text = model->item(0, brightIndex)->text();
+            verticalSliderDialog->setBrightValue(text);
+            connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
+        }
     } else if(subVariantMap["style"].toString().toInt() == 2) {
         QModelIndex modelIndex = model->item(0, index)->index();
         ui->tableView->edit(modelIndex);
@@ -515,6 +527,18 @@ void ThirdMenuWidget::set_edited_text(QString string)
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
         if(i == inputIndex) {
             model->item(0, i)->setText(string);
+            break;
+        }
+    }
+}
+
+void ThirdMenuWidget::setBrightValue(int value)
+{
+    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+        if(i == brightIndex) {
+            QString brightValue;
+            brightValue.append(QString::number((double)value, 'f', 0));
+            model->item(0, i)->setText(brightValue);
             break;
         }
     }
