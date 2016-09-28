@@ -128,11 +128,6 @@ public:
 
     virtual int factor_echo() const = 0;                    /* 回波数 */
 
-    /* Group */
-
-
-    virtual bool send(const char *data, int len) = 0;
-
 protected:
     Fpga() {}
     virtual ~Fpga() {}
