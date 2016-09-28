@@ -9,7 +9,6 @@
 #include "myinputpanel.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
-//#include "verticalsliderdialog.h"
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
@@ -38,8 +37,8 @@ QWidget(parent),
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 
-//    m_mcu = Mcu::get_mcu();
-//    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    m_mcu = Mcu::get_mcu();
+    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
 }
 
@@ -548,15 +547,16 @@ void ThirdMenuWidget::setBrightValue(int value)
             break;
         }
     }
+    m_mcu->set_brightness((char)value);
 }
 
-//void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
-//{
-//    int i = ui->verticalSliderBrightness->value();
-//    if (type == Mcu::ROTARY_UP) {
-//        ++i;
-//    } else {
-//        --i;
-//    }
-//    ui->verticalSliderBrightness->setValue(i);
-//}
+void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
+{
+    int i = verticalSliderDialog->slider.at(0)->value();
+    if (type == Mcu::ROTARY_UP) {
+        ++i;
+    } else {
+        --i;
+    }
+    verticalSliderDialog->slider.at(0)->setValue(i);
+}

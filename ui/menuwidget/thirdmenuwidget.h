@@ -62,7 +62,8 @@ private:
 signals:
     void inputItemCurrentText(QString);
 
-public slots:
+protected slots:
+    void do_rotary_event(Mcu::RotaryType type);
 
 private slots:
     void onHeaderClicked(int index);
@@ -73,7 +74,7 @@ private slots:
     void change_measurement_label(QString string);
     void set_edited_text(QString string);
     void setBrightValue(int value);
- //   void do_rotary_event(Mcu::RotaryType type);
+
 };
 
 #endif // THIRDMENUWIDGET_H
