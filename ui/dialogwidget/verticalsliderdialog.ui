@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>37</width>
+    <width>75</width>
     <height>325</height>
    </rect>
   </property>
@@ -17,8 +17,23 @@
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <widget class="QPushButton" name="pushButton_1">
+    <widget class="QPushButton" name="pushButton_add">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -31,20 +46,47 @@
     </widget>
    </item>
    <item>
-    <widget class="QSlider" name="verticalSlider">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="maximum">
-      <number>100</number>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QSlider" name="sliderBrightness">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="pushButton_decrease">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -56,8 +98,32 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_close">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_close</sender>
+   <signal>clicked()</signal>
+   <receiver>VerticalSliderDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>18</x>
+     <y>304</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>18</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

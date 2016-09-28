@@ -539,10 +539,11 @@ void ThirdMenuWidget::set_edited_text(QString string)
 
 void ThirdMenuWidget::setBrightValue(int value)
 {
+    QString brightValue;
+    brightValue.append(QString::number((double)value, 'f', 0));
+
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
         if(i == brightIndex) {
-            QString brightValue;
-            brightValue.append(QString::number((double)value, 'f', 0));
             model->item(0, i)->setText(brightValue);
             break;
         }
