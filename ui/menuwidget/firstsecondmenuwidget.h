@@ -2,6 +2,7 @@
 #define FIRSTSECONDMENUWIDGET_H
 
 #include "parser.h"
+#include "mcu.h"
 
 #include <QWidget>
 #include <QToolBox>
@@ -44,10 +45,12 @@ public:
     QVariantMap firstMenuMap;
 
 private:
+    Mcu *m_mcu;
 
 private slots:
 
 public slots:
+    void do_rotary_event(Mcu::RotaryType type);
 
 };
 

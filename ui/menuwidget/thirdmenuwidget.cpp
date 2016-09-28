@@ -9,7 +9,7 @@
 #include "myinputpanel.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
-#include "verticalsliderdialog.h"
+//#include "verticalsliderdialog.h"
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
@@ -37,6 +37,9 @@ QWidget(parent),
     setThirdMenuName(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
+
+//    m_mcu = Mcu::get_mcu();
+//    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
 }
 
@@ -307,7 +310,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         }
 
         if(currentHeaderText.contains("Bright")) {
-            VerticalSliderDialog *verticalSliderDialog = new VerticalSliderDialog(this);
+            verticalSliderDialog = new VerticalSliderDialog(this);
             verticalSliderDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
             verticalSliderDialog->show();
 
@@ -315,6 +318,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             QString text = model->item(0, brightIndex)->text();
             verticalSliderDialog->setBrightValue(text);
             connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
+        }else{
+            verticalSliderDialog->close();
         }
     } else if(subVariantMap["style"].toString().toInt() == 2) {
         QModelIndex modelIndex = model->item(0, index)->index();
@@ -543,3 +548,14 @@ void ThirdMenuWidget::setBrightValue(int value)
         }
     }
 }
+
+//void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
+//{
+//    int i = ui->verticalSliderBrightness->value();
+//    if (type == Mcu::ROTARY_UP) {
+//        ++i;
+//    } else {
+//        --i;
+//    }
+//    ui->verticalSliderBrightness->setValue(i);
+//}

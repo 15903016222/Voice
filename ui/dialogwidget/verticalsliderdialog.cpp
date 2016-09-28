@@ -7,7 +7,7 @@ VerticalSliderDialog::VerticalSliderDialog(QWidget *parent) :
     ui(new Ui::VerticalSliderDialog)
 {
     ui->setupUi(this);
-    slider.append(ui->verticalSlider);
+    slider.append(ui->sliderBrightness);
 }
 
 VerticalSliderDialog::~VerticalSliderDialog()
@@ -18,19 +18,19 @@ VerticalSliderDialog::~VerticalSliderDialog()
 void VerticalSliderDialog::setBrightValue(QString string)
 {
     int value = string.toInt();
-    ui->verticalSlider->setValue(value);
+    ui->sliderBrightness->setValue(value);
 }
 
-void VerticalSliderDialog::on_pushButton_1_clicked()
+void VerticalSliderDialog::on_pushButton_add_clicked()
 {
-    int i = ui->verticalSlider->value();
+    int i = ui->sliderBrightness->value();
     i = i + 10;
-    ui->verticalSlider->setValue(i);
+    ui->sliderBrightness->setValue(i);
 }
 
-void VerticalSliderDialog::on_pushButton_2_clicked()
+void VerticalSliderDialog::on_pushButton_decrease_clicked()
 {
-    int i = ui->verticalSlider->value();
+    int i = ui->sliderBrightness->value();
     i = i - 10;
-    ui->verticalSlider->setValue(i);
+    ui->sliderBrightness->setValue(i);
 }

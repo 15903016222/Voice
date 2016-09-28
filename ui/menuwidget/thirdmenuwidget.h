@@ -2,6 +2,7 @@
 #define THIRDMENUWIDGET_H
 
 #include "firstsecondmenuwidget.h"
+#include "verticalsliderdialog.h"
 
 #define THIRD_MENU_NUMBER 6
 
@@ -55,6 +56,8 @@ public:
 
 
 private:
+    VerticalSliderDialog *verticalSliderDialog;
+    Mcu *m_mcu;
 
 signals:
     void inputItemCurrentText(QString);
@@ -70,6 +73,7 @@ private slots:
     void change_measurement_label(QString string);
     void set_edited_text(QString string);
     void setBrightValue(int value);
+ //   void do_rotary_event(Mcu::RotaryType type);
 };
 
 #endif // THIRDMENUWIDGET_H

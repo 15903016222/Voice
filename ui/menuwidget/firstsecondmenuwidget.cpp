@@ -12,6 +12,9 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     read_json_file(file);
 
     initUI();
+
+    m_mcu = Mcu::get_mcu();
+ //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 }
 
 FirstSecondMenuWidget::~FirstSecondMenuWidget()
@@ -120,6 +123,19 @@ QStringList FirstSecondMenuWidget::get_second_menu_list(int i)
     QVariantList variantList = firstMenuMap.values(firstMenuData.at(i));
     QStringList stringList  = variantList.at(0).toStringList();
     return stringList;
+}
+
+void FirstSecondMenuWidget::do_rotary_event(Mcu::RotaryType type)
+{
+    //  int i = ui->verticalSliderBrightness->value();
+      int i = 0;
+   //   m_mcu->set_brightness((char)value);
+      if (type == Mcu::ROTARY_UP) {
+          ++i;
+      } else {
+          --i;
+      }
+   //   ui->verticalSliderBrightness->setValue(i);
 }
 
 void FirstSecondMenuWidget::resize_height(int i)
