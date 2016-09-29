@@ -56,7 +56,7 @@ bool PushButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
 {
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* e =(QMouseEvent*)event;
-        setSwitchFlag(index);
+        set_switch_flag(index);
         if (option.rect.adjusted(0, 0, 0, 0).contains(e->x(), e->y()) && buttonMap.contains(index)) {
             buttonMap.value(index)->state &= (~QStyle::State_Sunken);
 
@@ -87,7 +87,7 @@ void PushButtonDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewIt
     Q_UNUSED(text);
 }
 
-void PushButtonDelegate::setSwitchFlag(QModelIndex index)
+void PushButtonDelegate::set_switch_flag(QModelIndex index)
 {
     if(buttonMap.value(index)->text == "On") {
         switchFlag = true;

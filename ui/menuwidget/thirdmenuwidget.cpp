@@ -10,6 +10,8 @@
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
 
+#include <QDebug>
+
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
 	ui(new Ui::ThirdMenuWidget)
@@ -32,8 +34,9 @@ QWidget(parent),
     fourthMenuMap = read_json_file(stringTwo);
     fileTwo->close();
 
-    initStandardModel();
-    setThirdMenuName(0, 0);
+    height = this->geometry().height();   
+    init_standard_model();
+    set_third_menu_name(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
  //   connect(ui->tableView->horizontalHeader(), SIGNAL(sectionDoubleClicked(int)), this, SLOT(onHeaderClicked(int)), Qt::QueuedConnection);
@@ -48,12 +51,12 @@ ThirdMenuWidget::~ThirdMenuWidget()
     delete ui;
 }
 
-void ThirdMenuWidget::reTranslatorThirdMenuUi()
+void ThirdMenuWidget::retranslate_third_menu_ui()
 {
     ui->retranslateUi(this);
 }
 
-void ThirdMenuWidget::initStandardModel()
+void ThirdMenuWidget::init_standard_model()
 {
     model = new QStandardItemModel(1, THIRD_MENU_NUMBER, this);
     ui->tableView->setModel(model);
@@ -64,7 +67,6 @@ void ThirdMenuWidget::initStandardModel()
 #if QT_VERSION < 0x050000
     ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
-    height = this->geometry().height();
     ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
     ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
     ui->tableView->verticalHeader()->hide();
@@ -93,12 +95,12 @@ void ThirdMenuWidget::initStandardModel()
     ui->tableView->show();
 }
 
-void ThirdMenuWidget::setThirdMenuName(int i, int j)
+void ThirdMenuWidget::set_third_menu_name(int i, int j)
 {
 	currFirstNum = i;
 	currSecondNum = j;
 	model->clear();
-    initStandardModel();
+    init_standard_model();
 
     firstMenuString = widget->firstMenuData.at(i);
     secondMenuString = widget->get_second_menu_list(i).at(j);
@@ -106,7 +108,7 @@ void ThirdMenuWidget::setThirdMenuName(int i, int j)
     set_model_item(0, thirdStringList.count());
 }
 
-void ThirdMenuWidget::widgetStyleChoice(int k)
+void ThirdMenuWidget::choose_widget_style(int k)
 {
     QString thirdMenuString = get_third_menu_list().at(k);
     QString subString = firstMenuString + "_" + secondMenuString;
@@ -153,10 +155,8 @@ void ThirdMenuWidget::widgetStyleChoice(int k)
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
-                ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
-//                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditorHeaderText(QModelIndex)), this, SLOT(set_header_text_close(const QModelIndex)));
                 break;
             }
             case 2: {
@@ -232,7 +232,7 @@ void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
 {
     width = event->size().width();
     height = event->size().height();
-    setThirdMenuName(currFirstNum, currSecondNum);
+    set_third_menu_name(currFirstNum, currSecondNum);
 }
 
 QVariantMap ThirdMenuWidget::read_json_file(QString string)
@@ -279,13 +279,15 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
-    QModelIndex modelIndex = model->item(0, index)->index();
-    ui->tableView->edit(modelIndex);
-
-    if(subVariantMap["style"].toString().toInt() == 1) {
-
+    if(subVariantMap["style"].toString().toInt() == 1) {      
         //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+
+        if(!doubleSpinBox->editFlag) {
+            QModelIndex modelIndex = model->item(0, index)->index();
+            ui->tableView->edit(modelIndex);
+        }
+
         QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex = 0;
@@ -309,7 +311,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
-
         if(currentHeaderText.contains("Bright")) {
             verticalSliderDialog = new VerticalSliderDialog(this);
             verticalSliderDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -319,6 +320,11 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             QString text = model->item(0, brightIndex)->text();
             verticalSliderDialog->setBrightValue(text);
             connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
+    } else if(subVariantMap["style"].toString().toInt() == 2) {
+        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        if(!comboBox->editFlag) {
+            QModelIndex modelIndex = model->item(0, index)->index();
+            ui->tableView->edit(modelIndex);
         }
     } else if(subVariantMap["style"].toString().toInt() == 4) {
         //点击表头弹出探头选择对话框
@@ -343,6 +349,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         inputPanel->show();
 
         inputIndex = index;
+        connect(this, SIGNAL(inputItemCurrentText(QString)), inputPanel, SLOT(set_item_current_text(QString)));
         QString text = model->item(0, index)->text();
         inputPanel->set_item_current_text(text);
         connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
@@ -504,7 +511,7 @@ void ThirdMenuWidget::set_model_item(int startIndex, int count)
 {
     for(int k = startIndex; k < THIRD_MENU_NUMBER; k ++) {
         if(count >= k + 1) {
-            widgetStyleChoice(k);
+            choose_widget_style(k);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
         } else {
@@ -553,7 +560,7 @@ void ThirdMenuWidget::set_edited_text(QString string)
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
         if(i == inputIndex) {
             model->item(0, i)->setText(string);
-            break;
+            break;           
         }
     }
 }

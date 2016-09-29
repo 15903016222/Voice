@@ -26,6 +26,7 @@ public:
     QStringList itemList;
     QStringList modelItemList;
     int minimumContentLength;
+    bool editFlag;
 
 private:
     Mcu *m_mcu;

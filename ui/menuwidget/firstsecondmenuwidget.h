@@ -33,16 +33,15 @@ public:
     QList<QListView*> menuList;
     QList<QStandardItemModel*> modelList;
     QStringList firstMenuData;
+    QVariantMap firstMenuMap;
 
-    void setSecondMenuName(int i);
-    void initSecondMenuItem(int i);
-    void secondMenuItemClicked(int i, QModelIndex index);
-    void initUI();
-    void reTranslatorFirstSecondMenuUi();
+    void set_second_menu_name(int i);
+    void set_second_menu_item_style(int i, QModelIndex index);
+    void init_ui();
+    void retranslate_main_menu_ui();
     void read_json_file(QFile *file);
     void resize_height(int i);
-    QStringList get_second_menu_list(int i);
-    QVariantMap firstMenuMap;
+    QStringList get_second_menu_list(int i);    
 
 private:
     Mcu *m_mcu;

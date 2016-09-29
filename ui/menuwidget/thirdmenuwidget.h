@@ -22,10 +22,10 @@ private:
     Ui::ThirdMenuWidget *ui;
 
 public:
-    void reTranslatorThirdMenuUi();
-    void initStandardModel();
-    void setThirdMenuName(int i, int j);
-    void widgetStyleChoice(int k);
+    void retranslate_third_menu_ui();
+    void init_standard_model();
+    void set_third_menu_name(int i, int j);
+    void choose_widget_style(int k);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, int count);
 

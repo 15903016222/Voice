@@ -2,9 +2,9 @@
 #define TIMESETDIALOG_H
 
 #include <QDialog>
-#include <QTimer>
-#include <QDate>
-#include <QTime>
+//#include <QTimer>
+//#include <QDate>
+//#include <QTime>
 #include <QPushButton>
 #include <QDateEdit>
 #include <QTimeEdit>
@@ -30,11 +30,12 @@ public:
     QList<QTimeEdit*> timeEdit;
 
 private:
-    void initUI();
+    void init_ui();
 
 signals:
 
 public slots:
+    void set_date_and_time(QString string);
 
 };
 

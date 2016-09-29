@@ -1,6 +1,8 @@
 #include "firstsecondmenuwidget.h"
 #include "ui_firstsecondmenuwidget.h"
 
+#include <QDebug>
+
 FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FirstSecondMenuWidget)
@@ -11,7 +13,7 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     QFile *file = new QFile(":/json/resources/menuone.json");
     read_json_file(file);
 
-    initUI();
+    init_ui();
 
     m_mcu = Mcu::get_mcu();
  //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
@@ -22,18 +24,17 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
     delete ui;
 }
 
-void FirstSecondMenuWidget::reTranslatorFirstSecondMenuUi()
+void FirstSecondMenuWidget::retranslate_main_menu_ui()
 {
     ui->retranslateUi(this);
 }
 
-void FirstSecondMenuWidget::setSecondMenuName(int i)
+void FirstSecondMenuWidget::set_second_menu_name(int i)
 {
     QStringList secondMenuList;
     QStringList stringList = get_second_menu_list(i);
 
-    for(int j = 0; j < stringList.count(); j++)
-    {
+    for(int j = 0; j < stringList.count(); j++) {
         secondMenuList.append(stringList.at(j));
 
         QString string = static_cast<QString>(secondMenuList.at(j));
@@ -44,15 +45,14 @@ void FirstSecondMenuWidget::setSecondMenuName(int i)
     }
 }
 
-void FirstSecondMenuWidget::initSecondMenuItem(int i)
+void FirstSecondMenuWidget::set_second_menu_item_style(int i, QModelIndex index)
 {
     QStringList stringList = get_second_menu_list(i);
-    for(int j = 0; j < stringList.count(); j++)
-    {
+    for(int j = 0; j < stringList.count(); j++) {
         QModelIndex modelIndex = modelList.at(i)->index(j, 0);
         QStandardItem *item = modelList.at(i)->itemFromIndex(modelIndex);
 
-        if(item->row() == 0) {
+        if(modelIndex == index) {
             item->setForeground(QBrush(Qt::red));
             menuList.at(i)->setCurrentIndex(modelIndex);
         } else {
@@ -63,26 +63,9 @@ void FirstSecondMenuWidget::initSecondMenuItem(int i)
     resize_height(i);
 }
 
-void FirstSecondMenuWidget::secondMenuItemClicked(int i, QModelIndex index)
+void FirstSecondMenuWidget::init_ui()
 {
-    QStringList stringList = get_second_menu_list(i);
-    for(int j = 0; j < stringList.count(); j++)
-    {
-        QModelIndex modelIndex = modelList.at(i)->index(j, 0);
-        QStandardItem *item = modelList.at(i)->itemFromIndex(modelIndex);
-
-        if(modelIndex == index) {
-            item->setForeground(QBrush(Qt::red));
-        } else {
-            item->setForeground(QBrush(Qt::yellow));
-        }
-    }
-}
-
-void FirstSecondMenuWidget::initUI()
-{
-    for(int i = 0; i < FIRST_MENU_NUMBER; i++)
-    {
+    for(int i = 0; i < FIRST_MENU_NUMBER; i++) {
         QListView* listView = findChild<QListView*>("listView_" + QString::number(i + 1));
         listView->setStyleSheet("QListView{font: 14pt 'Times New Roman'}");
         menuList.append(listView);
@@ -93,7 +76,7 @@ void FirstSecondMenuWidget::initUI()
         standardItemModel->setObjectName("standardItemModel_"+QString::number(i + 1));
         modelList.append(standardItemModel);
 
-        setSecondMenuName(i);
+        set_second_menu_name(i);
 
         QModelIndex initModelIndex = modelList.at(i)->index(0, 0);
         QStandardItem *initItem = modelList.at(i)->itemFromIndex(initModelIndex);
@@ -102,9 +85,8 @@ void FirstSecondMenuWidget::initUI()
         menuList.at(i)->setModel(modelList.at(i));
     }
 
-    initSecondMenuItem(0);
     QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
-    menuList.at(0)->setCurrentIndex(initModelIndex);
+    set_second_menu_item_style(0, initModelIndex);
 }
 
 
@@ -115,6 +97,9 @@ void FirstSecondMenuWidget::read_json_file(QFile *file)
     file->open(QIODevice::ReadOnly | QIODevice::Text);
     QString str = file->readAll();
     QVariant variant = parser.parse(str.toUtf8(), &ok);
+    if(!ok) {
+        qDebug() << "An error occured during parsing.";
+    }
     firstMenuMap = variant.toMap();
 }
 

@@ -5,6 +5,7 @@ ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
 {
     m_mcu = Mcu::get_mcu();
   //  connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    editFlag = false;
 
 }
 
@@ -44,6 +45,7 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         editor->setMinimumContentsLength(minimumContentLength);
     }
 
+    (const_cast<ComboBoxDelegate *>(this))->editFlag = true;
     connect(editor, SIGNAL(activated(QString)), this, SLOT(commit_and_close_editor(QString)));
     return editor;
 
@@ -109,6 +111,7 @@ void ComboBoxDelegate::commit_and_close_editor(const QString &str)
     emit commitData(editor);
     emit closeEditor(editor);
     emit comboBox_current_text(str);
+    editFlag = false;
 }
 
 void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)

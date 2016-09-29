@@ -27,6 +27,7 @@ public:
     QStringList stepList;
     QString step;
     int decimalAmount;
+    bool editFlag;
 
 private:
     Mcu *m_mcu;

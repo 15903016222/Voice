@@ -69,7 +69,7 @@ MeasurementDialog::MeasurementDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    initUI();
+    init_ui();
 
     changedFlag = false;
 }
@@ -79,7 +79,7 @@ MeasurementDialog::~MeasurementDialog()
     delete ui;
 }
 
-void MeasurementDialog::initUI()
+void MeasurementDialog::init_ui()
 {
     buttonList.append(ui->pushButton_cancel);
     buttonList.append(ui->pushButton_ok);

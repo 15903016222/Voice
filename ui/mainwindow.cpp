@@ -125,10 +125,10 @@ void MainWindow::keyLeft_back(int key)
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 {
-    ui->widget_thirdMenu->setThirdMenuName(index, 0); //init
+    ui->widget_thirdMenu->set_third_menu_name(index, 0); //init
     firstMenuNum = index;
-
-    firstSecondMenu->initSecondMenuItem(firstMenuNum);
+    QModelIndex modelIndex = firstSecondMenu->modelList.at(index)->index(0, 0);
+    firstSecondMenu->set_second_menu_item_style(firstMenuNum, modelIndex);
 
     hiddenArrowFlag = true;
 
@@ -141,8 +141,8 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
     secondMenuNum = item->row();
 
-    firstSecondMenu->secondMenuItemClicked(firstMenuNum, index);
-    ui->widget_thirdMenu->setThirdMenuName(firstMenuNum, secondMenuNum);
+    firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
+    ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
 }
 
 void MainWindow::on_pushButton_top_clicked()
@@ -258,11 +258,11 @@ void MainWindow::slot_pushButton_commonMenuClicked()
 void MainWindow::updateTranslator()
 {
     ui->retranslateUi(this);
-    ui->widgetTopLeft->reTranslatorTopMenuUi();
-    ui->widgetTopLeft->setTopMenuFont();
-    firstSecondMenu->reTranslatorFirstSecondMenuUi();
-    ui->widget_thirdMenu->reTranslatorThirdMenuUi();
-    commonMenuWidget->reTranslatorCommonMenuUi();
+    ui->widgetTopLeft->retranslate_top_menu_ui();
+    ui->widgetTopLeft->set_top_menu_font();
+    firstSecondMenu->retranslate_main_menu_ui();
+    ui->widget_thirdMenu->retranslate_third_menu_ui();
+    commonMenuWidget->retranslate_common_menu_ui();
 }
 
 void MainWindow::translatorChineseUI()

@@ -66,6 +66,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -75,7 +78,7 @@
      <property name="lineWidth">
       <number>1</number>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,3,5,3,4,4">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -139,7 +142,7 @@
          </font>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="text">
          <string>PRF: 143(7579)</string>
@@ -196,8 +199,11 @@
           <bold>true</bold>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="text">
          <string>V:71.5mm/s</string>
@@ -255,7 +261,7 @@
          </font>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="text">
          <string>X:174.9mm / Y:188.9mm</string>
@@ -313,7 +319,7 @@
          </font>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="text">
          <string>Rouxing.cfg</string>
@@ -371,7 +377,7 @@
          </font>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="text">
          <string/>
@@ -429,7 +435,7 @@
          </font>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="text">
          <string>PA 3.5.1  32:64PR</string>

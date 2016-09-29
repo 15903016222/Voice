@@ -273,7 +273,7 @@ WedgeDialog::WedgeDialog(QWidget *parent) :
     ui(new Ui::WedgeDialog)
 {
     ui->setupUi(this);
-    initUI();
+    init_ui();
 }
 
 WedgeDialog::~WedgeDialog()
@@ -281,7 +281,7 @@ WedgeDialog::~WedgeDialog()
     delete ui;
 }
 
-void WedgeDialog::initUI()
+void WedgeDialog::init_ui()
 {
     wedgeTypeModel = new QStandardItemModel(this);
     QStringList wedgeTypeList;
@@ -310,11 +310,11 @@ void WedgeDialog::initUI()
     listView_1->setModel(wedgeTypeModel);
 
     listView_1CurrentIndex = 0;
-    insertWedge(listView_1CurrentIndex);
+    insert_wedge(listView_1CurrentIndex);
     connect(listView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_1ItemClicked(QModelIndex)));
 }
 
-void WedgeDialog::insertWedge(int i)
+void WedgeDialog::insert_wedge(int i)
 {
     QStringList wedgeList;
     for(int j = 0; j < WEDGE_NUMBER; j++){
@@ -346,7 +346,7 @@ void WedgeDialog::slot_listView_1ItemClicked(QModelIndex index)
     listView_1CurrentIndex = item->row();
 
     wedgeModelList.at(listView_1CurrentIndex)->clear();
-    insertWedge(listView_1CurrentIndex);
+    insert_wedge(listView_1CurrentIndex);
     ui->label->clear();
 
     if(listView_1CurrentIndex < WEDGETYPE_NUMBER-1){

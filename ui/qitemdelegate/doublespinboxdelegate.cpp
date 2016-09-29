@@ -6,6 +6,7 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(key_sure(int)));
+    editFlag = false;
 }
 
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -21,7 +22,8 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
     editor->setSingleStep(step.toFloat());
     editor->setDecimals(decimalAmount);
 
-    (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);    
+    (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
+    (const_cast<DoubleSpinBoxDelegate *>(this))->editFlag = true;
     QStringList sendList;
     sendList.append(QString::number(index.column()));
     sendList.append(step);
@@ -88,6 +90,7 @@ void DoubleSpinBoxDelegate::commit_and_close_editor()
     QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
+    editFlag = false;
 }
 
 void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)

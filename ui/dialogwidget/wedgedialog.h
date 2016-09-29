@@ -21,7 +21,7 @@ public:
 
 private:
     Ui::WedgeDialog *ui;
-    void initUI();
+    void init_ui();
 
 public:
     QListView *listView_1;
@@ -30,7 +30,7 @@ public:
     QStandardItemModel *wedgeModel;
     QList<QStandardItemModel*> wedgeModelList;
 
-    void insertWedge(int i);
+    void insert_wedge(int i);
     int listView_1CurrentIndex;
     int listView_2CurrentIndex;
     QString currentItem;

@@ -13,7 +13,7 @@ static QString PROBE_STRING[PROBETYPE_NUMBER][PROBE_NUMBER] = {
         "1L16-1.0-10-B10.opp",
         "2.25L16-1.0-10-B10.opp",
         "2.25L32-0.5-10-B10.opp",
-        "2.5L16-1.0-12-B10.opp",
+        "2.25L16-1.0-12-B10.opp",
         "4L16-1.0-10-B10.opp",
         "4L32-0.5-10-B10.opp",
         "5L32-0.5-10-B10.opp",
@@ -252,7 +252,7 @@ ProbeDialog::ProbeDialog(QWidget *parent) :
     ui(new Ui::ProbeDialog)
 {
     ui->setupUi(this);
-    initUI();
+    init_ui();
 }
 
 ProbeDialog::~ProbeDialog()
@@ -260,7 +260,7 @@ ProbeDialog::~ProbeDialog()
     delete ui;
 }
 
-void ProbeDialog::initUI()
+void ProbeDialog::init_ui()
 {
     probeTypeModel = new QStandardItemModel(this);
     QStringList probeTypeList;
@@ -289,11 +289,11 @@ void ProbeDialog::initUI()
     listView_1->setModel(probeTypeModel);
 
     listView_1CurrentIndex = 0;
-    insertProbe(listView_1CurrentIndex);
+    insert_probe(listView_1CurrentIndex);
     connect(listView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_1ItemClicked(QModelIndex)));
 }
 
-void ProbeDialog::insertProbe(int i)
+void ProbeDialog::insert_probe(int i)
 {
     QStringList probeList;
     for(int j = 0; j < PROBE_NUMBER; j++){
@@ -325,7 +325,7 @@ void ProbeDialog::slot_listView_1ItemClicked(QModelIndex index)
     listView_1CurrentIndex = item->row();
 
     probeModelList.at(listView_1CurrentIndex)->clear();
-    insertProbe(listView_1CurrentIndex);
+    insert_probe(listView_1CurrentIndex);
     ui->label->clear();
 
     if(listView_1CurrentIndex < PROBETYPE_NUMBER-1){
