@@ -25,59 +25,59 @@ struct PointInfo
 
 struct BeamData
 {
-    /* reg (-1) 地址 */
+    /* reg (-1) */
     quint32 offset        :16;    /* bit:0-15 地址的偏移 */
     quint32 res           :12;    /* bit:16-27 保留*/
     quint32 chip          :4;     /* bit:28-31 片选 Group取值0010 */
 
-    /* reg (0) 地址 */
+    /* reg (0) */
     quint32 res1          :2;     /* bit:0-1 保留 */
     quint32 gainOffset    :10;    /* bit:2-11 增益补偿单位0.1dB */
     quint32 res2          :3;     /* bit:12-14 保留 */
     quint32 group         :5;     /* bit:15-19 groupId */
     quint32 info   :12;    /* bit:19-31 beam_qty */
 
-    /* reg (1) 地址 */
+    /* reg (1) */
     quint32 beamDelay     :16;    /* bit:0-15 16 单位10ns */
-    quint32 res3          :16;    /* bit 16-31 保留*/
+    quint32 res3          :16;    /* bit:16-31 保留*/
 
-    /* reg (2) 地址 */
+    /* reg (2) */
     quint32 gateAStart    :20;    /* bit:0-19  单位10ns */
-    quint32 res4          :12;    /* bit 20-31 保留*/
+    quint32 res4          :12;    /* bit:20-31 保留*/
 
-    /* reg (3) 地址 */
+    /* reg (3) */
     quint32 gateAEnd      :20;    /* bit:0-19  单位10ns */
-    quint32 res5          :12;    /* bit 20-31 保留*/
+    quint32 res5          :12;    /* bit:20-31 保留*/
 
-    /* reg (4) 地址 */
+    /* reg (4) */
     quint32 gateBStart    :20;    /* bit:0-19  单位10ns */
-    quint32 res6          :12;    /* bit 20-31 保留*/
+    quint32 res6          :12;    /* bit:20-31 保留*/
 
-    /* reg (5) 地址 */
+    /* reg (5) */
     quint32 gateBEnd      :20;    /* bit:0-19  单位10ns */
-    quint32 res7          :12;    /* bit 20-31 保留*/
+    quint32 res7          :12;    /* bit:20-31 保留*/
 
-    /* reg (6) 地址 */
+    /* reg (6) */
     quint32 gateIStart    :20;    /* bit:0-19  单位10ns */
-    quint32 res8          :12;    /* bit 20-31 保留*/
+    quint32 res8          :12;    /* bit:20-31 保留*/
 
-    /* reg (7) 地址 */
+    /* reg (7) */
     quint32 gateIEnd      :20;    /* bit:0-19  单位10ns */
-    quint32 res9          :12;    /* bit 20-31 保留*/
+    quint32 res9          :12;    /* bit:20-31 保留*/
 
-    /* reg (8-9) 地址 */
+    /* reg (8-9) */
     quint32 res10[2];
 
     quint32 txEnable;
     quint32 rxEnable;
 
-    /* reg (12-13) 地址 接收使能 */
+    /* reg (12-13) 接收使能 */
     u_int64_t rxSel;
 
-    /* reg (14-15) 地址 发射使能 */
+    /* reg (14-15) 发射使能 */
     u_int64_t txSel;
 
-    /* reg (16-47) 地址 阵元发射信息 */
+    /* reg (16-47) 阵元发射信息 */
     DelayInfo delay[32];            /* bit0-13 发射延时 bit:16-27 接收延时*/
     PointInfo pointInfo[16] ;
 };

@@ -4,7 +4,7 @@
 #define GROUP_REG_NUM   (16)
 
 struct GroupData {
-    /* s_group_reg (-1) 地址 */
+    /* s_group_reg (-1) */
     quint32 offset              :16;/* bit:0-15 地址的偏移 */
     quint32 res0                :12;/* bit:16-27 保留 */
     quint32 chip                :4; /* bit:28-31 片选Group取值0010 */
@@ -88,7 +88,7 @@ struct GroupData {
     quint32 res15               :2; /* bit:30-31 保留位 */
 };
 
-static bool write_one_reg(GroupData *d, int index, int reg);
+static bool write_reg(GroupData *d, int index, int reg);
 
 Group::Group(const int index)
     : m_index(index), d(new GroupData())
@@ -109,7 +109,7 @@ int Group::freq_band(void) const
 bool Group::set_freq_band(int band, bool reflesh)
 {
     d->freqBand = band;
-    return reflesh ? write_one_reg(d, m_index, 0) : true;
+    return reflesh ? write_reg(d, m_index, 0) : true;
 }
 
 bool video_filter(void) const
@@ -120,7 +120,7 @@ bool video_filter(void) const
 bool Group::enable_video_filter(bool flag, bool reflesh)
 {
     d->videoFilter = flag;
-    return reflesh ? write_one_reg(d, m_index, 0) : true;
+    return reflesh ? write_reg(d, m_index, 0) : true;
 }
 
 Group::RectifierType Group::rectifier(void) const
@@ -131,7 +131,7 @@ Group::RectifierType Group::rectifier(void) const
 bool Group::set_rectifier(Group::RectifierType type, bool reflesh)
 {
     d->rectifier = type;
-    return reflesh ? write_one_reg(d, m_index, 0) : true;
+    return reflesh ? write_reg(d, m_index, 0) : true;
 }
 
 int Group::compress_rato(void) const
@@ -142,7 +142,7 @@ int Group::compress_rato(void) const
 bool Group::set_compress_rato(int val, bool reflesh)
 {
     d->compressRato = val;
-    return reflesh ? write_one_reg(d, m_index, 0) : true;
+    return reflesh ? write_reg(d, m_index, 0) : true;
 }
 
 int Group::gain(void) const
@@ -153,7 +153,7 @@ int Group::gain(void) const
 bool Group::set_gain(int gain, bool reflesh)
 {
     d->gain = gain;
-    return reflesh ? write_one_reg(d, m_index, 0) : true;
+    return reflesh ? write_reg(d, m_index, 0) : true;
 }
 
 int Group::thickness_factor(void) const
@@ -164,7 +164,7 @@ int Group::thickness_factor(void) const
 bool Group::set_thickness_factor(int factor, bool reflesh)
 {
     d->thicknessFactor = factor;
-    return reflesh ? write_one_reg(d, m_index, 1) : true;
+    return reflesh ? write_reg(d, m_index, 1) : true;
 }
 
 bool Group::ut1(void) const
@@ -175,7 +175,7 @@ bool Group::ut1(void) const
 bool Group::enable_ut1(bool flag, bool reflesh)
 {
     d->ut1 = flag;
-    return reflesh ? write_one_reg(d, m_index, 1) : true;
+    return reflesh ? write_reg(d, m_index, 1) : true;
 }
 
 bool Group::ut2(void) const
@@ -186,7 +186,7 @@ bool Group::ut2(void) const
 bool Group::enable_ut2(bool flag, bool reflesh)
 {
     d->ut2 = flag;
-    return reflesh ? write_one_reg(d, m_index, 1) : true;
+    return reflesh ? write_reg(d, m_index, 1) : true;
 }
 
 bool Group::pa(void) const
@@ -197,7 +197,7 @@ bool Group::pa(void) const
 bool Group::enable_pa(bool flag, bool reflesh)
 {
     d->pa = flag;
-    return reflesh ? write_one_reg(d, m_index, 1) : true;
+    return reflesh ? write_reg(d, m_index, 1) : true;
 }
 
 int Group::sum_gain(void) const
@@ -208,7 +208,7 @@ int Group::sum_gain(void) const
 bool Group::set_sum_gain(int gain, bool reflesh)
 {
     d->sumGain = gain;
-    return reflesh ? write_one_reg(d, m_index, 2) : true;
+    return reflesh ? write_reg(d, m_index, 2) : true;
 }
 
 int Group::sample_range(void) const
@@ -219,7 +219,7 @@ int Group::sample_range(void) const
 bool Group::set_sample_range(int range, bool reflesh)
 {
     d->sampleRange = range;
-    return reflesh ? write_one_reg(d, m_index, 2) : true;
+    return reflesh ? write_reg(d, m_index, 2) : true;
 }
 
 int Group::point_qty(void) const
@@ -230,7 +230,7 @@ int Group::point_qty(void) const
 bool Group::set_point_qty(int qty, bool reflesh)
 {
     d->pointQty = qty;
-    return reflesh ? write_one_reg(d, m_index, 3) : true;
+    return reflesh ? write_reg(d, m_index, 3) : true;
 }
 
 int Group::tcg_point_qty(void) const
@@ -241,7 +241,7 @@ int Group::tcg_point_qty(void) const
 bool Group::set_tcg_point_qty(int qty, bool reflesh)
 {
     d->tcgPointQty = qty;
-    return reflesh ? write_one_reg(d, m_index, 3) : true;
+    return reflesh ? write_reg(d, m_index, 3) : true;
 }
 
 bool tcg(void) const
@@ -252,7 +252,7 @@ bool tcg(void) const
 bool Group::enable_tcg(bool flag, bool reflesh)
 {
     d->tcg = flag;
-    return reflesh ? write_one_reg(d, m_index, 3) : true;
+    return reflesh ? write_reg(d, m_index, 3) : true;
 }
 
 int Group::rx_time(void) const
@@ -263,7 +263,7 @@ int Group::rx_time(void) const
 bool Group::set_rx_time(int val, bool reflesh)
 {
     d->rxTime = val;
-    return reflesh ? write_one_reg(d, m_index, 4) : true;
+    return reflesh ? write_reg(d, m_index, 4) : true;
 }
 
 int Group::idel_time(void) const
@@ -274,7 +274,7 @@ int Group::idel_time(void) const
 bool Group::set_idel_time(int val, bool reflesh)
 {
     d->idelTime = val;
-    return reflesh ? write_one_reg(d, m_index, 5) : true;
+    return reflesh ? write_reg(d, m_index, 5) : true;
 }
 
 int Group::gate_a_height(void) const
@@ -285,7 +285,7 @@ int Group::gate_a_height(void) const
 bool Group::set_gate_a_height(int val, bool reflesh)
 {
     d->gateAHeight = val;
-    return reflesh ? write_one_reg(d, m_index, 6) : true;
+    return reflesh ? write_reg(d, m_index, 6) : true;
 }
 
 int Group::gate_a_logic(void) const
@@ -296,7 +296,7 @@ int Group::gate_a_logic(void) const
 bool Group::set_gate_a_logic(int val, bool reflesh)
 {
     d->gateALogic = val;
-    return reflesh ? write_one_reg(d, m_index, 7) : true;
+    return reflesh ? write_reg(d, m_index, 7) : true;
 }
 
 int Group::gate_b_height(void) const
@@ -307,7 +307,7 @@ int Group::gate_b_height(void) const
 bool Group::set_gate_b_height(int val, bool reflesh)
 {
     d->gatebHeight = val;
-    return reflesh ? write_one_reg(d, m_index, 8) : true;
+    return reflesh ? write_reg(d, m_index, 8) : true;
 }
 
 int Group::gate_b_logic(void) const
@@ -318,7 +318,7 @@ int Group::gate_b_logic(void) const
 bool Group::set_gate_b_logic(int val, bool reflesh)
 {
     d->gateBLogic = val;
-    return reflesh ? write_one_reg(d, m_index, 9) : true;
+    return reflesh ? write_reg(d, m_index, 9) : true;
 }
 
 int Group::gate_i_height() const
@@ -329,7 +329,7 @@ int Group::gate_i_height() const
 bool Group::set_gate_i_height(int val, bool reflesh)
 {
     d->gateIHeight = val;
-    return reflesh ? write_one_reg(d, m_index, 10) : true;
+    return reflesh ? write_reg(d, m_index, 10) : true;
 }
 
 int Group::gate_i_logic() const
@@ -340,7 +340,7 @@ int Group::gate_i_logic() const
 bool Group::set_gate_i_logic(int val, bool reflesh)
 {
     d->gateILogic = val;
-    return reflesh ? write_one_reg(d, m_index, 11) : true;
+    return reflesh ? write_reg(d, m_index, 11) : true;
 }
 
 int Group::thickness_min(void) const
@@ -351,7 +351,7 @@ int Group::thickness_min(void) const
 bool Group::set_thickness_min(int val, bool reflesh)
 {
     d->thicknessMin = val;
-    return reflesh ? write_one_reg(d, m_index, 12) : true;
+    return reflesh ? write_reg(d, m_index, 12) : true;
 }
 
 int Group::reject(void) const
@@ -362,7 +362,7 @@ int Group::reject(void) const
 bool Group::set_reject(int val, bool reflesh)
 {
     d->reject = val;
-    return reflesh ? write_one_reg(d, m_index, 12) : true;
+    return reflesh ? write_reg(d, m_index, 12) : true;
 }
 
 int Group::sample_start(void) const
@@ -373,7 +373,7 @@ int Group::sample_start(void) const
 bool Group::set_sample_start(int val, bool reflesh)
 {
     d->sampleStart = val;
-    return reflesh ? write_one_reg(d, m_index, 13) : true;
+    return reflesh ? write_reg(d, m_index, 13) : true;
 }
 
 int Group::average(void) const
@@ -384,7 +384,7 @@ int Group::average(void) const
 bool Group::set_average(int val, bool reflesh)
 {
     d->average = val;
-    return reflesh ? write_one_reg(d, m_index, 13) : true;
+    return reflesh ? write_reg(d, m_index, 13) : true;
 }
 
 int Group::thickness_max(void) const
@@ -395,7 +395,7 @@ int Group::thickness_max(void) const
 bool Group::set_thickness_max(int val, bool reflesh)
 {
     d->thicknessMax = val;
-    return reflesh ? write_one_reg(d, m_index, 14) : true;
+    return reflesh ? write_reg(d, m_index, 14) : true;
 }
 
 int Group::thickness_source(void) const
@@ -406,7 +406,7 @@ int Group::thickness_source(void) const
 bool Group::set_thickness_source(int val, bool reflesh)
 {
     d->thicknessSource = val;
-    return reflesh ? write_one_reg(d, m_index, 14) : true;
+    return reflesh ? write_reg(d, m_index, 14) : true;
 }
 
 int Group::tx_end(void) const
@@ -417,7 +417,7 @@ int Group::tx_end(void) const
 bool Group::set_tx_end(int val, bool reflesh)
 {
     d->txEnd = val;
-    return reflesh ? write_one_reg(d, m_index, 15) : true;
+    return reflesh ? write_reg(d, m_index, 15) : true;
 }
 
 int Group::tx_start(void) const
@@ -428,7 +428,7 @@ int Group::tx_start(void) const
 bool Group::set_tx_start(int val, bool reflesh)
 {
     d->txStart = val;
-    return reflesh ? write_one_reg(d, m_index, 15) : true;
+    return reflesh ? write_reg(d, m_index, 15) : true;
 }
 
 bool Group::reflesh(void)
@@ -441,7 +441,7 @@ bool Group::reflesh(void)
     return spi->write((char *)d, sizeof(GroupData));
 }
 
-bool write_one_reg(GroupData *d, int index, int reg)
+bool write_reg(GroupData *d, int index, int reg)
 {
     PhascanSpi *spi = PhascanSpi::get_spi();
     if (reg >= GROUP_REG_NUM

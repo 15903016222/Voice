@@ -21,9 +21,7 @@ DEFINES += $$DEVICE
 SOURCES += tst_testfpga.cpp \
     ../fpga.cpp \
     ../gpio.cpp \
-    ../spi.cpp \
-    ../phascan_fpga.cpp \
-    ../phascan_spi.cpp
+    ../spi.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
@@ -31,15 +29,16 @@ HEADERS += \
     ../gpio.h \
     ../spi.h \
     ../beam.h \
-    ../phascan_fpga.h \
-    ../group.h \
-    ../phascan_spi.h
+    ../group.h
 
 equals(DEVICE, "PHASCAN") {
     SOURCES += \
         ../beam_phascan.cpp \
-        ../group_phascan.cpp
-    HEADERS +=
+        ../group_phascan.cpp \
+        ../phascan_spi.cpp
+
+    HEADERS += \
+        ../phascan_spi.h
 }
 
 equals(DEVICE, "PHASCAN_II") {
