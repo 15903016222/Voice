@@ -84,7 +84,7 @@ void IconsWidget::insert_battery1_icon(int value)
 {
   //0:Discharge; 1:Charge; 2:No Battery; 3:Full;
     if(status_batteryFirst == 0){
-        qDebug()<<"discharge_battery_1:  "<<value;
+    //    qDebug()<<"discharge_battery_1:  "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b0.png);");
         }else if(value >= 10 && value < 20){
@@ -107,7 +107,7 @@ void IconsWidget::insert_battery1_icon(int value)
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b9.png);");
         }
     }else if(status_batteryFirst == 1){
-        qDebug()<<"charge_battery_1:     "<<value;
+    //    qDebug()<<"charge_battery_1:     "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc0.png);");
         }else if(value >= 10 && value < 20){
@@ -132,10 +132,10 @@ void IconsWidget::insert_battery1_icon(int value)
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
         }
     }else if(status_batteryFirst == 2){
-        qDebug()<<"No_Battery_battery_1: "<<value;
+    //    qDebug()<<"No_Battery_battery_1: "<<value;
         ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b_error.png);");
     }else if(status_batteryFirst == 3){
-        qDebug()<<"full_battery_1:       "<<value;
+    //    qDebug()<<"full_battery_1:       "<<value;
         ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b9.png);");
     }
 }
@@ -144,7 +144,7 @@ void IconsWidget::insert_battery2_icon(int value)
 {
   //0:Discharge; 1:Charge; 2:No Battery; 3:Full;
     if(status_batterySecond == 0){
-        qDebug()<<"discharge_battery_2:  "<<value;
+     //   qDebug()<<"discharge_battery_2:  "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b0.png);");
         }else if(value >= 10 && value < 20){
@@ -167,7 +167,7 @@ void IconsWidget::insert_battery2_icon(int value)
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b9.png);");
         }
     }else if(status_batterySecond == 1){
-        qDebug()<<"charge_battery_2:     "<<value;
+     //   qDebug()<<"charge_battery_2:     "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc0.png);");
         }else if(value >= 10 && value < 20){
@@ -192,10 +192,10 @@ void IconsWidget::insert_battery2_icon(int value)
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
         }
     }else if(status_batterySecond == 2){
-        qDebug()<<"No_Battery_battery_2: "<<value;
+     //   qDebug()<<"No_Battery_battery_2: "<<value;
         ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b_error.png);");
     }else if(status_batterySecond == 3){
-        qDebug()<<"full_battery_2:       "<<value;
+     //   qDebug()<<"full_battery_2:       "<<value;
         ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b9.png);");
     }
 }
@@ -208,7 +208,7 @@ void IconsWidget::do_battery_quantity_event(int index, int value)
         battery1_quantity.append("%");
         ui->label_battery1_quantity->setText(battery1_quantity);
 
-        qDebug()<<"status_battery_1        =         "<<status_batteryFirst;
+     //   qDebug()<<"status_battery_1        =         "<<status_batteryFirst;
         insert_battery1_icon(value);
     } else if (index == 1) {
         QString battery2_quantity;
@@ -216,7 +216,7 @@ void IconsWidget::do_battery_quantity_event(int index, int value)
         battery2_quantity.append("%");
         ui->label_battery2_quantity->setText(battery2_quantity);
 
-        qDebug()<<"status_battery_2             =             "<<status_batterySecond;
+    //    qDebug()<<"status_battery_2             =             "<<status_batterySecond;
         insert_battery2_icon(value);
     }
 }
