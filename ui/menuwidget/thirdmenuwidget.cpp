@@ -35,8 +35,8 @@ QWidget(parent),
     initStandardModel();
     setThirdMenuName(0, 0);
 
-  //  connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
-    connect(ui->tableView->horizontalHeader(), SIGNAL(sectionDoubleClicked(int)), this, SLOT(onHeaderClicked(int)));
+    connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
+ //   connect(ui->tableView->horizontalHeader(), SIGNAL(sectionDoubleClicked(int)), this, SLOT(onHeaderClicked(int)), Qt::QueuedConnection);
 
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
@@ -337,9 +337,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         inputPanel->show();
 
         inputIndex = index;
-        connect(this, SIGNAL(inputItemCurrentText(QString)), inputPanel, SLOT(set_item_current_text(QString)));
         QString text = model->item(0, index)->text();
-        emit inputItemCurrentText(text);
+        inputPanel->set_item_current_text(text);
         connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
 
     } else if(subVariantMap["style"].toString().toInt() == 7) {

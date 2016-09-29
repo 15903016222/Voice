@@ -59,9 +59,6 @@ private:
     VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
 
-signals:
-    void inputItemCurrentText(QString);
-
 protected slots:
     void do_rotary_event(Mcu::RotaryType type);
 

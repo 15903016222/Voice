@@ -18,6 +18,9 @@ public:
 private:
     Ui::InputPanelContext *ui;
 
+public:
+    void set_item_current_text(QString string);
+
 signals:
     void textEditFinished(QString);
 
@@ -25,7 +28,6 @@ private slots:
     void edit_text();
     void on_pushButton_cancel_clicked();
     void on_pushButton_ok_clicked();
-    void set_item_current_text(QString string);
 };
 
 #endif // INPUTPANELCONTEXT_H
