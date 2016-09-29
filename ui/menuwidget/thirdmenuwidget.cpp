@@ -278,9 +278,10 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
+    QModelIndex modelIndex = model->item(0, index)->index();
+    ui->tableView->edit(modelIndex);
+
     if(subVariantMap["style"].toString().toInt() == 1) {
-        QModelIndex modelIndex = model->item(0, index)->index();
-        ui->tableView->edit(modelIndex);
 
         //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
@@ -317,12 +318,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             QString text = model->item(0, brightIndex)->text();
             verticalSliderDialog->setBrightValue(text);
             connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
-        }else{
-            verticalSliderDialog->close();
         }
-    } else if(subVariantMap["style"].toString().toInt() == 2) {
-        QModelIndex modelIndex = model->item(0, index)->index();
-        ui->tableView->edit(modelIndex);
     } else if(subVariantMap["style"].toString().toInt() == 4) {
         //点击表头弹出探头选择对话框
         ProbeDialog *probeDialog = new ProbeDialog(this);
