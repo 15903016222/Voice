@@ -162,10 +162,8 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
-                ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
-//                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditorHeaderText(QModelIndex)), this, SLOT(set_header_text_close(const QModelIndex)));
                 break;
             }
             case 2: {
@@ -290,12 +288,15 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
-    if(subVariantMap["style"].toString().toInt() == 1) {
-        QModelIndex modelIndex = model->item(0, index)->index();
-        ui->tableView->edit(modelIndex);
-
+    if(subVariantMap["style"].toString().toInt() == 1) {      
         //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+
+        if(!doubleSpinBox->editFlag) {
+            QModelIndex modelIndex = model->item(0, index)->index();
+            ui->tableView->edit(modelIndex);
+        }
+
         QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex;
@@ -320,8 +321,11 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
         }
     } else if(subVariantMap["style"].toString().toInt() == 2) {
-        QModelIndex modelIndex = model->item(0, index)->index();
-        ui->tableView->edit(modelIndex);
+        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        if(!comboBox->editFlag) {
+            QModelIndex modelIndex = model->item(0, index)->index();
+            ui->tableView->edit(modelIndex);
+        }
     } else if(subVariantMap["style"].toString().toInt() == 4) {
         //点击表头弹出探头选择对话框
         ProbeDialog *probeDialog = new ProbeDialog(this);
@@ -342,7 +346,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         inputPanel->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         inputPanel->show();
 
-        inputIndex = index;        
+        inputIndex = index;
+        qDebug() << inputIndex;
         connect(this, SIGNAL(inputItemCurrentText(QString)), inputPanel, SLOT(set_item_current_text(QString)));
         QString text = model->item(0, index)->text();
         emit inputItemCurrentText(text);
@@ -533,7 +538,7 @@ void ThirdMenuWidget::set_edited_text(QString string)
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
         if(i == inputIndex) {
             model->item(0, i)->setText(string);
-            break;
+            break;           
         }
     }
 }

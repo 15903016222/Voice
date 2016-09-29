@@ -22,6 +22,7 @@ public:
     QStringList itemList;
     QStringList modelItemList;
     int minimumContentLength;
+    bool editFlag;
 
 signals:
     void comboBox_current_text(QString);

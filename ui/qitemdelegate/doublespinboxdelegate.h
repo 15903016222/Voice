@@ -25,6 +25,7 @@ public:
     QStringList stepList;
     QString step;
     int decimalAmount;
+    bool editFlag;
 
 signals:
     void createEditorHeaderText(QStringList) const;

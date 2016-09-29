@@ -3,6 +3,7 @@
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
+    editFlag = false;
 }
 
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -18,7 +19,8 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
     editor->setSingleStep(step.toFloat());
     editor->setDecimals(decimalAmount);
 
-    (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);    
+    (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
+    (const_cast<DoubleSpinBoxDelegate *>(this))->editFlag = true;
     QStringList sendList;
     sendList.append(QString::number(index.column()));
     sendList.append(step);
@@ -85,4 +87,5 @@ void DoubleSpinBoxDelegate::commit_and_close_editor()
     QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
+    editFlag = false;
 }

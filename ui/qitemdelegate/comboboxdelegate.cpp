@@ -5,7 +5,7 @@
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
-
+    editFlag = false;
 }
 
 QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -42,6 +42,7 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         editor->setMinimumContentsLength(minimumContentLength);
     }
 
+    (const_cast<ComboBoxDelegate *>(this))->editFlag = true;
     connect(editor, SIGNAL(activated(QString)), this, SLOT(commit_and_close_editor(QString)));
     return editor;
 
@@ -107,4 +108,5 @@ void ComboBoxDelegate::commit_and_close_editor(const QString &str)
     emit commitData(editor);
     emit closeEditor(editor);
     emit comboBox_current_text(str);
+    editFlag = false;
 }
