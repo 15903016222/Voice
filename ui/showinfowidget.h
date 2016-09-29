@@ -19,7 +19,7 @@ public:
 
 private:
     Ui::ShowInfoWidget *ui;
-    TimeSetDialog setTimeDlg;
+    TimeSetDialog *setTimeDlg;
     QTimer *timer;
 
 public:
@@ -28,15 +28,14 @@ public:
     bool showDlg;
     QString str_date;
     QString str_time;
+    int count;
 
 signals:
+    void currentDateTime(QString);
 
 public slots:
     void slotUpdateTime();
     void slotPushButton_ok();
-    void slotEditTime();
-    void slot_dateEdit_dateChanged(QDate date);
-    void slot_timeEdit_timeChanged(QTime time);
 
 };
 
