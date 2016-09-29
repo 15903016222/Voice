@@ -111,7 +111,7 @@
  <connections>
   <connection>
    <sender>pushButton_close</sender>
-   <signal>clicked()</signal>
+   <signal>clicked(bool)</signal>
    <receiver>VerticalSliderDialog</receiver>
    <slot>close()</slot>
    <hints>
