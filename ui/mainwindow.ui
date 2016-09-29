@@ -69,7 +69,7 @@
     <item>
      <widget class="ShowInfoWidget" name="widgetShowInformation" native="true">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(126, 123, 21);</string>
+       <string notr="true">background-color: rgb(210, 150, 0);</string>
       </property>
      </widget>
     </item>
