@@ -126,15 +126,17 @@ void IconsWidget::insert_battery1_icon(int value)
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc7.png);");
         }else if(value >= 80 && value < 90){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc8.png);");
-        }else if(value >= 90 && value <= 100){
+        }else if(value >= 90 && value < 100){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc9.png);");
+        }else if(value == 100){
+            ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
         }
     }else if(status_batteryFirst == 2){
         qDebug()<<"No_Battery_battery_1: "<<value;
         ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b_error.png);");
     }else if(status_batteryFirst == 3){
         qDebug()<<"full_battery_1:       "<<value;
-        ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
+        ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b9.png);");
     }
 }
 
@@ -186,13 +188,15 @@ void IconsWidget::insert_battery2_icon(int value)
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc8.png);");
         }else if(value >= 90 && value < 100){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc9.png);");
+        }else if(value == 100){
+            ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
         }
     }else if(status_batterySecond == 2){
         qDebug()<<"No_Battery_battery_2: "<<value;
         ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b_error.png);");
     }else if(status_batterySecond == 3){
         qDebug()<<"full_battery_2:       "<<value;
-        ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
+        ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b9.png);");
     }
 }
 
