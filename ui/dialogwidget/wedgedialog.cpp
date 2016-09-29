@@ -360,9 +360,15 @@ void WedgeDialog::slot_listView_1ItemClicked(QModelIndex index)
 void WedgeDialog::slot_listView_2ItemClicked(QModelIndex index)
 {
     QStandardItem *item = wedgeModelList.at(listView_1CurrentIndex)->itemFromIndex(index);
+    currentItem = item->text();
     listView_2CurrentIndex = item->row();
 
     ui->label->clear();
     ui->label->setText(tr(WEDGEINFO_STRING[listView_1CurrentIndex][listView_2CurrentIndex]));
     ui->label->setAlignment(Qt::AlignLeft);
+}
+
+void WedgeDialog::on_buttonBox_accepted()
+{
+    emit wedgeChanged(currentItem);
 }

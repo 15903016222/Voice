@@ -44,6 +44,8 @@ public:
     int measurementIndex;
     int inputIndex;
     int brightIndex;
+    int probeIndex;
+    int wedgeIndex;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -69,6 +71,8 @@ private slots:
     void set_header_text_close(QWidget *editor) ;
     void on_tableView_clicked(const QModelIndex &index);
     void change_measurement_label(QString string);
+    void select_probe(QString string);
+    void select_wedge(QString string);
     void set_edited_text(QString string);
     void setBrightValue(int value);
 

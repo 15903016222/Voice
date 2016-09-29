@@ -325,11 +325,17 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         ProbeDialog *probeDialog = new ProbeDialog(this);
         probeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         probeDialog->show();
+
+        probeIndex = index;
+        connect(probeDialog, SIGNAL(probeChanged(QString)), this, SLOT(select_probe(QString)));
     } else if(subVariantMap["style"].toString().toInt() == 5) {
         //点击表头弹出楔块选择对话框
         WedgeDialog *wedgeDialog = new WedgeDialog(this);
         wedgeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         wedgeDialog->show();
+
+        wedgeIndex = index;
+        connect(wedgeDialog, SIGNAL(wedgeChanged(QString)), this, SLOT(select_wedge(QString)));
     } else if(subVariantMap["style"].toString().toInt() == 6) {
         //点击表头弹出软键盘
         InputPanelContext *inputPanel = new InputPanelContext(this);
@@ -517,6 +523,26 @@ void ThirdMenuWidget::change_measurement_label(QString string)
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
         if(i == measurementIndex) {
             model->setHeaderData(measurementIndex, Qt::Horizontal, string);
+            break;
+        }
+    }
+}
+
+void ThirdMenuWidget::select_probe(QString string)
+{
+    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+        if(i == probeIndex) {
+            model->item(0, i)->setText(string);
+            break;
+        }
+    }
+}
+
+void ThirdMenuWidget::select_wedge(QString string)
+{
+    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+        if(i == wedgeIndex) {
+            model->item(0, i)->setText(string);
             break;
         }
     }

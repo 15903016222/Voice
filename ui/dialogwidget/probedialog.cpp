@@ -339,9 +339,15 @@ void ProbeDialog::slot_listView_1ItemClicked(QModelIndex index)
 void ProbeDialog::slot_listView_2ItemClicked(QModelIndex index)
 {
     QStandardItem *item = probeModelList.at(listView_1CurrentIndex)->itemFromIndex(index);
+    currentItem = item->text();
     listView_2CurrentIndex = item->row();
 
     ui->label->clear();
     ui->label->setText(tr(PROBEINFO_STRING[listView_1CurrentIndex][listView_2CurrentIndex]));
     ui->label->setAlignment(Qt::AlignLeft);
+}
+
+void ProbeDialog::on_buttonBox_accepted()
+{
+    emit probeChanged(currentItem);
 }

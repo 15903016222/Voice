@@ -33,11 +33,15 @@ public:
     void insertWedge(int i);
     int listView_1CurrentIndex;
     int listView_2CurrentIndex;
+    QString currentItem;
+
+signals:
+    void wedgeChanged(QString);
 
 private slots:
     void slot_listView_1ItemClicked(QModelIndex index);
     void slot_listView_2ItemClicked(QModelIndex index);
-
+    void on_buttonBox_accepted();
 };
 
 #endif // WEDGEDIALOG_H
