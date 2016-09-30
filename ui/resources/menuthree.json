@@ -1,0 +1,2452 @@
+{
+    "Gain": {
+        "UT Settings_General": {
+            "parent": "UT Settings_General",
+            "style": "1",
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "dB",
+            "decimal": 1,
+            "steps": [
+                {
+                    "Gain": "0.1"
+                },
+                {
+                    "Gain": "0.5"
+                },
+                {
+                    "Gain": "1.0"
+                },
+                {
+                    "Gain": "2.0"
+                },
+                {
+                    "Gain": "6.0"
+                }
+            ]
+        },
+        "Probe/Part_FFT": {
+            "parent": "Probe/Part_FFT",
+            "style": "1",
+            "minimum": 0,
+            "maximum": 100,
+            "unit": "dB",
+            "decimal": 1,
+            "steps": [
+                {
+                    "Gain": "0.1"
+                },
+                {
+                    "Gain": "0.5"
+                },
+                {
+                    "Gain": "1.0"
+                },
+                {
+                    "Gain": "2.0"
+                },
+                {
+                    "Gain": "6.0"
+                }
+            ]
+        }
+    },
+    "Start": {
+        "UT Settings_General": {
+            "parent": "UT Settings_General",
+            "style": "1",
+            "minimum": 0,
+            "condition": "('Start' + 'Range') <= 'Velocity' * 9900",
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
+        },
+        "Gate/Curves_Gate": {
+            "parent": "Gate/Curves_Gate",
+            "style": "1",
+            "minimum": 0,
+            "maximum": 16000,
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
+        },
+        "Probe/Part_FFT": {
+            "parent": "Probe/Part_FFT",
+            "style": "1",
+            "minimum": 0,
+            "maximum": 16000,
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
+        },
+        "Scan_Start": {
+            "parent": "Scan_Start",
+            "style": "1",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
+        },
+		"Measurement_TOFD": {
+			"parent": "Measurement_TOFD",
+			"style": "1",
+            "minimum": 0,
+            "maximum": 16000,
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Start": "0.10"
+                },
+                {
+                    "Start": "1.00"
+                },
+                {
+                    "Start": "10.0"
+                },
+                {
+                    "Start": "100.0"
+                }
+            ]
+		}
+    },
+    "Range": {
+        "UT Settings_General": {
+			"parent": "UT Settings_General",
+			"style": "1",
+			"minimum": 0,
+			"condition": "('Start' + 'Range') <= 'Velocity' * 9900",
+			"unit": "mm",
+			"decimal": 2,
+			"steps": [
+				{
+					"Range": "0.10"
+				},
+				{
+					"Range": "1.00"
+				},
+				{
+					"Range": "10.0"
+				},
+				{
+					"Range": "100.0"
+				}
+			]
+		},
+		"Measurement_TOFD": {
+			"parent": "Measurement_TOFD",
+			"style": "1",
+			"minimum": 0,
+			"condition": "('Start' + 'Range') <= 'Velocity' * 9900",
+			"unit": "mm",
+			"decimal": 2,
+			"steps": [
+				{
+					"Range": "0.10"
+				},
+				{
+					"Range": "1.00"
+				},
+				{
+					"Range": "10.0"
+				},
+				{
+					"Range": "100.0"
+				}
+			]
+		}
+    },
+    "Velocity": {
+        "parent": "UT Settings_General",
+        "style": "1",
+        "minimum": 635,
+        "maximum": 12540,
+        "unit": "m/s",
+        "decimal": 1,
+        "steps": [
+            {
+                "Velocity": "1.0"
+            },
+            {
+                "Velocity": "10.0"
+            },
+            {
+                "Velocity": "100.0"
+            },
+            {
+                "Velocity": "1000.0"
+            }
+        ]
+    },
+    "Wedge Delay": {
+        "parent": "UT Settings_General",
+        "style": "1",
+        "minimum": 0,
+        "unit": "μs",
+        "decimal": 2,
+        "steps": [
+            {
+                "Wedge Delay": "0.01"
+            },
+            {
+                "Wedge Delay": "0.10"
+            },
+            {
+                "Wedge Delay": "1.00"
+            }
+        ]
+    },
+    "UT Unit": {
+        "parent": "UT Settings_General",
+        "style": "2",
+        "options": [
+            {
+                "UT Unit": "time"
+            },
+            {
+                "UT Unit": "sound path"
+            },
+            {
+                "UT Unit": "true depth"
+            }
+        ]
+    },
+    "Tx/Rx Mode": {
+        "parent": "UT Settings_Pulser",
+        "style": "2",
+        "options": [
+            {
+                "Tx/Rx Mode": "PC"
+            },
+            {
+                "Tx/Rx Mode": "PE"
+            },
+            {
+                "Tx/Rx Mode": "TT"
+            },
+            {
+                "Tx/Rx Mode": "TOFD"
+            }
+        ]
+    },
+    "Pulser": {
+        "parent": "UT Settings_Pulser",
+        "style": "1",
+        "minimum": 1,
+        "maximum": 113,
+        "decimal": 0,
+        "steps": [
+            {
+                "Pulser": "1"
+            },
+            {
+                "Pulser": "10"
+            },
+            {
+                "Pulser": "100"
+            }
+        ]
+    },
+    "Voltage": {
+        "parent": "UT Settings_Pulser",
+        "style": "2",
+        "options": [
+            {
+                "Voltage": "50V"
+            },
+            {
+                "Voltage": "100V"
+            },
+            {
+                "Voltage": "200V"
+            }
+        ]
+    },
+    "PW": {
+        "parent": "UT Settings_Pulser",
+        "style": "1",
+        "minimum": 30,
+        "maximum": 500,
+        "unit": "ns",
+        "decimal": 1,
+        "steps": [
+            {
+                "PW": "2.5"
+            },
+            {
+                "PW": "10"
+            },
+            {
+                "PW": "25"
+            }
+        ]
+    },
+    "PRF": {
+        "parent": "UT Settings_Pulser",
+        "style": "2",
+        "options": [
+            {
+                "PRF": "Auto Max"
+            },
+            {
+                "PRF": "Max/2"
+            },
+            {
+                "PRF": "Optimum"
+            },
+            {
+                "PRF": "UserDef"
+            }
+        ]
+    },
+    "Receiver": {
+        "parent": "UT Settings_Receiver"
+    },
+    "Filter": {
+        "parent": "UT Settings_Receiver",
+        "style": "2",
+        "options": [
+            {
+                "Filter": "none"
+            },
+            {
+                "Filter": "1M"
+            },
+            {
+                "Filter": "1.5-2.5M"
+            },
+            {
+                "Filter": "3-5M"
+            },
+            {
+                "Filter": "7.5M"
+            },
+            {
+                "Filter": "more than 10M"
+            }
+        ]
+    },
+    "Rectifier": {
+        "parent": "UT Settings_Receiver",
+        "style": "2",
+        "options": [
+            {
+                "Rectifier": "RF"
+            },
+            {
+                "Rectifier": "FW"
+            },
+            {
+                "Rectifier": "HW+"
+            },
+            {
+                "Rectifier": "HW-"
+            }
+        ]
+    },
+    "Video Filter": {
+        "parent": "UT Settings_Receiver",
+        "style": "3",
+        "label": [
+            {
+                "Video Filter": "on"
+            },
+            {
+                "Video Filter": "off"
+            }
+        ]
+    },
+    "Averaging": {
+        "parent": "UT Settings_Receiver",
+        "style": "2",
+        "options": [
+            {
+                "Averaging": "1"
+            },
+            {
+                "Averaging": "2"
+            },
+            {
+                "Averaging": "4"
+            },
+            {
+                "Averaging": "8"
+            },
+            {
+                "Averaging": "16"
+            }
+        ]
+    },
+    "Set 80%": {
+        "parent": "UT Settings_Advanced",
+        "style": "button"
+    },
+    "dB Ref.": {
+        "parent": "UT Settings_Advanced",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Point Qty.": {
+        "parent": "UT Settings_Advanced",
+        "style": "2",
+        "options": [
+            {
+                "Point Qty.": "Auto"
+            },
+            {
+                "Point Qty.": "160"
+            },
+            {
+                "Point Qty.": "320"
+            },
+            {
+                "Point Qty.": "640"
+            },
+            {
+                "Point Qty.": "UserDef"
+            }
+        ]
+    },
+    "Scale Factor": {
+        "parent": "UT Settings_Advanced"
+    },
+    "Sum Gain": {
+        "parent": "UT Settings_Advanced",
+        "style": "1",
+        "decimal": 1,
+        "steps": [
+            {
+                "Sum Gain": "0.1"
+            },
+            {
+                "Sum Gain": "0.5"
+            },
+            {
+                "Sum Gain": "1.0"
+            },
+            {
+                "Sum Gain": "2.0"
+            },
+            {
+                "Sum Gain": "6.0"
+            }
+        ]
+    },
+    "Gate": {
+        "parent": "Gate/Curves_Gate",
+        "style": "2",
+        "options": [
+            {
+                "Gate": "A"
+            },
+            {
+                "Gate": "B"
+            },
+            {
+                "Gate": "I"
+            },
+            {
+                "Gate": "off"
+            }
+        ]
+    },
+    "Width": {
+        "Gate/Curves_Gate": {
+            "parent": "Gate/Curves_Gate",
+            "style": "1",
+            "minimum": 0.05,
+            "maximum": 525,
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Width": "0.01"
+                },
+                {
+                    "Width": "0.10"
+                },
+                {
+                    "Width": "1.00"
+                },
+                {
+                    "Width": "10.00"
+                }
+            ]
+        },
+        "Probe/Part_FFT": {
+            "parent": "Probe/Part_FFT",
+            "style": "1",
+            "minimum": 0.05,
+            "maximum": 525,
+            "unit": "mm",
+            "decimal": 2,
+            "steps": [
+                {
+                    "Width": "0.01"
+                },
+                {
+                    "Width": "0.10"
+                },
+                {
+                    "Width": "1.00"
+                },
+                {
+                    "Width": "10.00"
+                }
+            ]
+        }
+    },
+    "Threshold": {
+        "parent": "Gate/Curves_Gate",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 100,
+        "unit": "%",
+        "decimal": 0,
+        "steps": [
+            {
+                "Threshold": "1"
+            },
+            {
+                "Threshold": "10"
+            }
+        ]
+    },
+    "Synchro": {
+        "parent": "Gate/Curves_Gate",
+        "style": "2",
+        "options": [
+            {
+                "Synchro": "Gate A"
+            },
+            {
+                "Synchro": "Gate I"
+            },
+            {
+                "Synchro": "Pulse"
+            }
+        ]
+    },
+    "Measure Mode": {
+        "parent": "Gate/Curves_Gate",
+        "style": "2",
+        "options": [
+            {
+                "Measure Mode": "Edge"
+            },
+            {
+                "Measure Mode": "Peak"
+            }
+        ]
+    },
+    "Alarm": {
+        "parent": "Gate/Curves_Alarm",
+        "style": "2",
+        "options": [
+            {
+                "Alarm": "Alarm 1"
+            },
+            {
+                "Alarm": "Alarm 2"
+            },
+            {
+                "Alarm": "Alarm 3"
+            }
+        ]
+    },
+    "Switch": {
+        "Gate/Curves_Alarm": {
+            "parent": "Gate/Curves_Alarm",
+            "style": "3",
+            "label": [
+                {
+                    "Switch": "on"
+                },
+                {
+                    "Switch": "off"
+                }
+            ]
+        },
+        "Probe/Part_FFT": {
+            "parent": "Probe/Part_FFT",
+            "style": "3",
+            "label": [
+                {
+                    "Switch": "on"
+                },
+                {
+                    "Switch": "off"
+                }
+            ]
+        }
+    },
+    "Condition": {
+        "parent": "Gate/Curves_Alarm",
+        "style": "2",
+        "options": [
+            {
+                "Condition": "None"
+            },
+            {
+                "Condition": "Gate A"
+            },
+            {
+                "Condition": "Gate B"
+            },
+            {
+                "Condition": "Gate I"
+            },
+            {
+                "Condition": "Not Gate A"
+            },
+            {
+                "Condition": "Not Gate B"
+            },
+            {
+                "Condition": "Not Gate I"
+            },
+            {
+                "Condition": ">Max.Thickness"
+            },
+            {
+                "Condition": "<Min.Thickness"
+            }
+        ]
+    },
+    "Operator": {
+        "parent": "Gate/Curves_Alarm",
+        "style": "2",
+        "options": [
+            {
+                "Operator": "And"
+            },
+            {
+                "Operator": "Or"
+            }
+        ]
+    },
+    "Output": {
+        "parent": "Gate/Curves_Output",
+        "style": "2",
+        "options": [
+            {
+                "Output": "Alarm 1"
+            },
+            {
+                "Output": "Alarm 2"
+            },
+            {
+                "Output": "Alarm 3"
+            },
+            {
+                "Output": "Analog 1"
+            },
+            {
+                "Output": "Analog 2"
+            }
+        ]
+    },
+    "Sound": {
+        "parent": "Gate/Curves_Output",
+        "style": "2",
+        "options": [
+            {
+                "Sound": "Off No Sound",
+                "ShortText": "Off"
+            },
+            {
+                "Sound": "300Hz Audio Output at 300Hz",
+                "ShortText": "300Hz"
+            },
+            {
+                "Sound": "600Hz Audio Output at 600Hz",
+                "ShortText": "600Hz"
+            },
+            {
+                "Sound": "1000Hz Audio Output at 1000Hz",
+                "ShortText": "1000Hz"
+            },
+            {
+                "Sound": "5000Hz Audio Output at 5000Hz",
+                "ShortText": "5000Hz"
+            }
+        ]
+    },
+    "Delay": {
+        "parent": "Gate/Curves_Output",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 5000,
+        "unit": "ms",
+        "decimal": 2,
+        "steps": [
+            {
+                "Delay": "0.10"
+            },
+            {
+                "Delay": "1.00"
+            },
+            {
+                "Delay": "10.00"
+            }
+        ]
+    },
+    "Hold Time": {
+        "parent": "Gate/Curves_Output",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 5000,
+        "unit": "ms",
+        "decimal": 2,
+        "steps": [
+            {
+                "Hold Time": "0.10"
+            },
+            {
+                "Hold Time": "1.00"
+            },
+            {
+                "Hold Time": "10.00"
+            }
+        ]
+    },
+    "Group": {
+        "Gate/Curves_Output": {
+            "parent": "Gate/Curves_Output"
+        },
+        "Display_Selection": {
+            "parent": "Display_Selection",
+            "style": "2",
+            "options": []
+        },
+        "Probe/Part_Select": {
+            "parent": "Probe/Part_Select",
+            "style": "2",
+            "options": [
+                {
+                    "Group": "Add"
+                },
+                {
+                    "Group": "1"
+                },
+                {
+                    "Group": "2"
+                },
+                {
+                    "Group": "3"
+                },
+                {
+                    "Group": "4"
+                },
+                {
+                    "Group": "5"
+                },
+                {
+                    "Group": "6"
+                },
+                {
+                    "Group": "7"
+                },
+                {
+                    "Group": "8"
+                },
+                {
+                    "Group": "Remove"
+                }
+            ]
+        },
+        "Gate/Curves_Alarm": {
+            "parent": "Gate/Curves_Alarm",
+            "style": "2",
+            "options": [
+                {
+                    "Group": "Group 1"
+                },
+                {
+                    "Group": "All"
+                },
+                {
+                    "Group": "None"
+                }
+            ]
+        }
+    },
+    "Data": {
+        "parent": "Gate/Curves_Output",
+        "style": "2",
+        "options": [
+            {
+                "Data": "A%"
+            },
+            {
+                "Data": "B%"
+            },
+            {
+                "Data": "None"
+            }
+        ]
+    },
+    "Mode": {
+        "Gate/Curves_DAC": {
+            "parent": "Gate/Curves_DAC",
+            "style": "2",
+            "options": [
+                {
+                    "Mode": "Setting"
+                },
+                {
+                    "Mode": "Edit"
+                }
+            ]
+        },
+        "Gate/Curves_TCG": {
+            "parent": "Gate/Curves_TCG",
+            "style": "2",
+            "options": [
+                {
+                    "Mode": "Setting"
+                },
+                {
+                    "Mode": "Edit"
+                }
+            ]
+        }
+    },
+    "Display": {
+        "parent": "Display_Selection",
+        "style": "2",
+        "options": [
+            {
+                "Display": "A A-Scan",
+                "ShortText": "A"
+            },
+            {
+                "Display": "A-B A-Scan B-Scan",
+                "ShortText": "A-B"
+            },
+            {
+                "Display": "A-S A-Scan S-Scan",
+                "ShortText": "A-S"
+            },
+            {
+                "Display": "A-B-C A-Scan B-Scan C-Scan",
+                "ShortText": "A-B-C"
+            },
+            {
+                "Display": "A-B-S A-Scan B-Scan S-Scan",
+                "ShortText": "A-B-S"
+            },
+            {
+                "Display": "A-S-[C] A-Scan S-Scan [C-Scan]",
+                "ShortText": "A-S-[C]"
+            },
+            {
+                "Display": "S-A-A-A S-Scan A-Scan A-Scan A-Scan",
+                "ShortText": "S-A-A-A"
+            },
+            {
+                "Display": "S-A-C-C S-Scan A-Scan C-Scan C-Scan",
+                "ShortText": "S-A-C-C"
+            }
+        ]
+    },
+    "C-scan Source": {
+        "parent": "Display_Selection",
+        "style": "2",
+        "options": [
+            {
+                "C-scan Source": "A%"
+            },
+            {
+                "C-scan Source": "B%"
+            },
+            {
+                "C-scan Source": "Thickness"
+            },
+            {
+                "C-scan Source": "I/"
+            }
+        ]
+    },
+    "Min.Thickness": {
+        "parent": "Display_Selection",
+        "style": "1",
+        "unit": "mm"
+    },
+    "Max.Thickness": {
+        "parent": "Display_Selection",
+        "style": "1",
+        "unit": "mm"
+    },
+    "Amplitude": {
+        "parent": "Display_Color Settings"
+    },
+    "Depth": {
+        "parent": "Display_Color Settings"
+    },
+    "TOFD": {
+        "parent": "Display_Color Settings"
+    },
+    "Scan": {
+        "Display_Properties": {
+            "parent": "Display_Properties",
+            "style": "2",
+            "options": [
+                {
+                    "Scan": "A-Scan"
+                },
+                {
+                    "Scan": "B-Scan"
+                },
+                {
+                    "Scan": "C-Scan"
+                }
+            ]
+        },
+        "Scan_Inspection": {
+            "parent": "Scan_Inspection",
+            "style": "2",
+            "options": [
+                {
+                    "Scan": "Time"
+                },
+                {
+                    "Scan": "Encoder 1"
+                },
+                {
+                    "Scan": "Encoder 2"
+                }
+            ]
+        }
+    },
+    "Color": {
+        "parent": "Display_Properties",
+        "style": "2",
+        "options": [
+            {
+                "Color": "Blue"
+            },
+            {
+                "Color": "Green"
+            },
+            {
+                "Color": "Red"
+            },
+            {
+                "Color": "Yellow"
+            },
+            {
+                "Color": "Black"
+            },
+            {
+                "Color": "White"
+            }
+        ]
+    },
+    "Envelope": {
+        "parent": "Display_Properties",
+        "style": "2",
+        "options": [
+            {
+                "Envelope": "None"
+            },
+            {
+                "Envelope": "Infinite"
+            }
+        ]
+    },
+    "Peak Holding": {
+        "parent": "Display_Properties"
+    },
+    "Reference Holding": {
+        "parent": "Display_Properties"
+    },
+    "Compression": {
+        "Display_Properties": {
+            "parent": "Display_Properties",
+            "style": "3",
+            "label": [
+                {
+                    "Switch": "on"
+                },
+                {
+                    "Switch": "off"
+                }
+            ]
+        }
+    },
+    "Ratio 1:1": {
+        "parent": "Display_Properties",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "C-Scan Mode": {
+        "parent": "Display_Properties"
+    },
+    "Group Mode": {
+        "parent": "Probe/Part_Select",
+        "style": "2",
+        "options": [
+            {
+                "Group Mode": "UT(PA Connector)",
+                "ShortText": "UT"
+            },
+            {
+                "Group Mode": "PA(Phassed Array)",
+                "ShortText": "PA"
+            },
+            {
+                "Group Mode": "UT1(Conventional UT)",
+                "ShortText": "UT1"
+            },
+            {
+                "Group Mode": "UT2(Conventional UT)",
+                "ShortText": "UT2"
+            }
+        ]
+    },
+    "Probe": {
+        "parent": "Probe/Part_Select",
+        "style": "4"
+    },
+    "Wedge": {
+        "parent": "Probe/Part_Select",
+        "style": "5"
+    },
+    "Define": {
+        "parent": "Probe/Part_Select",
+        "style": "2",
+        "options": [
+            {
+                "Define": "Probe"
+            },
+            {
+                "Define": "Wedge"
+            }
+        ]
+    },
+    "Auto Detect": {
+        "parent": "Probe/Part_Select",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Scan Offset": {
+        "parent": "Probe/Part_Position",
+        "style": "1",
+        "minimum": -10000,
+        "maximum": 10000,
+        "unit": "mm",
+        "decimal": 1,
+        "steps": [
+            {
+                "Scan Offset": "0.1"
+            },
+            {
+                "Scan Offset": "1.0"
+            },
+            {
+                "Scan Offset": "5.0"
+            },
+            {
+                "Scan Offset": "10.0"
+            }
+        ]
+    },
+    "Index Offset": {
+        "parent": "Probe/Part_Position",
+        "style": "1",
+        "minimum": -10000,
+        "maximum": 1000000,
+        "unit": "mm",
+        "decimal": 1,
+        "steps": [
+            {
+                "Index Offset": "0.1"
+            },
+            {
+                "Index Offset": "1.0"
+            },
+            {
+                "Index Offset": "5.0"
+            },
+            {
+                "Index Offset": "10.0"
+            }
+        ]
+    },
+    "Skew": {
+        "parent": "Probe/Part_Position",
+        "style": "2",
+        "options": [
+            {
+                "Skew": "0.0"
+            },
+            {
+                "Skew": "90.0"
+            },
+            {
+                "Skew": "180.0"
+            },
+            {
+                "Skew": "270.0"
+            }
+        ],
+        "unit": "°"
+    },
+    "Geometry": {
+        "parent": "Probe/Part_Part",
+        "style": "2",
+        "options": [
+            {
+                "Geometry": "Plate"
+            },
+            {
+                "Geometry": "ID"
+            },
+            {
+                "Geometry": "OD"
+            }
+        ]
+    },
+    "Thickness": {
+        "parent": "Probe/Part_Part",
+        "style": "1",
+        "minimum": 0.05,
+        "maximum": 1000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Thickness": "0.10"
+            },
+            {
+                "Thickness": "1.00"
+            },
+            {
+                "Thickness": "10.00"
+            }
+        ]
+    },
+    "Diameter": {
+        "parent": "Probe/Part_Part",
+        "style": "1",
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Diameter": "0.10"
+            },
+            {
+                "Diameter": "1.00"
+            },
+            {
+                "Diameter": "10.0"
+            }
+        ]
+    },
+    "Material": {
+        "parent": "Probe/Part_Part",
+        "style": "2",
+        "options": [
+            {
+                "Material": "Aluminum"
+            },
+            {
+                "Material": "Steel Common"
+            },
+            {
+                "Material": "Steel Stainless"
+            },
+            {
+                "Material": "Brass"
+            },
+            {
+                "Material": "Copper"
+            },
+            {
+                "Material": "Iron"
+            },
+            {
+                "Material": "Lead"
+            },
+            {
+                "Material": "Nylon"
+            },
+            {
+                "Material": "Silver"
+            },
+            {
+                "Material": "Gold"
+            },
+            {
+                "Material": "Zinc"
+            },
+            {
+                "Material": "Titanium"
+            },
+            {
+                "Material": "Tin"
+            },
+            {
+                "Material": "Epoxy Resin"
+            },
+            {
+                "Material": "Ice"
+            },
+            {
+                "Material": "Nickel"
+            },
+            {
+                "Material": "Plexiglass"
+            },
+            {
+                "Material": "Polystyrene"
+            },
+            {
+                "Material": "Porcelain"
+            },
+            {
+                "Material": "PVC"
+            },
+            {
+                "Material": "Quartz Glass"
+            },
+            {
+                "Material": "Rubber Vulcanized"
+            },
+            {
+                "Material": "Teflon"
+            },
+            {
+                "Material": "Water"
+            }
+        ]
+    },
+    "Overlay": {
+        "parent": "Probe/Part_Part"
+    },
+    "Load Part": {
+        "parent": "Probe/Part_Advanced",
+        "style": "button"
+    },
+    "Clear Part": {
+        "parent": "Probe/Part_Advanced",
+        "style": "button"
+    },
+    "Law Type": {
+        "parent": "Focal Law_Law Config",
+        "style": "2",
+        "options": [
+            {
+                "Law Type": "Azimuthal"
+            },
+            {
+                "Law Type": "Linear"
+            }
+        ]
+    },
+    "Pulse Connection": {
+        "parent": "Focal Law_Law Config",
+        "style": "1",
+        "minimum": 1,
+        "maximum": 113,
+        "decimal": 0,
+        "steps": [
+            {
+                "Pulse Connection": "1"
+            },
+            {
+                "Pulse Connection": "10"
+            }
+        ]
+    },
+    "Receiver Connection": {
+        "parent": "Focal Law_Law Config",
+        "style": "1",
+        "minimum": 1,
+        "maximum": 113,
+        "decimal": 0,
+        "steps": [
+            {
+                "Receiver Connection": "1"
+            },
+            {
+                "Receiver Connection": "10"
+            }
+        ]
+    },
+    "Wave Type": {
+        "parent": "Focal Law_Law Config",
+        "style": "2",
+        "options": [
+            {
+                "Wave Type": "LW"
+            },
+            {
+                "Wave Type": "SW"
+            }
+        ]
+    },
+    "Min. Angle": {
+        "parent": "Focal Law_Angle",
+        "style": "1",
+        "minimum": 25,
+        "maximum": 75,
+        "unit": "°",
+        "decimal": 0,
+        "steps": [
+            {
+                "Min. Angle": "1"
+            },
+            {
+                "Min. Angle": "5"
+            },
+            {
+                "Min. Angle": "10"
+            }
+        ]
+    },
+    "Max. Angle": {
+        "parent": "Focal Law_Angle",
+        "style": "1",
+        "minimum": 25,
+        "maximum": 75,
+        "unit": "°",
+        "decimal": 0,
+        "steps": [
+            {
+                "Max. Angle": "1"
+            },
+            {
+                "Max. Angle": "5"
+            },
+            {
+                "Max. Angle": "10"
+            }
+        ]
+    },
+    "Angle Step": {
+        "parent": "Focal Law_Angle",
+        "style": "1",
+        "minimum": 1,
+        "maximum": 10,
+        "unit": "°",
+        "decimal": 0,
+        "steps": [
+            {
+                "Angle Step": "1"
+            }
+        ]
+    },
+    "Apeture": {
+        "parent": "Focal Law_Apeture",
+        "style": "1",
+        "decimal": 0,
+        "steps": [
+            {
+                "Apeture": "1"
+            },
+            {
+                "Apeture": "5"
+            }
+        ]
+    },
+    "First Element": {
+        "parent": "Focal Law_Apeture",
+        "style": "1",
+        "decimal": 0,
+        "steps": [
+            {
+                "First Element": "1"
+            },
+            {
+                "First Element": "5"
+            }
+        ]
+    },
+    "Last Element": {
+        "parent": "Focal Law_Apeture",
+        "style": "1",
+        "decimal": 0,
+        "steps": [
+            {
+                "Last Element": "1"
+            },
+            {
+                "Last Element": "5"
+            }
+        ]
+    },
+    "Element Step": {
+        "parent": "Focal Law_Apeture",
+        "style": "1",
+        "decimal": 0,
+        "steps": [
+            {
+                "Element Step": "1"
+            },
+            {
+                "Element Step": "5"
+            }
+        ]
+    },
+    "Type": {
+        "Focal Law_Focal Point": {
+            "parent": "Focal Law_Focal Point",
+            "style": "2",
+            "options": [
+                {
+                    "Type": "True Depth"
+                },
+                {
+                    "Type": "Half Path"
+                },
+                {
+                    "Type": "Projection"
+                },
+                {
+                    "Type": "Focal Plane"
+                },
+                {
+                    "Type": "DDF"
+                }
+            ]
+        },
+        "Scan_Inspection": {
+            "parent": "Scan_Inspection",
+            "style": "2",
+            "options": [
+                {
+                    "Type": "One Line"
+                },
+                {
+                    "Type": "Raster Scan"
+                },
+                {
+                    "Type": "Helicoidal Scan"
+                }
+            ]
+        }
+    },
+    "Position Start": {
+        "parent": "Facal Law_Focal Point",
+        "style": "1",
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Position Start": "0.01"
+            },
+            {
+                "Position Start": "0.10"
+            },
+            {
+                "Position Start": "1.00"
+            },
+            {
+                "Position Start": "10.00"
+            }
+        ]
+    },
+    "Position End": {
+        "parent": "Facal Law_Focal Point",
+        "style": "1",
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Position End": "0.01"
+            },
+            {
+                "Position End": "0.10"
+            },
+            {
+                "Position End": "1.00"
+            },
+            {
+                "Position End": "10.00"
+            }
+        ]
+    },
+    "Offset Start": {
+        "parent": "Facal Law_Focal Point",
+        "style": "1",
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Offset Start": "0.01"
+            },
+            {
+                "Offset Start": "0.10"
+            },
+            {
+                "Offset Start": "1.00"
+            },
+            {
+                "Offset Start": "10.00"
+            }
+        ]
+    },
+    "Offset End": {
+        "parent": "Facal Law_Focal Point",
+        "style": "1",
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Offset End": "0.01"
+            },
+            {
+                "Offset End": "0.10"
+            },
+            {
+                "Offset End": "1.00"
+            },
+            {
+                "Offset End": "10.00"
+            }
+        ]
+    },
+    "Max Scan Speed": {
+        "parent": "Scan_Inspection",
+        "style": "1",
+        "unit": "mm/s",
+        "decimal": 2,
+        "steps": [
+            {
+                "Max Scan Speed": "1.00"
+            },
+            {
+                "Max Scan Speed": "10.00"
+            },
+            {
+                "Max Scan Speed": "100.00"
+            }
+        ]
+    },
+    "Max Scan Speed(rpm)": {
+        "parent": "Scan_Inspection",
+        "style": "1",
+        "unit": "mm/s",
+        "decimal": 2,
+        "steps": [
+            {
+                "Max Scan Speed(rpm)": "1.00"
+            },
+            {
+                "Max Scan Speed(rpm)": "10.00"
+            },
+            {
+                "Max Scan Speed(rpm)": "100.00"
+            }
+        ]
+    },
+    "Encoder": {
+        "parent": "Scan_Encoder",
+        "style": "2",
+        "options": [
+            {
+                "Encoder": "Encoder 1"
+            },
+            {
+                "Encoder": "Encoder 2"
+            }
+        ]
+    },
+    "Encoder Type": {
+        "parent": "Scan_Encoder",
+        "style": "2",
+        "options": [
+            {
+                "Encoder Type": "Up"
+            },
+            {
+                "Encoder Type": "Down"
+            },
+            {
+                "Encoder Type": "Quad"
+            }
+        ]
+    },
+    "Resolution": {
+        "parent": "Scan_Encoder",
+        "unit": "Step/mm"
+    },
+    "Polarity": {
+        "parent": "Scan_Encoder",
+        "style": "2",
+        "options": [
+            {
+                "Polarity": "Normal"
+            },
+            {
+                "Polarity": "Reverse"
+            }
+        ]
+    },
+    "Origin": {
+        "parent": "Scan_Encoder",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 1000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Origin": "0.01"
+            },
+            {
+                "Origin": "0.10"
+            },
+            {
+                "Origin": "1.00"
+            },
+            {
+                "Origin": "10.00"
+            },
+            {
+                "Origin": "100.00"
+            }
+        ]
+    },
+    "Preset": {
+        "parent": "Scan_Encoder",
+        "style": "button"
+    },
+    "Scan Start": {
+        "parent": "Scan_Area",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 10000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Scan Start": "10.00"
+            },
+            {
+                "Scan Start": "100.00"
+            },
+            {
+                "Scan Start": "1000.00"
+            },
+            {
+                "Scan Start": "10000.00"
+            }
+        ]
+    },
+    "Scan End": {
+        "parent": "Scan_Area",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 10000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Scan End": "10.00"
+            },
+            {
+                "Scan End": "100.00"
+            },
+            {
+                "Scan End": "1000.00"
+            },
+            {
+                "Scan End": "10000.00"
+            }
+        ]
+    },
+    "Scan Resolution": {
+        "parent": "Scan_Area",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 100,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Scan Resolution": "0.01"
+            },
+            {
+                "Scan Resolution": "0.10"
+            },
+            {
+                "Scan Resolution": "0.50"
+            },
+            {
+                "Scan Resolution": "1.00"
+            },
+            {
+                "Scan Resolution": "10.00"
+            }
+        ]
+    },
+    "Index Start": {
+        "parent": "Scan_Area",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 10000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Index Start": "10.00"
+            },
+            {
+                "Index Start": "100.00"
+            },
+            {
+                "Index Start": "1000.00"
+            },
+            {
+                "Index Start": "10000.00"
+            }
+        ]
+    },
+    "Index End": {
+        "parent": "Scan_Area",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 10000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "Index End": "10.00"
+            },
+            {
+                "Index End": "100.00"
+            },
+            {
+                "Index End": "1000.00"
+            },
+            {
+                "Index End": "10000.00"
+            }
+        ]
+    },
+    "Index Resolution": {
+        "parent": "Scan_Area",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 100,
+        "unit": "mm",
+        "steps": [
+            {
+                "Index Resolution": "0.01"
+            },
+            {
+                "Index Resolution": "0.10"
+            },
+            {
+                "Index Resolution": "0.50"
+            },
+            {
+                "Index Resolution": "1.00"
+            },
+            {
+                "Index Resolution": "10.00"
+            }
+        ]
+    },
+    "Pause": {
+        "parent": "Scan_Start",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Reading Group": {
+        "parent": "Measurement_Reading"
+    },
+    "Field 1": {
+        "parent": "Measurement_Reading",
+        "style": "7"
+    },
+    "Field 2": {
+        "parent": "Measurement_Reading",
+        "style": "7"
+    },
+    "Field 3": {
+        "parent": "Measurement_Reading",
+        "style": "7"
+    },
+    "Field 4": {
+        "parent": "Measurement_Reading",
+        "style": "7"
+    },
+    "Selection": {
+        "parent": "Measurement_Cursors",
+        "style": "2",
+        "options": [
+            {
+                "Selection": "A-Scan"
+            },
+            {
+                "Selection": "B-Scan"
+            },
+            {
+                "Selection": "C-Scan"
+            },
+            {
+                "Selection": "S-Scan"
+            },
+            {
+                "Selection": "Data"
+            }
+        ]
+    },
+    "%(r)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 100,
+        "unit": "%",
+        "decimal": 1,
+        "steps": [
+            {
+                "%(r)": "0.1"
+            },
+            {
+                "%(r)": "1.0"
+            },
+            {
+                "%(r)": "10.0"
+            }
+        ]
+    },
+    "%(m)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 100,
+        "unit": "%",
+        "decimal": 1,
+        "steps": [
+            {
+                "%(m)": "0.1"
+            },
+            {
+                "%(m)": "1.0"
+            },
+            {
+                "%(m)": "10.0"
+            }
+        ]
+    },
+    "U(r)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 2000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "U(r)": "0.1"
+            },
+            {
+                "U(r)": "1.0"
+            },
+            {
+                "U(r)": "10.0"
+            }
+        ]
+    },
+    "U(m)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 2000,
+        "unit": "mm",
+        "decimal": 2,
+        "steps": [
+            {
+                "U(m)": "0.1"
+            },
+            {
+                "U(m)": "1.0"
+            },
+            {
+                "U(m)": "10.0"
+            }
+        ]
+    },
+    "S(r)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 1000,
+        "unit": "s",
+        "decimal": 1,
+        "steps": [
+            {
+                "S(r)": "0.1"
+            },
+            {
+                "S(r)": "0.5"
+            },
+            {
+                "S(r)": "1.0"
+            },
+            {
+                "S(r)": "5.0"
+            }
+        ]
+    },
+    "S(m)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 1000,
+        "unit": "s",
+        "decimal": 1,
+        "steps": [
+            {
+                "S(m)": "0.1"
+            },
+            {
+                "S(m)": "0.5"
+            },
+            {
+                "S(m)": "1.0"
+            },
+            {
+                "S(m)": "5.0"
+            }
+        ]
+    },
+    "I(r)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 2000,
+        "unit": "mm",
+        "decimal": 1,
+        "steps": [
+            {
+                "I(r)": "0.1"
+            },
+            {
+                "I(r)": "0.5"
+            },
+            {
+                "I(r)": "1.0"
+            },
+            {
+                "I(r)": "5.0"
+            }
+        ]
+    },
+    "I(m)": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "minimum": 0,
+        "maximum": 2000,
+        "unit": "mm",
+        "decimal": 1,
+        "steps": [
+            {
+                "I(m)": "0.1"
+            },
+            {
+                "I(m)": "0.5"
+            },
+            {
+                "I(m)": "1.0"
+            },
+            {
+                "I(m)": "5.0"
+            }
+        ]
+    },
+    "Angle": {
+        "parent": "Measurement_Cursors",
+        "style": "1",
+        "unit": "°",
+        "decimal": 0,
+        "steps": [
+            {
+                "Angle": "1"
+            }
+        ]
+    },
+    "Select": {
+        "Measurement_TOFD": {
+            "parent": "Measurement_TOFD",
+            "style": "2",
+            "options": [
+                {
+                    "Select": "TOFD Settings"
+                },
+                {
+                    "Select": "TOFD Analysis"
+                }
+            ]
+        },
+        "File/Report_User Field": {
+            "parent": "File/Report_User Field",
+            "style": "2",
+            "options": [
+                {
+                    "Select": "1"
+                },
+                {
+                    "Select": "2"
+                },
+                {
+                    "Select": "3"
+                },
+                {
+                    "Select": "4"
+                },
+                {
+                    "Select": "5"
+                },
+                {
+                    "Select": "6"
+                },
+                {
+                    "Select": "7"
+                },
+                {
+                    "Select": "8"
+                },
+                {
+                    "Select": "9"
+                },
+                {
+                    "Select": "10"
+                }
+            ]
+        }
+    },
+	"Wedge Sep.": {
+		"parent": "Measurement_TOFD"
+	},
+	"Layer Depth": {
+		"parent": "Measurement_TOFD"
+	},
+	"TOFD Calculator": {
+		"parent": "Measurement_TOFD"
+	},                       
+	"Straightening": {
+		"parent": "Measurement_TOFD",
+		"style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Remove Lateral": {
+		"parent": "Measurement_TOFD",
+		"style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+	"Ref.Position": {
+		"parent": "Measurement_TOFD",
+		"style": "1",
+		"unit": "mm"
+	},
+	"Depth Calibration": {
+		"parent": "Measurement_TOFD",
+		"style": "3",
+		"label": [
+			{
+				"Switch": "on"
+			},
+			{
+				"Switch": "off"
+			}
+		]
+	},
+    "Add/Delete": {
+        "parent": "Measurement_Flaw Record"
+    },
+    "Flaw Image": {
+        "parent": "Measurement_Flaw Record",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Comment": {
+        "parent": "Measurement_Flaw Record",
+        "style": "6"
+    },
+    "Diaplay Table": {
+        "parent": "Measurement_Flaw Record",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Export Record": {
+        "parent": "Measurement_Flaw Record",
+        "style": "button"
+    },
+    "Save Setup As": {
+        "parent": "File/Report_File",
+        "style": "button"
+    },
+    "Open": {
+        "parent": "File/Report_File",
+        "style": "button"
+    },
+    "File Manager": {
+        "parent": "File/Report_File",
+        "style": "button"
+    },
+    "Storage": {
+        "parent": "File/Report_Save Mode",
+        "style": "2",
+        "options": [
+            {
+                "Storage": "SD"
+            },
+            {
+                "Storage": "SSG"
+            },
+            {
+                "Storage": "U Storage"
+            }
+        ]
+    },
+    "Save Mode": {
+        "parent": "File/Report_Save Mode",
+        "style": "2",
+        "options": [
+            {
+                "Save Mode": "Inspection Data"
+            },
+            {
+                "Save Mode": "Inspection Table"
+            },
+            {
+                "Save Mode": "Screen"
+            },
+            {
+                "Save Mode": "Report"
+            }
+        ]
+    },
+    "Save Data": {
+        "parent": "File/Report_Save Mode",
+        "style": "button"
+    },
+    "File Name": {
+        "parent": "File/Report_Save Mode",
+        "style": "6"
+    },
+    "Template": {
+        "parent": "File/Report_Report",
+        "style": "2"
+    },
+    "Report Name": {
+        "parent": "File/Report_Report",
+        "style": "6"
+    },
+    "Customer": {
+        "parent": "File/Report_Report",
+        "style": "6"
+    },
+    "Part Name": {
+        "parent": "File/Report_Report",
+        "style": "6"
+    },
+    "Part Number": {
+        "parent": "File/Report_Report",
+        "style": "6"
+    },
+    "Create": {
+        "parent": "File/Report_Report",
+        "style": "button"
+    },
+    "Probe/Wedge Info": {
+        "parent": "File/Report_Format",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Inspection Info": {
+        "parent": "File/Report_Format",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Scan Info": {
+        "parent": "File/Report_Format",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Encoder Info": {
+        "parent": "File/Report_Format",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "DAC/TCG Info": {
+        "parent": "File/Report_Format",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Flaw Record Table": {
+        "parent": "File/Report_Format",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Enable": {
+        "parent": "File/Report_User Field",
+        "style": "3",
+        "label": [
+            {
+                "Switch": "on"
+            },
+            {
+                "Switch": "off"
+            }
+        ]
+    },
+    "Label": {
+        "parent": "File/Report_User Field",
+        "style": "6"
+    },
+    "Content": {
+        "parent": "File/Report_User Field",
+        "style": "6"
+    },
+    "Edit Note": {
+        "parent": "File/Report_User Field",
+        "style": "6"
+    },
+    "Print": {
+        "parent": "File/Report_User Field",
+        "style": "button"
+    },
+    "Units": {
+        "parent": "Preference_Preference",
+        "style": "2",
+        "options": [
+            {
+                "Units": "Millimeters"
+            },
+            {
+                "Units": "Inches"
+            }
+        ]
+    },
+    "Bright": {
+        "parent": "Preference_Preference",
+        "style": "1",
+        "minimum": 1,
+        "maximum": 100,
+        "unit": "%",
+        "decimal": 0,
+        "steps": [
+            {
+                "Bright": "1"
+            },
+            {
+                "Bright": "10"
+            }
+        ]
+    },
+    "Opacity": {
+        "parent": "Preference_Preference",
+        "style": "1",
+        "minimum": 1,
+        "maximum": 100,
+        "unit": "%",
+        "decimal": 0,
+        "steps": [
+            {
+                "Opacity": "1"
+            },
+            {
+                "Opacity": "10"
+            }
+        ]
+    },
+    "Clock Set": {
+        "parent": "Preference_System",
+        "style": "ClockDialog"
+    },
+    "Date Set": {
+        "parent": "Preference_System",
+        "style": "DateDialog"
+    },
+    "Language": {
+        "parent": "Preference_System",
+        "style": "2",
+        "options": [
+            {
+                "Language": "English"
+            },
+            {
+                "Language": "Chinese"
+            }
+        ]
+    },
+    "IP Address": {
+        "parent": "Preference_Network"
+    },
+    "Subnet Mask": {
+        "parent": "Preference_Network"
+    },
+    "System Information": {
+        "parent": "Preference_Service"
+    },
+    "Cert Import": {
+        "parent": "Preference_Service"
+    },
+    "SW Update": {
+        "parent": "Preference_Service"
+    },
+    "HW Update": {
+        "parent": "Preference_Service"
+    },
+    "Reset Configuration": {
+        "parent": "Preference_Service"
+    },
+    "About": {
+        "parent": "Preference_Service"
+    }
+}
