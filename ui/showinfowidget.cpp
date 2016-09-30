@@ -12,7 +12,7 @@ ShowInfoWidget::ShowInfoWidget(QWidget *parent) :
     ui->label_5_showDateTime->installEventFilter(this);
     showDlg = false;
 
-    initShowTime();
+    init_show_time();
 
     QString string1 = "border-right:1px solid qlineargradient(spread:reflect, x1:0, y1:0, x2:0, y2:0.5, stop:0.2 rgba(210, 150, 0, 255), stop:0.5 rgba(0, 0, 0, 255));" ;
     QString string2 = "border-left:1px solid qlineargradient(spread:reflect, x1:0, y1:0,x2:0, y2:0.5, stop:0.2 rgba(210, 150, 0, 255), stop:0.5 rgba(255, 255, 255, 255));";
@@ -29,7 +29,7 @@ ShowInfoWidget::~ShowInfoWidget()
     delete ui;
 }
 
-void ShowInfoWidget::initShowTime()
+void ShowInfoWidget::init_show_time()
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(slotUpdateTime()));
