@@ -20,8 +20,6 @@ private Q_SLOTS:
     void testGroupIndex();
 private:
     Fpga *m_fpga;
-//    Beam *m_beam;
-//    Group *m_group;
 };
 
 TestFpga::TestFpga()

@@ -1,7 +1,7 @@
 #include "beam.h"
 #include "phascan_spi.h"
 
-#define BEAM_REG_NUM    (80)
+static const int BEAM_REGS_NUM = 80;
 
 struct DelayInfo
 {
@@ -86,7 +86,7 @@ Beam::Beam(const int index)
     : m_index(index), d(new BeamData())
 {
     d->chip = 0b0001;
-    d->offset = BEAM_REG_NUM * index;
+    d->offset = BEAM_REGS_NUM * index;
 }
 
 Beam::~Beam()

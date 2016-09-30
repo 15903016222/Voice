@@ -1,7 +1,7 @@
 #include "group.h"
 #include "phascan_spi.h"
 
-#define GROUP_REG_NUM   (16)
+static const int GROUP_REGS_NUM = 16;
 
 struct GroupData {
     /* s_group_reg (-1) */
@@ -437,19 +437,19 @@ bool Group::reflesh(void)
     if (spi == NULL) {
         return false;
     }
-    d->offset = GROUP_REG_NUM * m_index;
+    d->offset = GROUP_REGS_NUM * m_index;
     return spi->send((char *)d, sizeof(GroupData));
 }
 
 bool write_reg(GroupData *d, int index, int reg)
 {
     PhascanSpi *spi = PhascanSpi::get_spi();
-    if (reg >= GROUP_REG_NUM
+    if (reg >= GROUP_REGS_NUM
             || spi == NULL) {
         return false;
     }
 
-    d->offset = (GROUP_REG_NUM * index) + reg;
+    d->offset = (GROUP_REGS_NUM * index) + reg;
 
     quint32 data[2] = {0};
     quint32 *dp = (quint32 *)d;

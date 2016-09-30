@@ -303,6 +303,74 @@ bool Fpga::set_factor_echo(int val, bool reflesh)
     return (reflesh ? write_reg(m_global, 28) : true);
 }
 
+int Fpga::groups()
+{
+    QReadLocker l(&m_groupsLock);
+    return m_groups.size();
+}
+
+static const int MAX_GROUPS_NUM = 8;
+static const int MAX_BEAMS_NUM = 1024;
+bool Fpga::create_group()
+{
+    QWriteLocker l(&m_groupsLock);
+    int size = m_groups.size();
+    if (size >= MAX_GROUPS_NUM) {
+        return false;
+    }
+    m_groups.append(FpgaGroup(new Group(size)));
+    return true;
+}
+
+bool Fpga::remove_group(int index)
+{
+    QWriteLocker l(&m_groupsLock);
+    if (index < 0 || m_groups.size() - 1 < index) {
+        return false;
+    }
+    m_groups.removeAt(index);
+    return true;
+}
+
+FpgaGroup &Fpga::get_group(int index)
+{
+    QReadLocker l(&m_groupsLock);
+    return m_groups[index];
+}
+
+int Fpga::beams()
+{
+    QReadLocker l(&m_beamsLock);
+    return m_beams.size();
+}
+
+bool Fpga::create_beam()
+{
+    QWriteLocker l(&m_beamsLock);
+    int size = m_beams.size();
+    if (size >= MAX_BEAMS_NUM) {
+        return false;
+    }
+    m_beams.append(FpgaBeam(new Beam(size)));
+    return true;
+}
+
+bool Fpga::remove_beam(int index)
+{
+    QWriteLocker l(&m_beamsLock);
+    if (index < 0 || m_beams.size() -1 < index) {
+        return false;
+    }
+    m_beams.removeAt(index);
+    return true;
+}
+
+FpgaBeam &Fpga::get_beam(int index)
+{
+    QReadLocker l(&m_beamsLock);
+    return m_beams[index];
+}
+
 Fpga::Fpga()
     :m_global(new GlobalData()), m_alarmOutput0(this, 0), m_alarmOutput1(this, 1), m_alarmOutput2(this, 2),
       m_alarmAnalog0(this, 0), m_alarmAnalog1(this, 1)
@@ -327,7 +395,7 @@ bool write_reg(GlobalData *d, int reg)
     return spi->send((char *)data, 8);
 }
 
-/*** Alarm Output ***/
+/** Alarm Output **/
 
 bool AlarmOutput::is_valid() const
 {
@@ -436,7 +504,7 @@ bool AlarmOutput::set_hold_time(int time, bool reflesh)
     return (reflesh ? write_reg(m_fpga->m_global, 19+3*m_index) : true);
 }
 
-/*** AlarmAnalog ***/
+/** AlarmAnalog **/
 
 bool AlarmAnalog::is_valid() const
 {

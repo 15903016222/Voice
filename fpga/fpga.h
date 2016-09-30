@@ -1,8 +1,12 @@
 #ifndef __FPGA_H__
 #define __FPGA_H__
 
+#include "group.h"
+#include "beam.h"
+
 #include <QMutex>
 #include <QReadWriteLock>
+#include <QSharedPointer>
 
 struct GlobalData;
 
@@ -76,6 +80,9 @@ private:
     Fpga *m_fpga;
     int m_index;
 };
+
+typedef QSharedPointer<Group> FpgaGroup;
+typedef QSharedPointer<Beam> FpgaBeam;
 
 class Fpga
 {
@@ -175,6 +182,18 @@ public:
     int factor_echo();
     bool set_factor_echo(int val, bool reflesh = false);
 
+    /** Group **/
+    int groups();
+    bool create_group();
+    bool remove_group(int index);
+    FpgaGroup& get_group(int index);
+
+    /** Beam **/
+    int beams();
+    bool create_beam();
+    bool remove_beam(int index);
+    FpgaBeam &get_beam(int index);
+
 protected:
     Fpga();
     ~Fpga();
@@ -189,6 +208,10 @@ private:
     AlarmAnalog m_alarmAnalog0;
     AlarmAnalog m_alarmAnalog1;
     QReadWriteLock m_lock;
+    QList<FpgaGroup> m_groups;
+    QReadWriteLock m_groupsLock;
+    QList<FpgaBeam> m_beams;
+    QReadWriteLock m_beamsLock;
 };
 
 #endif // __FPGA_H__
