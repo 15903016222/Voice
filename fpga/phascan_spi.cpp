@@ -1,5 +1,7 @@
 #include "phascan_spi.h"
 
+#include <QDebug>
+
 QMutex PhascanSpi::s_mutex;
 PhascanSpi* PhascanSpi::s_spi = NULL;
 
@@ -9,6 +11,7 @@ PhascanSpi* PhascanSpi::get_spi(void)
     if (s_spi == NULL) {
         s_spi = new PhascanSpi();
         s_spi->setFileName("/dev/spidev1.0");
+        s_spi->open(QIODevice::ReadWrite);
         s_spi->set_mode(Spi::MODE0);
     }
 
@@ -30,6 +33,7 @@ bool PhascanSpi::send(const char *data, int len)
     if ( ! isOpen()
          || data == NULL
          || len <= 0) {
+        qWarning("spi send data failed:open(%d), data(0x%08x), len(%d)", isOpen(), (unsigned int)data, len);
         return false;
     }
 

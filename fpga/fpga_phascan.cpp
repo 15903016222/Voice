@@ -383,6 +383,7 @@ bool write_reg(GlobalData *d, int reg)
     PhascanSpi *spi = PhascanSpi::get_spi();
     if (reg >= GLOBAL_REG_NUM
             || spi == NULL) {
+        qWarning()<<"write reg failed";
         return false;
     }
 

@@ -19,7 +19,6 @@ TEMPLATE = app
 DEFINES += $$DEVICE
 
 SOURCES += tst_testfpga.cpp \
-    ../fpga.cpp \
     ../gpio.cpp \
     ../spi.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
@@ -35,7 +34,9 @@ equals(DEVICE, "PHASCAN") {
     SOURCES += \
         ../beam_phascan.cpp \
         ../group_phascan.cpp \
-        ../phascan_spi.cpp
+        ../phascan_spi.cpp \
+        ../fpga_phascan.cpp
+
 
     HEADERS += \
         ../phascan_spi.h
