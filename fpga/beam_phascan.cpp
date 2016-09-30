@@ -290,6 +290,6 @@ bool Beam::refresh(void)
     if (spi == NULL) {
         return false;
     }
-    return spi->write((char *)d, sizeof(BeamData));
+    return spi->send((char *)d, sizeof(BeamData));
 }
 

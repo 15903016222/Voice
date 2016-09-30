@@ -1,5 +1,6 @@
 
 #include "fpga.h"
+#include "phascan_spi.h"
 
 #include <QDebug>
 
@@ -13,20 +14,20 @@ struct AlarmOutputData{
     quint32 logicCondition1 :4; /* bit:12-15 报警条件1*/
     quint32 logicGroup      :16;/* bit:16-31使能的组 */
 
-    /* register18 21 24 */
+    /* reg 18 21 24 */
     quint32 delay           :20;/* bit:0-19 单位10us */
     quint32 res0            :12;/* bit:20-31 */
 
-    //register19 22 25
+    /* reg 19 22 25 */
     quint32 holdTime        :20;/* bit:0-19 单位10us */
     quint32 res1            :12;/* bit:20-31 */
 };
 
 struct AlarmAnalogData{
-    //register26 27
-    quint32 source:3;           //0-2 A% B%或thickness
-    quint32 logicGroup:4;       //3-6 源组
-    quint32 reserved1:25;         //7-31
+    /* reg 26 27 */
+    quint32 type            :3; /* bit:0-2 A% B%或thickness */
+    quint32 logicGroup      :4; /* bit:3-6 源组 */
+    quint32 res             :25;/* bit:7-31 */
 };
 
 struct GlobalData{
@@ -75,18 +76,27 @@ struct GlobalData{
 
     /* reg (28) */
     quint32 res4            :20;/* bit: 0-19 */
-    quint32 factor_echo     :12;/* bit: 20-32 4095/回波数 */
+    quint32 factorEcho      :12;/* bit: 20-32 4095/回波数 */
 
     /* reg (29 31) */
     quint32 res5[3];
 };
 
-QMutex Fpga::m_mutex;
-Fpga *Fpga::m_fpga = NULL;
+QMutex Fpga::s_mutex;
+Fpga *Fpga::s_fpga = NULL;
+Fpga *Fpga::get_fpga(void)
+{
+    QMutexLocker locker(&s_mutex);
+    if (s_fpga == NULL) {
+        s_fpga = new Fpga();
+    }
+
+    return s_fpga;
+}
 
 static bool write_reg(GlobalData *d, int reg);
 
-int Fpga::pa_law_qty() const
+int Fpga::pa_law_qty()
 {
     QReadLocker l(&m_lock);
     return m_global->paLawQty;
@@ -96,10 +106,10 @@ bool Fpga::set_pa_law_qty(int qty, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->paLawQty = qty;
-    return reflesh ? write_reg(m_global, 0) : true;
+    return (reflesh ? write_reg(m_global, 0) : true);
 }
 
-int Fpga::ut_law_qty() const
+int Fpga::ut_law_qty()
 {
     QReadLocker l(&m_lock);
     return m_global->utLawQty;
@@ -109,152 +119,152 @@ bool Fpga::set_ut_law_qty(int qty, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->utLawQty = qty;
-    return reflesh ? write_reg(m_global, 0) : true;
+    return (reflesh ? write_reg(m_global, 0) : true);
 }
 
-Fpga::EncoderPolarity Fpga::encoder_x_polarity() const
+Fpga::EncoderPolarity Fpga::encoder_x_polarity()
 {
     QReadLocker l(&m_lock);
-    return (m_global->encX & 0b1000);
+    return (Fpga::EncoderPolarity)(m_global->encX & 0b1000);
 }
 
-Fpga::EncoderPolarity Fpga::encoder_y_polarity() const
+Fpga::EncoderPolarity Fpga::encoder_y_polarity()
 {
     QReadLocker l(&m_lock);
-    return (m_global->encY & 0b1000);
+    return (Fpga::EncoderPolarity)(m_global->encY & 0b1000);
 }
 
-Fpga::EncoderMode Fpga::encoder_x_mode() const
+Fpga::EncoderMode Fpga::encoder_x_mode()
 {
     QReadLocker l(&m_lock);
-    return (m_global->encX & 0b0111);
+    return (Fpga::EncoderMode)(m_global->encX & 0b0111);
 }
 
-Fpga::EncoderMode Fpga::encoder_y_mode() const
+Fpga::EncoderMode Fpga::encoder_y_mode()
 {
     QReadLocker l(&m_lock);
-    return (m_global->encY & 0b0111);
+    return (Fpga::EncoderMode)(m_global->encY & 0b0111);
 }
 
-bool Fpga::set_encoder_x(Fpga::EncoderMode type, Fpga::EncoderPolarity polarity, bool reflesh)
+bool Fpga::set_encoder_x(Fpga::EncoderMode mode, Fpga::EncoderPolarity polarity, bool reflesh)
 {
     QWriteLocker l(&m_lock);
-    m_global->encX = type|mode;
-    return reflesh ? write_reg(m_global, 1) : true;
+    m_global->encX = mode|polarity;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-bool Fpga::set_encoder_y(Fpga::EncoderMode type, Fpga::EncoderPolarity polarity, bool reflesh)
+bool Fpga::set_encoder_y(Fpga::EncoderMode mode, Fpga::EncoderPolarity polarity, bool reflesh)
 {
     QWriteLocker l(&m_lock);
-    m_global->encY = type|mode;
-    return reflesh ? write_reg(m_global, 1) : true;
+    m_global->encY = mode|polarity;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-bool Fpga::ut1_twin() const
+bool Fpga::ut1_twin()
 {
     QReadLocker l(&m_lock);
     return m_global->ut1Twin;
 }
 
-bool Fpga::set_ut1_twin(bool enable)
+bool Fpga::set_ut1_twin(bool enable, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->ut1Twin = enable;
-    return reflesh ? write_reg(m_global, 1) : true;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-bool Fpga::ut2_twin() const
+bool Fpga::ut2_twin()
 {
     QReadLocker l(&m_lock);
     return m_global->ut2Twin;
 }
 
-bool Fpga::set_ut2_twin(bool enable)
+bool Fpga::set_ut2_twin(bool enable, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->ut2Twin = enable;
-    return reflesh ? write_reg(m_global, 1) : true;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-Fpga::DampingType Fpga::ut1_damping() const
+Fpga::DampingType Fpga::ut1_damping()
 {
     QReadLocker l(&m_lock);
-    return m_global->ut1Damping;
+    return (Fpga::DampingType)m_global->ut1Damping;
 }
 
 bool Fpga::set_ut1_damping(Fpga::DampingType type, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->ut1Damping = type;
-    return reflesh ? write_reg(m_global, 1) : true;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-Fpga::DampingType Fpga::ut2_damping() const
+Fpga::DampingType Fpga::ut2_damping()
 {
     QReadLocker l(&m_lock);
-    return m_global->ut2Damping;
+    return (Fpga::DampingType)m_global->ut2Damping;
 }
 
 bool Fpga::set_ut2_damping(Fpga::DampingType type, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->ut2Damping = type;
-    return reflesh ? write_reg(m_global, 1) : true;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-Fpga::VoltageType Fpga::ut_voltage() const
+Fpga::VoltageType Fpga::ut_voltage()
 {
     QReadLocker l(&m_lock);
-    return m_global->utVoltage;
+    return (Fpga::VoltageType)m_global->utVoltage;
 }
 
 bool Fpga::set_ut_voltage(Fpga::VoltageType type, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->utVoltage = type;
-    return reflesh ? write_reg(m_global, 1) : true;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-Fpga::VoltageType Fpga::pa_voltage() const
+Fpga::VoltageType Fpga::pa_voltage()
 {
     QReadLocker l(&m_lock);
-    return m_global->paVoltage;
+    return (Fpga::VoltageType)m_global->paVoltage;
 }
 
 bool Fpga::set_pa_voltage(Fpga::VoltageType type, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->paVoltage = type;
-    return reflesh ? write_reg(m_global, 1) : true;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-Fpga::PowerMode Fpga::power() const
+Fpga::PowerMode Fpga::power()
 {
     QReadLocker l(&m_lock);
-    return m_global->power;
+    return (Fpga::PowerMode)m_global->power;
 }
 
-bool Fpga::set_power(Fpga::PowerMode mode, bool reflesh = false)
+bool Fpga::set_power(Fpga::PowerMode mode, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->power = mode;
     return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-quint32 Fpga::rx_channels() const
+quint32 Fpga::rx_channels()
 {
     QReadLocker l(&m_lock);
     return m_global->rxChannels;
 }
 
-bool Fpga::set_rx_channels(quint32 channels, bool reflesh = false)
+bool Fpga::set_rx_channels(quint32 channels, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->rxChannels = channels;
     return (reflesh ? write_reg(m_global, 2) : true);
 }
 
-bool Fpga::is_freeze() const
+bool Fpga::is_freeze()
 {
     QReadLocker l(&m_lock);
     return m_global->freeze;
@@ -267,10 +277,10 @@ bool Fpga::set_freeze(bool freeze, bool reflesh)
     return (reflesh ? write_reg(m_global, 3) : true);
 }
 
-Fpga::SoundMode Fpga::sound() const
+Fpga::SoundMode Fpga::sound()
 {
     QReadLocker l(&m_lock);
-    return m_global->soundFreqency;
+    return (Fpga::SoundMode)m_global->soundFreqency;
 }
 
 bool Fpga::set_sound(Fpga::SoundMode mode, bool reflesh)
@@ -280,68 +290,22 @@ bool Fpga::set_sound(Fpga::SoundMode mode, bool reflesh)
     return (reflesh ? write_reg(m_global, 16) : true);
 }
 
-bool Fpga::is_alarm_analog1() const
+int Fpga::factor_echo()
 {
     QReadLocker l(&m_lock);
-    return !!((m_global->alarmFlags)&0b1000);
+    return m_global->factorEcho;
 }
 
-bool Fpga::is_alarm_analog2() const
-{
-    QReadLocker l(&m_lock);
-    return !!((m_global->alarmFlags)&0b10000);
-}
-
-bool Fpga::set_alarm_analog1(bool flag, bool reflesh)
+bool Fpga::set_factor_echo(int val, bool reflesh)
 {
     QWriteLocker l(&m_lock);
-    if (flag) {
-        m_global->alarmFlags |= 0b1000;
-    } else {
-        m_global->alarmFlags &= 0b10111;
-    }
-    return (reflesh ? write_reg(m_global, 16) : true);
-}
-
-bool Fpga::set_alarm_analog2(bool flag, bool reflesh)
-{
-    QWriteLocker l(&m_lock);
-    if (flag) {
-        m_global->alarmFlags |= 0b10000;
-    } else {
-        m_global->alarmFlags &= 0b01111;
-    }
-    return (reflesh ? write_reg(m_global, 16) : true);
-}
-
-quint16 Fpga::alarm_analog1_logic_group() const
-{
-    QReadLocker l(&m_lock);
-    return m_global->alarmAnalog[0].logicGroup;
-}
-
-quint16 Fpga::alarm_analog2_logic_group() const
-{
-    QReadLocker l(&m_lock);
-    return m_global->alarmAnalog[1].logicGroup;
-}
-
-bool Fpga::set_alarm_analog1_logic_group(quint16 groups, bool reflesh)
-{
-    QWriteLocker l(&m_lock);
-    m_global->alarmAnalog[0].logicGroup = groups;
-    return (reflesh ? write_reg(m_global, 26) : true);
-}
-
-bool Fpga::set_alarm_analog1_logic_group(quint16 groups, bool reflesh)
-{
-    QWriteLocker l(&m_lock);
-    m_global->alarmAnalog[0].logicGroup = groups;
-    return (reflesh ? write_reg(m_global, 27) : true);
+    m_global->factorEcho = val;
+    return (reflesh ? write_reg(m_global, 28) : true);
 }
 
 Fpga::Fpga()
-    :m_global(new GlobalData())
+    :m_global(new GlobalData()), m_alarmOutput0(this, 0), m_alarmOutput1(this, 1), m_alarmOutput2(this, 2),
+      m_alarmAnalog0(this, 0), m_alarmAnalog1(this, 1)
 {
     m_global->chip = 0b1000;
 }
@@ -357,15 +321,13 @@ bool write_reg(GlobalData *d, int reg)
     d->offset = reg;
 
     quint32 data[2] = {0};
-    quint32 *dp = &d;
+    quint32 *dp = (quint32 *)d;
     data[0] = dp[0];
     data[1] = dp[reg];
-    return spi->write((char *)data, 8);
+    return spi->send((char *)data, 8);
 }
 
-/**
- * Alarm Output
- */
+/*** Alarm Output ***/
 
 bool AlarmOutput::is_valid() const
 {
@@ -397,10 +359,10 @@ bool AlarmOutput::set_logic_group(quint16 groups, bool reflesh)
     return (reflesh ? write_reg(m_fpga->m_global, 17+(3*m_index)) : true);
 }
 
-AlarmOutput::Operator AlarmOutput::op(int output) const
+AlarmOutput::Operator AlarmOutput::op(void)
 {
     QReadLocker l(&m_fpga->m_lock);
-    return m_fpga->m_global->alarmOutput[m_index].op;
+    return (AlarmOutput::Operator)m_fpga->m_global->alarmOutput[m_index].op;
 }
 
 bool AlarmOutput::set_op(AlarmOutput::Operator op, bool reflesh)
@@ -410,13 +372,13 @@ bool AlarmOutput::set_op(AlarmOutput::Operator op, bool reflesh)
     return (reflesh ? write_reg(m_fpga->m_global, 17+3*m_index) : true);
 }
 
-AlarmOutput::Condition AlarmOutput::condition(int index) const
+AlarmOutput::Condition AlarmOutput::condition(int index)
 {
     QReadLocker l(&m_fpga->m_lock);
     if (0 == index) {
-        return m_fpga->m_global->alarmOutput[m_index].logicCondition1;
+        return (AlarmOutput::Condition)m_fpga->m_global->alarmOutput[m_index].logicCondition1;
     } else if (1 == index) {
-        return m_fpga->m_global->alarmOutput[m_index].logicCondition2;
+        return (AlarmOutput::Condition)m_fpga->m_global->alarmOutput[m_index].logicCondition2;
     } else {
         return CONDITION_NONE;
     }
@@ -472,4 +434,49 @@ bool AlarmOutput::set_hold_time(int time, bool reflesh)
     QWriteLocker l(&m_fpga->m_lock);
     m_fpga->m_global->alarmOutput[m_index].holdTime = time/10;
     return (reflesh ? write_reg(m_fpga->m_global, 19+3*m_index) : true);
+}
+
+/*** AlarmAnalog ***/
+
+bool AlarmAnalog::is_valid() const
+{
+    QReadLocker l(&m_fpga->m_lock);
+    return !!((m_fpga->m_global->alarmFlags)&(0b1000<<m_index));
+}
+
+bool AlarmAnalog::set_valid(bool flag, bool reflesh)
+{
+    QWriteLocker l(&m_fpga->m_lock);
+    if (flag) {
+        m_fpga->m_global->alarmFlags |= (0b1000<<m_index);
+    } else {
+        m_fpga->m_global->alarmFlags &= ~(0b1000<<m_index);
+    }
+    return (reflesh ? write_reg(m_fpga->m_global, 16) : true);
+}
+
+quint16 AlarmAnalog::logic_group() const
+{
+    QReadLocker l(&m_fpga->m_lock);
+    return m_fpga->m_global->alarmAnalog[m_index].logicGroup;
+}
+
+bool AlarmAnalog::set_logic_group(quint16 groups, bool reflesh)
+{
+    QWriteLocker l(&m_fpga->m_lock);
+    m_fpga->m_global->alarmAnalog[m_index].logicGroup = groups;
+    return (reflesh ? write_reg(m_fpga->m_global, 26+m_index) : true);
+}
+
+AlarmAnalog::Type AlarmAnalog::type() const
+{
+    QReadLocker l(&m_fpga->m_lock);
+    return (AlarmAnalog::Type)m_fpga->m_global->alarmAnalog[m_index].type;
+}
+
+bool AlarmAnalog::set_type(AlarmAnalog::Type type, bool reflesh)
+{
+    QWriteLocker l(&m_fpga->m_lock);
+    m_fpga->m_global->alarmAnalog[m_index].type = type;
+    return (reflesh ? write_reg(m_fpga->m_global, 26+m_index) : true);
 }

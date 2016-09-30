@@ -12,10 +12,10 @@ public:
     int index(void) const { return m_index; }
 
     int freq_band(void) const;             /* 频带选择 */
-    bool set_freq_band(int band);
+    bool set_freq_band(int band, bool reflesh = false);
 
     bool video_filter(void) const;         /* 视频滤波 */
-    bool enable_video_filter(bool flag);
+    bool enable_video_filter(bool flag, bool reflesh = false);
 
     enum RectifierType {
         RF,
@@ -24,7 +24,7 @@ public:
         FULL_WAVE
     };
     Group::RectifierType rectifier(void) const;
-    bool set_rectifier(Group::RectifierType type);
+    bool set_rectifier(Group::RectifierType type, bool reflesh = false);
 
     int compress_rato(void) const;
     bool set_compress_rato(int val, bool reflesh = false);

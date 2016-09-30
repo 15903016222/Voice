@@ -8,16 +8,16 @@
 class PhascanSpi : public Spi
 {
 public:
-    PhascanSpi* get_spi(void);
+    static PhascanSpi* get_spi(void);
 
-    bool write(const char *data, int len);
+    bool send(const char *data, int len);
 
 protected:
     PhascanSpi();
 
 private:
-    static PhascanSpi *m_spi;
-    static QMutex m_mutex;
+    static PhascanSpi *s_spi;
+    static QMutex s_mutex;
 
     void little_to_big(quint32 *data, int n);
 };

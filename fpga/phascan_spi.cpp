@@ -1,18 +1,18 @@
 #include "phascan_spi.h"
 
-QMutex PhascanSpi::m_mutex;
-PhascanSpi* PhascanSpi::m_spi = NULL;
+QMutex PhascanSpi::s_mutex;
+PhascanSpi* PhascanSpi::s_spi = NULL;
 
 PhascanSpi* PhascanSpi::get_spi(void)
 {
-    QMutexLocker l(&m_mutex);
-    if (m_spi == NULL) {
-        m_spi = new PhascanSpi();
-        m_spi->setFileName("/dev/spidev1.0");
-        m_spi->set_mode(Spi::MODE0);
+    QMutexLocker l(&s_mutex);
+    if (s_spi == NULL) {
+        s_spi = new PhascanSpi();
+        s_spi->setFileName("/dev/spidev1.0");
+        s_spi->set_mode(Spi::MODE0);
     }
 
-    return m_spi;
+    return s_spi;
 }
 
 void PhascanSpi::little_to_big(quint32 *data, int n)
@@ -24,17 +24,23 @@ void PhascanSpi::little_to_big(quint32 *data, int n)
     }
 }
 
-bool PhascanSpi::write(const char *data, int len)
+bool PhascanSpi::send(const char *data, int len)
 {
-    QMutexLocker l(&m_mutex);
+    QMutexLocker l(&s_mutex);
     if ( ! isOpen()
          || data == NULL
          || len <= 0) {
         return false;
     }
 
-    char buf[len] = {0};
+    char buf[len+1];
     memcpy(buf, data, len);
-    little_to_big(buf, len/4);
+    buf[len] = 0;
+    little_to_big((quint32 *)buf, len/4);
     return (!! Spi::write(buf, len));
+}
+
+PhascanSpi::PhascanSpi()
+{
+
 }
