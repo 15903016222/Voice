@@ -103,13 +103,13 @@ bool Fpga::reset()
 bool Fpga::freezing()
 {
     QReadLocker l(&m_lock);
-    return m_freezing;
+    return m_global->freeze;
 }
 
 bool Fpga::set_freezing(bool flag)
 {
     QWriteLocker l(&m_lock);
-    m_freezing = flag;
+    m_global->freeze = flag;
     return Gpio::get_gpio()->set(Gpio::PIN_43, (Gpio::PinState)!flag);
 }
 
@@ -394,7 +394,42 @@ Fpga::Fpga()
     :m_global(new GlobalData()), m_alarmOutput0(this, 0), m_alarmOutput1(this, 1), m_alarmOutput2(this, 2),
       m_alarmAnalog0(this, 0), m_alarmAnalog1(this, 1)
 {
+    /* Global */
+    qMemSet(m_global, 0, sizeof(GlobalData));
+    /** reg -1 **/
     m_global->chip = 0b1000;
+    /* reg (1) */
+    m_global->encX = Fpga::QUAD|Fpga::NORMAL;
+    m_global->encY = Fpga::QUAD|Fpga::NORMAL;
+//    ut2Twin         :1; /* bit:9 */
+//    ut2Damping      :2;
+//    ut1Twin         :1;
+//    ut1Damping      :2;
+//    utVoltage       :6;
+//    power           :5;
+//    paVoltage       :6;
+
+//    /* reg (2) */
+//    rxChannels;
+
+//    /* reg (3) */
+    m_global->freeze = false;
+
+
+//    /* reg (16) */
+//    soundFreqency   :3; /* bit: 0-2 */
+//    alarmFlags      :5; /* bit: 3-7 */
+
+//    /* reg (17-19) */
+//    /* reg (20-22) */
+//    /* reg (23-25) */
+//    AlarmOutputData alarmOutput[3];
+
+//    /* reg (26-27) */
+//    AlarmAnalogData alarmAnalog[2];
+
+//    /* reg (28) */
+//    factorEcho      :12;/* bit: 20-32 4095/回波数 */
 }
 
 bool write_reg(GlobalData *d, int reg)

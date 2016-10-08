@@ -93,10 +93,11 @@ public:
     static Fpga* get_fpga(void);
 
     bool reset();
+
+    /* Global */
     bool freezing();
     bool set_freezing(bool flag);
 
-    /* Global */
     int pa_law_qty();                     /* PA聚焦法则数 */
     bool set_pa_law_qty(int qty, bool reflesh = false);
 
@@ -105,8 +106,8 @@ public:
 
     /* 编码器 */
     enum EncoderPolarity {
-        Normal  = 0,
-        Inverse = 0b1000
+        NORMAL  = 0,
+        INVERSE = 0b1000
     };
     enum EncoderMode {
         QUAD    = 0b011,
@@ -119,8 +120,8 @@ public:
     EncoderPolarity encoder_y_polarity(); /* 编码器Y极性 */
     EncoderMode encoder_x_mode();         /* 编码器X模式 */
     EncoderMode encoder_y_mode();         /* 编码器Y模式 */
-    bool set_encoder_x(EncoderMode type, EncoderPolarity polarity = Normal, bool reflesh = false);
-    bool set_encoder_y(EncoderMode type, EncoderPolarity polarity = Normal, bool reflesh = false);
+    bool set_encoder_x(EncoderMode type, EncoderPolarity polarity = NORMAL, bool reflesh = false);
+    bool set_encoder_y(EncoderMode type, EncoderPolarity polarity = NORMAL, bool reflesh = false);
 
     /* UT双晶状态 */
     bool ut1_twin();
@@ -209,7 +210,6 @@ private:
     AlarmOutput m_alarmOutput2;
     AlarmAnalog m_alarmAnalog0;
     AlarmAnalog m_alarmAnalog1;
-    bool m_freezing;
     QReadWriteLock m_lock;
     QList<FpgaGroup> m_groups;
     QReadWriteLock m_groupsLock;

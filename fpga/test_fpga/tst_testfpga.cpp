@@ -15,8 +15,11 @@ private Q_SLOTS:
     void cleanupTestCase();
     /* 测试Fpga */
     void test_reset();
+    void test_freezing();
     void test_pa_law_qty();
     void test_ut_law_qty();
+    void test_encoder_x();
+//    void test_encoder_y();
     /** AlarmOutput **/
 //    void test_valid();
 //    void test_logic_group();
@@ -47,6 +50,15 @@ void TestFpga::test_reset()
     QVERIFY2(m_fpga->reset(), "Failure");
 }
 
+void TestFpga::test_freezing()
+{
+    QVERIFY(m_fpga->freezing() == false);
+    QVERIFY(m_fpga->set_freezing(true));
+    QVERIFY(m_fpga->freezing());
+    QVERIFY(m_fpga->set_freezing(false));
+    QVERIFY(m_fpga->freezing() == false);
+}
+
 void TestFpga::test_pa_law_qty()
 {
     QVERIFY(m_fpga->set_pa_law_qty(6, true));
@@ -57,6 +69,12 @@ void TestFpga::test_ut_law_qty()
 {
     QVERIFY(m_fpga->set_ut_law_qty(8, true));
     QVERIFY(m_fpga->ut_law_qty() == 8);
+}
+
+void TestFpga::test_encoder_x()
+{
+    qDebug()<<"x mode"<<m_fpga->encoder_x_mode();
+    QVERIFY(m_fpga->encoder_x_mode() == Fpga::QUAD);
 }
 
 void TestFpga::test_beam_index()
