@@ -561,7 +561,7 @@ void ThirdMenuWidget::set_edited_text(QString string)
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
         if(i == inputIndex) {
             model->item(0, i)->setText(string);
-            break;           
+            break;
         }
     }
 }
