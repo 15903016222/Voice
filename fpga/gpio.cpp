@@ -3,8 +3,10 @@
 
 #ifdef PHASCAN_II
 #define GPIO_DEV    ""
-#else /* Phascan */
+#elif PHASCAN
 #define GPIO_DEV    "/dev/tt"
+#else
+#error "No specify device"
 #endif
 
 #include <sys/types.h>

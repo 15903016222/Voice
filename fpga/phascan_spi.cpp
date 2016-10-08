@@ -1,5 +1,5 @@
 #include "phascan_spi.h"
-
+#include "gpio.h"
 #include <QDebug>
 
 QMutex PhascanSpi::s_mutex;
@@ -13,6 +13,11 @@ PhascanSpi* PhascanSpi::get_spi(void)
         s_spi->setFileName("/dev/spidev1.0");
         s_spi->open(QIODevice::ReadWrite);
         s_spi->set_mode(Spi::MODE0);
+        Gpio *gpio = Gpio::get_gpio();
+        gpio->set(Gpio::PIN_61, Gpio::LOW);
+        gpio->set(Gpio::PIN_61, Gpio::HIGHT);
+        gpio->set(Gpio::PIN_43, Gpio::LOW);
+        gpio->set(Gpio::PIN_43, Gpio::HIGHT);
     }
 
     return s_spi;

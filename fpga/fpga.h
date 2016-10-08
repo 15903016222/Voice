@@ -92,7 +92,9 @@ class Fpga
 public:
     static Fpga* get_fpga(void);
 
-    bool reset() {return true;}
+    bool reset();
+    bool freezing();
+    bool set_freezing(bool flag);
 
     /* Global */
     int pa_law_qty();                     /* PA聚焦法则数 */
@@ -207,6 +209,7 @@ private:
     AlarmOutput m_alarmOutput2;
     AlarmAnalog m_alarmAnalog0;
     AlarmAnalog m_alarmAnalog1;
+    bool m_freezing;
     QReadWriteLock m_lock;
     QList<FpgaGroup> m_groups;
     QReadWriteLock m_groupsLock;

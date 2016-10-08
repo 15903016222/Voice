@@ -1,6 +1,7 @@
 
 #include "fpga.h"
 #include "phascan_spi.h"
+#include "gpio.h"
 
 #include <QDebug>
 
@@ -92,6 +93,24 @@ Fpga *Fpga::get_fpga(void)
     }
 
     return s_fpga;
+}
+
+bool Fpga::reset()
+{
+    return true;
+}
+
+bool Fpga::freezing()
+{
+    QReadLocker l(&m_lock);
+    return m_freezing;
+}
+
+bool Fpga::set_freezing(bool flag)
+{
+    QWriteLocker l(&m_lock);
+    m_freezing = flag;
+    return Gpio::get_gpio()->set(Gpio::PIN_43, (Gpio::PinState)!flag);
 }
 
 static bool write_reg(GlobalData *d, int reg);
