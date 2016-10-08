@@ -29,6 +29,7 @@ private Q_SLOTS:
     void test_power();
     void test_rx_channels();
     void test_sound();
+
     /** AlarmOutput **/
     void test_alarm_output_valid();
     void test_alarm_output_logic_group();
@@ -41,6 +42,8 @@ private Q_SLOTS:
     void test_alarm_analog_valid();
     void test_alarm_analog_logic_group();
     void test_alarm_analog_type();
+
+    void test_factor_echo();
 
     /* 测试Group */
     void test_group_index();
@@ -385,6 +388,13 @@ void TestFpga::test_alarm_analog_type()
     QVERIFY( a->type() == AlarmAnalog::NONE );
     QVERIFY( a->set_type(AlarmAnalog::GATE_B, true) );
     QVERIFY( a->type() == AlarmAnalog::GATE_B );
+}
+
+void TestFpga::test_factor_echo()
+{
+    QVERIFY( m_fpga->factor_echo() == 0 );
+    QVERIFY( m_fpga->set_factor_echo(405, true) );
+    QVERIFY( m_fpga->factor_echo() == 405 );
 }
 
 void TestFpga::test_beam_index()
