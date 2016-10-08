@@ -19,7 +19,7 @@ private Q_SLOTS:
     void test_pa_law_qty();
     void test_ut_law_qty();
     void test_encoder_x();
-//    void test_encoder_y();
+    void test_encoder_y();
     /** AlarmOutput **/
 //    void test_valid();
 //    void test_logic_group();
@@ -73,8 +73,30 @@ void TestFpga::test_ut_law_qty()
 
 void TestFpga::test_encoder_x()
 {
-    qDebug()<<"x mode"<<m_fpga->encoder_x_mode();
     QVERIFY(m_fpga->encoder_x_mode() == Fpga::QUAD);
+    QVERIFY(m_fpga->encoder_x_polarity() == Fpga::NORMAL);
+
+    QVERIFY(m_fpga->set_encoder_x(Fpga::UP, Fpga::INVERSE, true));
+    QVERIFY(m_fpga->encoder_x_mode() == Fpga::UP);
+    QVERIFY(m_fpga->encoder_x_polarity() == Fpga::INVERSE);
+
+    QVERIFY(m_fpga->set_encoder_x(Fpga::DOWN));
+    QVERIFY(m_fpga->encoder_x_mode() == Fpga::DOWN);
+    QVERIFY(m_fpga->encoder_x_polarity() == Fpga::NORMAL);
+}
+
+void TestFpga::test_encoder_y()
+{
+    QVERIFY(m_fpga->encoder_y_mode() == Fpga::QUAD);
+    QVERIFY(m_fpga->encoder_y_polarity() == Fpga::NORMAL);
+
+    QVERIFY(m_fpga->set_encoder_y(Fpga::UP, Fpga::INVERSE, true));
+    QVERIFY(m_fpga->encoder_y_mode() == Fpga::UP);
+    QVERIFY(m_fpga->encoder_y_polarity() == Fpga::INVERSE);
+
+    QVERIFY(m_fpga->set_encoder_y(Fpga::DOWN));
+    QVERIFY(m_fpga->encoder_y_mode() == Fpga::DOWN);
+    QVERIFY(m_fpga->encoder_y_polarity() == Fpga::NORMAL);
 }
 
 void TestFpga::test_beam_index()
