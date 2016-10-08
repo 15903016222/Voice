@@ -30,9 +30,14 @@ private Q_SLOTS:
     void test_rx_channels();
     void test_sound();
     /** AlarmOutput **/
-//    void test_valid();
-//    void test_logic_group();
-//    void test_op();
+    void test_alarm_output_valid();
+    void test_alarm_output_logic_group();
+    void test_alarm_output_op();
+    void test_alarm_output_condition();
+    void test_alarm_output_count();
+    void test_alarm_output_delay();
+    void test_alarm_output_hold_time();
+
     /* 测试Group */
     void test_group_index();
     /* 测试Beam */
@@ -189,6 +194,151 @@ void TestFpga::test_sound()
     QVERIFY( m_fpga->sound() == Fpga::SOUND_1000HZ );
     QVERIFY( m_fpga->set_sound(Fpga::SOUND_5000HZ, true) );
     QVERIFY( m_fpga->sound() == Fpga::SOUND_5000HZ );
+}
+
+void TestFpga::test_alarm_output_valid()
+{
+    AlarmOutput *output = m_fpga->alarm_output(0);
+    QVERIFY( ! output->is_valid() );
+    QVERIFY( output->set_valid(true, true) );
+    QVERIFY( output->is_valid() );
+
+    output = m_fpga->alarm_output(1);
+    QVERIFY( ! output->is_valid() );
+    QVERIFY( output->set_valid(true, true) );
+    QVERIFY( output->is_valid() );
+
+    output = m_fpga->alarm_output(2);
+    QVERIFY( ! output->is_valid() );
+    QVERIFY( output->set_valid(true, true) );
+    QVERIFY( output->is_valid() );
+
+    output = m_fpga->alarm_output(3);
+    QVERIFY( output == NULL );
+}
+
+void TestFpga::test_alarm_output_logic_group()
+{
+    AlarmOutput *output = m_fpga->alarm_output(0);
+    QVERIFY( output->logic_group() == 0 );
+    QVERIFY( output->set_logic_group(0b11, true) );
+    QVERIFY( output->logic_group() == 0b11 );
+
+    output = m_fpga->alarm_output(1);
+    QVERIFY( output->logic_group() == 0 );
+    QVERIFY( output->set_logic_group(0b11, true) );
+    QVERIFY( output->logic_group() == 0b11 );
+
+    output = m_fpga->alarm_output(2);
+    QVERIFY( output->logic_group() == 0 );
+    QVERIFY( output->set_logic_group(0b11, true) );
+    QVERIFY( output->logic_group() == 0b11 );
+}
+
+void TestFpga::test_alarm_output_op()
+{
+    AlarmOutput *output = m_fpga->alarm_output(0);
+    QVERIFY( output->op() == AlarmOutput::AND );
+    QVERIFY( output->set_op(AlarmOutput::OR, true) );
+    QVERIFY( output->op() == AlarmOutput::OR );
+
+    output = m_fpga->alarm_output(1);
+    QVERIFY( output->op() == AlarmOutput::AND );
+    QVERIFY( output->set_op(AlarmOutput::OR) );
+    QVERIFY( output->op() == AlarmOutput::OR );
+
+    output = m_fpga->alarm_output(2);
+    QVERIFY( output->op() == AlarmOutput::AND );
+    QVERIFY( output->set_op(AlarmOutput::OR, true) );
+    QVERIFY( output->op() == AlarmOutput::OR );
+}
+
+void TestFpga::test_alarm_output_condition()
+{
+    AlarmOutput *output = m_fpga->alarm_output(0);
+    QVERIFY( output->condition(0) == AlarmOutput::CONDITION_NONE );
+    QVERIFY( output->set_condition(0, AlarmOutput::CONDITION_GATE_A, true) );
+    QVERIFY( output->condition(0) == AlarmOutput::CONDITION_GATE_A );
+    QVERIFY( output->condition(1) == AlarmOutput::CONDITION_NONE );
+    QVERIFY( output->set_condition(1, AlarmOutput::CONDITION_GATE_B, true) );
+    QVERIFY( output->condition(1) == AlarmOutput::CONDITION_GATE_B );
+
+    output = m_fpga->alarm_output(1);
+    QVERIFY( output->condition(0) == AlarmOutput::CONDITION_NONE );
+    QVERIFY( output->set_condition(0, AlarmOutput::CONDITION_GATE_I, true) );
+    QVERIFY( output->condition(0) == AlarmOutput::CONDITION_GATE_I );
+    QVERIFY( output->condition(1) == AlarmOutput::CONDITION_NONE );
+    QVERIFY( output->set_condition(1, AlarmOutput::CONDITION_NOT_GATE_A, true) );
+    QVERIFY( output->condition(1) == AlarmOutput::CONDITION_NOT_GATE_A );
+
+    output = m_fpga->alarm_output(2);
+    QVERIFY( output->condition(0) == AlarmOutput::CONDITION_NONE );
+    QVERIFY( output->set_condition(0, AlarmOutput::CONDITION_NOT_GATE_B, true) );
+    QVERIFY( output->condition(0) == AlarmOutput::CONDITION_NOT_GATE_B );
+    QVERIFY( output->condition(1) == AlarmOutput::CONDITION_NONE );
+    QVERIFY( output->set_condition(1, AlarmOutput::CONDITION_MAX_THICKNESS, true) );
+    QVERIFY( output->condition(1) == AlarmOutput::CONDITION_MAX_THICKNESS );
+}
+
+void TestFpga::test_alarm_output_count()
+{
+    AlarmOutput *output = m_fpga->alarm_output(0);
+    QVERIFY( output->count() == 0 );
+    QVERIFY( output->set_count(99, true) );
+    QVERIFY( output->count() == 99 );
+    QVERIFY( ! output->set_count(101, true) );
+
+    output = m_fpga->alarm_output(1);
+    QVERIFY( output->count() == 0 );
+    QVERIFY( output->set_count(92, true) );
+    QVERIFY( output->count() == 92 );
+    QVERIFY( ! output->set_count(132, true) );
+
+    output = m_fpga->alarm_output(2);
+    QVERIFY( output->count() == 0 );
+    QVERIFY( output->set_count(49, true) );
+    QVERIFY( output->count() == 49 );
+    QVERIFY( ! output->set_count(210, true) );
+}
+
+void TestFpga::test_alarm_output_delay()
+{
+    AlarmOutput *output = m_fpga->alarm_output(0);
+    QVERIFY( output->delay() == 0 );
+    QVERIFY( output->set_delay(5000, true) );
+    QVERIFY( output->delay() == 5000 );
+    QVERIFY( ! output->set_delay(5001*1000, true) );
+
+    output = m_fpga->alarm_output(1);
+    QVERIFY( output->delay() == 0 );
+    QVERIFY( output->set_delay(45000, true) );
+    QVERIFY( output->delay() == 45000 );
+    QVERIFY( ! output->set_delay(5001*1000, true) );
+
+    output = m_fpga->alarm_output(2);
+    QVERIFY( output->delay() == 0 );
+    QVERIFY( output->set_delay(500, true) );
+    QVERIFY( output->delay() == 500 );
+    QVERIFY( ! output->set_delay(5001*1000, true) );
+}
+
+void TestFpga::test_alarm_output_hold_time()
+{
+    AlarmOutput *output = m_fpga->alarm_output(0);
+    QVERIFY( output->hold_time() == 0 );
+    QVERIFY( output->set_hold_time(4924, true) );
+//    qDebug()<<"alarm output0 hold time:"<<output->hold_time();
+    QVERIFY( output->hold_time() == 4920 );
+
+    output = m_fpga->alarm_output(1);
+    QVERIFY( output->hold_time() == 0 );
+    QVERIFY( output->set_hold_time(5002, true) );
+    QVERIFY( output->hold_time() == 5000 );
+
+    output = m_fpga->alarm_output(2);
+    QVERIFY( output->hold_time() == 0 );
+    QVERIFY( ! output->set_hold_time(5001*1000) );
+    QVERIFY( output->hold_time() == 0 );
 }
 
 void TestFpga::test_beam_index()

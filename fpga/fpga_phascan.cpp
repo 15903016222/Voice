@@ -297,6 +297,39 @@ bool Fpga::set_sound(Fpga::SoundMode mode, bool reflesh)
     return (reflesh ? write_reg(m_global, 16) : true);
 }
 
+AlarmOutput *Fpga::alarm_output(int index)
+{
+    switch (index) {
+    case 0:
+        return &m_alarmOutput0;
+        break;
+    case 1:
+        return &m_alarmOutput1;
+        break;
+    case 2:
+        return &m_alarmOutput2;
+        break;
+    default:
+        return NULL;
+        break;
+    }
+}
+
+AlarmAnalog *Fpga::alarm_analog(int index)
+{
+    switch (index) {
+    case 0:
+        return &m_alarmAnalog0;
+        break;
+    case 1:
+        return &m_alarmAnalog1;
+        break;
+    default:
+        return NULL;
+        break;
+    }
+}
+
 int Fpga::factor_echo()
 {
     QReadLocker l(&m_lock);
@@ -391,19 +424,10 @@ Fpga::Fpga()
     m_global->encY = Fpga::QUAD|Fpga::NORMAL;
     m_global->ut2Twin = false;
     m_global->ut1Twin = false;
-//    utVoltage       :6;
-//    power           :5;
-//    paVoltage       :6;
-
-//    /* reg (2) */
-//    rxChannels;
-
-//    /* reg (3) */
+    /* reg (3) */
     m_global->freeze = false;
 
-
-//    /* reg (16) */
-//    soundFreqency   :3; /* bit: 0-2 */
+    /* reg (16) */
 //    alarmFlags      :5; /* bit: 3-7 */
 
 //    /* reg (17-19) */
@@ -515,6 +539,9 @@ quint32 AlarmOutput::count() const
 bool AlarmOutput::set_count(quint32 count, bool reflesh)
 {
     QWriteLocker l(&m_fpga->m_lock);
+    if (count > 100) {
+        return false;
+    }
     m_fpga->m_global->alarmOutput[m_index].count = count;
     return (reflesh ? write_reg(m_fpga->m_global, 17+3*m_index) : true);
 }
@@ -528,6 +555,9 @@ int AlarmOutput::delay() const
 bool AlarmOutput::set_delay(int delay, bool reflesh)
 {
     QWriteLocker l(&m_fpga->m_lock);
+    if (delay > 5000 * 1000) {
+        return false;
+    }
     m_fpga->m_global->alarmOutput[m_index].delay = delay/10;
     return (reflesh ? write_reg(m_fpga->m_global, 18+3*m_index) : true);
 }
@@ -541,6 +571,9 @@ int AlarmOutput::hold_time() const
 bool AlarmOutput::set_hold_time(int time, bool reflesh)
 {
     QWriteLocker l(&m_fpga->m_lock);
+    if (time > 5000 * 1000) {
+        return false;
+    }
     m_fpga->m_global->alarmOutput[m_index].holdTime = time/10;
     return (reflesh ? write_reg(m_fpga->m_global, 19+3*m_index) : true);
 }

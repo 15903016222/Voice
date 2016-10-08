@@ -175,8 +175,8 @@ public:
     SoundMode sound();
     bool set_sound(SoundMode mode, bool reflesh = false);
 
-    AlarmOutput& alarm_output(int index);
-    AlarmAnalog& alarm_analog(int index);
+    AlarmOutput *alarm_output(int index);
+    AlarmAnalog *alarm_analog(int index);
 
     /* 回波数 */
     int factor_echo();
