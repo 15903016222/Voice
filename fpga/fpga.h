@@ -95,9 +95,6 @@ public:
     bool reset();
 
     /* Global */
-    bool freezing();
-    bool set_freezing(bool flag);
-
     int pa_law_qty();                     /* PA聚焦法则数 */
     bool set_pa_law_qty(int qty, bool reflesh = false);
 

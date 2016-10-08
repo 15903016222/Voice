@@ -100,19 +100,6 @@ bool Fpga::reset()
     return true;
 }
 
-bool Fpga::freezing()
-{
-    QReadLocker l(&m_lock);
-    return m_global->freeze;
-}
-
-bool Fpga::set_freezing(bool flag)
-{
-    QWriteLocker l(&m_lock);
-    m_global->freeze = flag;
-    return Gpio::get_gpio()->set(Gpio::PIN_43, (Gpio::PinState)!flag);
-}
-
 static bool write_reg(GlobalData *d, int reg);
 
 int Fpga::pa_law_qty()
@@ -293,6 +280,7 @@ bool Fpga::set_freeze(bool freeze, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->freeze = freeze;
+    Gpio::get_gpio()->set(Gpio::PIN_43, (Gpio::PinState)!freeze);
     return (reflesh ? write_reg(m_global, 3) : true);
 }
 
