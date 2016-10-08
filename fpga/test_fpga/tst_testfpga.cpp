@@ -20,6 +20,10 @@ private Q_SLOTS:
     void test_ut_law_qty();
     void test_encoder_x();
     void test_encoder_y();
+    void test_ut1_twin();
+    void test_ut2_twin();
+    void test_ut1_damping();
+    void test_ut2_damping();
     /** AlarmOutput **/
 //    void test_valid();
 //    void test_logic_group();
@@ -97,6 +101,46 @@ void TestFpga::test_encoder_y()
     QVERIFY(m_fpga->set_encoder_y(Fpga::DOWN));
     QVERIFY(m_fpga->encoder_y_mode() == Fpga::DOWN);
     QVERIFY(m_fpga->encoder_y_polarity() == Fpga::NORMAL);
+}
+
+void TestFpga::test_ut1_twin()
+{
+    QVERIFY( ! m_fpga->ut1_twin() );
+    QVERIFY( m_fpga->set_ut1_twin(true, true) );
+    QVERIFY( m_fpga->ut1_twin() );
+    QVERIFY( m_fpga->set_ut1_twin(false, true) );
+    QVERIFY( ! m_fpga->ut1_twin() );
+}
+
+void TestFpga::test_ut2_twin()
+{
+    QVERIFY( ! m_fpga->ut2_twin() );
+    QVERIFY( m_fpga->set_ut2_twin(true, true) );
+    QVERIFY( m_fpga->ut2_twin() );
+    QVERIFY( m_fpga->set_ut2_twin(false, true) );
+    QVERIFY( ! m_fpga->ut2_twin() );
+}
+
+void TestFpga::test_ut1_damping()
+{
+    QVERIFY( m_fpga->ut1_damping() == Fpga::R50 );
+    QVERIFY( m_fpga->set_ut1_damping(Fpga::R100, true) );
+    QVERIFY( m_fpga->ut1_damping() == Fpga::R100 );
+    QVERIFY( m_fpga->set_ut1_damping(Fpga::R200, true) );
+    QVERIFY( m_fpga->ut1_damping() == Fpga::R200 );
+    QVERIFY( m_fpga->set_ut1_damping(Fpga::R500, true) );
+    QVERIFY( m_fpga->ut1_damping() == Fpga::R500 );
+}
+
+void TestFpga::test_ut2_damping()
+{
+    QVERIFY( m_fpga->ut2_damping() == Fpga::R50 );
+    QVERIFY( m_fpga->set_ut2_damping(Fpga::R100, true) );
+    QVERIFY( m_fpga->ut2_damping() == Fpga::R100 );
+    QVERIFY( m_fpga->set_ut2_damping(Fpga::R200, true) );
+    QVERIFY( m_fpga->ut2_damping() == Fpga::R200 );
+    QVERIFY( m_fpga->set_ut2_damping(Fpga::R500, true) );
+    QVERIFY( m_fpga->ut2_damping() == Fpga::R500 );
 }
 
 void TestFpga::test_beam_index()

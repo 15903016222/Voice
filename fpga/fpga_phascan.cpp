@@ -401,10 +401,8 @@ Fpga::Fpga()
     /* reg (1) */
     m_global->encX = Fpga::QUAD|Fpga::NORMAL;
     m_global->encY = Fpga::QUAD|Fpga::NORMAL;
-//    ut2Twin         :1; /* bit:9 */
-//    ut2Damping      :2;
-//    ut1Twin         :1;
-//    ut1Damping      :2;
+    m_global->ut2Twin = false;
+    m_global->ut1Twin = false;
 //    utVoltage       :6;
 //    power           :5;
 //    paVoltage       :6;
