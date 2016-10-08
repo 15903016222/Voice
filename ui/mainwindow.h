@@ -40,8 +40,8 @@ public:
 
     void show_hidden_Menu();
     void resizeEvent(QResizeEvent *event);
-    void arrowShowFlag();
-    void updateTranslator();
+    void show_hidden_arrow();
+    void update_translator();
 
     bool eventFilter(QObject *object, QEvent *event);
     bool hiddenFirstSecondMenuFlag;
@@ -53,11 +53,10 @@ public:
     int secondMenuNum;
     int mainMenuStartPos;
     int mainMenuEndPos;
-
     int keyValue;
 
 private:
-    void initUI();
+    void init_ui();
     QTranslator *translator;
     Mcu *m_mcu;
 

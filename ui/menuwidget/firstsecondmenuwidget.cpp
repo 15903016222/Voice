@@ -41,7 +41,7 @@ void FirstSecondMenuWidget::set_second_menu_name(int i)
 
         QStandardItem *item = new QStandardItem(string);
         modelList.at(i)->appendRow(item);
-        item->setForeground(QBrush(Qt::yellow));
+        item->setForeground(QBrush(Qt::yellow, Qt::SolidPattern));
     }
 }
 
@@ -53,10 +53,10 @@ void FirstSecondMenuWidget::set_second_menu_item_style(int i, QModelIndex index)
         QStandardItem *item = modelList.at(i)->itemFromIndex(modelIndex);
 
         if(modelIndex == index) {
-            item->setForeground(QBrush(Qt::red));
+            item->setForeground(QBrush(Qt::red, Qt::SolidPattern));
             menuList.at(i)->setCurrentIndex(modelIndex);
         } else {
-            item->setForeground(QBrush(Qt::yellow));
+            item->setForeground(QBrush(Qt::yellow, Qt::SolidPattern));
         }
     }
 

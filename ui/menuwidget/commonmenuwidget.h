@@ -25,20 +25,20 @@ private:
 public:
     void retranslate_common_menu_ui();
     void init_standard_model();
-    void set_common_menu_name();
-    QStandardItemModel *model;
+    void set_common_menu_name();   
     void choose_widget_style(int k);
     void resizeEvent(QResizeEvent *event);
 
     int height;
     int width;
+    QStandardItemModel *model;
 
 private:
 
 public slots:
     void onHeaderClicked(int index);
-    void set_header_text_create(QStringList stringList) const ;
-    void set_header_text_close(QWidget *editor) ;
+    void set_header_text_create(QStringList stringList) const;
+    void set_header_text_close(QWidget *editor);
 };
 
 #endif // COMMONMENUWIDGET_H
