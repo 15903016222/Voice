@@ -69,9 +69,10 @@ public:
     bool set_logic_group(quint16 groups, bool reflesh = false);
 
     enum Type {
-        ANALOG_GATE_A       = 0b001,                        /* A闸门峰值 */
-        ANALOG_GATE_B       = 0b010,                        /* B闸门峰值 */
-        ANALOG_THICKNESS    = 0b100                         /* 厚度 */
+        NONE         = 0b000,                        /* 无效类型 */
+        GATE_A       = 0b001,                        /* A闸门峰值 */
+        GATE_B       = 0b010,                        /* B闸门峰值 */
+        THICKNESS    = 0b100                         /* 厚度 */
     };
     Type type() const;
     bool set_type(Type type, bool reflesh = false);

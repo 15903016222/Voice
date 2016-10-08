@@ -37,6 +37,10 @@ private Q_SLOTS:
     void test_alarm_output_count();
     void test_alarm_output_delay();
     void test_alarm_output_hold_time();
+    /** AlarmAnalog **/
+    void test_alarm_analog_valid();
+    void test_alarm_analog_logic_group();
+    void test_alarm_analog_type();
 
     /* 测试Group */
     void test_group_index();
@@ -339,6 +343,48 @@ void TestFpga::test_alarm_output_hold_time()
     QVERIFY( output->hold_time() == 0 );
     QVERIFY( ! output->set_hold_time(5001*1000) );
     QVERIFY( output->hold_time() == 0 );
+}
+
+void TestFpga::test_alarm_analog_valid()
+{
+    AlarmAnalog *a = m_fpga->alarm_analog(0);
+    QVERIFY( ! a->is_valid() );
+    QVERIFY( a->set_valid(true, true) );
+    QVERIFY( a->is_valid() );
+
+    a = m_fpga->alarm_analog(1);
+    QVERIFY( ! a->is_valid() );
+    QVERIFY( a->set_valid(true, true) );
+    QVERIFY( a->is_valid() );
+
+    a = m_fpga->alarm_analog(2);
+    QVERIFY( a == NULL );
+}
+
+void TestFpga::test_alarm_analog_logic_group()
+{
+    AlarmAnalog *a = m_fpga->alarm_analog(0);
+    QVERIFY( a->logic_group() == 0 );
+    QVERIFY( a->set_logic_group(0b11, true) );
+    QVERIFY( a->logic_group() == 0b11 );
+
+    a = m_fpga->alarm_analog(1);
+    QVERIFY( a->logic_group() == 0 );
+    QVERIFY( a->set_logic_group(0b10, true) );
+    QVERIFY( a->logic_group() == 0b10 );
+}
+
+void TestFpga::test_alarm_analog_type()
+{
+    AlarmAnalog *a = m_fpga->alarm_analog(0);
+    QVERIFY( a->type() == AlarmAnalog::NONE );
+    QVERIFY( a->set_type(AlarmAnalog::GATE_A, true) );
+    QVERIFY( a->type() == AlarmAnalog::GATE_A );
+
+    a = m_fpga->alarm_analog(1);
+    QVERIFY( a->type() == AlarmAnalog::NONE );
+    QVERIFY( a->set_type(AlarmAnalog::GATE_B, true) );
+    QVERIFY( a->type() == AlarmAnalog::GATE_B );
 }
 
 void TestFpga::test_beam_index()
