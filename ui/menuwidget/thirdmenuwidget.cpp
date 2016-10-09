@@ -43,6 +43,9 @@ QWidget(parent),
 
     m_mcu = Mcu::get_mcu();
  //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    m_mcu->notify_started();
+    m_mcu->query_probe();
+    connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
 
 }
 
@@ -320,6 +323,9 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             QString text = model->item(0, brightIndex)->text();
             verticalSliderDialog->setBrightValue(text);
             connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
+        }else if(currentHeaderText.contains("Auto Detect")) {
+          //  QString text = model->item()
+
         }
     } else if(subVariantMap["style"].toString().toInt() == 2) {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
@@ -538,20 +544,26 @@ void ThirdMenuWidget::change_measurement_label(QString string)
 
 void ThirdMenuWidget::select_probe(QString string)
 {
-    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-        if(i == probeIndex) {
-            model->item(0, i)->setText(string);
-            break;
+    if(!string.isEmpty()){
+        QString probeModel = string.left(string.length() - 4);
+        for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+            if(i == probeIndex) {
+                model->item(0, i)->setText(probeModel);
+                break;
+            }
         }
     }
 }
 
 void ThirdMenuWidget::select_wedge(QString string)
 {
-    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-        if(i == wedgeIndex) {
-            model->item(0, i)->setText(string);
-            break;
+    if(!string.isEmpty()){
+        QString wedgeModel = string.left(string.length() - 4);
+        for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+            if(i == wedgeIndex) {
+                model->item(0, i)->setText(wedgeModel);
+                break;
+            }
         }
     }
 }
@@ -589,4 +601,9 @@ void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
         --i;
     }
     verticalSliderDialog->slider.at(0)->setValue(i);
+}
+
+void ThirdMenuWidget::do_probe_event(const Probe &probe)
+{
+
 }
