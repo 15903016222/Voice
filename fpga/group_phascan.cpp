@@ -93,7 +93,10 @@ static bool write_reg(GroupData *d, int index, int reg);
 Group::Group(const int index)
     : m_index(index), d(new GroupData())
 {
+    qMemSet(d, 0, sizeof(GroupData));
     d->chip = 0b0010;
+    d->gain = 1;
+    d->sumGain = d->gain;
 }
 
 Group::~Group()
@@ -101,332 +104,395 @@ Group::~Group()
     delete d;
 }
 
-int Group::freq_band(void) const
+Group::FreqBand Group::freq_band(void)
 {
-    return d->freqBand;
+    QReadLocker l(&m_rwlock);
+    return (Group::FreqBand)->freqBand;
 }
 
-bool Group::set_freq_band(int band, bool reflesh)
+bool Group::set_freq_band(Group::FreqBand band, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->freqBand = band;
     return (reflesh ? write_reg(d, m_index, 0) : true);
 }
 
-bool Group::video_filter(void) const
+bool Group::video_filter(void)
 {
+    QReadLocker l(&m_rwlock);
     return !!d->videoFilter;
 }
 
 bool Group::enable_video_filter(bool flag, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->videoFilter = flag;
     return (reflesh ? write_reg(d, m_index, 0) : true);
 }
 
-Group::RectifierType Group::rectifier(void) const
+Group::RectifierType Group::rectifier(void)
 {
+    QReadLocker l(&m_rwlock);
     return (Group::RectifierType)d->rectifier;
 }
 
 bool Group::set_rectifier(Group::RectifierType type, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->rectifier = type;
     return (reflesh ? write_reg(d, m_index, 0) : true);
 }
 
-int Group::compress_rato(void) const
+int Group::compress_rato(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->compressRato;
 }
 
 bool Group::set_compress_rato(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->compressRato = val;
     return (reflesh ? write_reg(d, m_index, 0) : true);
 }
 
-int Group::gain(void) const
+int Group::gain(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->gain;
 }
 
 bool Group::set_gain(int gain, bool reflesh)
 {
+    if (gain < 1) {
+        return false;
+    }
+    QWriteLocker l(&m_rwlock);
     d->gain = gain;
     return (reflesh ? write_reg(d, m_index, 0) : true);
 }
 
-int Group::thickness_factor(void) const
+int Group::thickness_factor(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->thicknessFactor;
 }
 
 bool Group::set_thickness_factor(int factor, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->thicknessFactor = factor;
     return (reflesh ? write_reg(d, m_index, 1) : true);
 }
 
-bool Group::ut1(void) const
+bool Group::ut1(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->ut1;
 }
 
 bool Group::enable_ut1(bool flag, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->ut1 = flag;
     return (reflesh ? write_reg(d, m_index, 1) : true);
 }
 
-bool Group::ut2(void) const
+bool Group::ut2(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->ut2;
 }
 
 bool Group::enable_ut2(bool flag, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->ut2 = flag;
     return (reflesh ? write_reg(d, m_index, 1) : true);
 }
 
-bool Group::pa(void) const
+bool Group::pa(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->pa;
 }
 
 bool Group::enable_pa(bool flag, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->pa = flag;
     return (reflesh ? write_reg(d, m_index, 1) : true);
 }
 
-int Group::sum_gain(void) const
+int Group::sum_gain(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->sumGain;
 }
 
 bool Group::set_sum_gain(int gain, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->sumGain = gain;
     return (reflesh ? write_reg(d, m_index, 2) : true);
 }
 
-int Group::sample_range(void) const
+int Group::sample_range(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->sampleRange;
 }
 
 bool Group::set_sample_range(int range, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->sampleRange = range;
     return (reflesh ? write_reg(d, m_index, 2) : true);
 }
 
-int Group::point_qty(void) const
+int Group::point_qty(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->pointQty;
 }
 
 bool Group::set_point_qty(int qty, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->pointQty = qty;
     return (reflesh ? write_reg(d, m_index, 3) : true);
 }
 
-int Group::tcg_point_qty(void) const
+int Group::tcg_point_qty(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->tcgPointQty;
 }
 
 bool Group::set_tcg_point_qty(int qty, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->tcgPointQty = qty;
     return (reflesh ? write_reg(d, m_index, 3) : true);
 }
 
-bool Group::tcg(void) const
+bool Group::tcg(void)
 {
+    QReadLocker l(&m_rwlock);
     return (!!d->tcg);
 }
 
 bool Group::enable_tcg(bool flag, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->tcg = flag;
     return (reflesh ? write_reg(d, m_index, 3) : true);
 }
 
-int Group::rx_time(void) const
+int Group::rx_time(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->rxTime;
 }
 
 bool Group::set_rx_time(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->rxTime = val;
     return (reflesh ? write_reg(d, m_index, 4) : true);
 }
 
-int Group::idel_time(void) const
+int Group::idel_time(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->idelTime;
 }
 
 bool Group::set_idel_time(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->idelTime = val;
     return (reflesh ? write_reg(d, m_index, 5) : true);
 }
 
-int Group::gate_a_height(void) const
+int Group::gate_a_height(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->gateAHeight;
 }
 
 bool Group::set_gate_a_height(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->gateAHeight = val;
     return (reflesh ? write_reg(d, m_index, 6) : true);
 }
 
-int Group::gate_a_logic(void) const
+int Group::gate_a_logic(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->gateALogic;
 }
 
 bool Group::set_gate_a_logic(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->gateALogic = val;
     return (reflesh ? write_reg(d, m_index, 7) : true);
 }
 
-int Group::gate_b_height(void) const
+int Group::gate_b_height(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->gatebHeight;
 }
 
 bool Group::set_gate_b_height(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->gatebHeight = val;
     return (reflesh ? write_reg(d, m_index, 8) : true);
 }
 
-int Group::gate_b_logic(void) const
+int Group::gate_b_logic(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->gateBLogic;
 }
 
 bool Group::set_gate_b_logic(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->gateBLogic = val;
     return (reflesh ? write_reg(d, m_index, 9) : true);
 }
 
-int Group::gate_i_height() const
+int Group::gate_i_height()
 {
+    QReadLocker l(&m_rwlock);
     return d->gateIHeight;
 }
 
 bool Group::set_gate_i_height(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->gateIHeight = val;
     return (reflesh ? write_reg(d, m_index, 10) : true);
 }
 
-int Group::gate_i_logic() const
+int Group::gate_i_logic()
 {
+    QReadLocker l(&m_rwlock);
     return d->gateILogic;
 }
 
 bool Group::set_gate_i_logic(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->gateILogic = val;
     return (reflesh ? write_reg(d, m_index, 11) : true);
 }
 
-int Group::thickness_min(void) const
+int Group::thickness_min(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->thicknessMin;
 }
 
 bool Group::set_thickness_min(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->thicknessMin = val;
     return (reflesh ? write_reg(d, m_index, 12) : true);
 }
 
-int Group::reject(void) const
+int Group::reject(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->reject;
 }
 
 bool Group::set_reject(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->reject = val;
     return (reflesh ? write_reg(d, m_index, 12) : true);
 }
 
-int Group::sample_start(void) const
+int Group::sample_start(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->sampleStart;
 }
 
 bool Group::set_sample_start(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->sampleStart = val;
     return (reflesh ? write_reg(d, m_index, 13) : true);
 }
 
-int Group::average(void) const
+int Group::average(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->average;
 }
 
 bool Group::set_average(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->average = val;
     return (reflesh ? write_reg(d, m_index, 13) : true);
 }
 
-int Group::thickness_max(void) const
+int Group::thickness_max(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->thicknessMax;
 }
 
 bool Group::set_thickness_max(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->thicknessMax = val;
     return (reflesh ? write_reg(d, m_index, 14) : true);
 }
 
-int Group::thickness_source(void) const
+int Group::thickness_source(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->thicknessSource;
 }
 
 bool Group::set_thickness_source(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->thicknessSource = val;
     return (reflesh ? write_reg(d, m_index, 14) : true);
 }
 
-int Group::tx_end(void) const
+int Group::tx_end(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->txEnd;
 }
 
 bool Group::set_tx_end(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->txEnd = val;
     return (reflesh ? write_reg(d, m_index, 15) : true);
 }
 
-int Group::tx_start(void) const
+int Group::tx_start(void)
 {
+    QReadLocker l(&m_rwlock);
     return d->txStart;
 }
 
 bool Group::set_tx_start(int val, bool reflesh)
 {
+    QWriteLocker l(&m_rwlock);
     d->txStart = val;
     return (reflesh ? write_reg(d, m_index, 15) : true);
 }
@@ -438,6 +504,8 @@ bool Group::reflesh(void)
         return false;
     }
     d->offset = GROUP_REGS_NUM * m_index;
+
+    QReadLocker l(&m_rwlock);
     return spi->send((char *)d, sizeof(GroupData));
 }
 
