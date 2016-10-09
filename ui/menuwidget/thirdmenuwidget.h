@@ -63,6 +63,7 @@ private:
 
 protected slots:
     void do_rotary_event(Mcu::RotaryType type);
+    void do_probe_event(const Probe& probe);
 
 private slots:
     void onHeaderClicked(int index);
