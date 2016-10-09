@@ -45,7 +45,6 @@ QWidget(parent),
  //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
     m_mcu->notify_started();
     m_mcu->query_probe();
-    connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
 
 }
 
@@ -210,6 +209,17 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
+
+                if(thirdMenuString.contains("Auto Detect")) {
+
+                    if(!pushButton->switchFlag){
+                        qDebug()<<"on";
+                        connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
+                    }else{
+                        qDebug()<<"off";
+                    }
+                }
+
                 break;
             }
             default:
@@ -282,6 +292,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
+    QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
+
     if(subVariantMap["style"].toString().toInt() == 1) {      
         //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
@@ -291,7 +303,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             ui->tableView->edit(modelIndex);
         }
 
-        QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex = 0;
         QStringList stringList = doubleSpinBox->stepList;
@@ -323,9 +334,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             QString text = model->item(0, brightIndex)->text();
             verticalSliderDialog->setBrightValue(text);
             connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
-        }else if(currentHeaderText.contains("Auto Detect")) {
-          //  QString text = model->item()
-
         }
     } else if(subVariantMap["style"].toString().toInt() == 2) {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
@@ -605,5 +613,5 @@ void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
 
 void ThirdMenuWidget::do_probe_event(const Probe &probe)
 {
-
+    select_probe(probe.model());
 }
