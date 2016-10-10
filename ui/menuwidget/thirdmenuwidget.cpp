@@ -596,12 +596,10 @@ void ThirdMenuWidget::setBrightValue(int value)
 void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
 {
     if(!flag){
-        qDebug()<<"on";
         m_mcu->notify_started();
         m_mcu->query_probe();
         connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
     }else{
-        qDebug()<<"off";
     }
 }
 

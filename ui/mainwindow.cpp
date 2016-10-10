@@ -272,12 +272,16 @@ void MainWindow::translatorEnglishUI()
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
+#ifdef _WINDOWS_  // WIN32
     if(object == ui->frame_showPlot) {
         if(event->type() == QEvent::MouseButtonPress) {//QEvent::MouseButtonDblClick
             show_hidden_Menu();
         }
     }
     return QWidget::eventFilter(object, event);
+#else
+
+#endif
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
