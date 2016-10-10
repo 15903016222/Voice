@@ -37,6 +37,7 @@ INCLUDEPATH += $$PWD/ui/menuwidget
 INCLUDEPATH += $$PWD/ui/dialogwidget
 INCLUDEPATH += $$PWD/ui/qitemdelegate
 INCLUDEPATH += $$PWD/mcu
+#INCLUDEPATH += $$PWD/sourcedata
 
 INCLUDEPATH += $$PWD/lib/qjson/lib
 DEPENDPATH += $$PWD/lib/qjson/lib
@@ -64,6 +65,9 @@ SOURCES += \
     mcu/mcu.cpp \
     mcu/mcu_imx.cpp \
     mcu/mcu_omap.cpp
+#    sourcedata/dmaoperate.cpp \
+#    sourcedata/phascanidata.cpp \
+#    sourcedata/sourcedata.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -88,6 +92,9 @@ HEADERS += \
     mcu/mcu_imx.h \
     mcu/mcu_omap.h \
     mcu/probe.h
+#    sourcedata/dmaoperate.h \
+#    sourcedata/phascanidata.h \
+#    sourcedata/sourcedata.h
 
 FORMS += \
     ui/mainwindow.ui \

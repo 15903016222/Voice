@@ -43,8 +43,6 @@ QWidget(parent),
 
     m_mcu = Mcu::get_mcu();
  //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    m_mcu->notify_started();
-    m_mcu->query_probe();
 
 }
 
@@ -214,6 +212,8 @@ void ThirdMenuWidget::choose_widget_style(int k)
 
                     if(!pushButton->switchFlag){
                         qDebug()<<"on";
+                        m_mcu->notify_started();
+                        m_mcu->query_probe();
                         connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
                     }else{
                         qDebug()<<"off";
