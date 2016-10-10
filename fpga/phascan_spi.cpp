@@ -38,7 +38,7 @@ bool PhascanSpi::send(const char *data, int len)
     if ( ! isOpen()
          || data == NULL
          || len <= 0) {
-        qWarning("spi send data failed:open(%d), data(0x%08x), len(%d)", isOpen(), (unsigned int)data, len);
+//        qWarning("spi send data failed:open(%d), data(0x%08x), len(%d)", isOpen(), (unsigned int)data, len);
         return false;
     }
 

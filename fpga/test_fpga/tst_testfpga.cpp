@@ -46,9 +46,42 @@ private Q_SLOTS:
     void test_factor_echo();
 
     /* 测试Group */
+    void test_group();
     void test_group_index();
+    void test_group_freq_band();
+    void test_group_video_filter();
+    void test_group_rectifier();
+    void test_group_compress_rato();
+    void test_group_gain();
+    void test_group_thickness_factor();
+    void test_group_ut1();
+    void test_group_ut2();
+    void test_group_pa();
+    void test_group_sum_gain();
+    void test_group_sample_range();
+    void test_group_point_qty();
+    void test_group_tcg_point_qty();
+    void test_group_tcg();
+    void test_group_rx_time();
+    void test_group_idel_time();
+    void test_group_gate_a_height();
+    void test_group_gate_a_logic();
+    void test_group_gate_b_height();
+    void test_group_gate_b_logic();
+    void test_group_gate_i_height();
+    void test_group_gate_i_logic();
+    void test_group_thickness_min();
+    void test_group_reject();
+    void test_group_sample_start();
+    void test_group_average();
+    void test_group_thickness_max();
+    void test_group_thickness_source();
+    void test_group_tx_end();
+    void test_group_tx_start();
+    void test_reflesh();
+
     /* 测试Beam */
-    void test_beam_index();
+//    void test_beam_index();
 private:
     Fpga *m_fpga;
 };
@@ -397,14 +430,311 @@ void TestFpga::test_factor_echo()
     QVERIFY( m_fpga->factor_echo() == 405 );
 }
 
-void TestFpga::test_beam_index()
+void TestFpga::test_group()
 {
-//    QCOMPARE(m_beam->index(), 2);
+    qDebug()<<"-------- Testing Group --------";
+//    FpgaGroup grp = m_fpga->get_group(0);
+    QVERIFY( m_fpga->groups() == 0 );
+//    QVERIFY( grp.isNull() );
+    QVERIFY( m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 1 );
+    FpgaGroup grp = m_fpga->get_group(0);
+    QVERIFY( ! grp.isNull() );
+    QVERIFY( m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 2 );
+    QVERIFY( m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 3 );
+    QVERIFY( m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 4 );
+    QVERIFY( m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 5 );
+    QVERIFY( m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 6 );
+    QVERIFY( m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 7 );
+    QVERIFY( m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 8 );
+    QVERIFY( ! m_fpga->create_group() );
+    QVERIFY( m_fpga->groups() == 8 );
+    QVERIFY( m_fpga->remove_group() );
+    QVERIFY( m_fpga->remove_group() );
+    QVERIFY( m_fpga->remove_group() );
+    QVERIFY( m_fpga->groups() == 5 );
+    QVERIFY( m_fpga->remove_group() );
+    QVERIFY( m_fpga->remove_group() );
+    QVERIFY( m_fpga->remove_group() );
+    QVERIFY( m_fpga->remove_group() );
+    QVERIFY( m_fpga->remove_group() );
+    QVERIFY( m_fpga->groups() == 0 );
+    QVERIFY( m_fpga->remove_group() );
 }
 
 void TestFpga::test_group_index()
 {
-//    QCOMPARE(m_group->index(), 2);
+    if (m_fpga->groups() <= 0) {
+        QVERIFY( m_fpga->create_group() );
+    }
+    qDebug()<<__LINE__;
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<__LINE__;
+    QVERIFY( ! grp.isNull() );
+    QVERIFY( grp->index() == m_fpga->groups()-1 );
+    QVERIFY( m_fpga->remove_group() );
+    qDebug()<<"group index:"<<grp->index();
+}
+
+void TestFpga::test_group_freq_band()
+{
+    if (m_fpga->groups() <= 0) {
+        QVERIFY( m_fpga->create_group() );
+    }
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<__LINE__;
+    QVERIFY( grp->freq_band() == Group::FREQ_BAND_05_20 );
+    qDebug()<<__LINE__;
+    QVERIFY( grp->set_freq_band(Group::FREQ_BAND_20_100, true) );
+    QVERIFY( grp->freq_band() == Group::FREQ_BAND_20_100 );
+}
+
+void TestFpga::test_group_video_filter()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    QVERIFY( ! grp->video_filter() );
+    QVERIFY( grp->enable_video_filter(true, true) );
+    QVERIFY( grp->video_filter() );
+}
+
+void TestFpga::test_group_rectifier()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    QVERIFY( grp->rectifier() == Group::RF );
+    QVERIFY( grp->set_rectifier(Group::POSITIVE_HW, true) );
+    QVERIFY( grp->rectifier() == Group::POSITIVE_HW );
+}
+
+void TestFpga::test_group_compress_rato()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    QVERIFY( grp->compress_rato() == 0 );
+    QVERIFY( grp->set_compress_rato(20, true) );
+    QVERIFY( grp->compress_rato() == 20 );
+}
+
+void TestFpga::test_group_gain()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    QVERIFY( grp->gain() == 1);
+    QVERIFY( grp->set_gain(20, true) );
+    QVERIFY( grp->gain() == 20 );
+}
+
+void TestFpga::test_group_thickness_factor()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    QVERIFY( grp->thickness_factor() == 0 );
+    QVERIFY( grp->set_thickness_factor(10, true) );
+    QVERIFY( grp->thickness_factor() == 10 );
+}
+
+void TestFpga::test_group_ut1()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    QVERIFY( ! grp->ut1() );
+    QVERIFY( grp->enable_ut1(true, true) );
+    QVERIFY( grp->ut1() );
+}
+
+void TestFpga::test_group_ut2()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    QVERIFY( ! grp->ut2() );
+    QVERIFY( grp->enable_ut2(true, true) );
+    QVERIFY( grp->ut2() );
+}
+
+void TestFpga::test_group_pa()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    QVERIFY( ! grp->pa() );
+    QVERIFY( grp->enable_pa(true, true) );
+    QVERIFY( grp->pa() );
+}
+
+void TestFpga::test_group_sum_gain()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<"sum gain:"<<grp->sum_gain();
+    QVERIFY( grp->set_sum_gain(20, true) );
+    QVERIFY( grp->sum_gain() == 20 );
+}
+
+void TestFpga::test_group_sample_range()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"sample range:"<<grp->sample_range();
+    QVERIFY( grp->set_sample_range(20, true) );
+    QVERIFY( grp->sample_range() == 20 );
+}
+
+void TestFpga::test_group_point_qty()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<"point qty:"<<grp->point_qty();
+    QVERIFY( grp->set_point_qty(30, true) );
+    QVERIFY( grp->point_qty() == 30 );
+}
+
+void TestFpga::test_group_tcg_point_qty()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<"tcg point qty:"<<grp->tcg_point_qty();
+    QVERIFY( grp->set_tcg_point_qty(25, true) );
+    QVERIFY( grp->tcg_point_qty() == 25 );
+}
+
+void TestFpga::test_group_tcg()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<"tcg enable:"<<grp->tcg();
+    QVERIFY( grp->enable_tcg(true, true) );
+    QVERIFY( grp->tcg() );
+}
+
+void TestFpga::test_group_rx_time()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<"rx time:"<<grp->rx_time();
+    QVERIFY( grp->set_rx_time(11, true) );
+    QVERIFY( grp->rx_time() == 11 );
+}
+
+void TestFpga::test_group_idel_time()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<"idel time:"<<grp->idel_time();
+    QVERIFY( grp->set_idel_time(56, true) );
+    QVERIFY( grp->idel_time() == 56 );
+}
+
+void TestFpga::test_group_gate_a_height()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<"gate a height:"<<grp->gate_a_height();
+    QVERIFY( grp->set_gate_a_height(76, true) );
+    QVERIFY( grp->gate_a_height() == 76 );
+}
+
+void TestFpga::test_group_gate_a_logic()
+{
+    FpgaGroup grp = m_fpga->get_group(m_fpga->groups()-1);
+    qDebug()<<"gate a logic:"<<grp->gate_a_logic();
+    QVERIFY( grp->set_gate_a_logic(34, true) );
+    QVERIFY( grp->gate_a_logic() );
+}
+
+void TestFpga::test_group_gate_b_height()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"gate b height:"<<grp->gate_b_height();
+    QVERIFY( grp->set_gate_b_height(23, true) );
+    QVERIFY( grp->gate_b_height() == 23 );
+}
+
+void TestFpga::test_group_gate_b_logic()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"gate b logic:"<<grp->gate_b_logic();
+    QVERIFY( grp->set_gate_b_logic(12, true) );
+    QVERIFY( grp->gate_b_logic() == 12 );
+}
+
+void TestFpga::test_group_gate_i_height()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"gate i height:"<<grp->gate_i_height();
+    QVERIFY( grp->set_gate_i_height(23, true) );
+    QVERIFY( grp->gate_i_height() == 23 );
+}
+
+void TestFpga::test_group_gate_i_logic()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"gate i logic:"<<grp->gate_i_logic();
+    QVERIFY( grp->set_gate_i_logic(21, true) );
+    QVERIFY( grp->gate_i_logic() == 21 );
+}
+
+void TestFpga::test_group_thickness_min()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"thickness min:"<<grp->thickness_min();
+    QVERIFY( grp->set_thickness_min(12, true) );
+    QVERIFY( grp->thickness_min() == 12 );
+}
+
+void TestFpga::test_group_reject()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"reject:"<<grp->reject();
+    QVERIFY( grp->set_reject(11, true) );
+    QVERIFY( grp->reject() == 11 );
+}
+
+void TestFpga::test_group_sample_start()
+{
+    FpgaGroup &grp = m_fpga->get_group(0);
+    qDebug()<<"grp addr:"<<&grp;
+    grp = m_fpga->get_group(0);
+    qDebug()<<"grp addr:"<<&grp;
+    qDebug()<<"sample_start:"<<grp->sample_start();
+    QVERIFY( grp->set_sample_start(12, true) );
+    QVERIFY( grp->sample_start() == 12 );
+}
+
+void TestFpga::test_group_average()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"average:"<<grp->average();
+    QVERIFY( grp->set_average(5, true) );
+    QVERIFY( grp->average() == 5 );
+}
+
+void TestFpga::test_group_thickness_max()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"thickness max:"<<grp->thickness_max();
+    QVERIFY( grp->set_thickness_max(34, true) );
+    QVERIFY( grp->thickness_max() == 34 );
+}
+
+void TestFpga::test_group_thickness_source()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"thickness source:"<<grp->thickness_source();
+    QVERIFY( grp->set_thickness_source(11, true) );
+    QVERIFY( grp->thickness_source() == 11 );
+}
+
+void TestFpga::test_group_tx_end()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"tx end:"<<grp->tx_end();
+    QVERIFY( grp->set_tx_end(42, true) );
+    QVERIFY( grp->tx_end() == 42 );
+}
+
+void TestFpga::test_group_tx_start()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    qDebug()<<"tx start:"<<grp->tx_start();
+    QVERIFY( grp->set_tx_start(12, true) );
+    QVERIFY( grp->tx_start() == 12 );
+}
+
+void TestFpga::test_reflesh()
+{
+    FpgaGroup grp = m_fpga->get_group(0);
+    QVERIFY( grp->reflesh() );
 }
 
 

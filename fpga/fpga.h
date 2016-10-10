@@ -186,7 +186,7 @@ public:
     /** Group **/
     int groups();
     bool create_group();
-    bool remove_group(int index);
+    bool remove_group();
     FpgaGroup& get_group(int index);
 
     /** Beam **/

@@ -11,11 +11,7 @@ public:
     explicit Group(const int index);
     ~Group();
 
-    int index(void) const { QReadLocker l(&m_rwlock); return m_index; }
-
-    enum FreqBand {
-        FREQ_100M
-    };
+    int index(void) { QReadLocker l(&m_rwlock); return m_index; }
 
     /* 频带选择 */
     enum FreqBand {             /* 探头频率  对应带宽   采样频率 */

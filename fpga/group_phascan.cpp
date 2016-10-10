@@ -64,15 +64,15 @@ struct GroupData {
     quint32 res10               :20;/* bit:12-31 保留位 */
 
     /* s_group_reg (11) */
-    quint32 gateILogic          :8; /* bit:0-7 闸门C 逻辑 */
+    quint32 gateILogic          :8; /* bit:0-7  闸门C 逻辑 */
     quint32 res11               :24;/* bit:8-31 保留位 */
 
     /* s_group_reg (12) */
-    quint32 thicknessMin        :20;/* bit:0-19 */
-    quint32 reject              :12;/* bit:20-31 闸门C 结束 */
+    quint32 thicknessMin        :20;/* bit:0-19  测量厚度最小值 */
+    quint32 reject              :12;/* bit:20-31 抑制 */
 
     /* s_group_reg (13) */
-    quint32 sampleStart         :21;/* bit:0-20 采样起点 */
+    quint32 sampleStart         :21;/* bit:0-20  采样起点 */
     quint32 res12               :8; /* bit:21-28 保留位 */
     quint32 average             :3; /* bit:29-31 求平均 */
 
@@ -93,7 +93,7 @@ static bool write_reg(GroupData *d, int index, int reg);
 Group::Group(const int index)
     : m_index(index), d(new GroupData())
 {
-    qMemSet(d, 0, sizeof(GroupData));
+    ::memset(d, 0, sizeof(GroupData));
     d->chip = 0b0010;
     d->gain = 1;
     d->sumGain = d->gain;
@@ -107,7 +107,7 @@ Group::~Group()
 Group::FreqBand Group::freq_band(void)
 {
     QReadLocker l(&m_rwlock);
-    return (Group::FreqBand)->freqBand;
+    return (Group::FreqBand)d->freqBand;
 }
 
 bool Group::set_freq_band(Group::FreqBand band, bool reflesh)

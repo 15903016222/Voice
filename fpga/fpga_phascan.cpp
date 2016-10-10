@@ -362,13 +362,10 @@ bool Fpga::create_group()
     return true;
 }
 
-bool Fpga::remove_group(int index)
+bool Fpga::remove_group()
 {
     QWriteLocker l(&m_groupsLock);
-    if (index < 0 || m_groups.size() - 1 < index) {
-        return false;
-    }
-    m_groups.removeAt(index);
+    m_groups.removeAt(m_groups.size()-1);
     return true;
 }
 
@@ -416,7 +413,7 @@ Fpga::Fpga()
       m_alarmAnalog0(this, 0), m_alarmAnalog1(this, 1)
 {
     /* Global */
-    qMemSet(m_global, 0, sizeof(GlobalData));
+    ::memset(m_global, 0, sizeof(GlobalData));
     /** reg -1 **/
     m_global->chip = 0b1000;
     /* reg (1) */
