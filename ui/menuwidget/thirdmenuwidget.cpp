@@ -613,5 +613,5 @@ void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
 
 void ThirdMenuWidget::do_probe_event(const Probe &probe)
 {
-    select_probe(probe.model());
+    model->item(0, 2)->setText(probe.model());
 }
