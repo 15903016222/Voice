@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
-    this->resize(800, 580);
+    this->resize(800, 560);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
     connect(ui->pushButtonCoreTemp, &QPushButton::clicked, m_mcu, &Mcu::query_core_temp);
