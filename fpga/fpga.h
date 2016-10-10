@@ -127,17 +127,21 @@ public:
     bool ut2_twin();
     bool set_ut2_twin(bool enable, bool reflesh = false);
 
-    /* UT阻尼 */
+    /* UT发射接收阻尼 */
     enum DampingType {
         R50  = 0b00,
         R100 = 0b01,
         R200 = 0b10,
         R500 = 0b11
     };
-    DampingType ut1_damping();
-    bool set_ut1_damping(DampingType type, bool reflesh = false);
-    DampingType ut2_damping();
-    bool set_ut2_damping(DampingType type, bool reflesh = false);
+    DampingType ut1_tx_damping();
+    bool set_ut1_tx_damping(DampingType type, bool reflesh = false);
+    DampingType ut2_tx_damping();
+    bool set_ut2_tx_damping(DampingType type, bool reflesh = false);
+    DampingType ut1_rx_damping();
+    bool set_ut1_rx_damping(DampingType type, bool reflesh = false);
+    DampingType ut2_rx_damping();
+    bool set_ut2_rx_damping(DampingType type, bool reflesh = false);
 
     /* PA/UT发射电压 */
     enum VoltageType {

@@ -192,30 +192,54 @@ bool Fpga::set_ut2_twin(bool enable, bool reflesh)
     return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-Fpga::DampingType Fpga::ut1_damping()
+Fpga::DampingType Fpga::ut1_tx_damping()
 {
     QReadLocker l(&m_lock);
     return (Fpga::DampingType)m_global->ut1Damping;
 }
 
-bool Fpga::set_ut1_damping(Fpga::DampingType type, bool reflesh)
+bool Fpga::set_ut1_tx_damping(Fpga::DampingType type, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->ut1Damping = type;
     return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-Fpga::DampingType Fpga::ut2_damping()
+Fpga::DampingType Fpga::ut2_tx_damping()
 {
     QReadLocker l(&m_lock);
     return (Fpga::DampingType)m_global->ut2Damping;
 }
 
-bool Fpga::set_ut2_damping(Fpga::DampingType type, bool reflesh)
+bool Fpga::set_ut2_tx_damping(Fpga::DampingType type, bool reflesh)
 {
     QWriteLocker l(&m_lock);
     m_global->ut2Damping = type;
     return (reflesh ? write_reg(m_global, 1) : true);
+}
+
+Fpga::DampingType Fpga::ut1_rx_damping()
+{
+    return Fpga::R50;
+}
+
+bool Fpga::set_ut1_rx_damping(Fpga::DampingType type, bool reflesh)
+{
+    Q_UNUSED(type);
+    Q_UNUSED(reflesh);
+    return true;
+}
+
+Fpga::DampingType Fpga::ut2_rx_damping()
+{
+    return Fpga::R50;
+}
+
+bool Fpga::set_ut2_rx_damping(Fpga::DampingType type, bool reflesh)
+{
+    Q_UNUSED(type);
+    Q_UNUSED(reflesh);
+    return true;
 }
 
 Fpga::VoltageType Fpga::ut_voltage()
