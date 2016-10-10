@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>580</height>
+    <width>627</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -457,12 +457,12 @@
                 <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="text">
-                <string>Serial:</string>
+                <string>Model:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelProbeSerial">
+              <widget class="QLabel" name="labelProbeModel">
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -481,12 +481,12 @@
                 <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="text">
-                <string>Model:</string>
+                <string>Serial:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelProbeModel">
+              <widget class="QLabel" name="labelProbeSerial">
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -643,8 +643,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>23</height>
+     <width>627</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>
