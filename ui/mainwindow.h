@@ -43,7 +43,9 @@ public:
     void show_hidden_arrow();
     void update_translator();
 
+#ifdef WIN32
     bool eventFilter(QObject *object, QEvent *event);
+#endif
     bool hiddenFirstSecondMenuFlag;
     bool hiddenThirdMenuFlag;
     bool hiddenCommonMenuFlag;
