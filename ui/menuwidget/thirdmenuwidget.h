@@ -76,6 +76,7 @@ private slots:
     void select_wedge(QString string);
     void set_edited_text(QString string);
     void setBrightValue(int value);
+    void set_autoDetect_probeModel(bool flag);
 
 };
 

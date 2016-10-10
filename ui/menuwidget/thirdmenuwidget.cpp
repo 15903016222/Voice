@@ -42,6 +42,7 @@ QWidget(parent),
  //   connect(ui->tableView->horizontalHeader(), SIGNAL(sectionDoubleClicked(int)), this, SLOT(onHeaderClicked(int)), Qt::QueuedConnection);
 
     m_mcu = Mcu::get_mcu();
+    set_autoDetect_probeModel(false);
  //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
 }
@@ -209,15 +210,7 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
 
                 if(thirdMenuString.contains("Auto Detect")) {
-
-                    if(!pushButton->switchFlag){
-                        qDebug()<<"on";
-                        m_mcu->notify_started();
-                        m_mcu->query_probe();
-                        connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
-                    }else{
-                        qDebug()<<"off";
-                    }
+                    connect(pushButton, SIGNAL(switchPress(bool)), this, SLOT(set_autoDetect_probeModel(bool)));
                 }
 
                 break;
@@ -598,6 +591,18 @@ void ThirdMenuWidget::setBrightValue(int value)
         }
     }
     m_mcu->set_brightness((char)value);
+}
+
+void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
+{
+    if(!flag){
+        qDebug()<<"on";
+        m_mcu->notify_started();
+        m_mcu->query_probe();
+        connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
+    }else{
+        qDebug()<<"off";
+    }
 }
 
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)

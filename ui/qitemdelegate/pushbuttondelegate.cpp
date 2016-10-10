@@ -62,8 +62,10 @@ bool PushButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
 
             if(switchFlag == true) {
                 buttonMap.value(index)->text = "Off";
+                emit switchPress(switchFlag);
             } else {
                 buttonMap.value(index)->text = "On";
+                emit switchPress(switchFlag);
             }
             switchFlag = !switchFlag;
         }
