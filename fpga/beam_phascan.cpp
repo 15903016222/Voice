@@ -1,26 +1,29 @@
 #include "beam.h"
 #include "phascan_spi.h"
 
-static const int BEAM_REGS_NUM = 80;
+static const int BEAM_REGS_NUM      = 80;
+const quint32 Beam::MAX_CHANNELS    = 32;
+const quint32 Beam::MAX_POINTS      = 16;
 
 struct DelayInfo
 {
-     quint32 tx_time  :14;
-     quint32 res1     :2;
-     quint32 rx_time  :12 ;
-     quint32 res2     :4;
+     quint32 txTime :14;        /* bit:0-13 发送延迟*/
+     quint32 res1   :2;         /* bit:14-15 */
+     quint32 rxTime :12;        /* bit:16-27 接收延迟*/
+     quint32 res2   :4;         /* bit:28-31 */
 };
 
 struct PointInfo
 {
-    /* TCG_SPI (0) */
-     quint32 position :20;
-     quint32 res1     :1;
-     quint32 pregain  :10;
-     quint32 res2     :1;
-     quint32 slope    :22;
-     quint32 res3     :9;
-     quint32 flag     :1;
+    /* TCG (0) */
+     quint32 position :20;      /* bit:0-19 当前点位置,单位10ns */
+     quint32 res1     :1;       /* bit:20 */
+     quint32 pregain  :10;      /* bit:21-30 */
+     quint32 res2     :1;       /* bit:31 */
+     /* TCG (1) */
+     quint32 slope    :22;      /* bit:0-21 */
+     quint32 res3     :9;       /* bit:22-30 */
+     quint32 flag     :1;       /* bit:31 */
 };
 
 struct BeamData
@@ -72,15 +75,17 @@ struct BeamData
     quint32 rxEnable;
 
     /* reg (12-13) 接收使能 */
-    u_int64_t rxSel;
+    quint64 rxChannelSel;
 
     /* reg (14-15) 发射使能 */
-    u_int64_t txSel;
+    quint64 txChannelSel;
 
     /* reg (16-47) 阵元发射信息 */
     DelayInfo delay[32];            /* bit0-13 发射延时 bit:16-27 接收延时*/
     PointInfo pointInfo[16] ;
 };
+
+//static quint8 channel_select()
 
 Beam::Beam(const int index)
     : m_index(index), d(new BeamData())
@@ -101,7 +106,7 @@ quint32 Beam::gain_offset(void) const
 
 void Beam::set_gain_offset(quint32 offset)
 {
-    d->offset = offset;
+    d->gainOffset = offset;
 }
 
 quint32 Beam::group_id(void) const
@@ -166,7 +171,7 @@ void Beam::set_gate_b_start(quint32 val)
 
 quint32 Beam::gate_b_end(void) const
 {
-    return d->gateBStart;
+    return d->gateBEnd;
 }
 
 void Beam::set_gate_b_end(quint32 val)
@@ -194,94 +199,183 @@ void Beam::set_gate_i_end(quint32 val)
     d->gateIEnd = val;
 }
 
-quint32 Beam::tx(void) const
+quint32 Beam::tx_channel(void) const
 {
     return d->txEnable;
 }
 
-void Beam::set_tx(quint32 val)
+void Beam::set_tx_channel(quint32 val)
 {
     d->txEnable = val;
 }
 
-quint32 Beam::rx(void) const
+quint32 Beam::rx_channel(void) const
 {
     return d->rxEnable;
 }
 
-void Beam::set_rx(quint32 val)
+void Beam::set_rx_channel(quint32 val)
 {
     d->rxEnable = val;
 }
 
-u_int64_t Beam::rx_sel(void) const
+static quint64 cal_rxtx_channel_start(quint8 n)
 {
-    return d->rxSel;
+    quint64 ret = 0;
+    if (n == 1) {
+        return ret;
+    }
+
+    if ( n <= Beam::MAX_CHANNELS + 1 ) {
+        /* 2 ~ 33 channels */
+        for (int i = 0; i < n; ++i) {
+            ret |= 0x1ULL<<(63-(i<<1));
+        }
+    } else if ( n <= (Beam::MAX_CHANNELS * 2 + 1) ) {
+        /* 34 ~ 65 channels */
+        ret = 0xAAAAAAAAAAAAAAAA; /* 0b101010....10 */
+        n -= (Beam::MAX_CHANNELS + 1);
+        for (int i = 0; i < n; ++i) {
+            ret &= ~(0x1ULL<<(63-(i<<1)));
+            ret |= 0x1ULL<<(62-(i<<1));
+        }
+    } else if ( n <= (Beam::MAX_CHANNELS * 2 + 1) ){
+        /* 66 ~ 97 chanels */
+        ret = 5555555555555555;
+        n -= (Beam::MAX_CHANNELS * 3 + 1);
+        for (int i = 0; i < n; ++i) {
+            ret |= 0x1ULL<<(63-(i<<1));
+        }
+    }
+    return ret;
 }
 
-void Beam::set_rx_sel(u_int64_t val)
+quint8 Beam::rx_channel_select(void) const
 {
-    d->rxSel = val;
+    quint8 ret = 1;
+    for (int i = 63; i > 0; i-=2) {
+        ret += (d->rxChannelSel>>i)&0x1;
+        ret += ((d->rxChannelSel>>(i-1))&0x1)*2;
+    }
+    return ret;
 }
 
-u_int64_t Beam::tx_sel(void) const
+bool Beam::set_rx_channel_select(quint8 n)
 {
-    return d->txSel;
+    if (n == 0 || n > 97) {
+        return false;
+    }
+
+    d->rxChannelSel = cal_rxtx_channel_start(n);
+    qDebug("MAX_CHANNELS(%d) 0x%llx", Beam::MAX_CHANNELS, d->rxChannelSel);
+
+    return true;
 }
 
-void Beam::set_tx_sel(u_int64_t val)
+quint8 Beam::tx_channel_select(void) const
 {
-    d->txSel = val;
+    quint8 ret = 1;
+    for (int i = 63; i > 0; i-=2) {
+        ret += (d->txChannelSel>>i)&0x1;
+        ret += ((d->txChannelSel>>(i-1))&0x1)*2;
+    }
+    return ret;
+}
+
+bool Beam::set_tx_channel_select(quint8 n)
+{
+    if (n == 0 || n > 97) {
+        return false;
+    }
+
+    d->txChannelSel = cal_rxtx_channel_start(n);
+
+    return true;
 }
 
 quint32 Beam::tx_delay(quint32 channel) const
 {
-    return d->delay[channel].tx_time;
+    if (channel >= Beam::MAX_CHANNELS) {
+        return 0;
+    }
+    return d->delay[channel].txTime;
 }
 
-void Beam::set_tx_delay(quint32 channel, quint32 val)
+bool Beam::set_tx_delay(quint32 channel, quint32 val)
 {
-    d->delay[channel].tx_time = val;
+    if (channel >= Beam::MAX_CHANNELS) {
+        return false;
+    }
+    d->delay[channel].txTime = val;
+    return true;
 }
 
 quint32 Beam::rx_delay(quint32 channel) const
 {
-    return d->delay[channel].rx_time;
+    if (channel >= Beam::MAX_CHANNELS) {
+        return 0;
+    }
+    return d->delay[channel].rxTime;
 }
 
-void Beam::set_rx_delay(quint32 channel, quint32 val)
+bool Beam::set_rx_delay(quint32 channel, quint32 val)
 {
-    d->delay[channel].rx_time = val;
+    if (channel >= Beam::MAX_CHANNELS) {
+        return false;
+    }
+    d->delay[channel].rxTime = val;
+    return true;
 }
 
 quint32 Beam::tcg_position(quint32 point) const
 {
+    if (point >= Beam::MAX_POINTS) {
+        return 0;
+    }
     return d->pointInfo[point].position;
 }
 
-void Beam::set_tcg_position(quint32 point, quint32 val)
+bool Beam::set_tcg_position(quint32 point, quint32 val)
 {
+    if (point >= Beam::MAX_POINTS) {
+        return false;
+    }
     d->pointInfo[point].position = val;
+    return true;
 }
 
 quint32 Beam::tcg_slope(quint32 point) const
 {
+    if (point >= Beam::MAX_POINTS) {
+        return 0;
+    }
     return d->pointInfo[point].slope;
 }
 
-void Beam::set_tcg_slope(quint32 point, quint32 val)
+bool Beam::set_tcg_slope(quint32 point, quint32 val)
 {
+    if (point >= Beam::MAX_POINTS) {
+        return false;
+    }
     d->pointInfo[point].slope = val;
+    return true;
 }
 
-quint32 Beam::tcg_flag(quint32 point) const
+bool Beam::tcg_flag(quint32 point) const
 {
+    if (point >= Beam::MAX_POINTS) {
+        return false;
+    }
     return d->pointInfo[point].flag;
 }
 
-void Beam::set_tcg_flag(quint32 point, quint32 val)
+bool Beam::set_tcg_flag(quint32 point, bool flag)
 {
-    d->pointInfo[point].flag = val;
+    if (point >= Beam::MAX_POINTS) {
+        return false;
+    }
+    d->pointInfo[point].flag = flag;
+    return true;
 }
 
 bool Beam::refresh(void)

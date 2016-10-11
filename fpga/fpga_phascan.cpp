@@ -6,6 +6,8 @@
 #include <QDebug>
 
 static const int GLOBAL_REG_NUM = 32;
+const int Fpga::MAX_GROUPS_NUM = 8;
+const int Fpga::MAX_BEAMS_NUM = 1024;
 
 struct AlarmOutputData{
     /* reg 17 20 23 */
@@ -373,8 +375,6 @@ int Fpga::groups()
     return m_groups.size();
 }
 
-static const int MAX_GROUPS_NUM = 8;
-static const int MAX_BEAMS_NUM = 1024;
 bool Fpga::create_group()
 {
     QWriteLocker l(&m_groupsLock);
@@ -382,7 +382,7 @@ bool Fpga::create_group()
     if (size >= MAX_GROUPS_NUM) {
         return false;
     }
-    m_groups.append(FpgaGroup(new Group(size)));
+    m_groups.append(GroupPointer(new Group(size)));
     return true;
 }
 
@@ -393,7 +393,7 @@ bool Fpga::remove_group()
     return true;
 }
 
-FpgaGroup &Fpga::get_group(int index)
+GroupPointer &Fpga::get_group(int index)
 {
     QReadLocker l(&m_groupsLock);
     return m_groups[index];
@@ -412,21 +412,18 @@ bool Fpga::create_beam()
     if (size >= MAX_BEAMS_NUM) {
         return false;
     }
-    m_beams.append(FpgaBeam(new Beam(size)));
+    m_beams.append(BeamPointer(new Beam(size)));
     return true;
 }
 
-bool Fpga::remove_beam(int index)
+bool Fpga::remove_beam()
 {
     QWriteLocker l(&m_beamsLock);
-    if (index < 0 || m_beams.size() -1 < index) {
-        return false;
-    }
-    m_beams.removeAt(index);
+    m_beams.removeAt(m_beams.size()-1);
     return true;
 }
 
-FpgaBeam &Fpga::get_beam(int index)
+BeamPointer &Fpga::get_beam(int index)
 {
     QReadLocker l(&m_beamsLock);
     return m_beams[index];

@@ -82,8 +82,8 @@ private:
     int m_index;
 };
 
-typedef QSharedPointer<Group> FpgaGroup;
-typedef QSharedPointer<Beam> FpgaBeam;
+typedef QSharedPointer<Group> GroupPointer;
+typedef QSharedPointer<Beam> BeamPointer;
 
 class Fpga
 {
@@ -187,17 +187,19 @@ public:
     int factor_echo();
     bool set_factor_echo(int val, bool reflesh = false);
 
+    static const int MAX_GROUPS_NUM;
+    static const int MAX_BEAMS_NUM;
     /** Group **/
     int groups();
     bool create_group();
     bool remove_group();
-    FpgaGroup& get_group(int index);
+    GroupPointer& get_group(int index);
 
     /** Beam **/
     int beams();
     bool create_beam();
-    bool remove_beam(int index);
-    FpgaBeam &get_beam(int index);
+    bool remove_beam();
+    BeamPointer &get_beam(int index);
 
 protected:
     Fpga();
@@ -213,9 +215,9 @@ private:
     AlarmAnalog m_alarmAnalog0;
     AlarmAnalog m_alarmAnalog1;
     QReadWriteLock m_lock;
-    QList<FpgaGroup> m_groups;
+    QList<GroupPointer> m_groups;
     QReadWriteLock m_groupsLock;
-    QList<FpgaBeam> m_beams;
+    QList<BeamPointer> m_beams;
     QReadWriteLock m_beamsLock;
 };
 

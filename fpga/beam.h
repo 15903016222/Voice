@@ -8,6 +8,9 @@ struct BeamData;
 class Beam
 {
 public:
+    static const quint32 MAX_CHANNELS;
+    static const quint32 MAX_POINTS;
+
     explicit Beam(const int index=0);
     ~Beam();
 
@@ -44,32 +47,37 @@ public:
     quint32 gate_i_end(void) const;
     void set_gate_i_end(quint32 val);
 
-    quint32 tx(void) const;
-    void set_tx(quint32 val);
+    quint32 tx_channel(void) const;
+    void set_tx_channel(quint32 val);
 
-    quint32 rx(void) const;
-    void set_rx(quint32 val);
+    quint32 rx_channel(void) const;
+    void set_rx_channel(quint32 val);
 
-    u_int64_t rx_sel(void) const;
-    void set_rx_sel(u_int64_t val);
+    quint8 rx_channel_select(void) const;
+    bool set_rx_channel_select(quint8 n);
 
-    u_int64_t tx_sel(void) const;
-    void set_tx_sel(u_int64_t val);
+    quint8 tx_channel_select(void) const;
+    bool set_tx_channel_select(quint8 n);
 
     quint32 tx_delay(quint32 channel) const;
-    void set_tx_delay(quint32 channel, quint32 val);
+    bool set_tx_delay(quint32 channel, quint32 val);
 
     quint32 rx_delay(quint32 channel) const;
-    void set_rx_delay(quint32 channel, quint32 val);
+    bool set_rx_delay(quint32 channel, quint32 val);
 
+    /**
+     * @brief tcg_position 返回对应TCG点的位置
+     * @param point        指定TCG点,最大点数为 MAX_POINTS-1
+     * @return             成功返回指定点的位置,单位为10ns
+     */
     quint32 tcg_position(quint32 point) const;
-    void set_tcg_position(quint32 poing, quint32 val);
+    bool set_tcg_position(quint32 poing, quint32 val);
 
     quint32 tcg_slope(quint32 point) const;
-    void set_tcg_slope(quint32 point, quint32 val) ;
+    bool set_tcg_slope(quint32 point, quint32 val) ;
 
-    quint32 tcg_flag(quint32 point) const;
-    void set_tcg_flag(quint32 point, quint32 val);
+    bool tcg_flag(quint32 point) const;
+    bool set_tcg_flag(quint32 point, bool flag);
 
     bool refresh(void);
 
