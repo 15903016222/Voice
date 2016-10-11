@@ -63,6 +63,7 @@ private:
 
 protected slots:
     void do_rotary_event(Mcu::RotaryType type);
+    void do_probe_event(const Probe& probe);
 
 private slots:
     void onHeaderClicked(int index);
@@ -75,6 +76,7 @@ private slots:
     void select_wedge(QString string);
     void set_edited_text(QString string);
     void setBrightValue(int value);
+    void set_autoDetect_probeModel(bool flag);
 
 };
 

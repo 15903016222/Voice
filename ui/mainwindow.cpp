@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
-    initUI();
+    init_ui();
 
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyBottom_menu(int)));
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyLeft_menu(int)));
@@ -43,7 +43,7 @@ MainWindow::~MainWindow()
     delete d_ptr;
 }
 
-void MainWindow::initUI()
+void MainWindow::init_ui()
 {
     this->resize(800, 600);
 
@@ -76,8 +76,7 @@ void MainWindow::initUI()
 
     QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
 
-    for(int i = 0; i < FIRST_MENU_NUMBER; i++)
-    {
+    for(int i = 0; i < FIRST_MENU_NUMBER; i++) {
         QObject::connect(firstSecondMenu->menuList.at(i), SIGNAL(clicked(QModelIndex)), this, SLOT(slot_secondMenuItemClicked(QModelIndex)));
     }
 
@@ -93,7 +92,7 @@ void MainWindow::initUI()
 
 void MainWindow::keyBottom_menu(int key)
 {
-    if(key == 227){
+    if(key == 227) {
         show_hidden_Menu();
         keyValue = 227;
     }
@@ -101,7 +100,7 @@ void MainWindow::keyBottom_menu(int key)
 
 void MainWindow::keyLeft_menu(int key)
 {
-    if(key == 210){
+    if(key == 210) {
         show_hidden_Menu();
         keyValue = 210;
     }
@@ -109,8 +108,8 @@ void MainWindow::keyLeft_menu(int key)
 
 void MainWindow::keyLeft_back(int key)
 {
-    if(key == 217){
-        switch(keyValue){
+    if(key == 217) {
+        switch(keyValue) {
         case 210:
             keyLeft_menu(210);
             break;
@@ -133,7 +132,7 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
     hiddenArrowFlag = true;
 
     emit clickedMenuIndex(firstMenuNum);
-    arrowShowFlag();
+    show_hidden_arrow();
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -150,14 +149,13 @@ void MainWindow::on_pushButton_top_clicked()
     int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
     int scrollTopY = ui->scrollArea->geometry().y();
 
-    if(menuTopY < (scrollTopY -20))
-    {
+    if(menuTopY < (scrollTopY -20)) {
         ui->scrollArea->viewport()->scroll(0, 20);
-    }else{
+    } else {
         ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
     }
 
-    arrowShowFlag();
+    show_hidden_arrow();
 }
 
 void MainWindow::on_pushButton_bottom_clicked()
@@ -165,14 +163,13 @@ void MainWindow::on_pushButton_bottom_clicked()
     int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
     int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
 
-    if((menuBottomY - 20) > scrollBottomY)
-    {
+    if((menuBottomY - 20) > scrollBottomY) {
         ui->scrollArea->viewport()->scroll(0, -20);
-    }else{
+    } else {
         ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
     }
 
-    arrowShowFlag();
+    show_hidden_arrow();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -183,31 +180,28 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     int oldHeight = event->oldSize().height();
     int menuHeight = firstSecondMenu->geometry().height();
 
-    if(oldWidth > 0 && oldHeight > 0)
-    {
+    if(oldWidth > 0 && oldHeight > 0) {
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
 
-        if(ui->widget_scrollArea->geometry().height() < 600)
-        {
+        if(ui->widget_scrollArea->geometry().height() < 600) {
             firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / oldHeight);
-        }else{
+        } else {
             firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
         }
         commonMenuWidget->resize(width, height * 70 / 600);
         commonMenuWidget->move(0, height * 530 / 600);
         commonMenuButton->move(width - commonMenuButton->geometry().width(), height - commonMenuButton->geometry().height());
-    }else
-    {
+    } else {
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
         commonMenuWidget->resize(width, height * 70 / 600);
         commonMenuWidget->move(0, height * 530 / 600);
         commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
     }
-    arrowShowFlag();
+    show_hidden_arrow();
 }
 
-void MainWindow::arrowShowFlag()
+void MainWindow::show_hidden_arrow()
 {
     int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
     int scrollTopY = ui->scrollArea->geometry().y();
@@ -240,22 +234,21 @@ void MainWindow::arrowShowFlag()
 void MainWindow::slot_pushButton_commonMenuClicked()
 {
     hiddenCommonMenuFlag = !hiddenCommonMenuFlag;
-    if(hiddenCommonMenuFlag)
-    {
+    if(hiddenCommonMenuFlag) {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
         hiddenFirstSecondMenuFlag = false;
         commonMenuWidget->show();
         commonMenuButton->raise();
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
-    }else {
+    } else {
         commonMenuWidget->hide();
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
         hiddenFirstSecondMenuFlag = false;
     }
 }
 
-void MainWindow::updateTranslator()
+void MainWindow::update_translator()
 {
     ui->retranslateUi(this);
     ui->widgetTopLeft->retranslate_top_menu_ui();
@@ -268,34 +261,33 @@ void MainWindow::updateTranslator()
 void MainWindow::translatorChineseUI()
 {
     translator->load(":/file/translator/phascanII_UI_Chinese.qm");
-    updateTranslator();
+    update_translator();
 }
 
 void MainWindow::translatorEnglishUI()
 {
     translator->load(":/file/translator/phascanII_UI_English.qm");
-    updateTranslator();
+    update_translator();
 }
 
+#ifdef WIN32
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-    if(object == ui->frame_showPlot)
-    {
-        if(event->type() == QEvent::MouseButtonPress) //QEvent::MouseButtonDblClick
-        {
+    if(object == ui->frame_showPlot) {
+        if(event->type() == QEvent::MouseButtonPress) {//QEvent::MouseButtonDblClick
             show_hidden_Menu();
         }
     }
     return QWidget::eventFilter(object, event);
 }
+#endif
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
                              ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                              ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
-    if(scrollRect.contains(event->pos()))
-    {
+    if(scrollRect.contains(event->pos())) {
         mainMenuStartPos = event->pos().y();
     }
 }
@@ -305,45 +297,35 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
     QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
                              ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                              ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
-    if(scrollRect.contains(moveEvent->pos()))
-    {
+    if(scrollRect.contains(moveEvent->pos())) {
         mainMenuEndPos = moveEvent->pos().y();
         int scrollLength = mainMenuEndPos - mainMenuStartPos;
         int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
         int scrollTopY = ui->scrollArea->geometry().y();
         int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
         int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
-        if(scrollLength < 0)
-        {
-            if((menuBottomY + scrollLength) > scrollBottomY)
-            {
+
+        if(scrollLength < 0) {
+            if((menuBottomY + scrollLength) > scrollBottomY) {
                 ui->scrollArea->viewport()->scroll(0, scrollLength);
-            }
-            else
-            {
+            } else  {
                 ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
             }
-        }
-        else
-        {
-            if((menuTopY + scrollLength) < scrollTopY)
-            {
+        } else {
+            if((menuTopY + scrollLength) < scrollTopY) {
                 ui->scrollArea->viewport()->scroll(0, scrollLength);
-            }
-            else
-            {
+            } else {
                 ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
             }
         }
-        arrowShowFlag();
+        show_hidden_arrow();
     }
 }
 
 void MainWindow::show_hidden_Menu()
 {
     hiddenFirstSecondMenuFlag = !hiddenFirstSecondMenuFlag;
-    if(hiddenFirstSecondMenuFlag)
-    {
+    if(hiddenFirstSecondMenuFlag) {
         ui->widget_firstSecondMenu->show();
         ui->widget_thirdMenu->show();
         commonMenuWidget->hide();
@@ -351,8 +333,8 @@ void MainWindow::show_hidden_Menu()
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
-        arrowShowFlag();
-    }else{
+        show_hidden_arrow();
+    } else {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
     }
@@ -360,10 +342,9 @@ void MainWindow::show_hidden_Menu()
 
 void MainWindow::scroll_menu(int index)
 {
-  if(index >= 4 && index < 9)
-  {
-    ui->scrollArea->viewport()->scroll(0, -50);
-    ui->scrollArea->update();
-  }
+    if(index >= 4 && index < 9) {
+        ui->scrollArea->viewport()->scroll(0, -50);
+        ui->scrollArea->update();
+    }
 }
 

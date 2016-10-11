@@ -42,6 +42,7 @@ QWidget(parent),
  //   connect(ui->tableView->horizontalHeader(), SIGNAL(sectionDoubleClicked(int)), this, SLOT(onHeaderClicked(int)), Qt::QueuedConnection);
 
     m_mcu = Mcu::get_mcu();
+    set_autoDetect_probeModel(false);
  //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
 }
@@ -207,6 +208,11 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
+
+                if(thirdMenuString.contains("Auto Detect")) {
+                    connect(pushButton, SIGNAL(switchPress(bool)), this, SLOT(set_autoDetect_probeModel(bool)));
+                }
+
                 break;
             }
             default:
@@ -279,6 +285,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     QString subString = firstMenuString + "_" + secondMenuString;
     QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
+    QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
+
     if(subVariantMap["style"].toString().toInt() == 1) {      
         //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
@@ -288,7 +296,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             ui->tableView->edit(modelIndex);
         }
 
-        QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex = 0;
         QStringList stringList = doubleSpinBox->stepList;
@@ -538,20 +545,26 @@ void ThirdMenuWidget::change_measurement_label(QString string)
 
 void ThirdMenuWidget::select_probe(QString string)
 {
-    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-        if(i == probeIndex) {
-            model->item(0, i)->setText(string);
-            break;
+    if(!string.isEmpty()){
+        QString probeModel = string.left(string.length() - 4);
+        for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+            if(i == probeIndex) {
+                model->item(0, i)->setText(probeModel);
+                break;
+            }
         }
     }
 }
 
 void ThirdMenuWidget::select_wedge(QString string)
 {
-    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-        if(i == wedgeIndex) {
-            model->item(0, i)->setText(string);
-            break;
+    if(!string.isEmpty()){
+        QString wedgeModel = string.left(string.length() - 4);
+        for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
+            if(i == wedgeIndex) {
+                model->item(0, i)->setText(wedgeModel);
+                break;
+            }
         }
     }
 }
@@ -561,7 +574,7 @@ void ThirdMenuWidget::set_edited_text(QString string)
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
         if(i == inputIndex) {
             model->item(0, i)->setText(string);
-            break;           
+            break;
         }
     }
 }
@@ -580,6 +593,16 @@ void ThirdMenuWidget::setBrightValue(int value)
     m_mcu->set_brightness((char)value);
 }
 
+void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
+{
+    if(!flag){
+        m_mcu->notify_started();
+        m_mcu->query_probe();
+        connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
+    }else{
+    }
+}
+
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
 {
     int i = verticalSliderDialog->slider.at(0)->value();
@@ -589,4 +612,9 @@ void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
         --i;
     }
     verticalSliderDialog->slider.at(0)->setValue(i);
+}
+
+void ThirdMenuWidget::do_probe_event(const Probe &probe)
+{
+    model->item(0, 2)->setText(probe.model());
 }

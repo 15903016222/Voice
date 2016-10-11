@@ -23,7 +23,7 @@ private:
     QTimer *timer;
 
 public:
-    void initShowTime();
+    void init_show_time();
     bool eventFilter(QObject *object, QEvent *event);
     bool showDlg;
     QString str_date;

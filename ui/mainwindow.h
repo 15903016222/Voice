@@ -40,10 +40,12 @@ public:
 
     void show_hidden_Menu();
     void resizeEvent(QResizeEvent *event);
-    void arrowShowFlag();
-    void updateTranslator();
+    void show_hidden_arrow();
+    void update_translator();
 
+#ifdef WIN32
     bool eventFilter(QObject *object, QEvent *event);
+#endif
     bool hiddenFirstSecondMenuFlag;
     bool hiddenThirdMenuFlag;
     bool hiddenCommonMenuFlag;
@@ -53,11 +55,10 @@ public:
     int secondMenuNum;
     int mainMenuStartPos;
     int mainMenuEndPos;
-
     int keyValue;
 
 private:
-    void initUI();
+    void init_ui();
     QTranslator *translator;
     Mcu *m_mcu;
 
