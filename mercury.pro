@@ -113,13 +113,6 @@ FORMS += \
     ui/dialogwidget/inputpanelcontext.ui \
     ui/dialogwidget/verticalsliderdialog.ui
 
-DISTFILES += \
-    ui/resources/menu.json \
-    ui/resources/menuone.json \
-    ui/resources/menuthree.json \
-    ui/resources/menutwo.json \
-    ui/resources/menucache.json
-
 win32 {
     LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
 }

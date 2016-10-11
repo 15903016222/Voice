@@ -38,7 +38,8 @@
         <file>resources/menuone.json</file>
         <file>resources/menuthree.json</file>
         <file>resources/menutwo.json</file>
-        <file>resources/menu.json</file>
-        <file>resources/menucache.json</file>
+        <file>resources/menuone_zh.json</file>
+        <file>resources/menutwo_zh.json</file>
+        <file>resources/menuthree_zh.json</file>
     </qresource>
 </RCC>

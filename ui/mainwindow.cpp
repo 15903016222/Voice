@@ -72,7 +72,7 @@ void MainWindow::init_ui()
     translator = new QTranslator(this);
     qApp->installTranslator(translator);
 //    translatorChineseUI(); // default Chinese
-//    firstSecondMenu->initUI();
+//    firstSecondMenu->init_ui();
 
     QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
 
