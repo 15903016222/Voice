@@ -2426,10 +2426,12 @@
         ]
     },
     "IP Address": {
-        "parent": "Preference_Network"
+        "parent": "Preference_Network",
+        "style": "IP"
     },
     "Subnet Mask": {
-        "parent": "Preference_Network"
+        "parent": "Preference_Network",
+        "style": "subNet"
     },
     "System Information": {
         "parent": "Preference_Service"

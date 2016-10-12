@@ -9,6 +9,8 @@
 #include "myinputpanel.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
+#include "ipsetdialog.h"
+#include "subnetsetdialog.h"
 
 #include <QDebug>
 
@@ -379,12 +381,26 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         timeSetIndex = index;
         connect(clockSetDialog, SIGNAL(currentTimeChanged(QString)), this, SLOT(set_time(QString)));
 
-    }else if(subVariantMap["style"].toString() == "DateDialog") {
+    } else if(subVariantMap["style"].toString() == "DateDialog") {
         dateSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         dateSetDialog->show();
 
         dateSetIndex = index;
         connect(dateSetDialog, SIGNAL(currentDateChanged(QString)), this, SLOT(set_date(QString)));
+    } else if(subVariantMap["style"].toString() == "IP") {
+        IPSetDialog *ipSetDialog = new IPSetDialog(this);
+        ipSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        ipSetDialog->show();
+
+        ipSetIndex = index;
+        connect(ipSetDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
+    } else if(subVariantMap["style"].toString() == "subNet") {
+        SubNetSetDialog *subNetSetDialog = new SubNetSetDialog(this);
+        subNetSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        subNetSetDialog->show();
+
+        subNetIndex = index;
+        connect(subNetSetDialog, SIGNAL(currentSubNetChanged(QString)), this, SLOT(set_subNet(QString)));
     }
 }
 
@@ -636,6 +652,16 @@ void ThirdMenuWidget::set_date(QString str_date)
 void ThirdMenuWidget::set_time(QString str_time)
 {
     model->item(0, timeSetIndex)->setText(str_time);
+}
+
+void ThirdMenuWidget::set_ip(QString str_ip)
+{
+    model->item(0, ipSetIndex)->setText(str_ip);
+}
+
+void ThirdMenuWidget::set_subNet(QString str_subNet)
+{
+    model->item(0, subNetIndex)->setText(str_subNet);
 }
 
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)

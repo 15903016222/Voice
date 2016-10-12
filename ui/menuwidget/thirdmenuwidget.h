@@ -52,6 +52,8 @@ public:
     int wedgeIndex;
     int dateSetIndex;
     int timeSetIndex;
+    int ipSetIndex;
+    int subNetIndex;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -87,6 +89,8 @@ private slots:
     void set_autoDetect_probeModel(bool flag);
     void set_date(QString str_date);
     void set_time(QString str_time);
+    void set_ip(QString str_ip);
+    void set_subNet(QString str_subNet);
 
 };
 
