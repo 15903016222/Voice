@@ -49,7 +49,10 @@
          </font>
         </property>
         <property name="text">
-         <string>SubNet Address Setting:</string>
+         <string>SubNet Address</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
