@@ -31,12 +31,12 @@ void DateSetDialog::on_buttonBox_accepted()
     int month = ui->spinBox_2->value();
     int day = ui->spinBox_3->value();
 
-    QString date;
-    date.append(QString::number((double)year, 'f', 0));
-    date.append("-");
-    date.append(QString::number((double)month, 'f', 0));
-    date.append("-");
-    date.append(QString::number((double)day, 'f', 0));
+    str_date.clear();
+    str_date.append(QString::number((double)year, 'f', 0));
+    str_date.append("-");
+    str_date.append(QString::number((double)month, 'f', 0));
+    str_date.append("-");
+    str_date.append(QString::number((double)day, 'f', 0));
 
-    emit currentDateChanged(date);
+    emit currentDateChanged(str_date);
 }
