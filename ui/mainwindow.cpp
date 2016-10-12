@@ -72,7 +72,7 @@ void MainWindow::init_ui()
     translator = new QTranslator(this);
     qApp->installTranslator(translator);
 //    translatorChineseUI(); // default Chinese
-//    firstSecondMenu->initUI();
+//    firstSecondMenu->init_ui();
 
     QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
 
@@ -270,6 +270,7 @@ void MainWindow::translatorEnglishUI()
     update_translator();
 }
 
+#ifdef WIN32
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
     if(object == ui->frame_showPlot) {
@@ -279,6 +280,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
     }
     return QWidget::eventFilter(object, event);
 }
+#endif
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {

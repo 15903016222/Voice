@@ -19,6 +19,9 @@ public:
     bool switchFlag;
 	QMap<QModelIndex, QStyleOptionButton*> buttonMap;
 
+signals:
+    void switchPress(bool flag);
+
 };
 
 #endif // PUSHBUTTONDELEGATE

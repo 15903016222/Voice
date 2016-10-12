@@ -8,13 +8,13 @@
 #include <QResizeEvent>
 
 static const char* COMMON_MENU_STRING[COMMON_MENU_NUMBER] = {
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Straightening"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Straightening"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Straightening"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Remove Lateral"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Ref. Position\n(mm)"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Depth Cal."),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Wedge Sep.\n(mm)")
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Start"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Range"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Velocity"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Video filter\n(on/off)"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Reset config"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Gate\n(on/off)"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Focal depth")
 };
 
 CommonMenuWidget::CommonMenuWidget(QWidget *parent) :

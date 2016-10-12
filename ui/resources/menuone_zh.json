@@ -1,0 +1,58 @@
+{
+    "UT Settings": [
+        "常规",
+        "发射",
+        "接收",
+        "高级"
+    ],
+    "Gate/Curves": [
+        "Gate",
+        "Alarm",
+        "Output",
+        "DAC",
+        "TCG"
+    ],
+    "Display": [
+        "Selection",
+        "Color Settings",
+        "Properties"
+    ],
+    "Probe/Part": [
+        "Select",
+        "Position",
+        "FFT",
+        "Part",
+        "高级"
+    ],
+    "Focal Law": [
+        "Law Config",
+        "Angle",
+        "Apeture",
+        "Focal Point"
+    ],
+    "Scan": [
+        "Inspection",
+        "Encoder",
+        "Area",
+        "Start"
+    ],
+    "Measurement": [
+        "Reading",
+        "Cursors",
+        "TOFD",
+        "Flaw Record"
+    ],
+    "File/Report": [
+        "File",
+        "Save Mode",
+        "Report",
+        "Format",
+        "User Field"
+    ],
+    "Preference": [
+        "Preference",
+        "System",
+        "Network",
+        "Service"
+    ]
+}

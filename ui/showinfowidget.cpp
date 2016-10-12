@@ -33,7 +33,7 @@ void ShowInfoWidget::init_show_time()
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(slotUpdateTime()));
-    timer->start(500);
+    timer->start(0);
 }
 
 void ShowInfoWidget::slotUpdateTime()
