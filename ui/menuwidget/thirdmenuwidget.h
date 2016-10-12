@@ -4,6 +4,7 @@
 #include "firstsecondmenuwidget.h"
 #include "verticalsliderdialog.h"
 #include "datesetdialog.h"
+#include "clocksetdialog.h"
 
 #define THIRD_MENU_NUMBER 6
 
@@ -30,6 +31,7 @@ public:
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, int count);
     void set_currentDateToMenu();
+    void set_currentTimeToMenu();
 
     QStringList get_third_menu_list();
     QVariantMap read_json_file(QString string);
@@ -49,6 +51,7 @@ public:
     int probeIndex;
     int wedgeIndex;
     int dateSetIndex;
+    int timeSetIndex;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -64,6 +67,7 @@ private:
     VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
     DateSetDialog *dateSetDialog;
+    ClockSetDialog *clockSetDialog;
 
 protected slots:
     void do_rotary_event(Mcu::RotaryType type);
@@ -82,6 +86,7 @@ private slots:
     void setBrightValue(int value);
     void set_autoDetect_probeModel(bool flag);
     void set_date(QString str_date);
+    void set_time(QString str_time);
 
 };
 

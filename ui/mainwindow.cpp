@@ -145,6 +145,7 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
 
     if(firstMenuNum == 8 && secondMenuNum == 1){
         ui->widget_thirdMenu->set_currentDateToMenu();
+        ui->widget_thirdMenu->set_currentTimeToMenu();
     }
 }
 

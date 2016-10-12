@@ -19,13 +19,16 @@ private:
     Ui::ClockSetDialog *ui;
 
 public:
+    QString str_time;
 
 private:
-    void init_ui();
 
 signals:
+    void currentTimeChanged(QString time);
 
 public slots:
+    void slotUpdateTime();
+    void on_buttonBox_accepted();
 
 };
 
