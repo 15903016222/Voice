@@ -3,6 +3,7 @@
 
 #include "firstsecondmenuwidget.h"
 #include "verticalsliderdialog.h"
+#include "datesetdialog.h"
 
 #define THIRD_MENU_NUMBER 6
 
@@ -60,6 +61,7 @@ public:
 private:
     VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
+    DateSetDialog *dateSetDialog;
 
 protected slots:
     void do_rotary_event(Mcu::RotaryType type);

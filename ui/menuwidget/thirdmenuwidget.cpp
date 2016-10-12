@@ -9,6 +9,7 @@
 #include "myinputpanel.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
+#include "clocksetdialog.h"
 
 #include <QDebug>
 
@@ -20,7 +21,7 @@ QWidget(parent),
 
 	widget = new FirstSecondMenuWidget;
 
-	QFile *fileOne = new QFile(":/json/resources/menutwo.json");
+    QFile *fileOne = new QFile(":/json/resources/menutwo.json");
     fileOne->open(QIODevice::ReadOnly | QIODevice::Text);
     QString stringOne = fileOne->readAll();
 
@@ -93,6 +94,7 @@ void ThirdMenuWidget::init_standard_model()
         QModelIndex index = model->index(k, 0, QModelIndex());
         model->setData(index, k);
     }
+
     ui->tableView->show();
 }
 
@@ -211,6 +213,10 @@ void ThirdMenuWidget::choose_widget_style(int k)
 
                 if(thirdMenuString.contains("Auto Detect")) {
                     connect(pushButton, SIGNAL(switchPress(bool)), this, SLOT(set_autoDetect_probeModel(bool)));
+                }else if(thirdMenuString.contains("DateDialog")){
+                  //  model->item(0, k)->setText(dateSetDialog->str_date);
+//                    item = new QStandardItem(QString("2016-10-12"));
+//                    model->setItem(0, 1, item);
                 }
 
                 break;
@@ -370,6 +376,16 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 
         measurementIndex = index;
         connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
+    } else if(subVariantMap["style"].toString() == "ClockDialog") {
+        ClockSetDialog *clockSetDialog = new ClockSetDialog(this);
+        clockSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        clockSetDialog->show();
+    }else if(subVariantMap["style"].toString() == "DateDialog") {
+        dateSetDialog = new DateSetDialog(this);
+        dateSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        dateSetDialog->show();
+
+        model->item(0, index)->setText(dateSetDialog->str_date);
     }
 }
 
