@@ -29,6 +29,7 @@ public:
     void choose_widget_style(int k);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, int count);
+    void set_currentDateToMenu();
 
     QStringList get_third_menu_list();
     QVariantMap read_json_file(QString string);
@@ -47,6 +48,7 @@ public:
     int brightIndex;
     int probeIndex;
     int wedgeIndex;
+    int dateSetIndex;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -79,6 +81,7 @@ private slots:
     void set_edited_text(QString string);
     void setBrightValue(int value);
     void set_autoDetect_probeModel(bool flag);
+    void set_date(QString str_date);
 
 };
 

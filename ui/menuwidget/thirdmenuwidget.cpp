@@ -20,6 +20,7 @@ QWidget(parent),
 	ui->setupUi(this);
 
 	widget = new FirstSecondMenuWidget;
+    dateSetDialog = new DateSetDialog(this);
 
     QFile *fileOne = new QFile(":/json/resources/menutwo.json");
     fileOne->open(QIODevice::ReadOnly | QIODevice::Text);
@@ -213,12 +214,7 @@ void ThirdMenuWidget::choose_widget_style(int k)
 
                 if(thirdMenuString.contains("Auto Detect")) {
                     connect(pushButton, SIGNAL(switchPress(bool)), this, SLOT(set_autoDetect_probeModel(bool)));
-                }else if(thirdMenuString.contains("DateDialog")){
-                  //  model->item(0, k)->setText(dateSetDialog->str_date);
-//                    item = new QStandardItem(QString("2016-10-12"));
-//                    model->setItem(0, 1, item);
                 }
-
                 break;
             }
             default:
@@ -381,11 +377,11 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         clockSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         clockSetDialog->show();
     }else if(subVariantMap["style"].toString() == "DateDialog") {
-        dateSetDialog = new DateSetDialog(this);
         dateSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         dateSetDialog->show();
 
-        model->item(0, index)->setText(dateSetDialog->str_date);
+        dateSetIndex = index;
+        connect(dateSetDialog, SIGNAL(currentDateChanged(QString)), this, SLOT(set_date(QString)));
     }
 }
 
@@ -549,6 +545,11 @@ void ThirdMenuWidget::set_model_item(int startIndex, int count)
     }
 }
 
+void ThirdMenuWidget::set_currentDateToMenu()
+{
+    model->item(0, 1)->setText(dateSetDialog->date);
+}
+
 void ThirdMenuWidget::change_measurement_label(QString string)
 {
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
@@ -617,6 +618,11 @@ void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
         connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
     }else{
     }
+}
+
+void ThirdMenuWidget::set_date(QString str_date)
+{
+    model->item(0, dateSetIndex)->setText(str_date);
 }
 
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
