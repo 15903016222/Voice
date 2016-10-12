@@ -2,9 +2,6 @@
 #define TIMESETDIALOG_H
 
 #include <QDialog>
-//#include <QTimer>
-//#include <QDate>
-//#include <QTime>
 #include <QPushButton>
 #include <QDateEdit>
 #include <QTimeEdit>

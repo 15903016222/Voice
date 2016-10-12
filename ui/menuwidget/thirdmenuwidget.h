@@ -71,6 +71,10 @@ private:
     DateSetDialog *dateSetDialog;
     ClockSetDialog *clockSetDialog;
 
+signals:
+    void translater_ZH();
+    void translater_EN();
+
 protected slots:
     void do_rotary_event(Mcu::RotaryType type);
     void do_probe_event(const Probe& probe);
@@ -91,6 +95,7 @@ private slots:
     void set_time(QString str_time);
     void set_ip(QString str_ip);
     void set_subNet(QString str_subNet);
+    void set_translateUI(QString str);
 
 };
 

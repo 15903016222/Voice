@@ -184,6 +184,10 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(comboBox_current_text(QString)), this, SLOT(change_related_third_menu_data(QString)));
+
+                if(thirdMenuString.contains("Language")){
+                    connect(comboBox, SIGNAL(comboBox_current_text(QString)), this, SLOT(set_translateUI(QString)));
+                }
                 break;
             }
             case 3: {
@@ -662,6 +666,23 @@ void ThirdMenuWidget::set_ip(QString str_ip)
 void ThirdMenuWidget::set_subNet(QString str_subNet)
 {
     model->item(0, subNetIndex)->setText(str_subNet);
+}
+
+void ThirdMenuWidget::set_translateUI(QString str)
+{
+    if(str == "Chinese"){
+//        QFile *fileOne = new QFile(":/json/resources/menutwo_zh.json");
+//        fileOne->open(QIODevice::ReadOnly | QIODevice::Text);
+//        QString stringOne = fileOne->readAll();
+
+//        thirdMenuMap = read_json_file(stringOne);
+//        fileOne->close();
+        qDebug()<<"test_ZH";
+        emit translater_ZH();
+    }else if(str == "English"){
+        qDebug()<<"test_EN";
+        emit translater_EN();
+    }
 }
 
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
