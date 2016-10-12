@@ -142,6 +142,11 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
 
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
+
+    if(firstMenuNum == 8 && secondMenuNum == 1){
+        ui->widget_thirdMenu->set_currentDateToMenu();
+        ui->widget_thirdMenu->set_currentTimeToMenu();
+    }
 }
 
 void MainWindow::on_pushButton_top_clicked()

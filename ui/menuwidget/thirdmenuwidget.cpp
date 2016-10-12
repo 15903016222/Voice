@@ -19,8 +19,10 @@ QWidget(parent),
 	ui->setupUi(this);
 
 	widget = new FirstSecondMenuWidget;
+    dateSetDialog = new DateSetDialog(this);
+    clockSetDialog = new ClockSetDialog(this);
 
-	QFile *fileOne = new QFile(":/json/resources/menutwo.json");
+    QFile *fileOne = new QFile(":/json/resources/menutwo.json");
     fileOne->open(QIODevice::ReadOnly | QIODevice::Text);
     QString stringOne = fileOne->readAll();
 
@@ -93,6 +95,7 @@ void ThirdMenuWidget::init_standard_model()
         QModelIndex index = model->index(k, 0, QModelIndex());
         model->setData(index, k);
     }
+
     ui->tableView->show();
 }
 
@@ -212,7 +215,6 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 if(thirdMenuString.contains("Auto Detect")) {
                     connect(pushButton, SIGNAL(switchPress(bool)), this, SLOT(set_autoDetect_probeModel(bool)));
                 }
-
                 break;
             }
             default:
@@ -370,6 +372,19 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 
         measurementIndex = index;
         connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
+    } else if(subVariantMap["style"].toString() == "ClockDialog") {
+        clockSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        clockSetDialog->show();
+
+        timeSetIndex = index;
+        connect(clockSetDialog, SIGNAL(currentTimeChanged(QString)), this, SLOT(set_time(QString)));
+
+    }else if(subVariantMap["style"].toString() == "DateDialog") {
+        dateSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        dateSetDialog->show();
+
+        dateSetIndex = index;
+        connect(dateSetDialog, SIGNAL(currentDateChanged(QString)), this, SLOT(set_date(QString)));
     }
 }
 
@@ -533,6 +548,16 @@ void ThirdMenuWidget::set_model_item(int startIndex, int count)
     }
 }
 
+void ThirdMenuWidget::set_currentDateToMenu()
+{
+    model->item(0, 1)->setText(dateSetDialog->str_date);
+}
+
+void ThirdMenuWidget::set_currentTimeToMenu()
+{
+    model->item(0, 0)->setText(clockSetDialog->str_time);
+}
+
 void ThirdMenuWidget::change_measurement_label(QString string)
 {
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
@@ -601,6 +626,16 @@ void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
         connect(m_mcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
     }else{
     }
+}
+
+void ThirdMenuWidget::set_date(QString str_date)
+{
+    model->item(0, dateSetIndex)->setText(str_date);
+}
+
+void ThirdMenuWidget::set_time(QString str_time)
+{
+    model->item(0, timeSetIndex)->setText(str_time);
 }
 
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
