@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>ClockSetDialog</name>
+    <message>
+        <location filename="../dialogwidget/clocksetdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/clocksetdialog.ui" line="52"/>
+        <source>Clock Setting:</source>
+        <translation>时间设置：</translation>
+    </message>
+</context>
+<context>
     <name>CommonMenuButton</name>
     <message>
         <location filename="../menuwidget/commonmenubutton.ui" line="14"/>
@@ -78,6 +91,19 @@
         <location filename="../menuwidget/commonmenuwidget.cpp" line="17"/>
         <source>Focal depth</source>
         <translation>聚焦深度</translation>
+    </message>
+</context>
+<context>
+    <name>DateSetDialog</name>
+    <message>
+        <location filename="../dialogwidget/datesetdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/datesetdialog.ui" line="52"/>
+        <source>Date Setting:</source>
+        <translation>日期设置：</translation>
     </message>
 </context>
 <context>
@@ -394,6 +420,19 @@
     <message>
         <source>Service</source>
         <translation type="vanished">服务</translation>
+    </message>
+</context>
+<context>
+    <name>IPSetDialog</name>
+    <message>
+        <location filename="../dialogwidget/ipsetdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/ipsetdialog.ui" line="52"/>
+        <source>IP Address</source>
+        <translation>IP地址</translation>
     </message>
 </context>
 <context>
@@ -1251,49 +1290,77 @@ Pitch: 1.000 mm    Ref.Point: -18.00 mm</source>
         <source>Model: 2.25L16-1.0-10-B10
 Freq.: 2.25MHz    Element Qty.: 16
 Pitch: 1.000 mm    Ref.Point: -18.00 mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: 1L16-1.0-10-B10
+频率.: 1.00MHz    阵元数量.: 16
+阵元间距: 1.000 mm    参考点: -18.00 mm {2.25L?} {16-1.0-10-?} {10
+?} {2.25M?} {16
+?} {1.000 ?} {18.00 ?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/probedialog.cpp" line="135"/>
         <source>Model: 2.25L32-0.5-10-B10
 Freq.: 2.25MHz    Element Qty.: 32
 Pitch: 0.500 mm    Ref.Point: -18.25 mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: 1L16-1.0-10-B10
+频率.: 1.00MHz    阵元数量.: 16
+阵元间距: 1.000 mm    参考点: -18.00 mm {2.25L?} {32-0.5-10-?} {10
+?} {2.25M?} {32
+?} {0.500 ?} {18.25 ?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/probedialog.cpp" line="136"/>
         <source>Model: 2.5L16-1.0-12-B10
 Freq.: 2.50MHz    Element Qty.: 16
 Pitch: 1.000 mm    Ref.Point: -18.00 mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: 1L16-1.0-10-B10
+频率.: 1.00MHz    阵元数量.: 16
+阵元间距: 1.000 mm    参考点: -18.00 mm {2.5L?} {16-1.0-12-?} {10
+?} {2.50M?} {16
+?} {1.000 ?} {18.00 ?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/probedialog.cpp" line="137"/>
         <source>Model: 4L16-1.0-10-B10
 Freq.: 4.00MHz    Element Qty.: 16
 Pitch: 1.000 mm    Ref.Point: -18.00 mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: 1L16-1.0-10-B10
+频率.: 1.00MHz    阵元数量.: 16
+阵元间距: 1.000 mm    参考点: -18.00 mm {4L?} {16-1.0-10-?} {10
+?} {4.00M?} {16
+?} {1.000 ?} {18.00 ?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/probedialog.cpp" line="138"/>
         <source>Model: 4L32-0.5-10-B10
 Freq.: 4.00MHz    Element Qty.: 32
 Pitch: 0.500 mm    Ref.Point: -18.25 mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: 1L16-1.0-10-B10
+频率.: 1.00MHz    阵元数量.: 16
+阵元间距: 1.000 mm    参考点: -18.00 mm {4L?} {32-0.5-10-?} {10
+?} {4.00M?} {32
+?} {0.500 ?} {18.25 ?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/probedialog.cpp" line="139"/>
         <source>Model: 5L32-0.5-10-B10
 Freq.: 5.00MHz    Element Qty.: 32
 Pitch: 0.500 mm    Ref.Point: -18.25 mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: 1L16-1.0-10-B10
+频率.: 1.00MHz    阵元数量.: 16
+阵元间距: 1.000 mm    参考点: -18.00 mm {5L?} {32-0.5-10-?} {10
+?} {5.00M?} {32
+?} {0.500 ?} {18.25 ?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/probedialog.cpp" line="140"/>
         <source>Model: 7.5L32-0.5-10-B10
 Freq.: 7.50MHz    Element Qty.: 32
 Pitch: 0.500 mm    Ref.Point: -18.25 mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: 1L16-1.0-10-B10
+频率.: 1.00MHz    阵元数量.: 16
+阵元间距: 1.000 mm    参考点: -18.00 mm {7.5L?} {32-0.5-10-?} {10
+?} {7.50M?} {32
+?} {0.500 ?} {18.25 ?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/probedialog.cpp" line="143"/>
@@ -1775,6 +1842,19 @@ ultrasonic phased array probes.</source>
         <location filename="../showinfowidget.ui" line="441"/>
         <source>PA 3.5.1  32:64PR</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SubNetSetDialog</name>
+    <message>
+        <location filename="../dialogwidget/subnetsetdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/subnetsetdialog.ui" line="52"/>
+        <source>SubNet Address</source>
+        <translation>子网掩码地址</translation>
     </message>
 </context>
 <context>
@@ -2665,7 +2745,10 @@ Sec Offset: 16.800 mm    Length: 0.00mm</source>
 Orientation: Normal    Height: 26.60 mm
 Velocity: 2337 m/s    Pri Offset: 29.00 mm
 Sec Offset: 16.750 mm    Length: 0.00mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: SB10-N0L    角度: 0.0°
+方向: 正向    高度: 20.00 mm
+速度: 2337 m/s    主偏移: 18.25 mm
+次偏移: 16.800 mm    长度: 0.00mm {10-?} {45L?} {16.5°?} {26.60 ?} {2337 ?} {29.00 ?} {16.750 ?} {0.00m?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/wedgedialog.cpp" line="146"/>
@@ -2673,7 +2756,10 @@ Sec Offset: 16.750 mm    Length: 0.00mm</source>
 Orientation: Normal    Height: 9.38 mm
 Velocity: 2337 m/s    Pri Offset: 30.22 mm
 Sec Offset: 16.750 mm    Length: 0.00mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: SB10-N0L    角度: 0.0°
+方向: 正向    高度: 20.00 mm
+速度: 2337 m/s    主偏移: 18.25 mm
+次偏移: 16.800 mm    长度: 0.00mm {10-?} {45S?} {30.0°?} {9.38 ?} {2337 ?} {30.22 ?} {16.750 ?} {0.00m?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/wedgedialog.cpp" line="148"/>
@@ -2681,7 +2767,10 @@ Sec Offset: 16.750 mm    Length: 0.00mm</source>
 Orientation: Normal    Height: 8.24 mm
 Velocity: 2337 m/s    Pri Offset: 30.38 mm
 Sec Offset: 16.750 mm    Length: 0.00mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: SB10-N0L    角度: 0.0°
+方向: 正向    高度: 20.00 mm
+速度: 2337 m/s    主偏移: 18.25 mm
+次偏移: 16.800 mm    长度: 0.00mm {10-?} {55S?} {36.0°?} {8.24 ?} {2337 ?} {30.38 ?} {16.750 ?} {0.00m?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/wedgedialog.cpp" line="150"/>
@@ -2689,7 +2778,10 @@ Sec Offset: 16.750 mm    Length: 0.00mm</source>
 Orientation: Normal    Height: 7.85 mm
 Velocity: 2337 m/s    Pri Offset: 30.24 mm
 Sec Offset: 16.750 mm    Length: 0.00mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: SB10-N0L    角度: 0.0°
+方向: 正向    高度: 20.00 mm
+速度: 2337 m/s    主偏移: 18.25 mm
+次偏移: 16.800 mm    长度: 0.00mm {10-?} {60S?} {38.0°?} {7.85 ?} {2337 ?} {30.24 ?} {16.750 ?} {0.00m?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/wedgedialog.cpp" line="154"/>
@@ -2697,7 +2789,10 @@ Sec Offset: 16.750 mm    Length: 0.00mm</source>
 Orientation: Normal    Height: 20.00 mm
 Velocity: 2337 m/s    Pri Offset: 11.25 mm
 Sec Offset: 14.000 mm    Length: 0.00mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: SB10-N0L    角度: 0.0°
+方向: 正向    高度: 20.00 mm
+速度: 2337 m/s    主偏移: 18.25 mm
+次偏移: 16.800 mm    长度: 0.00mm {12-?} {0L?} {0.0°?} {20.00 ?} {2337 ?} {11.25 ?} {14.000 ?} {0.00m?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/wedgedialog.cpp" line="157"/>
@@ -2705,7 +2800,10 @@ Sec Offset: 14.000 mm    Length: 0.00mm</source>
 Orientation: Normal    Height: 20.00 mm
 Velocity: 2337 m/s    Pri Offset: 11.25 mm
 Sec Offset: 14.000 mm    Length: 0.00mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号: SB10-N0L    角度: 0.0°
+方向: 正向    高度: 20.00 mm
+速度: 2337 m/s    主偏移: 18.25 mm
+次偏移: 16.800 mm    长度: 0.00mm {12-?} {45L?} {0.0°?} {20.00 ?} {2337 ?} {11.25 ?} {14.000 ?} {0.00m?}</translation>
     </message>
     <message>
         <location filename="../dialogwidget/wedgedialog.cpp" line="355"/>

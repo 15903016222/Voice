@@ -17,6 +17,11 @@ DateSetDialog::~DateSetDialog()
     delete ui;
 }
 
+void DateSetDialog::retranslate_dialog_ui()
+{
+    ui->retranslateUi(this);
+}
+
 void DateSetDialog::init_ui()
 {
     str_date = QDate::currentDate().toString("yyyy-MM-dd");

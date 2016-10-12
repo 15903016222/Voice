@@ -679,6 +679,8 @@ void ThirdMenuWidget::set_translateUI(QString str)
 //        fileOne->close();
         qDebug()<<"test_ZH";
         emit translater_ZH();
+        clockSetDialog->retranslate_dialog_ui();
+        dateSetDialog->retranslate_dialog_ui();
     }else if(str == "English"){
         qDebug()<<"test_EN";
         emit translater_EN();

@@ -19,6 +19,7 @@ private:
     Ui::ClockSetDialog *ui;
 
 public:
+    void retranslate_dialog_ui();
     QString str_time;
 
 private:

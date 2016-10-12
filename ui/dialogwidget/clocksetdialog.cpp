@@ -20,6 +20,11 @@ ClockSetDialog::~ClockSetDialog()
     delete ui;
 }
 
+void ClockSetDialog::retranslate_dialog_ui()
+{
+    ui->retranslateUi(this);
+}
+
 void ClockSetDialog::slotUpdateTime()
 {
     str_time = QTime::currentTime().toString("hh:mm:ss");

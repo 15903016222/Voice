@@ -19,6 +19,7 @@ private:
     Ui::DateSetDialog *ui;
 
 public:
+    void retranslate_dialog_ui();
     QString str_date;
 
 private:
