@@ -33,6 +33,7 @@
         <file>resources/bc7.png</file>
         <file>resources/bc8.png</file>
         <file>resources/bc9.png</file>
+        <file>resources/Logo.jpg</file>
     </qresource>
     <qresource prefix="/json">
         <file>resources/menuone.json</file>
