@@ -67,6 +67,7 @@ SOURCES += \
     ui/dialogwidget/ipsetdialog.cpp \
     ui/dialogwidget/subnetsetdialog.cpp \
     ui/dialogwidget/aboutdialog.cpp \
+    ui/dialogwidget/creditsdialog.cpp \
     mcu/mcu.cpp \
     mcu/mcu_imx.cpp \
     mcu/mcu_omap.cpp
@@ -98,6 +99,7 @@ HEADERS += \
     ui/dialogwidget/ipsetdialog.h \
     ui/dialogwidget/subnetsetdialog.h \
     ui/dialogwidget/aboutdialog.h \
+    ui/dialogwidget/creditsdialog.h \
     mcu/mcu.h \
     mcu/mcu_imx.h \
     mcu/mcu_omap.h \
@@ -126,7 +128,8 @@ FORMS += \
     ui/dialogwidget/verticalsliderdialog.ui \
     ui/dialogwidget/ipsetdialog.ui \
     ui/dialogwidget/subnetsetdialog.ui \
-    ui/dialogwidget/aboutdialog.ui
+    ui/dialogwidget/aboutdialog.ui \
+    ui/dialogwidget/creditsdialog.ui
 
 win32 {
     LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll

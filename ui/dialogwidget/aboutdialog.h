@@ -21,9 +21,8 @@ private:
 public:
     void retranslate_dialog_ui();
 
-signals:
-
 private slots:
+    void on_pushButton_credits_clicked();
 
 };
 
