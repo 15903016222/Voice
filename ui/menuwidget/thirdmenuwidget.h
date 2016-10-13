@@ -6,6 +6,8 @@
 #include "datesetdialog.h"
 #include "clocksetdialog.h"
 
+#include <QTableView>
+
 #define THIRD_MENU_NUMBER 6
 
 namespace Ui {
@@ -24,21 +26,19 @@ private:
     Ui::ThirdMenuWidget *ui;
 
 public:
-    void retranslate_third_menu_ui();
+    void retranslate_third_menu_ui(QString string);
     void init_standard_model();
     void set_third_menu_name(int i, int j);
     void choose_widget_style(int k);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, int count);
     void set_currentDateToMenu();
-    void set_currentTimeToMenu();
+    void set_currentTimeToMenu();    
 
     QStringList get_third_menu_list();
-    QVariantMap read_json_file(QString string);
-    QVariantMap get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString);
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
-    QStringList get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString);
-    QList<QStringList> get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString);
+    QStringList get_spinBox_step_list(QVariantMap variantMap);
+    QList<QStringList> get_comboBox_option_list(QVariantMap variantMap);
     QString set_long_contents_header(int index, QString string);
 
     int width;
@@ -55,13 +55,12 @@ public:
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
-    QVariantMap thirdMenuMap;
-    QVariantMap fourthMenuMap;
+    QVariantMap secondMenuMap;
     QVariantMap menuCacheMap;
     QString firstMenuString;
     QString secondMenuString;
     QString relatedMenuString;
-
+    QList<QTableView*> tableViewList;
 
 private:
     VerticalSliderDialog *verticalSliderDialog;
