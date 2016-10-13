@@ -11,6 +11,7 @@
 #include "inputpanelcontext.h"
 #include "aboutdialog.h"
 #include "resetconfigdialog.h"
+#include "systeminfodialog.h"
 
 #include <QDebug>
 
@@ -412,6 +413,10 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         AboutDialog *aboutDialog = new AboutDialog(this);
         aboutDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         aboutDialog->show();
+    }else if(currentHeaderText.contains("System")) {
+        SystemInfoDialog *systemInfoDialog = new SystemInfoDialog(this);
+        systemInfoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        systemInfoDialog->show();
     }
 }
 
