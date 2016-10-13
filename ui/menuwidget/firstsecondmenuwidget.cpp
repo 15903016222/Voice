@@ -10,8 +10,11 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     ui->setupUi(this);
 
     toolBox.append(ui->toolBox);
-    QFile *file = new QFile(":/json/resources/menuone.json");
-    read_json_file(file);
+
+    QFile *file = new QFile(":/json/resources/menuconf.json");
+    firstMenuMap = read_json_file(file);
+    QFile *fileTranslate = new QFile(":/json/resources/menutr_CHN.json");
+    translateChineseMap = read_json_file(fileTranslate);
 
     init_ui();
 
@@ -90,22 +93,24 @@ void FirstSecondMenuWidget::init_ui()
 }
 
 
-void FirstSecondMenuWidget::read_json_file(QFile *file)
+QVariantMap FirstSecondMenuWidget::read_json_file(QFile *file)
 {
     QJson::Parser parser;
     bool ok;
     file->open(QIODevice::ReadOnly | QIODevice::Text);
     QString str = file->readAll();
-    QVariant variant = parser.parse(str.toUtf8(), &ok);
+    QVariantMap variantMap = parser.parse(str.toUtf8(), &ok).toMap();
     if(!ok) {
         qDebug() << "An error occured during parsing.";
     }
-    firstMenuMap = variant.toMap();
+    file->close();
+    return variantMap;
 }
 
 QStringList FirstSecondMenuWidget::get_second_menu_list(int i)
 {
-    QVariantList variantList = firstMenuMap.values(firstMenuData.at(i));
+    QVariantMap variantMap = firstMenuMap[firstMenuData.at(i)].toMap();
+    QVariantList variantList = variantMap.values("Queue_Second_Menu");
     QStringList stringList  = variantList.at(0).toStringList();
     return stringList;
 }

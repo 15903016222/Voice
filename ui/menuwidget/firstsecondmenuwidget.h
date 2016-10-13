@@ -34,13 +34,14 @@ public:
     QList<QStandardItemModel*> modelList;
     QStringList firstMenuData;
     QVariantMap firstMenuMap;
+    QVariantMap translateChineseMap;
 
     void set_second_menu_name(int i);
     void set_second_menu_item_style(int i, QModelIndex index);
     void init_ui();
     void retranslate_main_menu_ui();
-    void read_json_file(QFile *file);
     void resize_height(int i);
+    QVariantMap read_json_file(QFile *file);
     QStringList get_second_menu_list(int i);    
 
 private:
