@@ -2,6 +2,48 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="59"/>
+        <source>PHASCAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="77"/>
+        <source>      PHASCAN has a powerfull detection capability,
+can achieve a variety of scanning mode and fouus
+mode, which greatly improve the detection reliability.
+     CopyRight @2010-2016 Doppler All rights reserved.</source>
+        <translation>      PHASCAN有强大的检测功能,可以实现多种扫描
+模式和聚焦模式,大大提高了检测的可靠性。
+      多浦乐保留@2010 - 2016所有版权。</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="93"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;SimSun&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.cndoppler.cn&quot;&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cndoppler.cn/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="139"/>
+        <source>Credits</source>
+        <translation>工作人员</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="173"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+</context>
+<context>
     <name>ClockSetDialog</name>
     <message>
         <location filename="../dialogwidget/clocksetdialog.ui" line="14"/>
@@ -91,6 +133,44 @@
         <location filename="../menuwidget/commonmenuwidget.cpp" line="17"/>
         <source>Focal depth</source>
         <translation>聚焦深度</translation>
+    </message>
+</context>
+<context>
+    <name>CreditsDialog</name>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="47"/>
+        <source>Written By</source>
+        <translation>开发人员</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="63"/>
+        <source>Yshy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="78"/>
+        <source>Jake Yang</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="93"/>
+        <source>ZJY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="116"/>
+        <source>tab_2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="160"/>
+        <source>Close</source>
+        <translation>关闭</translation>
     </message>
 </context>
 <context>
@@ -1809,6 +1889,19 @@ ultrasonic phased array probes.</source>
         <location filename="../qitemdelegate/pushbuttondelegate.cpp" line="51"/>
         <source>On</source>
         <translation>开</translation>
+    </message>
+</context>
+<context>
+    <name>ResetConfigDialog</name>
+    <message>
+        <location filename="../dialogwidget/resetconfigdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/resetconfigdialog.ui" line="70"/>
+        <source>Reset Config ?</source>
+        <translation>清除设置？</translation>
     </message>
 </context>
 <context>
