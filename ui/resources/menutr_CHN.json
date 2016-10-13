@@ -1,0 +1,354 @@
+{
+    "UT Settings":{
+        "Translate_Second_Menu":[
+            "常规",
+            "脉冲",
+            "接收",
+            "高级"
+        ],
+        "General":{
+            "Gain":"增益",
+            "Start":"起始点",
+            "Range":"范围",
+            "Velocity":"声速",
+            "Wedge Delay":"楔块延迟",
+            "UT Unit":"超声轴单位"
+        },
+        "Pulser":{            
+            "Tx/Rx Mode":"收发模式",
+            "Pulser":"发射起始阵元",
+            "Voltage":"发射电压",
+            "PW":"脉宽",
+            "PRF":"脉冲重复频率"
+        },
+        "Receiver":{
+			"Receiver":"起始接收阵元",
+            "Filter":"滤波",
+            "Rectifier":"检波",
+            "Video Filter":"视频滤波",
+            "Averaging":"平均"
+        },
+        "Advanced":{
+            "Set 80%":"设为80%",
+            "dB Ref.":"设定参考",
+            "Point Qty.":"采样点",
+            "Scale Factor":"压缩系数",
+            "Sum Gain":"总增益"
+        }
+    },
+    "Gate/Curves":{
+        "Translate_Second_Menu":[
+            "闸门",
+            "报警设置",
+            "报警输出",
+            "DAC",
+            "TCG"
+        ],
+        "Gate":{
+            "Gate":"闸门",
+            "Start":"闸门起点",
+            "Width":"闸门宽度",
+            "Threshold":"闸门阈值",
+            "Synchro":"闸门同步逻辑",
+            "Measure Mode":"测量方式"
+        },
+        "Alarm":{
+            "Alarm":"报警",
+            "Switch":"报警开关",
+            "Group":"组选择",
+            "Condition":"报警条件",
+            "Operator":"报警逻辑"
+        },
+        "Output":{
+            "Output":"输出",
+            "Sound":"蜂鸣",
+            "Delay":"报警延迟",
+            "Hold Time":"持续时间",
+            "Group":"输出组数",
+            "Data":"输出数据源"
+        },
+        "DAC":{
+            "Mode":"操作模式",
+			"Curve No.":"DAC曲线数量",
+			"Curve X":"第X条曲线",
+			"dB Offset":"增益补偿",
+			"Ref.Gain":"参考增益",
+			"Switch":"显示/隐藏",
+			"Point":"点",
+			"Position":"位置",
+			"Add Point":"增加点",
+			"Delete Point":"删除点"
+        },
+        "TCG":{
+            "Mode":"操作模式",
+			"Curve No.":"TCG曲线数量",
+			"Curve X":"第X条曲线",
+			"dB Offset":"增益补偿",
+			"Switch":"显示/隐藏",
+			"Point":"点",
+			"Position":"位置",
+			"Gain":"增益",
+			"Add Point":"增加点",
+			"Delete Point":"删除点"
+        }
+    },
+    "Display":{
+        "Translate_Second_Menu":[
+            "显示模式",
+            "颜色",
+            "属性"
+        ],
+        "Selection":{
+            "Group":"组",
+            "Display":"显示",
+            "C-Scan Source":"C扫数据",
+            "Min Thickness":"最小厚度",
+            "Max Thickness":"最大厚度"
+        },
+        "Color Settings":{
+            "Amplitude":"幅度",
+            "Depth":"深度",
+            "TOFD":"TOFD"
+        },
+        "Properties":{
+            "Scan":"扫描模式",
+            "Color":"颜色",
+            "Envelope":"包络",
+            "Peak Holding":"峰值冻结",
+            "Reference Holding":"参考冻结",
+            "Compression":"压缩",
+            "Ratio 1:1":"比率 1:1",
+            "C-Scan Mode":"C扫模式"
+        }
+    },
+    "Probe/Part":{
+        "Translate_Second_Menu":[
+            "选择",
+            "位置",
+            "FFT",
+            "工件",
+            "高级"
+        ],
+        "Select":{
+            "Group":"组",
+            "Group Mode":"检测模式",
+            "Probe":"探头",
+            "Wedge":"楔块",
+            "Define":"自定义",
+            "Auto Detect":"自动检测"
+        },
+        "Position":{
+            "Scan Offset":"扫查偏置",
+            "Index Offset":"步进偏置",
+            "Skew":"转向角"
+        },
+        "FFT":{
+            "Gain":"增益",
+            "Start":"闸门起点",
+            "Width":"闸门宽度",
+            "Switch":"FFT开关"
+        },
+        "Part":{
+            "Geometry":"工件形状",
+            "Thickness":"厚度",
+            "Diameter":"直径",
+            "Material":"材料",
+            "Overlay":"厚度参考线"
+        },
+        "Advanced":{
+            "Load Part":"工件加载",
+            "Clear Part":"工件清除"
+        }
+    },
+    "Focal Law":{
+        "Translate_Second_Menu":[
+            "配置",
+            "声速角度",
+            "孔径",
+            "焦点"
+        ],
+        "Law Config":{
+            "Law Type":"聚焦法则类型",
+            "Pulse Connection":"发射起始阵元",
+            "Receiver Connection":"接收起始阵元",
+            "Wave Type":"波型"
+        },
+        "Angle":{
+            "Min. Angle":"起始角度",
+            "Max. Angle":"终止角度",
+            "Angle Step":"步进"
+        },
+        "Apeture":{
+            "Apeture":"阵元数",
+            "First Element":"起始阵元",
+            "Last Element":"末阵元",
+            "Element Step":"阵元步进"
+        },
+        "Focal Point":{
+            "Type":"聚焦类型",
+            "Position Start":"初始位置",
+            "Position End":"终点位置",
+            "Offset Start":"初始补偿",
+            "Offset End":"终点补偿"
+        }
+    },
+    "Scan":{
+        "Translate_Second_Menu":[
+            "扫查设置",
+            "编码器",
+            "扫查区域",
+            "开始"
+        ],
+        "Inspection":{
+            "Scan":"扫查模式",
+            "Type":"编码器类型",
+            "Max Scan Speed":"扫查轴最大速度",
+            "Max Scan Speed(rpm)":"扫查轴最大速度"
+        },
+        "Encoder":{
+            "Encoder":"编码器",
+            "Encoder Type":"类型",
+            "Resolution":"分辨率",
+            "Polarity":"极性",
+            "Origin":"编码器起点",
+            "Preset":"预置编码器"
+        },
+        "Area":{
+            "Scan Start":"扫查起点",
+            "Scan End":"扫查终点",
+            "Scan Resolution":"扫查分辨率",
+            "Index Start":"步进起点",
+            "Index End":"步进终点",
+            "Index Resolution":"步进分辨率"
+        },
+        "Start":{
+            "Start":"开始",
+            "Pause":"暂停"
+        }
+    },
+    "Measurement":{
+        "Translate_Second_Menu":[
+            "检测结果",
+            "光标",
+            "TOFD",
+            "缺陷记录"
+        ],
+        "Reading":{
+            "Reading Group":"检测结果组",
+            "A%":"A%",
+            "DA":"DA",
+            "PA":"PA",
+            "SA":"SA",
+            "T-D(r)":"T-D(r)",
+            "T-D(m)":"T-D(m)",
+            "T-D(m-r)":"T-D(m-r)",
+            "T(A^)":"T(A^)",
+            "ML":"ML"
+        },
+        "Cursors":{
+            "Selection":"选择",
+            "%(r)":"%(r)",
+            "%(m)":"%(m)",
+            "U(r)":"U(r)",
+            "U(m)":"U(m)",
+            "S(r)":"S(r)",
+            "S(m)":"S(m)",
+            "I(r)":"I(r)",
+            "I(m)":"I(m)",
+            "Angle":"角度"
+        },
+        "TOFD":{
+            "Select":"选择",
+            "Wedge Sep.":"楔块间距",
+            "Layer Depth":"分层深度",
+            "TOFD Calculator":"TOFD计算",
+            "Start":"起始点",
+            "Range":"范围",
+            "Straightening":"直通波拉直",
+            "Remove Lateral":"去除直通波",
+            "Ref.Position":"参考位置",
+            "Depth Calibration":"深度校准"
+        },
+        "Flaw Record":{
+            "Add/Delete":"增加/删除记录",
+            "Flaw Image":"记录图像",
+            "Comment":"缺陷描述",
+            "Display Table":"显示报表",
+            "Export Record":"输出记录"
+        }
+    },
+    "File/Report":{
+        "Translate_Second_Menu":[
+            "文件",
+            "保存模式",
+            "报告",
+            "格式",
+            "用户栏"
+        ],
+        "File":{
+            "Save Setup As":"设置另存为",
+            "Open":"打开",
+            "File Manager":"文件管理"
+        },
+        "Save Mode":{
+            "Storage":"存储",
+            "Save Mode":"保存模式",
+            "Save Data":"保存数据",
+            "File Name":"文件名"
+        },
+        "Report":{
+            "Template":"模板",
+            "Report Name":"文件名",
+            "Customer":"用户名",
+            "Part Name":"工件名称",
+            "Part Number":"工件编号",
+            "Create":"报告预览"
+        },
+        "Format":{
+            "Probe/Wedge Info":"探头信息",
+            "Inspection Info":"检测信息",
+            "Scan Info":"扫查信息",
+            "Encoder Info":"编码器信息",
+            "DAC/TCG Info":"DAC/TCG信息",
+            "Flaw Record Table":"缺陷报表"
+        },
+        "User Field":{
+            "Select":"选择",
+            "Enable":"启用",
+            "Label":"主题",
+            "Content":"内容",
+            "Edit Note":"编辑注释",
+            "Print":"打印"
+        }
+    },
+    "Preference":{
+        "Translate_Second_Menu":[
+            "配置",
+            "系统设置",
+            "网络设置",
+            "服务"
+        ],
+        "Preference":{
+            "Units":"单位",
+            "Bright":"亮度",
+            "Opacity":"透明度"
+        },
+        "System":{
+            "Clock Set":"设置时间",
+            "Date Set":"设置日期",
+            "Language":"语言"
+        },
+        "Network":{
+            "IP Address":"IP地址",
+            "Subnet Mask":"子网掩码"
+        },
+        "Service":{
+            "System Information":"系统信息",
+            "Cert Import":"证书导入",
+            "SW Update":"软件升级",
+            "HW Update":"硬件升级",
+            "Reset Configuration":"清除设置",
+            "About":"关于"
+        }
+    }
+}

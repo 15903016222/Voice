@@ -35,11 +35,7 @@
         <file>resources/bc9.png</file>
     </qresource>
     <qresource prefix="/json">
-        <file>resources/menuone.json</file>
-        <file>resources/menuthree.json</file>
-        <file>resources/menutwo.json</file>
-        <file>resources/menuone_zh.json</file>
-        <file>resources/menutwo_zh.json</file>
-        <file>resources/menuthree_zh.json</file>
+        <file>resources/menuconf.json</file>
+        <file>resources/menutr_CHN.json</file>
     </qresource>
 </RCC>
