@@ -34,6 +34,7 @@
         <file>resources/bc8.png</file>
         <file>resources/bc9.png</file>
         <file>resources/Logo.jpg</file>
+        <file>resources/tip.jpg</file>
     </qresource>
     <qresource prefix="/json">
         <file>resources/menuone.json</file>

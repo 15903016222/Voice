@@ -66,6 +66,7 @@ SOURCES += \
     ui/dialogwidget/verticalsliderdialog.cpp \
     ui/dialogwidget/ipsetdialog.cpp \
     ui/dialogwidget/subnetsetdialog.cpp \
+    ui/dialogwidget/resetconfigdialog.cpp \
     ui/dialogwidget/aboutdialog.cpp \
     ui/dialogwidget/creditsdialog.cpp \
     mcu/mcu.cpp \
@@ -98,6 +99,7 @@ HEADERS += \
     ui/dialogwidget/verticalsliderdialog.h \
     ui/dialogwidget/ipsetdialog.h \
     ui/dialogwidget/subnetsetdialog.h \
+    ui/dialogwidget/resetconfigdialog.h \
     ui/dialogwidget/aboutdialog.h \
     ui/dialogwidget/creditsdialog.h \
     mcu/mcu.h \
@@ -128,6 +130,7 @@ FORMS += \
     ui/dialogwidget/verticalsliderdialog.ui \
     ui/dialogwidget/ipsetdialog.ui \
     ui/dialogwidget/subnetsetdialog.ui \
+    ui/dialogwidget/resetconfigdialog.ui \
     ui/dialogwidget/aboutdialog.ui \
     ui/dialogwidget/creditsdialog.ui
 

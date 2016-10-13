@@ -10,6 +10,7 @@
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
 #include "aboutdialog.h"
+#include "resetconfigdialog.h"
 
 #include <QDebug>
 
@@ -403,6 +404,10 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 
         subNetIndex = index;
         connect(subNetSetDialog, SIGNAL(currentSubNetChanged(QString)), this, SLOT(set_subNet(QString)));
+    }else if(currentHeaderText.contains("Configuration")) {
+        ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
+        resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        resetConfigDialog->show();
     }else if(currentHeaderText.contains("About")) {
         AboutDialog *aboutDialog = new AboutDialog(this);
         aboutDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
