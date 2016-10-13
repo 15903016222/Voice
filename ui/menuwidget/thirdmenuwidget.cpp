@@ -343,23 +343,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             QModelIndex modelIndex = model->item(0, index)->index();
             ui->tableView->edit(modelIndex);
         }
-    } else if(subVariantMap["style"].toString().toInt() == 4) {
-        //点击表头弹出探头选择对话框
-        ProbeDialog *probeDialog = new ProbeDialog(this);
-        probeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        probeDialog->show();
-
-        probeIndex = index;
-        connect(probeDialog, SIGNAL(probeChanged(QString)), this, SLOT(select_probe(QString)));
-    } else if(subVariantMap["style"].toString().toInt() == 5) {
-        //点击表头弹出楔块选择对话框
-        WedgeDialog *wedgeDialog = new WedgeDialog(this);
-        wedgeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        wedgeDialog->show();
-
-        wedgeIndex = index;
-        connect(wedgeDialog, SIGNAL(wedgeChanged(QString)), this, SLOT(select_wedge(QString)));
-    } else if(subVariantMap["style"].toString().toInt() == 6) {
+    }else if(subVariantMap["style"].toString().toInt() == 6) {
         //点击表头弹出软键盘
         InputPanelContext *inputPanel = new InputPanelContext(this);
         inputPanel->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -379,33 +363,47 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 
         measurementIndex = index;
         connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
-    } else if(subVariantMap["style"].toString() == "ClockDialog") {
+    }
+
+    if(currentHeaderText.contains("Probe")){
+        ProbeDialog *probeDialog = new ProbeDialog(this);
+        probeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        probeDialog->show();
+
+        probeIndex = index;
+        connect(probeDialog, SIGNAL(probeChanged(QString)), this, SLOT(select_probe(QString)));
+    }else if(currentHeaderText.contains("Wedge")){
+        WedgeDialog *wedgeDialog = new WedgeDialog(this);
+        wedgeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        wedgeDialog->show();
+
+        wedgeIndex = index;
+        connect(wedgeDialog, SIGNAL(wedgeChanged(QString)), this, SLOT(select_wedge(QString)));
+    }else if(currentHeaderText.contains("Clock Set")){
         clockSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         clockSetDialog->show();
 
         timeSetIndex = index;
         connect(clockSetDialog, SIGNAL(currentTimeChanged(QString)), this, SLOT(set_time(QString)));
-
-    } else if(subVariantMap["style"].toString() == "DateDialog") {
+    }else if(currentHeaderText.contains("Date Set")){
         dateSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         dateSetDialog->show();
 
         dateSetIndex = index;
         connect(dateSetDialog, SIGNAL(currentDateChanged(QString)), this, SLOT(set_date(QString)));
-    } else if(subVariantMap["style"].toString() == "IP") {
+    }else if(currentHeaderText.contains("IP Address")){
         ipSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         ipSetDialog->show();
 
         ipSetIndex = index;
         connect(ipSetDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
-    } else if(subVariantMap["style"].toString() == "subNet") {
+    }else if(currentHeaderText.contains("Subnet Mask")){
         subNetSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         subNetSetDialog->show();
 
         subNetIndex = index;
         connect(subNetSetDialog, SIGNAL(currentSubNetChanged(QString)), this, SLOT(set_subNet(QString)));
-    }
-    if(currentHeaderText.contains("About")) {
+    }else if(currentHeaderText.contains("About")) {
         AboutDialog *aboutDialog = new AboutDialog(this);
         aboutDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         aboutDialog->show();
