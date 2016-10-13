@@ -6,6 +6,7 @@ IPSetDialog::IPSetDialog(QWidget *parent) :
     ui(new Ui::IPSetDialog)
 {
     ui->setupUi(this);
+    init_ui();
 }
 
 IPSetDialog::~IPSetDialog()
@@ -13,7 +14,12 @@ IPSetDialog::~IPSetDialog()
     delete ui;
 }
 
-void IPSetDialog::on_buttonBox_accepted()
+void IPSetDialog::retranslate_dialog_ui()
+{
+    ui->retranslateUi(this);
+}
+
+void IPSetDialog::init_ui()
 {
     int ip_1 = ui->spinBox_1->value();
     int ip_2 = ui->spinBox_2->value();
@@ -28,5 +34,10 @@ void IPSetDialog::on_buttonBox_accepted()
     str_ip.append(QString::number((double)ip_3, 'f', 0));
     str_ip.append(".");
     str_ip.append(QString::number((double)ip_4, 'f', 0));
+}
+
+void IPSetDialog::on_buttonBox_accepted()
+{
+    init_ui();
     emit currentIPChanged(str_ip);
 }

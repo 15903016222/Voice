@@ -145,9 +145,14 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
 
-    if(firstMenuNum == 8 && secondMenuNum == 1){
-        ui->widget_thirdMenu->set_currentDateToMenu();
-        ui->widget_thirdMenu->set_currentTimeToMenu();
+    if(firstMenuNum == 8){
+        if(secondMenuNum == 1){
+            ui->widget_thirdMenu->set_currentDateToMenu();
+            ui->widget_thirdMenu->set_currentTimeToMenu();
+        }else if(secondMenuNum == 2){
+            ui->widget_thirdMenu->set_currentIPToMenu();
+            ui->widget_thirdMenu->set_currentSubNetToMenu();
+        }
     }
 }
 

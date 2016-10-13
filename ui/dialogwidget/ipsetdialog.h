@@ -19,9 +19,11 @@ private:
     Ui::IPSetDialog *ui;
 
 public:
+    void retranslate_dialog_ui();
     QString str_ip;
 
 private:
+    void init_ui();
 
 signals:
     void currentIPChanged(QString IP);

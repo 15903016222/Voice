@@ -9,8 +9,6 @@
 #include "myinputpanel.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
-#include "ipsetdialog.h"
-#include "subnetsetdialog.h"
 
 #include <QDebug>
 
@@ -23,6 +21,8 @@ QWidget(parent),
 	widget = new FirstSecondMenuWidget;
     dateSetDialog = new DateSetDialog(this);
     clockSetDialog = new ClockSetDialog(this);
+    ipSetDialog = new IPSetDialog(this);
+    subNetSetDialog = new SubNetSetDialog(this);
 
     QFile *fileOne = new QFile(":/json/resources/menutwo.json");
     fileOne->open(QIODevice::ReadOnly | QIODevice::Text);
@@ -392,14 +392,12 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         dateSetIndex = index;
         connect(dateSetDialog, SIGNAL(currentDateChanged(QString)), this, SLOT(set_date(QString)));
     } else if(subVariantMap["style"].toString() == "IP") {
-        IPSetDialog *ipSetDialog = new IPSetDialog(this);
         ipSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         ipSetDialog->show();
 
         ipSetIndex = index;
         connect(ipSetDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
     } else if(subVariantMap["style"].toString() == "subNet") {
-        SubNetSetDialog *subNetSetDialog = new SubNetSetDialog(this);
         subNetSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         subNetSetDialog->show();
 
@@ -578,6 +576,16 @@ void ThirdMenuWidget::set_currentTimeToMenu()
     model->item(0, 0)->setText(clockSetDialog->str_time);
 }
 
+void ThirdMenuWidget::set_currentIPToMenu()
+{
+    model->item(0, 0)->setText(ipSetDialog->str_ip);
+}
+
+void ThirdMenuWidget::set_currentSubNetToMenu()
+{
+    model->item(0, 1)->setText(subNetSetDialog->str_subNet);
+}
+
 void ThirdMenuWidget::change_measurement_label(QString string)
 {
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
@@ -671,18 +679,12 @@ void ThirdMenuWidget::set_subNet(QString str_subNet)
 void ThirdMenuWidget::set_translateUI(QString str)
 {
     if(str == "Chinese"){
-//        QFile *fileOne = new QFile(":/json/resources/menutwo_zh.json");
-//        fileOne->open(QIODevice::ReadOnly | QIODevice::Text);
-//        QString stringOne = fileOne->readAll();
-
-//        thirdMenuMap = read_json_file(stringOne);
-//        fileOne->close();
-        qDebug()<<"test_ZH";
         emit translater_ZH();
         clockSetDialog->retranslate_dialog_ui();
         dateSetDialog->retranslate_dialog_ui();
+        ipSetDialog->retranslate_dialog_ui();
+        subNetSetDialog->retranslate_dialog_ui();
     }else if(str == "English"){
-        qDebug()<<"test_EN";
         emit translater_EN();
     }
 }

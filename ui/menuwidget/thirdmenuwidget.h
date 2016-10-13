@@ -5,6 +5,8 @@
 #include "verticalsliderdialog.h"
 #include "datesetdialog.h"
 #include "clocksetdialog.h"
+#include "ipsetdialog.h"
+#include "subnetsetdialog.h"
 
 #define THIRD_MENU_NUMBER 6
 
@@ -32,6 +34,8 @@ public:
     void set_model_item(int startIndex, int count);
     void set_currentDateToMenu();
     void set_currentTimeToMenu();
+    void set_currentIPToMenu();
+    void set_currentSubNetToMenu();
 
     QStringList get_third_menu_list();
     QVariantMap read_json_file(QString string);
@@ -70,6 +74,8 @@ private:
     Mcu *m_mcu;
     DateSetDialog *dateSetDialog;
     ClockSetDialog *clockSetDialog;
+    IPSetDialog *ipSetDialog;
+    SubNetSetDialog *subNetSetDialog;
 
 signals:
     void translater_ZH();

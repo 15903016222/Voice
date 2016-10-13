@@ -19,9 +19,11 @@ private:
     Ui::SubNetSetDialog *ui;
 
 public:
+    void retranslate_dialog_ui();
     QString str_subNet;
 
 private:
+    void init_ui();
 
 signals:
     void currentSubNetChanged(QString subNet);
