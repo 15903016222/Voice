@@ -1951,6 +1951,84 @@ ultrasonic phased array probes.</source>
     </message>
 </context>
 <context>
+    <name>SystemInfoDialog</name>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="31"/>
+        <source>System Infomation</source>
+        <translation>系统信息</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="42"/>
+        <source>Serial Number</source>
+        <translation>序列号</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="47"/>
+        <source>Device Type</source>
+        <translation>设备型号</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="52"/>
+        <source>Device Version</source>
+        <translation>设备版本</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="57"/>
+        <source>Hardware Version</source>
+        <translation>硬件版本</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="62"/>
+        <source>Software Version</source>
+        <translation>软件版本</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="67"/>
+        <source>Software Commit</source>
+        <translation>软件提交</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="72"/>
+        <source>Authentication Mode</source>
+        <translation>验证模式</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="77"/>
+        <source>Authentication Expire</source>
+        <translation>验证终止</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="82"/>
+        <source>Run Count</source>
+        <translation>运行计数</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="87"/>
+        <source>Run Time(s)</source>
+        <translation>运行时间（s）</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="123"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="144"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="159"/>
+        <source>Print</source>
+        <translation type="unfinished">打印</translation>
+    </message>
+</context>
+<context>
     <name>ThirdMenuWidget</name>
     <message>
         <location filename="../menuwidget/thirdmenuwidget.ui" line="23"/>
