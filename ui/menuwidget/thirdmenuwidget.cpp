@@ -25,15 +25,17 @@ QWidget(parent),
     tableViewList.append(ui->tableView);
 
     height = this->geometry().height();
+    languageOption = 1;
+
     init_standard_model();
     set_third_menu_name(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
- //   connect(ui->tableView->horizontalHeader(), SIGNAL(sectionDoubleClicked(int)), this, SLOT(onHeaderClicked(int)), Qt::QueuedConnection);
+//   connect(ui->tableView->horizontalHeader(), SIGNAL(sectionDoubleClicked(int)), this, SLOT(onHeaderClicked(int)), Qt::QueuedConnection);
 
     m_mcu = Mcu::get_mcu();
     set_autoDetect_probeModel(false);
- //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+//   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
 }
 
@@ -44,10 +46,14 @@ ThirdMenuWidget::~ThirdMenuWidget()
 
 void ThirdMenuWidget::retranslate_third_menu_ui(QString string)
 {
-//    ui->retranslateUi(this);
-//    if(string == "Chinese") {
-//        widget->translateChineseMap
-//    }
+    emit retranslate_ui(string);
+    ui->retranslateUi(this);
+    if(string == "Chinese") {
+        languageOption = 2;
+    } else if (string == "English") {
+        languageOption = 1;
+    }
+    set_third_menu_name(8, 1);
 }
 
 void ThirdMenuWidget::init_standard_model()
@@ -101,21 +107,11 @@ void ThirdMenuWidget::set_third_menu_name(int i, int j)
     secondMenuString = widget->get_second_menu_list(i).at(j);
 
     QStringList thirdStringList = get_third_menu_list();
-    set_model_item(0, thirdStringList.count());
+    set_model_item(0, thirdStringList);
 }
 
-void ThirdMenuWidget::choose_widget_style(int k)
+void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString)
 {
-    QString thirdMenuString = get_third_menu_list().at(k);
-    QString newThirdMenuString = set_long_contents_header(k, thirdMenuString);
-    QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
-
-    if(thirdMenuMap.contains("unit")) {
-        model->setHeaderData(k, Qt::Horizontal, QString(newThirdMenuString + "\n(" + thirdMenuMap["unit"].toString() + ")"));
-    } else {
-        model->setHeaderData(k, Qt::Horizontal, newThirdMenuString);
-    }
-
     if(thirdMenuMap.contains("style")) {
         switch(thirdMenuMap["style"].toString().toInt()) {
             case 0: {
@@ -145,7 +141,7 @@ void ThirdMenuWidget::choose_widget_style(int k)
 //                }
 
                 model->setItem(0, k, item);
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
@@ -168,10 +164,10 @@ void ThirdMenuWidget::choose_widget_style(int k)
                     item = new QStandardItem(list.at(1).at(0));
 //                }
                 model->setItem(0, k, item);
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(comboBox_current_text(QString)), this, SLOT(change_related_third_menu_data(QString)));
-//                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(change_language(QString)), this, SLOT(retranslate_third_menu_ui(QString)));
+                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(change_language(QString)), this, SLOT(retranslate_third_menu_ui(QString)));
                 break;
             }
             case 3: {
@@ -199,7 +195,7 @@ void ThirdMenuWidget::choose_widget_style(int k)
 
                 model->setItem(0, k, item);
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
 
                 if(thirdMenuString.contains("Auto Detect")) {
@@ -211,7 +207,7 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 QStandardItem *item = new QStandardItem(QString(""));
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 model->setItem(0, k, item);
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
                 break;
@@ -220,7 +216,7 @@ void ThirdMenuWidget::choose_widget_style(int k)
         ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
         QStandardItem *item = new QStandardItem(QString(""));
         ui->tableView->setItemDelegateForColumn(k, comboBox);
-        model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//        model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         model->setItem(0, k, item);
         model->item(0, k)->setFlags(Qt::NoItemFlags);
     }
@@ -235,19 +231,17 @@ void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
 
 QStringList ThirdMenuWidget::get_third_menu_list()
 {
-    QStringList stringList;
     QVariantList variantList;
     QVariantMap firstMap = widget->firstMenuMap[firstMenuString].toMap();
     secondMenuMap = firstMap[secondMenuString].toMap();
     if(!secondMenuMap.isEmpty() && secondMenuMap.contains("Queue_Third_Menu")) {
-        if(secondMenuMap["Queue_Third_Menu"].toMap().isEmpty()) {
+        QVariantMap variantMap = secondMenuMap["Queue_Third_Menu"].toMap();
+        if(variantMap.isEmpty()) {
             variantList = secondMenuMap.values("Queue_Third_Menu");
         } else {
-            QVariantMap variantMap = secondMenuMap["Queue_Third_Menu"].toMap();
             QString string = variantMap.value("first third_menu").toString();
             QVariantMap firstThirdMenuMap = secondMenuMap[string].toMap();
             QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap).at(0);
-            qDebug() << otherThirdMenuList;
             if(relatedMenuString == NULL || !otherThirdMenuList.contains(relatedMenuString)) {
                 variantList = variantMap.values(otherThirdMenuList.at(0));
             } else {
@@ -255,15 +249,29 @@ QStringList ThirdMenuWidget::get_third_menu_list()
             }
         }
     }
-    stringList = variantList.at(0).toStringList();
+
+    QStringList stringList = variantList.at(0).toStringList();
+    return stringList;
+}
+
+QStringList ThirdMenuWidget::get_translate_third_menu_list()
+{
+    QStringList tmpList = get_third_menu_list();
+    QStringList stringList;
+    QVariantMap firstTranslateMap = widget->translateChineseMap[firstMenuString].toMap();
+    QVariantMap secondMap = firstTranslateMap[secondMenuString].toMap();
+    for(int index = 0; index < tmpList.count(); index ++) {
+        stringList.append(secondMap.value(tmpList.at(index)).toString());
+    }
     return stringList;
 }
 
 void ThirdMenuWidget::onHeaderClicked(int index)
 {
     QString thirdMenuString;
-    if(get_third_menu_list().count() > index) {
-       thirdMenuString  = get_third_menu_list().at(index);
+    QStringList thirdMenuList = get_third_menu_list();
+    if(thirdMenuList.count() > index) {
+       thirdMenuString  = thirdMenuList.at(index);
     } else {
         return;
     }
@@ -399,8 +407,9 @@ void ThirdMenuWidget::set_header_text_close(QWidget *editor)
 void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
 {
     QString thirdMenuString;
-    if(get_third_menu_list().count() > index.column()) {
-       thirdMenuString  = get_third_menu_list().at(index.column());
+    QStringList thirdMenuList = get_third_menu_list();
+    if(thirdMenuList.count() > index.column()) {
+       thirdMenuString  =thirdMenuList.at(index.column());
     } else {
         return;
     }
@@ -500,15 +509,31 @@ void ThirdMenuWidget::change_related_third_menu_data(QString string)
         QVariantList variantList = variantMap.values(string);
         QStringList thirdStringList = variantList.at(0).toStringList();
 
-        set_model_item(1, thirdStringList.count());
+        set_model_item(1, thirdStringList);
     }
 }
 
-void ThirdMenuWidget::set_model_item(int startIndex, int count)
+void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
 {
     for(int k = startIndex; k < THIRD_MENU_NUMBER; k ++) {
-        if(count >= k + 1) {
-            choose_widget_style(k);
+        if(thirdMenuList.count() >= k + 1) {
+            QString thirdMenuString = thirdMenuList.at(k);
+            QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
+            choose_widget_style(k, thirdMenuMap, thirdMenuString);
+
+            QString newThirdMenuString;
+            if(languageOption == 1) {
+                newThirdMenuString = set_long_contents_header(k, thirdMenuString);
+                if(thirdMenuMap.contains("unit")) {
+                    model->setHeaderData(k, Qt::Horizontal, QString(newThirdMenuString + "\n(" + thirdMenuMap["unit"].toString() + ")"));
+                } else {
+                    model->setHeaderData(k, Qt::Horizontal, newThirdMenuString);
+                }
+            } else if(languageOption == 2) {
+                QString thirdMenuStringTran = get_translate_third_menu_list().at(k);
+                model->setHeaderData(k, Qt::Horizontal, thirdMenuStringTran);
+            }
+
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
         } else {

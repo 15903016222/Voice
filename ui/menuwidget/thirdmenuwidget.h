@@ -26,16 +26,16 @@ private:
     Ui::ThirdMenuWidget *ui;
 
 public:
-    void retranslate_third_menu_ui(QString string);
     void init_standard_model();
     void set_third_menu_name(int i, int j);
-    void choose_widget_style(int k);
+    void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void resizeEvent(QResizeEvent *event);
-    void set_model_item(int startIndex, int count);
+    void set_model_item(int startIndex, QStringList thirdMenuList);
     void set_currentDateToMenu();
     void set_currentTimeToMenu();    
 
     QStringList get_third_menu_list();
+    QStringList get_translate_third_menu_list();
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
     QStringList get_spinBox_step_list(QVariantMap variantMap);
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap);
@@ -52,6 +52,7 @@ public:
     int wedgeIndex;
     int dateSetIndex;
     int timeSetIndex;
+    int languageOption;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -61,6 +62,9 @@ public:
     QString secondMenuString;
     QString relatedMenuString;
     QList<QTableView*> tableViewList;
+
+signals:
+    void retranslate_ui(QString);
 
 private:
     VerticalSliderDialog *verticalSliderDialog;
@@ -86,6 +90,7 @@ private slots:
     void set_autoDetect_probeModel(bool flag);
     void set_date(QString str_date);
     void set_time(QString str_time);
+    void retranslate_third_menu_ui(QString string);
 
 };
 
