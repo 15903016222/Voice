@@ -33,6 +33,7 @@ private:
 
 signals:
     void comboBox_current_text(QString);
+    void change_language(QString);
 
 private slots:
     void commit_and_close_editor(const QString &str);
