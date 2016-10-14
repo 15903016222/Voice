@@ -2437,7 +2437,16 @@
         "parent": "Preference_Service"
     },
     "Cert Import": {
-        "parent": "Preference_Service"
+        "parent": "Preference_Service",
+        "style": "2",
+        "options": [
+            {
+                "Cert Import": "U-Disk"
+            },
+            {
+                "Cert Import": "NetWork"
+            }
+        ]
     },
     "SW Update": {
         "parent": "Preference_Service"
