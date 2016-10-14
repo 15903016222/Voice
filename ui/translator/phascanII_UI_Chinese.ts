@@ -16,29 +16,38 @@
     <message>
         <location filename="../dialogwidget/aboutdialog.ui" line="77"/>
         <source>      PHASCAN has a powerfull detection capability,
-can achieve a variety of scanning mode and fouus
+can achieve a variety of scanning mode and focus
 mode, which greatly improve the detection reliability.
      CopyRight @2010-2016 Doppler All rights reserved.</source>
-        <translation>      PHASCAN有强大的检测功能,可以实现多种扫描
-模式和聚焦模式,大大提高了检测的可靠性。
+        <translation type="unfinished">      PHASCAN有强大的检测功能，可以实现多种扫描
+模式和聚焦模式，大大提高了检测的可靠性。
       多浦乐保留@2010 - 2016所有版权。</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="93"/>
+        <location filename="../dialogwidget/aboutdialog.ui" line="111"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;SimSun&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.cndoppler.cn&quot;&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cndoppler.cn/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.cndoppler.cn&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cndoppler.cn/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="139"/>
+        <source>      PHASCAN has a powerfull detection capability,
+can achieve a variety of scanning mode and fouus
+mode, which greatly improve the detection reliability.
+     CopyRight @2010-2016 Doppler All rights reserved.</source>
+        <translation type="vanished">      PHASCAN有强大的检测功能,可以实现多种扫描
+模式和聚焦模式,大大提高了检测的可靠性。
+      多浦乐保留@2010 - 2016所有版权。</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="157"/>
         <source>Credits</source>
         <translation>工作人员</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="173"/>
+        <location filename="../dialogwidget/aboutdialog.ui" line="191"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
