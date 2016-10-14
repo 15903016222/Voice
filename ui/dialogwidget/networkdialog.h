@@ -1,22 +1,22 @@
-#ifndef IPSETDIALOG_H
-#define IPSETDIALOG_H
+#ifndef NETWORKDIALOG_H
+#define NETWORKDIALOG_H
 
 #include <QDialog>
 
 namespace Ui {
-class IPSetDialog;
+class NetworkDialog;
 }
 
-class IPSetDialog : public QDialog
+class NetworkDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit IPSetDialog(QWidget *parent = 0);
-    ~IPSetDialog();
+    explicit NetworkDialog(QWidget *parent = 0);
+    ~NetworkDialog();
 
 private:
-    Ui::IPSetDialog *ui;
+    Ui::NetworkDialog *ui;
 
 public:
     void retranslate_dialog_ui();
@@ -30,7 +30,9 @@ signals:
 
 public slots:
     void on_buttonBox_accepted();
+    void set_dialog_title(QString string);
+    void set_spinbox_value(QList<int> valueList);
 
 };
 
-#endif // IPSETDIALOG_H
+#endif // NETWORKDIALOG_H
