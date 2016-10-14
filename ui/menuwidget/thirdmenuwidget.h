@@ -5,9 +5,7 @@
 #include "verticalsliderdialog.h"
 #include "datesetdialog.h"
 #include "clocksetdialog.h"
-#include "ipsetdialog.h"
-#include "subnetsetdialog.h"
-
+#include "networkdialog.h"
 
 #define THIRD_MENU_NUMBER 6
 
@@ -55,8 +53,7 @@ public:
     int wedgeIndex;
     int dateSetIndex;
     int timeSetIndex;
-    int ipSetIndex;
-    int subNetIndex;
+    int networkIndex;
     int languageOption;
 
     QStandardItemModel *model;
@@ -69,14 +66,15 @@ public:
 
 signals:
     void retranslate_ui(QString);
+    void send_dialog_title_content(QString);
+    void send_spinbox_value(QList<int>);
 
 private:
     VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
     DateSetDialog *dateSetDialog;
     ClockSetDialog *clockSetDialog;
-    IPSetDialog *ipSetDialog;
-    SubNetSetDialog *subNetSetDialog;
+    NetworkDialog *networkDialog;
 
 signals:
     void translater_ZH();

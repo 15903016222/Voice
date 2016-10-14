@@ -24,8 +24,7 @@ QWidget(parent),
     widget = new FirstSecondMenuWidget;
     dateSetDialog = new DateSetDialog(this);
     clockSetDialog = new ClockSetDialog(this);
-    ipSetDialog = new IPSetDialog(this);
-    subNetSetDialog = new SubNetSetDialog(this);
+    networkDialog = new NetworkDialog(this);
 
     height = this->geometry().height();
     languageOption = 1;
@@ -58,8 +57,7 @@ void ThirdMenuWidget::retranslate_third_menu_ui(QString string)
     }
     clockSetDialog->retranslate_dialog_ui();
     dateSetDialog->retranslate_dialog_ui();
-    ipSetDialog->retranslate_dialog_ui();
-    subNetSetDialog->retranslate_dialog_ui();
+    networkDialog->retranslate_dialog_ui();
     set_third_menu_name(8, 1);
 }
 
@@ -370,33 +368,53 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         timeSetIndex = index;
         connect(clockSetDialog, SIGNAL(currentTimeChanged(QString)), this, SLOT(set_time(QString)));
 
-    }else if(thirdMenuMap["style"].toString() == "19") {
+    } else if(thirdMenuMap["style"].toString() == "19") {
         dateSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         dateSetDialog->show();
 
         dateSetIndex = index;
         connect(dateSetDialog, SIGNAL(currentDateChanged(QString)), this, SLOT(set_date(QString)));
-    }else if(currentHeaderText.contains("IP Address")){
-        ipSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        ipSetDialog->show();
+    } else if(thirdMenuMap["style"].toString() == "14"){
+        connect(this, SIGNAL(send_dialog_title_content(QString)), networkDialog, SLOT(set_dialog_title(QString)));
+        connect(this, SIGNAL(send_spinbox_value(QList<int>)), networkDialog, SLOT(set_spinbox_value(QList<int>)));
 
-        ipSetIndex = index;
-        connect(ipSetDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
-    }else if(currentHeaderText.contains("Subnet Mask")){
-        subNetSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        subNetSetDialog->show();
+        QVariantMap mapOne = widget->translateChineseMap["Preference"].toMap();
+        QVariantMap mapTwo = mapOne["Network"].toMap();
+        QString string = model->item(0, index)->text();
+        QList<int> valueList;
+        QString tmpString = string;
+        int tmpIndex = 0;
+        for(int index = 0; index < string.length(); index ++) {
+            if(QString(string.at(index)) == ".") {
+                valueList.append(tmpString.left(index - tmpIndex).toInt());
+                tmpString = tmpString.right(string.count() - index - 1);
+                tmpIndex = index + 1;
+            }
+            if(index == string.length() - 1) {
+                valueList.append(tmpString.toInt());
+            }
+        }
+        if(currentHeaderText.contains("IP Address") || currentHeaderText.contains(mapTwo.value("IP Address").toString())){
+            emit send_dialog_title_content(currentHeaderText);
+            emit send_spinbox_value(valueList);
+        } else if(currentHeaderText.contains("Subnet Mask") || currentHeaderText.contains(mapTwo.value("子网掩码").toString())) {
+            emit send_dialog_title_content(currentHeaderText);
+            emit send_spinbox_value(valueList);
+        }
+        networkDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        networkDialog->show();
 
-        subNetIndex = index;
-        connect(subNetSetDialog, SIGNAL(currentSubNetChanged(QString)), this, SLOT(set_subNet(QString)));
-    }else if(currentHeaderText.contains("Configuration")) {
+        networkIndex = index;
+        connect(networkDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
+    } else if(currentHeaderText.contains("Configuration")) {
         ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
         resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         resetConfigDialog->show();
-    }else if(currentHeaderText.contains("About")) {
+    } else if(currentHeaderText.contains("About")) {
         AboutDialog *aboutDialog = new AboutDialog(this);
         aboutDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         aboutDialog->show();
-    }else if(currentHeaderText.contains("System")) {
+    } else if(currentHeaderText.contains("System")) {
         SystemInfoDialog *systemInfoDialog = new SystemInfoDialog(this);
         systemInfoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         systemInfoDialog->show();
@@ -584,12 +602,12 @@ void ThirdMenuWidget::set_currentTimeToMenu()
 
 void ThirdMenuWidget::set_currentIPToMenu()
 {
-    model->item(0, 0)->setText(ipSetDialog->str_ip);
+    model->item(0, 0)->setText("192.168.1.1");
 }
 
 void ThirdMenuWidget::set_currentSubNetToMenu()
 {
-    model->item(0, 1)->setText(subNetSetDialog->str_subNet);
+    model->item(0, 1)->setText("255.255.255.0");
 }
 
 void ThirdMenuWidget::change_measurement_label(QString string)
@@ -674,12 +692,12 @@ void ThirdMenuWidget::set_time(QString str_time)
 
 void ThirdMenuWidget::set_ip(QString str_ip)
 {
-    model->item(0, ipSetIndex)->setText(str_ip);
+    model->item(0, networkIndex)->setText(str_ip);
 }
 
 void ThirdMenuWidget::set_subNet(QString str_subNet)
 {
-    model->item(0, subNetIndex)->setText(str_subNet);
+    model->item(0, networkIndex)->setText(str_subNet);
 }
 
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
