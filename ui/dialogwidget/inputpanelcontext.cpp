@@ -9,10 +9,10 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     ui(new Ui::InputPanelContext)
 {
     ui->setupUi(this);
-    ui->pushButton_arrow_up->setText("<font>&uarr;</font>");
-    ui->pushButton_arrow_left->setText((QChar)27);
-    ui->pushButton_arrow_right->setText((QChar)26);
-    ui->pushButton_arrow_down->setText(QString((QChar)25));
+//    ui->pushButton_arrow_up->setText("<font>&uarr;</font>");
+//    ui->pushButton_arrow_left->setText((QChar)27);
+//    ui->pushButton_arrow_right->setText((QChar)26);
+//    ui->pushButton_arrow_down->setText(QString((QChar)25));
 
     for(int i = 0; i < 10; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + QString::number(i));
@@ -34,7 +34,7 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     connect(ui->pushButton_BackSpace, SIGNAL(clicked()), this, SLOT(edit_text()));
 
 
-    for(int i = 0; i < 8; i ++ ) {
+    for(int i = 0; i < 3; i ++ ) {
         QFrame *frame = findChild<QFrame*>("frame_" + QString::number(i));
         frame->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
     }
