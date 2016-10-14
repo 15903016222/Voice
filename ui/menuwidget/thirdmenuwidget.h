@@ -57,7 +57,7 @@ public:
     int timeSetIndex;
     int ipSetIndex;
     int subNetIndex;
-    int languageOption;；
+    int languageOption;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;

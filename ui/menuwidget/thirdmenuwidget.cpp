@@ -27,8 +27,6 @@ QWidget(parent),
     ipSetDialog = new IPSetDialog(this);
     subNetSetDialog = new SubNetSetDialog(this);
 
-    tableViewList.append(ui->tableView);
-
     height = this->geometry().height();
     languageOption = 1;
 
@@ -58,6 +56,10 @@ void ThirdMenuWidget::retranslate_third_menu_ui(QString string)
     } else if (string == "English") {
         languageOption = 1;
     }
+    clockSetDialog->retranslate_dialog_ui();
+    dateSetDialog->retranslate_dialog_ui();
+    ipSetDialog->retranslate_dialog_ui();
+    subNetSetDialog->retranslate_dialog_ui();
     set_third_menu_name(8, 1);
 }
 
@@ -678,19 +680,6 @@ void ThirdMenuWidget::set_ip(QString str_ip)
 void ThirdMenuWidget::set_subNet(QString str_subNet)
 {
     model->item(0, subNetIndex)->setText(str_subNet);
-}
-
-void ThirdMenuWidget::set_translateUI(QString str)
-{
-    if(str == "Chinese"){
-        emit translater_ZH();
-        clockSetDialog->retranslate_dialog_ui();
-        dateSetDialog->retranslate_dialog_ui();
-        ipSetDialog->retranslate_dialog_ui();
-        subNetSetDialog->retranslate_dialog_ui();
-    }else if(str == "English"){
-        emit translater_EN();
-    }
 }
 
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)

@@ -73,8 +73,8 @@ void MainWindow::init_ui()
     qApp->installTranslator(translator);
 //    translatorChineseUI(); // default Chinese
 //    firstSecondMenu->init_ui();
-    connect(ui->widget_thirdMenu, SIGNAL(translater_ZH()), this, SLOT(translatorChineseUI()));
-    connect(ui->widget_thirdMenu, SIGNAL(translater_EN()), this, SLOT(translatorEnglishUI()));
+//    connect(ui->widget_thirdMenu, SIGNAL(translater_ZH()), this, SLOT(translatorChineseUI()));
+//    connect(ui->widget_thirdMenu, SIGNAL(translater_EN()), this, SLOT(translatorEnglishUI()));
 
     QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
 
