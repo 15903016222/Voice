@@ -141,8 +141,6 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
 //                }
 
                 model->setItem(0, k, item);
-//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
@@ -163,8 +161,7 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
 //                } else {
                     item = new QStandardItem(list.at(1).at(0));
 //                }
-                model->setItem(0, k, item);
-//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+                model->setItem(0, k, item);               
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(comboBox_current_text(QString)), this, SLOT(change_related_third_menu_data(QString)));
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(change_language(QString)), this, SLOT(retranslate_third_menu_ui(QString)));
@@ -190,12 +187,11 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
 //                if(subCacheMap.contains(thirdMenuString)) {
 //                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
 //                } else {
-                    item = new QStandardItem(QString("On"));
+                    item = new QStandardItem(QString("Off"));
 //                }
 
                 model->setItem(0, k, item);
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
-//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
 
                 if(thirdMenuString.contains("Auto Detect")) {
@@ -207,7 +203,6 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 QStandardItem *item = new QStandardItem(QString(""));
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
-//                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 model->setItem(0, k, item);
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
                 break;
@@ -216,7 +211,6 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
         ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
         QStandardItem *item = new QStandardItem(QString(""));
         ui->tableView->setItemDelegateForColumn(k, comboBox);
-//        model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         model->setItem(0, k, item);
         model->item(0, k)->setFlags(Qt::NoItemFlags);
     }
@@ -533,7 +527,7 @@ void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
                 QString thirdMenuStringTran = get_translate_third_menu_list().at(k);
                 model->setHeaderData(k, Qt::Horizontal, thirdMenuStringTran);
             }
-
+            model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
         } else {
