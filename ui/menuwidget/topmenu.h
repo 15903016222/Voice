@@ -2,7 +2,6 @@
 #define TOPMENU
 
 #include "measurementdialog.h"
-#include "thirdmenuwidget.h"
 
 #include <QLabel>
 
@@ -28,7 +27,6 @@ public:
     QStandardItemModel *model;
     MeasurementDialog *mDialog;
     QString objectName;
-    ThirdMenuWidget *thirdMenuWidget;
 
     void retranslate_top_menu_ui();
     void init_ui();

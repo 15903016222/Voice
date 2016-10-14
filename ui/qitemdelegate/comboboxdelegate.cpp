@@ -1,5 +1,7 @@
 #include "comboboxdelegate.h"
 
+#include <QDebug>
+
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
@@ -111,6 +113,9 @@ void ComboBoxDelegate::commit_and_close_editor(const QString &str)
     emit commitData(editor);
     emit closeEditor(editor);
     emit comboBox_current_text(str);
+    if(str == "Chinese" || str == "English") {
+        emit change_language(str);
+    }
     editFlag = false;
 }
 

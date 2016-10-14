@@ -90,6 +90,7 @@ void MainWindow::init_ui()
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
+    connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
 }
 
 void MainWindow::keyBottom_menu(int key)
@@ -260,26 +261,25 @@ void MainWindow::slot_pushButton_commonMenuClicked()
     }
 }
 
-void MainWindow::update_translator()
+void MainWindow::update_translator(QString string)
 {
-    ui->retranslateUi(this);
-    ui->widgetTopLeft->retranslate_top_menu_ui();
-    ui->widgetTopLeft->set_top_menu_font();
-    firstSecondMenu->retranslate_main_menu_ui();
-    ui->widget_thirdMenu->retranslate_third_menu_ui();
-    commonMenuWidget->retranslate_common_menu_ui();
-}
-
-void MainWindow::translatorChineseUI()
-{
-    translator->load(":/file/translator/phascanII_UI_Chinese.qm");
-    update_translator();
-}
-
-void MainWindow::translatorEnglishUI()
-{
-    translator->load(":/file/translator/phascanII_UI_English.qm");
-    update_translator();
+    if(string == "Chinese") {
+        translator->load(":/file/translator/phascanII_UI_Chinese.qm");
+        ui->retranslateUi(this);
+        ui->widgetTopLeft->retranslate_top_menu_ui();
+        ui->widgetTopLeft->set_top_menu_font();
+        firstSecondMenu->retranslate_main_menu_ui(string);
+//        ui->widget_thirdMenu->retranslate_third_menu_ui(string);
+        commonMenuWidget->retranslate_common_menu_ui();
+    } else if(string == "English") {
+        translator->load(":/file/translator/phascanII_UI_English.qm");
+        ui->retranslateUi(this);
+        ui->widgetTopLeft->retranslate_top_menu_ui();
+        ui->widgetTopLeft->set_top_menu_font();
+        firstSecondMenu->retranslate_main_menu_ui(string);
+//        ui->widget_thirdMenu->retranslate_third_menu_ui(string);
+        commonMenuWidget->retranslate_common_menu_ui();
+    }
 }
 
 #ifdef WIN32

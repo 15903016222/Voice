@@ -41,7 +41,6 @@ public:
     void show_hidden_Menu();
     void resizeEvent(QResizeEvent *event);
     void show_hidden_arrow();
-    void update_translator();
 
 #ifdef WIN32
     bool eventFilter(QObject *object, QEvent *event);
@@ -71,14 +70,11 @@ protected slots:
 private slots:
     void slot_firstMenuToolBoxCurrentChanged(int index);
     void slot_secondMenuItemClicked(QModelIndex index);
-
     void on_pushButton_top_clicked();
     void on_pushButton_bottom_clicked();
     void slot_pushButton_commonMenuClicked();
     void scroll_menu(int index);
-
-    void translatorChineseUI();
-    void translatorEnglishUI();
+    void update_translator(QString string);
 
 signals:
     void clickedMenuIndex(int);

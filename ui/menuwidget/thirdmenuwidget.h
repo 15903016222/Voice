@@ -8,6 +8,7 @@
 #include "ipsetdialog.h"
 #include "subnetsetdialog.h"
 
+
 #define THIRD_MENU_NUMBER 6
 
 namespace Ui {
@@ -26,23 +27,21 @@ private:
     Ui::ThirdMenuWidget *ui;
 
 public:
-    void retranslate_third_menu_ui();
     void init_standard_model();
     void set_third_menu_name(int i, int j);
-    void choose_widget_style(int k);
+    void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void resizeEvent(QResizeEvent *event);
-    void set_model_item(int startIndex, int count);
+    void set_model_item(int startIndex, QStringList thirdMenuList);
     void set_currentDateToMenu();
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
 
     QStringList get_third_menu_list();
-    QVariantMap read_json_file(QString string);
-    QVariantMap get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString);
+    QStringList get_translate_third_menu_list();
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
-    QStringList get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString);
-    QList<QStringList> get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString);
+    QStringList get_spinBox_step_list(QVariantMap variantMap);
+    QList<QStringList> get_comboBox_option_list(QVariantMap variantMap);
     QString set_long_contents_header(int index, QString string);
 
     int width;
@@ -58,16 +57,18 @@ public:
     int timeSetIndex;
     int ipSetIndex;
     int subNetIndex;
+    int languageOption;；
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
-    QVariantMap thirdMenuMap;
-    QVariantMap fourthMenuMap;
+    QVariantMap secondMenuMap;
     QVariantMap menuCacheMap;
     QString firstMenuString;
     QString secondMenuString;
     QString relatedMenuString;
 
+signals:
+    void retranslate_ui(QString);
 
 private:
     VerticalSliderDialog *verticalSliderDialog;
@@ -101,7 +102,7 @@ private slots:
     void set_time(QString str_time);
     void set_ip(QString str_ip);
     void set_subNet(QString str_subNet);
-    void set_translateUI(QString str);
+    void retranslate_third_menu_ui(QString string);
 
 };
 
