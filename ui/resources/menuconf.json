@@ -155,7 +155,7 @@
                 "Averaging"
             ],
             "Receiver":{
-				"style": "FixedValue"
+				"style": "20"
             },
             "Filter":{
                 "style":"2",
@@ -228,7 +228,7 @@
                 ]
             },
             "Scale Factor":{
-				"style": "FixedValue"
+				"style": "20"
             },
             "Sum Gain":{
                 "style":"1",
