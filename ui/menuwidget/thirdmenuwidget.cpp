@@ -352,7 +352,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         inputPanel->show();
 
         inputIndex = index;
-        connect(this, SIGNAL(inputItemCurrentText(QString)), inputPanel, SLOT(set_item_current_text(QString)));
         QString text = model->item(0, index)->text();
         inputPanel->set_item_current_text(text);
         connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));

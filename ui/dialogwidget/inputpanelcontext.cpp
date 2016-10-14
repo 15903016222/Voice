@@ -34,13 +34,9 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     connect(ui->pushButton_BackSpace, SIGNAL(clicked()), this, SLOT(edit_text()));
 
 
-    for(int i = 2; i < 9; i ++ ) {
-        QWidget *widget = findChild<QWidget*>("widget_" + QString::number(i));
-        if(i == 7) {
-            widget->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
-        } else {
-            widget->setStyleSheet("QWidget QPushButton{font: 12pt 'Times New Roman';}");
-        }
+    for(int i = 0; i < 8; i ++ ) {
+        QFrame *frame = findChild<QFrame*>("frame_" + QString::number(i));
+        frame->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
     }
 }
 

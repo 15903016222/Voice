@@ -6,59 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>332</height>
+    <width>668</width>
+    <height>392</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="13,4,4,4,4,4,4,3">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <item row="0" column="0">
-    <widget class="QWidget" name="widget_1" native="true">
-     <layout class="QGridLayout" name="gridLayout_9">
-      <property name="leftMargin">
-       <number>5</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <property name="horizontalSpacing">
-       <number>5</number>
-      </property>
-      <property name="verticalSpacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QTextEdit" name="textEdit"/>
-      </item>
-     </layout>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
-    <widget class="QWidget" name="widget_8" native="true">
-     <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0">
+    <widget class="QFrame" name="frame_1">
+     <layout class="QGridLayout" name="gridLayout_10">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -74,207 +32,7 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="9">
-       <widget class="QPushButton" name="symbol_10">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>[</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="8">
-       <widget class="QPushButton" name="symbol_9">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="symbol_5">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>%</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QPushButton" name="symbol_6">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>^</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="10">
-       <widget class="QPushButton" name="symbol_11">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>]</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="symbol_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>#</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="symbol_4">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>$</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="11">
-       <widget class="QPushButton" name="symbol_12">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>&lt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="6">
+      <item row="0" column="7">
        <widget class="QPushButton" name="symbol_7">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -299,8 +57,8 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="symbol_1">
+      <item row="0" column="12">
+       <widget class="QPushButton" name="symbol_12">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -313,12 +71,193 @@
           <height>35</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>35</height>
+         </size>
+        </property>
         <property name="text">
-         <string>!</string>
+         <string>&lt;</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="0" column="4">
+       <widget class="QPushButton" name="symbol_4">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>$</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QPushButton" name="symbol_9">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="10">
+       <widget class="QPushButton" name="symbol_10">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>[</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="symbol_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>#</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="11">
+       <widget class="QPushButton" name="symbol_11">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QPushButton" name="symbol_5">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>%</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QPushButton" name="symbol_6">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>^</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
        <widget class="QPushButton" name="symbol_2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -343,7 +282,26 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="7">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="symbol_1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>!</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
        <widget class="QPushButton" name="symbol_8">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -368,7 +326,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="13">
+      <item row="0" column="14">
        <widget class="QPushButton" name="symbol_13">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -393,7 +351,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="14">
+      <item row="0" column="15">
        <widget class="QPushButton" name="symbol_14">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -418,67 +376,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="15">
-       <widget class="QPushButton" name="symbol_15">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>?</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-     <zorder>symbol_5</zorder>
-     <zorder>symbol_12</zorder>
-     <zorder>symbol_2</zorder>
-     <zorder>symbol_6</zorder>
-     <zorder>symbol_7</zorder>
-     <zorder>symbol_1</zorder>
-     <zorder>symbol_8</zorder>
-     <zorder>symbol_9</zorder>
-     <zorder>symbol_4</zorder>
-     <zorder>symbol_11</zorder>
-     <zorder>symbol_10</zorder>
-     <zorder>symbol_3</zorder>
-     <zorder>symbol_13</zorder>
-     <zorder>symbol_14</zorder>
-     <zorder>symbol_15</zorder>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QWidget" name="widget_2" native="true">
-     <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,0,0,0,0,0,0,0,0,0,0,0,0,0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
       <item row="0" column="0">
        <widget class="QPushButton" name="symbol_16">
         <property name="sizePolicy">
@@ -498,6 +395,42 @@
         </property>
        </widget>
       </item>
+     </layout>
+     <zorder>symbol_5</zorder>
+     <zorder>symbol_12</zorder>
+     <zorder>symbol_2</zorder>
+     <zorder>symbol_6</zorder>
+     <zorder>symbol_7</zorder>
+     <zorder>symbol_1</zorder>
+     <zorder>symbol_8</zorder>
+     <zorder>symbol_9</zorder>
+     <zorder>symbol_4</zorder>
+     <zorder>symbol_11</zorder>
+     <zorder>symbol_10</zorder>
+     <zorder>symbol_3</zorder>
+     <zorder>symbol_13</zorder>
+     <zorder>symbol_14</zorder>
+     <zorder>symbol_16</zorder>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QFrame" name="frame_2">
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item row="0" column="4">
        <widget class="QPushButton" name="pushButton_4">
         <property name="sizePolicy">
@@ -545,31 +478,6 @@
         </property>
         <property name="text">
          <string>3</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="pushButton_1">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>1</string>
         </property>
        </widget>
       </item>
@@ -823,12 +731,37 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton_1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QWidget" name="widget_3" native="true">
-     <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,1,1,1,1,1,1,1,1,1,1,1,1,2">
+    <widget class="QFrame" name="frame_3">
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="2,0,0,0,0,0,0,0,0,0,0,0,0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -844,156 +777,6 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="10">
-       <widget class="QPushButton" name="pushButton_P">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>P</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pushButton_W">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="pushButton_R">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="6">
-       <widget class="QPushButton" name="pushButton_Y">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Y</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="9">
-       <widget class="QPushButton" name="pushButton_O">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>O</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="7">
-       <widget class="QPushButton" name="pushButton_U">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>U</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="3">
        <widget class="QPushButton" name="pushButton_E">
         <property name="sizePolicy">
@@ -1044,33 +827,8 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="13">
-       <widget class="QPushButton" name="pushButton_Enter">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Enter</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="8">
-       <widget class="QPushButton" name="pushButton_I">
+      <item row="0" column="9">
+       <widget class="QPushButton" name="pushButton_O">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -1090,12 +848,12 @@
          </size>
         </property>
         <property name="text">
-         <string>I</string>
+         <string>O</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="11">
-       <widget class="QPushButton" name="symbol_19">
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pushButton_W">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -1110,12 +868,112 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>30</width>
           <height>35</height>
          </size>
         </property>
         <property name="text">
-         <string>{</string>
+         <string>W</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="10">
+       <widget class="QPushButton" name="pushButton_P">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>P</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QPushButton" name="pushButton_U">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>U</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QPushButton" name="pushButton_Y">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Y</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="pushButton_R">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>R</string>
         </property>
        </widget>
       </item>
@@ -1144,6 +1002,31 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="11">
+       <widget class="QPushButton" name="symbol_19">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>{</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="12">
        <widget class="QPushButton" name="symbol_20">
         <property name="sizePolicy">
@@ -1169,6 +1052,31 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="8">
+       <widget class="QPushButton" name="pushButton_I">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>I</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="pushButton_Tab">
         <property name="sizePolicy">
@@ -1185,302 +1093,6 @@
         </property>
         <property name="text">
          <string>Tab</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QWidget" name="widget_4" native="true">
-     <layout class="QGridLayout" name="gridLayout_4" columnstretch="2,1,1,1,1,1,1,1,1,1,1,1,1,0,0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="11">
-       <widget class="QPushButton" name="symbol_21">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="12">
-       <widget class="QPushButton" name="symbol_22">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>'</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="9">
-       <widget class="QPushButton" name="pushButton_K">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>K</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="10">
-       <widget class="QPushButton" name="pushButton_L">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>L</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="7">
-       <widget class="QPushButton" name="pushButton_H">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>H</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="8">
-       <widget class="QPushButton" name="pushButton_J">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>J</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="6">
-       <widget class="QPushButton" name="pushButton_G">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>G</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="pushButton_D">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pushButton_A">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QPushButton" name="pushButton_F">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="pushButton_S">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>S</string>
         </property>
        </widget>
       </item>
@@ -1509,6 +1121,27 @@
         </property>
        </widget>
       </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QFrame" name="frame_4">
+     <layout class="QGridLayout" name="gridLayout_4" columnstretch="2,0,0,0,0,0,0,0,0,0,0,0,0,2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item row="0" column="0">
        <widget class="QPushButton" name="pushButton_28">
         <property name="sizePolicy">
@@ -1534,7 +1167,282 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="14">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_A">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>A</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pushButton_S">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>S</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="pushButton_D">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>D</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="pushButton_F">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>F</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QPushButton" name="pushButton_G">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>G</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QPushButton" name="pushButton_H">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>H</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QPushButton" name="pushButton_J">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>J</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <widget class="QPushButton" name="pushButton_K">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>K</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QPushButton" name="pushButton_L">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>L</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="10">
+       <widget class="QPushButton" name="symbol_21">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="11">
+       <widget class="QPushButton" name="symbol_22">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>'</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="12">
        <widget class="QPushButton" name="symbol_24">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -1559,29 +1467,8 @@
         </property>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QWidget" name="widget_5" native="true">
-     <layout class="QGridLayout" name="gridLayout_5" columnstretch="2,1,1,1,1,1,1,1,1,1,1,1,1,1">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="pushButton_Shift">
+      <item row="0" column="13">
+       <widget class="QPushButton" name="pushButton_Enter">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -1601,60 +1488,31 @@
          </size>
         </property>
         <property name="text">
-         <string>Shift</string>
+         <string>Enter</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="pushButton_Z">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Z</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pushButton_X">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>X</string>
-        </property>
-       </widget>
-      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QFrame" name="frame_5">
+     <layout class="QGridLayout" name="gridLayout_5" columnstretch="2,0,0,0,0,0,0,0,0,0,0,0,0,2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item row="0" column="3">
        <widget class="QPushButton" name="pushButton_C">
         <property name="sizePolicy">
@@ -1702,6 +1560,56 @@
         </property>
         <property name="text">
          <string>V</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QPushButton" name="symbol_26">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QPushButton" name="pushButton_M">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>M</string>
         </property>
        </widget>
       </item>
@@ -1755,31 +1663,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="7">
-       <widget class="QPushButton" name="pushButton_M">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>M</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="8">
        <widget class="QPushButton" name="symbol_25">
         <property name="sizePolicy">
@@ -1805,8 +1688,27 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="9">
-       <widget class="QPushButton" name="symbol_26">
+      <item row="0" column="13">
+       <widget class="QPushButton" name="pushButton_arrow_up">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="12">
+       <widget class="QPushButton" name="symbol_28">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -1821,12 +1723,12 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>30</width>
+          <width>16777215</width>
           <height>35</height>
          </size>
         </property>
         <property name="text">
-         <string>.</string>
+         <string>:</string>
         </property>
        </widget>
       </item>
@@ -1855,8 +1757,83 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_Z">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Z</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton_Shift">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Shift</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pushButton_X">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="11">
-       <widget class="QPushButton" name="symbol_28">
+       <widget class="QPushButton" name="symbol_15">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -1876,38 +1853,16 @@
          </size>
         </property>
         <property name="text">
-         <string>:</string>
+         <string>?</string>
         </property>
        </widget>
-      </item>
-      <item row="0" column="12">
-       <widget class="QPushButton" name="pushButton_arrow_up">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>35</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="13">
-       <widget class="QWidget" name="widget_10" native="true"/>
       </item>
      </layout>
     </widget>
    </item>
    <item row="6" column="0">
-    <widget class="QWidget" name="widget_6" native="true">
-     <layout class="QGridLayout" name="gridLayout_6" columnstretch="12,1,1,1">
+    <widget class="QFrame" name="frame_6">
+     <layout class="QGridLayout" name="gridLayout_6">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -1923,7 +1878,7 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="0">
+      <item row="0" column="2">
        <widget class="QPushButton" name="pushButton_Space">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -1948,7 +1903,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="0" column="3">
        <widget class="QPushButton" name="pushButton_arrow_left">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -1967,7 +1922,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
+      <item row="0" column="4">
        <widget class="QPushButton" name="pushButton_arrow_down">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -1986,7 +1941,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
+      <item row="0" column="5">
        <widget class="QPushButton" name="pushButton_arrow_right">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -2005,49 +1960,91 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton_ctrl">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Ctrl</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_alt">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Alt</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
    <item row="7" column="0">
-    <widget class="QWidget" name="widget_7" native="true">
-     <layout class="QGridLayout" name="gridLayout_7" columnstretch="2,1">
+    <widget class="QFrame" name="frame_7">
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pushButton_ok">
+        <property name="text">
+         <string>Ok</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_cancel">
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QFrame" name="frame_0">
+     <layout class="QGridLayout" name="gridLayout_9">
       <property name="leftMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
-      <property name="spacing">
+      <property name="horizontalSpacing">
+       <number>5</number>
+      </property>
+      <property name="verticalSpacing">
        <number>0</number>
       </property>
       <item row="0" column="0">
-       <widget class="QWidget" name="widget" native="true"/>
-      </item>
-      <item row="0" column="1">
-       <widget class="QWidget" name="widget_11" native="true">
-        <layout class="QGridLayout" name="gridLayout_8">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton_ok">
-           <property name="text">
-            <string>Ok</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QPushButton" name="pushButton_cancel">
-           <property name="text">
-            <string>Cancel</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <widget class="QTextEdit" name="textEdit"/>
       </item>
      </layout>
     </widget>
