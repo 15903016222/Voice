@@ -2,6 +2,7 @@
 #include "ui_datesetdialog.h"
 
 #include <QDate>
+#include <QDebug>
 
 DateSetDialog::DateSetDialog(QWidget *parent) :
     QDialog(parent),
@@ -28,6 +29,9 @@ void DateSetDialog::init_ui()
     ui->spinBox_1->setValue(str_date.left(4).toInt());
     ui->spinBox_2->setValue(str_date.mid(5, 2).toInt());
     ui->spinBox_3->setValue(str_date.right(2).toInt());
+    connect(ui->spinBox_1, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+    connect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+    connect(ui->spinBox_3, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
 }
 
 void DateSetDialog::on_buttonBox_accepted()
@@ -44,4 +48,18 @@ void DateSetDialog::on_buttonBox_accepted()
     str_date.append(QString::number((double)day, 'f', 0));
 
     emit currentDateChanged(str_date);
+}
+
+void DateSetDialog::check_date_valid(int number)
+{
+    Q_UNUSED(number);
+    QDate date = QDate(ui->spinBox_1->value(), ui->spinBox_2->value(), ui->spinBox_3->value());
+    if(date.isValid()) {
+        return;
+    } else {
+        int days = QDate(ui->spinBox_1->value(), ui->spinBox_2->value(),1).daysInMonth();
+        if(ui->spinBox_3->value() > days) {
+            ui->spinBox_3->setValue(days);
+        }
+    }
 }
