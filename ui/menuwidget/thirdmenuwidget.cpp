@@ -58,6 +58,8 @@ void ThirdMenuWidget::retranslate_third_menu_ui(QString string)
     dateTimeSetDialog->retranslate_dialog_ui();
     networkDialog->retranslate_dialog_ui();
     set_third_menu_name(8, 1);
+    set_currentDateToMenu();
+    set_currentTimeToMenu();
 }
 
 void ThirdMenuWidget::init_standard_model()
@@ -436,6 +438,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             valueList = get_dialog_value_list(index, ":");
             map["Clock Set"] = "Clock Set";
         } else if(currentHeaderText.contains(mapTwo.value("Clock Set").toString())){
+            qDebug() << "run";
             valueList = get_dialog_value_list(index, ":");
             map["Clock Set"] = mapTwo.value("Clock Set").toString();
         } else if(currentHeaderText.contains("Date Set")) {
@@ -693,6 +696,7 @@ void ThirdMenuWidget::set_currentDateToMenu()
     } else {
         model->item(0, 1)->setText(dateTimeSetDialog->str_date);
     }
+    qDebug() << model->item(0, 1)->text();
 }
 
 void ThirdMenuWidget::set_currentTimeToMenu()
@@ -702,6 +706,7 @@ void ThirdMenuWidget::set_currentTimeToMenu()
     } else {
         model->item(0, 0)->setText(dateTimeSetDialog->str_time);
     }
+    qDebug() << model->item(0, 0)->text();
 }
 
 void ThirdMenuWidget::set_currentIPToMenu()
