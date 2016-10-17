@@ -21,7 +21,7 @@
                 }
 			}
         },
-        "Pulser":{            
+        "Pulser":{
             "Tx/Rx Mode":"收发模式",
             "Pulser":"发射起始阵元",
             "Voltage":"发射电压",
@@ -47,7 +47,7 @@
                     "HW+":"正半波",
                     "HW-":"负半波"
                 }
-            },           
+            },
             "Video Filter":"视频滤波",
             "Averaging":"平均"
         },
@@ -79,14 +79,14 @@
                     "Gate I":"闸门I",
                     "Pulse":"脉冲"
                 }
-            },           
+            },
 			"Measure Mode":{
                 "Measure Mode":"测量方式",
                 "options":{
                     "Edge":"前沿",
                     "Peak":"峰值"
                 }
-            }          
+            }
         },
         "Alarm":{
 			"Alarm":{
@@ -96,7 +96,7 @@
                     "Alarm 2":"报警2",
                     "Alarm 3":"报警3"
                 }
-            },          
+            },
             "Switch":"报警开关",
 			"Group":{
                 "Group":"组选择",
@@ -127,7 +127,6 @@
                     "Or":"或"
                 }
             }
-            
         },
         "Output":{
 			"Output":{
@@ -153,7 +152,7 @@
             "Delay":"报警延迟",
             "Hold Time":"持续时间",
             "Group":"输出组数",
-			"Data":{              
+            "Data":{
 				"Data":"输出数据源",
                 "options":{
                     "A%":"A%",
@@ -213,7 +212,7 @@
 					"Curent":"当前组"
                 }
             },
-			"Display":{				
+            "Display":{
 				"Display":"显示",
                 "options":{
                     "A A-Scan":"A A-扫描",
@@ -509,7 +508,7 @@
             "TOFD",
             "缺陷记录"
         ],
-        "Reading":{           
+        "Reading":{
 			"Reading Group":{
 				"Reading Group":"检测结果组",
 				"options":{
