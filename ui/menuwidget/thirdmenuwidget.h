@@ -40,7 +40,10 @@ public:
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
     QStringList get_spinBox_step_list(QVariantMap variantMap);
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap);
+    QList<QStringList> get_translate_comboBox_option_list(QVariantMap variantMapEng, QVariantMap variantMapTran);
+    QStringList get_abbreviate_comboBox_option_list(QStringList stringList);
     QString set_long_contents_header(int index, QString string);
+    QVariantMap get_translate_option_map(QString thirdMenuString);
 
     int width;
     int height;
@@ -86,7 +89,7 @@ protected slots:
 
 private slots:
     void onHeaderClicked(int index);
-    void change_related_third_menu_data(QString string);
+    void change_related_third_menu_data(QString str);
     void set_header_text_create(QStringList stringList) const ;
     void set_header_text_close(QWidget *editor) ;
     void on_tableView_clicked(const QModelIndex &index);
