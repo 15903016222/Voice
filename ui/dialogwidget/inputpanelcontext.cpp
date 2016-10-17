@@ -9,19 +9,12 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     ui(new Ui::InputPanelContext)
 {
     ui->setupUi(this);
-    ui->pushButton_arrow_up->setText("<font>&uarr;</font>");
-    ui->pushButton_arrow_left->setText((QChar)27);
-    ui->pushButton_arrow_right->setText((QChar)26);
-    ui->pushButton_arrow_down->setText(QString((QChar)25));
+
+    capsLock = true;
+    on_pushButton_capsLock_clicked();
 
     for(int i = 0; i < 10; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + QString::number(i));
-        connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-    }
-
-    for(int i = 65; i <= 90; i ++) {
-        QString string = (QChar)i;
-        QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
     }
 
@@ -30,17 +23,9 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
     }
 
-    connect(ui->pushButton_Space, SIGNAL(clicked()), this, SLOT(edit_text()));
-    connect(ui->pushButton_BackSpace, SIGNAL(clicked()), this, SLOT(edit_text()));
-
-
-    for(int i = 2; i < 9; i ++ ) {
-        QWidget *widget = findChild<QWidget*>("widget_" + QString::number(i));
-        if(i == 7) {
-            widget->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
-        } else {
-            widget->setStyleSheet("QWidget QPushButton{font: 12pt 'Times New Roman';}");
-        }
+    for(int i = 0; i < 3; i ++ ) {
+        QFrame *frame = findChild<QFrame*>("frame_" + QString::number(i));
+        frame->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
     }
 }
 
@@ -51,23 +36,49 @@ InputPanelContext::~InputPanelContext()
 
 void InputPanelContext::edit_text()
 {
-    QString text = ui->textEdit->toPlainText();
-    QPushButton *pushButton = qobject_cast<QPushButton*>(sender());
-    if(pushButton->objectName() == "pushButton_Space") {
-        ui->textEdit->setText(text + " ");
-    } else if(pushButton->objectName() == "pushButton_BackSpace") {
-        if(text != NULL) {
-            QString newText = text.left(text.count() - 1);
-            ui->textEdit->setText(newText);
-        }
-    } else {
-        ui->textEdit->setText(text + pushButton->text());
-    }
+    QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
+    QString text = ui->textEdit->toPlainText() + pushButton->text();
+    ui->textEdit->setText(text);
 }
 
-void InputPanelContext::on_pushButton_cancel_clicked()
+void InputPanelContext::edit_lowerText()
 {
-    close();
+    QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
+    QString text = ui->textEdit->toPlainText() + pushButton->text().toLower();
+    ui->textEdit->setText(text);
+}
+
+void InputPanelContext::on_pushButton_capsLock_clicked()
+{
+    for(int i = 65; i <= 90; i ++) {
+        QString string = (QChar)i;
+        QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
+
+        if(capsLock){
+            ui->pushButton_capsLock->setStyleSheet("background-color: rgb(0, 170, 0)");
+            disconnect(pushButton, SIGNAL(clicked()), this, SLOT(edit_lowerText()));
+            connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
+        } else{
+            ui->pushButton_capsLock->setStyleSheet("background-color: rgb(175, 175, 175)");
+            disconnect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
+            connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_lowerText()));
+        }
+    }
+    capsLock = !capsLock;
+}
+
+void InputPanelContext::on_pushButton_Space_clicked()
+{
+    QString text = ui->textEdit->toPlainText();
+    ui->textEdit->setText(text + " ");
+}
+
+void InputPanelContext::on_pushButton_BackSpace_clicked()
+{
+    QString text = ui->textEdit->toPlainText();
+    if(text != NULL) {
+        ui->textEdit->setText(text.left(text.count() - 1));
+    }
 }
 
 void InputPanelContext::on_pushButton_ok_clicked()

@@ -19,6 +19,7 @@ private:
     Ui::InputPanelContext *ui;
 
 public:
+    bool capsLock;
     void set_item_current_text(QString string);
 
 signals:
@@ -26,7 +27,10 @@ signals:
 
 private slots:
     void edit_text();
-    void on_pushButton_cancel_clicked();
+    void edit_lowerText();
+    void on_pushButton_capsLock_clicked();
+    void on_pushButton_Space_clicked();
+    void on_pushButton_BackSpace_clicked();
     void on_pushButton_ok_clicked();
 };
 
