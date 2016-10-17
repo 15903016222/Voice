@@ -1101,6 +1101,17 @@
             <height>35</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(0, 170, 0)</string>
+          </property>
           <property name="text">
            <string>Caps Lock</string>
           </property>
@@ -2034,5 +2045,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>InputPanelContext</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>456</x>
+     <y>322</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>171</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
