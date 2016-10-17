@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SubNetSetDialog</class>
- <widget class="QDialog" name="SubNetSetDialog">
+ <class>NetworkDialog</class>
+ <widget class="QDialog" name="NetworkDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -49,7 +49,7 @@
          </font>
         </property>
         <property name="text">
-         <string>SubNet Address</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -84,7 +84,7 @@
            <number>1000</number>
           </property>
           <property name="value">
-           <number>255</number>
+           <number>192</number>
           </property>
          </widget>
         </item>
@@ -111,7 +111,7 @@
            <number>1000</number>
           </property>
           <property name="value">
-           <number>255</number>
+           <number>168</number>
           </property>
          </widget>
         </item>
@@ -135,10 +135,10 @@
            <set>Qt::AlignCenter</set>
           </property>
           <property name="maximum">
-           <number>1000</number>
+           <number>100</number>
           </property>
           <property name="value">
-           <number>255</number>
+           <number>1</number>
           </property>
          </widget>
         </item>
@@ -165,7 +165,7 @@
            <number>1000</number>
           </property>
           <property name="value">
-           <number>0</number>
+           <number>217</number>
           </property>
          </widget>
         </item>
@@ -188,7 +188,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SubNetSetDialog</receiver>
+   <receiver>NetworkDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -204,7 +204,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SubNetSetDialog</receiver>
+   <receiver>NetworkDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">

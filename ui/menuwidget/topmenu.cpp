@@ -2,6 +2,8 @@
 #include "ui_topmenu.h"
 
 #include "doublespinboxdelegate.h"
+#include "thirdmenuwidget.h"
+#include "firstsecondmenuwidget.h"
 
 #include <QDebug>
 
@@ -82,18 +84,22 @@ void TopMenu::init_gain_angle()
     QStandardItemModel *model_gain = new QStandardItemModel(1, 2, this);
     ui->tableView_gain->setModel(model_gain);
 
-    QFile *file = new QFile(":/json/resources/menuthree.json");
-    file->open(QIODevice::ReadOnly | QIODevice::Text);
-    QString string = file->readAll();
-    QVariantMap fourthMap = thirdMenuWidget->read_json_file(string);
-    QVariantMap variantMapGain = thirdMenuWidget->get_sub_menu_map(fourthMap, "Gain", "UT Settings_General");
-//    QVariantMap variantMapAngle = thirdMenuWidget->get_fourth_menu_map(fourthMap, QString("Angle"), QString("Measurement_Cursors"));
-    QVariantMap variantMapAngle = thirdMenuWidget->get_sub_menu_map(fourthMap, QString("Min. Angle"), QString("Focal Law_Angle"));
-    file->close();
+    ThirdMenuWidget *thirdMenuWidget = new ThirdMenuWidget;
+    FirstSecondMenuWidget *mainMenuWidget = new FirstSecondMenuWidget;
+    QFile *file = new QFile(":/json/resources/menuconf.json");
+    QVariantMap map = mainMenuWidget->read_json_file(file);
+
+    QVariantMap firstMapOne = map["UT Settings"].toMap();
+    QVariantMap secondMapOne = firstMapOne["General"].toMap();
+    QVariantMap variantMapGain = secondMapOne["Gain"].toMap();
+
+    QVariantMap firstMapTwo = map["Focal Law"].toMap();
+    QVariantMap secondMapTwo = firstMapTwo["Angle"].toMap();
+    QVariantMap variantMapAngle = secondMapTwo["Min.Angle"].toMap();
 
     int decimalGain = variantMapGain["decimal"].toInt();
     QList<int> rangeListGain = thirdMenuWidget->get_spinBox_range_list(variantMapGain);
-    QStringList stepListGain = thirdMenuWidget->get_spinBox_step_list(variantMapGain, "Gain");
+    QStringList stepListGain = thirdMenuWidget->get_spinBox_step_list(variantMapGain);
 
     DoubleSpinBoxDelegate *doubleSpinBoxOne = new DoubleSpinBoxDelegate(this);
     doubleSpinBoxOne->set_number_range(rangeListGain);
@@ -133,8 +139,7 @@ void TopMenu::init_gain_angle()
 
     int decimalAngle = variantMapAngle["decimal"].toInt();
     QList<int> rangeListAngle = thirdMenuWidget->get_spinBox_range_list(variantMapAngle);
-//    QStringList stepList = thirdMenuWidget->get_spinBox_step_list(variantMap, "Angle");
-    QStringList stepListAngle = thirdMenuWidget->get_spinBox_step_list(variantMapAngle, "Min. Angle");
+    QStringList stepListAngle = thirdMenuWidget->get_spinBox_step_list(variantMapAngle);
 
     DoubleSpinBoxDelegate *doubleSpinBoxAngle = new DoubleSpinBoxDelegate(this);
     doubleSpinBoxAngle->set_number_range(rangeListAngle);
@@ -148,7 +153,6 @@ void TopMenu::init_gain_angle()
     model_angle->item(0)->setForeground(Qt::white);
     model_angle->item(0)->setFont(QFont("Times New Roman", 14));
     ui->tableView_angle->setItemDelegate(doubleSpinBoxAngle);
-//    ui->tableView_angle->setEditTriggers(QAbstractItemView::CurrentChanged);
     ui->tableView_angle->show();
 }
 

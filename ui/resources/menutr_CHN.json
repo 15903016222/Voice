@@ -1,0 +1,684 @@
+{
+    "UT Settings":{
+        "Translate_Second_Menu":[
+            "常规",
+            "脉冲",
+            "接收",
+            "高级"
+        ],
+        "General":{
+            "Gain":"增益",
+            "Start":"起始点",
+            "Range":"范围",
+            "Velocity":"声速",
+            "Wedge Delay":"楔块延迟",
+			"UT Unit":{
+				"UT Unit":"超声轴单位",
+				"options":{
+                    "time":"时间",
+                    "sound path":"声程",
+                    "true depth":"真实深度"
+                }
+			}
+        },
+        "Pulser":{            
+            "Tx/Rx Mode":"收发模式",
+            "Pulser":"发射起始阵元",
+            "Voltage":"发射电压",
+            "PW":"脉宽",
+            "PRF":{
+				"PRF":"脉冲重复频率",
+				"options":{
+					"Auto Max":"最大",
+					"Max/2":"最大/2",
+					"Optimum":"最佳",
+					"UserDef":"自定义"
+                }
+			}
+        },
+        "Receiver":{
+			"Receiver":"起始接收阵元",
+            "Filter":"滤波",
+			"Rectifier":{
+                "Rectifier":"检波",
+                "options":{
+                    "RF":"射频",
+                    "FW":"全波",
+                    "HW+":"正半波",
+                    "HW-":"负半波"
+                }
+            },           
+            "Video Filter":"视频滤波",
+            "Averaging":"平均"
+        },
+        "Advanced":{
+            "Set 80%":"设为80%",
+            "dB Ref.":"设定参考",
+            "Point Qty.":"采样点",
+            "Scale Factor":"压缩系数",
+            "Sum Gain":"总增益"
+        }
+    },
+    "Gate/Curves":{
+        "Translate_Second_Menu":[
+            "闸门",
+            "报警设置",
+            "报警输出",
+            "DAC",
+            "TCG"
+        ],
+        "Gate":{
+            "Gate":"闸门",
+            "Start":"闸门起点",
+            "Width":"闸门宽度",
+            "Threshold":"闸门阈值",
+			"Synchro":{
+                "Synchro":"闸门同步逻辑",
+                "options":{
+                    "Gate A":"闸门A",
+                    "Gate I":"闸门I",
+                    "Pulse":"脉冲"
+                }
+            },           
+			"Measure Mode":{
+                "Measure Mode":"测量方式",
+                "options":{
+                    "Edge":"前沿",
+                    "Peak":"峰值"
+                }
+            }          
+        },
+        "Alarm":{
+			"Alarm":{
+                "Alarm":"报警",
+                "options":{
+					"Alarm 1":"报警1",
+                    "Alarm 2":"报警2",
+                    "Alarm 3":"报警3"
+                }
+            },          
+            "Switch":"报警开关",
+			"Group":{
+                "Group":"组选择",
+                "options":{
+                    "Group 1":"第1组",
+                    "All":"全部",
+                    "None":"无"
+                }
+            },
+			"Condition":{
+				"Condition":"报警条件",
+                "options":{
+                    "None":"无",
+                    "Gate A":"闸门A",
+                    "Gate B":"闸门B",
+                    "Gate I":"闸门I",
+                    "Not Gate A":"非闸门A",
+                    "Not Gate B":"非闸门B",
+                    "Not Gate I":"非闸门I",
+                    ">Max.Thickness":"大于最大厚度",
+                    "<Min.Thickness":"小于最小厚度"
+                }
+            },
+			"Operator":{
+                "Operator":"报警逻辑",
+                "options":{
+                    "And":"与",
+                    "Or":"或"
+                }
+            }
+            
+        },
+        "Output":{
+			"Output":{
+				"Output":"输出",
+                "options":{
+                    "Alarm 1":"报警1",
+                    "Alarm 2":"报警2",
+                    "Alarm 3":"报警3",
+                    "Analog 1":"模拟1",
+                    "Analog 2":"模拟2"
+                }
+            },
+			"Sound":{
+				"Sound":"蜂鸣",
+                "options":{
+                    "Off No Sound":"关 静音",
+                    "300Hz Audio Output at 300Hz":"300Hz 音频输出",
+                    "600Hz Audio Output at 600Hz":"600Hz 音频输出",
+                    "1000Hz Audio Output at 1000Hz":"1000Hz 音频输出",
+                    "5000Hz Audio Output at 5000Hz":"5000Hz 音频输出"
+                }
+            },
+            "Delay":"报警延迟",
+            "Hold Time":"持续时间",
+            "Group":"输出组数",
+			"Data":{              
+				"Data":"输出数据源",
+                "options":{
+                    "A%":"A%",
+                    "B%":"B%",
+                    "None":"无"
+                }
+            }
+        },
+        "DAC":{
+            "Mode":{
+				"Mode":"操作模式",
+                "options":{
+                    "Setting":"设置",
+                    "Edit":"编辑"
+                }
+            },
+			"Curve No.":"DAC曲线数量",
+			"Curve X":"第X条曲线",
+			"dB Offset":"增益补偿",
+			"Ref.Gain":"参考增益",
+			"Switch":"显示/隐藏",
+			"Point":"点",
+			"Position":"位置",
+			"Add Point":"增加点",
+			"Delete Point":"删除点"
+        },
+        "TCG":{
+            "Mode":{
+				"Mode":"操作模式",
+                "options":{
+                    "Setting":"设置",
+                    "Edit":"编辑"
+                }
+            },
+			"Curve No.":"TCG曲线数量",
+			"Curve X":"第X条曲线",
+			"dB Offset":"增益补偿",
+			"Switch":"显示/隐藏",
+			"Point":"点",
+			"Position":"位置",
+			"Gain":"增益",
+			"Add Point":"增加点",
+			"Delete Point":"删除点"
+        }
+    },
+    "Display":{
+        "Translate_Second_Menu":[
+            "显示模式",
+            "颜色",
+            "属性"
+        ],
+        "Selection":{
+			"Group":{
+				"Group":"组",
+                "options":{
+					"All":"全部组",
+					"Curent":"当前组"
+                }
+            },
+			"Display":{				
+				"Display":"显示",
+                "options":{
+                    "A A-Scan":"A A-扫描",
+					"B B-Scan":"B B-扫描",
+					"C C-Scan":"C C-扫描",
+					"S S-Scan":"S S-扫描",
+                    "A-B A-Scan B-Scan":"A-B A-扫描 B-扫描",
+                    "A-S A-Scan S-Scan":"A-S A-扫描 S-扫描",
+                    "A-B-C A-Scan B-Scan C-Scan":"A-B-C A-扫描 B-扫描 C-扫描",
+                    "A-B-S A-Scan B-Scan S-Scan":"A-B-S A-扫描 B-扫描 S-扫描",
+                    "A-S-[C] A-Scan S-Scan [C-Scan]":"A-S-[C] A-扫描 S-扫描 [C-扫描]",
+                    "S-A-A-A S-Scan A-Scan A-Scan A-Scan":"S-A-A-A S-扫描 A-扫描 A-扫描 A-扫描",
+                    "S-A-C-C S-Scan A-Scan C-Scan C-Scan":"S-A-C-C S-扫描 A-扫描 C-扫描 C-扫描"
+                }
+            },
+			"C-Scan Source":{
+				"C-Scan Source":"C扫数据",
+                "options":{
+                    "A%":"A%",
+                    "B%":"B%",
+                    "Thickness":"厚度",
+                    "I/":"I/"
+                }
+            },
+            "Min.Thickness":"最小厚度",
+            "Max.Thickness":"最大厚度"
+        },
+        "Color Settings":{
+            "Amplitude":"幅度",
+            "Depth":"深度",
+            "TOFD":"TOFD"
+        },
+        "Properties":{
+			"Scan":{
+				"Scan":"扫描模式",
+                "options":{
+                    "A-Scan":"A-扫描",
+                    "B-Scan":"B-扫描",
+                    "C-Scan":"C-扫描"
+                }
+            },
+			"Color":{
+				"Color":"颜色",
+                "options":{
+                    "Blue":"蓝色",
+                    "Green":"绿色",
+                    "Red":"红色",
+                    "Yellow":"黄色",
+                    "Black":"黑色",
+                    "White":"白色"
+                }
+            },
+			"Envelope":{
+				"Envelope":"包络",
+                "options":{
+                    "None":"无",
+                    "Infinite":"极限值"
+                }
+            },
+            "Peak Holding":"峰值冻结",
+            "Reference Holding":"参考冻结",
+            "Compression":"压缩",
+            "Ratio 1:1":"比率 1:1",
+			"C-Scan Mode":{
+				"C-Scan Mode":"C扫模式",
+                "options":{
+                    "Sectorial":"角度C扫",
+                    "Linear":"投影C扫"
+                }
+            }
+        }
+    },
+    "Probe/Part":{
+        "Translate_Second_Menu":[
+            "选择",
+            "位置",
+            "FFT",
+            "工件",
+            "高级"
+        ],
+        "Select":{
+			"Group":{
+				"Group":"组",
+                "options":{
+                    "Add":"增加",
+                    "1":"1",
+                    "2":"2",
+                    "3":"3",
+                    "4":"4",
+                    "5":"5",
+                    "6":"6",
+                    "7":"7",
+                    "8":"8",
+                    "Remove":"删除"
+                }
+            },
+			"Group Mode":{
+				"Group Mode":"检测模式",
+                "options":{
+                    "UT (PA Connector)":"UT (常规超声)",
+                    "PA (Phassed Array)":"PA (相控阵)",
+                    "UT1 (Conventional UT)":"UT1 (独立通道1)",
+                    "UT2 (Conventional UT)":"UT2 (独立通道2)"
+                }
+            },
+            "Probe":"探头",
+            "Wedge":"楔块",
+			"Define":{
+				"Define":"自定义",
+                "options":{
+                    "Probe":"探头",
+                    "Wedge":"楔块"
+                }
+            },
+            "Auto Detect":"自动检测"
+        },
+        "Position":{
+            "Scan Offset":"扫查偏置",
+            "Index Offset":"步进偏置",
+            "Skew":"转向角"
+        },
+        "FFT":{
+            "Gain":"增益",
+            "Start":"闸门起点",
+            "Width":"闸门宽度",
+            "Switch":"FFT开关"
+        },
+        "Part":{
+            "Geometry":{
+				"Geometry":"工件形状",
+                "options":{
+                    "Plate":"板",
+                    "ID":"凸面",
+                    "OD":"凹面"
+                }
+            },
+            "Thickness":"厚度",
+            "Diameter":"直径",
+			"Material":{
+				"Material":"材料",
+                "options":{
+                    "Aluminum":"铝",
+                    "Steel Common":"普通钢",
+                    "Steel Stainless":"不锈钢",
+                    "Brass":"黄铜",
+                    "Copper":"铜",
+                    "Iron":"铁",
+                    "Lead":"铅",
+                    "Nylon":"尼龙",
+                    "Silver":"银",
+                    "Gold":"金",
+                    "Zinc":"锌",
+                    "Titanium":"钛",
+                    "Tin":"锡",
+                    "Epoxy Resin":"环氧树脂",
+                    "Ice":"冰",
+                    "Nickel":"镍",
+                    "Plexiglass":"树脂玻璃",
+                    "Polystyrene":"聚苯乙烯",
+                    "orcelain":"瓷器",
+                    "PVC":"聚氯乙烯",
+                    "Quartz Glass":"石英玻璃",
+                    "Rubber Vulcanized":"硫化橡胶",
+                    "Teflon":"聚四氟乙烯",
+                    "Water":"水"
+                }
+            },
+            "Overlay":"厚度参考线"
+        },
+        "Advanced":{
+            "Load Part":"工件加载",
+            "Clear Part":"工件清除"
+        }
+    },
+    "Focal Law":{
+        "Translate_Second_Menu":[
+            "配置",
+            "声速角度",
+            "孔径",
+            "焦点"
+        ],
+        "Law Config":{
+            "Law Type":{
+                "Law Type":"聚焦法则类型",
+                "options":{
+                    "Azimuthal":"扇形扫查",
+                    "Linear":"线性扫查"
+                }
+            },
+            "Pulse Connection":"发射起始阵元",
+            "Receiver Connection":"接收起始阵元",
+            "Wave Type":"波型"
+        },
+        "Angle":{
+            "Min. Angle":"起始角度",
+            "Max. Angle":"终止角度",
+            "Angle Step":"步进"
+        },
+        "Apeture":{
+            "Apeture":"阵元数",
+            "First Element":"起始阵元",
+            "Last Element":"末阵元",
+            "Element Step":"阵元步进"
+        },
+        "Focal Point":{
+			"Type":{
+				"Type":"聚焦类型",
+                "options":{
+                    "True Depth":"真实深度",
+                    "Half Path":"半声程",
+                    "Projection":"投影面",
+                    "Focal Plane":"Focal Plane",
+                    "DDF":"DDF"
+                }
+            },
+            "Position Start":"初始位置",
+            "Position End":"终点位置",
+            "Offset Start":"初始补偿",
+            "Offset End":"终点补偿"
+        }
+    },
+    "Scan":{
+        "Translate_Second_Menu":[
+            "扫查设置",
+            "编码器",
+            "扫查区域",
+            "开始"
+        ],
+        "Inspection":{
+            "Scan":{
+                "Scan":"扫查模式",
+                "options":{
+                    "Time":"时间",
+                    "Encoder 1":"编码器1",
+                    "Encoder 2":"编码器2"
+                }
+            },
+			"Type":{
+				"Type":"编码器类型",
+                "options":{
+                    "One Line":"One Line",
+                    "Raster Scan":"Raster Scan",
+                    "Helicoidal Scan":"Helicoidal Scan"
+                }
+            },
+            "Max Scan Speed":"扫查轴最大速度",
+            "Max Scan Speed(rpm)":"扫查轴最大速度"
+        },
+        "Encoder":{
+            "Encoder":{
+                "Encoder":"编码器",
+                "options":{
+                    "Encoder 1":"编码器1",
+                    "Encoder 2":"编码器2"
+                }
+            },
+			"Encoder Type":{
+				"Encoder Type":"类型",
+                "options":{
+                    "Up":"向上",
+                    "Down":"向下",
+                    "Quad":"正交"
+                }
+            },
+            "Resolution":"分辨率",
+            "Polarity":{
+                "Polarity":"极性",
+                "options":{
+                    "Normal":"常规",
+                    "Reverse":"反转"
+                }
+            },
+            "Origin":"编码器起点",
+            "Preset":"预置编码器"
+        },
+        "Area":{
+            "Scan Start":"扫查起点",
+            "Scan End":"扫查终点",
+            "Scan Resolution":"扫查分辨率",
+            "Index Start":"步进起点",
+            "Index End":"步进终点",
+            "Index Resolution":"步进分辨率"
+        },
+        "Start":{
+            "Start":"开始",
+            "Pause":"暂停"
+        }
+    },
+    "Measurement":{
+        "Translate_Second_Menu":[
+            "检测结果",
+            "光标",
+            "TOFD",
+            "缺陷记录"
+        ],
+        "Reading":{           
+			"Reading Group":{
+				"Reading Group":"检测结果组",
+				"options":{
+					"1 Weld Joint:A%/DA/PA/SA":"1 焊缝:A%/DA/PA/SA",
+					"2 TOFD:A%/T-D(r)/T-D(m)/T-D(m-r)":"2 TOFD:A%/T-D(r)/T-D(m)/T-D(m-r)",
+					"3 Corossion:T(A^)/ML":"3 腐蚀:T(A^)/ML"
+				}
+            },
+            "A%":"A%",
+            "DA":"DA",
+            "PA":"PA",
+            "SA":"SA",
+            "T-D(r)":"T-D(r)",
+            "T-D(m)":"T-D(m)",
+            "T-D(m-r)":"T-D(m-r)",
+            "T(A^)":"T(A^)",
+            "ML":"ML"
+        },
+        "Cursors":{
+            "Selection":{
+                "Selection":"选择",
+                "options":{
+                    "A-Scan":"A-扫描",
+                    "B-Scan":"B-扫描",
+                    "C-Scan":"C-扫描",
+                    "S-Scan":"S-扫描"
+                }
+            },
+            "%(r)":"%(r)",
+            "%(m)":"%(m)",
+            "U(r)":"U(r)",
+            "U(m)":"U(m)",
+            "S(r)":"S(r)",
+            "S(m)":"S(m)",
+            "I(r)":"I(r)",
+            "I(m)":"I(m)",
+            "Angle":"角度"
+        },
+        "TOFD":{
+            "Select":{
+                "Select":"选择",
+                "options":{
+                    "TOFD Settings":"TOFD设置",
+                    "TOFD Analysis":"TOFD分析"
+                }
+            },
+            "Wedge Sep.":"楔块间距",
+            "Layer Depth":"分层深度",
+            "TOFD Calculator":"TOFD计算",
+            "Start":"起始点",
+            "Range":"范围",
+            "Straightening":"直通波拉直",
+            "Remove Lateral":"去除直通波",
+            "Ref.Position":"参考位置",
+            "Depth Calibration":"深度校准"
+        },
+        "Flaw Record":{
+            "Add/Delete":"增加/删除记录",
+            "Flaw Image":"记录图像",
+            "Comment":"缺陷描述",
+            "Display Table":"显示报表",
+            "Export Record":"输出记录"
+        }
+    },
+    "File/Report":{
+        "Translate_Second_Menu":[
+            "文件",
+            "保存模式",
+            "报告",
+            "格式",
+            "用户栏"
+        ],
+        "File":{
+            "Save Setup As":"设置另存为",
+            "Open":"打开",
+            "File Manager":"文件管理"
+        },
+        "Save Mode":{
+            "Storage":{
+                "Storage":"存储",
+                "options":{
+                    "SD":"存储卡",
+                    "SSG":"内存",
+                    "U Storage":"U盘"
+                }
+            },
+            "Save Mode":{
+                "Save Mode":"保存模式",
+                "options":{
+                    "Inspection Data":"检测数据",
+                    "Inspection Table":"缺陷记录表",
+                    "Screen":"屏幕",
+                    "Report":"报告"
+                }
+            },
+            "Save Data":"保存数据",
+            "File Name":"文件名"
+        },
+        "Report":{
+            "Template":"模板",
+            "Report Name":"文件名",
+            "Customer":"用户名",
+            "Part Name":"工件名称",
+            "Part Number":"工件编号",
+            "Create":"报告预览"
+        },
+        "Format":{
+            "Probe/Wedge Info":"探头信息",
+            "Inspection Info":"检测信息",
+            "Scan Info":"扫查信息",
+            "Encoder Info":"编码器信息",
+            "DAC/TCG Info":"DAC/TCG信息",
+            "Flaw Record Table":"缺陷报表"
+        },
+        "User Field":{
+            "Select":"选择",
+            "Enable":"启用",
+            "Label":"主题",
+            "Content":"内容",
+            "Edit Note":"编辑注释",
+            "Print":"打印"
+        }
+    },
+    "Preference":{
+        "Translate_Second_Menu":[
+            "配置",
+            "系统设置",
+            "网络设置",
+            "服务"
+        ],
+        "Preference":{
+            "Units":{
+                "Units":"单位",
+                "options":{
+                    "Millimeters":"毫米",
+                    "Inches":"英寸"
+                }
+            },
+            "Bright":"亮度",
+            "Opacity":"透明度"
+        },
+        "System":{
+            "Clock Set":"设置时间",
+            "Date Set":"设置日期",
+            "Language":{
+                "Language":"语言",
+                "options":{
+                    "English":"English",
+                    "Chinese":"中文"
+                }
+            }
+        },
+        "Network":{
+            "IP Address":"IP地址",
+            "Subnet Mask":"子网掩码"
+        },
+        "Service":{
+            "System Information":"系统信息",
+            "Cert Import":{
+				"Cert Import":"证书导入",
+				"options":{
+					"U-Disk":"U盘导入",
+					"Network":"网络导入"
+				}
+            },
+            "SW Update":"软件升级",
+            "HW Update":"硬件升级",
+            "Reset Configuration":"清除设置",
+            "About":"关于"
+        }
+    }
+}
