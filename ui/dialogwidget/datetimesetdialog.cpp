@@ -1,56 +1,60 @@
-#include "datesetdialog.h"
-#include "ui_datesetdialog.h"
+#include "datetimesetdialog.h"
+#include "ui_datetimesetdialog.h"
 
 #include <QDate>
-#include <QDebug>
 
-DateSetDialog::DateSetDialog(QWidget *parent) :
+DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::DateSetDialog)
+    ui(new Ui::DateTimeSetDialog)
 {
     ui->setupUi(this);
 
     init_ui();
 }
 
-DateSetDialog::~DateSetDialog()
+DateTimeSetDialog::~DateTimeSetDialog()
 {
     delete ui;
 }
 
-void DateSetDialog::retranslate_dialog_ui()
+void DateTimeSetDialog::retranslate_dialog_ui()
 {
     ui->retranslateUi(this);
 }
 
-void DateSetDialog::init_ui()
+void DateTimeSetDialog::init_ui()
 {
-    str_date = QDate::currentDate().toString("yyyy-MM-dd");
-    ui->spinBox_1->setValue(str_date.left(4).toInt());
-    ui->spinBox_2->setValue(str_date.mid(5, 2).toInt());
-    ui->spinBox_3->setValue(str_date.right(2).toInt());
-    connect(ui->spinBox_1, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
-    connect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
-    connect(ui->spinBox_3, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+
 }
 
-void DateSetDialog::on_buttonBox_accepted()
-{
-    int year = ui->spinBox_1->value();
-    int month = ui->spinBox_2->value();
-    int day = ui->spinBox_3->value();
+void DateTimeSetDialog::on_buttonBox_accepted()
+{    
+    int valueOne = ui->spinBox_1->value();
+    int valueTwo = ui->spinBox_2->value();
+    int valueThree = ui->spinBox_3->value();
 
-    str_date.clear();
-    str_date.append(QString::number((double)year, 'f', 0));
-    str_date.append("-");
-    str_date.append(QString::number((double)month, 'f', 0));
-    str_date.append("-");
-    str_date.append(QString::number((double)day, 'f', 0));
+    if(titleMap.keys().at(0) == "Date Set") {
+        str_date.clear();
+        str_date.append(QString::number((double)valueOne, 'f', 0));
+        str_date.append("-");
+        str_date.append(QString::number((double)valueTwo, 'f', 0));
+        str_date.append("-");
+        str_date.append(QString::number((double)valueThree, 'f', 0));
 
-    emit currentDateChanged(str_date);
+        emit currentDateTimeChanged(str_date);
+    } else {
+        str_time.clear();
+        str_time.append(QString::number((double)valueOne, 'f', 0));
+        str_time.append(":");
+        str_time.append(QString::number((double)valueTwo, 'f', 0));
+        str_time.append(":");
+        str_time.append(QString::number((double)valueThree, 'f', 0));
+
+        emit currentDateTimeChanged(str_time);
+    }
 }
 
-void DateSetDialog::check_date_valid(int number)
+void DateTimeSetDialog::check_date_valid(int number)
 {
     Q_UNUSED(number);
     QDate date = QDate(ui->spinBox_1->value(), ui->spinBox_2->value(), ui->spinBox_3->value());
@@ -62,4 +66,42 @@ void DateSetDialog::check_date_valid(int number)
             ui->spinBox_3->setValue(days);
         }
     }
+}
+
+void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> map)
+{
+    ui->label->setText(map.values().at(0));
+    titleMap = map;
+    if(map.keys().at(0) == "Date Set") {
+        ui->spinBox_1->setMinimum(1970);
+        ui->spinBox_2->setMinimum(1);
+        ui->spinBox_3->setMinimum(1);
+
+        ui->spinBox_1->setMaximum(5000);
+        ui->spinBox_2->setMaximum(12);
+        ui->spinBox_3->setMaximum(31);
+
+        connect(ui->spinBox_1, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+        connect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+        connect(ui->spinBox_3, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+    } else {
+        ui->spinBox_1->setMinimum(0);
+        ui->spinBox_2->setMinimum(0);
+        ui->spinBox_3->setMinimum(0);
+
+        ui->spinBox_1->setMaximum(23);
+        ui->spinBox_2->setMaximum(59);
+        ui->spinBox_3->setMaximum(59);
+
+        disconnect(ui->spinBox_1, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+        disconnect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+        disconnect(ui->spinBox_3, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
+    }
+}
+
+void DateTimeSetDialog::set_spinbox_value(QList<int> valueList)
+{
+    ui->spinBox_1->setValue(valueList.at(0));
+    ui->spinBox_2->setValue(valueList.at(1));
+    ui->spinBox_3->setValue(valueList.at(2));
 }
