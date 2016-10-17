@@ -666,6 +666,9 @@
                 "style":"2",
                 "options":[
                     "A A-Scan",
+					"B B-Scan",
+					"C C-Scan",
+					"S S-Scan",
                     "A-B A-Scan B-Scan",
                     "A-S A-Scan S-Scan",
                     "A-B-C A-Scan B-Scan C-Scan",
