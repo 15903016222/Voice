@@ -13,21 +13,10 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     capsLock = true;
     on_pushButton_capsLock_clicked();
 
-//    ui->pushButton_arrow_up->setText("<font>&uarr;</font>");
-//    ui->pushButton_arrow_left->setText((QChar)27);
-//    ui->pushButton_arrow_right->setText((QChar)26);
-//    ui->pushButton_arrow_down->setText(QString((QChar)25));
-
     for(int i = 0; i < 10; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
     }
-
-//    for(int i = 65; i <= 90; i ++) {
-//        QString string = (QChar)i;
-//        QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
-//        connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-//    }
 
     for(int i = 1; i <= 28; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("symbol_" + QString::number(i));
@@ -55,8 +44,8 @@ void InputPanelContext::edit_text()
 void InputPanelContext::edit_lowerText()
 {
     QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
-    QString text = ui->textEdit->toPlainText();
-    ui->textEdit->setText(text + pushButton->text().toLower());
+    QString text = ui->textEdit->toPlainText() + pushButton->text().toLower();
+    ui->textEdit->setText(text);
 }
 
 void InputPanelContext::on_pushButton_capsLock_clicked()
@@ -67,9 +56,11 @@ void InputPanelContext::on_pushButton_capsLock_clicked()
 
         if(capsLock){
             ui->pushButton_capsLock->setStyleSheet("background-color: rgb(0, 170, 0)");
+            disconnect(pushButton, SIGNAL(clicked()), this, SLOT(edit_lowerText()));
             connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
         } else{
             ui->pushButton_capsLock->setStyleSheet("background-color: rgb(175, 175, 175)");
+            disconnect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
             connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_lowerText()));
         }
     }
