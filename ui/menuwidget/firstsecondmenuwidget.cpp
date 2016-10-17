@@ -10,10 +10,17 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     ui->setupUi(this);
 
     toolBox.append(ui->toolBox);
-    QFile *file = new QFile(":/json/resources/menuone.json");
-    read_json_file(file);
+
+    QFile *file = new QFile(":/json/resources/menuconf.json");
+    firstMenuMap = read_json_file(file);
+    QFile *fileTranslate = new QFile(":/json/resources/menutr_CHN.json");
+    translateChineseMap = read_json_file(fileTranslate);
+
+    languageOption = 1;
 
     init_ui();
+    QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
+    set_second_menu_item_style(0, initModelIndex);
 
     m_mcu = Mcu::get_mcu();
  //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
@@ -24,9 +31,17 @@ FirstSecondMenuWidget::~FirstSecondMenuWidget()
     delete ui;
 }
 
-void FirstSecondMenuWidget::retranslate_main_menu_ui()
+void FirstSecondMenuWidget::retranslate_main_menu_ui(QString string)
 {
     ui->retranslateUi(this);
+    if(string == "Chinese") {
+        languageOption = 2;
+    } else if(string == "English") {
+        languageOption = 1;
+    }
+    init_ui();
+    QModelIndex initModelIndex = modelList.at(8)->index(1, 0);
+    set_second_menu_item_style(8, initModelIndex);
 }
 
 void FirstSecondMenuWidget::set_second_menu_name(int i)
@@ -34,9 +49,12 @@ void FirstSecondMenuWidget::set_second_menu_name(int i)
     QStringList secondMenuList;
     QStringList stringList = get_second_menu_list(i);
 
+    if(modelList.at(i)->rowCount() == stringList.count()) {
+        modelList.at(i)->removeRows(0, stringList.count());
+    }
+
     for(int j = 0; j < stringList.count(); j++) {
         secondMenuList.append(stringList.at(j));
-
         QString string = static_cast<QString>(secondMenuList.at(j));
 
         QStandardItem *item = new QStandardItem(string);
@@ -51,7 +69,6 @@ void FirstSecondMenuWidget::set_second_menu_item_style(int i, QModelIndex index)
     for(int j = 0; j < stringList.count(); j++) {
         QModelIndex modelIndex = modelList.at(i)->index(j, 0);
         QStandardItem *item = modelList.at(i)->itemFromIndex(modelIndex);
-
         if(modelIndex == index) {
             item->setForeground(QBrush(Qt::red, Qt::SolidPattern));
             menuList.at(i)->setCurrentIndex(modelIndex);
@@ -68,13 +85,21 @@ void FirstSecondMenuWidget::init_ui()
     for(int i = 0; i < FIRST_MENU_NUMBER; i++) {
         QListView* listView = findChild<QListView*>("listView_" + QString::number(i + 1));
         listView->setStyleSheet("QListView{font: 14pt 'Times New Roman'}");
+
+        if(menuList.size() == 9) {
+            menuList.clear();
+        }
         menuList.append(listView);
 
         firstMenuData.append(ui->toolBox->itemText(i));
 
         QStandardItemModel *standardItemModel = new QStandardItemModel(this);
         standardItemModel->setObjectName("standardItemModel_"+QString::number(i + 1));
+        if(modelList.size() == 9) {
+            modelList.clear();
+        }
         modelList.append(standardItemModel);
+
 
         set_second_menu_name(i);
 
@@ -84,29 +109,35 @@ void FirstSecondMenuWidget::init_ui()
         menuList.at(i)->setCurrentIndex(initModelIndex);
         menuList.at(i)->setModel(modelList.at(i));
     }
-
-    QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
-    set_second_menu_item_style(0, initModelIndex);
 }
 
 
-void FirstSecondMenuWidget::read_json_file(QFile *file)
+QVariantMap FirstSecondMenuWidget::read_json_file(QFile *file)
 {
     QJson::Parser parser;
     bool ok;
     file->open(QIODevice::ReadOnly | QIODevice::Text);
     QString str = file->readAll();
-    QVariant variant = parser.parse(str.toUtf8(), &ok);
+    QVariantMap variantMap = parser.parse(str.toUtf8(), &ok).toMap();
     if(!ok) {
         qDebug() << "An error occured during parsing.";
     }
-    firstMenuMap = variant.toMap();
+    file->close();
+    return variantMap;
 }
 
 QStringList FirstSecondMenuWidget::get_second_menu_list(int i)
 {
-    QVariantList variantList = firstMenuMap.values(firstMenuData.at(i));
-    QStringList stringList  = variantList.at(0).toStringList();
+    QStringList stringList;
+    if(languageOption == 1) {
+        QVariantMap variantMap = firstMenuMap[firstMenuData.at(i)].toMap();
+        QVariantList variantList = variantMap.values("Queue_Second_Menu");
+        stringList  = variantList.at(0).toStringList();
+    } else if(languageOption == 2) {
+        QVariantMap variantMap = translateChineseMap[firstMenuData.at(i)].toMap();
+        QVariantList variantList = variantMap.values("Translate_Second_Menu");
+        stringList  = variantList.at(0).toStringList();
+    }
     return stringList;
 }
 

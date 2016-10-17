@@ -17,40 +17,26 @@
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
-	ui(new Ui::ThirdMenuWidget)
+    ui(new Ui::ThirdMenuWidget)
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
-	widget = new FirstSecondMenuWidget;
+    widget = new FirstSecondMenuWidget;
     dateSetDialog = new DateSetDialog(this);
     clockSetDialog = new ClockSetDialog(this);
-    ipSetDialog = new IPSetDialog(this);
-    subNetSetDialog = new SubNetSetDialog(this);
+    networkDialog = new NetworkDialog(this);
 
-    QFile *fileOne = new QFile(":/json/resources/menutwo.json");
-    fileOne->open(QIODevice::ReadOnly | QIODevice::Text);
-    QString stringOne = fileOne->readAll();
+    height = this->geometry().height();
+    languageOption = 1;
 
-    thirdMenuMap = read_json_file(stringOne);
-	fileOne->close();
-
-    QFile *fileTwo = new QFile(":/json/resources/menuthree.json");
-    fileTwo->open(QIODevice::ReadOnly | QIODevice::Text);
-    QString stringTwo = fileTwo->readAll();
-
-    fourthMenuMap = read_json_file(stringTwo);
-    fileTwo->close();
-
-    height = this->geometry().height();   
     init_standard_model();
     set_third_menu_name(0, 0);
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
- //   connect(ui->tableView->horizontalHeader(), SIGNAL(sectionDoubleClicked(int)), this, SLOT(onHeaderClicked(int)), Qt::QueuedConnection);
 
     m_mcu = Mcu::get_mcu();
     set_autoDetect_probeModel(false);
- //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+//   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
 }
 
@@ -59,9 +45,19 @@ ThirdMenuWidget::~ThirdMenuWidget()
     delete ui;
 }
 
-void ThirdMenuWidget::retranslate_third_menu_ui()
+void ThirdMenuWidget::retranslate_third_menu_ui(QString string)
 {
+    emit retranslate_ui(string);
     ui->retranslateUi(this);
+    if(string == "Chinese") {
+        languageOption = 2;
+    } else if (string == "English") {
+        languageOption = 1;
+    }
+    clockSetDialog->retranslate_dialog_ui();
+    dateSetDialog->retranslate_dialog_ui();
+    networkDialog->retranslate_dialog_ui();
+    set_third_menu_name(8, 1);
 }
 
 void ThirdMenuWidget::init_standard_model()
@@ -106,34 +102,21 @@ void ThirdMenuWidget::init_standard_model()
 
 void ThirdMenuWidget::set_third_menu_name(int i, int j)
 {
-	currFirstNum = i;
-	currSecondNum = j;
-	model->clear();
+    currFirstNum = i;
+    currSecondNum = j;
+    model->clear();
     init_standard_model();
 
     firstMenuString = widget->firstMenuData.at(i);
     secondMenuString = widget->get_second_menu_list(i).at(j);
-    QStringList thirdStringList = get_third_menu_list();
-    set_model_item(0, thirdStringList.count());
+
+    set_model_item(0, get_third_menu_list());
 }
 
-void ThirdMenuWidget::choose_widget_style(int k)
+void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString)
 {
-    QString thirdMenuString = get_third_menu_list().at(k);
-    QString subString = firstMenuString + "_" + secondMenuString;
-
-    QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
-    QVariantMap subCacheMap = get_sub_menu_map(menuCacheMap, thirdMenuString, subString);
-
-    QString newThirdMenuString = set_long_contents_header(k, thirdMenuString);
-    if(subVariantMap.contains("unit")) {
-        model->setHeaderData(k, Qt::Horizontal, QString(newThirdMenuString + "\n(" + subVariantMap["unit"].toString() + ")"));
-    } else {
-        model->setHeaderData(k, Qt::Horizontal, newThirdMenuString);
-    }
-
-    if(subVariantMap.contains("style")) {
-        switch(subVariantMap["style"].toString().toInt()) {
+    if(thirdMenuMap.contains("style")) {
+        switch(thirdMenuMap["style"].toString().toInt()) {
             case 0: {
                 QStandardItem *item = new QStandardItem(QString(""));
                 model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -143,9 +126,9 @@ void ThirdMenuWidget::choose_widget_style(int k)
             }
             case 1: {
                 //SpinBox
-                QList<int> rangeList = get_spinBox_range_list(subVariantMap);
-                QStringList stepList = get_spinBox_step_list(subVariantMap, thirdMenuString);
-                int decimal = subVariantMap["decimal"].toInt();
+                QList<int> rangeList = get_spinBox_range_list(thirdMenuMap);
+                QStringList stepList = get_spinBox_step_list(thirdMenuMap);
+                int decimal = thirdMenuMap["decimal"].toInt();
 
                 DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
                 doubleSpinBox->set_number_range(rangeList);
@@ -154,15 +137,9 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 doubleSpinBox->set_decimal_amount(decimal);
 
                 QStandardItem *item;
-                if(subCacheMap.contains(thirdMenuString)) {
-                    item = new QStandardItem(QString::number(subCacheMap[thirdMenuString].toString().toFloat(), 'f', decimal));
-                } else {
-                    item = new QStandardItem(QString::number((rangeList.at(0) + rangeList.at(1)) / 2, 'f', decimal));
-                }
+                item = new QStandardItem(QString::number((rangeList.at(0) + rangeList.at(1)) / 2, 'f', decimal));
 
                 model->setItem(0, k, item);
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
@@ -170,7 +147,13 @@ void ThirdMenuWidget::choose_widget_style(int k)
             }
             case 2: {
                 //ComboBox
-                QList<QStringList> list = get_comboBox_option_list(subVariantMap, thirdMenuString);
+                QList<QStringList> list;
+                if(languageOption == 1) {
+                    list = get_comboBox_option_list(thirdMenuMap);
+                } else if(languageOption == 2) {
+                    QVariantMap headerMap = get_translate_option_map(thirdMenuString);
+                    list = get_translate_comboBox_option_list(thirdMenuMap, headerMap);
+                }
 
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 comboBox->set_comboBox_item_list(list.at(0));
@@ -178,24 +161,17 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 comboBox->set_minimum_contents_length(width / 6);
 
                 QStandardItem *item;
-                if(subCacheMap.contains(thirdMenuString)) {
-                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
-                } else {
-                    item = new QStandardItem(list.at(1).at(0));
-                }
+                item = new QStandardItem(list.at(1).at(0));
+
                 model->setItem(0, k, item);
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(comboBox_current_text(QString)), this, SLOT(change_related_third_menu_data(QString)));
-
-                if(thirdMenuString.contains("Language")){
-                    connect(comboBox, SIGNAL(comboBox_current_text(QString)), this, SLOT(set_translateUI(QString)));
-                }
+                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(change_language(QString)), this, SLOT(retranslate_third_menu_ui(QString)));
                 break;
             }
             case 3: {
                 //切换字on/off
-                QVariantList tmpList = subVariantMap["label"].toList();
+                QVariantList tmpList = thirdMenuMap["label"].toList();
                 QStringList switchList;
                 if(tmpList.size() != 0) {
                     for(int index = 0; index < tmpList.size(); index ++) {
@@ -210,15 +186,10 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 PushButtonDelegate *pushButton = new PushButtonDelegate(this);
 
                 QStandardItem *item;
-                if(subCacheMap.contains(thirdMenuString)) {
-                    item = new QStandardItem(subCacheMap[thirdMenuString].toString());
-                } else {
-                    item = new QStandardItem(QString("On"));
-                }
+                item = new QStandardItem(QString("Off"));
 
                 model->setItem(0, k, item);
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
 
                 if(thirdMenuString.contains("Auto Detect")) {
@@ -230,7 +201,6 @@ void ThirdMenuWidget::choose_widget_style(int k)
                 ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
                 QStandardItem *item = new QStandardItem(QString(""));
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
-                model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
                 model->setItem(0, k, item);
                 model->item(0, k)->setFlags(Qt::NoItemFlags);
                 break;
@@ -239,7 +209,6 @@ void ThirdMenuWidget::choose_widget_style(int k)
         ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
         QStandardItem *item = new QStandardItem(QString(""));
         ui->tableView->setItemDelegateForColumn(k, comboBox);
-        model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         model->setItem(0, k, item);
         model->item(0, k)->setFlags(Qt::NoItemFlags);
     }
@@ -252,53 +221,64 @@ void ThirdMenuWidget::resizeEvent(QResizeEvent *event)
     set_third_menu_name(currFirstNum, currSecondNum);
 }
 
-QVariantMap ThirdMenuWidget::read_json_file(QString string)
-{
-    QJson::Parser parser;
-    bool ok;
-    QVariant variant = parser.parse(string.toUtf8(), &ok);
-    QVariantMap variantMap = variant.toMap();
-
-    return variantMap;
-}
-
 QStringList ThirdMenuWidget::get_third_menu_list()
 {
-    QStringList stringList;
     QVariantList variantList;
-    QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
-    if(!variantMap.isEmpty() && variantMap.contains(firstMenuString)) {
-        variantList = variantMap.values(firstMenuString);
-    } else if(!variantMap.isEmpty() && variantMap.contains("first third_menu")) {
-        QString string = variantMap.value("first third_menu").toString();
-        QVariantMap firstThirdMenuMap = get_sub_menu_map(fourthMenuMap, string, firstMenuString + "_" + secondMenuString);
-        QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap, string).at(1);
-        if(relatedMenuString == NULL || !otherThirdMenuList.contains(relatedMenuString)) {
-            variantList = variantMap.values(otherThirdMenuList.at(0));
+    QVariantMap firstMap = widget->firstMenuMap[firstMenuString].toMap();
+    secondMenuMap = firstMap[secondMenuString].toMap();
+    if(!secondMenuMap.isEmpty() && secondMenuMap.contains("Queue_Third_Menu")) {
+        QVariantMap variantMap = secondMenuMap["Queue_Third_Menu"].toMap();
+        if(variantMap.isEmpty()) {
+            variantList = secondMenuMap.values("Queue_Third_Menu");
         } else {
-            variantList = variantMap.values(relatedMenuString);
+            QString string = variantMap.value("first third_menu").toString();
+            QVariantMap firstThirdMenuMap = secondMenuMap[string].toMap();
+            QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap).at(0);
+            if(relatedMenuString == NULL || !otherThirdMenuList.contains(relatedMenuString)) {
+                variantList = variantMap.values(otherThirdMenuList.at(0));
+            } else {
+                variantList = variantMap.values(relatedMenuString);
+            }
         }
-    } else {
-        variantList = thirdMenuMap.values(secondMenuString);
     }
-    stringList = variantList.at(0).toStringList();
+
+    QStringList stringList = variantList.at(0).toStringList();
+    return stringList;
+}
+
+QStringList ThirdMenuWidget::get_translate_third_menu_list()
+{
+    QStringList tmpList = get_third_menu_list();
+    QStringList stringList;
+    QVariantMap firstTranslateMap = widget->translateChineseMap[firstMenuString].toMap();
+    QVariantMap secondMap = firstTranslateMap[secondMenuString].toMap();
+    for(int index = 0; index < tmpList.count(); index ++) {
+        QString thirdMenuString = tmpList.at(index);
+        if(secondMap.value(thirdMenuString).toMap().isEmpty()) {
+            stringList.append(secondMap.value(thirdMenuString).toString());
+        } else {
+            QVariantMap comboBoxHeaderMap = secondMap.value(thirdMenuString).toMap();
+            stringList.append(comboBoxHeaderMap.value(thirdMenuString).toString());
+        }
+    }
     return stringList;
 }
 
 void ThirdMenuWidget::onHeaderClicked(int index)
 {
     QString thirdMenuString;
-    if(get_third_menu_list().count() > index) {
-       thirdMenuString  = get_third_menu_list().at(index);
+    QStringList thirdMenuList = get_third_menu_list();
+    if(thirdMenuList.count() > index) {
+       thirdMenuString  = thirdMenuList.at(index);
     } else {
         return;
     }
-    QString subString = firstMenuString + "_" + secondMenuString;
-    QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
+    QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
     QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
 
-    if(subVariantMap["style"].toString().toInt() == 1) {      
+    switch(thirdMenuMap["style"].toString().toInt()) {
+    case 1: {
         //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
 
@@ -322,7 +302,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         } else {
             headerText = currentHeaderText;
         }
-        if(stepIndex == stringList.count() - 1) {
+        if(stepIndex == (stringList.count() - 1)) {
             doubleSpinBox->set_number_step(stringList.at(0));
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(0)));
         } else {
@@ -339,13 +319,37 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             verticalSliderDialog->setBrightValue(text);
             connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
         }
-    } else if(subVariantMap["style"].toString().toInt() == 2) {
+        break;
+    }
+    case 2: {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         if(!comboBox->editFlag) {
             QModelIndex modelIndex = model->item(0, index)->index();
             ui->tableView->edit(modelIndex);
         }
-    }else if(subVariantMap["style"].toString().toInt() == 6) {
+        break;
+    }
+    case 4: {
+        //点击表头弹出探头选择对话框
+        ProbeDialog *probeDialog = new ProbeDialog(this);
+        probeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        probeDialog->show();
+
+        probeIndex = index;
+        connect(probeDialog, SIGNAL(probeChanged(QString)), this, SLOT(select_probe(QString)));
+        break;
+    }
+    case 5: {
+        //点击表头弹出楔块选择对话框
+        WedgeDialog *wedgeDialog = new WedgeDialog(this);
+        wedgeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        wedgeDialog->show();
+
+        wedgeIndex = index;
+        connect(wedgeDialog, SIGNAL(wedgeChanged(QString)), this, SLOT(select_wedge(QString)));
+        break;
+    }
+    case 6: {
         //点击表头弹出软键盘
         InputPanelContext *inputPanel = new InputPanelContext(this);
         inputPanel->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -355,8 +359,9 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         QString text = model->item(0, index)->text();
         inputPanel->set_item_current_text(text);
         connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
-
-    } else if(subVariantMap["style"].toString().toInt() == 7) {
+        break;
+    }
+    case 7: {
         //点击表头弹出测量值选择对话框
         MeasurementDialog *measurementDialog = new MeasurementDialog(this);
         measurementDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -364,58 +369,79 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 
         measurementIndex = index;
         connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
+        break;
     }
+    case 14: {
+        connect(this, SIGNAL(send_dialog_title_content(QString)), networkDialog, SLOT(set_dialog_title(QString)));
+        connect(this, SIGNAL(send_spinbox_value(QList<int>)), networkDialog, SLOT(set_spinbox_value(QList<int>)));
 
-    if(currentHeaderText.contains("Probe")){
-        ProbeDialog *probeDialog = new ProbeDialog(this);
-        probeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        probeDialog->show();
+        QVariantMap mapOne = widget->translateChineseMap["Preference"].toMap();
+        QVariantMap mapTwo = mapOne["Network"].toMap();
+        QString string = model->item(0, index)->text();
+        QList<int> valueList;
+        QString tmpString = string;
+        int tmpIndex = 0;
+        for(int index = 0; index < string.length(); index ++) {
+            if(QString(string.at(index)) == ".") {
+                valueList.append(tmpString.left(index - tmpIndex).toInt());
+                tmpString = tmpString.right(string.count() - index - 1);
+                tmpIndex = index + 1;
+            }
+            if(index == string.length() - 1) {
+                valueList.append(tmpString.toInt());
+            }
+        }
+        if(currentHeaderText.contains("IP Address") || currentHeaderText.contains(mapTwo.value("IP Address").toString())){
+            emit send_dialog_title_content(currentHeaderText);
+            emit send_spinbox_value(valueList);
+        } else if(currentHeaderText.contains("Subnet Mask") || currentHeaderText.contains(mapTwo.value("子网掩码").toString())) {
+            emit send_dialog_title_content(currentHeaderText);
+            emit send_spinbox_value(valueList);
+        }
+        networkDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        networkDialog->show();
 
-        probeIndex = index;
-        connect(probeDialog, SIGNAL(probeChanged(QString)), this, SLOT(select_probe(QString)));
-    }else if(currentHeaderText.contains("Wedge")){
-        WedgeDialog *wedgeDialog = new WedgeDialog(this);
-        wedgeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        wedgeDialog->show();
-
-        wedgeIndex = index;
-        connect(wedgeDialog, SIGNAL(wedgeChanged(QString)), this, SLOT(select_wedge(QString)));
-    }else if(currentHeaderText.contains("Clock Set")){
+        networkIndex = index;
+        connect(networkDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
+        break;
+    }
+    case 15: {
+        SystemInfoDialog *systemInfoDialog = new SystemInfoDialog(this);
+        systemInfoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        systemInfoDialog->show();
+        break;
+    }
+    case 16: {
+        AboutDialog *aboutDialog = new AboutDialog(this);
+        aboutDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        aboutDialog->show();
+        break;
+    }
+    case 18: {
         clockSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         clockSetDialog->show();
 
         timeSetIndex = index;
         connect(clockSetDialog, SIGNAL(currentTimeChanged(QString)), this, SLOT(set_time(QString)));
-    }else if(currentHeaderText.contains("Date Set")){
+        break;
+    }
+    case 19: {
         dateSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         dateSetDialog->show();
 
         dateSetIndex = index;
         connect(dateSetDialog, SIGNAL(currentDateChanged(QString)), this, SLOT(set_date(QString)));
-    }else if(currentHeaderText.contains("IP Address")){
-        ipSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        ipSetDialog->show();
+        break;
+    }
+    default: {
+        break;
+    }
+    }
 
-        ipSetIndex = index;
-        connect(ipSetDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
-    }else if(currentHeaderText.contains("Subnet Mask")){
-        subNetSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        subNetSetDialog->show();
-
-        subNetIndex = index;
-        connect(subNetSetDialog, SIGNAL(currentSubNetChanged(QString)), this, SLOT(set_subNet(QString)));
-    }else if(currentHeaderText.contains("Configuration")) {
-        ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
-        resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        resetConfigDialog->show();
-    }else if(currentHeaderText.contains("About")) {
-        AboutDialog *aboutDialog = new AboutDialog(this);
-        aboutDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        aboutDialog->show();
-    }else if(currentHeaderText.contains("System")) {
-        SystemInfoDialog *systemInfoDialog = new SystemInfoDialog(this);
-        systemInfoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        systemInfoDialog->show();
+    if(currentHeaderText.contains("Configuration")) {
+       ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
+       resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+       resetConfigDialog->show();
     }
 }
 
@@ -448,33 +474,20 @@ void ThirdMenuWidget::set_header_text_close(QWidget *editor)
 void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
 {
     QString thirdMenuString;
-    if(get_third_menu_list().count() > index.column()) {
-       thirdMenuString  = get_third_menu_list().at(index.column());
+    QStringList thirdMenuList = get_third_menu_list();
+    if(thirdMenuList.count() > index.column()) {
+       thirdMenuString  =thirdMenuList.at(index.column());
     } else {
         return;
     }
-    QString subString = firstMenuString + "_" + secondMenuString;
-    QVariantMap subVariantMap = get_sub_menu_map(fourthMenuMap, thirdMenuString, subString);
 
-    if(subVariantMap["style"].toString().toInt() == 1) {
+    QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
+
+    if(thirdMenuMap["style"].toString().toInt() == 1) {
         ui->tableView->edit(index);
-    } else if(subVariantMap["style"].toString().toInt() == 2) {
+    } else if(thirdMenuMap["style"].toString().toInt() == 2) {
         ui->tableView->edit(index);
     }
-}
-
-QVariantMap ThirdMenuWidget::get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString)
-{
-    QVariantMap subVariantMap;
-    if(!variantMap[thirdMenuString].toMap().isEmpty()) {
-        QVariantMap map = variantMap[thirdMenuString].toMap();
-        if(!map[subString].toMap().isEmpty()) {
-            subVariantMap = map[subString].toMap();
-        } else {
-            subVariantMap = map;
-        }
-    }
-    return subVariantMap;
 }
 
 QList<int> ThirdMenuWidget::get_spinBox_range_list(QVariantMap variantMap)
@@ -487,15 +500,13 @@ QList<int> ThirdMenuWidget::get_spinBox_range_list(QVariantMap variantMap)
     return rangeList;
 }
 
-QStringList ThirdMenuWidget::get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString)
+QStringList ThirdMenuWidget::get_spinBox_step_list(QVariantMap variantMap)
 {
     QVariantList tmpList = variantMap["steps"].toList();
     QStringList stepList;
     if(tmpList.size() != 0) {
         for(int index = 0; index < tmpList.size(); index ++) {
-            QMap<QString, QVariant> map = tmpList.at(index).toMap();
-            QVariant result = map.value(thirdMenuString);
-            stepList.append(result.toString());
+            stepList.append(tmpList.at(index).toStringList());
         }
     } else {
         stepList.append("");
@@ -503,32 +514,74 @@ QStringList ThirdMenuWidget::get_spinBox_step_list(QVariantMap variantMap, QStri
     return stepList;
 }
 
-QList<QStringList> ThirdMenuWidget::get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString)
+QList<QStringList> ThirdMenuWidget::get_comboBox_option_list(QVariantMap variantMap)
 {
-    QVariantList tmpList = variantMap["options"].toList();
-    QStringList optionList;
-    QStringList abbreviationList;
+    QStringList optionList,abbreviationList;
     QList<QStringList> list;
-    if(tmpList.size() != 0) {
-        for(int index = 0; index < tmpList.size(); index ++) {
-            QMap<QString, QVariant> map = tmpList.at(index).toMap();
-            QVariant result = map.value(thirdMenuString);
-            optionList.append(result.toString());
-            if(map.contains("ShortText")) {
-                QVariant shortText = map.value("ShortText");
-                abbreviationList.append(shortText.toString());
-            } else {
-                abbreviationList.append(optionList.at(index));
-            }
-        }
-    } else {
-        optionList.append("");
-        abbreviationList.append("");
+    QVariantList tmpList = variantMap["options"].toList();
+
+    for(int index = 0; index < tmpList.count(); index ++) {
+        optionList.append(tmpList.at(index).toStringList());
     }
+
+    abbreviationList = get_abbreviate_comboBox_option_list(optionList);
     list.append(optionList);
     list.append(abbreviationList);
     return list;
 }
+
+QVariantMap ThirdMenuWidget::get_translate_option_map(QString thirdMenuString)
+{
+    QVariantMap firstTranslateMap = widget->translateChineseMap[firstMenuString].toMap();
+    QVariantMap secondMap = firstTranslateMap[secondMenuString].toMap();
+    QVariantMap comboBoxHeaderMap = secondMap[thirdMenuString].toMap();
+    return comboBoxHeaderMap;
+}
+
+QList<QStringList> ThirdMenuWidget::get_translate_comboBox_option_list(QVariantMap variantMapEng, QVariantMap variantMapTran)
+{
+    QStringList optionList,abbreviationList;
+    QList<QStringList> list;
+    QVariantMap optionMap = variantMapTran["options"].toMap();
+    QStringList tmpList = get_comboBox_option_list(variantMapEng).at(0);
+
+    for(int index = 0; index < tmpList.count(); index ++) {
+        optionList.append(optionMap.value(tmpList.at(index)).toString());
+    }
+
+    abbreviationList = get_abbreviate_comboBox_option_list(optionList);
+    list.append(optionList);
+    list.append(abbreviationList);
+    return list;
+}
+
+QStringList ThirdMenuWidget::get_abbreviate_comboBox_option_list(QStringList stringList)
+{
+    QStringList abbreviationList;
+    int length = 0;
+    QString maxString = "";
+
+    for(int index = 0; index < stringList.count(); index ++) {
+        QString string = stringList.at(index);
+        int tmpLength = string.length();
+        if(tmpLength > length) {
+            length = tmpLength;
+            maxString = string;
+        }
+    }
+
+    if(ui->tableView->horizontalHeader()->fontMetrics().width(maxString) >= width / 6) {
+        for(int index = 0; index < stringList.count(); index ++) {
+            QString string = stringList.at(index);
+            abbreviationList.append(string.left(string.indexOf(" ")));
+        }
+    } else {
+        abbreviationList = stringList;
+    }
+
+    return abbreviationList;
+}
+
 
 QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
 {
@@ -540,7 +593,6 @@ QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
             int blankIndex = string.indexOf(" ");
             leftText = string.left(blankIndex);
             rightText = string.right(string.length() - blankIndex - 1);
-//            model->setHeaderData(index, Qt::Horizontal, leftText + "\n" + rightText);
             newString = leftText + "\n" + rightText;
         }
     } else {
@@ -549,23 +601,54 @@ QString ThirdMenuWidget::set_long_contents_header(int index, QString string)
     return newString;
 }
 
-void ThirdMenuWidget::change_related_third_menu_data(QString string)
+void ThirdMenuWidget::change_related_third_menu_data(QString str)
 {
-    QVariantMap variantMap = thirdMenuMap[secondMenuString].toMap();
-    if(!variantMap.isEmpty() && variantMap.contains("first third_menu") && variantMap.contains(string)) {
+    QString string;
+    QVariantMap variantMap = secondMenuMap["Queue_Third_Menu"].toMap();
+
+    if(!variantMap.isEmpty() && variantMap.contains("first third_menu")) {
+        if(languageOption == 1) {
+            if(variantMap.contains(str)) {
+                string = str;
+            }
+        } else if(languageOption == 2) {
+             QVariantMap tranMap = get_translate_option_map(variantMap.value("first third_menu").toString());
+             QVariantMap optionMap = tranMap["options"].toMap();
+             string = optionMap.key(str);
+        }
         relatedMenuString = string;
         QVariantList variantList = variantMap.values(string);
         QStringList thirdStringList = variantList.at(0).toStringList();
 
-        set_model_item(1, thirdStringList.count());
+        set_model_item(1, thirdStringList);
     }
 }
 
-void ThirdMenuWidget::set_model_item(int startIndex, int count)
+void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
 {
     for(int k = startIndex; k < THIRD_MENU_NUMBER; k ++) {
-        if(count >= k + 1) {
-            choose_widget_style(k);
+        if(thirdMenuList.count() >= k + 1) {
+            QString thirdMenuString = thirdMenuList.at(k);
+            QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
+            QString newThirdMenuString;
+
+            if(languageOption == 1) {
+                newThirdMenuString = set_long_contents_header(k, thirdMenuString);
+
+            } else if(languageOption == 2) {
+                QString thirdMenuStringTran = get_translate_third_menu_list().at(k);
+                newThirdMenuString = set_long_contents_header(k, thirdMenuStringTran);
+            }
+
+            if(thirdMenuMap.contains("unit")) {
+                model->setHeaderData(k, Qt::Horizontal, QString(newThirdMenuString + "\n(" + thirdMenuMap["unit"].toString() + ")"));
+            } else {
+                model->setHeaderData(k, Qt::Horizontal, newThirdMenuString);
+            }
+
+            choose_widget_style(k, thirdMenuMap, thirdMenuString);
+
+            model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
             model->item(0, k)->setTextAlignment(Qt::AlignCenter);
             model->item(0, k)->setFont(QFont("Times New Roman", 12));
         } else {
@@ -591,12 +674,12 @@ void ThirdMenuWidget::set_currentTimeToMenu()
 
 void ThirdMenuWidget::set_currentIPToMenu()
 {
-    model->item(0, 0)->setText(ipSetDialog->str_ip);
+    model->item(0, 0)->setText("192.168.1.1");
 }
 
 void ThirdMenuWidget::set_currentSubNetToMenu()
 {
-    model->item(0, 1)->setText(subNetSetDialog->str_subNet);
+    model->item(0, 1)->setText("255.255.255.0");
 }
 
 void ThirdMenuWidget::change_measurement_label(QString string)
@@ -681,25 +764,12 @@ void ThirdMenuWidget::set_time(QString str_time)
 
 void ThirdMenuWidget::set_ip(QString str_ip)
 {
-    model->item(0, ipSetIndex)->setText(str_ip);
+    model->item(0, networkIndex)->setText(str_ip);
 }
 
 void ThirdMenuWidget::set_subNet(QString str_subNet)
 {
-    model->item(0, subNetIndex)->setText(str_subNet);
-}
-
-void ThirdMenuWidget::set_translateUI(QString str)
-{
-    if(str == "Chinese"){
-        emit translater_ZH();
-        clockSetDialog->retranslate_dialog_ui();
-        dateSetDialog->retranslate_dialog_ui();
-        ipSetDialog->retranslate_dialog_ui();
-        subNetSetDialog->retranslate_dialog_ui();
-    }else if(str == "English"){
-        emit translater_EN();
-    }
+    model->item(0, networkIndex)->setText(str_subNet);
 }
 
 void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)

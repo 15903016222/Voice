@@ -64,12 +64,11 @@ SOURCES += \
     ui/qitemdelegate/pushbuttondelegate.cpp \
     ui/dialogwidget/inputpanelcontext.cpp \
     ui/dialogwidget/verticalsliderdialog.cpp \
-    ui/dialogwidget/ipsetdialog.cpp \
-    ui/dialogwidget/subnetsetdialog.cpp \
     ui/dialogwidget/resetconfigdialog.cpp \
     ui/dialogwidget/aboutdialog.cpp \
     ui/dialogwidget/creditsdialog.cpp \
     ui/dialogwidget/systeminfodialog.cpp \
+    ui/dialogwidget/networkdialog.cpp \
     mcu/mcu.cpp \
     mcu/mcu_imx.cpp \
     mcu/mcu_omap.cpp
@@ -98,12 +97,11 @@ HEADERS += \
     ui/qitemdelegate/pushbuttondelegate.h \
     ui/dialogwidget/inputpanelcontext.h \
     ui/dialogwidget/verticalsliderdialog.h \
-    ui/dialogwidget/ipsetdialog.h \
-    ui/dialogwidget/subnetsetdialog.h \
     ui/dialogwidget/resetconfigdialog.h \
     ui/dialogwidget/aboutdialog.h \
     ui/dialogwidget/creditsdialog.h \
     ui/dialogwidget/systeminfodialog.h \
+    ui/dialogwidget/networkdialog.h \
     mcu/mcu.h \
     mcu/mcu_imx.h \
     mcu/mcu_omap.h \
@@ -130,12 +128,11 @@ FORMS += \
     ui/dialogwidget/wedgedialog.ui \
     ui/dialogwidget/inputpanelcontext.ui \
     ui/dialogwidget/verticalsliderdialog.ui \
-    ui/dialogwidget/ipsetdialog.ui \
-    ui/dialogwidget/subnetsetdialog.ui \
     ui/dialogwidget/resetconfigdialog.ui \
     ui/dialogwidget/aboutdialog.ui \
     ui/dialogwidget/creditsdialog.ui \
-    ui/dialogwidget/systeminfodialog.ui
+    ui/dialogwidget/systeminfodialog.ui \
+    ui/dialogwidget/networkdialog.ui
 
 win32 {
     LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll

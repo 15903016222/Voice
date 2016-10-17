@@ -5,8 +5,7 @@
 #include "verticalsliderdialog.h"
 #include "datesetdialog.h"
 #include "clocksetdialog.h"
-#include "ipsetdialog.h"
-#include "subnetsetdialog.h"
+#include "networkdialog.h"
 
 #define THIRD_MENU_NUMBER 6
 
@@ -26,24 +25,25 @@ private:
     Ui::ThirdMenuWidget *ui;
 
 public:
-    void retranslate_third_menu_ui();
     void init_standard_model();
     void set_third_menu_name(int i, int j);
-    void choose_widget_style(int k);
+    void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void resizeEvent(QResizeEvent *event);
-    void set_model_item(int startIndex, int count);
+    void set_model_item(int startIndex, QStringList thirdMenuList);
     void set_currentDateToMenu();
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
 
     QStringList get_third_menu_list();
-    QVariantMap read_json_file(QString string);
-    QVariantMap get_sub_menu_map(QVariantMap variantMap, QString thirdMenuString, QString subString);
+    QStringList get_translate_third_menu_list();
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
-    QStringList get_spinBox_step_list(QVariantMap variantMap, QString thirdMenuString);
-    QList<QStringList> get_comboBox_option_list(QVariantMap variantMap, QString thirdMenuString);
+    QStringList get_spinBox_step_list(QVariantMap variantMap);
+    QList<QStringList> get_comboBox_option_list(QVariantMap variantMap);
+    QList<QStringList> get_translate_comboBox_option_list(QVariantMap variantMapEng, QVariantMap variantMapTran);
+    QStringList get_abbreviate_comboBox_option_list(QStringList stringList);
     QString set_long_contents_header(int index, QString string);
+    QVariantMap get_translate_option_map(QString thirdMenuString);
 
     int width;
     int height;
@@ -56,26 +56,28 @@ public:
     int wedgeIndex;
     int dateSetIndex;
     int timeSetIndex;
-    int ipSetIndex;
-    int subNetIndex;
+    int networkIndex;
+    int languageOption;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
-    QVariantMap thirdMenuMap;
-    QVariantMap fourthMenuMap;
+    QVariantMap secondMenuMap;
     QVariantMap menuCacheMap;
     QString firstMenuString;
     QString secondMenuString;
     QString relatedMenuString;
 
+signals:
+    void retranslate_ui(QString);
+    void send_dialog_title_content(QString);
+    void send_spinbox_value(QList<int>);
 
 private:
     VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
     DateSetDialog *dateSetDialog;
     ClockSetDialog *clockSetDialog;
-    IPSetDialog *ipSetDialog;
-    SubNetSetDialog *subNetSetDialog;
+    NetworkDialog *networkDialog;
 
 signals:
     void translater_ZH();
@@ -87,7 +89,7 @@ protected slots:
 
 private slots:
     void onHeaderClicked(int index);
-    void change_related_third_menu_data(QString string);
+    void change_related_third_menu_data(QString str);
     void set_header_text_create(QStringList stringList) const ;
     void set_header_text_close(QWidget *editor) ;
     void on_tableView_clicked(const QModelIndex &index);
@@ -101,7 +103,7 @@ private slots:
     void set_time(QString str_time);
     void set_ip(QString str_ip);
     void set_subNet(QString str_subNet);
-    void set_translateUI(QString str);
+    void retranslate_third_menu_ui(QString string);
 
 };
 
