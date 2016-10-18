@@ -1,8 +1,6 @@
 #include "datetimesetdialog.h"
 #include "ui_datetimesetdialog.h"
 
-#include <QDate>
-
 DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DateTimeSetDialog)

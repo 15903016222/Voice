@@ -6,7 +6,6 @@
 #include "pushbuttondelegate.h"
 #include "probedialog.h"
 #include "wedgedialog.h"
-#include "myinputpanel.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
 #include "aboutdialog.h"
@@ -14,6 +13,7 @@
 #include "systeminfodialog.h"
 
 #include <QMap>
+#include <QResizeEvent>
 #include <QDebug>
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :

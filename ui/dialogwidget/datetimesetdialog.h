@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QMap>
+#include <QDate>
+#include <QTime>
 
 namespace Ui {
 class DateTimeSetDialog;
