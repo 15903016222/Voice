@@ -64,8 +64,8 @@ InputPanelContext::~InputPanelContext()
 void InputPanelContext::edit_text()
 {
     QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
-    QString text = ui->textEdit->toPlainText() + pushButton->text();
-    ui->textEdit->setText(text);
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.insertText(pushButton->text());
 }
 
 void InputPanelContext::on_pushButton_capsLock_clicked()
@@ -95,7 +95,16 @@ void InputPanelContext::on_pushButton_BackSpace_clicked()
 {
     QString text = ui->textEdit->toPlainText();
     if(text != NULL) {
-        ui->textEdit->setText(text.left(text.count() - 1));
+        QTextCursor cursor = ui->textEdit->textCursor();
+        if(cursor.position() == 0) {
+            return;
+        } else {
+            if(cursor.hasSelection()) {
+                cursor.clearSelection();
+            }
+            cursor.deletePreviousChar();
+            ui->textEdit->setTextCursor(cursor);
+        }
     }
 }
 
@@ -156,9 +165,6 @@ void InputPanelContext::on_pushButton_arrow_down_clicked()
 void InputPanelContext::show_cursor()
 {
     ui->textEdit->setFocus();
-    QTextCursor cursor = ui->textEdit->textCursor();
-    cursor.movePosition(QTextCursor::End);
-    ui->textEdit->setTextCursor(cursor);
 }
 
 
