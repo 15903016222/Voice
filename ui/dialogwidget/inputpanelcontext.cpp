@@ -26,7 +26,7 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
         pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
-    for(int i = 0; i < 3; i ++ ) {
+    for(int i = 1; i < 3; i ++ ) {
         QFrame *frame = findChild<QFrame*>("frame_" + QString::number(i));
         frame->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
     }
@@ -53,6 +53,7 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     ui->pushButton_cancel->setFocusPolicy(Qt::NoFocus);
     ui->pushButton_ok->setFocusPolicy(Qt::NoFocus);
 
+    ui->textEdit->setStyleSheet("QTextEdit{font:12pt 'Times New Roman';}");
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(show_cursor()));
 }
 
@@ -87,8 +88,8 @@ void InputPanelContext::on_pushButton_capsLock_clicked()
 
 void InputPanelContext::on_pushButton_Space_clicked()
 {
-    QString text = ui->textEdit->toPlainText();
-    ui->textEdit->setText(text + " ");
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.insertText(" ");
 }
 
 void InputPanelContext::on_pushButton_BackSpace_clicked()
