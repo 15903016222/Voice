@@ -1,7 +1,7 @@
 #ifndef ICONSWIDGETS_H
 #define ICONSWIDGETS_H
 
-#include "myinputpanel.h"
+#include "inputpanelcontext.h"
 
 #include "mcu.h"
 

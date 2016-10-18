@@ -53,7 +53,6 @@ SOURCES += \
     ui/menuwidget/commonmenuwidget.cpp \
     ui/menuwidget/commonmenubutton.cpp \
     ui/dialogwidget/measurementdialog.cpp \
-    ui/dialogwidget/myinputpanel.cpp \
     ui/dialogwidget/timesetdialog.cpp \
     ui/dialogwidget/probedialog.cpp \
     ui/dialogwidget/wedgedialog.cpp \
@@ -85,7 +84,6 @@ HEADERS += \
     ui/menuwidget/commonmenuwidget.h \
     ui/menuwidget/commonmenubutton.h \
     ui/dialogwidget/measurementdialog.h \
-    ui/dialogwidget/myinputpanel.h \
     ui/dialogwidget/timesetdialog.h \
     ui/dialogwidget/probedialog.h \
     ui/dialogwidget/wedgedialog.h \
@@ -118,7 +116,6 @@ FORMS += \
     ui/menuwidget/commonmenuwidget.ui \
     ui/menuwidget/commonmenubutton.ui \
     ui/dialogwidget/measurementdialog.ui \
-    ui/dialogwidget/myinputpanel.ui \
     ui/dialogwidget/timesetdialog.ui \
     ui/dialogwidget/probedialog.ui \
     ui/dialogwidget/wedgedialog.ui \
