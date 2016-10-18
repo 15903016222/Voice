@@ -3,8 +3,7 @@
 
 #include "firstsecondmenuwidget.h"
 #include "verticalsliderdialog.h"
-#include "datesetdialog.h"
-#include "clocksetdialog.h"
+#include "datetimesetdialog.h"
 #include "networkdialog.h"
 
 #define THIRD_MENU_NUMBER 6
@@ -44,6 +43,7 @@ public:
     QStringList get_abbreviate_comboBox_option_list(QStringList stringList);
     QString set_long_contents_header(int index, QString string);
     QVariantMap get_translate_option_map(QString thirdMenuString);
+    QList<int> get_dialog_value_list(int index, QString str);
 
     int width;
     int height;
@@ -54,8 +54,8 @@ public:
     int brightIndex;
     int probeIndex;
     int wedgeIndex;
-    int dateSetIndex;
     int timeSetIndex;
+    int dateTimeSetIndex;
     int networkIndex;
     int languageOption;
 
@@ -69,14 +69,13 @@ public:
 
 signals:
     void retranslate_ui(QString);
-    void send_dialog_title_content(QString);
+    void send_dialog_title_content(QMap<QString, QString>);
     void send_spinbox_value(QList<int>);
 
 private:
     VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
-    DateSetDialog *dateSetDialog;
-    ClockSetDialog *clockSetDialog;
+    DateTimeSetDialog *dateTimeSetDialog;
     NetworkDialog *networkDialog;
 
 signals:

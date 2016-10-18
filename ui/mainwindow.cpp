@@ -261,19 +261,15 @@ void MainWindow::update_translator(QString string)
 {
     if(string == "Chinese") {
         translator->load(":/file/translator/phascanII_UI_Chinese.qm");
-        ui->retranslateUi(this);
-        ui->widgetTopLeft->retranslate_top_menu_ui();
-        ui->widgetTopLeft->set_top_menu_font();
-        firstSecondMenu->retranslate_main_menu_ui(string);
-        commonMenuWidget->retranslate_common_menu_ui();
     } else if(string == "English") {
-        translator->load(":/file/translator/phascanII_UI_English.qm");
-        ui->retranslateUi(this);
-        ui->widgetTopLeft->retranslate_top_menu_ui();
-        ui->widgetTopLeft->set_top_menu_font();
-        firstSecondMenu->retranslate_main_menu_ui(string);
-        commonMenuWidget->retranslate_common_menu_ui();
+        translator->load(":/file/translator/phascanII_UI_English.qm");        
     }
+    ui->retranslateUi(this);
+    ui->widgetTopLeft->retranslate_top_menu_ui();
+    ui->widgetTopLeft->set_top_menu_font();
+    firstSecondMenu->retranslate_main_menu_ui(string);
+    commonMenuWidget->retranslate_common_menu_ui();
+
 }
 
 #ifdef WIN32

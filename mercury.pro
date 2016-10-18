@@ -55,8 +55,6 @@ SOURCES += \
     ui/dialogwidget/measurementdialog.cpp \
     ui/dialogwidget/myinputpanel.cpp \
     ui/dialogwidget/timesetdialog.cpp \
-    ui/dialogwidget/datesetdialog.cpp \
-    ui/dialogwidget/clocksetdialog.cpp \
     ui/dialogwidget/probedialog.cpp \
     ui/dialogwidget/wedgedialog.cpp \
     ui/qitemdelegate/comboboxdelegate.cpp \
@@ -68,10 +66,11 @@ SOURCES += \
     ui/dialogwidget/aboutdialog.cpp \
     ui/dialogwidget/creditsdialog.cpp \
     ui/dialogwidget/systeminfodialog.cpp \
-    ui/dialogwidget/networkdialog.cpp \
     mcu/mcu.cpp \
     mcu/mcu_imx.cpp \
-    mcu/mcu_omap.cpp
+    mcu/mcu_omap.cpp \
+    ui/dialogwidget/networkdialog.cpp \
+    ui/dialogwidget/datetimesetdialog.cpp
 #    sourcedata/dmaoperate.cpp \
 #    sourcedata/phascanidata.cpp \
 #    sourcedata/sourcedata.cpp
@@ -88,8 +87,6 @@ HEADERS += \
     ui/dialogwidget/measurementdialog.h \
     ui/dialogwidget/myinputpanel.h \
     ui/dialogwidget/timesetdialog.h \
-    ui/dialogwidget/datesetdialog.h \
-    ui/dialogwidget/clocksetdialog.h \
     ui/dialogwidget/probedialog.h \
     ui/dialogwidget/wedgedialog.h \
     ui/qitemdelegate/comboboxdelegate.h \
@@ -101,11 +98,12 @@ HEADERS += \
     ui/dialogwidget/aboutdialog.h \
     ui/dialogwidget/creditsdialog.h \
     ui/dialogwidget/systeminfodialog.h \
-    ui/dialogwidget/networkdialog.h \
     mcu/mcu.h \
     mcu/mcu_imx.h \
     mcu/mcu_omap.h \
-    mcu/probe.h
+    mcu/probe.h \
+    ui/dialogwidget/networkdialog.h \
+    ui/dialogwidget/datetimesetdialog.h
 #    sourcedata/dmaoperate.h \
 #    sourcedata/phascanidata.h \
 #    sourcedata/sourcedata.h
@@ -122,8 +120,6 @@ FORMS += \
     ui/dialogwidget/measurementdialog.ui \
     ui/dialogwidget/myinputpanel.ui \
     ui/dialogwidget/timesetdialog.ui \
-    ui/dialogwidget/datesetdialog.ui \
-    ui/dialogwidget/clocksetdialog.ui \
     ui/dialogwidget/probedialog.ui \
     ui/dialogwidget/wedgedialog.ui \
     ui/dialogwidget/inputpanelcontext.ui \
@@ -132,7 +128,8 @@ FORMS += \
     ui/dialogwidget/aboutdialog.ui \
     ui/dialogwidget/creditsdialog.ui \
     ui/dialogwidget/systeminfodialog.ui \
-    ui/dialogwidget/networkdialog.ui
+    ui/dialogwidget/networkdialog.ui \
+    ui/dialogwidget/datetimesetdialog.ui
 
 win32 {
     LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll

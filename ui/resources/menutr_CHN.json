@@ -424,7 +424,7 @@
                     "True Depth":"真实深度",
                     "Half Path":"半声程",
                     "Projection":"投影面",
-                    "Focal Plane":"Focal Plane",
+                    "Focal Plane":"任意面",
                     "DDF":"DDF"
                 }
             },

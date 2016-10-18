@@ -48,9 +48,9 @@ void NetworkDialog::on_buttonBox_accepted()
     emit currentIPChanged(str_ip);
 }
 
-void NetworkDialog::set_dialog_title(QString string)
+void NetworkDialog::set_dialog_title(QMap<QString, QString> map)
 {
-    ui->label->setText(string);
+    ui->label->setText(map.values().at(0));
 }
 
 void NetworkDialog::set_spinbox_value(QList<int> valueList)

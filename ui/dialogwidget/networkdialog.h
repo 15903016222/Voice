@@ -2,6 +2,7 @@
 #define NETWORKDIALOG_H
 
 #include <QDialog>
+#include <QMap>
 
 namespace Ui {
 class NetworkDialog;
@@ -30,7 +31,7 @@ signals:
 
 public slots:
     void on_buttonBox_accepted();
-    void set_dialog_title(QString string);
+    void set_dialog_title(QMap<QString, QString> map);
     void set_spinbox_value(QList<int> valueList);
 
 };

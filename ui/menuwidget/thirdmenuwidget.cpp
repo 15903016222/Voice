@@ -13,6 +13,7 @@
 #include "resetconfigdialog.h"
 #include "systeminfodialog.h"
 
+#include <QMap>
 #include <QDebug>
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
@@ -22,8 +23,7 @@ QWidget(parent),
     ui->setupUi(this);
 
     widget = new FirstSecondMenuWidget;
-    dateSetDialog = new DateSetDialog(this);
-    clockSetDialog = new ClockSetDialog(this);
+    dateTimeSetDialog = new DateTimeSetDialog(this);
     networkDialog = new NetworkDialog(this);
 
     height = this->geometry().height();
@@ -54,10 +54,11 @@ void ThirdMenuWidget::retranslate_third_menu_ui(QString string)
     } else if (string == "English") {
         languageOption = 1;
     }
-    clockSetDialog->retranslate_dialog_ui();
-    dateSetDialog->retranslate_dialog_ui();
+    dateTimeSetDialog->retranslate_dialog_ui();
     networkDialog->retranslate_dialog_ui();
     set_third_menu_name(8, 1);
+    set_currentDateToMenu();
+    set_currentTimeToMenu();
 }
 
 void ThirdMenuWidget::init_standard_model()
@@ -329,6 +330,13 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         }
         break;
     }
+    case 3: {
+        PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        QModelIndex modelIndex = model->item(0, index)->index();
+        pushButton->change_button_text(modelIndex);
+        model->setData(modelIndex, pushButton->buttonMap.value(modelIndex)->text, Qt::EditRole);
+        break;
+    }
     case 4: {
         //点击表头弹出探头选择对话框
         ProbeDialog *probeDialog = new ProbeDialog(this);
@@ -372,32 +380,26 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         break;
     }
     case 14: {
-        connect(this, SIGNAL(send_dialog_title_content(QString)), networkDialog, SLOT(set_dialog_title(QString)));
+        connect(this, SIGNAL(send_dialog_title_content(QMap<QString, QString>)), networkDialog, SLOT(set_dialog_title(QMap<QString, QString>)));
         connect(this, SIGNAL(send_spinbox_value(QList<int>)), networkDialog, SLOT(set_spinbox_value(QList<int>)));
 
         QVariantMap mapOne = widget->translateChineseMap["Preference"].toMap();
         QVariantMap mapTwo = mapOne["Network"].toMap();
-        QString string = model->item(0, index)->text();
-        QList<int> valueList;
-        QString tmpString = string;
-        int tmpIndex = 0;
-        for(int index = 0; index < string.length(); index ++) {
-            if(QString(string.at(index)) == ".") {
-                valueList.append(tmpString.left(index - tmpIndex).toInt());
-                tmpString = tmpString.right(string.count() - index - 1);
-                tmpIndex = index + 1;
-            }
-            if(index == string.length() - 1) {
-                valueList.append(tmpString.toInt());
-            }
+        QList<int> valueList = get_dialog_value_list(index, ".");
+        QMap<QString, QString> map;
+
+        if(currentHeaderText.contains("IP Address")) {
+            map["IP Address"] = "IP Address";
+        } else if(currentHeaderText.contains(mapTwo.value("IP Address").toString())){
+            map["IP Address"] = mapTwo.value("IP Address").toString();
+        } else if(currentHeaderText.contains("Subnet Mask")) {
+            map["Subnet Mask"] = "Subnet Mask";
+        } else if(currentHeaderText.contains(mapTwo.value("Subnet Mask").toString())) {
+            map["Subnet Mask"] = mapTwo.value("Subnet Mask").toString();            
         }
-        if(currentHeaderText.contains("IP Address") || currentHeaderText.contains(mapTwo.value("IP Address").toString())){
-            emit send_dialog_title_content(currentHeaderText);
-            emit send_spinbox_value(valueList);
-        } else if(currentHeaderText.contains("Subnet Mask") || currentHeaderText.contains(mapTwo.value("子网掩码").toString())) {
-            emit send_dialog_title_content(currentHeaderText);
-            emit send_spinbox_value(valueList);
-        }
+        emit send_dialog_title_content(map);
+        emit send_spinbox_value(valueList);
+
         networkDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         networkDialog->show();
 
@@ -418,19 +420,36 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         break;
     }
     case 18: {
-        clockSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        clockSetDialog->show();
+        connect(this, SIGNAL(send_dialog_title_content(QMap<QString, QString>)), dateTimeSetDialog, SLOT(set_dialog_title(QMap<QString, QString>)));
+        connect(this, SIGNAL(send_spinbox_value(QList<int>)), dateTimeSetDialog, SLOT(set_spinbox_value(QList<int>)));
 
-        timeSetIndex = index;
-        connect(clockSetDialog, SIGNAL(currentTimeChanged(QString)), this, SLOT(set_time(QString)));
-        break;
-    }
-    case 19: {
-        dateSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        dateSetDialog->show();
+        QMap<QString, QString> map;
+        QList<int> valueList;
+        QVariantMap mapOne = widget->translateChineseMap["Preference"].toMap();
+        QVariantMap mapTwo = mapOne["System"].toMap();        
 
-        dateSetIndex = index;
-        connect(dateSetDialog, SIGNAL(currentDateChanged(QString)), this, SLOT(set_date(QString)));
+        if(currentHeaderText.contains("Clock Set")) {
+            valueList = get_dialog_value_list(index, ":");
+            map["Clock Set"] = "Clock Set";
+        } else if(currentHeaderText.contains(mapTwo.value("Clock Set").toString())){
+            valueList = get_dialog_value_list(index, ":");
+            map["Clock Set"] = mapTwo.value("Clock Set").toString();
+        } else if(currentHeaderText.contains("Date Set")) {
+            valueList = get_dialog_value_list(index, "-");
+            map["Date Set"] = "Date Set";
+        } else if(currentHeaderText.contains(mapTwo.value("Date Set").toString())) {
+            valueList = get_dialog_value_list(index, "-");
+            map["Date Set"] = mapTwo.value("Date Set").toString();            
+        }
+
+        emit send_dialog_title_content(map);
+        emit send_spinbox_value(valueList);
+
+        dateTimeSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        dateTimeSetDialog->show();
+
+        dateTimeSetIndex = index;
+        connect(dateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_date(QString)));
         break;
     }
     default: {
@@ -664,12 +683,20 @@ void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
 
 void ThirdMenuWidget::set_currentDateToMenu()
 {
-    model->item(0, 1)->setText(dateSetDialog->str_date);
+    if(dateTimeSetDialog->str_date == NULL) {
+        model->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
+    } else {
+        model->item(0, 1)->setText(dateTimeSetDialog->str_date);
+    }
 }
 
 void ThirdMenuWidget::set_currentTimeToMenu()
 {
-    model->item(0, 0)->setText(clockSetDialog->str_time);
+    if(dateTimeSetDialog->str_time == NULL) {
+        model->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
+    } else {
+        model->item(0, 0)->setText(dateTimeSetDialog->str_time);
+    }
 }
 
 void ThirdMenuWidget::set_currentIPToMenu()
@@ -754,7 +781,7 @@ void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
 
 void ThirdMenuWidget::set_date(QString str_date)
 {
-    model->item(0, dateSetIndex)->setText(str_date);
+    model->item(0, dateTimeSetIndex)->setText(str_date);
 }
 
 void ThirdMenuWidget::set_time(QString str_time)
@@ -786,4 +813,23 @@ void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
 void ThirdMenuWidget::do_probe_event(const Probe &probe)
 {
     model->item(0, 2)->setText(probe.model());
+}
+
+QList<int> ThirdMenuWidget::get_dialog_value_list(int index, QString str)
+{
+    QList<int> valueList;
+    QString string = model->item(0, index)->text();
+    QString tmpString = string;
+    int tmpIndex = 0;
+    for(int i = 0; i < string.length(); i ++) {
+        if(QString(string.at(i)) == str) {
+            valueList.append(tmpString.left(i - tmpIndex).toInt());
+            tmpString = tmpString.right(string.count() - i - 1);
+            tmpIndex = i + 1;
+        }
+        if(i == string.length() - 1) {
+            valueList.append(tmpString.toInt());
+        }
+    }
+    return valueList;
 }
