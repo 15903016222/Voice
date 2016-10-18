@@ -27,6 +27,12 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
         QFrame *frame = findChild<QFrame*>("frame_" + QString::number(i));
         frame->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
     }
+
+    for(int i = 65; i <= 90; i ++) {
+        QString string = (QChar)i;
+        QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
+        connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
+    }
 }
 
 InputPanelContext::~InputPanelContext()
@@ -41,13 +47,6 @@ void InputPanelContext::edit_text()
     ui->textEdit->setText(text);
 }
 
-void InputPanelContext::edit_lowerText()
-{
-    QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
-    QString text = ui->textEdit->toPlainText() + pushButton->text().toLower();
-    ui->textEdit->setText(text);
-}
-
 void InputPanelContext::on_pushButton_capsLock_clicked()
 {
     for(int i = 65; i <= 90; i ++) {
@@ -56,12 +55,10 @@ void InputPanelContext::on_pushButton_capsLock_clicked()
 
         if(capsLock){
             ui->pushButton_capsLock->setStyleSheet("background-color: rgb(0, 170, 0)");
-            disconnect(pushButton, SIGNAL(clicked()), this, SLOT(edit_lowerText()));
-            connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
+            pushButton->setText((QChar)(i));
         } else{
             ui->pushButton_capsLock->setStyleSheet("background-color: rgb(175, 175, 175)");
-            disconnect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-            connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_lowerText()));
+            pushButton->setText((QChar)(i + 32));
         }
     }
     capsLock = !capsLock;
