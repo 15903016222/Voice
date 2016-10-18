@@ -17,11 +17,13 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     for(int i = 0; i < 10; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
+        pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
     for(int i = 1; i <= 28; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("symbol_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
+        pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
     for(int i = 0; i < 3; i ++ ) {
@@ -33,7 +35,23 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
         QString string = (QChar)i;
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
+        pushButton->setFocusPolicy(Qt::NoFocus);
     }
+
+    ui->pushButton_alt->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_arrow_down->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_arrow_left->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_arrow_right->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_arrow_up->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_BackSpace->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_capsLock->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_Enter->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_Shift->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_Space->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_Tab->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_ctrl->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_cancel->setFocusPolicy(Qt::NoFocus);
+    ui->pushButton_ok->setFocusPolicy(Qt::NoFocus);
 
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(show_cursor()));
 }
