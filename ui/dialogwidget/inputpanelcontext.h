@@ -27,7 +27,6 @@ signals:
 
 private slots:
     void edit_text();
-    void edit_lowerText();
     void on_pushButton_capsLock_clicked();
     void on_pushButton_Space_clicked();
     void on_pushButton_BackSpace_clicked();
