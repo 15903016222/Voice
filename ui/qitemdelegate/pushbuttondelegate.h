@@ -15,8 +15,10 @@ public:
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const;	
     void set_switch_flag(QModelIndex index);
+    void change_button_text(QModelIndex &index);
 
     bool switchFlag;
+    bool editFlag;
 	QMap<QModelIndex, QStyleOptionButton*> buttonMap;
 
 signals:

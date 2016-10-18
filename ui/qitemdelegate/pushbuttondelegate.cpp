@@ -7,6 +7,7 @@
 PushButtonDelegate::PushButtonDelegate(QObject *parent) :
 QStyledItemDelegate(parent)
 {
+    editFlag = false;
 }
 
 void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -17,10 +18,11 @@ void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     if (!button) {
         button = new QStyleOptionButton();
         button->rect = option.rect.adjusted(0, 0, 0, 0);
-        button->text = "On";
+        button->text = "Off";
         button->state |= QStyle::State_Enabled;
-        button->palette=palette;
+        button->palette = palette;
         (const_cast<PushButtonDelegate *>(this))->buttonMap.insert(index, button);
+
     }
     painter->save();
 
@@ -48,26 +50,16 @@ void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
     painter->restore();
 
-    drawDisplay(painter, option, option.rect, tr("On"));
+    drawDisplay(painter, option, option.rect, tr("Off"));
     QApplication::style()->drawControl(QStyle::CE_PushButtonLabel, button, painter);
 }
 
 bool PushButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    if (event->type() == QEvent::MouseButtonRelease) {
+    if(event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* e =(QMouseEvent*)event;
-        set_switch_flag(index);
-        if (option.rect.adjusted(0, 0, 0, 0).contains(e->x(), e->y()) && buttonMap.contains(index)) {
-            buttonMap.value(index)->state &= (~QStyle::State_Sunken);
-
-            if(switchFlag == true) {
-                buttonMap.value(index)->text = "Off";
-                emit switchPress(switchFlag);
-            } else {
-                buttonMap.value(index)->text = "On";
-                emit switchPress(switchFlag);
-            }
-            switchFlag = !switchFlag;
+        if(option.rect.adjusted(0, -45, 103, 70).contains(e->x(), e->y()) && buttonMap.contains(index)) {
+            change_button_text(const_cast<QModelIndex &>(index));
         }
     }
     model->setData(index, buttonMap.value(index)->text, Qt::EditRole);
@@ -104,4 +96,17 @@ PushButtonDelegate::~PushButtonDelegate()
 
 }
 
+void PushButtonDelegate::change_button_text(QModelIndex &index)
+{
+    buttonMap.value(index)->state &= (~QStyle::State_Sunken);
+    set_switch_flag(index);
 
+    if(switchFlag == false) {
+        buttonMap.value(index)->text = "On";
+        emit switchPress(switchFlag);
+    } else {
+        buttonMap.value(index)->text = "Off";
+        emit switchPress(switchFlag);
+    }
+    switchFlag = !switchFlag;
+}
