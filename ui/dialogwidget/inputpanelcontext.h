@@ -31,6 +31,11 @@ private slots:
     void on_pushButton_Space_clicked();
     void on_pushButton_BackSpace_clicked();
     void on_pushButton_ok_clicked();
+    void on_pushButton_arrow_left_clicked();
+    void show_cursor();
+    void on_pushButton_arrow_right_clicked();
+    void on_pushButton_arrow_up_clicked();
+    void on_pushButton_arrow_down_clicked();
 };
 
 #endif // INPUTPANELCONTEXT_H

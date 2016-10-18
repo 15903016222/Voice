@@ -2,6 +2,7 @@
 #include "ui_inputpanelcontext.h"
 
 #include <QPushButton>
+#include <QTextCursor>
 #include <QDebug>
 
 InputPanelContext::InputPanelContext(QWidget *parent) :
@@ -33,6 +34,8 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
     }
+
+    connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(show_cursor()));
 }
 
 InputPanelContext::~InputPanelContext()
@@ -88,4 +91,56 @@ void InputPanelContext::on_pushButton_ok_clicked()
 void InputPanelContext::set_item_current_text(QString string)
 {
     ui->textEdit->setText(string);
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    ui->textEdit->setTextCursor(cursor);
 }
+
+void InputPanelContext::on_pushButton_arrow_left_clicked()
+{
+    ui->textEdit->setFocus();
+    if(ui->textEdit->toPlainText() != NULL && ui->textEdit->textCursor().position() != 0) {
+        QTextCursor cursor = ui->textEdit->textCursor();
+        cursor.movePosition(QTextCursor::Left);
+        ui->textEdit->setTextCursor(cursor);
+    }
+}
+
+void InputPanelContext::on_pushButton_arrow_right_clicked()
+{
+    ui->textEdit->setFocus();
+    if(ui->textEdit->toPlainText() != NULL && ui->textEdit->textCursor().position() != ui->textEdit->toPlainText().length()) {
+        QTextCursor cursor = ui->textEdit->textCursor();
+        cursor.movePosition(QTextCursor::Right);
+        ui->textEdit->setTextCursor(cursor);
+    }
+}
+void InputPanelContext::on_pushButton_arrow_up_clicked()
+{
+    ui->textEdit->setFocus();
+    if(ui->textEdit->document()->lineCount() > 0) {
+        QTextCursor cursor = ui->textEdit->textCursor();
+        cursor.movePosition(QTextCursor::Up);
+        ui->textEdit->setTextCursor(cursor);
+    }
+}
+
+void InputPanelContext::on_pushButton_arrow_down_clicked()
+{
+    ui->textEdit->setFocus();
+    if(ui->textEdit->document()->lineCount() > 0) {
+        QTextCursor cursor = ui->textEdit->textCursor();
+        cursor.movePosition(QTextCursor::Down);
+        ui->textEdit->setTextCursor(cursor);
+    }
+}
+
+void InputPanelContext::show_cursor()
+{
+    ui->textEdit->setFocus();
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    ui->textEdit->setTextCursor(cursor);
+}
+
+
