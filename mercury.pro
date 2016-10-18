@@ -71,7 +71,8 @@ SOURCES += \
     ui/dialogwidget/networkdialog.cpp \
     mcu/mcu.cpp \
     mcu/mcu_imx.cpp \
-    mcu/mcu_omap.cpp
+    mcu/mcu_omap.cpp \
+    ui/dialogwidget/networkdialog.cpp
 #    sourcedata/dmaoperate.cpp \
 #    sourcedata/phascanidata.cpp \
 #    sourcedata/sourcedata.cpp
@@ -105,7 +106,8 @@ HEADERS += \
     mcu/mcu.h \
     mcu/mcu_imx.h \
     mcu/mcu_omap.h \
-    mcu/probe.h
+    mcu/probe.h \
+    ui/dialogwidget/networkdialog.h
 #    sourcedata/dmaoperate.h \
 #    sourcedata/phascanidata.h \
 #    sourcedata/sourcedata.h
