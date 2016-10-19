@@ -69,7 +69,8 @@ SOURCES += \
     mcu/mcu_imx.cpp \
     mcu/mcu_omap.cpp \
     ui/dialogwidget/networkdialog.cpp \
-    ui/dialogwidget/datetimesetdialog.cpp
+    ui/dialogwidget/datetimesetdialog.cpp \
+    ui/dialogwidget/filemanagerdialog.cpp
 #    sourcedata/dmaoperate.cpp \
 #    sourcedata/phascanidata.cpp \
 #    sourcedata/sourcedata.cpp
@@ -101,7 +102,8 @@ HEADERS += \
     mcu/mcu_omap.h \
     mcu/probe.h \
     ui/dialogwidget/networkdialog.h \
-    ui/dialogwidget/datetimesetdialog.h
+    ui/dialogwidget/datetimesetdialog.h \
+    ui/dialogwidget/filemanagerdialog.h
 #    sourcedata/dmaoperate.h \
 #    sourcedata/phascanidata.h \
 #    sourcedata/sourcedata.h
@@ -126,7 +128,8 @@ FORMS += \
     ui/dialogwidget/creditsdialog.ui \
     ui/dialogwidget/systeminfodialog.ui \
     ui/dialogwidget/networkdialog.ui \
-    ui/dialogwidget/datetimesetdialog.ui
+    ui/dialogwidget/datetimesetdialog.ui \
+    ui/dialogwidget/filemanagerdialog.ui
 
 win32 {
     LIBS += -L$$PWD/lib/qjson/lib/ -llibqjson-qt5.dll
