@@ -11,6 +11,7 @@
 #include "aboutdialog.h"
 #include "resetconfigdialog.h"
 #include "systeminfodialog.h"
+#include "filemanagerdialog.h"
 
 #include <QMap>
 #include <QResizeEvent>
@@ -377,6 +378,14 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 
         measurementIndex = index;
         connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
+        break;
+    }
+    case 11: {
+        //点击表头弹出文件管理对话框
+        FileManagerDialog *fileManagerDialog = new FileManagerDialog(this);
+        fileManagerDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        fileManagerDialog->show();
+
         break;
     }
     case 14: {
