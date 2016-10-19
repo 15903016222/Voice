@@ -283,10 +283,12 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     case 1: {
         //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        QString headerText;
 
-        if(!doubleSpinBox->editFlag) {
-            QModelIndex modelIndex = model->item(0, index)->index();
-            ui->tableView->edit(modelIndex);
+        if(currentHeaderText.contains("Δ")) {
+            headerText = currentHeaderText.left(currentHeaderText.indexOf("Δ"));
+        } else {
+            headerText = currentHeaderText;
         }
 
         QString currentStep = doubleSpinBox->get_number_step();
@@ -298,19 +300,21 @@ void ThirdMenuWidget::onHeaderClicked(int index)
                 break;
             }
         }
-        QString headerText;
-        if(currentHeaderText.contains("Δ")) {
-            headerText = currentHeaderText.left(currentHeaderText.indexOf("Δ"));
+
+        if(!doubleSpinBox->editFlag) {
+            QModelIndex modelIndex = model->item(0, index)->index();
+            ui->tableView->edit(modelIndex);
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
         } else {
-            headerText = currentHeaderText;
+            if(stepIndex == (stringList.count() - 1)) {
+                doubleSpinBox->set_number_step(stringList.at(0));
+                model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(0)));
+            } else {
+                doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
+                model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
+            }
         }
-        if(stepIndex == (stringList.count() - 1)) {
-            doubleSpinBox->set_number_step(stringList.at(0));
-            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(0)));
-        } else {
-            doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
-            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
-        }
+
         if(currentHeaderText.contains("Bright")) {
             verticalSliderDialog = new VerticalSliderDialog(this);
             verticalSliderDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
