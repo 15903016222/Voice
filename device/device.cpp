@@ -191,6 +191,18 @@ Device::~Device()
     delete d;
 }
 
+Device *Device::s_device = NULL;
+QMutex Device::s_mutex;
+
+Device *Device::get_device()
+{
+    QMutexLocker l(&s_mutex);
+    if (s_device == NULL) {
+        s_device = new Device();
+    }
+    return s_device;
+}
+
 Device::Type Device::type() const
 {
     return d->m_type;
