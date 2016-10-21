@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QXmlStreamReader>
+#include <QReadWriteLock>
 #include <QDebug>
 
 /* unix */
@@ -31,13 +32,20 @@ public:
     static const QString s_typeMap[Device::DEV_TYPE_MAX];
     static const QString s_infoFile;
     static const char *s_runCountFile;
+    static const char *s_timeFile;
+
     QString m_serialNo;
     Device::Type m_type;
     int m_fpgaVersion;
     int m_runCount;
     time_t m_fstTime;
+
+    time_t m_time;
+
+    QReadWriteLock m_rwlock;
 };
 
+const char *DevicePrivate::s_timeFile = "/home/tt/.time";
 const char *DevicePrivate::s_runCountFile = "/home/tt/.phascan/runcount.info";
 const QString DevicePrivate::s_infoFile = "/home/tt/.phascan/dev.info";
 const QString DevicePrivate::s_typeMap[Device::DEV_TYPE_MAX] = {
@@ -62,7 +70,14 @@ DevicePrivate::DevicePrivate()
 
     save_run_count();
 
-    //load_cert();
+    /* read time */
+    FILE *fp = ::fopen(s_timeFile, "r");
+    if ( NULL == fp ) {
+        qWarning()<<"Cann't open"<<s_timeFile;
+    } else {
+        ::fscanf(fp, "%ld", &m_time);
+        ::fclose(fp);
+    }
 }
 
 QString DevicePrivate::get_serial_number()
@@ -231,4 +246,22 @@ int Device::run_count() const
 uint Device::run_time() const
 {
     return (::time(NULL) - d->m_fstTime);
+}
+
+uint Device::date_time() const
+{
+    QReadLocker l(&d->m_rwlock);
+    return ::time(NULL) + d->m_time;
+}
+
+bool Device::set_date_time(uint t)
+{
+    QString cmd;
+    QWriteLocker l(&d->m_rwlock);
+    d->m_time = t - ::time(NULL);
+    cmd.sprintf("echo %ld > %s && sync", d->m_time, DevicePrivate::s_timeFile);
+    if ( ::system(cmd.toUtf8().data()) ) {
+        return false;
+    }
+    return true;
 }

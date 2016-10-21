@@ -1,7 +1,14 @@
+/**
+ * @file device.h
+ * @brief Device 
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-10-21
+ */
 #ifndef __DEVICE_H__
 #define __DEVICE_H__
 
-#include <QObject>
+#include <QDateTime>
 #include <QMutex>
 
 class DevicePrivate;
@@ -25,6 +32,15 @@ public:
     int fpga_version() const;
     int run_count() const;
     uint run_time() const;  /* Unit: seconds */
+
+    /* 设备时间及日期 */
+    uint date_time() const;
+    bool set_date_time(uint t);
+    bool set_date_time(const QDateTime &t) { return set_date_time(t.toTime_t()); }
+
+//    bool load_cert(const QString &certFile);
+//    const QString &cert_mode_string() const;
+//    const QString &cert_data_string() const;
 
 protected:
     explicit Device();

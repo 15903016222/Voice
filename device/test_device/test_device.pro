@@ -16,8 +16,10 @@ TEMPLATE = app
 
 
 SOURCES += devicetest.cpp \
-    ../device.cpp
+    ../device.cpp \
+    ../cert.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
-    ../device.h
+    ../device.h \
+    ../cert.h
