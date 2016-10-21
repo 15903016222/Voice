@@ -58,7 +58,7 @@ bool PushButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
 {
     if(event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* e =(QMouseEvent*)event;
-        if(option.rect.adjusted(0, -45, 103, 70).contains(e->x(), e->y()) && buttonMap.contains(index)) {
+        if(option.rect.adjusted(0, 0, 0, 0).contains(e->x(), e->y()) && buttonMap.contains(index)) {
             change_button_text(const_cast<QModelIndex &>(index));
         }
     }
