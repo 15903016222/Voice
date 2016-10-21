@@ -21,7 +21,7 @@ IconsWidget::~IconsWidget()
 
 void IconsWidget::on_pushButton_keyboard_clicked()
 {
-    InputPanelContext myInputPanelDlg;
+    MyInputPanel myInputPanelDlg;
     myInputPanelDlg.setWindowFlags(Qt::FramelessWindowHint);
     myInputPanelDlg.setModal(true);
     myInputPanelDlg.showNormal();
