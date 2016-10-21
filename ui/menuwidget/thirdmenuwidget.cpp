@@ -16,6 +16,7 @@
 #include <QMap>
 #include <QResizeEvent>
 #include <QDebug>
+#include <QAbstractItemView>
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
 QWidget(parent),
@@ -38,7 +39,6 @@ QWidget(parent),
     m_mcu = Mcu::get_mcu();
     set_autoDetect_probeModel(false);
 //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -330,9 +330,20 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     case 2: {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         if(!comboBox->editFlag) {
+            ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
             QModelIndex modelIndex = model->item(0, index)->index();
             ui->tableView->edit(modelIndex);
+//            qDebug () << ui->tableView->state();
+//            comboBox->comboBoxMap.value(modelIndex)->view()->setState(QAbstractItemView::EditingState);
+//            comboBox->comboBoxMap.value(modelIndex)->view()->parentWidget()->show();
         }
+//        qDebug() << "header";
+//        qDebug() << "1";
+//        comboBox->set_minimum_contents_length(width / 6);
+//        qDebug() << "2";
+//        comboBox->set_comboBox_item_width(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1));
+//        qDebug() << "3";
+//        comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1)->showPopup();
         break;
     }
     case 3: {
@@ -519,6 +530,17 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
         ui->tableView->edit(index);
     } else if(thirdMenuMap["style"].toString().toInt() == 2) {
         ui->tableView->edit(index);
+//        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
+//        comboBox->comboBoxMap.value(index)->view()->show();
+//        int column = index.column();
+//        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(column));
+//        qDebug() << "1";
+//        comboBox->set_minimum_contents_length(width / 6);
+//        qDebug() << "2";
+//        comboBox->set_comboBox_item_width(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1));
+//        qDebug() << "3";
+//        comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1)->showPopup();
+//        emit activated(index);
     }
 }
 

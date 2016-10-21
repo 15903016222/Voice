@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <QMouseEvent>
 #include <QStyle>
+#include <QGraphicsDropShadowEffect>
 
 ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -38,7 +39,6 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         "QComboBox QAbstractItemView{"
         "font:12pt 'Times New Roman';"
         "background-color:rgb(255, 255, 255);"
-        "border:0px solid;"
         "margin-bottom:45px;"
         "outline:0px;}"
         "QComboBox QAbstractItemView::item{height:30px}"
@@ -47,13 +47,28 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         "QComboBox QAbstractItemView::item:selected{color:yellow;"
         "background-color:rgba(0, 150, 255, 225);}");
 
-
     editor->setView(new QListView());
     editor->view()->parentWidget()->setAttribute(Qt::WA_TranslucentBackground);
     editor->view()->parentWidget()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
-    set_comboBox_item_width(editor);
+//    editor->view()->setFrameShape(QFrame::NoFrame);
+//    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect;
+//    effect->setBlurRadius(0);
+//    effect->setColor(Qt::black);
+//    effect->setOffset(2,2);
+//    editor->view()->parentWidget()->setGraphicsEffect(effect);
 
-//    editor->showPopup();
+    qDebug() << "1";
+
+    set_comboBox_item_width(editor);
+    editor->showPopup();
+//    editor->view()->setVisible(true);
+
+    qDebug() << editor->view()->isVisible();
+//    editor->view()->selectionModel()->setCurrentIndex(index,QItemSelectionModel::ClearAndSelect);
+//    static_cast<QAbstractItemView*>(editor->view())->setState(QAbstractItemView::EditingState);
+//    editor->view()->parentWidget()->show();
+//    editor->view()->parentWidget()->setFocus();
+
     (const_cast<ComboBoxDelegate *>(this))->comboBoxList.append(editor);
     (const_cast<ComboBoxDelegate *>(this))->comboBoxMap.insert(index, editor);
     (const_cast<ComboBoxDelegate *>(this))->editFlag = true;
@@ -72,6 +87,7 @@ void ComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) 
     int i = find_list_index(modelItemList, shortText);
     int textIndex = comboBox->findText(itemList.at(i));
     comboBox->setCurrentIndex(textIndex);
+    qDebug() << "2";
 }
 
 void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
@@ -81,6 +97,7 @@ void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
     int i = find_list_index(itemList, text);
     QString shortText = modelItemList.at(i);
     model->setData(index, shortText, Qt::EditRole);
+    qDebug() << "3";
 }
 
 void ComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -138,7 +155,7 @@ void ComboBoxDelegate::commit_and_close_editor(const QString &str)
         emit change_language(str);
     }
     editFlag = false;
-//    comboBoxList.at(comboBoxList.count() - 1)->hidePopup();
+    editor->hidePopup();
 }
 
 void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
