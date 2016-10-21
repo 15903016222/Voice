@@ -42,6 +42,8 @@ public:
     const QString &cert_mode_string() const;
     const QString cert_expire() const;
 
+    bool is_valid() const;
+
 Q_SIGNALS:
     void valid_change(bool valid);
 

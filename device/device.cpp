@@ -30,6 +30,8 @@ public:
     bool mount() { return ! ::system("mount /dev/mtdblock2 /home/tt/.phascan"); }
     bool umount() { return ! ::system("umount /home/tt/.phascan"); }
 
+    bool check_cert();
+
     static const QString s_typeMap[Device::DEV_TYPE_MAX];
     static const QString s_infoFile;
     static const char *s_runCountFile;
@@ -203,6 +205,30 @@ bool DevicePrivate::read_info()
     return !xml.hasError();
 }
 
+bool DevicePrivate::check_cert()
+{
+    bool flag = false;
+    if (m_cert.get_serial_number() == m_serialNo) {
+        switch (m_cert.get_auth_mode()) {
+        case Cert::ALWAYS_VALID:
+            flag = true;
+            break;
+        case Cert::RUN_COUNT:
+            flag = (m_cert.get_expire() >= m_runCount);
+            break;
+        case Cert::RUN_TIME:
+            flag = (m_cert.get_expire() >= (::time(NULL) - m_fstTime));
+            break;
+        case Cert::RUN_DATE:
+            flag = (m_cert.get_expire() > ::time(NULL));
+            break;
+        default:
+            break;
+        }
+    }
+    return flag;
+}
+
 /* Device */
 Device::Device()
     : d(new DevicePrivate())
@@ -314,4 +340,9 @@ const QString Device::cert_expire() const
         break;
     }
     return "Invalid";
+}
+
+bool Device::is_valid() const
+{
+    return d->check_cert();
 }

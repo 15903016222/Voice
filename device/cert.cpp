@@ -117,6 +117,11 @@ bool Cert::load(const QString &certFile, const QString &pubPemFile)
     return true;
 }
 
+const QString &Cert::get_serial_number() const
+{
+    return d->m_serialNo;
+}
+
 Cert::AuthMode Cert::get_auth_mode() const
 {
     return CertPrivate::s_modeMap[d->m_authMode];

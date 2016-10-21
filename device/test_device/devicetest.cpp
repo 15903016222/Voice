@@ -73,15 +73,19 @@ void DeviceTest::test_cert()
 {
     qDebug()<<"mode:"<<m_device->cert_mode_string();
     qDebug()<<"expire:"<<m_device->cert_expire();
+    qDebug()<<"valid:"<<m_device->is_valid();
     m_device->import_cert("run_time_260.cert");
     qDebug()<<"mode:"<<m_device->cert_mode_string();
     qDebug()<<"expire:"<<m_device->cert_expire();
+    qDebug()<<"valid:"<<m_device->is_valid();
     m_device->import_cert("run_count_60.cert");
     qDebug()<<"mode:"<<m_device->cert_mode_string();
     qDebug()<<"expire:"<<m_device->cert_expire();
+    qDebug()<<"valid:"<<m_device->is_valid();
     m_device->import_cert("1610241613.cert");
     qDebug()<<"mode:"<<m_device->cert_mode_string();
     qDebug()<<"expire:"<<m_device->cert_expire();
+    qDebug()<<"valid:"<<m_device->is_valid();
 }
 
 QTEST_APPLESS_MAIN(DeviceTest)
