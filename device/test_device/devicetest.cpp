@@ -17,6 +17,8 @@ private Q_SLOTS:
     void test_run_time();
     void test_time();
 
+    void test_cert();
+
 private:
     Device *m_device;
 
@@ -65,6 +67,21 @@ void DeviceTest::test_time()
     m_device->set_date_time(t);
     t.setTime_t(m_device->date_time());
     qDebug()<<__LINE__<<"Device Date:"<<t;
+}
+
+void DeviceTest::test_cert()
+{
+    qDebug()<<"mode:"<<m_device->cert_mode_string();
+    qDebug()<<"expire:"<<m_device->cert_expire();
+    m_device->import_cert("run_time_260.cert");
+    qDebug()<<"mode:"<<m_device->cert_mode_string();
+    qDebug()<<"expire:"<<m_device->cert_expire();
+    m_device->import_cert("run_count_60.cert");
+    qDebug()<<"mode:"<<m_device->cert_mode_string();
+    qDebug()<<"expire:"<<m_device->cert_expire();
+    m_device->import_cert("1610241613.cert");
+    qDebug()<<"mode:"<<m_device->cert_mode_string();
+    qDebug()<<"expire:"<<m_device->cert_expire();
 }
 
 QTEST_APPLESS_MAIN(DeviceTest)

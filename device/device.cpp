@@ -1,4 +1,5 @@
 #include "device.h"
+#include "cert.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -33,6 +34,8 @@ public:
     static const QString s_infoFile;
     static const char *s_runCountFile;
     static const char *s_timeFile;
+    static const char *s_certFile;
+    static const char *s_pubPemFile;
 
     QString m_serialNo;
     Device::Type m_type;
@@ -42,9 +45,13 @@ public:
 
     time_t m_time;
 
+    Cert m_cert;
+
     QReadWriteLock m_rwlock;
 };
 
+const char *DevicePrivate::s_pubPemFile = "/home/tt/.secure/pub.pem";
+const char *DevicePrivate::s_certFile = "/home/tt/.phascan/auth.cert";
 const char *DevicePrivate::s_timeFile = "/home/tt/.time";
 const char *DevicePrivate::s_runCountFile = "/home/tt/.phascan/runcount.info";
 const QString DevicePrivate::s_infoFile = "/home/tt/.phascan/dev.info";
@@ -66,6 +73,7 @@ DevicePrivate::DevicePrivate()
     } else {
         read_old_info();
     }
+    m_cert.load(s_certFile, s_pubPemFile);
     umount();
 
     save_run_count();
@@ -199,6 +207,7 @@ bool DevicePrivate::read_info()
 Device::Device()
     : d(new DevicePrivate())
 {
+
 }
 
 Device::~Device()
@@ -264,4 +273,45 @@ bool Device::set_date_time(uint t)
         return false;
     }
     return true;
+}
+
+bool Device::import_cert(const QString &certFile)
+{
+    QString cmd;
+    cmd.sprintf("cp %s %s && sync", certFile.toUtf8().data(), DevicePrivate::s_certFile);
+
+    d->mount();
+    if (::system(cmd.toUtf8().data()) != 0) {
+        d->umount();
+        return false;
+    }
+
+    QWriteLocker l(&d->m_rwlock);
+    bool ret = d->m_cert.load(DevicePrivate::s_certFile, DevicePrivate::s_pubPemFile);
+    d->umount();
+    return ret;
+}
+
+const QString &Device::cert_mode_string() const
+{
+    QReadLocker l(&d->m_rwlock);
+    return d->m_cert.get_auth_mode_string();
+}
+
+const QString Device::cert_expire() const
+{
+    QReadLocker l(&d->m_rwlock);
+    switch (d->m_cert.get_auth_mode()) {
+    case Cert::RUN_COUNT:
+    case Cert::RUN_TIME:
+        return QString::number(d->m_cert.get_expire());
+        break;
+    case Cert::RUN_DATE:
+        return QDateTime::fromTime_t(d->m_cert.get_expire()).toString("yyyy-M-d H:m");
+    case Cert::ALWAYS_VALID:
+        return "Always Valid";
+    default:
+        break;
+    }
+    return "Invalid";
 }

@@ -38,9 +38,12 @@ public:
     bool set_date_time(uint t);
     bool set_date_time(const QDateTime &t) { return set_date_time(t.toTime_t()); }
 
-//    bool load_cert(const QString &certFile);
-//    const QString &cert_mode_string() const;
-//    const QString &cert_data_string() const;
+    bool import_cert(const QString &certFile);
+    const QString &cert_mode_string() const;
+    const QString cert_expire() const;
+
+Q_SIGNALS:
+    void valid_change(bool valid);
 
 protected:
     explicit Device();
