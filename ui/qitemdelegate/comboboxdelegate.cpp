@@ -60,7 +60,6 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
     qDebug() << "1";
 
     set_comboBox_item_width(editor);
-    editor->showPopup();
 //    editor->view()->setVisible(true);
 
     qDebug() << editor->view()->isVisible();
