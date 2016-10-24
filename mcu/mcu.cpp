@@ -3,8 +3,10 @@
 
 #ifdef PHASCAN_II
 #include "mcu_imx.h"
-#else
+#elif PHASCAN
 #include "mcu_omap.h"
+#else
+#error "Must Specify Device Name"
 #endif
 
 QMutex Mcu::m_mutex;
@@ -16,7 +18,7 @@ Mcu* Mcu::get_mcu()
     if (m_mcu == NULL) {
 #ifdef PHASCAN_II
         m_mcu = new McuImx();
-#else
+#elif PHASCAN
         m_mcu = new McuOmap();
 #endif
     }

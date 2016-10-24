@@ -10,7 +10,7 @@
 #  PHASCAN_II
 #-------------------------------------------------
 
-DEVICE = PHASCAN_II
+DEVICE = PC
 
 DEFINES += $$DEVICE
 
