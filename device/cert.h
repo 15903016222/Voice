@@ -11,6 +11,7 @@
 
 #include <openssl/evp.h>
 
+#include <QObject>
 #include <QString>
 #include <QDateTime>
 

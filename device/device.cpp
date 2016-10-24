@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <time.h>
 
@@ -164,7 +165,7 @@ bool DevicePrivate::read_old_info()
                                  m_fpgaVersion,
                                  m_fstTime
                                  );
-    ::system("mkfs.ext2 "MTD_DEVICE);
+    ::system("mkfs.ext2 " MTD_DEVICE);
     mount();
     QFile file(DevicePrivate::s_infoFile);
     if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {

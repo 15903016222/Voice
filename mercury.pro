@@ -4,18 +4,27 @@
 #
 #-------------------------------------------------
 
+#-------------------------------------------------
+# Support Devices:
+#  PHASCAN
+#  PHASCAN_II
+#-------------------------------------------------
+
+DEVICE = PHASCAN_II
+
+DEFINES += $$DEVICE
+
 QT       += core gui
 
 equals(QT_MAJOR_VERSION, 5) {
     QT      += serialport
-    DEFINES += PHASCAN_II
 }
 
 equals(QT_MAJOR_VERSION, 4) {
     CONFIG  += serialport
     QMAKE_CXXFLAGS += -Wno-psabi
-    DEFINES += PHASCAN
 }
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -36,11 +45,6 @@ INCLUDEPATH += $$PWD/ui
 INCLUDEPATH += $$PWD/ui/menuwidget
 INCLUDEPATH += $$PWD/ui/dialogwidget
 INCLUDEPATH += $$PWD/ui/qitemdelegate
-INCLUDEPATH += $$PWD/mcu
-#INCLUDEPATH += $$PWD/sourcedata
-
-INCLUDEPATH += $$PWD/lib/qjson/lib
-DEPENDPATH += $$PWD/lib/qjson/lib
 
 SOURCES += \
     main.cpp \
@@ -66,16 +70,9 @@ SOURCES += \
     ui/dialogwidget/aboutdialog.cpp \
     ui/dialogwidget/creditsdialog.cpp \
     ui/dialogwidget/systeminfodialog.cpp \
-    mcu/mcu.cpp \
-    mcu/mcu_imx.cpp \
-    mcu/mcu_omap.cpp \
     ui/dialogwidget/networkdialog.cpp \
     ui/dialogwidget/datetimesetdialog.cpp \
     ui/dialogwidget/filemanagerdialog.cpp
-
-#    sourcedata/dmaoperate.cpp \
-#    sourcedata/phascanidata.cpp \
-#    sourcedata/sourcedata.cpp
 
 HEADERS += \
     ui/mainwindow.h \
@@ -100,16 +97,9 @@ HEADERS += \
     ui/dialogwidget/aboutdialog.h \
     ui/dialogwidget/creditsdialog.h \
     ui/dialogwidget/systeminfodialog.h \
-    mcu/mcu.h \
-    mcu/mcu_imx.h \
-    mcu/mcu_omap.h \
-    mcu/probe.h \
     ui/dialogwidget/networkdialog.h \
     ui/dialogwidget/datetimesetdialog.h \
     ui/dialogwidget/filemanagerdialog.h
-#    sourcedata/dmaoperate.h \
-#    sourcedata/phascanidata.h \
-#    sourcedata/sourcedata.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -137,6 +127,9 @@ FORMS += \
 
 
 include(lib/lib.pri)
+
+include(device/device.pri)
+include(mcu/mcu.pri)
 
 unix {
     INCLUDEPATH += /stuff/bitbake/bin/tmp/sysroots/i686-linux/usr/qt-4.8.6/lib/
