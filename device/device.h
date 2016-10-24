@@ -44,9 +44,6 @@ public:
 
     bool is_valid() const;
 
-Q_SIGNALS:
-    void valid_change(bool valid);
-
 protected:
     explicit Device();
     ~Device();
