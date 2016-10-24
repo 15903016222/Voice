@@ -325,12 +325,15 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             verticalSliderDialog->setBrightValue(text);
             connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
         }
+
+        opendSpinBoxIndex = index;
+        qDebug() << opendSpinBoxIndex;
         break;
     }
     case 2: {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         if(!comboBox->editFlag) {
-            ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+//            ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
             QModelIndex modelIndex = model->item(0, index)->index();
             ui->tableView->edit(modelIndex);
 //            qDebug () << ui->tableView->state();
@@ -821,7 +824,7 @@ void ThirdMenuWidget::set_date(QString str_date)
 
 void ThirdMenuWidget::set_time(QString str_time)
 {
-    model->item(0, timeSetIndex)->setText(str_time);
+    model->item(0, dateTimeSetIndex)->setText(str_time);
 }
 
 void ThirdMenuWidget::set_ip(QString str_ip)
@@ -867,4 +870,24 @@ QList<int> ThirdMenuWidget::get_dialog_value_list(int index, QString str)
         }
     }
     return valueList;
+}
+
+void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
+{
+    DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+    qDebug() << spinBox->editFlag;
+    if(!spinBox->editFlag) {
+        QModelIndex modelIndex = model->item(0, index)->index();
+        ui->tableView->openPersistentEditor(modelIndex);
+    }
+}
+
+void ThirdMenuWidget::close_spinbox_persistent_editor(int index)
+{
+    DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+    qDebug() << spinBox->editFlag;
+    if(spinBox->editFlag) {
+        QModelIndex modelIndex = model->item(0, index)->index();
+        ui->tableView->closePersistentEditor(modelIndex);
+    }
 }

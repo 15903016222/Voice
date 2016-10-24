@@ -54,10 +54,10 @@ public:
     int brightIndex;
     int probeIndex;
     int wedgeIndex;
-    int timeSetIndex;
     int dateTimeSetIndex;
     int networkIndex;
     int languageOption;
+    int opendSpinBoxIndex;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -103,6 +103,8 @@ private slots:
     void set_ip(QString str_ip);
     void set_subNet(QString str_subNet);
     void retranslate_third_menu_ui(QString string);
+    void open_spinbox_persistent_editor(int index);
+    void close_spinbox_persistent_editor(int index);
 
 };
 
