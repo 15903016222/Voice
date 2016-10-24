@@ -7,19 +7,22 @@ HEADERS += \
 SOURCES += \
     $$PWD/mcu.cpp
 
+equals(QT_MAJOR_VERSION, 5) {
+    QT      += serialport
+}
 
 equals(DEVICE, "PHASCAN") {
-HEADERS += \
-   $$PWD/mcu_omap.h
+    HEADERS += \
+        $$PWD/mcu_omap.h
 
-SOURCES += \
-    $$PWD/mcu_omap.cpp
+    SOURCES += \
+        $$PWD/mcu_omap.cpp
 }
 
 equals(DEVICE, "PHASCAN_II") {
-HEADERS += \
-    $$PWD/mcu_imx.h
+    HEADERS += \
+        $$PWD/mcu_imx.h
 
-SOURCES += \
-    $$PWD/mcu_imx.cpp
+    SOURCES += \
+        $$PWD/mcu_imx.cpp
 }

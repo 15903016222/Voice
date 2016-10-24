@@ -4,29 +4,23 @@
 #
 #-------------------------------------------------
 
-#-------------------------------------------------
+#------------------------------------------------------------
 # Support Devices:
-#  PHASCAN
-#  PHASCAN_II
-#-------------------------------------------------
+#  PHASCAN    : Qt4.8.6, arm-angstrom-linux-gnueabi-gcc.4.5.3
+#  PHASCAN_II : Qt5.4.3, arm-phytec-linux-gnueabi-gcc.4.9.2
+#-------------------------------------------------------------
 
-DEVICE = PC
-
-DEFINES += $$DEVICE
+DEVICE = PHASCAN
 
 QT       += core gui
 
-equals(QT_MAJOR_VERSION, 5) {
-    QT      += serialport
-}
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 equals(QT_MAJOR_VERSION, 4) {
-    CONFIG  += serialport
     QMAKE_CXXFLAGS += -Wno-psabi
 }
 
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+DEFINES += $$DEVICE
 
 RESOURCES += ui/mainwindow.qrc
 
@@ -129,11 +123,5 @@ FORMS += \
 include(lib/lib.pri)
 
 include(device/device.pri)
+
 include(mcu/mcu.pri)
-
-unix {
-    INCLUDEPATH += /stuff/bitbake/bin/tmp/sysroots/i686-linux/usr/qt-4.8.6/lib/
-#    LIBS += -lQtGui
-}
-
-message($$CONFIG)
