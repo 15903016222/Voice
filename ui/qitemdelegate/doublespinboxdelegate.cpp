@@ -1,5 +1,7 @@
 #include "doublespinboxdelegate.h"
 
+#include <QEvent>
+
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
@@ -97,14 +99,16 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 {
     if(spinBoxList.size() != 0) {
         QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-        double value = doubleSpinBox->value();
+//        double value = doubleSpinBox->value();
 
         if (type == Mcu::ROTARY_UP) {
-            value = value + 1;
+//            value = value + 1;
+            doubleSpinBox->stepDown();
         } else {
-            value = value - 1;
+//            value = value - 1;
+            doubleSpinBox->stepDown();
         }
-        doubleSpinBox->setValue(value);
+//        doubleSpinBox->setValue(value);
     }
 }
 
@@ -114,7 +118,8 @@ void DoubleSpinBoxDelegate::key_sure(int key)
     if(key == 214){
         if(spinBoxList.size() != 0) {
             QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
+//            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
+            emit doubleSpinBox->editingFinished();
         }
       //  QShortcut *key_return = new QShortcut(QKeySequence(Qt::Key_Return), doubleSpinBox);
       //  connect(key_return, SIGNAL(activated()), this, SLOT());
