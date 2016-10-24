@@ -30,10 +30,12 @@ public:
     void insert_battery1_icon(int value);
     void insert_battery2_icon(int value);
 
+    QList<QPushButton*> pushButton_keyboard;
+
 signals:
 
 public slots:
-    void on_pushButton_keyboard_clicked();
+//    void on_pushButton_keyboard_clicked();
     void on_pushButton_scan_clicked();
     void do_rotary_event(Mcu::RotaryType type);
     void do_temperature_event(Mcu::TemperatureType type, int value);

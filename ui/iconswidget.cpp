@@ -8,6 +8,7 @@ IconsWidget::IconsWidget(QWidget *parent) :
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
+    pushButton_keyboard.append(ui->pushButton_keyboard);
    // connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
     connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
@@ -19,14 +20,26 @@ IconsWidget::~IconsWidget()
     delete ui;
 }
 
-void IconsWidget::on_pushButton_keyboard_clicked()
-{
-    MyInputPanel myInputPanelDlg;
-    myInputPanelDlg.setWindowFlags(Qt::FramelessWindowHint);
-    myInputPanelDlg.setModal(true);
-    myInputPanelDlg.showNormal();
-    myInputPanelDlg.exec();
-}
+//void IconsWidget::on_pushButton_keyboard_clicked()
+//{
+////    MyInputPanel *myInputPanelDlg = new MyInputPanel;
+////    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint);
+//////    myInputPanelDlg->setAttribute(Qt::WA_TransparentForMouseEvents);
+//////    myInputPanelDlg->setModal(true);
+////    myInputPanelDlg.setWindowModality(Qt::WindowModal);
+//////    myInputPanelDlg->showNormal();
+////    myInputPanelDlg->show();
+
+////    MyInputPanel *myInputPanelDlg = new MyInputPanel;
+////    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+////    myInputPanelDlg->show();
+
+//    MyInputPanel myInputPanelDlg;
+//    myInputPanelDlg.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+//    myInputPanelDlg.setModal(false);
+//    myInputPanelDlg.showNormal();
+//    myInputPanelDlg.exec();
+//}
 
 void IconsWidget::on_pushButton_scan_clicked()
 {

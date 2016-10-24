@@ -77,6 +77,8 @@ MyInputPanel::MyInputPanel():
     connect(form.panelButton_0, SIGNAL(clicked()), &signalMapper, SLOT(map()));
     connect(form.panelButton_hash, SIGNAL(clicked()), &signalMapper, SLOT(map()));
     connect(&signalMapper, SIGNAL(mapped(QWidget*)), this, SLOT(buttonClicked(QWidget*)));
+
+    pushButton_close.append(form.closeButton);
 }
 
 //! [0]
@@ -120,4 +122,5 @@ void MyInputPanel::buttonClicked(QWidget *w)
 void MyInputPanel::on_closeButton_clicked()
 {
     close();
+    emit close_keyboard();
 }

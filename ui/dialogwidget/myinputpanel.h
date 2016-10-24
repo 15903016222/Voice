@@ -56,8 +56,11 @@ class MyInputPanel : public QDialog
 public:
     MyInputPanel();
 
+    QList<QPushButton*> pushButton_close;
+
 signals:
     void characterGenerated(QChar character);
+    void close_keyboard();
 
 protected:
     bool event(QEvent *e);

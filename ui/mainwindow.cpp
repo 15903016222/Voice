@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 class MainWindowPrivate
 {
 public:
@@ -85,6 +86,8 @@ void MainWindow::init_ui()
     ui->scrollArea->setWidget(firstSecondMenu);
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
+    QObject::connect(ui->widgetTopRight->pushButton_keyboard.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_keyboard_clicked()));
+    QObject::connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
 }
@@ -350,3 +353,22 @@ void MainWindow::scroll_menu(int index)
     }
 }
 
+void MainWindow::slot_pushButton_keyboard_clicked()
+{
+
+    myInputPanelDlg.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    myInputPanelDlg.setModal(false);
+    myInputPanelDlg.showNormal();
+
+
+    emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
+    myInputPanelDlg.exec();
+    ui->widget_thirdMenu->setFocus();
+
+//    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+}
+
+void MainWindow::slot_keyboard_close_clicked()
+{
+    emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+}

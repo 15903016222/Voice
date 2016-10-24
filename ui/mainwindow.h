@@ -4,6 +4,7 @@
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
+#include "myinputpanel.h"
 #include "mcu.h"
 
 #include <QMainWindow>
@@ -37,6 +38,7 @@ public:
     CommonMenuWidget * commonMenuWidget;
     FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
+    MyInputPanel myInputPanelDlg;
 
     void show_hidden_Menu();
     void resizeEvent(QResizeEvent *event);
@@ -75,9 +77,13 @@ private slots:
     void slot_pushButton_commonMenuClicked();
     void scroll_menu(int index);
     void update_translator(QString string);
+    void slot_pushButton_keyboard_clicked();
+    void slot_keyboard_close_clicked();
 
 signals:
     void clickedMenuIndex(int);
+    void show_keyboard(int);
+    void close_persistent_editor(int);
 
 };
 
