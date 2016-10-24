@@ -272,18 +272,6 @@ void MainWindow::update_translator(QString string)
 
 }
 
-#ifdef WIN32
-bool MainWindow::eventFilter(QObject *object, QEvent *event)
-{
-    if(object == ui->frame_showPlot) {
-        if(event->type() == QEvent::MouseButtonPress) {
-            show_hidden_Menu();
-        }
-    }
-    return QWidget::eventFilter(object, event);
-}
-#endif
-
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
@@ -322,6 +310,15 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
         }
         show_hidden_arrow();
     }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    qDebug("0x%0x", event->key());
+    if (event->key() == Qt::Key_Meta) {
+        show_hidden_Menu();
+    }
+    return QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::show_hidden_Menu()

@@ -29,6 +29,7 @@ protected:
     MainWindowPrivate * const d_ptr;
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *moveEvent);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Q_DECLARE_PRIVATE(MainWindow)
@@ -42,9 +43,6 @@ public:
     void resizeEvent(QResizeEvent *event);
     void show_hidden_arrow();
 
-#ifdef WIN32
-    bool eventFilter(QObject *object, QEvent *event);
-#endif
     bool hiddenFirstSecondMenuFlag;
     bool hiddenThirdMenuFlag;
     bool hiddenCommonMenuFlag;
