@@ -1,8 +1,9 @@
 #ifndef FIRSTSECONDMENUWIDGET_H
 #define FIRSTSECONDMENUWIDGET_H
 
-#include "parser.h"
 #include "mcu.h"
+
+#include <Parser>
 
 #include <QWidget>
 #include <QToolBox>
