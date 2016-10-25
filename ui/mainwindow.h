@@ -39,7 +39,7 @@ public:
     CommonMenuWidget * commonMenuWidget;
     FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
-    MyInputPanel myInputPanelDlg;
+    MyInputPanel *myInputPanelDlg;
 
     void show_hidden_Menu();
     void resizeEvent(QResizeEvent *event);
