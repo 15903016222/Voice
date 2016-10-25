@@ -2,14 +2,18 @@ INCLUDEPATH += $$PWD
 
 HEADERS += \
     $$PWD/mcu.h \
-    $$PWD/probe.h \
-    $$PWD/mcu_pc.h
+    $$PWD/probe.h
 
 SOURCES += \
     $$PWD/mcu.cpp
 
 equals(QT_MAJOR_VERSION, 5) {
     QT      += serialport
+}
+
+equals(DEVICE, "PC_UNIX") {
+    HEADERS += \
+        $$PWD/mcu_pc.h
 }
 
 equals(DEVICE, "PHASCAN") {

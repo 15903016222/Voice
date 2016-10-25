@@ -6,13 +6,13 @@
 
 #------------------------------------------------------------
 # Support Devices:
-#  PC_Linux   : Qt5.6.0, gcc.4.8.4
-#  PC_Wins    : Qt5.7.0, MSVC2015
+#  PC_UNIX    : Qt5.6.0, gcc.4.8.4
+#  PC_WIN     : Qt5.7.0, MSVC2015
 #  PHASCAN    : Qt4.8.6, arm-angstrom-linux-gnueabi-gcc.4.5.3
 #  PHASCAN_II : Qt5.4.3, arm-phytec-linux-gnueabi-gcc.4.9.2
 #-------------------------------------------------------------
 
-DEVICE = PC_Linux
+DEVICE = PC_UNIX
 
 QT       += core gui
 
