@@ -1,5 +1,7 @@
 INCLUDEPATH += $$PWD
 
+DEFINES += QJSON_STATIC YYDEBUG=0
+
 SOURCES += \ 
     $$PWD/json_parser.cc \
     $$PWD/json_scanner.cc \
