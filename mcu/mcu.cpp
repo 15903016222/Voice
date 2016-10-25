@@ -3,8 +3,10 @@
 
 #ifdef PHASCAN_II
 #include "mcu_imx.h"
-#else
+#elif PHASCAN
 #include "mcu_omap.h"
+#else
+#include "mcu_pc.h"
 #endif
 
 QMutex Mcu::m_mutex;
@@ -16,8 +18,10 @@ Mcu* Mcu::get_mcu()
     if (m_mcu == NULL) {
 #ifdef PHASCAN_II
         m_mcu = new McuImx();
-#else
+#elif PHASCAN
         m_mcu = new McuOmap();
+#else
+        m_mcu = new McuPc();
 #endif
     }
     return m_mcu;
