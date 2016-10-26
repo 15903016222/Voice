@@ -79,6 +79,11 @@ MyInputPanel::MyInputPanel():
     connect(&signalMapper, SIGNAL(mapped(QWidget*)), this, SLOT(buttonClicked(QWidget*)));
 
     pushButton_close.append(form.closeButton);
+    for(int i = 0; i < 10; i ++) {
+        QPushButton *pushButton = findChild<QPushButton*>("panelButton_" + QString::number(i));
+        connect(pushButton, SIGNAL(clicked()), this, SLOT(input_text()));
+//        pushButton->setFocusPolicy(Qt::NoFocus);
+    }
 }
 
 //! [0]
@@ -123,4 +128,12 @@ void MyInputPanel::on_closeButton_clicked()
 {
     close();
     emit close_keyboard();
+}
+
+void MyInputPanel::input_text()
+{
+    QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
+    QString string = pushButton->text();
+    emit input_number(string);
+
 }

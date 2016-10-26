@@ -61,6 +61,7 @@ public:
 signals:
     void characterGenerated(QChar character);
     void close_keyboard();
+    void input_number(QString);
 
 protected:
     bool event(QEvent *e);
@@ -70,6 +71,7 @@ private slots:
     void buttonClicked(QWidget *w);
 
     void on_closeButton_clicked();
+    void input_text();
 
 private:
     Ui::MyInputPanelForm form;
