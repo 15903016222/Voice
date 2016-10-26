@@ -358,15 +358,22 @@ void MainWindow::slot_pushButton_keyboard_clicked()
     myInputPanelDlg->setModal(false);
     myInputPanelDlg->showNormal();
 
+    if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
+        emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
+    }
 
-    emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
     myInputPanelDlg->show();
-    ui->widget_thirdMenu->setFocus();
+//    ui->widget_thirdMenu->setFocus();
 
     connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
+
 }
 
 void MainWindow::slot_keyboard_close_clicked()
 {
-    emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+    if(ui->widget_thirdMenu->keyboardShowFlag) {
+        emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+    }
 }
+
