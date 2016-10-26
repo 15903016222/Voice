@@ -30,6 +30,7 @@ QWidget(parent),
 
     height = this->geometry().height();
     languageOption = 1;
+    keyboardShowFlag = false;
 
     init_standard_model();
     set_third_menu_name(0, 0);
@@ -145,6 +146,7 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
+
                 break;
             }
             case 2: {
@@ -301,9 +303,21 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             }
         }
 
+        QModelIndex modelIndex = model->item(0, index)->index();
+        if(keyboardShowFlag) {
+            DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
+            QModelIndex modelIndex2 = model->item(0, opendSpinBoxIndex)->index();
+            disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
+            ui->tableView->closePersistentEditor(modelIndex2);
+            spinBox->editFlag = false;
+            set_header_text_close(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1));
+            ui->tableView->openPersistentEditor(modelIndex);
+        }
+
         if(!doubleSpinBox->editFlag) {
-            QModelIndex modelIndex = model->item(0, index)->index();
             ui->tableView->edit(modelIndex);
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
+        } else if(keyboardShowFlag && opendSpinBoxIndex != index) {
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
         } else {
             if(stepIndex == (stringList.count() - 1)) {
@@ -315,6 +329,9 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             }
         }
 
+        opendSpinBoxIndex = index;        
+        connect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
+
         if(currentHeaderText.contains("Bright")) {
             verticalSliderDialog = new VerticalSliderDialog(this);
             verticalSliderDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -325,9 +342,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             verticalSliderDialog->setBrightValue(text);
             connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
         }
-
-        opendSpinBoxIndex = index;
-        qDebug() << opendSpinBoxIndex;
         break;
     }
     case 2: {
@@ -530,7 +544,21 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
     QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
 
     if(thirdMenuMap["style"].toString().toInt() == 1) {
-        ui->tableView->edit(index);
+        int column = index.column();
+        if(!keyboardShowFlag) {
+            ui->tableView->edit(index);
+        }
+
+        if(keyboardShowFlag) {
+            DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
+            QModelIndex modelIndex = model->item(0, opendSpinBoxIndex)->index();
+            ui->tableView->closePersistentEditor(modelIndex);
+            set_header_text_close(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1));
+            spinBox->editFlag = false;
+            ui->tableView->openPersistentEditor(index);
+        }
+        opendSpinBoxIndex = column;
+
     } else if(thirdMenuMap["style"].toString().toInt() == 2) {
         ui->tableView->edit(index);
 //        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
@@ -875,19 +903,33 @@ QList<int> ThirdMenuWidget::get_dialog_value_list(int index, QString str)
 void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
 {
     DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
-    qDebug() << spinBox->editFlag;
+    keyboardShowFlag = true;
     if(!spinBox->editFlag) {
         QModelIndex modelIndex = model->item(0, index)->index();
         ui->tableView->openPersistentEditor(modelIndex);
     }
+
 }
 
 void ThirdMenuWidget::close_spinbox_persistent_editor(int index)
 {
     DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
-    qDebug() << spinBox->editFlag;
+    keyboardShowFlag = false;
     if(spinBox->editFlag) {
         QModelIndex modelIndex = model->item(0, index)->index();
         ui->tableView->closePersistentEditor(modelIndex);
+        set_header_text_close(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1));
+        spinBox->editFlag = false;
+        disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
     }
+}
+
+void ThirdMenuWidget::input_spinbox_number(QString string)
+{
+    DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
+
+    if(spinBox->editFlag) {
+        emit send_string_to_delegate(string);
+    }
+
 }

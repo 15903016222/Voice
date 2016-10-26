@@ -58,6 +58,7 @@ public:
     int networkIndex;
     int languageOption;
     int opendSpinBoxIndex;
+    bool keyboardShowFlag;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -81,6 +82,7 @@ private:
 signals:
     void translater_ZH();
     void translater_EN();
+    void send_string_to_delegate(QString);
 
 protected slots:
     void do_rotary_event(Mcu::RotaryType type);
@@ -105,6 +107,8 @@ private slots:
     void retranslate_third_menu_ui(QString string);
     void open_spinbox_persistent_editor(int index);
     void close_spinbox_persistent_editor(int index);
+    void input_spinbox_number(QString string);
+
 
 };
 
