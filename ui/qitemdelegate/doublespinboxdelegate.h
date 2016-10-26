@@ -24,9 +24,11 @@ public:
 
     QList<QDoubleSpinBox*> spinBoxList;
     QList<int> rangeList;
+    QMap<QModelIndex, QDoubleSpinBox*> spinBoxMap;
     QStringList stepList;
     QString step;
     int decimalAmount;
+    int inputCount;
     bool editFlag;
 
 private:

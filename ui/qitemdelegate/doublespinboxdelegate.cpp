@@ -10,6 +10,7 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(key_sure(int)));
     editFlag = false;
+    inputCount = 0;
 }
 
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -26,11 +27,12 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
     editor->setDecimals(decimalAmount);
 
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
+    (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxMap.insert(index, editor);
     (const_cast<DoubleSpinBoxDelegate *>(this))->editFlag = true;
     QStringList sendList;
     sendList.append(QString::number(index.column()));
     sendList.append(step);
-    qDebug() << "count:" << spinBoxList.count();
+
     emit createEditorHeaderText(sendList);
     connect(editor, SIGNAL(editingFinished()), this, SLOT(commit_and_close_editor()));
 
@@ -43,6 +45,7 @@ void DoubleSpinBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &in
     double value = index.model()->data(index,Qt::EditRole).toDouble();
     QDoubleSpinBox *doubleSpinBox = static_cast<QDoubleSpinBox*>(editor);
     doubleSpinBox->setValue(value);
+    qDebug() << "setEditorData" << value;
 }
 
 void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
@@ -50,6 +53,7 @@ void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
     QDoubleSpinBox *doubleSpinBox = static_cast<QDoubleSpinBox*>(editor);
     doubleSpinBox->interpretText();
     double value = doubleSpinBox->value();
+    qDebug() << "setModelData" << value;
     model->setData(index, QString::number(value, 'f', decimalAmount), Qt::EditRole);
 }
 
@@ -134,6 +138,27 @@ void DoubleSpinBoxDelegate::editFinished()
 
 void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 {
+    double newValue;
     QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-    doubleSpinBox->setValue(string.toInt());
+    const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
+
+    if(inputCount == 0) {
+        doubleSpinBox->cleanText();
+        newValue = string.toInt();
+    } else {
+        double value = doubleSpinBox->value();
+        QString addedString = QString::number(value, 10, decimalAmount) + string;
+        newValue = addedString.toDouble();
+    }
+
+    if(newValue > doubleSpinBox->maximum()) {
+        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->maximum(), 'f', decimalAmount), Qt::EditRole);
+        doubleSpinBox->setValue(doubleSpinBox->maximum());
+    } else if(newValue < doubleSpinBox->minimum()) {
+        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->minimum(), 'f', decimalAmount), Qt::EditRole);
+        doubleSpinBox->setValue(doubleSpinBox->minimum());
+    } else {
+        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(newValue, 'f', decimalAmount), Qt::EditRole);
+        doubleSpinBox->setValue(newValue);
+    }
 }
