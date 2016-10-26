@@ -41,6 +41,7 @@ private slots:
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(int key);
     void editFinished();
+    void input_number_to_lineedit(QString string);
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

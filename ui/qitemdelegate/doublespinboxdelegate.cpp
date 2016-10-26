@@ -1,6 +1,7 @@
 #include "doublespinboxdelegate.h"
 
 #include <QEvent>
+#include <QDebug>
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -29,7 +30,7 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
     QStringList sendList;
     sendList.append(QString::number(index.column()));
     sendList.append(step);
-
+    qDebug() << "count:" << spinBoxList.count();
     emit createEditorHeaderText(sendList);
     connect(editor, SIGNAL(editingFinished()), this, SLOT(commit_and_close_editor()));
 
@@ -103,7 +104,7 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 
         if (type == Mcu::ROTARY_UP) {
 //            value = value + 1;
-            doubleSpinBox->stepDown();
+            doubleSpinBox->stepUp();
         } else {
 //            value = value - 1;
             doubleSpinBox->stepDown();
@@ -129,4 +130,10 @@ void DoubleSpinBoxDelegate::key_sure(int key)
 void DoubleSpinBoxDelegate::editFinished()
 {
 
+}
+
+void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
+{
+    QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+    doubleSpinBox->setValue(string.toInt());
 }
