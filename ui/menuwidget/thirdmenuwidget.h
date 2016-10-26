@@ -33,6 +33,7 @@ public:
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
+    void change_persistent_editor(QModelIndex modelIndex);
 
     QStringList get_third_menu_list();
     QStringList get_translate_third_menu_list();
