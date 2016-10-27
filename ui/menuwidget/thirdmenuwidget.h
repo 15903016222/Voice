@@ -34,6 +34,7 @@ public:
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
     void change_persistent_editor(QModelIndex modelIndex);
+    void disconnect_input_number();
 
     QStringList get_third_menu_list();
     QStringList get_translate_third_menu_list();
@@ -73,17 +74,15 @@ signals:
     void retranslate_ui(QString);
     void send_dialog_title_content(QMap<QString, QString>);
     void send_spinbox_value(QList<int>);
+    void translater_ZH();
+    void translater_EN();
+    void send_string_to_delegate(QString);
 
 private:
     VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
     DateTimeSetDialog *dateTimeSetDialog;
     NetworkDialog *networkDialog;
-
-signals:
-    void translater_ZH();
-    void translater_EN();
-    void send_string_to_delegate(QString);
 
 protected slots:
     void do_rotary_event(Mcu::RotaryType type);
@@ -109,7 +108,6 @@ private slots:
     void open_spinbox_persistent_editor(int index);
     void close_spinbox_persistent_editor(int index);
     void input_spinbox_number(QString string);
-
 
 };
 

@@ -143,8 +143,12 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
     secondMenuNum = item->row();
 
+    ui->widget_thirdMenu->disconnect_input_number();
+    ui->widget_thirdMenu->opendSpinBoxIndex = -1;
+
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
+
 
     if(firstMenuNum == 8){
         if(secondMenuNum == 1){
@@ -367,12 +371,11 @@ void MainWindow::slot_pushButton_keyboard_clicked()
 
     connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
     connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
-
 }
 
 void MainWindow::slot_keyboard_close_clicked()
 {
-    if(ui->widget_thirdMenu->keyboardShowFlag) {
+    if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
         emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
     }
 }
