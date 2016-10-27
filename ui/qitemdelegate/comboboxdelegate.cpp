@@ -57,12 +57,8 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 //    effect->setOffset(2,2);
 //    editor->view()->parentWidget()->setGraphicsEffect(effect);
 
-    qDebug() << "1";
-
     set_comboBox_item_width(editor);
 //    editor->view()->setVisible(true);
-
-    qDebug() << editor->view()->isVisible();
 //    editor->view()->selectionModel()->setCurrentIndex(index,QItemSelectionModel::ClearAndSelect);
 //    static_cast<QAbstractItemView*>(editor->view())->setState(QAbstractItemView::EditingState);
 //    editor->view()->parentWidget()->show();
@@ -86,7 +82,6 @@ void ComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) 
     int i = find_list_index(modelItemList, shortText);
     int textIndex = comboBox->findText(itemList.at(i));
     comboBox->setCurrentIndex(textIndex);
-    qDebug() << "2";
 }
 
 void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
@@ -96,7 +91,6 @@ void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
     int i = find_list_index(itemList, text);
     QString shortText = modelItemList.at(i);
     model->setData(index, shortText, Qt::EditRole);
-    qDebug() << "3";
 }
 
 void ComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -146,6 +140,7 @@ void ComboBoxDelegate::set_minimum_contents_length(int width)
 
 void ComboBoxDelegate::commit_and_close_editor(const QString &str)
 {
+    qDebug() << "commit close";
     QComboBox *editor = qobject_cast<QComboBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);

@@ -45,7 +45,6 @@ void DoubleSpinBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &in
     double value = index.model()->data(index,Qt::EditRole).toDouble();
     QDoubleSpinBox *doubleSpinBox = static_cast<QDoubleSpinBox*>(editor);
     doubleSpinBox->setValue(value);
-    qDebug() << "setEditorData" << value;
 }
 
 void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
@@ -53,7 +52,6 @@ void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
     QDoubleSpinBox *doubleSpinBox = static_cast<QDoubleSpinBox*>(editor);
     doubleSpinBox->interpretText();
     double value = doubleSpinBox->value();
-    qDebug() << "setModelData" << value;
     model->setData(index, QString::number(value, 'f', decimalAmount), Qt::EditRole);
 }
 
@@ -120,7 +118,7 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 #include <QShortcut>
 void DoubleSpinBoxDelegate::key_sure(int key)
 {
-    if(key == 214){
+    if(key == 214) {
         if(spinBoxList.size() != 0) {
             QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
 //            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
@@ -142,9 +140,13 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
     QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
     const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
 
+//    const QLineEdit *lineEdit = doubleSpinBox->lineEdit();
+//    doubleSpinBox->setLineEdit(new QLineEdit());
+
     if(inputCount == 0) {
         doubleSpinBox->cleanText();
         newValue = string.toInt();
+
     } else {
         double value = doubleSpinBox->value();
         QString addedString = QString::number(value, 10, decimalAmount) + string;
@@ -162,3 +164,4 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
         doubleSpinBox->setValue(newValue);
     }
 }
+
