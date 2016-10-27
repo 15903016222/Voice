@@ -73,6 +73,8 @@ private slots:
     void on_closeButton_clicked();
     void input_text();
 
+    void on_pushButton_5_clicked();
+
 private:
     Ui::MyInputPanelForm form;
     QWidget *lastFocusedWidget;

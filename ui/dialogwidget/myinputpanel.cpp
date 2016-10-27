@@ -83,6 +83,7 @@ MyInputPanel::MyInputPanel():
         QPushButton *pushButton = findChild<QPushButton*>("panelButton_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(input_text()));
 //        pushButton->setFocusPolicy(Qt::NoFocus);
+
     }
 }
 
@@ -136,4 +137,10 @@ void MyInputPanel::input_text()
     QString string = pushButton->text();
     emit input_number(string);
 
+}
+
+void MyInputPanel::on_pushButton_5_clicked()
+{
+    close();
+    emit close_keyboard();
 }
