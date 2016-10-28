@@ -432,7 +432,7 @@
           <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
-          <string>Backspace</string>
+          <string>BackSpace</string>
          </property>
         </widget>
        </item>
