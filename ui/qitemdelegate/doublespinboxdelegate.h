@@ -31,6 +31,8 @@ public:
     int inputCount;
     bool editFlag;
 
+    bool eventFilter(QObject *object, QEvent *event);
+
 private:
     Mcu *m_mcu;
 

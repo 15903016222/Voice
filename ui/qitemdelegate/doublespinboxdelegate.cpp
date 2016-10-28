@@ -1,7 +1,10 @@
 #include "doublespinboxdelegate.h"
 
+#include "windows.h"
+
 #include <QEvent>
 #include <QDebug>
+#include <QKeyEvent>
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -25,6 +28,7 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
     }
     editor->setSingleStep(step.toFloat());
     editor->setDecimals(decimalAmount);
+    editor->installEventFilter(parent);
 
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxMap.insert(index, editor);
@@ -60,6 +64,46 @@ void DoubleSpinBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOp
     Q_UNUSED(index);
     editor->setGeometry(option.rect);
 }
+
+bool DoubleSpinBoxDelegate::eventFilter(QObject *object, QEvent *event)
+{
+    QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+    if(event->type() == QEvent::KeyPress && object == doubleSpinBox) {
+        doubleSpinBox->setFocus();
+        QKeyEvent *e = (QKeyEvent*)event;
+        if(e->key() == Qt::Key_1) {
+            qDebug() << "eventFilter:" << "key1";
+
+//            double newValue;
+//            QString string = "1";
+//            const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
+
+//            if(inputCount == 0) {
+//                doubleSpinBox->cleanText();
+//                newValue = string.toInt();
+
+//            } else {
+//                double value = doubleSpinBox->value();
+//                QString addedString = QString::number(value, 10, decimalAmount) + string;
+//                newValue = addedString.toDouble();
+//            }
+
+//            if(newValue > doubleSpinBox->maximum()) {
+//                const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->maximum(), 'f', decimalAmount), Qt::EditRole);
+//                doubleSpinBox->setValue(doubleSpinBox->maximum());
+//            } else if(newValue < doubleSpinBox->minimum()) {
+//                const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->minimum(), 'f', decimalAmount), Qt::EditRole);
+//                doubleSpinBox->setValue(doubleSpinBox->minimum());
+//            } else {
+//                const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(newValue, 'f', decimalAmount), Qt::EditRole);
+//                doubleSpinBox->setValue(newValue);
+//            }
+        }
+
+    }
+    return QObject::eventFilter(object, event);
+}
+
 
 void DoubleSpinBoxDelegate::set_number_range(QList<int> list)
 {
@@ -136,32 +180,54 @@ void DoubleSpinBoxDelegate::editFinished()
 
 void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 {
-    double newValue;
+//    double newValue;
     QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-    const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
+//    const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
 
-//    const QLineEdit *lineEdit = doubleSpinBox->lineEdit();
-//    doubleSpinBox->setLineEdit(new QLineEdit());
+    doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
+    doubleSpinBox->setFocus();
+    QWidget *widget = doubleSpinBox->focusWidget();
+    HWND hwnd = (HWND)widget->winId();
 
-    if(inputCount == 0) {
-        doubleSpinBox->cleanText();
-        newValue = string.toInt();
-
+    if(string == "." && decimalAmount > 0) {
+        PostMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
+    } else if(string == "Left Arrow") {
+        PostMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
+    } else if(string == "Right Arrow") {
+        PostMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
+    } else if(string == "BackSpace") {
+        PostMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
+    } else if(string == "Delete") {
+        PostMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
+    } else if(string == "Enter" || string == "Close") {
+        PostMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
     } else {
-        double value = doubleSpinBox->value();
-        QString addedString = QString::number(value, 10, decimalAmount) + string;
-        newValue = addedString.toDouble();
+        int value = string.toInt();
+        PostMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
     }
+//    PostMessage(hwnd, WM_KEYUP, VK_HELP + value + 1, 0);
 
-    if(newValue > doubleSpinBox->maximum()) {
-        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->maximum(), 'f', decimalAmount), Qt::EditRole);
-        doubleSpinBox->setValue(doubleSpinBox->maximum());
-    } else if(newValue < doubleSpinBox->minimum()) {
-        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->minimum(), 'f', decimalAmount), Qt::EditRole);
-        doubleSpinBox->setValue(doubleSpinBox->minimum());
-    } else {
-        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(newValue, 'f', decimalAmount), Qt::EditRole);
-        doubleSpinBox->setValue(newValue);
-    }
+//    if(inputCount == 0) {
+//        doubleSpinBox->cleanText();
+//        newValue = string.toInt();
+
+//    } else {
+//        double value = doubleSpinBox->value();
+//        QString addedString = QString::number(value, 10, decimalAmount) + string;
+//        newValue = addedString.toDouble();
+//    }
+//    newValue = doubleSpinBox->value();
+
+//    if(newValue > doubleSpinBox->maximum()) {
+//        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->maximum(), 'f', decimalAmount), Qt::EditRole);
+//        doubleSpinBox->setValue(doubleSpinBox->maximum());
+//    } else if(newValue < doubleSpinBox->minimum()) {
+//        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->minimum(), 'f', decimalAmount), Qt::EditRole);
+//        doubleSpinBox->setValue(doubleSpinBox->minimum());
+//    } else {
+//        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(newValue, 'f', decimalAmount), Qt::EditRole);
+//        doubleSpinBox->setValue(newValue);
+//    }
+
 }
 
