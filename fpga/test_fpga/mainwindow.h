@@ -78,6 +78,8 @@ private slots:
 
     void on_comboBoxAlarmAnalogType_currentIndexChanged(int index);
 
+    void on_pushButtonReset_clicked();
+
 private:
     Ui::MainWindow *ui;
     Fpga *m_fpga;

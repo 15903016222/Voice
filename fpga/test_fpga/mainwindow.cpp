@@ -256,3 +256,10 @@ void MainWindow::on_comboBoxAlarmAnalogType_currentIndexChanged(int index)
         show_warning();
     }
 }
+
+void MainWindow::on_pushButtonReset_clicked()
+{
+    if (! m_fpga->reset()) {
+        show_warning();
+    }
+}
