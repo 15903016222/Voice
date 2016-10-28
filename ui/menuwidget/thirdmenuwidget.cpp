@@ -8,7 +8,7 @@
 #include "wedgedialog.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
-#include "aboutdialog.h"
+#include "about_dialog.h"
 #include "resetconfigdialog.h"
 #include "systeminfodialog.h"
 #include "filemanagerdialog.h"
@@ -438,9 +438,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         break;
     }
     case 16: {
-        AboutDialog *aboutDialog = new AboutDialog(this);
-        aboutDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        aboutDialog->show();
+        Ui::Dialog::AboutDialog *aboutDialog = new Ui::Dialog::AboutDialog(this);
+        aboutDialog->exec();
         break;
     }
     case 18: {

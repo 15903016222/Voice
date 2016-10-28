@@ -314,8 +314,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    qDebug("0x%0x", event->key());
-    if (event->key() == Qt::Key_Meta) {
+    if (event->key() == Qt::Key_Alt) {
         show_hidden_Menu();
     }
     return QMainWindow::keyPressEvent(event);
