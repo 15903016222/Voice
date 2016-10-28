@@ -108,10 +108,10 @@ public:
         INVERSE = 0b1000
     };
     enum EncoderMode {
-        QUAD    = 0b011,
-        UP      = 0b010,
-        DOWN    = 0b001,
         OFF     = 0b000,
+        DOWN    = 0b001,
+        UP      = 0b010,
+        QUAD    = 0b011,
         PAUSE   = 0b100
     };
     EncoderPolarity encoder_x_polarity(); /* 编码器X极性 */
