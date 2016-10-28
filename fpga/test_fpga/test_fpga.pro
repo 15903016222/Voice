@@ -1,48 +1,48 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-09-18T16:07:47
+# Project created by QtCreator 2016-10-28T08:56:44
 #
 #-------------------------------------------------
-DEVICE = "PHASCAN"
 
-QT       += testlib
+DEVICE = PHASCAN
 
-QT       -= gui
+QT       += core gui
 
-TARGET = tst_testfpga
-CONFIG   += console
-CONFIG   -= app_bundle
-
-TEMPLATE = app
-
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 DEFINES += $$DEVICE
 
-SOURCES += tst_testfpga.cpp \
+TARGET = test_fpga
+TEMPLATE = app
+
+
+SOURCES += main.cpp\
+        mainwindow.cpp \
     ../gpio.cpp \
     ../spi.cpp
-DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-HEADERS += \
+HEADERS  += mainwindow.h \
+    ../beam.h \
     ../fpga.h \
     ../gpio.h \
-    ../spi.h \
-    ../beam.h \
-    ../group.h
+    ../group.h \
+    ../spi.h
+
+FORMS    += mainwindow.ui
+
 
 equals(DEVICE, "PHASCAN") {
-    SOURCES += \
-        ../beam_phascan.cpp \
-        ../group_phascan.cpp \
-        ../phascan_spi.cpp \
-        ../fpga_phascan.cpp
-
-
-    HEADERS += \
-        ../phascan_spi.h
+SOURCES += \
+    ../beam_phascan.cpp \
+    ../fpga_phascan.cpp \
+    ../group_phascan.cpp \
+    ../phascan_spi.cpp
+HEADERS += \
+    ../phascan_spi.h
 }
 
+
+
 equals(DEVICE, "PHASCAN_II") {
-    SOURCES +=
-    HEADERS +=
+
 }
