@@ -59,7 +59,6 @@ void FirstSecondMenuWidget::set_second_menu_name(int i)
 
         QStandardItem *item = new QStandardItem(string);
         modelList.at(i)->appendRow(item);
-        item->setForeground(QBrush(Qt::yellow, Qt::SolidPattern));
     }
 }
 
@@ -68,12 +67,8 @@ void FirstSecondMenuWidget::set_second_menu_item_style(int i, QModelIndex index)
     QStringList stringList = get_second_menu_list(i);
     for(int j = 0; j < stringList.count(); j++) {
         QModelIndex modelIndex = modelList.at(i)->index(j, 0);
-        QStandardItem *item = modelList.at(i)->itemFromIndex(modelIndex);
         if(modelIndex == index) {
-            item->setForeground(QBrush(Qt::red, Qt::SolidPattern));
             menuList.at(i)->setCurrentIndex(modelIndex);
-        } else {
-            item->setForeground(QBrush(Qt::yellow, Qt::SolidPattern));
         }
     }
 
@@ -84,7 +79,14 @@ void FirstSecondMenuWidget::init_ui()
 {
     for(int i = 0; i < FIRST_MENU_NUMBER; i++) {
         QListView* listView = findChild<QListView*>("listView_" + QString::number(i + 1));
-        listView->setStyleSheet("QListView{font: 14pt 'Times New Roman'}");
+        listView->setStyleSheet("QListView{font: 14pt 'Times New Roman';"
+                                "outline: 0px;}"
+                                "QListView::item{"
+                                "background-color: rgba(0, 0, 0, 0);"
+                                "color: yellow;}"
+                                "QListView::item:Selected{"
+                                "background-color: rgba(0, 0, 0, 0);"
+                                "color: red;}");
 
         if(menuList.size() == 9) {
             menuList.clear();
@@ -104,8 +106,6 @@ void FirstSecondMenuWidget::init_ui()
         set_second_menu_name(i);
 
         QModelIndex initModelIndex = modelList.at(i)->index(0, 0);
-        QStandardItem *initItem = modelList.at(i)->itemFromIndex(initModelIndex);
-        initItem->setForeground(QBrush(Qt::red));
         menuList.at(i)->setCurrentIndex(initModelIndex);
         menuList.at(i)->setModel(modelList.at(i));
     }
