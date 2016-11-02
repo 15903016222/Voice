@@ -108,6 +108,12 @@ void ThirdMenuWidget::set_third_menu_name(int i, int j)
 {
     currFirstNum = i;
     currSecondNum = j;
+
+    if(opendSpinBoxIndex >= 0) {
+        disconnect_input_number();
+        opendSpinBoxIndex = -1;
+    }
+
     model->clear();
     init_standard_model();
 

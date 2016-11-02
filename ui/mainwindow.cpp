@@ -129,6 +129,7 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 {
     ui->widget_thirdMenu->set_third_menu_name(index, 0); //init
     firstMenuNum = index;
+
     QModelIndex modelIndex = firstSecondMenu->modelList.at(index)->index(0, 0);
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, modelIndex);
 
@@ -143,14 +144,8 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
     secondMenuNum = item->row();
 
-    if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
-        ui->widget_thirdMenu->disconnect_input_number();
-        ui->widget_thirdMenu->opendSpinBoxIndex = -1;
-    }
-
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
-
 
     if(firstMenuNum == 8){
         if(secondMenuNum == 1){
