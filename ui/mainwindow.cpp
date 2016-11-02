@@ -143,8 +143,10 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
     secondMenuNum = item->row();
 
-    ui->widget_thirdMenu->disconnect_input_number();
-    ui->widget_thirdMenu->opendSpinBoxIndex = -1;
+    if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
+        ui->widget_thirdMenu->disconnect_input_number();
+        ui->widget_thirdMenu->opendSpinBoxIndex = -1;
+    }
 
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
@@ -362,15 +364,12 @@ void MainWindow::slot_pushButton_keyboard_clicked()
     myInputPanelDlg->setModal(false);
     myInputPanelDlg->showNormal();
 
-    if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
-        emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
-    }
+    emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
+    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
 
     myInputPanelDlg->show();
 //    ui->widget_thirdMenu->setFocus();
-
-    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
 }
 
 void MainWindow::slot_keyboard_close_clicked()
