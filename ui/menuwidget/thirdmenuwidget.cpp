@@ -361,6 +361,9 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 //            ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
             QModelIndex modelIndex = model->item(0, index)->index();
             ui->tableView->edit(modelIndex);
+            QPoint point = QPoint();
+            QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+            QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
 //            qDebug () << ui->tableView->state();
 //            comboBox->comboBoxMap.value(modelIndex)->view()->setState(QAbstractItemView::EditingState);
 //            comboBox->comboBoxMap.value(modelIndex)->view()->parentWidget()->show();
@@ -577,8 +580,12 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
         }
 
     } else if(thirdMenuMap["style"].toString().toInt() == 2) {
+        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
         ui->tableView->edit(index);
-//        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
+        QPoint point = QPoint();
+        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
+
 //        comboBox->comboBoxMap.value(index)->view()->show();
 //        int column = index.column();
 //        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(column));
@@ -957,6 +964,9 @@ void ThirdMenuWidget::input_spinbox_number(QString string)
         qDebug() << opendSpinBoxIndex;
         qDebug() << spinBox->editFlag;
         if(spinBox->editFlag) {
+//            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
+//            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_1, Qt::NoModifier);
+//            QApplication::sendEvent(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1), event);
             emit send_string_to_delegate(string);
             spinBox->inputCount += 1;
         }
