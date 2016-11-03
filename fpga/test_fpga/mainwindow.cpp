@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     m_fpga = Fpga::get_fpga();
     m_alarmOutput = m_fpga->alarm_output(ui->comboBoxAlarmOuput->currentIndex());
     m_alarmAnalog = m_fpga->alarm_analog(ui->comboBoxAlarmAnalog->currentIndex());
+
+    m_fpga->create_group();
+    m_group = m_fpga->get_group(0);
 }
 
 MainWindow::~MainWindow()
@@ -264,3 +267,254 @@ void MainWindow::on_pushButtonReset_clicked()
     }
 }
 
+/******* Group ********/
+
+void MainWindow::on_pushButtonGroupCreate_clicked()
+{
+    if (! m_fpga->create_group() ) {
+        show_warning();
+        return;
+    }
+    ui->comboBoxCurrentGroup->addItem(QString::number(m_fpga->groups()));
+    ui->pushButtonGroupDelete->setEnabled(true);
+    if (m_fpga->groups() == 8) {
+        ui->pushButtonGroupCreate->setEnabled(false);
+    }
+}
+
+void MainWindow::on_pushButtonGroupDelete_clicked()
+{
+    if (! m_fpga->remove_group()) {
+        show_warning();
+    }
+    ui->comboBoxCurrentGroup->removeItem(m_fpga->groups());
+    if (m_fpga->groups() == 1) {
+        ui->pushButtonGroupDelete->setEnabled(false);
+    }
+    ui->pushButtonGroupCreate->setEnabled(true);
+}
+
+void MainWindow::on_comboBoxCurrentGroup_currentIndexChanged(int index)
+{
+    m_group = m_fpga->get_group(index);
+    qDebug()<<__LINE__<<index;
+}
+
+
+void MainWindow::on_comboBoxGroupFreqBand_currentIndexChanged(int index)
+{
+    if (! m_group->set_freq_band((Group::FreqBand)index, true) ) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_comboBoxGroupVideoFilter_currentIndexChanged(int index)
+{
+    if (! m_group->enable_video_filter(index, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_comboBoxGroupRectifier_currentIndexChanged(int index)
+{
+    if (! m_group->set_rectifier(Group::RectifierType(index), true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupCompressRato_valueChanged(int arg1)
+{
+    if (! m_group->set_compress_rato(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupGain_valueChanged(int arg1)
+{
+    if (! m_group->set_gain(arg1), true) {
+        show_warning();
+    }
+}
+
+
+void MainWindow::on_spinBoxGroupThicknessFactor_valueChanged(int arg1)
+{
+    if (! m_group->set_thickness_factor(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_comboBoxGroupUt1_currentIndexChanged(int index)
+{
+    if (! m_group->enable_ut1(index, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_comboBoxGroupUt2_currentIndexChanged(int index)
+{
+    if (! m_group->enable_ut2(index, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_comboBoxGroupPa_currentIndexChanged(int index)
+{
+    if (! m_group->enable_pa(index, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupSumGain_valueChanged(int arg1)
+{
+    if (! m_group->set_sum_gain(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupSampleRange_valueChanged(int arg1)
+{
+    if (! m_group->set_sample_range(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupPointQty_valueChanged(int arg1)
+{
+    if (! m_group->set_point_qty(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupTcgPointQty_valueChanged(int arg1)
+{
+    if (! m_group->set_tcg_point_qty(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_comboBoxGroupTcg_currentIndexChanged(int index)
+{
+    if (! m_group->enable_tcg(index, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupRxTime_valueChanged(int arg1)
+{
+    if (! m_group->set_rx_time(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupIdelTime_valueChanged(int arg1)
+{
+    if (! m_group->set_idel_time(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupGateAHeight_valueChanged(int arg1)
+{
+    if (! m_group->set_gate_a_height(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupGateALogic_valueChanged(int arg1)
+{
+    if (! m_group->set_gate_a_logic(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupGateBHeight_valueChanged(int arg1)
+{
+    if (! m_group->set_gate_b_height(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupGateBLogic_valueChanged(int arg1)
+{
+    if (! m_group->set_gate_b_logic(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupGateIHeight_valueChanged(int arg1)
+{
+    if (! m_group->set_gate_i_height(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupGateILogic_valueChanged(int arg1)
+{
+    if (! m_group->set_gate_i_logic(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupThinknessMin_valueChanged(int arg1)
+{
+    if (! m_group->set_thickness_min(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupReject_valueChanged(int arg1)
+{
+    if (! m_group->set_reject(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupSampleStart_valueChanged(int arg1)
+{
+    if (! m_group->set_sample_start(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupAverage_valueChanged(int arg1)
+{
+    if (! m_group->set_average(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupThicknessMax_valueChanged(int arg1)
+{
+    if (! m_group->set_thickness_max(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupThicknessSource_valueChanged(int arg1)
+{
+    if (! m_group->set_thickness_source(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupTxEnd_valueChanged(int arg1)
+{
+    if (! m_group->set_tx_end(arg1, true)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_spinBoxGroupTxStart_valueChanged(int arg1)
+{
+    if (! m_group->set_tx_start(arg1)) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_pushButtonGroupReflesh_clicked()
+{
+    if (! m_group->reflesh()) {
+        show_warning();
+    }
+}

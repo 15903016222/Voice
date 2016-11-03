@@ -48,7 +48,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabGlobal">
        <property name="toolTip">
@@ -1347,21 +1347,30 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pushButtonGroupCreate">
             <property name="text">
              <string>Create</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pushButtonGroupDelete">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Delete</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox"/>
+           <widget class="QComboBox" name="comboBoxCurrentGroup">
+            <item>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_5">
@@ -1479,7 +1488,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_16">
               <item>
-               <widget class="QComboBox" name="comboBox_2">
+               <widget class="QComboBox" name="comboBoxGroupFreqBand">
                 <item>
                  <property name="text">
                   <string>0.5~20</string>
@@ -1513,7 +1522,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_3">
+               <widget class="QComboBox" name="comboBoxGroupVideoFilter">
                 <item>
                  <property name="text">
                   <string>Off</string>
@@ -1527,7 +1536,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_4">
+               <widget class="QComboBox" name="comboBoxGroupRectifier">
                 <item>
                  <property name="text">
                   <string>RF</string>
@@ -1551,37 +1560,16 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_5">
-                <item>
-                 <property name="text">
-                  <string>RF</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>HW+</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>HW-</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>HW</string>
-                 </property>
-                </item>
-               </widget>
+               <widget class="QSpinBox" name="spinBoxGroupCompressRato"/>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+               <widget class="QSpinBox" name="spinBoxGroupGain"/>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+               <widget class="QSpinBox" name="spinBoxGroupThicknessFactor"/>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_6">
+               <widget class="QComboBox" name="comboBoxGroupUt1">
                 <item>
                  <property name="text">
                   <string>Off</string>
@@ -1595,7 +1583,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_7">
+               <widget class="QComboBox" name="comboBoxGroupUt2">
                 <item>
                  <property name="text">
                   <string>Off</string>
@@ -1609,7 +1597,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_8">
+               <widget class="QComboBox" name="comboBoxGroupPa">
                 <item>
                  <property name="text">
                   <string>Off</string>
@@ -1623,10 +1611,10 @@
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+               <widget class="QSpinBox" name="spinBoxGroupSumGain"/>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+               <widget class="QSpinBox" name="spinBoxGroupSampleRange"/>
               </item>
              </layout>
             </item>
@@ -1731,13 +1719,13 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_18">
               <item>
-               <widget class="QSpinBox" name="spinBox"/>
+               <widget class="QSpinBox" name="spinBoxGroupPointQty"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_2"/>
+               <widget class="QSpinBox" name="spinBoxGroupTcgPointQty"/>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_9">
+               <widget class="QComboBox" name="comboBoxGroupTcg">
                 <item>
                  <property name="text">
                   <string>Off</string>
@@ -1751,28 +1739,28 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_4"/>
+               <widget class="QSpinBox" name="spinBoxGroupRxTime"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_5"/>
+               <widget class="QSpinBox" name="spinBoxGroupIdelTime"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_6"/>
+               <widget class="QSpinBox" name="spinBoxGroupGateAHeight"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_7"/>
+               <widget class="QSpinBox" name="spinBoxGroupGateALogic"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_9"/>
+               <widget class="QSpinBox" name="spinBoxGroupGateBHeight"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_8"/>
+               <widget class="QSpinBox" name="spinBoxGroupGateBLogic"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_10"/>
+               <widget class="QSpinBox" name="spinBoxGroupGateIHeight"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_11"/>
+               <widget class="QSpinBox" name="spinBoxGroupGateILogic"/>
               </item>
              </layout>
             </item>
@@ -1858,35 +1846,35 @@
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_20">
                 <item>
-                 <widget class="QSpinBox" name="spinBox_13"/>
+                 <widget class="QSpinBox" name="spinBoxGroupThinknessMin"/>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_12"/>
+                 <widget class="QSpinBox" name="spinBoxGroupReject"/>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_16"/>
+                 <widget class="QSpinBox" name="spinBoxGroupSampleStart"/>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_17"/>
+                 <widget class="QSpinBox" name="spinBoxGroupAverage"/>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_15"/>
+                 <widget class="QSpinBox" name="spinBoxGroupThicknessMax"/>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_14"/>
+                 <widget class="QSpinBox" name="spinBoxGroupThicknessSource"/>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_18"/>
+                 <widget class="QSpinBox" name="spinBoxGroupTxEnd"/>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_19"/>
+                 <widget class="QSpinBox" name="spinBoxGroupTxStart"/>
                 </item>
                </layout>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="pushButtonGroupReflesh">
               <property name="text">
                <string>Reflesh All</string>
               </property>

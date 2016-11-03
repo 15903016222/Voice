@@ -79,11 +79,84 @@ private slots:
     void on_comboBoxAlarmAnalogType_currentIndexChanged(int index);
 
     void on_pushButtonReset_clicked();    
+
+    void on_pushButtonGroupCreate_clicked();
+
+    void on_pushButtonGroupDelete_clicked();
+
+    void on_comboBoxCurrentGroup_currentIndexChanged(int index);
+
+
+    void on_comboBoxGroupFreqBand_currentIndexChanged(int index);
+
+    void on_comboBoxGroupVideoFilter_currentIndexChanged(int index);
+
+    void on_comboBoxGroupRectifier_currentIndexChanged(int index);
+
+    void on_spinBoxGroupCompressRato_valueChanged(int arg1);
+
+    void on_spinBoxGroupGain_valueChanged(int arg1);
+
+
+    void on_spinBoxGroupThicknessFactor_valueChanged(int arg1);
+
+    void on_comboBoxGroupUt1_currentIndexChanged(int index);
+
+    void on_comboBoxGroupUt2_currentIndexChanged(int index);
+
+    void on_comboBoxGroupPa_currentIndexChanged(int index);
+
+    void on_spinBoxGroupSumGain_valueChanged(int arg1);
+
+    void on_spinBoxGroupSampleRange_valueChanged(int arg1);
+
+    void on_spinBoxGroupPointQty_valueChanged(int arg1);
+
+    void on_spinBoxGroupTcgPointQty_valueChanged(int arg1);
+
+    void on_comboBoxGroupTcg_currentIndexChanged(int index);
+
+    void on_spinBoxGroupRxTime_valueChanged(int arg1);
+
+    void on_spinBoxGroupIdelTime_valueChanged(int arg1);
+
+    void on_spinBoxGroupGateAHeight_valueChanged(int arg1);
+
+    void on_spinBoxGroupGateALogic_valueChanged(int arg1);
+
+    void on_spinBoxGroupGateBHeight_valueChanged(int arg1);
+
+    void on_spinBoxGroupGateBLogic_valueChanged(int arg1);
+
+    void on_spinBoxGroupGateIHeight_valueChanged(int arg1);
+
+    void on_spinBoxGroupGateILogic_valueChanged(int arg1);
+
+    void on_spinBoxGroupThinknessMin_valueChanged(int arg1);
+
+    void on_spinBoxGroupReject_valueChanged(int arg1);
+
+    void on_spinBoxGroupSampleStart_valueChanged(int arg1);
+
+    void on_spinBoxGroupAverage_valueChanged(int arg1);
+
+    void on_spinBoxGroupThicknessMax_valueChanged(int arg1);
+
+    void on_spinBoxGroupThicknessSource_valueChanged(int arg1);
+
+    void on_spinBoxGroupTxEnd_valueChanged(int arg1);
+
+    void on_spinBoxGroupTxStart_valueChanged(int arg1);
+
+    void on_pushButtonGroupReflesh_clicked();
+
 private:
     Ui::MainWindow *ui;
     Fpga *m_fpga;
     AlarmOutput *m_alarmOutput;
     AlarmAnalog *m_alarmAnalog;
+
+    GroupPointer m_group;
 };
 
 #endif // MAINWINDOW_H
