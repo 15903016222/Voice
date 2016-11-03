@@ -101,7 +101,7 @@ void McuOmap::on_ttyS0_readyRead_event()
     }
 
     if (m_buffer.at(1) == 0x55 && m_buffer.at(2) == 0x55) {
-        if (m_buffer.at(27) == 0xaa) {
+        if ((unsigned char)(m_buffer.at(27)) == 0xaa) {
             emit poweroff_event();
         }
         /* first battery */
