@@ -11,7 +11,7 @@ equals(DEVICE, "PC_UNIX") {
 
 equals(DEVICE, "PHASCAN"){
     HEADERS += \
-        $$PWD/cert.h \
+        $$PWD/cert.h
     SOURCES += \
         $$PWD/device_phascan.cpp \
         $$PWD/cert.cpp
