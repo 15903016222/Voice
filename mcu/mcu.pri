@@ -11,6 +11,10 @@ equals(QT_MAJOR_VERSION, 5) {
     QT      += serialport
 }
 
+equals(QT_MAJOR_VERSION, 4) {
+    CONFIG  += serialport
+}
+
 equals(DEVICE, "PC_UNIX") {
     HEADERS += \
         $$PWD/mcu_pc.h
