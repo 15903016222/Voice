@@ -11,6 +11,8 @@ public:
 
     enum GpioPin {
 #ifdef PHASCAN_II
+        PIN_43 = 0x6002,
+        PIN_61 = 0x6000
 #else  /* Phascan */
         PIN_43  = 0x6002,
         PIN_61  = 0x6000

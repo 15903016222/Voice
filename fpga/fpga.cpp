@@ -1,6 +1,6 @@
 
 #include "fpga.h"
-#include "phascan_spi.h"
+#include "fpga_spi.h"
 #include "gpio.h"
 
 #include <QDebug>
@@ -462,9 +462,9 @@ Fpga::Fpga()
 
 bool write_reg(GlobalData *d, int reg)
 {
-    PhascanSpi *spi = PhascanSpi::get_spi();
+    FpgaSpi *spi = FpgaSpi::get_spi();
     if (reg >= GLOBAL_REG_NUM
-            || spi == NULL) {
+            | spi == NULL) {
         qWarning()<<"write reg failed";
         return false;
     }

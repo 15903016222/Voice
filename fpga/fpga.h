@@ -208,15 +208,20 @@ protected:
 private:
     static QMutex s_mutex;
     static Fpga *s_fpga;
+
     GlobalData *m_global;
+
     AlarmOutput m_alarmOutput0;
     AlarmOutput m_alarmOutput1;
     AlarmOutput m_alarmOutput2;
     AlarmAnalog m_alarmAnalog0;
     AlarmAnalog m_alarmAnalog1;
+
     QReadWriteLock m_lock;
+
     QList<GroupPointer> m_groups;
     QReadWriteLock m_groupsLock;
+
     QList<BeamPointer> m_beams;
     QReadWriteLock m_beamsLock;
 };

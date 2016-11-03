@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-DEVICE = PHASCAN
+DEVICE = PHASCAN_II
 
 QT       += core gui
 
@@ -19,30 +19,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     ../gpio.cpp \
-    ../spi.cpp
+    ../spi.cpp \
+    ../fpga.cpp \
+    ../fpga_spi.cpp \
+    ../group.cpp \
+    ../beam.cpp
 
 HEADERS  += mainwindow.h \
     ../beam.h \
     ../fpga.h \
     ../gpio.h \
     ../group.h \
-    ../spi.h
+    ../spi.h \
+    ../fpga_spi.h
 
 FORMS    += mainwindow.ui
-
-
-equals(DEVICE, "PHASCAN") {
-SOURCES += \
-    ../beam_phascan.cpp \
-    ../fpga_phascan.cpp \
-    ../group_phascan.cpp \
-    ../phascan_spi.cpp
-HEADERS += \
-    ../phascan_spi.h
-}
-
-
-
-equals(DEVICE, "PHASCAN_II") {
-
-}
