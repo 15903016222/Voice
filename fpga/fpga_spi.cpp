@@ -24,10 +24,10 @@ FpgaSpi::FpgaSpi()
         gpio->set(Gpio::PIN_43, Gpio::LOW);
         gpio->set(Gpio::PIN_43, Gpio::HIGHT);
 #elif PHASCAN_II
-        s_spi->open("/dev/spidev4.0");
-        s_spi->set_mode(Spi::MODE3);
-        s_spi->set_bits_per_word(32);
-        s_spi->set_speed(500*1000);
+        open("/dev/spidev4.0");
+        set_mode(Spi::MODE3);
+        set_bits_per_word(32);
+        set_speed(500*1000);
 #else
 #error "Not Specify spi device"
 #endif
