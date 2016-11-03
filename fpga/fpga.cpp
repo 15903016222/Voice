@@ -464,7 +464,7 @@ bool write_reg(GlobalData *d, int reg)
 {
     FpgaSpi *spi = FpgaSpi::get_spi();
     if (reg >= GLOBAL_REG_NUM
-            | spi == NULL) {
+            || spi == NULL) {
         qWarning()<<"write reg failed";
         return false;
     }
@@ -474,7 +474,8 @@ bool write_reg(GlobalData *d, int reg)
     quint32 data[2] = {0};
     quint32 *dp = (quint32 *)d;
     data[0] = dp[0];
-    data[1] = dp[reg];
+    data[1] = dp[reg+1];
+    qDebug("0x%08x 0x%08x", data[0], data[1]);
     return spi->send((char *)data, 8);
 }
 

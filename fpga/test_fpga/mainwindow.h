@@ -18,9 +18,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_spinBoxPaLawQty_editingFinished();
+    void on_spinBoxPaLawQty_valueChanged(int arg1);
 
-    void on_spinBoxUtLawQty_editingFinished();
+    void on_spinBoxUtLawQty_valueChanged(int arg1);
 
     void on_comboBoxEncoderXPolarity_currentIndexChanged(int index);
 
@@ -50,7 +50,7 @@ private slots:
 
     void on_comboBoxSound_currentIndexChanged(int index);
 
-    void on_spinBoxEcho_editingFinished();
+    void on_spinBoxEcho_valueChanged(int arg1);
 
     void on_comboBoxAlarmOuput_currentIndexChanged(int index);
 
@@ -64,11 +64,11 @@ private slots:
 
     void on_comboBoxAlarmOutputCondition_currentIndexChanged(int index);
 
-    void on_spinBoxAlarmOutputCount_editingFinished();
+    void on_spinBoxAlarmOutputCount_valueChanged(int arg1);
 
-    void on_spinBoxAlarmOutputDelay_editingFinished();
+    void on_spinBoxAlarmOutputDelay_valueChanged(int arg1);
 
-    void on_spinBoxAlarmOutputHoldTime_editingFinished();
+    void on_spinBoxAlarmOutputHoldTime_valueChanged(int arg1);
 
     void on_comboBoxAlarmAnalog_currentIndexChanged(int index);
 
@@ -78,8 +78,7 @@ private slots:
 
     void on_comboBoxAlarmAnalogType_currentIndexChanged(int index);
 
-    void on_pushButtonReset_clicked();
-
+    void on_pushButtonReset_clicked();    
 private:
     Ui::MainWindow *ui;
     Fpga *m_fpga;

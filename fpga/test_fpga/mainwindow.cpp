@@ -20,16 +20,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_spinBoxPaLawQty_editingFinished()
+void MainWindow::on_spinBoxPaLawQty_valueChanged(int arg1)
 {
-    if ( ! m_fpga->set_pa_law_qty(ui->spinBoxPaLawQty->value(), true) ) {
+    if ( ! m_fpga->set_pa_law_qty(arg1, true) ) {
         show_warning();
     }
 }
 
-void MainWindow::on_spinBoxUtLawQty_editingFinished()
+void MainWindow::on_spinBoxUtLawQty_valueChanged(int arg1)
 {
-    if ( ! m_fpga->set_ut_law_qty(ui->spinBoxUtLawQty->value(), true) ) {
+    if ( ! m_fpga->set_ut_law_qty(arg1, true) ) {
         show_warning();
     }
 }
@@ -145,9 +145,9 @@ void MainWindow::on_comboBoxSound_currentIndexChanged(int index)
     }
 }
 
-void MainWindow::on_spinBoxEcho_editingFinished()
+void MainWindow::on_spinBoxEcho_valueChanged(int arg1)
 {
-    if (! m_fpga->set_factor_echo(ui->spinBoxEcho->value(), true)) {
+    if (! m_fpga->set_factor_echo(arg1, true)) {
         show_warning();
     }
 }
@@ -209,23 +209,23 @@ void MainWindow::on_comboBoxAlarmOutputCondition_currentIndexChanged(int index)
     }
 }
 
-void MainWindow::on_spinBoxAlarmOutputCount_editingFinished()
+void MainWindow::on_spinBoxAlarmOutputCount_valueChanged(int arg1)
 {
-    if (! m_alarmOutput->set_count(ui->spinBoxAlarmOutputCount->value(), true)) {
+    if (! m_alarmOutput->set_count(arg1, true)) {
         show_warning();
     }
 }
 
-void MainWindow::on_spinBoxAlarmOutputDelay_editingFinished()
+void MainWindow::on_spinBoxAlarmOutputDelay_valueChanged(int arg1)
 {
-    if (! m_alarmOutput->set_delay(ui->spinBoxAlarmOutputDelay->value(), true)) {
+    if (! m_alarmOutput->set_delay(arg1, true)) {
         show_warning();
     }
 }
 
-void MainWindow::on_spinBoxAlarmOutputHoldTime_editingFinished()
+void MainWindow::on_spinBoxAlarmOutputHoldTime_valueChanged(int arg1)
 {
-    if (! m_alarmOutput->set_hold_time(ui->spinBoxAlarmOutputHoldTime->value(), true)) {
+    if (! m_alarmOutput->set_hold_time(arg1, true)) {
         show_warning();
     }
 }
@@ -263,3 +263,4 @@ void MainWindow::on_pushButtonReset_clicked()
         show_warning();
     }
 }
+
