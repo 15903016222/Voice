@@ -1,5 +1,7 @@
 #include "group.h"
-#include "phascan_spi.h"
+#include "fpga_spi.h"
+
+#include <string.h>
 
 static const int GROUP_REGS_NUM = 16;
 
@@ -499,7 +501,7 @@ bool Group::set_tx_start(int val, bool reflesh)
 
 bool Group::reflesh(void)
 {
-    PhascanSpi *spi = PhascanSpi::get_spi();
+    FpgaSpi *spi = FpgaSpi::get_spi();
     if (spi == NULL) {
         return false;
     }
@@ -511,7 +513,7 @@ bool Group::reflesh(void)
 
 bool write_reg(GroupData *d, int index, int reg)
 {
-    PhascanSpi *spi = PhascanSpi::get_spi();
+    FpgaSpi *spi = FpgaSpi::get_spi();
     if (reg >= GROUP_REGS_NUM
             || spi == NULL) {
         return false;

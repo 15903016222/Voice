@@ -1,5 +1,5 @@
 #include "beam.h"
-#include "phascan_spi.h"
+#include "fpga_spi.h"
 
 static const int BEAM_REGS_NUM      = 80;
 const quint32 Beam::MAX_CHANNELS    = 32;
@@ -380,7 +380,7 @@ bool Beam::set_tcg_flag(quint32 point, bool flag)
 
 bool Beam::refresh(void)
 {
-    PhascanSpi *spi = PhascanSpi::get_spi();
+    FpgaSpi *spi = FpgaSpi::get_spi();
     if (spi == NULL) {
         return false;
     }
