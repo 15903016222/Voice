@@ -109,15 +109,14 @@ void FileManagerDialog::init_source_path_tableView()
 {
     modelSourcePath = new QStandardItemModel(1, 6, this);
     ui->tableView_1->setModel(modelSourcePath);
- //   ui->tableView_1->resizeColumnsToContents();
 
-#if QT_VERSION >= 0x050000
-    ui->tableView_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-#endif
-
-#if QT_VERSION < 0x050000
-    ui->tableView_1->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-#endif
+    int width = this->geometry().width() / 6 * 5;
+    ui->tableView_1->horizontalHeader()->resizeSection(0, width / 8);
+    ui->tableView_1->horizontalHeader()->resizeSection(1, width / 4);
+    ui->tableView_1->horizontalHeader()->resizeSection(2, width / 4);
+    ui->tableView_1->horizontalHeader()->resizeSection(3, width / 8 );
+    ui->tableView_1->horizontalHeader()->resizeSection(4, width / 8);
+    ui->tableView_1->horizontalHeader()->resizeSection(5, width / 8);
 
     ui->tableView_1->verticalHeader()->hide();
     ui->tableView_1->horizontalHeader()->setFixedHeight(60);
@@ -152,13 +151,13 @@ void FileManagerDialog::init_target_path_tableView()
     modelTargetPath = new QStandardItemModel(1, 6, this);
     ui->tableView_2->setModel(modelTargetPath);
 
-#if QT_VERSION >= 0x050000
-    ui->tableView_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-#endif
-
-#if QT_VERSION < 0x050000
-    ui->tableView_2->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-#endif
+    int width = this->geometry().width() / 6 * 5;
+    ui->tableView_2->horizontalHeader()->resizeSection(0, width / 8);
+    ui->tableView_2->horizontalHeader()->resizeSection(1, width / 4);
+    ui->tableView_2->horizontalHeader()->resizeSection(2, width / 4);
+    ui->tableView_2->horizontalHeader()->resizeSection(3, width / 8 );
+    ui->tableView_2->horizontalHeader()->resizeSection(4, width / 8);
+    ui->tableView_2->horizontalHeader()->resizeSection(5, width / 8);
 
     ui->tableView_2->verticalHeader()->hide();
     ui->tableView_2->horizontalHeader()->setFixedHeight(60);
