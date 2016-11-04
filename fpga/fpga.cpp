@@ -39,20 +39,22 @@ struct GlobalData{
     quint32 chip            :4; /* bit:28-31 片选 Group取值1000 */
 
     /* reg (0) */
-    quint32 paLawQty        :16;
-    quint32 utLawQty        :16;
+    quint32 paLawQty        :16;/* bit:0-15 实际聚焦法则数 */
+    quint32 utLawQty        :16;/* bit:16-31 虚拟聚焦法则数 */
 
     /* reg (1) */
     quint32 encX            :4; /* bit:0-3 编码器x编码器逻辑; 011:双向增减; 010:正向增; 001:负向递增; 000:关掉编码器; 1xx:暂停编码器; 1XXX:反向逻辑 */
     quint32 encY            :4; /* bit:4-7 编码器y; 同编码器x */
     quint32 res0            :1; /* bit:8 保留 */
-    quint32 ut2Twin         :1; /* bit:9 */
-    quint32 ut2Damping      :2;
-    quint32 ut1Twin         :1;
-    quint32 ut1Damping      :2;
-    quint32 utVoltage       :6;
-    quint32 power           :5;
-    quint32 paVoltage       :6;
+    quint32 ut2Twin         :1; /* bit:9 Ut2双晶形状*/
+    quint32 ut2TxDamping    :2; /* bit:10-11 Ut2发射阻尼 */
+    quint32 ut1Twin         :1; /* bit:12 Ut1双晶开关 */
+    quint32 ut1TxDamping    :2; /* bit:13-14 Ut1发射阻尼 */
+    quint32 utVoltage       :6; /* bit:15-20 常规发射电压 */
+    quint32 power           :5; /* bit:21-25 控制省电 */
+    quint32 paVoltage       :2; /* bit:26-27 相控阵发射电压 */
+    quint32 ut2RxDamping    :2; /* bit:28-29 Ut2接收阻尼 */
+    quint32 ut1RxDamping    :2; /* bit:30-31 Ut1接收阻尼 */
 
     /* reg (2) */
     quint32 rxChannels;
@@ -197,51 +199,53 @@ bool Fpga::set_ut2_twin(bool enable, bool reflesh)
 Fpga::DampingType Fpga::ut1_tx_damping()
 {
     QReadLocker l(&m_lock);
-    return (Fpga::DampingType)m_global->ut1Damping;
+    return (Fpga::DampingType)m_global->ut1TxDamping;
 }
 
 bool Fpga::set_ut1_tx_damping(Fpga::DampingType type, bool reflesh)
 {
     QWriteLocker l(&m_lock);
-    m_global->ut1Damping = type;
+    m_global->ut1TxDamping = type;
     return (reflesh ? write_reg(m_global, 1) : true);
 }
 
 Fpga::DampingType Fpga::ut2_tx_damping()
 {
     QReadLocker l(&m_lock);
-    return (Fpga::DampingType)m_global->ut2Damping;
+    return (Fpga::DampingType)m_global->ut2TxDamping;
 }
 
 bool Fpga::set_ut2_tx_damping(Fpga::DampingType type, bool reflesh)
 {
     QWriteLocker l(&m_lock);
-    m_global->ut2Damping = type;
+    m_global->ut2TxDamping = type;
     return (reflesh ? write_reg(m_global, 1) : true);
 }
 
 Fpga::DampingType Fpga::ut1_rx_damping()
 {
-    return Fpga::R50;
+    QReadLocker l(&m_lock);
+    return (Fpga::DampingType)m_global->ut1RxDamping;
 }
 
 bool Fpga::set_ut1_rx_damping(Fpga::DampingType type, bool reflesh)
 {
-    Q_UNUSED(type);
-    Q_UNUSED(reflesh);
-    return true;
+    QWriteLocker l(&m_lock);
+    m_global->ut1RxDamping = type;
+    return (reflesh? write_reg(m_global, 1) : true);
 }
 
 Fpga::DampingType Fpga::ut2_rx_damping()
 {
-    return Fpga::R50;
+    QReadLocker l(&m_lock);
+    return (Fpga::DampingType)m_global->ut2RxDamping;
 }
 
 bool Fpga::set_ut2_rx_damping(Fpga::DampingType type, bool reflesh)
 {
-    Q_UNUSED(type);
-    Q_UNUSED(reflesh);
-    return true;
+    QWriteLocker l(&m_lock);
+    m_global->ut2RxDamping = type;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
 Fpga::VoltageType Fpga::ut_voltage()
