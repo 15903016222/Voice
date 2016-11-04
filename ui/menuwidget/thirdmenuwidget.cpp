@@ -315,8 +315,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             change_persistent_editor(modelIndex);
         }
 
-
-
         if(keyboardShowFlag) {
             qDebug() << "run 1";
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));

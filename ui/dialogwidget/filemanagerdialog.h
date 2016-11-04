@@ -17,6 +17,10 @@ public:
     explicit FileManagerDialog(QWidget *parent = 0);
     ~FileManagerDialog();
 
+private:
+    Ui::FileManagerDialog *ui;
+
+public:
     void init_type();
     void init_path();
     void init_source_path_tableView();
@@ -28,9 +32,6 @@ public:
     QStandardItemModel *modelType;
     QStandardItemModel *modelSourcePath;
     QStandardItemModel *modelTargetPath;
-
-private:
-    Ui::FileManagerDialog *ui;
 
 private slots:
     void onHeaderClicked(int index);
