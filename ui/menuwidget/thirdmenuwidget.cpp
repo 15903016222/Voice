@@ -40,7 +40,6 @@ QWidget(parent),
 
     m_mcu = Mcu::get_mcu();
     set_autoDetect_probeModel(false);
-//   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -338,14 +337,10 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             }
         }
         if(currentHeaderText.contains("Bright")) {
-            verticalSliderDialog = new VerticalSliderDialog(this);
-            verticalSliderDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-            verticalSliderDialog->show();
-
             brightIndex = index;
-            QString text = model->item(0, brightIndex)->text();
-            verticalSliderDialog->setBrightValue(text);
-            connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
+            setBrightValue(brightIndex);
+//            QString text = model->item(0, brightIndex)->text();
+//            m_mcu->set_brightness((char)text.toInt());
         }
         break;
     }
@@ -774,6 +769,12 @@ void ThirdMenuWidget::set_currentSubNetToMenu()
     model->item(0, 1)->setText("255.255.255.0");
 }
 
+void ThirdMenuWidget::setBrightValue(int index)
+{
+    QString brightness = model->item(0, index)->text();
+    m_mcu->set_brightness((char)brightness.toInt());
+}
+
 void ThirdMenuWidget::change_measurement_label(QString string)
 {
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
@@ -820,20 +821,6 @@ void ThirdMenuWidget::set_edited_text(QString string)
     }
 }
 
-void ThirdMenuWidget::setBrightValue(int value)
-{
-    QString brightValue;
-    brightValue.append(QString::number((double)value, 'f', 0));
-
-    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-        if(i == brightIndex) {
-            model->item(0, i)->setText(brightValue);
-            break;
-        }
-    }
-    m_mcu->set_brightness((char)value);
-}
-
 void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
 {
     if(!flag){
@@ -862,17 +849,6 @@ void ThirdMenuWidget::set_ip(QString str_ip)
 void ThirdMenuWidget::set_subNet(QString str_subNet)
 {
     model->item(0, networkIndex)->setText(str_subNet);
-}
-
-void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
-{
-    int i = verticalSliderDialog->slider.at(0)->value();
-    if (type == Mcu::ROTARY_UP) {
-        ++i;
-    } else {
-        --i;
-    }
-    verticalSliderDialog->slider.at(0)->setValue(i);
 }
 
 void ThirdMenuWidget::do_probe_event(const Probe &probe)

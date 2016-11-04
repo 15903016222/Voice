@@ -2,7 +2,6 @@
 #define THIRDMENUWIDGET_H
 
 #include "firstsecondmenuwidget.h"
-#include "verticalsliderdialog.h"
 #include "datetimesetdialog.h"
 #include "networkdialog.h"
 
@@ -33,6 +32,7 @@ public:
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
+    void setBrightValue(int index);
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 
@@ -53,9 +53,9 @@ public:
     int currSecondNum;
     int measurementIndex;
     int inputIndex;
-    int brightIndex;
     int probeIndex;
     int wedgeIndex;
+    int brightIndex;
     int dateTimeSetIndex;
     int networkIndex;
     int languageOption;
@@ -79,13 +79,11 @@ signals:
     void send_string_to_delegate(QString);
 
 private:
-    VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
     DateTimeSetDialog *dateTimeSetDialog;
     NetworkDialog *networkDialog;
 
 protected slots:
-    void do_rotary_event(Mcu::RotaryType type);
     void do_probe_event(const Probe& probe);
 
 private slots:
@@ -98,7 +96,6 @@ private slots:
     void select_probe(QString string);
     void select_wedge(QString string);
     void set_edited_text(QString string);
-    void setBrightValue(int value);
     void set_autoDetect_probeModel(bool flag);
     void set_date(QString str_date);
     void set_time(QString str_time);
