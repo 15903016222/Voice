@@ -48,7 +48,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabGlobal">
        <property name="toolTip">
@@ -292,12 +292,12 @@
                  <widget class="QComboBox" name="comboBoxUt1Twin">
                   <item>
                    <property name="text">
-                    <string>On</string>
+                    <string>Off</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>Off</string>
+                    <string>On</string>
                    </property>
                   </item>
                  </widget>
@@ -306,12 +306,12 @@
                  <widget class="QComboBox" name="comboBoxUt2Twin">
                   <item>
                    <property name="text">
-                    <string>On</string>
+                    <string>Off</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>Off</string>
+                    <string>On</string>
                    </property>
                   </item>
                  </widget>
@@ -578,12 +578,12 @@
                  <widget class="QComboBox" name="comboBoxFreeze">
                   <item>
                    <property name="text">
-                    <string>On</string>
+                    <string>Off</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>Off</string>
+                    <string>On</string>
                    </property>
                   </item>
                  </widget>
@@ -974,7 +974,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
-                <widget class="QComboBox" name="comboBoxAlarmOuput">
+                <widget class="QComboBox" name="comboBoxAlarmOutput">
                  <item>
                   <property name="text">
                    <string>Output 0</string>
@@ -996,12 +996,12 @@
                 <widget class="QComboBox" name="comboBoxAlarmOutputValid">
                  <item>
                   <property name="text">
-                   <string>Valid</string>
+                   <string>Invalid</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Invalid</string>
+                   <string>Valid</string>
                   </property>
                  </item>
                 </widget>
@@ -1078,6 +1078,11 @@
                 <layout class="QVBoxLayout" name="verticalLayout_3">
                  <item>
                   <widget class="QComboBox" name="comboBoxAlarmOutputLogicGroup">
+                   <item>
+                    <property name="text">
+                     <string>None</string>
+                    </property>
+                   </item>
                    <item>
                     <property name="text">
                      <string>Group1</string>
@@ -1211,12 +1216,12 @@
                 <widget class="QComboBox" name="comboBoxAlarmAnalogValid">
                  <item>
                   <property name="text">
-                   <string>Valid</string>
+                   <string>Invalid</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Invalid</string>
+                   <string>Valid</string>
                   </property>
                  </item>
                 </widget>
@@ -1252,7 +1257,12 @@
                <item>
                 <layout class="QVBoxLayout" name="verticalLayout_7">
                  <item>
-                  <widget class="QComboBox" name="comboBoxSoundAlarmAnalogLogicGroup">
+                  <widget class="QComboBox" name="comboBoxAlarmAnalogLogicGroup">
+                   <item>
+                    <property name="text">
+                     <string>None</string>
+                    </property>
+                   </item>
                    <item>
                     <property name="text">
                      <string>Group1</string>

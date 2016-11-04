@@ -43,8 +43,10 @@ struct GlobalData{
     quint32 utLawQty        :16;/* bit:16-31 虚拟聚焦法则数 */
 
     /* reg (1) */
-    quint32 encX            :4; /* bit:0-3 编码器x编码器逻辑; 011:双向增减; 010:正向增; 001:负向递增; 000:关掉编码器; 1xx:暂停编码器; 1XXX:反向逻辑 */
-    quint32 encY            :4; /* bit:4-7 编码器y; 同编码器x */
+    quint32 encXMode        :3; /* bit:0-2 编码器x编码逻辑; 011:双向增减; 010:正向增; 001:负向递增; 000:关掉编码器; 1xx:暂停编码器;*/
+    quint32 encXPolarity    :1; /* bit:3 反向逻辑 */
+    quint32 encYMode        :3; /* bit:4-6 编码器y编码逻辑;　*/
+    quint32 encYPolarity    :1; /* bit:7 编码器Ｙ反射逻辑 */
     quint32 res0            :1; /* bit:8 保留 */
     quint32 ut2Twin         :1; /* bit:9 Ut2双晶形状*/
     quint32 ut2TxDamping    :2; /* bit:10-11 Ut2发射阻尼 */
@@ -135,38 +137,52 @@ bool Fpga::set_ut_law_qty(int qty, bool reflesh)
 Fpga::EncoderPolarity Fpga::encoder_x_polarity()
 {
     QReadLocker l(&m_lock);
-    return (Fpga::EncoderPolarity)(m_global->encX & 0b1000);
+    return (Fpga::EncoderPolarity)(m_global->encXPolarity);
 }
 
 Fpga::EncoderPolarity Fpga::encoder_y_polarity()
 {
     QReadLocker l(&m_lock);
-    return (Fpga::EncoderPolarity)(m_global->encY & 0b1000);
+    return (Fpga::EncoderPolarity)(m_global->encYPolarity);
+}
+
+bool Fpga::set_encoder_x_polarity(Fpga::EncoderPolarity polarity, bool reflesh)
+{
+    QWriteLocker l(&m_lock);
+    m_global->encXPolarity = polarity;
+    return (reflesh ? write_reg(m_global, 1) : true);
+}
+
+bool Fpga::set_encoder_y_polarity(Fpga::EncoderPolarity polarity, bool reflesh)
+{
+    QWriteLocker l(&m_lock);
+    m_global->encYPolarity = polarity;
+    return (reflesh ? write_reg(m_global, 1) : true);
 }
 
 Fpga::EncoderMode Fpga::encoder_x_mode()
 {
     QReadLocker l(&m_lock);
-    return (Fpga::EncoderMode)(m_global->encX & 0b0111);
+    return (Fpga::EncoderMode)(m_global->encXMode);
 }
 
 Fpga::EncoderMode Fpga::encoder_y_mode()
 {
     QReadLocker l(&m_lock);
-    return (Fpga::EncoderMode)(m_global->encY & 0b0111);
+    return (Fpga::EncoderMode)(m_global->encYMode);
 }
 
-bool Fpga::set_encoder_x(Fpga::EncoderMode mode, Fpga::EncoderPolarity polarity, bool reflesh)
+bool Fpga::set_encoder_x_mode(Fpga::EncoderMode mode, bool reflesh)
 {
     QWriteLocker l(&m_lock);
-    m_global->encX = mode|polarity;
+    m_global->encXMode = mode;
     return (reflesh ? write_reg(m_global, 1) : true);
 }
 
-bool Fpga::set_encoder_y(Fpga::EncoderMode mode, Fpga::EncoderPolarity polarity, bool reflesh)
+bool Fpga::set_encoder_y_mode(Fpga::EncoderMode mode, bool reflesh)
 {
     QWriteLocker l(&m_lock);
-    m_global->encY = mode|polarity;
+    m_global->encYMode = mode;
     return (reflesh ? write_reg(m_global, 1) : true);
 }
 
@@ -442,8 +458,8 @@ Fpga::Fpga()
     /** reg -1 **/
     m_global->chip = 0b1000;
     /* reg (1) */
-    m_global->encX = Fpga::QUAD|Fpga::NORMAL;
-    m_global->encY = Fpga::QUAD|Fpga::NORMAL;
+    m_global->encXMode = Fpga::QUAD;
+    m_global->encYMode = Fpga::QUAD;
     m_global->ut2Twin = false;
     m_global->ut1Twin = false;
     /* reg (3) */

@@ -52,7 +52,7 @@ private slots:
 
     void on_spinBoxEcho_valueChanged(int arg1);
 
-    void on_comboBoxAlarmOuput_currentIndexChanged(int index);
+    void on_comboBoxAlarmOutput_currentIndexChanged(int index);
 
     void on_comboBoxAlarmOutputValid_currentIndexChanged(int index);
 
@@ -74,7 +74,7 @@ private slots:
 
     void on_comboBoxAlarmAnalogValid_currentIndexChanged(int index);
 
-    void on_comboBoxSoundAlarmAnalogLogicGroup_currentIndexChanged(int index);
+    void on_comboBoxAlarmAnalogLogicGroup_currentIndexChanged(int index);
 
     void on_comboBoxAlarmAnalogType_currentIndexChanged(int index);
 
