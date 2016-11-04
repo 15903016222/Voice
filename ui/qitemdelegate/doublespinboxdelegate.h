@@ -39,6 +39,7 @@ private:
 signals:
     void createEditorHeaderText(QStringList) const;
     void closeEditorHeaderText(QModelIndex) const;
+    void stringChanged(double value);
 
 private slots:
     void commit_and_close_editor();
@@ -46,6 +47,7 @@ private slots:
     void key_sure(int key);
     void editFinished();
     void input_number_to_lineedit(QString string);
+    void valueChanged_signal(double value);
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

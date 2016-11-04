@@ -51,6 +51,7 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
 
     emit createEditorHeaderText(sendList);
     connect(editor, SIGNAL(editingFinished()), this, SLOT(commit_and_close_editor()));
+    connect(editor, SIGNAL(valueChanged(double)), this, SLOT(valueChanged_signal(double)));
 
     return editor;
     Q_UNUSED(option);
@@ -125,6 +126,7 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
             } else {
                 doubleSpinBox->stepDown();
             }
+            emit stringChanged(doubleSpinBox->value());
         }
     }
 }
@@ -229,7 +231,12 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //        simulate_key(fd_kbd, KEY_0 + value);
 //    }
 
-//    close(fd_kbd);
+    //    close(fd_kbd);
+}
+
+void DoubleSpinBoxDelegate::valueChanged_signal(double value)
+{
+    emit stringChanged(value);
 }
 
 //void DoubleSpinBoxDelegate::simulate_key(int fd, int value)

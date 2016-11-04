@@ -153,6 +153,11 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
 
+                if(thirdMenuString.contains("Bright")) {
+                    connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setBrightness(double)));
+                }
+                break;
+
                 break;
             }
             case 2: {
@@ -335,12 +340,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 //                doubleSpinBox->closeEditor(doubleSpinBox->spinBoxList.at(doubleSpinBox->spinBoxList.count() -1));
                 ui->tableView->openPersistentEditor(modelIndex);
             }
-        }
-        if(currentHeaderText.contains("Bright")) {
-            brightIndex = index;
-            setBrightValue(brightIndex);
-//            QString text = model->item(0, brightIndex)->text();
-//            m_mcu->set_brightness((char)text.toInt());
         }
         break;
     }
@@ -769,12 +768,6 @@ void ThirdMenuWidget::set_currentSubNetToMenu()
     model->item(0, 1)->setText("255.255.255.0");
 }
 
-void ThirdMenuWidget::setBrightValue(int index)
-{
-    QString brightness = model->item(0, index)->text();
-    m_mcu->set_brightness((char)brightness.toInt());
-}
-
 void ThirdMenuWidget::change_measurement_label(QString string)
 {
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
@@ -819,6 +812,12 @@ void ThirdMenuWidget::set_edited_text(QString string)
             break;
         }
     }
+}
+
+void ThirdMenuWidget::setBrightness(double value)
+{
+    int brightnessValue = (int)value;
+    m_mcu->set_brightness((char)brightnessValue);
 }
 
 void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)

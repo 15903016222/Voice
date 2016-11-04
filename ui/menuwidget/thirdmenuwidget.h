@@ -32,7 +32,6 @@ public:
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
-    void setBrightValue(int index);
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 
@@ -55,7 +54,6 @@ public:
     int inputIndex;
     int probeIndex;
     int wedgeIndex;
-    int brightIndex;
     int dateTimeSetIndex;
     int networkIndex;
     int languageOption;
@@ -96,6 +94,7 @@ private slots:
     void select_probe(QString string);
     void select_wedge(QString string);
     void set_edited_text(QString string);
+    void setBrightness(double value);
     void set_autoDetect_probeModel(bool flag);
     void set_date(QString str_date);
     void set_time(QString str_time);
