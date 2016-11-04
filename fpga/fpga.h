@@ -108,10 +108,10 @@ public:
         INVERSE = 0b1000
     };
     enum EncoderMode {
-        QUAD    = 0b011,
-        UP      = 0b010,
-        DOWN    = 0b001,
         OFF     = 0b000,
+        DOWN    = 0b001,
+        UP      = 0b010,
+        QUAD    = 0b011,
         PAUSE   = 0b100
     };
     EncoderPolarity encoder_x_polarity(); /* 编码器X极性 */
@@ -208,15 +208,20 @@ protected:
 private:
     static QMutex s_mutex;
     static Fpga *s_fpga;
+
     GlobalData *m_global;
+
     AlarmOutput m_alarmOutput0;
     AlarmOutput m_alarmOutput1;
     AlarmOutput m_alarmOutput2;
     AlarmAnalog m_alarmAnalog0;
     AlarmAnalog m_alarmAnalog1;
+
     QReadWriteLock m_lock;
+
     QList<GroupPointer> m_groups;
     QReadWriteLock m_groupsLock;
+
     QList<BeamPointer> m_beams;
     QReadWriteLock m_beamsLock;
 };

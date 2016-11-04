@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
+    this->resize(800, 560);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
     connect(ui->pushButtonCoreTemp, &QPushButton::clicked, m_mcu, &Mcu::query_core_temp);
@@ -89,11 +90,27 @@ void MainWindow::do_temperature_event(Mcu::TemperatureType type, int value)
 
 void MainWindow::do_probe_event(const Probe &probe)
 {
-    ui->labelProbeType->setNum(probe.type());
+//    ui->labelProbeType->setNum(probe.type());
+    switch(probe.type()){
+        case 0:ui->labelProbeType->setText("UNKNOWN"); break;
+        case 1:ui->labelProbeType->setText("CUSTOM"); break;
+        case 3:ui->labelProbeType->setText("ANGLE_BEAM"); break;
+        case 5:ui->labelProbeType->setText("CONTACT"); break;
+        case 6:ui->labelProbeType->setText("IMMERSION"); break;
+        default:  break;
+    }
     ui->labelProbeModel->setText(probe.model());
     ui->labelProbeSerial->setText(probe.serial());
-    ui->labelProbePitch->setNum(probe.pitch());
-    ui->labelProbeFreq->setNum(probe.freq());
+//    ui->labelProbePitch->setNum(probe.pitch());
+    QString pitch;
+    pitch.append(QString::number((double)probe.pitch()/1000, 'f', 3));
+    pitch.append(" mm");
+    ui->labelProbePitch->setText(pitch);
+//    ui->labelProbeFreq->setNum(probe.freq());
+    QString freq;
+    freq.append(QString::number((double)probe.freq()/1000, 'f', 2));
+    freq.append(" MHz");
+    ui->labelProbeFreq->setText(freq);
     ui->labelProbePoint->setNum(probe.reference_point());
     ui->labelProbeElemQty->setNum(probe.elements_quantity());
 }
