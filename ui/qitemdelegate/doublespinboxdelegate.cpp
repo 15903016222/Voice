@@ -1,10 +1,22 @@
 #include "doublespinboxdelegate.h"
 
+//#ifdef PC_WIN
 //#include "windows.h"
+//#endif
+
+//#ifdef PC_UNIX
+//#include  <linux/input.h>
+//#include <stdio.h>
+//#include <fcntl.h>
+//#include <sys/time.h>
+//#include <unistd.h>
+//#endif
 
 #include <QEvent>
 #include <QDebug>
 #include <QKeyEvent>
+#include <QApplication>
+#include <QLineEdit>
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -65,46 +77,6 @@ void DoubleSpinBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOp
     editor->setGeometry(option.rect);
 }
 
-bool DoubleSpinBoxDelegate::eventFilter(QObject *object, QEvent *event)
-{
-    QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-    if(event->type() == QEvent::KeyPress && object == doubleSpinBox) {
-        doubleSpinBox->setFocus();
-        QKeyEvent *e = (QKeyEvent*)event;
-        if(e->key() == Qt::Key_1) {
-            qDebug() << "eventFilter:" << "key1";
-
-//            double newValue;
-//            QString string = "1";
-//            const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
-
-//            if(inputCount == 0) {
-//                doubleSpinBox->cleanText();
-//                newValue = string.toInt();
-
-//            } else {
-//                double value = doubleSpinBox->value();
-//                QString addedString = QString::number(value, 10, decimalAmount) + string;
-//                newValue = addedString.toDouble();
-//            }
-
-//            if(newValue > doubleSpinBox->maximum()) {
-//                const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->maximum(), 'f', decimalAmount), Qt::EditRole);
-//                doubleSpinBox->setValue(doubleSpinBox->maximum());
-//            } else if(newValue < doubleSpinBox->minimum()) {
-//                const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->minimum(), 'f', decimalAmount), Qt::EditRole);
-//                doubleSpinBox->setValue(doubleSpinBox->minimum());
-//            } else {
-//                const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(newValue, 'f', decimalAmount), Qt::EditRole);
-//                doubleSpinBox->setValue(newValue);
-//            }
-        }
-
-    }
-    return QObject::eventFilter(object, event);
-}
-
-
 void DoubleSpinBoxDelegate::set_number_range(QList<int> list)
 {
     rangeList = list;
@@ -144,32 +116,30 @@ void DoubleSpinBoxDelegate::commit_and_close_editor()
 
 void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 {
-    if(spinBoxList.size() != 0) {
-        QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-//        double value = doubleSpinBox->value();
+    if(editFlag) {
+        if(spinBoxList.size() != 0) {
+            QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
 
-        if (type == Mcu::ROTARY_UP) {
-//            value = value + 1;
-            doubleSpinBox->stepUp();
-        } else {
-//            value = value - 1;
-            doubleSpinBox->stepDown();
+            if (type == Mcu::ROTARY_UP) {
+                doubleSpinBox->stepUp();
+            } else {
+                doubleSpinBox->stepDown();
+            }
         }
-//        doubleSpinBox->setValue(value);
     }
 }
 
 #include <QShortcut>
 void DoubleSpinBoxDelegate::key_sure(int key)
 {
-    if(key == 214) {
+    if(editFlag){
         if(spinBoxList.size() != 0) {
-            QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-//            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
-    //        emit doubleSpinBox->editingFinished();
+            if(key == 214) {
+                QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+                QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+                QApplication::sendEvent(doubleSpinBox, event);
+            }
         }
-      //  QShortcut *key_return = new QShortcut(QKeySequence(Qt::Key_Return), doubleSpinBox);
-      //  connect(key_return, SIGNAL(activated()), this, SLOT());
     }
 }
 
@@ -183,28 +153,32 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //    double newValue;
     QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
 //    const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
-
+//    QLineEdit *lineEdit = new QLineEdit(doubleSpinBox);
+//    doubleSpinBox->setLineEdit(lineEdit);
     doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
     doubleSpinBox->setFocus();
-    QWidget *widget = doubleSpinBox->focusWidget();
+//    QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_1, Qt::NoModifier);
+//    QCoreApplication::sendEvent(doubleSpinBox, event);
+//    QWidget *widget = doubleSpinBox->focusWidget();
 //    HWND hwnd = (HWND)widget->winId();
-
+//    qDebug() << "string" << string;
 //    if(string == "." && decimalAmount > 0) {
-//        PostMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
+//        SendMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
 //    } else if(string == "Left Arrow") {
-//        PostMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
+//        SendMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
 //    } else if(string == "Right Arrow") {
-//        PostMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
+//        SendMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
 //    } else if(string == "BackSpace") {
-//        PostMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
+//        SendMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
 //    } else if(string == "Delete") {
-//        PostMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
+//        SendMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
 //    } else if(string == "Enter" || string == "Close") {
-//        PostMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
+//        SendMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
 //    } else {
 //        int value = string.toInt();
-//        PostMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
+//        SendMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
 //    }
+    
 //    PostMessage(hwnd, WM_KEYUP, VK_HELP + value + 1, 0);
 
 //    if(inputCount == 0) {
@@ -229,5 +203,46 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //        doubleSpinBox->setValue(newValue);
 //    }
 
+////    linux
+//    int fd_kbd;
+//    qDebug() << "open:" << fd_kbd;
+//    fd_kbd = open("/dev/input/event1", O_RDWR);
+//    if(fd_kbd <= 0) {
+//        qDebug() << "Open keyboard failed.";
+//    }
+
+//    if(string == "." && decimalAmount > 0) {
+////        PostMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
+//        simulate_key(fd_kbd, KEY_0);
+//    } else if(string == "Left Arrow") {
+//        simulate_key(fd_kbd, KEY_LEFT);
+//    } else if(string == "Right Arrow") {
+//        simulate_key(fd_kbd, KEY_RIGHT);
+//    } else if(string == "BackSpace") {
+//        simulate_key(fd_kbd, KEY_BACKSPACE);
+//    } else if(string == "Delete") {
+//        simulate_key(fd_kbd, KEY_DELETE);
+//    } else if(string == "Enter" || string == "Close") {
+//        simulate_key(fd_kbd, KEY_ENTER);
+//    } else {
+//        int value = string.toInt();
+//        simulate_key(fd_kbd, KEY_0 + value);
+//    }
+
+//    close(fd_kbd);
 }
 
+//void DoubleSpinBoxDelegate::simulate_key(int fd, int value)
+//{
+//    struct input_event event;
+//    qDebug() << value;
+//    event.type = EV_KEY;
+//    event.value = 1;
+//    event.code = value;
+//    gettimeofday(&event.time, 0);
+//    write(fd, &event, sizeof(event));
+//    qDebug() << "write:" << write(fd, &event, sizeof(event));
+////    if(write(fd, &event, sizeof(event)) < 0) {
+////        qDebug() << "write failed";
+////    }
+//}
