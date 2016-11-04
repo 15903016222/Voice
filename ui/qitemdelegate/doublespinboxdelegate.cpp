@@ -1,6 +1,6 @@
 #include "doublespinboxdelegate.h"
 
-#include "windows.h"
+//#include "windows.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -166,7 +166,7 @@ void DoubleSpinBoxDelegate::key_sure(int key)
         if(spinBoxList.size() != 0) {
             QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
 //            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
-            emit doubleSpinBox->editingFinished();
+    //        emit doubleSpinBox->editingFinished();
         }
       //  QShortcut *key_return = new QShortcut(QKeySequence(Qt::Key_Return), doubleSpinBox);
       //  connect(key_return, SIGNAL(activated()), this, SLOT());
@@ -187,24 +187,24 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
     doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
     doubleSpinBox->setFocus();
     QWidget *widget = doubleSpinBox->focusWidget();
-    HWND hwnd = (HWND)widget->winId();
+//    HWND hwnd = (HWND)widget->winId();
 
-    if(string == "." && decimalAmount > 0) {
-        PostMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
-    } else if(string == "Left Arrow") {
-        PostMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
-    } else if(string == "Right Arrow") {
-        PostMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
-    } else if(string == "BackSpace") {
-        PostMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
-    } else if(string == "Delete") {
-        PostMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
-    } else if(string == "Enter" || string == "Close") {
-        PostMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
-    } else {
-        int value = string.toInt();
-        PostMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
-    }
+//    if(string == "." && decimalAmount > 0) {
+//        PostMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
+//    } else if(string == "Left Arrow") {
+//        PostMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
+//    } else if(string == "Right Arrow") {
+//        PostMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
+//    } else if(string == "BackSpace") {
+//        PostMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
+//    } else if(string == "Delete") {
+//        PostMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
+//    } else if(string == "Enter" || string == "Close") {
+//        PostMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
+//    } else {
+//        int value = string.toInt();
+//        PostMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
+//    }
 //    PostMessage(hwnd, WM_KEYUP, VK_HELP + value + 1, 0);
 
 //    if(inputCount == 0) {
