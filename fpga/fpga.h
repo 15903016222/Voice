@@ -1,3 +1,10 @@
+/**
+ * @file fpga.h
+ * @brief Fpga Class
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #ifndef __FPGA_H__
 #define __FPGA_H__
 

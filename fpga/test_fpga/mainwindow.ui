@@ -48,7 +48,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabGlobal">
        <property name="toolTip">
@@ -1162,10 +1162,33 @@
                   <widget class="QSpinBox" name="spinBoxAlarmOutputCount"/>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="spinBoxAlarmOutputDelay"/>
+                  <widget class="QSpinBox" name="spinBoxAlarmOutputDelay">
+                   <property name="suffix">
+                    <string> us</string>
+                   </property>
+                   <property name="maximum">
+                    <number>5000000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>10</number>
+                   </property>
+                   <property name="displayIntegerBase">
+                    <number>10</number>
+                   </property>
+                  </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="spinBoxAlarmOutputHoldTime"/>
+                  <widget class="QSpinBox" name="spinBoxAlarmOutputHoldTime">
+                   <property name="suffix">
+                    <string> us</string>
+                   </property>
+                   <property name="maximum">
+                    <number>5000000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>10</number>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -1573,10 +1596,24 @@
                <widget class="QSpinBox" name="spinBoxGroupCompressRato"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBoxGroupGain"/>
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxGroupGain">
+                <property name="prefix">
+                 <string/>
+                </property>
+                <property name="suffix">
+                 <string> dB</string>
+                </property>
+                <property name="decimals">
+                 <number>1</number>
+                </property>
+               </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBoxGroupThicknessFactor"/>
+               <widget class="QSpinBox" name="spinBoxGroupThicknessFactor">
+                <property name="suffix">
+                 <string> mm</string>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QComboBox" name="comboBoxGroupUt1">

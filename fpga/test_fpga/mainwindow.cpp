@@ -1,3 +1,10 @@
+/**
+ * @file mainwindow.cpp
+ * @brief testing fpga
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -355,7 +362,7 @@ void MainWindow::on_spinBoxGroupCompressRato_valueChanged(int arg1)
     }
 }
 
-void MainWindow::on_spinBoxGroupGain_valueChanged(int arg1)
+void MainWindow::on_spinBoxGroupGain_valueChanged(double arg1)
 {
     if (! m_group->set_gain(arg1), true) {
         show_warning();

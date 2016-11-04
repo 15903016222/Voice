@@ -1,3 +1,10 @@
+/**
+ * @file fpga.cpp
+ * @brief Fpga Class
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 01.
+ * @date 2016-11-04
+ */
 
 #include "fpga.h"
 #include "fpga_spi.h"
@@ -11,82 +18,82 @@ const int Fpga::MAX_BEAMS_NUM = 1024;
 
 struct AlarmOutputData{
     /* reg 17 20 23 */
-    quint32 count           :7; /* bit:0-6 */
-    quint32 logicCondition2 :4; /* bit:7-10 报警条件2*/
-    quint32 op              :1; /* bit:11 与或操作 */
-    quint32 logicCondition1 :4; /* bit:12-15 报警条件1*/
-    quint32 logicGroup      :16;/* bit:16-31使能的组 */
+    quint32 count           :7; /* bit:0-6      报警触发条件计数器*/
+    quint32 logicCondition2 :4; /* bit:7-10     报警条件2*/
+    quint32 op              :1; /* bit:11       与或操作 */
+    quint32 logicCondition1 :4; /* bit:12-15    报警条件1*/
+    quint32 logicGroup      :16;/* bit:16-31    使能的组 */
 
     /* reg 18 21 24 */
-    quint32 delay           :20;/* bit:0-19 单位10us */
-    quint32 res0            :12;/* bit:20-31 */
+    quint32 delay           :20;/* bit:0-19     延迟时间，单位10us，最大值5000ms */
+    quint32 res0            :12;/* bit:20-31    保留*/
 
     /* reg 19 22 25 */
-    quint32 holdTime        :20;/* bit:0-19 单位10us */
-    quint32 res1            :12;/* bit:20-31 */
+    quint32 holdTime        :20;/* bit:0-19     保持时间，单位10us，最大值5000ms */
+    quint32 res1            :12;/* bit:20-31    保留*/
 };
 
 struct AlarmAnalogData{
     /* reg 26 27 */
-    quint32 type            :3; /* bit:0-2 A% B%或thickness */
-    quint32 logicGroup      :4; /* bit:3-6 源组 */
-    quint32 res             :25;/* bit:7-31 */
+    quint32 type            :3; /* bit:0-2      A% B%或thickness */
+    quint32 logicGroup      :4; /* bit:3-6      报警逻辑组 */
+    quint32 res             :25;/* bit:7-31     保留 */
 };
 
 struct GlobalData{
     /* reg (-1) */
-    quint32 offset          :28;/* bit:0-27 地址的偏移 */
-    quint32 chip            :4; /* bit:28-31 片选 Group取值1000 */
+    quint32 offset          :28;/* bit:0-27     地址的偏移 */
+    quint32 chip            :4; /* bit:28-31    片选，取值为1000 */
 
     /* reg (0) */
-    quint32 paLawQty        :16;/* bit:0-15 实际聚焦法则数 */
-    quint32 utLawQty        :16;/* bit:16-31 虚拟聚焦法则数 */
+    quint32 paLawQty        :16;/* bit:0-15     实际聚焦法则数 */
+    quint32 utLawQty        :16;/* bit:16-31    虚拟聚焦法则数 */
 
     /* reg (1) */
-    quint32 encXMode        :3; /* bit:0-2 编码器x编码逻辑; 011:双向增减; 010:正向增; 001:负向递增; 000:关掉编码器; 1xx:暂停编码器;*/
-    quint32 encXPolarity    :1; /* bit:3 反向逻辑 */
-    quint32 encYMode        :3; /* bit:4-6 编码器y编码逻辑;　*/
-    quint32 encYPolarity    :1; /* bit:7 编码器Ｙ反射逻辑 */
-    quint32 res0            :1; /* bit:8 保留 */
-    quint32 ut2Twin         :1; /* bit:9 Ut2双晶形状*/
-    quint32 ut2TxDamping    :2; /* bit:10-11 Ut2发射阻尼 */
-    quint32 ut1Twin         :1; /* bit:12 Ut1双晶开关 */
-    quint32 ut1TxDamping    :2; /* bit:13-14 Ut1发射阻尼 */
-    quint32 utVoltage       :6; /* bit:15-20 常规发射电压 */
-    quint32 power           :5; /* bit:21-25 控制省电 */
-    quint32 paVoltage       :2; /* bit:26-27 相控阵发射电压 */
-    quint32 ut2RxDamping    :2; /* bit:28-29 Ut2接收阻尼 */
-    quint32 ut1RxDamping    :2; /* bit:30-31 Ut1接收阻尼 */
+    quint32 encXMode        :3; /* bit:0-2      编码器x编码逻辑; 011:双向增减; 010:正向增; 001:负向递增; 000:关掉编码器; 1xx:暂停编码器;*/
+    quint32 encXPolarity    :1; /* bit:3        反向逻辑 */
+    quint32 encYMode        :3; /* bit:4-6      编码器y编码逻辑;　*/
+    quint32 encYPolarity    :1; /* bit:7        编码器Ｙ反射逻辑 */
+    quint32 res0            :1; /* bit:8        保留 */
+    quint32 ut2Twin         :1; /* bit:9        Ut2双晶形状*/
+    quint32 ut2TxDamping    :2; /* bit:10-11    Ut2发射阻尼 */
+    quint32 ut1Twin         :1; /* bit:12       Ut1双晶开关 */
+    quint32 ut1TxDamping    :2; /* bit:13-14    Ut1发射阻尼 */
+    quint32 utVoltage       :6; /* bit:15-20    常规发射电压 */
+    quint32 power           :5; /* bit:21-25    控制省电 */
+    quint32 paVoltage       :2; /* bit:26-27    相控阵发射电压 */
+    quint32 ut2RxDamping    :2; /* bit:28-29    Ut2接收阻尼 */
+    quint32 ut1RxDamping    :2; /* bit:30-31    Ut1接收阻尼 */
 
     /* reg (2) */
-    quint32 rxChannels;
+    quint32 rxChannels;         /* 接收通道使能 */
 
     /* reg (3) */
-    quint32 res1            :31;
-    quint32 freeze          :1;
+    quint32 res1            :31;/* bit:0-30     保留 */
+    quint32 freeze          :1; /* bit:31       冻结控制位 */
 
     /* reg (4-15) */
-    quint32 res2[12];
+    quint32 res2[12];           /* 保留寄存器 */
 
     /* reg (16) */
-    quint32 soundFreqency   :3; /* bit: 0-2 */
-    quint32 alarmFlags      :5; /* bit: 3-7 */
-    quint32 res3            :24;/* bit: 8-31 */
+    quint32 soundFreqency   :3; /* bit: 0-2     蜂鸣器频率*/
+    quint32 alarmFlags      :5; /* bit: 3-7     输出报警使能位*/
+    quint32 res3            :24;/* bit: 8-31    保留*/
 
     /* reg (17-19) */
     /* reg (20-22) */
     /* reg (23-25) */
-    AlarmOutputData alarmOutput[3];
+    AlarmOutputData alarmOutput[3]; /* Output报警寄存器 */
 
     /* reg (26-27) */
-    AlarmAnalogData alarmAnalog[2];
+    AlarmAnalogData alarmAnalog[2]; /* Analog报警寄存器 */
 
     /* reg (28) */
-    quint32 res4            :20;/* bit: 0-19 */
-    quint32 factorEcho      :12;/* bit: 20-32 4095/回波数 */
+    quint32 res4            :20;/* bit: 0-19    保留 */
+    quint32 factorEcho      :12;/* bit: 20-32   4095/回波数 */
 
     /* reg (29 31) */
-    quint32 res5[3];
+    quint32 res5[3];        /* 保留寄存器 */
 };
 
 QMutex Fpga::s_mutex;

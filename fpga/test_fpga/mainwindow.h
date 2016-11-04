@@ -1,3 +1,10 @@
+/**
+ * @file mainwindow.h
+ * @brief testing fpga
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -95,8 +102,7 @@ private slots:
 
     void on_spinBoxGroupCompressRato_valueChanged(int arg1);
 
-    void on_spinBoxGroupGain_valueChanged(int arg1);
-
+    void on_spinBoxGroupGain_valueChanged(double arg1);
 
     void on_spinBoxGroupThicknessFactor_valueChanged(int arg1);
 

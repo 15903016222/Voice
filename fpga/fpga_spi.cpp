@@ -1,3 +1,10 @@
+/**
+ * @file fpga_spi.cpp
+ * @brief FpgaSpi
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #include "fpga_spi.h"
 
 FpgaSpi *FpgaSpi::s_spi = NULL;
