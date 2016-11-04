@@ -316,10 +316,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         }
 
         if(keyboardShowFlag) {
-            qDebug() << "run 1";
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
         } else if(!doubleSpinBox->editFlag) {
-            qDebug() << "run 2";
             ui->tableView->edit(modelIndex);
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
         } else {
@@ -337,7 +335,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             if(keyboardShowFlag) {
 //                doubleSpinBox->closeEditor(doubleSpinBox->spinBoxList.at(doubleSpinBox->spinBoxList.count() -1));
                 ui->tableView->openPersistentEditor(modelIndex);
-                qDebug() << "openeditor";
             }
         }
         if(currentHeaderText.contains("Bright")) {
@@ -906,7 +903,6 @@ QList<int> ThirdMenuWidget::get_dialog_value_list(int index, QString str)
 void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
 {    
     keyboardShowFlag = true;
-    qDebug() << keyboardShowFlag;
     if(opendSpinBoxIndex >= 0) {
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         if(!spinBox->editFlag) {
@@ -935,12 +931,14 @@ void ThirdMenuWidget::input_spinbox_number(QString string)
 {
     if(opendSpinBoxIndex >= 0) {
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
-        qDebug() << opendSpinBoxIndex;
-        qDebug() << spinBox->editFlag;
         if(spinBox->editFlag) {
+//            QModelIndex modelIndex = model->item(0, opendSpinBoxIndex)->index();
+//            ui->tableView->edit(modelIndex);
+//            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocusPolicy(Qt::StrongFocus);
 //            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
 //            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_1, Qt::NoModifier);
-//            QApplication::sendEvent(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1), event);
+//            QCoreApplication::sendEvent(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1), event);
+
             emit send_string_to_delegate(string);
             spinBox->inputCount += 1;
         }
@@ -949,8 +947,6 @@ void ThirdMenuWidget::input_spinbox_number(QString string)
 
 void ThirdMenuWidget::change_persistent_editor(QModelIndex modelIndex)
 {
-
-    qDebug() << "change";
     if(keyboardShowFlag) {
         QModelIndex modelIndexLast = model->item(0, opendSpinBoxIndex)->index();
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
@@ -963,7 +959,6 @@ void ThirdMenuWidget::change_persistent_editor(QModelIndex modelIndex)
 //        ui->tableView->edit(modelIndex);
 //        ui->tableView->openPersistentEditor(modelIndex);
         spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
-        qDebug() << "change_persistent_editor";
     }
     disconnect_input_number();
 }
