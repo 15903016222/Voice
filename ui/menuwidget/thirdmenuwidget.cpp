@@ -287,7 +287,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 
     QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
     QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
-
+    qDebug() << "style" << thirdMenuMap["style"].toString().toInt();
     switch(thirdMenuMap["style"].toString().toInt()) {
     case 1: {
         //点击表头更改spinbox的步进及表头文字
@@ -358,23 +358,17 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
 
         if(!comboBox->editFlag) {
-//            ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
             QModelIndex modelIndex = model->item(0, index)->index();
+//            if(comboBox->comboBoxList.count() > 0 && comboBox->editFlag){
+//                comboBox->closeEditor(static_cast<QWidget*>(comboBox->comboBoxList.at(comboBox->comboBoxList.count() -1)));
+//            }
+
             ui->tableView->edit(modelIndex);
             QPoint point = QPoint();
             QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
             QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
-//            qDebug () << ui->tableView->state();
-//            comboBox->comboBoxMap.value(modelIndex)->view()->setState(QAbstractItemView::EditingState);
-//            comboBox->comboBoxMap.value(modelIndex)->view()->parentWidget()->show();
+
         }
-//        qDebug() << "header";
-//        qDebug() << "1";
-//        comboBox->set_minimum_contents_length(width / 6);
-//        qDebug() << "2";
-//        comboBox->set_comboBox_item_width(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1));
-//        qDebug() << "3";
-//        comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1)->showPopup();
         break;
     }
     case 3: {
@@ -583,19 +577,8 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
         ui->tableView->edit(index);
         QPoint point = QPoint();
-        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
-
-//        comboBox->comboBoxMap.value(index)->view()->show();
-//        int column = index.column();
-//        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(column));
-//        qDebug() << "1";
-//        comboBox->set_minimum_contents_length(width / 6);
-//        qDebug() << "2";
-//        comboBox->set_comboBox_item_width(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1));
-//        qDebug() << "3";
-//        comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1)->showPopup();
-//        emit activated(index);
     }
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {

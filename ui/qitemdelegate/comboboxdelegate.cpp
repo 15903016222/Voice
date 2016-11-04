@@ -30,39 +30,28 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
     }
 
     editor->setStyleSheet("QComboBox{"
-        "background-color:qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));"
+        "background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));"
         "color: yellow;"
-        "font:12pt 'Times New Roman';"
+        "font: 12pt 'Times New Roman';"
         "selection-background-color: rgba(0, 130, 195, 0);"
         "selection-color: yellow;}"
-        "QComboBox::drop-down{border-style:none;}"
+        "QComboBox::drop-down{border-style: none;}"
         "QComboBox QAbstractItemView{"
-        "font:12pt 'Times New Roman';"
+        "font: 12pt 'Times New Roman';"
         "background-color:rgb(255, 255, 255);"
-        "margin-bottom:45px;"
+        "margin-bottom: 45px;"
         "outline:0px;}"
-        "QComboBox QAbstractItemView::item{height:30px}"
-        "QComboBox QAbstractItemView::item:hover{color:yellow;"
-        "background-color:rgba(0, 150, 255, 225);}"
-        "QComboBox QAbstractItemView::item:selected{color:yellow;"
-        "background-color:rgba(0, 150, 255, 225);}");
+        "QComboBox QAbstractItemView::item{height: 30px;}"
+        "QComboBox QAbstractItemView::item:hover{color: yellow;"
+        "background-color: rgba(0, 150, 255, 225);}"
+        "QComboBox QAbstractItemView::item:selected{color: yellow;"
+        "background-color: rgba(0, 150, 255, 225);}");
 
     editor->setView(new QListView());
     editor->view()->parentWidget()->setAttribute(Qt::WA_TranslucentBackground);
     editor->view()->parentWidget()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
-//    editor->view()->setFrameShape(QFrame::NoFrame);
-//    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect;
-//    effect->setBlurRadius(0);
-//    effect->setColor(Qt::black);
-//    effect->setOffset(2,2);
-//    editor->view()->parentWidget()->setGraphicsEffect(effect);
 
     set_comboBox_item_width(editor);
-//    editor->view()->setVisible(true);
-//    editor->view()->selectionModel()->setCurrentIndex(index,QItemSelectionModel::ClearAndSelect);
-//    static_cast<QAbstractItemView*>(editor->view())->setState(QAbstractItemView::EditingState);
-//    editor->view()->parentWidget()->show();
-//    editor->view()->parentWidget()->setFocus();
 
     (const_cast<ComboBoxDelegate *>(this))->comboBoxList.append(editor);
     (const_cast<ComboBoxDelegate *>(this))->comboBoxMap.insert(index, editor);
@@ -98,18 +87,6 @@ void ComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionV
     editor->setGeometry(option.rect);
     Q_UNUSED(index);
 }
-
-//bool ComboBoxDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
-//{
-//    if(event->type() == QEvent::MouseButtonRelease) {
-//        QMouseEvent* e =(QMouseEvent*)event;
-//        if(option.rect.adjusted(0, 0, 0, 0).contains(e->x(), e->y()) && comboBoxMap.contains(index)) {
-//            comboBoxMap.value(index)->showPopup();
-//        }
-//    }
-//    return true;
-
-//}
 
 void ComboBoxDelegate::set_comboBox_item_list(QStringList stringList)
 {
@@ -149,7 +126,6 @@ void ComboBoxDelegate::commit_and_close_editor(const QString &str)
         emit change_language(str);
     }
     editFlag = false;
-    editor->hidePopup();
 }
 
 void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
@@ -187,14 +163,6 @@ void ComboBoxDelegate::set_comboBox_item_width(QComboBox *editor) const
         }
      }
     if(minimumContentLength < maxSize) {
-        editor->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-    } else {
-        editor->setMinimumContentsLength(minimumContentLength);
+        editor->view()->setFixedWidth(maxSize);
     }
 }
-
-//void ComboBoxDelegate::showPopup() {
-//    QComboBox::showPopup();
-//    QWidget *popup = this->findChild<QFrame*>();
-//    popup->move(popup->x(),popup->y() - this->height() - popup->height());
-//}
