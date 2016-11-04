@@ -15,6 +15,8 @@
 #include <QEvent>
 #include <QDebug>
 #include <QKeyEvent>
+#include <QApplication>
+#include <QLineEdit>
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -134,9 +136,10 @@ void DoubleSpinBoxDelegate::key_sure(int key)
 {
     if(key == 214) {
         if(spinBoxList.size() != 0) {
-            QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
+//            QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
 //            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
-            emit doubleSpinBox->editingFinished();
+//            emit doubleSpinBox->editingFinished();
+            commit_and_close_editor();
         }
       //  QShortcut *key_return = new QShortcut(QKeySequence(Qt::Key_Return), doubleSpinBox);
       //  connect(key_return, SIGNAL(activated()), this, SLOT());
@@ -153,9 +156,12 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //    double newValue;
     QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
 //    const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
-
-//    doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
+//    QLineEdit *lineEdit = new QLineEdit(doubleSpinBox);
+//    doubleSpinBox->setLineEdit(lineEdit);
+    doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
     doubleSpinBox->setFocus();
+//    QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_1, Qt::NoModifier);
+//    QCoreApplication::sendEvent(doubleSpinBox, event);
     QWidget *widget = doubleSpinBox->focusWidget();
     HWND hwnd = (HWND)widget->winId();
     qDebug() << "string" << string;
