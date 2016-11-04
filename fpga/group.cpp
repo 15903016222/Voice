@@ -531,6 +531,7 @@ bool write_reg(GroupData *d, int index, int reg)
     quint32 data[2] = {0};
     quint32 *dp = (quint32 *)d;
     data[0] = dp[0];
-    data[1] = dp[reg];
+    data[1] = dp[reg+1];
+
     return spi->send((char *)data, 8);
 }

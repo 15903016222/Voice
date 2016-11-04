@@ -128,10 +128,8 @@ bool Spi::write(char *data, quint32 len)
     xfer.len = len;
 
     if (::ioctl(m_fd, SPI_IOC_MESSAGE(1), &xfer) == -1) {
-        qDebug("failed");
         return false;
     }
 
     return true;
 }
-

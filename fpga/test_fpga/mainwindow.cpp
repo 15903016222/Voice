@@ -330,7 +330,6 @@ void MainWindow::on_pushButtonGroupDelete_clicked()
 void MainWindow::on_comboBoxCurrentGroup_currentIndexChanged(int index)
 {
     m_group = m_fpga->get_group(index);
-    qDebug()<<__LINE__<<index;
 }
 
 
