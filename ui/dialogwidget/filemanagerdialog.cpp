@@ -215,8 +215,10 @@ void FileManagerDialog::on_listView_clicked(const QModelIndex &index)
 {
     int row = index.row();
 
-    ui->comboBox_1->setCurrentText(filePathList.at(row));
-    ui->comboBox_2->setCurrentText(filePathList.at(row));
+    ui->comboBox_1->setCurrentIndex(row);
+    ui->comboBox_2->setCurrentIndex(row);
+//    ui->comboBox_1->setCurrentText(filePathList.at(row));
+//    ui->comboBox_2->setCurrentText(filePathList.at(row));
 
     for(int i = 0; i < FILE_TYPE_NUMBER; i++) {
         QModelIndex modelIndex = modelType->index(i, 0);

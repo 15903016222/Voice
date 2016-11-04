@@ -943,7 +943,7 @@ void ThirdMenuWidget::close_spinbox_persistent_editor(int index)
         spinBox->editFlag = false;
         spinBox->inputCount = 0;
         disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
-        spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
+   //     spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
     }
 }
 
@@ -973,9 +973,7 @@ void ThirdMenuWidget::change_persistent_editor(QModelIndex modelIndex)
         spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->clearFocus();
         spinBox->editFlag = false;
         spinBox->inputCount = 0;
-//        ui->tableView->edit(modelIndex);
-//        ui->tableView->openPersistentEditor(modelIndex);
-        spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
+  //      spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
         qDebug() << "change_persistent_editor";
     }
     disconnect_input_number();
