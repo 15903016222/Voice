@@ -31,7 +31,7 @@ public:
     int inputCount;
     bool editFlag;
 
-    bool eventFilter(QObject *object, QEvent *event);
+//    void simulate_key(int fd, int value);
 
 private:
     Mcu *m_mcu;
