@@ -24,12 +24,11 @@ SOURCES += \
     $$PWD/dialogwidget/inputpanelcontext.cpp \
     $$PWD/dialogwidget/verticalsliderdialog.cpp \
     $$PWD/dialogwidget/resetconfigdialog.cpp \
-    $$PWD/dialogwidget/aboutdialog.cpp \
-    $$PWD/dialogwidget/creditsdialog.cpp \
     $$PWD/dialogwidget/systeminfodialog.cpp \
     $$PWD/dialogwidget/networkdialog.cpp \
     $$PWD/dialogwidget/datetimesetdialog.cpp \
-    $$PWD/dialogwidget/filemanagerdialog.cpp
+    $$PWD/dialogwidget/filemanagerdialog.cpp \
+    $$PWD/dialogwidget/about_dialog.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -51,12 +50,11 @@ HEADERS += \
     $$PWD/dialogwidget/inputpanelcontext.h \
     $$PWD/dialogwidget/verticalsliderdialog.h \
     $$PWD/dialogwidget/resetconfigdialog.h \
-    $$PWD/dialogwidget/aboutdialog.h \
-    $$PWD/dialogwidget/creditsdialog.h \
     $$PWD/dialogwidget/systeminfodialog.h \
     $$PWD/dialogwidget/networkdialog.h \
     $$PWD/dialogwidget/datetimesetdialog.h \
-    $$PWD/dialogwidget/filemanagerdialog.h
+    $$PWD/dialogwidget/filemanagerdialog.h \
+    $$PWD/dialogwidget/about_dialog.h
 
 FORMS += \
     $$PWD/mainwindow.ui \
@@ -75,8 +73,6 @@ FORMS += \
     $$PWD/dialogwidget/inputpanelcontext.ui \
     $$PWD/dialogwidget/verticalsliderdialog.ui \
     $$PWD/dialogwidget/resetconfigdialog.ui \
-    $$PWD/dialogwidget/aboutdialog.ui \
-    $$PWD/dialogwidget/creditsdialog.ui \
     $$PWD/dialogwidget/systeminfodialog.ui \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
