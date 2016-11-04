@@ -48,7 +48,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabGlobal">
        <property name="toolTip">
@@ -1916,6 +1916,369 @@
        <attribute name="title">
         <string>Focal Law</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_28">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_19">
+          <item>
+           <spacer name="horizontalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonBeamCreate">
+            <property name="text">
+             <string>Create</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonBeamDelete">
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxCurrentBeam">
+            <item>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_12">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_22">
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_21">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_23">
+              <item>
+               <widget class="QLabel" name="label_57">
+                <property name="text">
+                 <string>Gain Offset</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_58">
+                <property name="text">
+                 <string>Group ID</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_59">
+                <property name="text">
+                 <string>Info</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_60">
+                <property name="text">
+                 <string>Delay</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_61">
+                <property name="text">
+                 <string>Gate A Start</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_62">
+                <property name="text">
+                 <string>Gate A End</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_63">
+                <property name="text">
+                 <string>Gate B Start</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_64">
+                <property name="text">
+                 <string>Gate B End</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_65">
+                <property name="text">
+                 <string>Gate I Start</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_66">
+                <property name="text">
+                 <string>Gate I End</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_24">
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamGainOffset"/>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBoxBeamGroupID"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamInfo"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamDelay"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamGateASTart"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamGateAEnd"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamGateBStart"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamGateBEnd"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamGateIStart"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamGateIEnd"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_15">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_27">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_25">
+                <item>
+                 <widget class="QLabel" name="label_67">
+                  <property name="text">
+                   <string>Tx Channel</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_68">
+                  <property name="text">
+                   <string>Rx Channel</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_69">
+                  <property name="text">
+                   <string>Tx Channel Select</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_70">
+                  <property name="text">
+                   <string>Rx Channel Select</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_26">
+                <item>
+                 <widget class="QSpinBox" name="spinBoxBeamTxChannel"/>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBoxBeamRxChannel"/>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBoxBeamTxChannelSelect"/>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBoxBeamRxChannelSelect"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <item>
+               <widget class="QLabel" name="label_71">
+                <property name="text">
+                 <string>Tx Delay</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_16">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBoxBeamTxDelay"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamTxDelay"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <item>
+               <widget class="QLabel" name="label_72">
+                <property name="text">
+                 <string>Rx Delay</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_17">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBoxBeamRxDelay"/>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxBeamRxDelay"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_23">
+          <item>
+           <spacer name="horizontalSpacer_18">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>&amp;Send</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -1961,54 +2324,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_10</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>189</x>
-     <y>390</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_8</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>80</x>
-     <y>390</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_9</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>134</x>
-     <y>390</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBox_6</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -2016,38 +2331,6 @@
    <hints>
     <hint type="sourcelabel">
      <x>407</x>
-     <y>367</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_7</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>461</x>
-     <y>367</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_1</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>134</x>
      <y>367</y>
     </hint>
     <hint type="destinationlabel">
@@ -2089,157 +2372,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_2</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>189</x>
-     <y>367</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_20</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>298</x>
-     <y>413</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_19</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>243</x>
-     <y>413</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_18</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>189</x>
-     <y>413</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_17</sender>
+   <sender>checkBox_1</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>do_checkBox_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
-     <y>413</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_16</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>80</x>
-     <y>413</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_14</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>407</x>
-     <y>390</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_13</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>352</x>
-     <y>390</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_12</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>298</x>
-     <y>390</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_4</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>298</x>
      <y>367</y>
     </hint>
     <hint type="destinationlabel">
@@ -2249,13 +2388,61 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_31</sender>
+   <sender>checkBox_7</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>do_checkBox_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>461</x>
+     <y>367</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_8</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_9</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>134</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_26</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
      <y>436</y>
     </hint>
     <hint type="destinationlabel">
@@ -2265,29 +2452,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_3</sender>
+   <sender>checkBox_25</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>do_checkBox_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>243</x>
-     <y>367</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_29</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>352</x>
+     <x>134</x>
      <y>436</y>
     </hint>
     <hint type="destinationlabel">
@@ -2329,13 +2500,45 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_26</sender>
+   <sender>checkBox_3</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>do_checkBox_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>189</x>
+     <x>243</x>
+     <y>367</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_0</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>367</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_30</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>407</x>
      <y>436</y>
     </hint>
     <hint type="destinationlabel">
@@ -2345,14 +2548,174 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_25</sender>
+   <sender>checkBox_31</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>461</x>
+     <y>436</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_14</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>407</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_4</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>298</x>
+     <y>367</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_10</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>367</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_17</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>do_checkBox_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_13</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>352</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_16</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_22</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>407</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_29</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>352</x>
      <y>436</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_12</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>298</x>
+     <y>390</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2393,22 +2756,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_22</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>do_checkBox_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>407</x>
-     <y>413</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBox_21</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -2425,14 +2772,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_0</sender>
+   <sender>checkBox_20</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>do_checkBox_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>80</x>
-     <y>367</y>
+     <x>298</x>
+     <y>413</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2441,14 +2788,30 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_30</sender>
+   <sender>checkBox_18</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>do_checkBox_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>407</x>
-     <y>436</y>
+     <x>189</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_19</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>do_checkBox_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>413</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>

@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_fpga->create_group();
     m_group = m_fpga->get_group(0);
+
+    m_fpga->create_beam();
+    m_beam = m_fpga->get_beam(0);
 }
 
 MainWindow::~MainWindow()
@@ -515,6 +518,119 @@ void MainWindow::on_spinBoxGroupTxStart_valueChanged(int arg1)
 void MainWindow::on_pushButtonGroupReflesh_clicked()
 {
     if (! m_group->reflesh()) {
+        show_warning();
+    }
+}
+
+
+/***************  Focal Law ****************/
+void MainWindow::on_pushButtonBeamCreate_clicked()
+{
+    if (! m_fpga->create_beam()) {
+        show_warning();
+        return;
+    }
+
+    ui->comboBoxCurrentBeam->addItem(QString::number(m_fpga->beams()-1));
+    ui->pushButtonBeamDelete->setEnabled(true);
+}
+
+void MainWindow::on_pushButtonBeamDelete_clicked()
+{
+    if (! m_fpga->remove_beam()) {
+        show_warning();
+    }
+    if (m_fpga->beams() == 1) {
+        ui->pushButtonBeamDelete->setEnabled(false);
+    }
+    ui->comboBoxCurrentBeam->removeItem(m_fpga->beams()-1);
+}
+
+
+void MainWindow::on_comboBoxCurrentBeam_currentIndexChanged(int index)
+{
+    m_beam = m_fpga->get_beam(index);
+}
+
+void MainWindow::on_spinBoxBeamGainOffset_valueChanged(int arg1)
+{
+    m_beam->set_gain_offset(arg1);
+}
+
+void MainWindow::on_spinBoxBeamInfo_valueChanged(int arg1)
+{
+    m_beam->set_info(arg1);
+}
+
+void MainWindow::on_spinBoxBeamDelay_valueChanged(int arg1)
+{
+    m_beam->set_delay(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateASTart_valueChanged(int arg1)
+{
+    m_beam->set_gate_a_start(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateAEnd_valueChanged(int arg1)
+{
+    m_beam->set_gate_a_end(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateBStart_valueChanged(int arg1)
+{
+    m_beam->set_gate_b_start(arg1);
+}
+
+
+void MainWindow::on_spinBoxBeamGateBEnd_valueChanged(int arg1)
+{
+    m_beam->set_gate_b_end(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateIStart_valueChanged(int arg1)
+{
+    m_beam->set_gate_i_start(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateIEnd_valueChanged(int arg1)
+{
+    m_beam->set_gate_i_end(arg1);
+}
+
+void MainWindow::on_spinBoxBeamTxChannel_valueChanged(int arg1)
+{
+    m_beam->set_tx_channel(arg1);
+}
+
+void MainWindow::on_spinBoxBeamRxChannel_valueChanged(int arg1)
+{
+    m_beam->set_rx_channel(arg1);
+}
+
+void MainWindow::on_spinBoxBeamTxChannelSelect_valueChanged(int arg1)
+{
+    m_beam->set_tx_channel_select(arg1);
+}
+
+void MainWindow::on_spinBoxBeamRxChannelSelect_valueChanged(int arg1)
+{
+    m_beam->set_rx_channel_select(arg1);
+}
+
+void MainWindow::on_spinBoxBeamTxDelay_valueChanged(int arg1)
+{
+    m_beam->set_tx_delay(ui->comboBoxBeamTxDelay->currentIndex(), arg1);
+}
+
+void MainWindow::on_spinBoxBeamRxDelay_valueChanged(int arg1)
+{
+    m_beam->set_rx_delay(ui->comboBoxBeamRxDelay->currentIndex(), arg1);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    if ( ! m_beam->refresh() ) {
         show_warning();
     }
 }
