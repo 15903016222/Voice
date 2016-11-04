@@ -355,20 +355,13 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         break;
     }
     case 2: {
-        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));        
+        QModelIndex modelIndex = model->item(0, index)->index();
+        ui->tableView->edit(modelIndex);
+        QPoint point = QPoint();
+        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
 
-        if(!comboBox->editFlag) {
-            QModelIndex modelIndex = model->item(0, index)->index();
-//            if(comboBox->comboBoxList.count() > 0 && comboBox->editFlag){
-//                comboBox->closeEditor(static_cast<QWidget*>(comboBox->comboBoxList.at(comboBox->comboBoxList.count() -1)));
-//            }
-
-            ui->tableView->edit(modelIndex);
-            QPoint point = QPoint();
-            QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-            QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
-
-        }
         break;
     }
     case 3: {
