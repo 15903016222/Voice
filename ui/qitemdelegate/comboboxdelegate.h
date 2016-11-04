@@ -40,6 +40,7 @@ signals:
 private slots:
     void commit_and_close_editor(const QString &str);
     void do_rotary_event(Mcu::RotaryType type);
+    void key_sure(int key);
 };
 
 #endif // COMBOBOXDELEGATE_H
