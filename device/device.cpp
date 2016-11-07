@@ -15,8 +15,6 @@
 #include <fcntl.h>
 #include <time.h>
 
-#define MTD_DEVICE  "/dev/mtdblock2"
-
 class DevicePrivate
 {
 public:
@@ -25,13 +23,21 @@ public:
     QString get_serial_number();
     void save_run_count();
 
-    bool read_old_info();
     bool read_info();
+    bool check_cert();
 
+#ifdef PHASCAN
+    bool read_old_info();
     bool mount() { return ! ::system("mount /dev/mtdblock2 /home/tt/.phascan"); }
     bool umount() { return ! ::system("umount /home/tt/.phascan"); }
+#elif PHASCAN_II
+    bool read_old_info() { return true; }
+    bool mount() { return true; }
+    bool umount() { return true; }
+#else
+#error "Not Specify The Device Name"
+#endif
 
-    bool check_cert();
 
     static const QString s_typeMap[Device::DEV_TYPE_MAX];
     static const QString s_infoFile;
@@ -138,6 +144,8 @@ void DevicePrivate::save_run_count()
     umount();
 }
 
+#ifdef PHASCAN
+#define MTD_DEVICE  "/dev/mtdblock2"
 bool DevicePrivate::read_old_info()
 {
     char buf[100] = {0};
@@ -179,6 +187,7 @@ bool DevicePrivate::read_old_info()
 
     return true;
 }
+#endif
 
 bool DevicePrivate::read_info()
 {
