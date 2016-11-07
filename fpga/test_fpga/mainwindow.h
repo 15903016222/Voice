@@ -102,7 +102,7 @@ private slots:
 
     void on_spinBoxGroupCompressRato_valueChanged(int arg1);
 
-    void on_spinBoxGroupGain_valueChanged(double arg1);
+    void on_doubleSpinBoxGroupGain_valueChanged(double arg1);
 
     void on_spinBoxGroupThicknessFactor_valueChanged(int arg1);
 
