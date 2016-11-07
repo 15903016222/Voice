@@ -14,15 +14,12 @@ equals(DEVICE, "PHASCAN"){
         $$PWD/cert.h
     SOURCES += \
         $$PWD/cert.cpp \
-        $$PWD/device.cpp
+        $$PWD/device_phascan.cpp
 }
 
 equals(DEVICE, "PHASCAN_II") {
     HEADERS += \
         $$PWD/cert.h
     SOURCES += \
-        $$PWD/cert.cpp \
-        $$PWD/device.cpp
+        $$PWD/cert.cpp
 }
-
-SOURCES += \

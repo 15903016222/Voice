@@ -12,9 +12,8 @@
 #include <QTextStream>
 #include <QSharedPointer>
 #include <QXmlStreamReader>
+#include <QDateTime>
 #include <QDebug>
-
-#include "openssl/pem.h"
 
 
 class CertPrivate
@@ -25,6 +24,7 @@ public:
     QByteArray read_cert_file(const QString &certFile, const QString &pubPemFile);
 
     QString m_serialNo;
+    QString m_devType;
     QString m_authMode;
     uint m_expire;
 
@@ -36,14 +36,16 @@ QMap<QString, Cert::AuthMode> CertPrivate::s_modeMap;
 CertPrivate::CertPrivate()
 {
     m_serialNo = "00000000-00000000-00000000-00000000";
+    m_devType  = "16-64-TOFD";
     m_authMode = "INVAILD";
     m_expire = 0;
 
     if (s_modeMap.isEmpty()) {
-        s_modeMap.insert("NONE", Cert::ALWAYS_VALID);
-        s_modeMap.insert("RUN_COUNT", Cert::RUN_COUNT);
-        s_modeMap.insert("RUN_TIME", Cert::RUN_TIME);
-        s_modeMap.insert("DATE", Cert::RUN_DATE);
+        s_modeMap.insert("Invalid", Cert::INVALID);
+        s_modeMap.insert("Always Valid", Cert::ALWAYS_VALID);
+        s_modeMap.insert("Valid Count", Cert::VALID_COUNT);
+        s_modeMap.insert("Valid Time", Cert::VALID_TIME);
+        s_modeMap.insert("Valid Date", Cert::VALID_DATE);
     }
 }
 
@@ -100,10 +102,12 @@ bool Cert::load(const QString &certFile, const QString &pubPemFile)
         }
         if (xml.name() == "ID") {
             d->m_serialNo = xml.readElementText();
+        } else if(xml.name() == "Type") {
+            d->m_devType = xml.readElementText();
         } else if (xml.name() == "AUTH") {
             d->m_authMode = xml.attributes().value("mode").toString();
 
-            if (get_auth_mode() == Cert::RUN_DATE) {
+            if (get_auth_mode() == Cert::VALID_DATE) {
                 d->m_expire = QDateTime::fromString(xml.readElementText(), "yyyy/M/d H:m").toTime_t();
             } else {
                 d->m_expire = xml.readElementText().toInt();
@@ -120,6 +124,11 @@ bool Cert::load(const QString &certFile, const QString &pubPemFile)
 const QString &Cert::get_serial_number() const
 {
     return d->m_serialNo;
+}
+
+const QString &Cert::get_device_type() const
+{
+    return d->m_devType;
 }
 
 Cert::AuthMode Cert::get_auth_mode() const

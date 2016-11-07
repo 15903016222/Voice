@@ -1,3 +1,10 @@
+/**
+ * @file device_phascan.cpp
+ * @brief Device for Phascan
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-07
+ */
 #include "device.h"
 #include "cert.h"
 
@@ -15,6 +22,8 @@
 #include <fcntl.h>
 #include <time.h>
 
+#define MTD_DEVICE  "/dev/mtdblock2"
+
 class DevicePrivate
 {
 public:
@@ -23,21 +32,13 @@ public:
     QString get_serial_number();
     void save_run_count();
 
-    bool read_info();
-    bool check_cert();
-
-#ifdef PHASCAN
     bool read_old_info();
+    bool read_info();
+
     bool mount() { return ! ::system("mount /dev/mtdblock2 /home/tt/.phascan"); }
     bool umount() { return ! ::system("umount /home/tt/.phascan"); }
-#elif PHASCAN_II
-    bool read_old_info() { return true; }
-    bool mount() { return true; }
-    bool umount() { return true; }
-#else
-#error "Not Specify The Device Name"
-#endif
 
+    bool check_cert();
 
     static const QString s_typeMap[Device::DEV_TYPE_MAX];
     static const QString s_infoFile;
@@ -144,8 +145,6 @@ void DevicePrivate::save_run_count()
     umount();
 }
 
-#ifdef PHASCAN
-#define MTD_DEVICE  "/dev/mtdblock2"
 bool DevicePrivate::read_old_info()
 {
     char buf[100] = {0};
@@ -187,7 +186,6 @@ bool DevicePrivate::read_old_info()
 
     return true;
 }
-#endif
 
 bool DevicePrivate::read_info()
 {
@@ -223,13 +221,13 @@ bool DevicePrivate::check_cert()
         case Cert::ALWAYS_VALID:
             flag = true;
             break;
-        case Cert::RUN_COUNT:
+        case Cert::VALID_COUNT:
             flag = (m_cert.get_expire() >= m_runCount);
             break;
-        case Cert::RUN_TIME:
+        case Cert::VALID_TIME:
             flag = (m_cert.get_expire() >= (::time(NULL) - m_fstTime));
             break;
-        case Cert::RUN_DATE:
+        case Cert::VALID_DATE:
             flag = (m_cert.get_expire() > ::time(NULL));
             break;
         default:
@@ -338,14 +336,12 @@ const QString Device::cert_expire() const
 {
     QReadLocker l(&d->m_rwlock);
     switch (d->m_cert.get_auth_mode()) {
-    case Cert::RUN_COUNT:
-    case Cert::RUN_TIME:
+    case Cert::VALID_COUNT:
+    case Cert::VALID_TIME:
         return QString::number(d->m_cert.get_expire());
         break;
-    case Cert::RUN_DATE:
+    case Cert::VALID_DATE:
         return QDateTime::fromTime_t(d->m_cert.get_expire()).toString("yyyy-M-d H:m");
-    case Cert::ALWAYS_VALID:
-        return "Always Valid";
     default:
         break;
     }

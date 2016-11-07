@@ -10,7 +10,7 @@ QT       += testlib
 
 QT       -= gui
 
-TARGET = devicetest
+TARGET   = devicetest
 CONFIG   += console
 CONFIG   -= app_bundle
 
