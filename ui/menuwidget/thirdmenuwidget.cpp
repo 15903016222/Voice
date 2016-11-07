@@ -482,16 +482,17 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         connect(dateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_date(QString)));
         break;
     }
-    default: {
+    case 19: {
+        ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
+        resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        resetConfigDialog->show();
         break;
     }
+    default: {
+        break;
+        }
     }
 
-    if(currentHeaderText.contains("Configuration")) {
-       ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
-       resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-       resetConfigDialog->show();
-    }
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {
         disconnect_input_number();
