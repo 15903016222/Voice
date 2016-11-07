@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+DEVICE = PHASCAN
+
 QT       += testlib
 
 QT       -= gui
@@ -15,11 +17,9 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += devicetest.cpp \
-    ../device.cpp \
-    ../cert.cpp
+DEFINES += $$DEVICE
+
+SOURCES += devicetest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-HEADERS += \
-    ../device.h \
-    ../cert.h
+include(../device.pri)
