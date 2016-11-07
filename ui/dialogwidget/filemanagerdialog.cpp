@@ -34,8 +34,8 @@ FileManagerDialog::FileManagerDialog(QWidget *parent) :
     ui->setupUi(this);
 
     for(int i = 0; i < FILE_TYPE_NUMBER; i ++) {
-        fileTypeList.append(FILE_TYPE_STRING[i]);
-        filePathList.append(FILE_PATH_STRING[i]);
+        fileTypeList.append(tr(FILE_TYPE_STRING[i]));
+        filePathList.append(tr(FILE_PATH_STRING[i]));
     }
 
     init_type();
@@ -43,7 +43,7 @@ FileManagerDialog::FileManagerDialog(QWidget *parent) :
     init_source_path_tableView();
     init_target_path_tableView();
 
-    connect(ui->tableView_2->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
+ //   connect(ui->tableView_2->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 
 }
 
@@ -74,7 +74,7 @@ void FileManagerDialog::init_type()
 
     QModelIndex initModelIndex = modelType->index(0, 0);
     QStandardItem *initItem = modelType->itemFromIndex(initModelIndex);
-    initItem->setForeground(QBrush(Qt::black));
+    initItem->setForeground(QBrush(Qt::red));
     ui->listView->setCurrentIndex(initModelIndex);
     ui->listView->setModel(modelType);
 
@@ -86,21 +86,21 @@ void FileManagerDialog::init_type()
 void FileManagerDialog::init_path()
 {
     for(int i = 0; i < FILE_PATH_NUMBER; i ++) {
-        ui->comboBox_1->addItem(FILE_PATH_STRING[i]);
-        ui->comboBox_2->addItem(FILE_PATH_STRING[i]);
+        ui->comboBox_1->addItem(tr(FILE_PATH_STRING[i]));
+        ui->comboBox_2->addItem(tr(FILE_PATH_STRING[i]));
     }
     ui->comboBox_1->setStyleSheet("QComboBox{"
         "font: 12pt 'Times New Roman';"
         "color: black;"
         "selection-background-color: rgba(0, 130, 195, 0);"
-        "selection-color: yellow;}"
+        "selection-color: black;}"
         "QComboBox QAbstractItemView{selection-color:white;}");
 
     ui->comboBox_2->setStyleSheet("QComboBox{"
         "font: 12pt 'Times New Roman';"
         "color: black;"
         "selection-background-color: rgba(0, 130, 195, 0);"
-        "selection-color: yellow;}"
+        "selection-color: black;}"
         "QComboBox QAbstractItemView{selection-color:white;}");
 
 
@@ -110,13 +110,13 @@ void FileManagerDialog::init_source_path_tableView()
     modelSourcePath = new QStandardItemModel(1, 6, this);
     ui->tableView_1->setModel(modelSourcePath);
 
-#if QT_VERSION >= 0x050000
-    ui->tableView_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-#endif
-
-#if QT_VERSION < 0x050000
-    ui->tableView_1->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-#endif
+    int width = this->geometry().width() / 6 * 5;
+    ui->tableView_1->horizontalHeader()->resizeSection(0, width / 8);
+    ui->tableView_1->horizontalHeader()->resizeSection(1, width / 4);
+    ui->tableView_1->horizontalHeader()->resizeSection(2, width / 4);
+    ui->tableView_1->horizontalHeader()->resizeSection(3, width / 8 );
+    ui->tableView_1->horizontalHeader()->resizeSection(4, width / 8);
+    ui->tableView_1->horizontalHeader()->resizeSection(5, width / 8);
 
     ui->tableView_1->verticalHeader()->hide();
     ui->tableView_1->horizontalHeader()->setFixedHeight(60);
@@ -130,7 +130,7 @@ void FileManagerDialog::init_source_path_tableView()
     QStandardItem *item = new QStandardItem(fileTypeList.at(0));
     modelSourcePath->setItem(0, 0, item);
     modelSourcePath->item(0, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-    modelSourcePath->item(0, 0)->setForeground(Qt::yellow);
+    modelSourcePath->item(0, 0)->setForeground(Qt::black);
     modelSourcePath->item(0, 0)->setFont(QFont("Times New Roman", 14));
 
     set_tableView_header_data(modelSourcePath);
@@ -138,7 +138,7 @@ void FileManagerDialog::init_source_path_tableView()
     ui->tableView_1->horizontalHeader()->setStyleSheet("QHeaderView::section"
         "{font: 13pt 'Times New Roman';"
         "background-color: rgba(255, 255, 255, 255);"
-        "color: rgba(235, 235, 235, 255);"
+        "color: rgba(0, 0, 0, 255);"//rgba(235, 235, 235, 255)
         "border: 0px solid black;}");
 
 
@@ -151,13 +151,13 @@ void FileManagerDialog::init_target_path_tableView()
     modelTargetPath = new QStandardItemModel(1, 6, this);
     ui->tableView_2->setModel(modelTargetPath);
 
-#if QT_VERSION >= 0x050000
-    ui->tableView_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-#endif
-
-#if QT_VERSION < 0x050000
-    ui->tableView_2->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-#endif
+    int width = this->geometry().width() / 6 * 5;
+    ui->tableView_2->horizontalHeader()->resizeSection(0, width / 8);
+    ui->tableView_2->horizontalHeader()->resizeSection(1, width / 4);
+    ui->tableView_2->horizontalHeader()->resizeSection(2, width / 4);
+    ui->tableView_2->horizontalHeader()->resizeSection(3, width / 8 );
+    ui->tableView_2->horizontalHeader()->resizeSection(4, width / 8);
+    ui->tableView_2->horizontalHeader()->resizeSection(5, width / 8);
 
     ui->tableView_2->verticalHeader()->hide();
     ui->tableView_2->horizontalHeader()->setFixedHeight(60);
@@ -171,7 +171,7 @@ void FileManagerDialog::init_target_path_tableView()
     QStandardItem *item = new QStandardItem(fileTypeList.at(0));
     modelTargetPath->setItem(0, 0, item);
     modelTargetPath->item(0, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-    modelTargetPath->item(0, 0)->setForeground(Qt::yellow);
+    modelTargetPath->item(0, 0)->setForeground(Qt::black);
     modelTargetPath->item(0, 0)->setFont(QFont("Times New Roman", 14));
 
     set_tableView_header_data(modelTargetPath);
@@ -179,7 +179,7 @@ void FileManagerDialog::init_target_path_tableView()
     ui->tableView_2->horizontalHeader()->setStyleSheet("QHeaderView::section"
         "{font: 13pt 'Times New Roman';"
         "background-color: rgba(255, 255, 255, 255);"
-        "color: rgba(235, 235, 235, 255);"
+        "color: rgba(0, 0, 0, 255);"
         "border: 0px solid black;}");
 
 
@@ -189,40 +189,39 @@ void FileManagerDialog::init_target_path_tableView()
 
 void FileManagerDialog::set_tableView_header_data(QStandardItemModel *model)
 {
-    model->setHeaderData(0, Qt::Horizontal, "Number");
-    model->setHeaderData(1, Qt::Horizontal, "File Name");
-    model->setHeaderData(2, Qt::Horizontal, "Modification Time");
-    model->setHeaderData(3, Qt::Horizontal, "Copy");
-    model->setHeaderData(4, Qt::Horizontal, "Move");
-    model->setHeaderData(5, Qt::Horizontal, "Delete");
+    model->setHeaderData(0, Qt::Horizontal, tr("Number"));
+    model->setHeaderData(1, Qt::Horizontal, tr("File Name"));
+    model->setHeaderData(2, Qt::Horizontal, tr("Modification Time"));
+    model->setHeaderData(3, Qt::Horizontal, tr("Copy"));
+    model->setHeaderData(4, Qt::Horizontal, tr("Move"));
+    model->setHeaderData(5, Qt::Horizontal, tr("Delete"));
 }
 
-void FileManagerDialog::on_tableView_1_clicked(const QModelIndex &index)
-{
-//    ui->tableView_1->edit(index);
-}
+//void FileManagerDialog::on_tableView_1_clicked(const QModelIndex &index)
+//{
+////    ui->tableView_1->edit(index);
+//}
 
-void FileManagerDialog::onHeaderClicked(int index)
-{
-//    ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView_1->itemDelegate());
-//    if(!comboBox->editFlag) {
-//        QModelIndex modelIndex = model->item(0, index)->index();
-//        ui->tableView_1->edit(modelIndex);
-//    }
-}
+//void FileManagerDialog::onHeaderClicked(int index)
+//{
+////    ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView_1->itemDelegate());
+////    if(!comboBox->editFlag) {
+////        QModelIndex modelIndex = model->item(0, index)->index();
+////        ui->tableView_1->edit(modelIndex);
+////    }
+//}
 
 void FileManagerDialog::on_listView_clicked(const QModelIndex &index)
 {
     int row = index.row();
-
-    ui->comboBox_1->setCurrentText(filePathList.at(row));
-    ui->comboBox_2->setCurrentText(filePathList.at(row));
+    ui->comboBox_1->setCurrentIndex(row);
+    ui->comboBox_2->setCurrentIndex(row);
 
     for(int i = 0; i < FILE_TYPE_NUMBER; i++) {
         QModelIndex modelIndex = modelType->index(i, 0);
         QStandardItem *item = modelType->itemFromIndex(modelIndex);
         if(modelIndex == index) {
-            item->setForeground(QBrush(Qt::black, Qt::SolidPattern));
+            item->setForeground(QBrush(Qt::red, Qt::SolidPattern));
             ui->listView->setCurrentIndex(modelIndex);
         } else {
             item->setForeground(QBrush(Qt::white, Qt::SolidPattern));
@@ -230,7 +229,7 @@ void FileManagerDialog::on_listView_clicked(const QModelIndex &index)
     }
 }
 
-void FileManagerDialog::on_tableView_2_clicked(const QModelIndex &index)
-{
+//void FileManagerDialog::on_tableView_2_clicked(const QModelIndex &index)
+//{
 
-}
+//}

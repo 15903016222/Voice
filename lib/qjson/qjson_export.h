@@ -22,6 +22,8 @@
 
 #include <QtCore/qglobal.h>
 
+#define QJSON_EXPORT
+
 #ifndef QJSON_STATIC
 # ifndef QJSON_EXPORT
 #  if defined(QJSON_MAKEDLL)

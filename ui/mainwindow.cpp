@@ -85,6 +85,9 @@ void MainWindow::init_ui()
     ui->scrollArea->setWidget(firstSecondMenu);
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
+    QObject::connect(ui->widgetTopRight->pushButton_keyboard.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_keyboard_clicked()));
+    QObject::connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
+    QObject::connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
 }
@@ -125,6 +128,7 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 {
     ui->widget_thirdMenu->set_third_menu_name(index, 0); //init
     firstMenuNum = index;
+
     QModelIndex modelIndex = firstSecondMenu->modelList.at(index)->index(0, 0);
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, modelIndex);
 
@@ -343,6 +347,28 @@ void MainWindow::scroll_menu(int index)
     if(index >= 4 && index < 9) {
         ui->scrollArea->viewport()->scroll(0, -50);
         ui->scrollArea->update();
+    }
+}
+
+void MainWindow::slot_pushButton_keyboard_clicked()
+{
+    myInputPanelDlg = new MyInputPanel;
+    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    myInputPanelDlg->setModal(false);
+    myInputPanelDlg->showNormal();
+
+    emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
+    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
+
+    myInputPanelDlg->show();
+//    ui->widget_thirdMenu->setFocus();
+}
+
+void MainWindow::slot_keyboard_close_clicked()
+{
+    if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
+        emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
     }
 }
 

@@ -2,15 +2,42 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en" sourcelanguage="en">
 <context>
-    <name>ClockSetDialog</name>
+    <name>AboutDialog</name>
     <message>
-        <location filename="../dialogwidget/clocksetdialog.ui" line="14"/>
+        <location filename="../dialogwidget/aboutdialog.ui" line="14"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/clocksetdialog.ui" line="52"/>
-        <source>Clock Setting:</source>
+        <location filename="../dialogwidget/aboutdialog.ui" line="59"/>
+        <source>PHASCAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="77"/>
+        <source>      PHASCAN has a powerfull detection capability,
+can achieve a variety of scanning mode and focus
+mode, which greatly improve the detection reliability.
+     CopyRight @2010-2016 Doppler All rights reserved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="111"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;SimSun&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.cndoppler.cn&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cndoppler.cn/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="157"/>
+        <source>Credits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/aboutdialog.ui" line="191"/>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -68,15 +95,166 @@
     </message>
 </context>
 <context>
-    <name>DateSetDialog</name>
+    <name>CreditsDialog</name>
     <message>
-        <location filename="../dialogwidget/datesetdialog.ui" line="14"/>
+        <location filename="../dialogwidget/creditsdialog.ui" line="14"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/datesetdialog.ui" line="52"/>
-        <source>Date Setting:</source>
+        <location filename="../dialogwidget/creditsdialog.ui" line="47"/>
+        <source>Written By</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="63"/>
+        <source>Yshy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="78"/>
+        <source>Jake Yang</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="93"/>
+        <source>ZJY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="116"/>
+        <source>tab_2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/creditsdialog.ui" line="160"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeSetDialog</name>
+    <message>
+        <location filename="../dialogwidget/datetimesetdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FileManagerDialog</name>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="125"/>
+        <source>Target Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="178"/>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="188"/>
+        <source>Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="216"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="239"/>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="324"/>
+        <source>Source Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="417"/>
+        <source>File Manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="484"/>
+        <source>File Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="11"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="22"/>
+        <source>Setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="12"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="23"/>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="13"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="24"/>
+        <source>Report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="14"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="25"/>
+        <source>Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="15"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="26"/>
+        <source>CAD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="16"/>
+        <source>ALL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="27"/>
+        <source>U Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="192"/>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="193"/>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="194"/>
+        <source>Modification Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="195"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="196"/>
+        <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="197"/>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -141,32 +319,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="393"/>
+        <location filename="../iconswidget.ui" line="399"/>
         <source>Ref</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="448"/>
+        <location filename="../iconswidget.ui" line="454"/>
         <source>TCG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="503"/>
+        <location filename="../iconswidget.ui" line="509"/>
         <source>50°C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="558"/>
+        <location filename="../iconswidget.ui" line="564"/>
         <source>SV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="613"/>
+        <location filename="../iconswidget.ui" line="619"/>
         <source>W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="668"/>
+        <location filename="../iconswidget.ui" line="674"/>
         <source>0 /</source>
         <translation type="unfinished"></translation>
     </message>
@@ -174,367 +352,397 @@
 <context>
     <name>InputPanelContext</name>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="14"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="22"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="98"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="361"/>
         <source>[</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="123"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="336"/>
         <source>)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="148"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="236"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="173"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="261"/>
         <source>^</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="198"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="386"/>
         <source>]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="223"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="186"/>
         <source>#</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="248"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="211"/>
         <source>$</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="273"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="411"/>
         <source>&lt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="298"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="286"/>
         <source>*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="317"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="136"/>
         <source>!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="342"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="161"/>
         <source>@</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="367"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="311"/>
         <source>(</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="392"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="436"/>
         <source>&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="417"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1710"/>
         <source>|</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="442"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1942"/>
         <source>?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="497"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="111"/>
         <source>~</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="522"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="536"/>
         <source>4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="547"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="511"/>
         <source>3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="572"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="461"/>
         <source>1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="597"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="636"/>
         <source>8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="622"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="611"/>
         <source>7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="647"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="486"/>
         <source>2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="672"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="561"/>
         <source>5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="697"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="586"/>
         <source>6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="722"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="711"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="747"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="736"/>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="772"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="661"/>
         <source>9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="797"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="686"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="822"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="761"/>
         <source>BackSpace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="868"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1030"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="893"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="830"/>
         <source>W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="918"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="880"/>
         <source>R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="943"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="930"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="968"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1005"/>
         <source>O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="993"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="955"/>
         <source>U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1018"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="855"/>
         <source>E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1043"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="905"/>
         <source>T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1068"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1366"/>
         <source>Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1093"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="980"/>
         <source>I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1118"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1055"/>
         <source>{</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1143"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="805"/>
         <source>Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1168"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1080"/>
         <source>}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1187"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="780"/>
         <source>Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1233"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1341"/>
         <source>;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1258"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1591"/>
         <source>&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1283"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1291"/>
         <source>K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1308"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1316"/>
         <source>L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1333"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1241"/>
         <source>H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1358"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1266"/>
         <source>J</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1383"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1216"/>
         <source>G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1408"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1917"/>
         <source>D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1433"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1141"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1458"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1191"/>
         <source>F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1483"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1166"/>
         <source>S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1508"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1735"/>
         <source>\</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1533"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1116"/>
         <source>Caps Lock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1558"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1616"/>
         <source>&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1604"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1391"/>
         <source>Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1629"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1416"/>
         <source>Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1654"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1441"/>
         <source>X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1679"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1466"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1704"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1491"/>
         <source>V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1729"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1516"/>
         <source>B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1754"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1541"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1779"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1566"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1804"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1635"/>
+        <source>↑</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1660"/>
+        <source>Ctrl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1685"/>
+        <source>Alt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1785"/>
         <source>,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1829"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1810"/>
         <source>.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dialogwidget/inputpanelcontext.ui" line="1854"/>
+        <source>←</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1873"/>
+        <source>↓</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1892"/>
+        <source>→</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1967"/>
         <source>/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1879"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1835"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="1947"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="1760"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="2038"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="2006"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/inputpanelcontext.ui" line="2045"/>
+        <location filename="../dialogwidget/inputpanelcontext.ui" line="2025"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -888,63 +1096,71 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="302"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="305"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="315"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="321"/>
         <source>.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="331"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="340"/>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="357"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="366"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="383"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="395"/>
         <source>←</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="404"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="419"/>
         <source>→</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="417"/>
-        <source>Backspace</source>
+        <location filename="../dialogwidget/myinputpanel.ui" line="435"/>
+        <source>BackSpace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="430"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="451"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="443"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="467"/>
         <source>Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="465"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="489"/>
         <source>#</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="492"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="516"/>
         <source>*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/myinputpanel.ui" line="513"/>
+        <location filename="../dialogwidget/myinputpanel.ui" line="537"/>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NetworkDialog</name>
+    <message>
+        <location filename="../dialogwidget/networkdialog.ui" line="14"/>
+        <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1468,8 +1684,29 @@ ultrasonic phased array probes.</source>
 <context>
     <name>PushButtonDelegate</name>
     <message>
-        <location filename="../qitemdelegate/pushbuttondelegate.cpp" line="51"/>
-        <source>On</source>
+        <location filename="../qitemdelegate/pushbuttondelegate.cpp" line="53"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QJson::ParserRunnable</name>
+    <message>
+        <location filename="../../lib/qjson/parserrunnable.cpp" line="64"/>
+        <source>An error occurred while parsing json: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ResetConfigDialog</name>
+    <message>
+        <location filename="../dialogwidget/resetconfigdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/resetconfigdialog.ui" line="70"/>
+        <source>Reset Config ?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1503,6 +1740,84 @@ ultrasonic phased array probes.</source>
     <message>
         <location filename="../showinfowidget.ui" line="441"/>
         <source>PA 3.5.1  32:64PR</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SystemInfoDialog</name>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="31"/>
+        <source>System Infomation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="42"/>
+        <source>Serial Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="47"/>
+        <source>Device Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="52"/>
+        <source>Device Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="57"/>
+        <source>Hardware Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="62"/>
+        <source>Software Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="67"/>
+        <source>Software Commit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="72"/>
+        <source>Authentication Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="77"/>
+        <source>Authentication Expire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="82"/>
+        <source>Run Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="87"/>
+        <source>Run Time(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="123"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="144"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/systeminfodialog.ui" line="159"/>
+        <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

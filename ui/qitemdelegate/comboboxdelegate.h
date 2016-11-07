@@ -16,14 +16,12 @@ public:
     void setEditorData(QWidget *editor, const QModelIndex &index)const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index)const;
-//    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
 
     void set_comboBox_item_list(QStringList stringList);
     void set_model_item_list(QStringList stringList);
     void set_minimum_contents_length(int width);
     int find_list_index(QStringList stringList, QString string) const;
     void set_comboBox_item_width(QComboBox *editor) const;
-//    void showPopup();
 
     QList<QComboBox*> comboBoxList;
     QMap<QModelIndex, QComboBox*> comboBoxMap;
@@ -42,6 +40,7 @@ signals:
 private slots:
     void commit_and_close_editor(const QString &str);
     void do_rotary_event(Mcu::RotaryType type);
+    void key_sure(int key);
 };
 
 #endif // COMBOBOXDELEGATE_H

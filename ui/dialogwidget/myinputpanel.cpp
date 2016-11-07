@@ -77,6 +77,20 @@ MyInputPanel::MyInputPanel():
     connect(form.panelButton_0, SIGNAL(clicked()), &signalMapper, SLOT(map()));
     connect(form.panelButton_hash, SIGNAL(clicked()), &signalMapper, SLOT(map()));
     connect(&signalMapper, SIGNAL(mapped(QWidget*)), this, SLOT(buttonClicked(QWidget*)));
+
+    pushButton_close.append(form.closeButton);
+    for(int i = 0; i < 10; i ++) {
+        QPushButton *pushButton = findChild<QPushButton*>("panelButton_" + QString::number(i));
+        connect(pushButton, SIGNAL(clicked()), this, SLOT(input_text()));
+//        pushButton->setFocusPolicy(Qt::NoFocus);
+
+    }
+
+    connect(form.pushButton_3, SIGNAL(clicked()), this, SLOT(input_text()));
+    connect(form.pushButton_4, SIGNAL(clicked()), this, SLOT(input_text()));
+    connect(form.pushButton_6, SIGNAL(clicked()), this, SLOT(input_text()));
+    connect(form.pushButton_7, SIGNAL(clicked()), this, SLOT(input_text()));
+    connect(form.pushButton_8, SIGNAL(clicked()), this, SLOT(input_text()));
 }
 
 //! [0]
@@ -120,4 +134,30 @@ void MyInputPanel::buttonClicked(QWidget *w)
 void MyInputPanel::on_closeButton_clicked()
 {
     close();
+    QString string = form.closeButton->text();
+    emit input_number(string);
+    emit close_keyboard();
+}
+
+void MyInputPanel::input_text()
+{
+    QString string;
+    QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
+    if(pushButton->objectName() == "pushButton_7") {
+        string = "Left Arrow";
+    } else if(pushButton->objectName() == "pushButton_8") {
+        string = "Right Arrow";
+    } else {
+        string = pushButton->text();
+    }
+    emit input_number(string);
+
+}
+
+void MyInputPanel::on_pushButton_5_clicked()
+{
+    close();
+    QString string = form.pushButton_5->text();
+    emit input_number(string);
+    emit close_keyboard();
 }

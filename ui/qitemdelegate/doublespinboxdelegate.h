@@ -24,10 +24,14 @@ public:
 
     QList<QDoubleSpinBox*> spinBoxList;
     QList<int> rangeList;
+    QMap<QModelIndex, QDoubleSpinBox*> spinBoxMap;
     QStringList stepList;
     QString step;
     int decimalAmount;
+    int inputCount;
     bool editFlag;
+
+//    void simulate_key(int fd, int value);
 
 private:
     Mcu *m_mcu;
@@ -35,12 +39,15 @@ private:
 signals:
     void createEditorHeaderText(QStringList) const;
     void closeEditorHeaderText(QModelIndex) const;
+    void stringChanged(double value);
 
 private slots:
     void commit_and_close_editor();
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(int key);
     void editFinished();
+    void input_number_to_lineedit(QString string);
+    void valueChanged_signal(double value);
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

@@ -2,7 +2,6 @@
 #define THIRDMENUWIDGET_H
 
 #include "firstsecondmenuwidget.h"
-#include "verticalsliderdialog.h"
 #include "datetimesetdialog.h"
 #include "networkdialog.h"
 
@@ -33,6 +32,8 @@ public:
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
+    void change_persistent_editor(QModelIndex modelIndex);
+    void disconnect_input_number();
 
     QStringList get_third_menu_list();
     QStringList get_translate_third_menu_list();
@@ -51,13 +52,13 @@ public:
     int currSecondNum;
     int measurementIndex;
     int inputIndex;
-    int brightIndex;
     int probeIndex;
     int wedgeIndex;
-    int timeSetIndex;
     int dateTimeSetIndex;
     int networkIndex;
     int languageOption;
+    int opendSpinBoxIndex;
+    bool keyboardShowFlag;
 
     QStandardItemModel *model;
     FirstSecondMenuWidget *widget;
@@ -71,19 +72,16 @@ signals:
     void retranslate_ui(QString);
     void send_dialog_title_content(QMap<QString, QString>);
     void send_spinbox_value(QList<int>);
+    void translater_ZH();
+    void translater_EN();
+    void send_string_to_delegate(QString);
 
 private:
-    VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
     DateTimeSetDialog *dateTimeSetDialog;
     NetworkDialog *networkDialog;
 
-signals:
-    void translater_ZH();
-    void translater_EN();
-
 protected slots:
-    void do_rotary_event(Mcu::RotaryType type);
     void do_probe_event(const Probe& probe);
 
 private slots:
@@ -96,13 +94,16 @@ private slots:
     void select_probe(QString string);
     void select_wedge(QString string);
     void set_edited_text(QString string);
-    void setBrightValue(int value);
+    void setBrightness(double value);
     void set_autoDetect_probeModel(bool flag);
     void set_date(QString str_date);
     void set_time(QString str_time);
     void set_ip(QString str_ip);
     void set_subNet(QString str_subNet);
     void retranslate_third_menu_ui(QString string);
+    void open_spinbox_persistent_editor(int index);
+    void close_spinbox_persistent_editor(int index);
+    void input_spinbox_number(QString string);
 
 };
 

@@ -124,6 +124,19 @@ void MeasurementDialog::init_ui()
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea->setWidget(listView);
     listView->setModel(measurementModel);
+    listView->setFrameShape(QFrame::NoFrame);
+    listView->setStyleSheet("QListView{outline: 0px;}"
+                            "QListView::item{"
+                            "background-color: rgba(0, 0, 0, 0);"
+                            "color: black;}"
+                            "QListView::item:Selected{"
+                            "border: 1px solid rgba(180, 180, 180, 255);"
+                            "background-color: rgba(85, 175, 255, 80);"
+                            "color: red;}"
+                            "QListView::item:hover{"
+                            "border: 1px solid rgba(180, 180, 180, 255);"
+                            "background-color: rgba(85, 175, 255, 20);"
+                            "color: red;}");
 
     connect(listView, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
 }
