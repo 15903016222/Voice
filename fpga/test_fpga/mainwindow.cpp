@@ -361,9 +361,9 @@ void MainWindow::on_spinBoxGroupCompressRato_valueChanged(int arg1)
     }
 }
 
-void MainWindow::on_spinBoxGroupGain_valueChanged(double arg1)
+void MainWindow::on_doubleSpinBoxGroupGain_valueChanged(double arg1)
 {
-    if (! m_group->set_gain(arg1), true) {
+    if (! m_group->set_gain(arg1, true )) {
         show_warning();
     }
 }
