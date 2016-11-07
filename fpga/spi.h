@@ -1,3 +1,10 @@
+/**
+ * @file spi.h
+ * @brief Spi
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #ifndef __SPI_H__
 #define __SPI_H__
 

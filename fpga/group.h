@@ -1,3 +1,10 @@
+/**
+ * @file group.h
+ * @brief Group
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #ifndef __GROUP_H__
 #define __GROUP_H__
 
@@ -40,8 +47,8 @@ public:
     int compress_rato(void);
     bool set_compress_rato(int val, bool reflesh = false);
 
-    int gain(void);
-    bool set_gain(int gain, bool reflesh = false);
+    float gain(void);     /* 单位　dB */
+    bool set_gain(float gain, bool reflesh = false);
 
     int thickness_factor(void);
     bool set_thickness_factor(int factor, bool reflesh = false);

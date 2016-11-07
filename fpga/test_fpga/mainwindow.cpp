@@ -1,3 +1,10 @@
+/**
+ * @file mainwindow.cpp
+ * @brief testing fpga
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -11,11 +18,37 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     m_fpga = Fpga::get_fpga();
-    m_alarmOutput = m_fpga->alarm_output(ui->comboBoxAlarmOuput->currentIndex());
+    m_alarmOutput = m_fpga->alarm_output(ui->comboBoxAlarmOutput->currentIndex());
     m_alarmAnalog = m_fpga->alarm_analog(ui->comboBoxAlarmAnalog->currentIndex());
 
     m_fpga->create_group();
     m_group = m_fpga->get_group(0);
+
+    m_fpga->create_beam();
+    m_beam = m_fpga->get_beam(0);
+
+    /*** Global ***/
+    ui->spinBoxPaLawQty->setValue(m_fpga->pa_law_qty());
+    ui->spinBoxUtLawQty->setValue(m_fpga->ut_law_qty());
+    ui->comboBoxEncoderXPolarity->setCurrentIndex(m_fpga->encoder_x_polarity());
+    ui->comboBoxEncoderYPolarity->setCurrentIndex(m_fpga->encoder_y_polarity());
+    ui->comboBoxEncoderXMode->setCurrentIndex(m_fpga->encoder_x_mode());
+    ui->comboBoxEncoderYMode->setCurrentIndex(m_fpga->encoder_y_mode());
+    ui->comboBoxUt1Twin->setCurrentIndex(m_fpga->ut1_twin());
+    ui->comboBoxUt2Twin->setCurrentIndex(m_fpga->ut2_twin());
+    ui->comboBoxUt1RxDamping->setCurrentIndex(m_fpga->ut1_rx_damping());
+    ui->comboBoxUt2RxDamping->setCurrentIndex(m_fpga->ut2_rx_damping());
+    ui->comboBoxUt1TxDamping->setCurrentIndex(m_fpga->ut1_tx_damping());
+    ui->comboBoxUt2TxDamping->setCurrentIndex(m_fpga->ut2_tx_damping());
+    ui->comboBoxUtVoltage->setCurrentIndex(m_fpga->ut_voltage());
+    ui->comboBoxPaVoltage->setCurrentIndex(m_fpga->pa_voltage());
+    ui->comboBoxFreeze->setCurrentIndex(m_fpga->is_freeze());
+    ui->comboBoxSound->setCurrentIndex(m_fpga->sound());
+    ui->spinBoxEcho->setValue(m_fpga->factor_echo());
+
+
+    /*** Group ***/
+    /*** Beam ***/
 }
 
 MainWindow::~MainWindow()
@@ -39,54 +72,42 @@ void MainWindow::on_spinBoxUtLawQty_valueChanged(int arg1)
 
 void MainWindow::on_comboBoxEncoderXPolarity_currentIndexChanged(int index)
 {
-    bool ret = false;
-    if (index == 1) {
-        ret = m_fpga->set_encoder_x(m_fpga->encoder_x_mode(), Fpga::INVERSE, true);
-    } else {
-        ret = m_fpga->set_encoder_x(m_fpga->encoder_x_mode(), Fpga::NORMAL, true);
-    }
-    if (! ret) {
+    if (! m_fpga->set_encoder_x_polarity((Fpga::EncoderPolarity)index, true)) {
         show_warning();
     }
 }
 
 void MainWindow::on_comboBoxEncoderXMode_currentIndexChanged(int index)
 {
-    if (! m_fpga->set_encoder_x((Fpga::EncoderMode)index, m_fpga->encoder_x_polarity(), true) ) {
+    if (! m_fpga->set_encoder_x_mode((Fpga::EncoderMode)index, true) ) {
         show_warning();
     }
 }
 
 void MainWindow::on_comboBoxEncoderYPolarity_currentIndexChanged(int index)
 {
-    bool ret = false;
-    if (index == 1) {
-        ret = m_fpga->set_encoder_y(m_fpga->encoder_y_mode(), Fpga::INVERSE, true);
-    } else {
-        ret = m_fpga->set_encoder_y(m_fpga->encoder_y_mode(), Fpga::NORMAL, true);
-    }
-    if (! ret) {
+    if (! m_fpga->set_encoder_y_polarity((Fpga::EncoderPolarity)index, true)) {
         show_warning();
     }
 }
 
 void MainWindow::on_comboBoxEncoderYMode_currentIndexChanged(int index)
 {
-    if (! m_fpga->set_encoder_y((Fpga::EncoderMode)index, m_fpga->encoder_y_polarity(), true)) {
+    if (! m_fpga->set_encoder_y_mode((Fpga::EncoderMode)index, true)) {
         show_warning();
     }
 }
 
 void MainWindow::on_comboBoxUt1Twin_currentIndexChanged(int index)
 {
-    if (! m_fpga->set_ut1_twin((!index), true)) {
+    if (! m_fpga->set_ut1_twin(index, true)) {
         show_warning();
     }
 }
 
 void MainWindow::on_comboBoxUt2Twin_currentIndexChanged(int index)
 {
-    if (! m_fpga->set_ut2_twin((!index), true)) {
+    if (! m_fpga->set_ut2_twin(index, true)) {
         show_warning();
     }
 }
@@ -136,7 +157,7 @@ void MainWindow::on_comboBoxPaVoltage_currentIndexChanged(int index)
 
 void MainWindow::on_comboBoxFreeze_currentIndexChanged(int index)
 {
-    if ( ! m_fpga->set_freeze(!index, true) ) {
+    if ( ! m_fpga->set_freeze(index, true) ) {
         show_warning();
     }
 }
@@ -155,15 +176,23 @@ void MainWindow::on_spinBoxEcho_valueChanged(int arg1)
     }
 }
 
-void MainWindow::on_comboBoxAlarmOuput_currentIndexChanged(int index)
+void MainWindow::on_comboBoxAlarmOutput_currentIndexChanged(int index)
 {
     ui->groupBoxAlarmOutput->setTitle(QString("Alarm Output %1").arg(index));
-    m_alarmOutput = m_fpga->alarm_output(ui->comboBoxAlarmOuput->currentIndex());
+    m_alarmOutput = m_fpga->alarm_output(ui->comboBoxAlarmOutput->currentIndex());
+
+    ui->comboBoxAlarmOutputValid->setCurrentIndex(m_alarmOutput->is_valid());
+    ui->comboBoxAlarmOutputLogicGroup->setCurrentIndex(m_alarmOutput->logic_group());
+    ui->comboBoxAlarmOutputOperator->setCurrentIndex(m_alarmOutput->op());
+    ui->comboBoxAlarmOutputCondition->setCurrentIndex(m_alarmOutput->condition(ui->comboBoxAlarmOutputLogicGroup->currentIndex()));
+    ui->spinBoxAlarmOutputCount->setValue(m_alarmOutput->count());
+    ui->spinBoxAlarmOutputDelay->setValue(m_alarmOutput->delay());
+    ui->spinBoxAlarmOutputHoldTime->setValue(m_alarmOutput->hold_time());
 }
 
 void MainWindow::on_comboBoxAlarmOutputValid_currentIndexChanged(int index)
 {
-    if (! m_alarmOutput->set_valid(!index, true) ) {
+    if (! m_alarmOutput->set_valid(index, true) ) {
         show_warning();
     }
 }
@@ -193,7 +222,7 @@ void MainWindow::do_checkBox_changed()
 
 void MainWindow::on_comboBoxAlarmOutputLogicGroup_currentIndexChanged(int index)
 {
-    if (! m_alarmOutput->set_logic_group(index+1, true)) {
+    if (! m_alarmOutput->set_logic_group(index, true)) {
         show_warning();
     }
 }
@@ -237,18 +266,22 @@ void MainWindow::on_comboBoxAlarmAnalog_currentIndexChanged(int index)
 {
     ui->groupBoxAlarmAnalog->setTitle(QString("Alarm Analog %1").arg(index));
     m_alarmAnalog = m_fpga->alarm_analog(ui->comboBoxAlarmAnalog->currentIndex());
+
+    ui->comboBoxAlarmAnalogValid->setCurrentIndex(m_alarmAnalog->is_valid());
+    ui->comboBoxAlarmAnalogLogicGroup->setCurrentIndex(m_alarmAnalog->logic_group());
+    ui->comboBoxAlarmAnalogType->setCurrentIndex(m_alarmAnalog->type());
 }
 
 void MainWindow::on_comboBoxAlarmAnalogValid_currentIndexChanged(int index)
 {
-    if (! m_alarmAnalog->set_valid(!index, true)) {
+    if (! m_alarmAnalog->set_valid(index, true)) {
         show_warning();
     }
 }
 
-void MainWindow::on_comboBoxSoundAlarmAnalogLogicGroup_currentIndexChanged(int index)
+void MainWindow::on_comboBoxAlarmAnalogLogicGroup_currentIndexChanged(int index)
 {
-    if (! m_alarmAnalog->set_logic_group(index+1, true)) {
+    if (! m_alarmAnalog->set_logic_group(index, true)) {
         show_warning();
     }
 }
@@ -297,7 +330,6 @@ void MainWindow::on_pushButtonGroupDelete_clicked()
 void MainWindow::on_comboBoxCurrentGroup_currentIndexChanged(int index)
 {
     m_group = m_fpga->get_group(index);
-    qDebug()<<__LINE__<<index;
 }
 
 
@@ -329,7 +361,7 @@ void MainWindow::on_spinBoxGroupCompressRato_valueChanged(int arg1)
     }
 }
 
-void MainWindow::on_spinBoxGroupGain_valueChanged(int arg1)
+void MainWindow::on_spinBoxGroupGain_valueChanged(double arg1)
 {
     if (! m_group->set_gain(arg1), true) {
         show_warning();
@@ -515,6 +547,119 @@ void MainWindow::on_spinBoxGroupTxStart_valueChanged(int arg1)
 void MainWindow::on_pushButtonGroupReflesh_clicked()
 {
     if (! m_group->reflesh()) {
+        show_warning();
+    }
+}
+
+
+/***************  Focal Law ****************/
+void MainWindow::on_pushButtonBeamCreate_clicked()
+{
+    if (! m_fpga->create_beam()) {
+        show_warning();
+        return;
+    }
+
+    ui->comboBoxCurrentBeam->addItem(QString::number(m_fpga->beams()-1));
+    ui->pushButtonBeamDelete->setEnabled(true);
+}
+
+void MainWindow::on_pushButtonBeamDelete_clicked()
+{
+    if (! m_fpga->remove_beam()) {
+        show_warning();
+    }
+    if (m_fpga->beams() == 1) {
+        ui->pushButtonBeamDelete->setEnabled(false);
+    }
+    ui->comboBoxCurrentBeam->removeItem(m_fpga->beams()-1);
+}
+
+
+void MainWindow::on_comboBoxCurrentBeam_currentIndexChanged(int index)
+{
+    m_beam = m_fpga->get_beam(index);
+}
+
+void MainWindow::on_spinBoxBeamGainOffset_valueChanged(int arg1)
+{
+    m_beam->set_gain_offset(arg1);
+}
+
+void MainWindow::on_spinBoxBeamInfo_valueChanged(int arg1)
+{
+    m_beam->set_info(arg1);
+}
+
+void MainWindow::on_spinBoxBeamDelay_valueChanged(int arg1)
+{
+    m_beam->set_delay(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateASTart_valueChanged(int arg1)
+{
+    m_beam->set_gate_a_start(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateAEnd_valueChanged(int arg1)
+{
+    m_beam->set_gate_a_end(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateBStart_valueChanged(int arg1)
+{
+    m_beam->set_gate_b_start(arg1);
+}
+
+
+void MainWindow::on_spinBoxBeamGateBEnd_valueChanged(int arg1)
+{
+    m_beam->set_gate_b_end(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateIStart_valueChanged(int arg1)
+{
+    m_beam->set_gate_i_start(arg1);
+}
+
+void MainWindow::on_spinBoxBeamGateIEnd_valueChanged(int arg1)
+{
+    m_beam->set_gate_i_end(arg1);
+}
+
+void MainWindow::on_spinBoxBeamTxChannel_valueChanged(int arg1)
+{
+    m_beam->set_tx_channel(arg1);
+}
+
+void MainWindow::on_spinBoxBeamRxChannel_valueChanged(int arg1)
+{
+    m_beam->set_rx_channel(arg1);
+}
+
+void MainWindow::on_spinBoxBeamTxChannelSelect_valueChanged(int arg1)
+{
+    m_beam->set_tx_channel_select(arg1);
+}
+
+void MainWindow::on_spinBoxBeamRxChannelSelect_valueChanged(int arg1)
+{
+    m_beam->set_rx_channel_select(arg1);
+}
+
+void MainWindow::on_spinBoxBeamTxDelay_valueChanged(int arg1)
+{
+    m_beam->set_tx_delay(ui->comboBoxBeamTxDelay->currentIndex(), arg1);
+}
+
+void MainWindow::on_spinBoxBeamRxDelay_valueChanged(int arg1)
+{
+    m_beam->set_rx_delay(ui->comboBoxBeamRxDelay->currentIndex(), arg1);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    if ( ! m_beam->refresh() ) {
         show_warning();
     }
 }
