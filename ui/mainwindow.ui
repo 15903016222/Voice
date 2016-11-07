@@ -143,7 +143,7 @@
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>2</number>
+              <number>0</number>
              </property>
              <property name="spacing">
               <number>0</number>
@@ -151,11 +151,7 @@
              <item row="0" column="0">
               <widget class="QWidget" name="widget" native="true">
                <property name="styleSheet">
-                <string notr="true">QWidget#widget
-{
-    background-color:rgb(37, 76, 124);
-    border-radius:8px;
-}</string>
+                <string notr="true"/>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,18,1">
                 <property name="spacing">
@@ -165,22 +161,16 @@
                  <number>0</number>
                 </property>
                 <property name="topMargin">
-                 <number>5</number>
+                 <number>0</number>
                 </property>
                 <property name="rightMargin">
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>5</number>
+                 <number>0</number>
                 </property>
                 <item>
                  <widget class="QFrame" name="frame_up">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_2">
                    <property name="spacing">
                     <number>0</number>
@@ -206,9 +196,7 @@
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(37, 76, 124);
-border:none;
-</string>
+                      <string notr="true"/>
                      </property>
                      <property name="text">
                       <string/>
@@ -279,7 +267,7 @@ border:none;
                         <x>0</x>
                         <y>0</y>
                         <width>178</width>
-                        <height>412</height>
+                        <height>423</height>
                        </rect>
                       </property>
                      </widget>
@@ -290,13 +278,7 @@ border:none;
                 </item>
                 <item>
                  <widget class="QFrame" name="frame_down">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4">
+                  <layout class="QHBoxLayout" name="horizontalLayout_3">
                    <property name="spacing">
                     <number>0</number>
                    </property>
@@ -321,9 +303,7 @@ border:none;
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(37, 76, 124);
-border:none;
-</string>
+                      <string notr="true"/>
                      </property>
                      <property name="text">
                       <string/>

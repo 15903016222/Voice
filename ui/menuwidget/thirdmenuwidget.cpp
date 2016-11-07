@@ -157,6 +157,8 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
                 if(thirdMenuString.contains("Bright")) {
                     connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setBrightness(double)));
                 }else if(thirdMenuString.contains("Opacity")) {
+                    item = new QStandardItem(QString::number(100.0, 'f', 0));
+                    model->setItem(0, 2, item);
                     connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setOpacity(double)));
                 }
                 break;

@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     init_ui();
 
-    slot_setMenuOpacity(50.0);
+    slot_setMenuOpacity(100.0);
     connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
 
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyBottom_menu(int)));
@@ -376,12 +376,12 @@ void MainWindow::slot_keyboard_close_clicked()
 
 void MainWindow::slot_setMenuOpacity(double value)
 {
-    //    ui->widget_thirdMenu->setWindowOpacity(0.2);
-      //  setStyleSheet("QWidget#widget{background-color:rgb(37, 76, 124);border-radius:8px}");
-    qDebug()<<"test2="<<value;
-    double a = (double)(value/100);
-    effect = new QGraphicsOpacityEffect;
-    effect->setOpacity(a);
-    ui->widget->setGraphicsEffect(effect);
+    QString alph = QString::number((double)(value/100), 'f', 2);
+    QString bc = QString("background-color:rgba(37, 76, 124," + alph + ");");
+
+    QString style = QString("QWidget#widget{" +bc + "border-radius:8px;}"
+                            "QPushButton#pushButton_top{" + bc + "border-radius:8px;}"
+                            "QPushButton#pushButton_bottom{" + bc + "border:none;}");
+    setStyleSheet(style);
 }
 
