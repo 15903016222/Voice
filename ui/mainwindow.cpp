@@ -21,7 +21,6 @@ private:
     Q_DECLARE_PUBLIC(MainWindow)
 };
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -31,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     init_ui();
+
+    slot_setMenuOpacity(50.0);
+    connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
 
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyBottom_menu(int)));
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyLeft_menu(int)));
@@ -370,5 +372,16 @@ void MainWindow::slot_keyboard_close_clicked()
     if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
         emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
     }
+}
+
+void MainWindow::slot_setMenuOpacity(double value)
+{
+    //    ui->widget_thirdMenu->setWindowOpacity(0.2);
+      //  setStyleSheet("QWidget#widget{background-color:rgb(37, 76, 124);border-radius:8px}");
+    qDebug()<<"test2="<<value;
+    double a = (double)(value/100);
+    effect = new QGraphicsOpacityEffect;
+    effect->setOpacity(a);
+    ui->widget->setGraphicsEffect(effect);
 }
 

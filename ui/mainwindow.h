@@ -9,6 +9,7 @@
 
 #include <QMainWindow>
 #include <QTranslator>
+#include <QGraphicsOpacityEffect>
 
 namespace Ui {
 class MainWindow;
@@ -60,7 +61,7 @@ private:
     void init_ui();
     QTranslator *translator;
     Mcu *m_mcu;
-
+    QGraphicsOpacityEffect *effect;
 
 protected slots:
     void keyBottom_menu(int key);
@@ -77,6 +78,7 @@ private slots:
     void update_translator(QString string);
     void slot_pushButton_keyboard_clicked();
     void slot_keyboard_close_clicked();
+    void slot_setMenuOpacity(double value);
 
 signals:
     void clickedMenuIndex(int);

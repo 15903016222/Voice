@@ -40,6 +40,7 @@ QWidget(parent),
 
     m_mcu = Mcu::get_mcu();
     set_autoDetect_probeModel(false);
+
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -155,6 +156,8 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
 
                 if(thirdMenuString.contains("Bright")) {
                     connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setBrightness(double)));
+                }else if(thirdMenuString.contains("Opacity")) {
+                    connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setOpacity(double)));
                 }
                 break;
 
@@ -819,6 +822,12 @@ void ThirdMenuWidget::setBrightness(double value)
 {
     int brightnessValue = (int)value;
     m_mcu->set_brightness((char)brightnessValue);
+}
+
+void ThirdMenuWidget::setOpacity(double value)
+{
+    emit opacityChanged(value);
+    qDebug()<<"testSignal"<<(int)value;
 }
 
 void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)

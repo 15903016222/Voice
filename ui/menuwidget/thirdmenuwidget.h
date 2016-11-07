@@ -75,6 +75,7 @@ signals:
     void translater_ZH();
     void translater_EN();
     void send_string_to_delegate(QString);
+    void opacityChanged(double value);
 
 private:
     Mcu *m_mcu;
@@ -95,6 +96,7 @@ private slots:
     void select_wedge(QString string);
     void set_edited_text(QString string);
     void setBrightness(double value);
+    void setOpacity(double value);
     void set_autoDetect_probeModel(bool flag);
     void set_date(QString str_date);
     void set_time(QString str_time);

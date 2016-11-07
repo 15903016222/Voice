@@ -151,11 +151,10 @@
              <item row="0" column="0">
               <widget class="QWidget" name="widget" native="true">
                <property name="styleSheet">
-                <string notr="true">
-QWidget#widget
+                <string notr="true">QWidget#widget
 {
-	background-color: rgb(37, 76, 124);
-	border-radius:8px;
+    background-color:rgb(37, 76, 124);
+    border-radius:8px;
 }</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,18,1">
