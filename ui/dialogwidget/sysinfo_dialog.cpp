@@ -1,32 +1,40 @@
-#include "about_dialog.h"
+#include "sysinfo_dialog.h"
 
 #include <QDialogButtonBox>
 #include <QGridLayout>
-#include <QKeyEvent>
 #include <QLabel>
 #include <QPushButton>
+#include <QDebug>
 
 using namespace Ui::Dialog;
 
-AboutDialog::AboutDialog(QWidget *parent)
-    : QDialog(parent)
+SysInfoDialog::SysInfoDialog(QWidget *parent) :
+    QDialog(parent)
 {
     QPalette palette;
     palette.setColor(QPalette::Background, QColor(255, 255, 255));
     setPalette(palette);
 
-    setWindowTitle(tr("About Device"));
+    setWindowTitle(tr("System Infomation"));
     setWindowFlags( (windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::FramelessWindowHint | Qt::Dialog);
     QGridLayout *layout = new QGridLayout(this);
     layout->setSizeConstraint(QLayout::SetFixedSize);
 
     const QString description = tr(
         "<h3 style=\"text-align:center\">%1</h3>"
-        "&nbsp;&nbsp;&nbsp;&nbsp;Phascan has a powerful detection capability, "
-        "can achieve a variety of scanning mode and focus mode,"
-        "which greatly improves the detection reliability."
-        "<p style=\"font-size:14px; text-align:center;\">Copyright 2008-2016 Doppler. All rights reserved.</p>")
-        .arg("Phascan");
+        "<table border=1 >"
+        "<tr><th>Serial Number</th><td>%s</td></tr>"
+        "<tr><th>Device Type</th><td>%s</td></tr>"
+        "<tr><th>Device Version</th><td>%s</td></tr>"
+        "<tr><th>Hardware Version</th><td>%d</td></tr>"
+        "<tr><th>Software Version</th><td>%d.%d.%d</td></tr>"
+        "<tr><th>Software Commit</th><td>%s</td></tr>"
+        "<tr><th>Authentication Mode</th><td>%s</td></tr>"
+        "<tr><th>Authentication Expire</th><td>%s</td></tr>"
+        "<tr><th>Run Count</th><td>%d</td></tr>"
+        "<tr><th>Run Time(s)</th><td>%d</td></tr>"
+        "</table>")
+            .arg(tr("System Infomation"));
 
     QLabel *copyRightLabel = new QLabel(description);
     copyRightLabel->setWordWrap(true);
@@ -45,16 +53,4 @@ AboutDialog::AboutDialog(QWidget *parent)
     layout->addWidget(logoLabel , 0, 0, 1, 1, Qt::AlignCenter);
     layout->addWidget(copyRightLabel, 1, 0);
     layout->addWidget(buttonBox, 2, 0, 1, 5);
-}
-
-bool AboutDialog::event(QEvent *event)
-{
-    if (event->type() == QEvent::ShortcutOverride) {
-        QKeyEvent *ke = static_cast<QKeyEvent *>(event);
-        if (ke->key() == Qt::Key_Escape && !ke->modifiers()) {
-            ke->accept();
-            return true;
-        }
-    }
-    return QDialog::event(event);
 }
