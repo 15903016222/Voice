@@ -539,7 +539,7 @@ void MainWindow::on_spinBoxGroupTxEnd_valueChanged(int arg1)
 
 void MainWindow::on_spinBoxGroupTxStart_valueChanged(int arg1)
 {
-    if (! m_group->set_tx_start(arg1)) {
+    if (! m_group->set_tx_start(arg1, true)) {
         show_warning();
     }
 }
