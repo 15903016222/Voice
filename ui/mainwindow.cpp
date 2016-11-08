@@ -138,6 +138,13 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 
     emit clickedMenuIndex(firstMenuNum);
     show_hidden_arrow();
+
+    if(firstMenuNum == 8){
+        if(secondMenuNum == 0){
+            ui->widget_thirdMenu->set_currentOpacity();
+        }
+    }
+    ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -149,7 +156,9 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
 
     if(firstMenuNum == 8){
-        if(secondMenuNum == 1){
+        if(secondMenuNum == 0){
+            ui->widget_thirdMenu->set_currentOpacity();
+        }else if(secondMenuNum == 1){
             ui->widget_thirdMenu->set_currentDateToMenu();
             ui->widget_thirdMenu->set_currentTimeToMenu();
         }else if(secondMenuNum == 2){
@@ -157,6 +166,7 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
             ui->widget_thirdMenu->set_currentSubNetToMenu();
         }
     }
+    ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
 void MainWindow::on_pushButton_top_clicked()

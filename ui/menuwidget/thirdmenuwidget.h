@@ -32,6 +32,7 @@ public:
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
+    void set_currentOpacity();
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 
@@ -56,6 +57,7 @@ public:
     int wedgeIndex;
     int dateTimeSetIndex;
     int networkIndex;
+    double opacity;
     int languageOption;
     int opendSpinBoxIndex;
     bool keyboardShowFlag;
@@ -96,7 +98,7 @@ private slots:
     void select_wedge(QString string);
     void set_edited_text(QString string);
     void setBrightness(double value);
-    void setOpacity(double value);
+//    void setOpacity(double value);
     void set_autoDetect_probeModel(bool flag);
     void set_date(QString str_date);
     void set_time(QString str_time);
@@ -106,6 +108,9 @@ private slots:
     void open_spinbox_persistent_editor(int index);
     void close_spinbox_persistent_editor(int index);
     void input_spinbox_number(QString string);
+
+public slots:
+    void setOpacity(double value);
 
 };
 
