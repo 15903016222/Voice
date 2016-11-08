@@ -62,7 +62,7 @@
          <number>9</number>
         </property>
         <item>
-         <widget class="QSpinBox" name="spinBox_1">
+         <widget class="SpinBox" name="spinBox_1">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -86,7 +86,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_2">
+         <widget class="SpinBox" name="spinBox_2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -110,7 +110,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_3">
+         <widget class="SpinBox" name="spinBox_3">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -134,7 +134,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_4">
+         <widget class="SpinBox" name="spinBox_4">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -171,6 +171,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>spinbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
