@@ -430,7 +430,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         } else if(currentHeaderText.contains("Subnet Mask")) {
             map["Subnet Mask"] = "Subnet Mask";
         } else if(currentHeaderText.contains(mapTwo.value("Subnet Mask").toString())) {
-            map["Subnet Mask"] = mapTwo.value("Subnet Mask").toString();            
+            map["Subnet Mask"] = mapTwo.value("Subnet Mask").toString();
         }
         emit send_dialog_title_content(map);
         emit send_spinbox_value(valueList);
@@ -439,7 +439,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         networkDialog->show();
 
         networkIndex = index;
-        connect(networkDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
+        connect(networkDialog, SIGNAL(currentIP_subNetChanged(QString)), this, SLOT(set_ip_subNet(QString)));
         break;
     }
     case 15: {
@@ -483,7 +483,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         dateTimeSetDialog->show();
 
         dateTimeSetIndex = index;
-        connect(dateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_date(QString)));
+        connect(dateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_time(QString)));
         break;
     }
     case 19: {
@@ -496,7 +496,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         break;
         }
     }
-
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {
         disconnect_input_number();
@@ -765,8 +764,17 @@ void ThirdMenuWidget::set_currentTimeToMenu(int i, int j)
 void ThirdMenuWidget::set_currentIP_subNetToMenu(int i, int j)
 {
     if(i == 8 && j == 2){
-        model->item(0, 0)->setText("192.168.1.1");
-        model->item(0, 1)->setText("255.255.255.0");
+        if(networkDialog->str_ip == NULL){
+            model->item(0, 0)->setText("192.168.1.215");
+        }else{
+            model->item(0, 0)->setText(networkDialog->str_ip);
+        }
+
+        if(networkDialog->str_subNet == NULL){
+            model->item(0, 1)->setText("255.255.255.0");
+        }else{
+            model->item(0, 1)->setText(networkDialog->str_subNet);
+        }
     }
 }
 
@@ -868,24 +876,14 @@ void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
     }
 }
 
-void ThirdMenuWidget::set_date(QString str_date)
+void ThirdMenuWidget::set_time(QString value)
 {
-    model->item(0, dateTimeSetIndex)->setText(str_date);
+    model->item(0, dateTimeSetIndex)->setText(value);
 }
 
-void ThirdMenuWidget::set_time(QString str_time)
+void ThirdMenuWidget::set_ip_subNet(QString value)
 {
-    model->item(0, dateTimeSetIndex)->setText(str_time);
-}
-
-void ThirdMenuWidget::set_ip(QString str_ip)
-{
-    model->item(0, networkIndex)->setText(str_ip);
-}
-
-void ThirdMenuWidget::set_subNet(QString str_subNet)
-{
-    model->item(0, networkIndex)->setText(str_subNet);
+    model->item(0, networkIndex)->setText(value);
 }
 
 void ThirdMenuWidget::do_probe_event(const Probe &probe)

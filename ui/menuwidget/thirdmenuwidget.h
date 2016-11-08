@@ -97,10 +97,8 @@ private slots:
     void set_edited_text(QString string);
     void setBrightness(double value);
     void set_autoDetect_probeModel(bool flag);
-    void set_date(QString str_date);
-    void set_time(QString str_time);
-    void set_ip(QString str_ip);
-    void set_subNet(QString str_subNet);
+    void set_time(QString value);
+    void set_ip_subNet(QString value);
     void retranslate_third_menu_ui(QString string);
     void open_spinbox_persistent_editor(int index);
     void close_spinbox_persistent_editor(int index);
