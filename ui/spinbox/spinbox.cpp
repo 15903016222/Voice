@@ -3,6 +3,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QApplication>
+#include <QDebug>
 
 SpinBox::SpinBox(QWidget *parent) :
     QSpinBox(parent)
@@ -14,12 +15,13 @@ SpinBox::SpinBox(QWidget *parent) :
 
 void SpinBox::do_rotary_event(Mcu::RotaryType type)
 {
-    if(hasFocus()){
+    if(hasFocus()) {
         if (type == Mcu::ROTARY_UP) {
             this->stepUp();
         } else {
             this->stepDown();
         }
+        qDebug()<<"spinBoxValue = "<<this->value();
     }
 }
 
