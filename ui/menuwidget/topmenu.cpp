@@ -5,8 +5,6 @@
 #include "thirdmenuwidget.h"
 #include "firstsecondmenuwidget.h"
 
-#include <QDebug>
-
 TopMenu :: TopMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TopMenu)

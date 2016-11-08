@@ -15,7 +15,6 @@
 
 #include <QMap>
 #include <QResizeEvent>
-#include <QDebug>
 #include <QAbstractItemView>
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
@@ -837,7 +836,6 @@ void ThirdMenuWidget::setBrightness(double value)
 void ThirdMenuWidget::setOpacity(double value)
 {
     emit opacityChanged(value);
-    qDebug()<<"testSignal"<<(int)value;
 
     QString alph = QString::number((double)(value/100), 'f', 2);
     ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
@@ -859,6 +857,7 @@ void ThirdMenuWidget::setOpacity(double value)
         " stop:1 rgba(0, 120, 195, "+ alph + "));"
         "border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, " + alph + "),"
         "stop:1 rgba(0, 120, 195, "+ alph + "));}");
+
     opacity = value;
 }
 
