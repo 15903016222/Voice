@@ -32,7 +32,7 @@ public:
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
-    void set_currentOpacity();
+    void set_currentOpacity(int i, int j);
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 

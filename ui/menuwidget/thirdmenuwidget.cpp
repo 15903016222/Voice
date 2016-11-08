@@ -775,10 +775,12 @@ void ThirdMenuWidget::set_currentSubNetToMenu()
     model->item(0, 1)->setText("255.255.255.0");
 }
 
-void ThirdMenuWidget::set_currentOpacity()
+void ThirdMenuWidget::set_currentOpacity(int i, int j)
 {
-    QString opacityValue = QString::number(opacity, 'f', 0);
-    model->item(0, 2)->setText(opacityValue);
+    if(i == 8 && j == 0){
+        QString opacityValue = QString::number(opacity, 'f', 0);
+        model->item(0, 2)->setText(opacityValue);
+    }
 }
 
 void ThirdMenuWidget::change_measurement_label(QString string)
