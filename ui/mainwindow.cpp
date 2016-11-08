@@ -31,8 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     init_ui();
 
-    slot_setMenuOpacity(100.0);
-    connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
+ //   slot_setMenuOpacity(100.0);
+ //   connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
 
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyBottom_menu(int)));
     connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyLeft_menu(int)));
@@ -140,7 +140,7 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
     show_hidden_arrow();
 
     ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
+ //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -154,7 +154,7 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     ui->widget_thirdMenu->set_currentTimeToMenu(firstMenuNum, secondMenuNum);
     ui->widget_thirdMenu->set_currentIP_subNetToMenu(firstMenuNum, secondMenuNum);
     ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
+ //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
 void MainWindow::on_pushButton_top_clicked()
