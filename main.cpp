@@ -7,7 +7,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     MainWindow w;
- //   w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+#ifndef _WINDOWS_
+    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+#endif
     w.show();
 
     return a.exec();

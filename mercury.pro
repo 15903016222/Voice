@@ -12,7 +12,7 @@
 #  PHASCAN_II : Qt5.4.3, arm-phytec-linux-gnueabi-gcc.4.9.2
 #-------------------------------------------------------------
 
-DEVICE = PC_UNIX
+#DEVICE = PC_UNIX
 
 QT       += core gui
 
@@ -22,7 +22,9 @@ equals(QT_MAJOR_VERSION, 4) {
     QMAKE_CXXFLAGS += -Wno-psabi
 }
 
-DEFINES += $$DEVICE
+#DEFINES += $$DEVICE
+DEFINES += $$PC_UNIX
+DEFINES += $$PHASCAN
 
 RESOURCES += ui/mainwindow.qrc
 
