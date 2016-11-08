@@ -15,7 +15,6 @@
 
 #include <QMap>
 #include <QResizeEvent>
-#include <QDebug>
 #include <QAbstractItemView>
 
 ThirdMenuWidget::ThirdMenuWidget(QWidget *parent) :
@@ -33,6 +32,8 @@ QWidget(parent),
     keyboardShowFlag = false;
     opendSpinBoxIndex = -1;
 
+    opacity = 100.0;
+
     init_standard_model();
     set_third_menu_name(0, 0);
 
@@ -40,6 +41,7 @@ QWidget(parent),
 
     m_mcu = Mcu::get_mcu();
     set_autoDetect_probeModel(false);
+
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -155,6 +157,10 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
 
                 if(thirdMenuString.contains("Bright")) {
                     connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setBrightness(double)));
+                }else if(thirdMenuString.contains("Opacity")) {
+                    item = new QStandardItem(QString::number(100.0, 'f', 0));
+                    model->setItem(0, 2, item);
+                    connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setOpacity(double)));
                 }
                 break;
 
@@ -768,6 +774,12 @@ void ThirdMenuWidget::set_currentSubNetToMenu()
     model->item(0, 1)->setText("255.255.255.0");
 }
 
+void ThirdMenuWidget::set_currentOpacity()
+{
+    QString opacityValue = QString::number(opacity, 'f', 0);
+    model->item(0, 2)->setText(opacityValue);
+}
+
 void ThirdMenuWidget::change_measurement_label(QString string)
 {
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
@@ -818,6 +830,34 @@ void ThirdMenuWidget::setBrightness(double value)
 {
     int brightnessValue = (int)value;
     m_mcu->set_brightness((char)brightnessValue);
+}
+
+void ThirdMenuWidget::setOpacity(double value)
+{
+    emit opacityChanged(value);
+
+    QString alph = QString::number((double)(value/100), 'f', 2);
+    ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
+        "{font: 13pt 'Times New Roman';"
+        "background-color: rgba(0, 130, 195, " + alph + ");"
+        "color: rgba(255, 255, 255, 255);"
+        "border: 0px solid black;"
+        "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, "
+        "stop:0.158192 rgba(0, 130, 195," + alph + "), stop:0.559322 rgba(255, 255, 255, " + alph + "));"
+        "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,"
+        "stop:0.158192 rgba(0, 130, 195," + alph + "), stop:0.559322 rgba(0, 0, 0, " + alph + "));}");
+
+    ui->tableView->setStyleSheet("QTableView::item"
+        "{font: 12pt 'Times New Roman';"
+        "color: yellow;"
+        "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, " + alph + "), "
+        "stop:1 rgba(0, 120, 195, "+ alph + "));"
+        "border-left:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(255, 255, 255, " + alph + "),"
+        " stop:1 rgba(0, 120, 195, "+ alph + "));"
+        "border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, " + alph + "),"
+        "stop:1 rgba(0, 120, 195, "+ alph + "));}");
+
+    opacity = value;
 }
 
 void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)

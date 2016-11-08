@@ -32,6 +32,7 @@ public:
     void set_currentTimeToMenu();
     void set_currentIPToMenu();
     void set_currentSubNetToMenu();
+    void set_currentOpacity();
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 
@@ -56,6 +57,7 @@ public:
     int wedgeIndex;
     int dateTimeSetIndex;
     int networkIndex;
+    double opacity;
     int languageOption;
     int opendSpinBoxIndex;
     bool keyboardShowFlag;
@@ -75,6 +77,7 @@ signals:
     void translater_ZH();
     void translater_EN();
     void send_string_to_delegate(QString);
+    void opacityChanged(double value);
 
 private:
     Mcu *m_mcu;
@@ -104,6 +107,9 @@ private slots:
     void open_spinbox_persistent_editor(int index);
     void close_spinbox_persistent_editor(int index);
     void input_spinbox_number(QString string);
+
+public slots:
+    void setOpacity(double value);
 
 };
 
