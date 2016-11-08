@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QDebug>
 
 class MainWindowPrivate
 {
@@ -59,6 +60,7 @@ void MainWindow::init_ui()
     hiddenFirstSecondMenuFlag = false;
     hiddenThirdMenuFlag = false;
     hiddenCommonMenuFlag = false;
+    hiddenKeyboardFlag = false;
 
     firstSecondMenu = new FirstSecondMenuWidget(this);
 #if QT_VERSION <= QT_VERSION_CHECK(5, 0, 0)
@@ -87,10 +89,23 @@ void MainWindow::init_ui()
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
     QObject::connect(ui->widgetTopRight->pushButton_keyboard.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_keyboard_clicked()));
-    QObject::connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
-    QObject::connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
+
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
+
+    myInputPanelDlg = new MyInputPanel;
+    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    myInputPanelDlg->setModal(false);
+    myInputPanelDlg->showNormal();
+
+//    myInputPanelDlg->setFocusPolicy(Qt::NoFocus);
+//    myInputPanelDlg->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
+    myInputPanelDlg->show();
+    myInputPanelDlg->setVisible(false);
+    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
+    connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
+    connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
 }
 
 void MainWindow::keyBottom_menu(int key)
@@ -319,6 +334,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+    qDebug() << event->key();
     if (event->key() == Qt::Key_Meta) {
         show_hidden_Menu();
     }
@@ -353,23 +369,25 @@ void MainWindow::scroll_menu(int index)
 
 void MainWindow::slot_pushButton_keyboard_clicked()
 {
-    myInputPanelDlg = new MyInputPanel;
-    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    myInputPanelDlg->setModal(false);
-    myInputPanelDlg->showNormal();
-
-    emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
-    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
-
-    myInputPanelDlg->show();
-//    ui->widget_thirdMenu->setFocus();
+    hiddenKeyboardFlag = !hiddenKeyboardFlag;
+    if(hiddenKeyboardFlag) {
+        myInputPanelDlg->setFocusPolicy(Qt::NoFocus);
+        myInputPanelDlg->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
+        myInputPanelDlg->setVisible(true);
+        qDebug() << "HasFocus" << myInputPanelDlg->hasFocus();
+//        ui->widget_thirdMenu->setFocus();
+        emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
+    } else {
+        myInputPanelDlg->setVisible(false);
+        slot_keyboard_close_clicked();
+    }
 }
 
 void MainWindow::slot_keyboard_close_clicked()
 {
     if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
         emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+        hiddenKeyboardFlag = false;
     }
 }
 
