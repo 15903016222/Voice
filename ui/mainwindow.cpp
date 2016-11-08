@@ -140,6 +140,7 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
     show_hidden_arrow();
 
     ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
+    ui->widget_thirdMenu->set_currentBrightness(firstMenuNum, secondMenuNum);
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
@@ -154,6 +155,7 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     ui->widget_thirdMenu->set_currentTimeToMenu(firstMenuNum, secondMenuNum);
     ui->widget_thirdMenu->set_currentIP_subNetToMenu(firstMenuNum, secondMenuNum);
     ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
+    ui->widget_thirdMenu->set_currentBrightness(firstMenuNum, secondMenuNum);
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 

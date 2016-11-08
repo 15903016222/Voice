@@ -32,6 +32,7 @@ QWidget(parent),
     keyboardShowFlag = false;
     opendSpinBoxIndex = -1;
 
+    brightness = 50;
     opacity = 100.0;
 
     init_standard_model();
@@ -744,6 +745,13 @@ void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
     }
 }
 
+void ThirdMenuWidget::set_currentBrightness(int i, int j)
+{
+    if(i == 8 && j == 0){
+        model->item(0, 1)->setText(QString::number((double)brightness, 'f', 0));
+    }
+}
+
 void ThirdMenuWidget::set_currentTimeToMenu(int i, int j)
 {
     if(i == 8 && j == 1){
@@ -834,8 +842,8 @@ void ThirdMenuWidget::set_edited_text(QString string)
 
 void ThirdMenuWidget::setBrightness(double value)
 {
-    int brightnessValue = (int)value;
-    m_mcu->set_brightness((char)brightnessValue);
+    brightness = (int)value;
+    m_mcu->set_brightness((char)brightness);
 }
 
 void ThirdMenuWidget::setOpacity(double value)

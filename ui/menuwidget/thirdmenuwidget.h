@@ -28,6 +28,7 @@ public:
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, QStringList thirdMenuList);
+    void set_currentBrightness(int i, int j);
     void set_currentTimeToMenu(int i, int j);
     void set_currentIP_subNetToMenu(int i, int j);
     void set_currentOpacity(int i, int j);
@@ -55,6 +56,7 @@ public:
     int wedgeIndex;
     int dateTimeSetIndex;
     int networkIndex;
+    int brightness;
     double opacity;
     int languageOption;
     int opendSpinBoxIndex;
