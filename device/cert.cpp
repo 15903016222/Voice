@@ -145,3 +145,13 @@ int Cert::get_expire() const
 {
     return d->m_expire;
 }
+
+QString Cert::info() const
+{
+    QString info = d->m_authMode;
+    if (get_auth_mode() == Cert::VALID_DATE ) {
+        info += ":";
+        info += QDateTime::fromTime_t(d->m_expire).toString("yyyy-M-d H:m");
+    }
+    return info;
+}

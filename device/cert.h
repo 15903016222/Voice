@@ -38,6 +38,8 @@ public:
 
     int get_expire() const;
 
+    QString info() const;
+
 private:
     CertPrivate *d;
 };
