@@ -28,18 +28,38 @@ void DateTimeSetDialog::on_buttonBox_accepted()
         str_date.clear();
         str_date.append(QString::number((double)valueOne, 'f', 0));
         str_date.append("-");
-        str_date.append(QString::number((double)valueTwo, 'f', 0));
+        if(valueTwo < 10){
+            str_date.append("0" + QString::number((double)valueTwo, 'f', 0));
+        }else{
+            str_date.append(QString::number((double)valueTwo, 'f', 0));
+        }
         str_date.append("-");
-        str_date.append(QString::number((double)valueThree, 'f', 0));
+        if(valueThree < 10){
+            str_date.append("0" + QString::number((double)valueThree, 'f', 0));
+        }else{
+            str_date.append(QString::number((double)valueThree, 'f', 0));
+        }
 
         emit currentDateTimeChanged(str_date);
     } else {
         str_time.clear();
-        str_time.append(QString::number((double)valueOne, 'f', 0));
+        if(valueOne < 10){
+            str_time.append("0" + QString::number((double)valueOne, 'f', 0));
+        }else{
+            str_time.append(QString::number((double)valueOne, 'f', 0));
+        }
         str_time.append(":");
-        str_time.append(QString::number((double)valueTwo, 'f', 0));
+        if(valueTwo < 10){
+            str_time.append("0" + QString::number((double)valueTwo, 'f', 0));
+        }else{
+            str_time.append(QString::number((double)valueTwo, 'f', 0));
+        }
         str_time.append(":");
-        str_time.append(QString::number((double)valueThree, 'f', 0));
+        if(valueThree < 10){
+            str_time.append("0" + QString::number((double)valueThree, 'f', 0));
+        }else{
+            str_time.append(QString::number((double)valueThree, 'f', 0));
+        }
 
         emit currentDateTimeChanged(str_time);
     }
