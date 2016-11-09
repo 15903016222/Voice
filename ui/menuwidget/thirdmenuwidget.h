@@ -28,10 +28,7 @@ public:
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, QStringList thirdMenuList);
-    void set_currentBrightness(int i, int j);
-    void set_currentTimeToMenu(int i, int j);
-    void set_currentIP_subNetToMenu(int i, int j);
-    void set_currentOpacity(int i, int j);
+    void set_thirdMenuValue(int i, int j);
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 
@@ -59,6 +56,7 @@ public:
     int brightness;
     double opacity;
     int languageOption;
+    QString language;
     int opendSpinBoxIndex;
     bool keyboardShowFlag;
 
