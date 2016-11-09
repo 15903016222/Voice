@@ -28,6 +28,7 @@ public:
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, QStringList thirdMenuList);
+    void set_currentTime();
     void set_thirdMenuValue(int i, int j);
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();

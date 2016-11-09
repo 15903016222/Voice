@@ -65,6 +65,7 @@ void ThirdMenuWidget::retranslate_third_menu_ui(QString string)
     dateTimeSetDialog->retranslate_dialog_ui();
     networkDialog->retranslate_dialog_ui();
     set_third_menu_name(8, 1);
+    set_currentTime();
 }
 
 void ThirdMenuWidget::init_standard_model()
@@ -747,6 +748,21 @@ void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
     }
 }
 
+void ThirdMenuWidget::set_currentTime()
+{
+    if(dateTimeSetDialog->str_time == NULL) {
+        model->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
+    } else {
+        model->item(0, 0)->setText(dateTimeSetDialog->str_time);
+    }
+
+    if(dateTimeSetDialog->str_date == NULL) {
+        model->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
+    } else {
+        model->item(0, 1)->setText(dateTimeSetDialog->str_date);
+    }
+}
+
 void ThirdMenuWidget::set_thirdMenuValue(int i, int j)
 {
     if(i == 8){
@@ -757,18 +773,7 @@ void ThirdMenuWidget::set_thirdMenuValue(int i, int j)
             model->item(0, 2)->setText(opacityValue);
 
         }else if(j == 1){
-            if(dateTimeSetDialog->str_time == NULL) {
-                model->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
-            } else {
-                model->item(0, 0)->setText(dateTimeSetDialog->str_time);
-            }
-
-            if(dateTimeSetDialog->str_date == NULL) {
-                model->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
-            } else {
-                model->item(0, 1)->setText(dateTimeSetDialog->str_date);
-            }
-
+            set_currentTime();
             model->item(0, 2)->setText(language);
 
         }else if(j == 2){

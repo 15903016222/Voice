@@ -128,6 +128,7 @@ void MainWindow::keyLeft_back(int key)
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 {
+    ui->widget_thirdMenu->set_thirdMenuValue(firstMenuNum, secondMenuNum);
     ui->widget_thirdMenu->set_third_menu_name(index, 0); //init
     firstMenuNum = index;
 
@@ -138,8 +139,6 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 
     emit clickedMenuIndex(firstMenuNum);
     show_hidden_arrow();
-
-    ui->widget_thirdMenu->set_thirdMenuValue(firstMenuNum, secondMenuNum);
 
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
