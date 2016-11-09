@@ -75,7 +75,7 @@ private:
     QByteArray m_recBuffer;
     static char s_queryPkg[7];
     static char s_setPkg[8];
-    static QMap<int, int> s_keyMap;
+    static QMap<int, Mcu::KeyType> s_keyMap;
 
     Probe m_probe;
     int m_probeFlag;

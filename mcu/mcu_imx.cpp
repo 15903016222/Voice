@@ -11,6 +11,7 @@
 
 char McuImx::s_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
 char McuImx::s_setPkg[8] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
+QMap<int, Mcu::KeyType> McuImx::s_keyMap;
 
 McuImx::McuImx()
     : Mcu(), m_tty(UART_DEVICE)
@@ -105,7 +106,6 @@ void McuImx::parse_packet(QByteArray &pkg)
     switch (pkg.at(4)) {
     case KEY:
         emit key_event(s_keyMap[data.toHex().toInt(0, 16)]);
-        do_key(data.toHex().toInt(0, 16));
         break;
     case ROTARY:
         emit rotary_event((Mcu::RotaryType)(data.toHex().toInt(0, 16)));
