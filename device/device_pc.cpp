@@ -27,7 +27,7 @@ DevicePrivate::DevicePrivate()
     m_typeString = "Unix PC";
 #elif PC_WIN
     m_type = Device::DEV_PC_WIN;
-    m_typeString = "Window Pc";
+    m_typeString = "Window PC";
 #endif
 }
 
