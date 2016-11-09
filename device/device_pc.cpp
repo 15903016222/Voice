@@ -8,6 +8,7 @@
 
 
 #include "device.h"
+#include <time.h>
 
 class DevicePrivate
 {
