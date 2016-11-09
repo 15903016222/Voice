@@ -23,12 +23,12 @@ private:
 
 public:
     void retranslate_dialog_ui();
+    void set_dialog_title(QMap<QString, QString> map);
+    void set_spinbox_value(QList<int> valueList);
 
     QMap<QString, QString> titleMap;
     QString str_date;
     QString str_time;
-
-private:
 
 signals:
     void currentDateTimeChanged(QString string);
@@ -36,8 +36,6 @@ signals:
 public slots:
     void on_buttonBox_accepted();
     void check_date_valid(int number);
-    void set_dialog_title(QMap<QString, QString> map);
-    void set_spinbox_value(QList<int> valueList);
 
 };
 
