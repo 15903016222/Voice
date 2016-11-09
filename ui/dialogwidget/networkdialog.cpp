@@ -6,7 +6,6 @@ NetworkDialog::NetworkDialog(QWidget *parent) :
     ui(new Ui::NetworkDialog)
 {
     ui->setupUi(this);
-    init_ui();
 }
 
 NetworkDialog::~NetworkDialog()
@@ -19,38 +18,40 @@ void NetworkDialog::retranslate_dialog_ui()
     ui->retranslateUi(this);
 }
 
-void NetworkDialog::init_ui()
-{
-    ui->spinBox_1->setMaximum(255);
-    ui->spinBox_2->setMaximum(255);
-    ui->spinBox_3->setMaximum(255);
-    ui->spinBox_4->setMaximum(255);
-
-    int ip_1 = ui->spinBox_1->value();
-    int ip_2 = ui->spinBox_2->value();
-    int ip_3 = ui->spinBox_3->value();
-    int ip_4 = ui->spinBox_4->value();
-
-    str_ip.clear();
-    str_ip.append(QString::number((double)ip_1, 'f', 0));
-    str_ip.append(".");
-    str_ip.append(QString::number((double)ip_2, 'f', 0));
-    str_ip.append(".");
-    str_ip.append(QString::number((double)ip_3, 'f', 0));
-    str_ip.append(".");
-    str_ip.append(QString::number((double)ip_4, 'f', 0));
-
-}
-
 void NetworkDialog::on_buttonBox_accepted()
 {
-    init_ui();
-    emit currentIPChanged(str_ip);
+    int value_1 = ui->spinBox_1->value();
+    int value_2 = ui->spinBox_2->value();
+    int value_3 = ui->spinBox_3->value();
+    int value_4 = ui->spinBox_4->value();
+
+    if(titleMap.keys().at(0) == "IP Address") {
+        str_ip.clear();
+        str_ip.append(QString::number((double)value_1, 'f', 0));
+        str_ip.append(".");
+        str_ip.append(QString::number((double)value_2, 'f', 0));
+        str_ip.append(".");
+        str_ip.append(QString::number((double)value_3, 'f', 0));
+        str_ip.append(".");
+        str_ip.append(QString::number((double)value_4, 'f', 0));
+        emit currentIP_subNetChanged(str_ip);
+    }else{
+        str_subNet.clear();
+        str_subNet.append(QString::number((double)value_1, 'f', 0));
+        str_subNet.append(".");
+        str_subNet.append(QString::number((double)value_2, 'f', 0));
+        str_subNet.append(".");
+        str_subNet.append(QString::number((double)value_3, 'f', 0));
+        str_subNet.append(".");
+        str_subNet.append(QString::number((double)value_4, 'f', 0));
+        emit currentIP_subNetChanged(str_subNet);
+    }
 }
 
 void NetworkDialog::set_dialog_title(QMap<QString, QString> map)
 {
     ui->label->setText(map.values().at(0));
+    titleMap = map;
 }
 
 void NetworkDialog::set_spinbox_value(QList<int> valueList)
@@ -59,6 +60,4 @@ void NetworkDialog::set_spinbox_value(QList<int> valueList)
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
     ui->spinBox_4->setValue(valueList.at(3));
-
-
 }

@@ -29,7 +29,6 @@ public:
     QString str_time;
 
 private:
-    void init_ui();
 
 signals:
     void currentDateTimeChanged(QString string);

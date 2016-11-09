@@ -21,13 +21,15 @@ private:
 
 public:
     void retranslate_dialog_ui();
+
+    QMap<QString, QString> titleMap;
     QString str_ip;
+    QString str_subNet;
 
 private:
-    void init_ui();
 
 signals:
-    void currentIPChanged(QString IP);
+    void currentIP_subNetChanged(QString value);
 
 public slots:
     void on_buttonBox_accepted();
