@@ -34,7 +34,7 @@ private:
     QByteArray m_buffer;    /* used by ttyS1 */
 
     static QMap<int, Mcu::BatteryStatus> s_statusMap;
-    static QMap<int, int> s_keyMap;
+    static QMap<int, Mcu::KeyType> s_keyMap;
 
     void init_tty(QSerialPort &tty);
 
