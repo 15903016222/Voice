@@ -23,7 +23,7 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
 {
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(key_sure(int)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
     editFlag = false;
     inputCount = 0;
 }
@@ -132,11 +132,11 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 }
 
 #include <QShortcut>
-void DoubleSpinBoxDelegate::key_sure(int key)
+void DoubleSpinBoxDelegate::key_sure(Mcu::KeyType key)
 {
     if(editFlag){
         if(spinBoxList.size() != 0) {
-            if(key == 214) {
+            if(key == Mcu::KEY_SURE) {
                 QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
                 QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
                 QApplication::sendEvent(doubleSpinBox, event);
