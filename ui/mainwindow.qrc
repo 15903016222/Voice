@@ -33,9 +33,8 @@
         <file>resources/bc7.png</file>
         <file>resources/bc8.png</file>
         <file>resources/bc9.png</file>
-        <file>resources/Logo.jpg</file>
         <file>resources/tip.jpg</file>
-        <file>resources/systeminfo.txt</file>
+        <file>resources/logo.png</file>
     </qresource>
     <qresource prefix="/json">
         <file>resources/menuconf.json</file>

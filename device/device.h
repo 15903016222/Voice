@@ -20,27 +20,28 @@ public:
         DEV_16_64_TOFD,
         DEV_32_64_TOFD,
         DEV_32_128_TOFD,
-        DEV_32_128_PRO_TOFD,
-        DEV_TYPE_MAX
+        DEV_32_128_PRO_TOFD
     };
 
     static Device *get_device();
 
+    const QString &version() const;
+
     Device::Type type() const;
     const QString &type_string() const;
+
     const QString &serial_number() const;
-    int fpga_version() const;
-    int run_count() const;
-    uint run_time() const;  /* Unit: seconds */
 
     /* 设备时间及日期 */
     uint date_time() const;
     bool set_date_time(uint t);
     bool set_date_time(const QDateTime &t) { return set_date_time(t.toTime_t()); }
 
+    uint run_time() const;
+    int run_count() const;
+
     bool import_cert(const QString &certFile);
-    const QString &cert_mode_string() const;
-    const QString cert_expire() const;
+    const QString cert_info() const;
 
     bool is_valid() const;
 

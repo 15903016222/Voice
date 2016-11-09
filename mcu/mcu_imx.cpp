@@ -9,12 +9,52 @@
 #define PKG_END_CHAR        ((char)0xfe)
 #define PKG_HEADER_LEN      (5)
 
-char McuImx::m_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
-char McuImx::m_setPkg[8] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
+char McuImx::s_queryPkg[7] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::QueryPkg, 0x0, 0x10, PKG_END_CHAR, PKG_END_CHAR};
+char McuImx::s_setPkg[8] = {PKG_BEGIN_CHAR, PKG_BEGIN_CHAR, McuImx::SettingPkg, 0x01, 0, 0x0, PKG_END_CHAR, PKG_END_CHAR};
+QMap<int, Mcu::KeyType> McuImx::s_keyMap;
 
 McuImx::McuImx()
     : Mcu(), m_tty(UART_DEVICE)
 {
+    if (s_keyMap.isEmpty()) {
+        s_keyMap.insert(0,  KEY_UP);
+        s_keyMap.insert(1,  KEY_LEFT);
+        s_keyMap.insert(9,  KEY_RIGHT);
+        s_keyMap.insert(10, KEY_DOWN);
+        s_keyMap.insert(2,  KEY_MENU);
+        s_keyMap.insert(25, KEY_MENU);
+        s_keyMap.insert(8,  KEY_SURE);
+        s_keyMap.insert(44, KEY_SURE);
+        s_keyMap.insert(11, KEY_BACK);
+        s_keyMap.insert(43, KEY_BACK);
+        s_keyMap.insert(3,  KEY_80_PERCENT);
+        s_keyMap.insert(12, KEY_DISPLAY);
+        s_keyMap.insert(4,  KEY_START);
+//        s_keyMap.insert(KEY_STOP);
+        s_keyMap.insert(13, KEY_SAVE);
+        s_keyMap.insert(5,  KEY_OPEN);
+        s_keyMap.insert(16, KEY_GATE);
+        s_keyMap.insert(17, KEY_CALIBRATION);
+        s_keyMap.insert(18, KEY_DB);
+        s_keyMap.insert(19, KEY_CURSOR);
+        s_keyMap.insert(20, KEY_FREEZE);
+        s_keyMap.insert(21, KEY_ANGLE);
+        s_keyMap.insert(24, KEY_ERASURE);
+        s_keyMap.insert(33, KEY_HELP);
+//        s_keyMap.insert(KEY_F1);
+        s_keyMap.insert(26, KEY_F2);
+        s_keyMap.insert(27, KEY_F3);
+        s_keyMap.insert(28, KEY_F4);
+        s_keyMap.insert(29, KEY_F5);
+        s_keyMap.insert(32, KEY_F6);
+        s_keyMap.insert(34, KEY_F7);
+        s_keyMap.insert(35, KEY_F8);
+        s_keyMap.insert(36, KEY_F9);
+        s_keyMap.insert(37, KEY_F10);
+        s_keyMap.insert(42, KEY_F11);
+        s_keyMap.insert(45, KEY_F12);
+    }
+
     connect(&m_tty, SIGNAL(readyRead()), this, SLOT(on_readyRead_event()));
     m_recBuffer.clear();
 
@@ -65,7 +105,7 @@ void McuImx::parse_packet(QByteArray &pkg)
     QByteArray data = pkg.mid(PKG_HEADER_LEN, pkg.at(3));
     switch (pkg.at(4)) {
     case KEY:
-        emit key_event(data.toHex().toInt(0, 16));
+        emit key_event(s_keyMap[data.toHex().toInt(0, 16)]);
         break;
     case ROTARY:
         emit rotary_event((Mcu::RotaryType)(data.toHex().toInt(0, 16)));

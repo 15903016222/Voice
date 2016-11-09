@@ -8,9 +8,9 @@
 #include "wedgedialog.h"
 #include "measurementdialog.h"
 #include "inputpanelcontext.h"
-#include "aboutdialog.h"
+#include "about_dialog.h"
 #include "resetconfigdialog.h"
-#include "systeminfodialog.h"
+#include "sysinfo_dialog.h"
 #include "filemanagerdialog.h"
 
 #include <QMap>
@@ -33,6 +33,9 @@ QWidget(parent),
     keyboardShowFlag = false;
     opendSpinBoxIndex = -1;
 
+    brightness = 50;
+    opacity = 100.0;
+
     init_standard_model();
     set_third_menu_name(0, 0);
 
@@ -40,7 +43,7 @@ QWidget(parent),
 
     m_mcu = Mcu::get_mcu();
     set_autoDetect_probeModel(false);
-//   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+
 }
 
 ThirdMenuWidget::~ThirdMenuWidget()
@@ -60,8 +63,6 @@ void ThirdMenuWidget::retranslate_third_menu_ui(QString string)
     dateTimeSetDialog->retranslate_dialog_ui();
     networkDialog->retranslate_dialog_ui();
     set_third_menu_name(8, 1);
-    set_currentDateToMenu();
-    set_currentTimeToMenu();
 }
 
 void ThirdMenuWidget::init_standard_model()
@@ -153,6 +154,15 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
                 ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
+
+                if(thirdMenuString.contains("Bright")) {
+                    connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setBrightness(double)));
+                }else if(thirdMenuString.contains("Opacity")) {
+                    item = new QStandardItem(QString::number(100.0, 'f', 0));
+                    model->setItem(0, 2, item);
+                    connect(doubleSpinBox, SIGNAL(stringChanged(double)), this, SLOT(setOpacity(double)));
+                }
+                break;
 
                 break;
             }
@@ -337,16 +347,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
                 ui->tableView->openPersistentEditor(modelIndex);
             }
         }
-        if(currentHeaderText.contains("Bright")) {
-            verticalSliderDialog = new VerticalSliderDialog(this);
-            verticalSliderDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-            verticalSliderDialog->show();
-
-            brightIndex = index;
-            QString text = model->item(0, brightIndex)->text();
-            verticalSliderDialog->setBrightValue(text);
-            connect(verticalSliderDialog->slider.at(0), SIGNAL(valueChanged(int)), this, SLOT(setBrightValue(int)));
-        }
         break;
     }
     case 2: {
@@ -432,7 +432,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         } else if(currentHeaderText.contains("Subnet Mask")) {
             map["Subnet Mask"] = "Subnet Mask";
         } else if(currentHeaderText.contains(mapTwo.value("Subnet Mask").toString())) {
-            map["Subnet Mask"] = mapTwo.value("Subnet Mask").toString();            
+            map["Subnet Mask"] = mapTwo.value("Subnet Mask").toString();
         }
         emit send_dialog_title_content(map);
         emit send_spinbox_value(valueList);
@@ -441,19 +441,17 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         networkDialog->show();
 
         networkIndex = index;
-        connect(networkDialog, SIGNAL(currentIPChanged(QString)), this, SLOT(set_ip(QString)));
+        connect(networkDialog, SIGNAL(currentIP_subNetChanged(QString)), this, SLOT(set_ip_subNet(QString)));
         break;
     }
     case 15: {
-        SystemInfoDialog *systemInfoDialog = new SystemInfoDialog(this);
-        systemInfoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        systemInfoDialog->show();
+        Ui::Dialog::SysInfoDialog *infoDialog = new Ui::Dialog::SysInfoDialog(this);
+        infoDialog->exec();
         break;
     }
     case 16: {
-        AboutDialog *aboutDialog = new AboutDialog(this);
-        aboutDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        aboutDialog->show();
+        Ui::Dialog::AboutDialog *aboutDialog = new Ui::Dialog::AboutDialog(this);
+        aboutDialog->exec();
         break;
     }
     case 18: {
@@ -486,18 +484,18 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         dateTimeSetDialog->show();
 
         dateTimeSetIndex = index;
-        connect(dateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_date(QString)));
+        connect(dateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_time(QString)));
+        break;
+    }
+    case 19: {
+        ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
+        resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        resetConfigDialog->show();
         break;
     }
     default: {
         break;
-    }
-    }
-
-    if(currentHeaderText.contains("Configuration")) {
-       ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
-       resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-       resetConfigDialog->show();
+        }
     }
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {
@@ -747,32 +745,53 @@ void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
     }
 }
 
-void ThirdMenuWidget::set_currentDateToMenu()
+void ThirdMenuWidget::set_currentBrightness(int i, int j)
 {
-    if(dateTimeSetDialog->str_date == NULL) {
-        model->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
-    } else {
-        model->item(0, 1)->setText(dateTimeSetDialog->str_date);
+    if(i == 8 && j == 0){
+        model->item(0, 1)->setText(QString::number((double)brightness, 'f', 0));
     }
 }
 
-void ThirdMenuWidget::set_currentTimeToMenu()
+void ThirdMenuWidget::set_currentTimeToMenu(int i, int j)
 {
-    if(dateTimeSetDialog->str_time == NULL) {
-        model->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
-    } else {
-        model->item(0, 0)->setText(dateTimeSetDialog->str_time);
+    if(i == 8 && j == 1){
+        if(dateTimeSetDialog->str_time == NULL) {
+            model->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
+        } else {
+            model->item(0, 0)->setText(dateTimeSetDialog->str_time);
+        }
+
+        if(dateTimeSetDialog->str_date == NULL) {
+            model->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
+        } else {
+            model->item(0, 1)->setText(dateTimeSetDialog->str_date);
+        }
     }
 }
 
-void ThirdMenuWidget::set_currentIPToMenu()
+void ThirdMenuWidget::set_currentIP_subNetToMenu(int i, int j)
 {
-    model->item(0, 0)->setText("192.168.1.1");
+    if(i == 8 && j == 2){
+        if(networkDialog->str_ip == NULL){
+            model->item(0, 0)->setText("192.168.1.215");
+        }else{
+            model->item(0, 0)->setText(networkDialog->str_ip);
+        }
+
+        if(networkDialog->str_subNet == NULL){
+            model->item(0, 1)->setText("255.255.255.0");
+        }else{
+            model->item(0, 1)->setText(networkDialog->str_subNet);
+        }
+    }
 }
 
-void ThirdMenuWidget::set_currentSubNetToMenu()
+void ThirdMenuWidget::set_currentOpacity(int i, int j)
 {
-    model->item(0, 1)->setText("255.255.255.0");
+    if(i == 8 && j == 0){
+        QString opacityValue = QString::number(opacity, 'f', 0);
+        model->item(0, 2)->setText(opacityValue);
+    }
 }
 
 void ThirdMenuWidget::change_measurement_label(QString string)
@@ -821,18 +840,38 @@ void ThirdMenuWidget::set_edited_text(QString string)
     }
 }
 
-void ThirdMenuWidget::setBrightValue(int value)
+void ThirdMenuWidget::setBrightness(double value)
 {
-    QString brightValue;
-    brightValue.append(QString::number((double)value, 'f', 0));
+    brightness = (int)value;
+    m_mcu->set_brightness((char)brightness);
+}
 
-    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-        if(i == brightIndex) {
-            model->item(0, i)->setText(brightValue);
-            break;
-        }
-    }
-    m_mcu->set_brightness((char)value);
+void ThirdMenuWidget::setOpacity(double value)
+{
+    emit opacityChanged(value);
+
+//    QString alph = QString::number((double)(value/100), 'f', 2);
+//    ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section"
+//        "{font: 13pt 'Times New Roman';"
+//        "background-color: rgba(0, 130, 195, " + alph + ");"
+//        "color: rgba(255, 255, 255, 255);"
+//        "border: 0px solid black;"
+//        "border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, "
+//        "stop:0.158192 rgba(0, 130, 195," + alph + "), stop:0.559322 rgba(255, 255, 255, " + alph + "));"
+//        "border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,"
+//        "stop:0.158192 rgba(0, 130, 195," + alph + "), stop:0.559322 rgba(0, 0, 0, " + alph + "));}");
+
+//    ui->tableView->setStyleSheet("QTableView::item"
+//        "{font: 12pt 'Times New Roman';"
+//        "color: yellow;"
+//        "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, " + alph + "), "
+//        "stop:1 rgba(0, 120, 195, "+ alph + "));"
+//        "border-left:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(255, 255, 255, " + alph + "),"
+//        " stop:1 rgba(0, 120, 195, "+ alph + "));"
+//        "border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, " + alph + "),"
+//        "stop:1 rgba(0, 120, 195, "+ alph + "));}");
+
+    opacity = value;
 }
 
 void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
@@ -845,35 +884,14 @@ void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
     }
 }
 
-void ThirdMenuWidget::set_date(QString str_date)
+void ThirdMenuWidget::set_time(QString value)
 {
-    model->item(0, dateTimeSetIndex)->setText(str_date);
+    model->item(0, dateTimeSetIndex)->setText(value);
 }
 
-void ThirdMenuWidget::set_time(QString str_time)
+void ThirdMenuWidget::set_ip_subNet(QString value)
 {
-    model->item(0, dateTimeSetIndex)->setText(str_time);
-}
-
-void ThirdMenuWidget::set_ip(QString str_ip)
-{
-    model->item(0, networkIndex)->setText(str_ip);
-}
-
-void ThirdMenuWidget::set_subNet(QString str_subNet)
-{
-    model->item(0, networkIndex)->setText(str_subNet);
-}
-
-void ThirdMenuWidget::do_rotary_event(Mcu::RotaryType type)
-{
-    int i = verticalSliderDialog->slider.at(0)->value();
-    if (type == Mcu::ROTARY_UP) {
-        ++i;
-    } else {
-        --i;
-    }
-    verticalSliderDialog->slider.at(0)->setValue(i);
+    model->item(0, networkIndex)->setText(value);
 }
 
 void ThirdMenuWidget::do_probe_event(const Probe &probe)
@@ -934,7 +952,7 @@ void ThirdMenuWidget::close_spinbox_persistent_editor(int index)
         spinBox->editFlag = false;
         spinBox->inputCount = 0;
         disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
-        spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
+//       spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
     }
 }
 
@@ -976,7 +994,7 @@ void ThirdMenuWidget::change_persistent_editor(QModelIndex modelIndex)
         spinBox->inputCount = 0;
 //        ui->tableView->edit(modelIndex);
 //        ui->tableView->openPersistentEditor(modelIndex);
-        spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
+//        spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
     }
     disconnect_input_number();
 }

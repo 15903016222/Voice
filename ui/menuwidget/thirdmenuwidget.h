@@ -2,7 +2,6 @@
 #define THIRDMENUWIDGET_H
 
 #include "firstsecondmenuwidget.h"
-#include "verticalsliderdialog.h"
 #include "datetimesetdialog.h"
 #include "networkdialog.h"
 
@@ -29,10 +28,10 @@ public:
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, QStringList thirdMenuList);
-    void set_currentDateToMenu();
-    void set_currentTimeToMenu();
-    void set_currentIPToMenu();
-    void set_currentSubNetToMenu();
+    void set_currentBrightness(int i, int j);
+    void set_currentTimeToMenu(int i, int j);
+    void set_currentIP_subNetToMenu(int i, int j);
+    void set_currentOpacity(int i, int j);
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 
@@ -53,11 +52,12 @@ public:
     int currSecondNum;
     int measurementIndex;
     int inputIndex;
-    int brightIndex;
     int probeIndex;
     int wedgeIndex;
     int dateTimeSetIndex;
     int networkIndex;
+    int brightness;
+    double opacity;
     int languageOption;
     int opendSpinBoxIndex;
     bool keyboardShowFlag;
@@ -77,15 +77,14 @@ signals:
     void translater_ZH();
     void translater_EN();
     void send_string_to_delegate(QString);
+    void opacityChanged(double value);
 
 private:
-    VerticalSliderDialog *verticalSliderDialog;
     Mcu *m_mcu;
     DateTimeSetDialog *dateTimeSetDialog;
     NetworkDialog *networkDialog;
 
 protected slots:
-    void do_rotary_event(Mcu::RotaryType type);
     void do_probe_event(const Probe& probe);
 
 private slots:
@@ -98,16 +97,17 @@ private slots:
     void select_probe(QString string);
     void select_wedge(QString string);
     void set_edited_text(QString string);
-    void setBrightValue(int value);
+    void setBrightness(double value);
     void set_autoDetect_probeModel(bool flag);
-    void set_date(QString str_date);
-    void set_time(QString str_time);
-    void set_ip(QString str_ip);
-    void set_subNet(QString str_subNet);
+    void set_time(QString value);
+    void set_ip_subNet(QString value);
     void retranslate_third_menu_ui(QString string);
     void open_spinbox_persistent_editor(int index);
     void close_spinbox_persistent_editor(int index);
     void input_spinbox_number(QString string);
+
+public slots:
+    void setOpacity(double value);
 
 };
 

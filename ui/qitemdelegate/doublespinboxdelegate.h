@@ -41,12 +41,14 @@ private:
 signals:
     void createEditorHeaderText(QStringList) const;
     void closeEditorHeaderText(QModelIndex) const;
+    void stringChanged(double value);
 
 private slots:
     void commit_and_close_editor();
     void do_rotary_event(Mcu::RotaryType type);
-    void key_sure(int key);
+    void key_sure(Mcu::KeyType key);
     void input_number_to_lineedit(QString string);
+    void valueChanged_signal(double value);
 
 protected slots:
     void input_number(QString string);

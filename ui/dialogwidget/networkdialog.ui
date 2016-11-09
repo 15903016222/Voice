@@ -62,7 +62,7 @@
          <number>9</number>
         </property>
         <item>
-         <widget class="QSpinBox" name="spinBox_1">
+         <widget class="SpinBox" name="spinBox_1">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -81,15 +81,12 @@
            <set>Qt::AlignCenter</set>
           </property>
           <property name="maximum">
-           <number>1000</number>
-          </property>
-          <property name="value">
-           <number>192</number>
+           <number>255</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_2">
+         <widget class="SpinBox" name="spinBox_2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -108,15 +105,12 @@
            <set>Qt::AlignCenter</set>
           </property>
           <property name="maximum">
-           <number>1000</number>
-          </property>
-          <property name="value">
-           <number>168</number>
+           <number>255</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_3">
+         <widget class="SpinBox" name="spinBox_3">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -135,15 +129,12 @@
            <set>Qt::AlignCenter</set>
           </property>
           <property name="maximum">
-           <number>100</number>
-          </property>
-          <property name="value">
-           <number>1</number>
+           <number>255</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_4">
+         <widget class="SpinBox" name="spinBox_4">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -162,10 +153,7 @@
            <set>Qt::AlignCenter</set>
           </property>
           <property name="maximum">
-           <number>1000</number>
-          </property>
-          <property name="value">
-           <number>217</number>
+           <number>255</number>
           </property>
          </widget>
         </item>
@@ -183,6 +171,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>spinbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

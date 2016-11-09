@@ -13,7 +13,7 @@ ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
 {
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(key_sure(int)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
     editFlag = false;
 
 }
@@ -149,24 +149,24 @@ void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 //                    index = index + 1;
 //                }
 //            }
-        if(type == Mcu::ROTARY_UP) {
-            event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
-        } else {
-            event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            if(type == Mcu::ROTARY_UP) {
+                event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            } else {
+                event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            }
+            QApplication::sendEvent(comboBox, event);
         }
-        QApplication::sendEvent(comboBox, event);
-    }
+//        comboBox->setCurrentIndex(index);
+  //  }
 }
 
-void ComboBoxDelegate::key_sure(int key)
+void ComboBoxDelegate::key_sure(Mcu::KeyType key)
 {
-    if(editFlag) {
-        if(key == 214) {
+    if(key == Mcu::KEY_SURE) {
+        if(editFlag) {
             QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
             QString string = itemList.at(comboBox->currentIndex());
             commit_and_close_editor(string);
-//            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
-//            QApplication::sendEvent(comboBox, event);
         }
     }
 }

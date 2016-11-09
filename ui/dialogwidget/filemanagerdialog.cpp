@@ -43,7 +43,7 @@ FileManagerDialog::FileManagerDialog(QWidget *parent) :
     init_source_path_tableView();
     init_target_path_tableView();
 
-    connect(ui->tableView_2->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
+ //   connect(ui->tableView_2->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 
 }
 
@@ -211,26 +211,25 @@ void FileManagerDialog::set_tableView_header_data(QStandardItemModel *model)
     model->setHeaderData(5, Qt::Horizontal, tr("Delete"));
 }
 
-void FileManagerDialog::on_tableView_1_clicked(const QModelIndex &index)
-{
-//    ui->tableView_1->edit(index);
-}
+//void FileManagerDialog::on_tableView_1_clicked(const QModelIndex &index)
+//{
+////    ui->tableView_1->edit(index);
+//}
 
-void FileManagerDialog::onHeaderClicked(int index)
-{
-//    ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView_1->itemDelegate());
-//    if(!comboBox->editFlag) {
-//        QModelIndex modelIndex = model->item(0, index)->index();
-//        ui->tableView_1->edit(modelIndex);
-//    }
-}
+//void FileManagerDialog::onHeaderClicked(int index)
+//{
+////    ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView_1->itemDelegate());
+////    if(!comboBox->editFlag) {
+////        QModelIndex modelIndex = model->item(0, index)->index();
+////        ui->tableView_1->edit(modelIndex);
+////    }
+//}
 
 void FileManagerDialog::on_listView_clicked(const QModelIndex &index)
 {
     int row = index.row();
-
-    ui->comboBox_1->setCurrentText(filePathList.at(row));
-    ui->comboBox_2->setCurrentText(filePathList.at(row));
+    ui->comboBox_1->setCurrentIndex(row);
+    ui->comboBox_2->setCurrentIndex(row);
 
     for(int i = 0; i < FILE_TYPE_NUMBER; i++) {
         QModelIndex modelIndex = modelType->index(i, 0);
@@ -244,7 +243,7 @@ void FileManagerDialog::on_listView_clicked(const QModelIndex &index)
     }
 }
 
-void FileManagerDialog::on_tableView_2_clicked(const QModelIndex &index)
-{
+//void FileManagerDialog::on_tableView_2_clicked(const QModelIndex &index)
+//{
 
-}
+//}

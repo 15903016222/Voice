@@ -24,7 +24,7 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
 {
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(key_sure(int)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
     editFlag = false;
     keyboardShowFlag = false;
     inputCount = 0;
@@ -54,6 +54,7 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
 
     emit createEditorHeaderText(sendList);
     connect(editor, SIGNAL(editingFinished()), this, SLOT(commit_and_close_editor()));
+    connect(editor, SIGNAL(valueChanged(double)), this, SLOT(valueChanged_signal(double)));
 
     return editor;
     Q_UNUSED(option);
@@ -142,17 +143,15 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 }
 
 #include <QShortcut>
-void DoubleSpinBoxDelegate::key_sure(int key)
+void DoubleSpinBoxDelegate::key_sure(Mcu::KeyType key)
 {
     if(editFlag) {
-        if(key == 214) {
             QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
 //            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
 //            emit doubleSpinBox->editingFinished();
 //            commit_and_close_editor();
             QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
             QApplication::sendEvent(doubleSpinBox, event);
-        }
     }
 }
 
@@ -254,7 +253,12 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //        simulate_key(fd_kbd, KEY_0 + value);
 //    }
 
-//    close(fd_kbd);
+    //    close(fd_kbd);
+}
+
+void DoubleSpinBoxDelegate::valueChanged_signal(double value)
+{
+    emit stringChanged(value);
 }
 
 //void DoubleSpinBoxDelegate::simulate_key(int fd, int value)

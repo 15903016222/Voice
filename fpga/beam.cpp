@@ -1,5 +1,12 @@
+/**
+ * @file beam.cpp
+ * @brief Beam Class (Focal law)
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #include "beam.h"
-#include "phascan_spi.h"
+#include "fpga_spi.h"
 
 static const int BEAM_REGS_NUM      = 80;
 const quint32 Beam::MAX_CHANNELS    = 32;
@@ -7,18 +14,18 @@ const quint32 Beam::MAX_POINTS      = 16;
 
 struct DelayInfo
 {
-     quint32 txTime :14;        /* bit:0-13 发送延迟*/
-     quint32 res1   :2;         /* bit:14-15 */
-     quint32 rxTime :12;        /* bit:16-27 接收延迟*/
-     quint32 res2   :4;         /* bit:28-31 */
+     quint32 txTime :14;        /* bit:0-13     发送延迟*/
+     quint32 res1   :2;         /* bit:14-15    保留 */
+     quint32 rxTime :12;        /* bit:16-27    接收延迟*/
+     quint32 res2   :4;         /* bit:28-31    保留 */
 };
 
 struct PointInfo
 {
     /* TCG (0) */
-     quint32 position :20;      /* bit:0-19 当前点位置,单位10ns */
-     quint32 res1     :1;       /* bit:20 */
-     quint32 pregain  :10;      /* bit:21-30 */
+     quint32 position :20;      /* bit:0-19     当前点位置,单位10ns */
+     quint32 res1     :1;       /* bit:20       保留 */
+     quint32 pregain  :10;      /* bit:21-30    */
      quint32 res2     :1;       /* bit:31 */
      /* TCG (1) */
      quint32 slope    :22;      /* bit:0-21 */
@@ -380,7 +387,7 @@ bool Beam::set_tcg_flag(quint32 point, bool flag)
 
 bool Beam::refresh(void)
 {
-    PhascanSpi *spi = PhascanSpi::get_spi();
+    FpgaSpi *spi = FpgaSpi::get_spi();
     if (spi == NULL) {
         return false;
     }

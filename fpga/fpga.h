@@ -1,3 +1,10 @@
+/**
+ * @file fpga.h
+ * @brief Fpga Class
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #ifndef __FPGA_H__
 #define __FPGA_H__
 
@@ -105,21 +112,23 @@ public:
     /* 编码器 */
     enum EncoderPolarity {
         NORMAL  = 0,
-        INVERSE = 0b1000
+        INVERSE = 1
     };
     enum EncoderMode {
-        QUAD    = 0b011,
-        UP      = 0b010,
-        DOWN    = 0b001,
         OFF     = 0b000,
+        DOWN    = 0b001,
+        UP      = 0b010,
+        QUAD    = 0b011,
         PAUSE   = 0b100
     };
     EncoderPolarity encoder_x_polarity(); /* 编码器X极性 */
     EncoderPolarity encoder_y_polarity(); /* 编码器Y极性 */
+    bool set_encoder_x_polarity(Fpga::EncoderPolarity polarity, bool reflesh = false);
+    bool set_encoder_y_polarity(Fpga::EncoderPolarity polarity, bool reflesh = false);
     EncoderMode encoder_x_mode();         /* 编码器X模式 */
     EncoderMode encoder_y_mode();         /* 编码器Y模式 */
-    bool set_encoder_x(EncoderMode type, EncoderPolarity polarity = NORMAL, bool reflesh = false);
-    bool set_encoder_y(EncoderMode type, EncoderPolarity polarity = NORMAL, bool reflesh = false);
+    bool set_encoder_x_mode(EncoderMode type, bool reflesh = false);
+    bool set_encoder_y_mode(EncoderMode type, bool reflesh = false);
 
     /* UT双晶状态 */
     bool ut1_twin();
@@ -208,15 +217,20 @@ protected:
 private:
     static QMutex s_mutex;
     static Fpga *s_fpga;
+
     GlobalData *m_global;
+
     AlarmOutput m_alarmOutput0;
     AlarmOutput m_alarmOutput1;
     AlarmOutput m_alarmOutput2;
     AlarmAnalog m_alarmAnalog0;
     AlarmAnalog m_alarmAnalog1;
+
     QReadWriteLock m_lock;
+
     QList<GroupPointer> m_groups;
     QReadWriteLock m_groupsLock;
+
     QList<BeamPointer> m_beams;
     QReadWriteLock m_beamsLock;
 };

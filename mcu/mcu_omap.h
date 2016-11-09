@@ -33,7 +33,8 @@ private:
     char m_brightness;      /* used by ttyS1 */
     QByteArray m_buffer;    /* used by ttyS1 */
 
-    QMap<int, Mcu::BatteryStatus> m_statusMap;
+    static QMap<int, Mcu::BatteryStatus> s_statusMap;
+    static QMap<int, Mcu::KeyType> s_keyMap;
 
     void init_tty(QSerialPort &tty);
 

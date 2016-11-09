@@ -1,15 +1,17 @@
+/**
+ * @file main.cpp
+ * @brief testing fpga
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #include "mainwindow.h"
-
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
     MainWindow w;
-#if (PHASCAN | PHASCAN_II)
-    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-#endif
     w.show();
 
     return a.exec();

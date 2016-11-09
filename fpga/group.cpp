@@ -1,91 +1,100 @@
+/**
+ * @file group.cpp
+ * @brief Group
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #include "group.h"
-#include "phascan_spi.h"
+#include "fpga_spi.h"
+
+#include <string.h>
 
 static const int GROUP_REGS_NUM = 16;
 
 struct GroupData {
     /* s_group_reg (-1) */
-    quint32 offset              :16;/* bit:0-15 地址的偏移 */
-    quint32 res0                :12;/* bit:16-27 保留 */
-    quint32 chip                :4; /* bit:28-31 片选Group取值0010 */
+    quint32 offset              :16;/* bit:0-15     地址的偏移 */
+    quint32 res0                :12;/* bit:16-27    保留 */
+    quint32 chip                :4; /* bit:28-31    片选Group取值0010 */
 
     /* s_group_reg (0) */
-    quint32 freqBand            :4; /* bit:0-3 频带选择 */
-    quint32 videoFilter         :1; /* bit:4   视频滤波 */
-    quint32 rectifier           :2; /* bit:5-6 检波方式 */
-    quint32 compressRato        :12;/* bit:7-18 压缩比 */
-    quint32 res1                :2; /* bit:19-20 保留位 */
-    quint32 gain                :11;/* bit:21-31 Gain, 0.1 dB */
+    quint32 freqBand            :4; /* bit:0-3      频带选择 */
+    quint32 videoFilter         :1; /* bit:4        视频滤波 */
+    quint32 rectifier           :2; /* bit:5-6      检波方式 */
+    quint32 compressRato        :12;/* bit:7-18     压缩比 */
+    quint32 res1                :2; /* bit:19-20    保留位 */
+    quint32 gain                :11;/* bit:21-31    Gain, 0.1 dB */
 
     /* s_group_reg (1) */
-    quint32 thicknessFactor     :24;/* bit:0-23 (2^24) / (thickness_max - thickness_min) 厚度差 */
-    quint32 res2                :5; /* bit:24-28 保留位 */
-    quint32 ut1                 :1; /* bit:29  UT1使能位 */
-    quint32 ut2                 :1; /* bit:30 UT2使能位 */
-    quint32 pa                  :1; /* bit:31 PA使能位 */
+    quint32 thicknessFactor     :24;/* bit:0-23 (2^24) / (thickness_max - thickness_min) 厚度差, 单位mm */
+    quint32 res2                :5; /* bit:24-28    保留位 */
+    quint32 ut1                 :1; /* bit:29       UT1使能位 */
+    quint32 ut2                 :1; /* bit:30       UT2使能位 */
+    quint32 pa                  :1; /* bit:31       PA使能位 */
 
     /* s_group_reg (2) */
-    quint32 sumGain             :12;/* bit:0-11 Sum gain */
-    quint32 sampleRange         :20;/* bit:12-31 capture end 采样范围 */
+    quint32 sumGain             :12;/* bit:0-11     Sum gain */
+    quint32 sampleRange         :20;/* bit:12-31    采样范围 */
 
     /* s_group_reg (3) */
-    quint32 pointQty            :16;/* bit:0-15 聚焦法则数量 */
-    quint32 tcgPointQty         :8; /* bit:16-23 TCG点个数 */
-    quint32 tcg                 :1; /* bit:24   TCG使能  */
-    quint32 res3                :7; /* bit:25-31 保留位 */
+    quint32 pointQty            :16;/* bit:0-15     聚焦法则数量 */
+    quint32 tcgPointQty         :8; /* bit:16-23    TCG点个数 */
+    quint32 tcg                 :1; /* bit:24       TCG使能  */
+    quint32 res3                :7; /* bit:25-31    保留位 */
 
     /* s_group_reg (4) */
-    quint32 rxTime              :20;/* bit:0-19 rx_time */
-    quint32 res4                :2; /* bit:20-21 保留位*/
-    quint32 gain1               :10;/* bit:22-31 gain1 */
+    quint32 rxTime              :20;/* bit:0-19     rx_time */
+    quint32 res4                :2; /* bit:20-21    保留位*/
+    quint32 gain1               :10;/* bit:22-31    gain1 */
 
     /* s_group_reg (5) */
-    quint32 idelTime            :27;/* bit:0-26 idel time  */
-    quint32 res5                :5; /* bit:27-31 保留位 */
+    quint32 idelTime            :27;/* bit:0-26     idel time  */
+    quint32 res5                :5; /* bit:27-31    保留位 */
 
     /* s_group_reg (6) */
-    quint32 gateAHeight         :12;/* bit:0-11  闸门A 高度 */
-    quint32 res6                :20;/* bit:12-31 保留位 */
+    quint32 gateAHeight         :12;/* bit:0-11     闸门A 高度 */
+    quint32 res6                :20;/* bit:12-31    保留位 */
 
     /* s_group_reg (7) */
-    quint32 gateALogic          :8; /* bit:0-7 闸门A 逻辑 */
-    quint32 res7                :24;/* bit:8-31 保留位 */
+    quint32 gateALogic          :8; /* bit:0-7      闸门A 逻辑 */
+    quint32 res7                :24;/* bit:8-31     保留位 */
 
     /* s_group_reg (8) */
-    quint32 gatebHeight         :12;/* bit:0-11 闸门B 高度 */
-    quint32 res8                :20;/* bit:12-31 保留位 */
+    quint32 gatebHeight         :12;/* bit:0-11     闸门B 高度 */
+    quint32 res8                :20;/* bit:12-31    保留位 */
 
     /* s_group_reg (9) */
-    quint32 gateBLogic          :8; /* bit:0-7 闸门B 逻辑 */
-    quint32 res9                :24;/* bit:8-31 保留位 */
+    quint32 gateBLogic          :8; /* bit:0-7      闸门B 逻辑 */
+    quint32 res9                :24;/* bit:8-31     保留位 */
 
     /* s_group_reg (10) */
-    quint32 gateIHeight         :12;/* bit:0-11 闸门C 高度 */
-    quint32 res10               :20;/* bit:12-31 保留位 */
+    quint32 gateIHeight         :12;/* bit:0-11     闸门C 高度 */
+    quint32 res10               :20;/* bit:12-31    保留位 */
 
     /* s_group_reg (11) */
-    quint32 gateILogic          :8; /* bit:0-7  闸门C 逻辑 */
-    quint32 res11               :24;/* bit:8-31 保留位 */
+    quint32 gateILogic          :8; /* bit:0-7      闸门C 逻辑 */
+    quint32 res11               :24;/* bit:8-31     保留位 */
 
     /* s_group_reg (12) */
-    quint32 thicknessMin        :20;/* bit:0-19  测量厚度最小值 */
-    quint32 reject              :12;/* bit:20-31 抑制 */
+    quint32 thicknessMin        :20;/* bit:0-19     测量厚度最小值 */
+    quint32 reject              :12;/* bit:20-31    抑制 */
 
     /* s_group_reg (13) */
-    quint32 sampleStart         :21;/* bit:0-20  采样起点 */
-    quint32 res12               :8; /* bit:21-28 保留位 */
-    quint32 average             :3; /* bit:29-31 求平均 */
+    quint32 sampleStart         :21;/* bit:0-20     采样起点 */
+    quint32 res12               :8; /* bit:21-28    保留位 */
+    quint32 average             :3; /* bit:29-31    求平均 */
 
     /* s_group_reg  (14)*/
-    quint32 thicknessMax        :20;/* bit:0-19 测量厚度最大值 */
-    quint32 res13               :8; /* bit:20-27 保留位 */
-    quint32 thicknessSource     :4; /* bit:28-31 输出 TTL 模拟电压的条件源 */
+    quint32 thicknessMax        :20;/* bit:0-19     测量厚度最大值 */
+    quint32 res13               :8; /* bit:20-27    保留位 */
+    quint32 thicknessSource     :4; /* bit:28-31    输出 TTL 模拟电压的条件源 */
 
     /* s_group_reg  (15)*/
-    quint32 txEnd               :14;/* bit:0-13  UT tx end */
-    quint32 res14               :2; /* bit:14-15 保留位 */
-    quint32 txStart             :14;/* bit:16-29 UT tx start */
-    quint32 res15               :2; /* bit:30-31 保留位 */
+    quint32 txEnd               :14;/* bit:0-13     UT tx end */
+    quint32 res14               :2; /* bit:14-15    保留位 */
+    quint32 txStart             :14;/* bit:16-29    UT tx start */
+    quint32 res15               :2; /* bit:30-31    保留位 */
 };
 
 static bool write_reg(GroupData *d, int index, int reg);
@@ -156,19 +165,19 @@ bool Group::set_compress_rato(int val, bool reflesh)
     return (reflesh ? write_reg(d, m_index, 0) : true);
 }
 
-int Group::gain(void)
+float Group::gain(void)
 {
     QReadLocker l(&m_rwlock);
-    return d->gain;
+    return (float)(d->gain/(10.0));
 }
 
-bool Group::set_gain(int gain, bool reflesh)
+bool Group::set_gain(float gain, bool reflesh)
 {
-    if (gain < 1) {
+    if (gain < 0) {
         return false;
     }
     QWriteLocker l(&m_rwlock);
-    d->gain = gain;
+    d->gain = (quint32)(gain*10);
     return (reflesh ? write_reg(d, m_index, 0) : true);
 }
 
@@ -499,7 +508,7 @@ bool Group::set_tx_start(int val, bool reflesh)
 
 bool Group::reflesh(void)
 {
-    PhascanSpi *spi = PhascanSpi::get_spi();
+    FpgaSpi *spi = FpgaSpi::get_spi();
     if (spi == NULL) {
         return false;
     }
@@ -511,7 +520,7 @@ bool Group::reflesh(void)
 
 bool write_reg(GroupData *d, int index, int reg)
 {
-    PhascanSpi *spi = PhascanSpi::get_spi();
+    FpgaSpi *spi = FpgaSpi::get_spi();
     if (reg >= GROUP_REGS_NUM
             || spi == NULL) {
         return false;
@@ -522,6 +531,7 @@ bool write_reg(GroupData *d, int index, int reg)
     quint32 data[2] = {0};
     quint32 *dp = (quint32 *)d;
     data[0] = dp[0];
-    data[1] = dp[reg];
+    data[1] = dp[reg+1];
+
     return spi->send((char *)data, 8);
 }

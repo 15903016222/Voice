@@ -6,8 +6,6 @@ DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
     ui(new Ui::DateTimeSetDialog)
 {
     ui->setupUi(this);
-
-    init_ui();
 }
 
 DateTimeSetDialog::~DateTimeSetDialog()
@@ -18,11 +16,6 @@ DateTimeSetDialog::~DateTimeSetDialog()
 void DateTimeSetDialog::retranslate_dialog_ui()
 {
     ui->retranslateUi(this);
-}
-
-void DateTimeSetDialog::init_ui()
-{
-
 }
 
 void DateTimeSetDialog::on_buttonBox_accepted()

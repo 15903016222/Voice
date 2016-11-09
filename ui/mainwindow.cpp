@@ -23,7 +23,6 @@ private:
     Q_DECLARE_PUBLIC(MainWindow)
 };
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -34,9 +33,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     init_ui();
 
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyBottom_menu(int)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyLeft_menu(int)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyLeft_back(int)));
+ //   slot_setMenuOpacity(100.0);
+ //   connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
+
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
 }
 
 MainWindow::~MainWindow()
@@ -108,35 +108,14 @@ void MainWindow::init_ui()
     connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
 }
 
-void MainWindow::keyBottom_menu(int key)
+void MainWindow::do_key_event(Mcu::KeyType type)
 {
-    if(key == 227) {
+    switch (type) {
+    case Mcu::KEY_MENU:
         show_hidden_Menu();
-        keyValue = 227;
-    }
-}
-
-void MainWindow::keyLeft_menu(int key)
-{
-    if(key == 210) {
-        show_hidden_Menu();
-        keyValue = 210;
-    }
-}
-
-void MainWindow::keyLeft_back(int key)
-{
-    if(key == 217) {
-        switch(keyValue) {
-        case 210:
-            keyLeft_menu(210);
-            break;
-        case 227:
-            keyBottom_menu(227);
-            break;
-
-        default:break;
-        }
+        break;
+    default:
+        break;
     }
 }
 
@@ -152,6 +131,10 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 
     emit clickedMenuIndex(firstMenuNum);
     show_hidden_arrow();
+
+    ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
+    ui->widget_thirdMenu->set_currentBrightness(firstMenuNum, secondMenuNum);
+ //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -162,15 +145,11 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
 
-    if(firstMenuNum == 8){
-        if(secondMenuNum == 1){
-            ui->widget_thirdMenu->set_currentDateToMenu();
-            ui->widget_thirdMenu->set_currentTimeToMenu();
-        }else if(secondMenuNum == 2){
-            ui->widget_thirdMenu->set_currentIPToMenu();
-            ui->widget_thirdMenu->set_currentSubNetToMenu();
-        }
-    }
+    ui->widget_thirdMenu->set_currentTimeToMenu(firstMenuNum, secondMenuNum);
+    ui->widget_thirdMenu->set_currentIP_subNetToMenu(firstMenuNum, secondMenuNum);
+    ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
+    ui->widget_thirdMenu->set_currentBrightness(firstMenuNum, secondMenuNum);
+ //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
 void MainWindow::on_pushButton_top_clicked()
@@ -334,8 +313,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    qDebug() << event->key();
-    if (event->key() == Qt::Key_Meta) {
+    if (event->key() == Qt::Key_Alt) {
         show_hidden_Menu();
     }
     return QMainWindow::keyPressEvent(event);
@@ -389,5 +367,16 @@ void MainWindow::slot_keyboard_close_clicked()
         emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
         hiddenKeyboardFlag = false;
     }
+}
+
+void MainWindow::slot_setMenuOpacity(double value)
+{
+    QString alph = QString::number((double)(value/100), 'f', 2);
+    QString bc = QString("background-color:rgba(37, 76, 124," + alph + ");");
+
+    QString style = QString("QWidget#widget{" +bc + "border-radius:8px;}"
+                            "QPushButton#pushButton_top{" + bc + "border-radius:8px;}"
+                            "QPushButton#pushButton_bottom{" + bc + "border:none;}");
+    setStyleSheet(style);
 }
 
