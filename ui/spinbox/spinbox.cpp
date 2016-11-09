@@ -10,7 +10,7 @@ SpinBox::SpinBox(QWidget *parent) :
 {
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(key_sure(int)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
 }
 
 void SpinBox::do_rotary_event(Mcu::RotaryType type)
@@ -25,10 +25,10 @@ void SpinBox::do_rotary_event(Mcu::RotaryType type)
     }
 }
 
-void SpinBox::key_sure(int key)
+void SpinBox::key_sure(Mcu::KeyType key)
 {
     if(hasFocus()){
-        if(key == 214) {
+        if(key == Mcu::KEY_SURE) {
             QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
             QApplication::sendEvent(this, event);
         }
