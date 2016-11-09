@@ -6,7 +6,6 @@
 #include <QLabel>
 #include <QPushButton>
 
-using namespace Ui;
 using namespace Ui::Dialog;
 
 AboutDialog::AboutDialog(QWidget *parent)

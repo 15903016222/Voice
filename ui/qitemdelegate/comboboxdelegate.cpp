@@ -13,7 +13,7 @@ ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
 {
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(key_sure(int)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
     editFlag = false;
 
 }
@@ -164,9 +164,9 @@ void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
     }
 }
 
-void ComboBoxDelegate::key_sure(int key)
+void ComboBoxDelegate::key_sure(Mcu::KeyType key)
 {
-    if(key == 214) {
+    if(key == Mcu::KEY_SURE) {
         if(comboBoxList.size() != 0) {
             QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
             QString string = itemList.at(comboBox->currentIndex());

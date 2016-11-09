@@ -55,7 +55,6 @@ public:
     int secondMenuNum;
     int mainMenuStartPos;
     int mainMenuEndPos;
-    int keyValue;
 
 private:
     void init_ui();
@@ -64,9 +63,7 @@ private:
     QGraphicsOpacityEffect *effect;
 
 protected slots:
-    void keyBottom_menu(int key);
-    void keyLeft_menu(int key);
-    void keyLeft_back(int key);
+    void do_key_event(Mcu::KeyType type);
 
 private slots:
     void slot_firstMenuToolBoxCurrentChanged(int index);

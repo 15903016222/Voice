@@ -1,3 +1,11 @@
+/**
+ * @file beam.h
+ * @brief Beam Class (Focal Law)
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
+
 #ifndef __BEAM_H__
 #define __BEAM_H__
 

@@ -34,9 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
  //   slot_setMenuOpacity(100.0);
  //   connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
 
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyBottom_menu(int)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyLeft_menu(int)));
-    connect(m_mcu, SIGNAL(key_event(int)), this, SLOT(keyLeft_back(int)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
 }
 
 MainWindow::~MainWindow()
@@ -94,35 +92,14 @@ void MainWindow::init_ui()
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
 }
 
-void MainWindow::keyBottom_menu(int key)
+void MainWindow::do_key_event(Mcu::KeyType type)
 {
-    if(key == 227) {
+    switch (type) {
+    case Mcu::KEY_MENU:
         show_hidden_Menu();
-        keyValue = 227;
-    }
-}
-
-void MainWindow::keyLeft_menu(int key)
-{
-    if(key == 210) {
-        show_hidden_Menu();
-        keyValue = 210;
-    }
-}
-
-void MainWindow::keyLeft_back(int key)
-{
-    if(key == 217) {
-        switch(keyValue) {
-        case 210:
-            keyLeft_menu(210);
-            break;
-        case 227:
-            keyBottom_menu(227);
-            break;
-
-        default:break;
-        }
+        break;
+    default:
+        break;
     }
 }
 

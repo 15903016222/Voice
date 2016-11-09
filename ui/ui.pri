@@ -25,11 +25,11 @@ SOURCES += \
     $$PWD/dialogwidget/inputpanelcontext.cpp \
     $$PWD/dialogwidget/verticalsliderdialog.cpp \
     $$PWD/dialogwidget/resetconfigdialog.cpp \
-    $$PWD/dialogwidget/systeminfodialog.cpp \
     $$PWD/dialogwidget/networkdialog.cpp \
     $$PWD/dialogwidget/datetimesetdialog.cpp \
     $$PWD/dialogwidget/filemanagerdialog.cpp \
     $$PWD/dialogwidget/about_dialog.cpp \
+    $$PWD/dialogwidget/sysinfo_dialog.cpp \
     $$PWD/spinbox/spinbox.cpp
 
 HEADERS += \
@@ -52,11 +52,11 @@ HEADERS += \
     $$PWD/dialogwidget/inputpanelcontext.h \
     $$PWD/dialogwidget/verticalsliderdialog.h \
     $$PWD/dialogwidget/resetconfigdialog.h \
-    $$PWD/dialogwidget/systeminfodialog.h \
     $$PWD/dialogwidget/networkdialog.h \
     $$PWD/dialogwidget/datetimesetdialog.h \
     $$PWD/dialogwidget/filemanagerdialog.h \
     $$PWD/dialogwidget/about_dialog.h \
+    $$PWD/dialogwidget/sysinfo_dialog.h \
     $$PWD/spinbox/spinbox.h
 
 FORMS += \

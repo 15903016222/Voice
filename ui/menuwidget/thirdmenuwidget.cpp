@@ -10,7 +10,7 @@
 #include "inputpanelcontext.h"
 #include "about_dialog.h"
 #include "resetconfigdialog.h"
-#include "systeminfodialog.h"
+#include "sysinfo_dialog.h"
 #include "filemanagerdialog.h"
 
 #include <QMap>
@@ -447,9 +447,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         break;
     }
     case 15: {
-        SystemInfoDialog *systemInfoDialog = new SystemInfoDialog(this);
-        systemInfoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        systemInfoDialog->show();
+        Ui::Dialog::SysInfoDialog *infoDialog = new Ui::Dialog::SysInfoDialog(this);
+        infoDialog->exec();
         break;
     }
     case 16: {

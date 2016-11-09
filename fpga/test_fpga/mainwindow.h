@@ -1,3 +1,10 @@
+/**
+ * @file mainwindow.h
+ * @brief testing fpga
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -52,7 +59,7 @@ private slots:
 
     void on_spinBoxEcho_valueChanged(int arg1);
 
-    void on_comboBoxAlarmOuput_currentIndexChanged(int index);
+    void on_comboBoxAlarmOutput_currentIndexChanged(int index);
 
     void on_comboBoxAlarmOutputValid_currentIndexChanged(int index);
 
@@ -74,7 +81,7 @@ private slots:
 
     void on_comboBoxAlarmAnalogValid_currentIndexChanged(int index);
 
-    void on_comboBoxSoundAlarmAnalogLogicGroup_currentIndexChanged(int index);
+    void on_comboBoxAlarmAnalogLogicGroup_currentIndexChanged(int index);
 
     void on_comboBoxAlarmAnalogType_currentIndexChanged(int index);
 
@@ -95,8 +102,7 @@ private slots:
 
     void on_spinBoxGroupCompressRato_valueChanged(int arg1);
 
-    void on_spinBoxGroupGain_valueChanged(int arg1);
-
+    void on_doubleSpinBoxGroupGain_valueChanged(double arg1);
 
     void on_spinBoxGroupThicknessFactor_valueChanged(int arg1);
 
@@ -150,6 +156,45 @@ private slots:
 
     void on_pushButtonGroupReflesh_clicked();
 
+    void on_pushButtonBeamCreate_clicked();
+
+    void on_pushButtonBeamDelete_clicked();
+
+
+    void on_comboBoxCurrentBeam_currentIndexChanged(int index);
+
+    void on_spinBoxBeamGainOffset_valueChanged(int arg1);
+
+    void on_spinBoxBeamInfo_valueChanged(int arg1);
+
+    void on_spinBoxBeamDelay_valueChanged(int arg1);
+
+    void on_spinBoxBeamGateASTart_valueChanged(int arg1);
+
+    void on_spinBoxBeamGateAEnd_valueChanged(int arg1);
+
+    void on_spinBoxBeamGateBStart_valueChanged(int arg1);
+
+    void on_spinBoxBeamGateBEnd_valueChanged(int arg1);
+
+    void on_spinBoxBeamGateIStart_valueChanged(int arg1);
+
+    void on_spinBoxBeamGateIEnd_valueChanged(int arg1);
+
+    void on_spinBoxBeamTxChannel_valueChanged(int arg1);
+
+    void on_spinBoxBeamRxChannel_valueChanged(int arg1);
+
+    void on_spinBoxBeamTxChannelSelect_valueChanged(int arg1);
+
+    void on_spinBoxBeamRxChannelSelect_valueChanged(int arg1);
+
+    void on_spinBoxBeamTxDelay_valueChanged(int arg1);
+
+    void on_spinBoxBeamRxDelay_valueChanged(int arg1);
+
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Fpga *m_fpga;
@@ -157,6 +202,7 @@ private:
     AlarmAnalog *m_alarmAnalog;
 
     GroupPointer m_group;
+    BeamPointer m_beam;
 };
 
 #endif // MAINWINDOW_H

@@ -1,3 +1,10 @@
+/**
+ * @file spi.cpp
+ * @brief Spi
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-04
+ */
 #include "spi.h"
 
 #include <string.h>
@@ -109,33 +116,20 @@ bool Spi::set_lsb_first(bool flag)
     return true;
 }
 
-static const int MAX_LEN = 32;
 bool Spi::write(char *data, quint32 len)
 {
-    if (! is_open()) {
+    if (! is_open() || data == NULL) {
         return false;
     }
 
-    int i = 0;
-    const int j = len / MAX_LEN;
-    const int k = len % MAX_LEN;
-    struct spi_ioc_transfer xfer[j+1];
-    ::memset(xfer, 0, sizeof(xfer));
-    for (i=0; i<j; ++i) {
-        xfer[i].tx_buf = (unsigned long)(data+i);
-        xfer[i].len = MAX_LEN;
-    }
+    struct spi_ioc_transfer xfer;
+    ::memset(&xfer, 0, sizeof(xfer));
+    xfer.tx_buf = (unsigned long)data;
+    xfer.len = len;
 
-    if (k != 0) {
-        xfer[j].tx_buf = (unsigned long)(data + (j*MAX_LEN));
-        xfer[j].len = k;
-    }
-
-    if (::ioctl(m_fd, SPI_IOC_MESSAGE(j+1), xfer) == -1) {
+    if (::ioctl(m_fd, SPI_IOC_MESSAGE(1), &xfer) == -1) {
         return false;
     }
 
-//    ::usleep(100);
     return true;
 }
-
