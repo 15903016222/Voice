@@ -71,8 +71,6 @@ public:
 
 signals:
     void retranslate_ui(QString);
-    void send_dialog_title_content(QMap<QString, QString>);
-    void send_spinbox_value(QList<int>);
     void translater_ZH();
     void translater_EN();
     void send_string_to_delegate(QString);

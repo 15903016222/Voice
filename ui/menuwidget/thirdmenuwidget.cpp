@@ -419,9 +419,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         break;
     }
     case 14: {
-        connect(this, SIGNAL(send_dialog_title_content(QMap<QString, QString>)), networkDialog, SLOT(set_dialog_title(QMap<QString, QString>)));
-        connect(this, SIGNAL(send_spinbox_value(QList<int>)), networkDialog, SLOT(set_spinbox_value(QList<int>)));
-
         QVariantMap mapOne = widget->translateChineseMap["Preference"].toMap();
         QVariantMap mapTwo = mapOne["Network"].toMap();
         QList<int> valueList = get_dialog_value_list(index, ".");
@@ -436,8 +433,9 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         } else if(currentHeaderText.contains(mapTwo.value("Subnet Mask").toString())) {
             map["Subnet Mask"] = mapTwo.value("Subnet Mask").toString();
         }
-        emit send_dialog_title_content(map);
-        emit send_spinbox_value(valueList);
+
+        networkDialog->set_dialog_title(map);
+        networkDialog->set_spinbox_value(valueList);
 
         networkDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         networkDialog->show();
@@ -457,9 +455,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         break;
     }
     case 18: {
-        connect(this, SIGNAL(send_dialog_title_content(QMap<QString, QString>)), dateTimeSetDialog, SLOT(set_dialog_title(QMap<QString, QString>)));
-        connect(this, SIGNAL(send_spinbox_value(QList<int>)), dateTimeSetDialog, SLOT(set_spinbox_value(QList<int>)));
-
         QMap<QString, QString> map;
         QList<int> valueList;
         QVariantMap mapOne = widget->translateChineseMap["Preference"].toMap();
@@ -479,8 +474,8 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             map["Date Set"] = mapTwo.value("Date Set").toString();            
         }
 
-        emit send_dialog_title_content(map);
-        emit send_spinbox_value(valueList);
+        dateTimeSetDialog->set_dialog_title(map);
+        dateTimeSetDialog->set_spinbox_value(valueList);
 
         dateTimeSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         dateTimeSetDialog->show();
