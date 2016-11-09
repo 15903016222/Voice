@@ -1,9 +1,10 @@
 #include "sysinfo_dialog.h"
+#include "device.h"
 
 #include <QDialogButtonBox>
-#include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include <QDebug>
 
 using namespace Ui::Dialog;
@@ -17,29 +18,59 @@ SysInfoDialog::SysInfoDialog(QWidget *parent) :
 
     setWindowTitle(tr("System Infomation"));
     setWindowFlags( (windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::FramelessWindowHint | Qt::Dialog);
-    QGridLayout *layout = new QGridLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSizeConstraint(QLayout::SetFixedSize);
 
-    const QString description = tr(
-        "<h3 style=\"text-align:center\">%1</h3>"
-        "<table border=1 >"
-        "<tr><th>Serial Number</th><td>%s</td></tr>"
-        "<tr><th>Device Type</th><td>%s</td></tr>"
-        "<tr><th>Device Version</th><td>%s</td></tr>"
-        "<tr><th>Hardware Version</th><td>%d</td></tr>"
-        "<tr><th>Software Version</th><td>%d.%d.%d</td></tr>"
-        "<tr><th>Software Commit</th><td>%s</td></tr>"
-        "<tr><th>Authentication Mode</th><td>%s</td></tr>"
-        "<tr><th>Authentication Expire</th><td>%s</td></tr>"
-        "<tr><th>Run Count</th><td>%d</td></tr>"
-        "<tr><th>Run Time(s)</th><td>%d</td></tr>"
-        "</table>")
-            .arg(tr("System Infomation"));
+    Device *dev = Device::get_device();
 
-    QLabel *copyRightLabel = new QLabel(description);
-    copyRightLabel->setWordWrap(true);
-    copyRightLabel->setOpenExternalLinks(true);
-    copyRightLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    const QString info = tr(
+                "<html><head><title>System Infomation</title>"
+                "<style>"
+                "body {background-color: #CCCCCC;}"
+                "table, th, td {"
+                "padding:5px;"
+                "border: 1px solid black;"
+                "border-collapse: collapse;"
+                "}"
+                "table {"
+                "margin:5px;"
+                "}"
+                "th {"
+                "text-align:left;"
+                "background:#CCCCFF;"
+                "}"
+                "td {"
+                "text-align:left;"
+                "}"
+                "h3 {"
+                "text-align:center;"
+                "}"
+                "</style>"
+                "</head>"
+                "<body>"
+                "<table border=1 cellspacing=1 cellpadding=0 >"
+                "<tr><th>Serial Number</th><td>%1</td></tr>"
+                "<tr><th>Device Type</th><td>%2</td></tr>"
+                "<tr><th>Device Version</th><td>%3</td></tr>"
+                "<tr><th>Hardware Version</th><td></td></tr>"
+                "<tr><th>Software Version</th><td></td></tr>"
+                "<tr><th>Software Commit</th><td></td></tr>"
+                "<tr><th>Cert Info</th><td>%4</td></tr>"
+                "<tr><th>Run Count</th><td></td></tr>"
+                "<tr><th>Run Time(s)</th><td></td></tr>"
+                "</table>"
+                "</body>"
+                "</html>")
+            .arg(dev->serial_number())
+            .arg(dev->type_string())
+            .arg(dev->version())
+            .arg(dev->cert_info());
+
+    QLabel *infoTitleLabel = new QLabel(QString("<h3>%1</3>").arg(tr("System Infomation")));
+    QLabel *infoLabel = new QLabel(info);
+    infoLabel->setAlignment(Qt::AlignLeft);
+    infoLabel->setWordWrap(true);
+    infoLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     QPushButton *closeButton = buttonBox->button(QDialogButtonBox::Close);
@@ -47,10 +78,7 @@ SysInfoDialog::SysInfoDialog(QWidget *parent) :
     buttonBox->addButton(closeButton, QDialogButtonBox::ButtonRole(QDialogButtonBox::RejectRole | QDialogButtonBox::AcceptRole));
     connect(buttonBox , SIGNAL(rejected()), this, SLOT(reject()));
 
-    QLabel *logoLabel = new QLabel;
-    logoLabel->setPixmap(QPixmap(":/file/resources/logo.png"));
-
-    layout->addWidget(logoLabel , 0, 0, 1, 1, Qt::AlignCenter);
-    layout->addWidget(copyRightLabel, 1, 0);
-    layout->addWidget(buttonBox, 2, 0, 1, 5);
+    layout->addWidget(infoTitleLabel, 0, Qt::AlignCenter);
+    layout->addWidget(infoLabel);
+    layout->addWidget(buttonBox, 0, Qt::AlignRight);
 }
