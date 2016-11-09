@@ -12,7 +12,21 @@
 #  PHASCAN_II : Qt5.4.3, arm-phytec-linux-gnueabi-gcc.4.9.2
 #-------------------------------------------------------------
 
+win32 {
+DEVICE = PC_WIN
+}
+
+linux-oe-g++ {
+DEVICE = PHASCAN_II
+}
+
+linux-arm-g++ {
+DEVICE = PHASCAN
+}
+
+linux-g++ {
 DEVICE = PC_UNIX
+}
 
 QT       += core gui
 
