@@ -4,33 +4,13 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="59"/>
-        <source>PHASCAN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="77"/>
         <source>      PHASCAN has a powerfull detection capability,
 can achieve a variety of scanning mode and focus
 mode, which greatly improve the detection reliability.
      CopyRight @2010-2016 Doppler All rights reserved.</source>
-        <translation type="unfinished">      PHASCAN有强大的检测功能，可以实现多种扫描
+        <translation type="obsolete">      PHASCAN有强大的检测功能，可以实现多种扫描
 模式和聚焦模式，大大提高了检测的可靠性。
       多浦乐保留@2010 - 2016所有版权。</translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="111"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;SimSun&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.cndoppler.cn&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cndoppler.cn/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>      PHASCAN has a powerfull detection capability,
@@ -42,14 +22,12 @@ mode, which greatly improve the detection reliability.
       多浦乐保留@2010 - 2016所有版权。</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="157"/>
         <source>Credits</source>
-        <translation>工作人员</translation>
+        <translation type="vanished">工作人员</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="191"/>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="vanished">关闭</translation>
     </message>
 </context>
 <context>
@@ -141,39 +119,12 @@ mode, which greatly improve the detection reliability.
 <context>
     <name>CreditsDialog</name>
     <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="47"/>
         <source>Written By</source>
-        <translation>开发人员</translation>
+        <translation type="vanished">开发人员</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="63"/>
-        <source>Yshy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="78"/>
-        <source>Jake Yang</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="93"/>
-        <source>ZJY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="116"/>
-        <source>tab_2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="160"/>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="vanished">关闭</translation>
     </message>
 </context>
 <context>
@@ -488,6 +439,16 @@ mode, which greatly improve the detection reliability.
     <message>
         <source>Service</source>
         <translation type="vanished">服务</translation>
+    </message>
+    <message>
+        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="122"/>
+        <source>Parsing file Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="122"/>
+        <source>Read file failure!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2864,6 +2825,11 @@ Part</source>
 Part</source>
         <translation type="vanished">工件清除</translation>
     </message>
+    <message>
+        <location filename="../menuwidget/thirdmenuwidget.cpp" line="60"/>
+        <source>Chinese</source>
+        <translation>中文</translation>
+    </message>
 </context>
 <context>
     <name>TimeSetDialog</name>
@@ -3006,6 +2972,19 @@ Part</source>
 (°)</source>
         <translation>角度
 (°)</translation>
+    </message>
+</context>
+<context>
+    <name>Ui::Dialog::AboutDialog</name>
+    <message>
+        <location filename="../dialogwidget/about_dialog.cpp" line="19"/>
+        <source>About Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/about_dialog.cpp" line="24"/>
+        <source>&lt;h3 style=&quot;text-align:center&quot;&gt;%1&lt;/h3&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Phascan has a powerful detection capability, can achieve a variety of scanning mode and focus mode,which greatly improves the detection reliability.&lt;p style=&quot;font-size:14px; text-align:center;&quot;&gt;Copyright 2008-2016 Doppler. All rights reserved.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
