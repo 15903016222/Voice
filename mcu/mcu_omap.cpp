@@ -34,10 +34,51 @@ struct ProbeData
 McuOmap::McuOmap()
     :Mcu(), m_ttyS0(TTY_DEV0), m_ttyS1(TTY_DEV1), m_brightness(70)
 {
-    m_statusMap.insert(0x00, Mcu::NO_BATTERY);
-    m_statusMap.insert(0x80, Mcu::CHARGE);
-    m_statusMap.insert(0xc0, Mcu::DISCHARGE);
-    m_statusMap.insert(0xe0, Mcu::BATTERY_FULL);
+    if (s_statusMap.isEmpty()) {
+        s_statusMap.insert(0x00, Mcu::NO_BATTERY);
+        s_statusMap.insert(0x80, Mcu::CHARGE);
+        s_statusMap.insert(0xc0, Mcu::DISCHARGE);
+        s_statusMap.insert(0xe0, Mcu::BATTERY_FULL);
+    }
+
+    if (s_keyMap.isEmpty()) {
+        s_keyMap.insert(0,  KEY_UP);
+        s_keyMap.insert(1,  KEY_LEFT);
+        s_keyMap.insert(9,  KEY_RIGHT);
+        s_keyMap.insert(10, KEY_DOWN);
+        s_keyMap.insert(2,  KEY_MENU);
+        s_keyMap.insert(25, KEY_MENU);
+        s_keyMap.insert(8,  KEY_SURE);
+        s_keyMap.insert(44, KEY_SURE);
+        s_keyMap.insert(11, KEY_BACK);
+        s_keyMap.insert(43, KEY_BACK);
+        s_keyMap.insert(3,  KEY_80_PERCENT);
+        s_keyMap.insert(12, KEY_DISPLAY);
+        s_keyMap.insert(4,  KEY_START);
+//        s_keyMap.insert(KEY_STOP);
+        s_keyMap.insert(13, KEY_SAVE);
+        s_keyMap.insert(5,  KEY_OPEN);
+        s_keyMap.insert(16, KEY_GATE);
+        s_keyMap.insert(17, KEY_CALIBRATION);
+        s_keyMap.insert(18, KEY_DB);
+        s_keyMap.insert(19, KEY_CURSOR);
+        s_keyMap.insert(20, KEY_FREEZE);
+        s_keyMap.insert(21, KEY_ANGLE);
+        s_keyMap.insert(24, KEY_ERASURE);
+        s_keyMap.insert(33, KEY_HELP);
+//        s_keyMap.insert(KEY_F1);
+        s_keyMap.insert(26, KEY_F2);
+        s_keyMap.insert(27, KEY_F3);
+        s_keyMap.insert(28, KEY_F4);
+        s_keyMap.insert(29, KEY_F5);
+        s_keyMap.insert(32, KEY_F6);
+        s_keyMap.insert(34, KEY_F7);
+        s_keyMap.insert(35, KEY_F8);
+        s_keyMap.insert(36, KEY_F9);
+        s_keyMap.insert(37, KEY_F10);
+        s_keyMap.insert(42, KEY_F11);
+        s_keyMap.insert(45, KEY_F12);
+    }
 
     init_tty(m_ttyS0);
     init_tty(m_ttyS1);
@@ -107,12 +148,12 @@ void McuOmap::on_ttyS0_readyRead_event()
         /* first battery */
         emit battery_quantity_event(0, m_buffer.mid(4, 1).toHex().toInt(0, 16));
 
-        emit battery_status_event(0, m_statusMap[m_buffer.at(6)]);
+        emit battery_status_event(0, s_statusMap[m_buffer.at(6)]);
 
         /* second battery */
         emit battery_quantity_event(1, m_buffer.mid(10, 1).toHex().toInt(0, 16));
 
-        emit battery_status_event(1, m_statusMap[m_buffer.at(12)]);
+        emit battery_status_event(1, s_statusMap[m_buffer.at(12)]);
 
         /* temperature */
         emit temperature_event(Mcu::TEMPERATURE_POWER,m_buffer.mid(15, 2).toHex().toInt(0, 16)>>7);
@@ -156,7 +197,7 @@ void McuOmap::on_ttyS1_readyRead_event()
         } else if (key == 208) {
             emit rotary_event(Mcu::ROTARY_UP);
         } else {
-            emit key_event(key);
+            emit key_event(s_keyMap[key]);
         }
     }
 }

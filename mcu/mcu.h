@@ -15,6 +15,43 @@ public:
         ROTARY_DOWN
     };
 
+    enum KeyType {
+        KEY_INVALID,
+        KEY_UP,
+        KEY_LEFT,
+        KEY_RIGHT,
+        KEY_DOWN,
+        KEY_MENU,
+        KEY_SURE,
+        KEY_BACK,
+        KEY_80_PERCENT,
+        KEY_DISPLAY,
+        KEY_START,
+        KEY_STOP,
+        KEY_SAVE,
+        KEY_OPEN,
+        KEY_GATE,
+        KEY_CALIBRATION,
+        KEY_DB,
+        KEY_CURSOR,
+        KEY_FREEZE,
+        KEY_ANGLE,
+        KEY_ERASURE,
+        KEY_HELP,
+        KEY_F1,
+        KEY_F2,
+        KEY_F3,
+        KEY_F4,
+        KEY_F5,
+        KEY_F6,
+        KEY_F7,
+        KEY_F8,
+        KEY_F9,
+        KEY_F10,
+        KEY_F11,
+        KEY_F12
+    };
+
     enum BatteryStatus {
         DISCHARGE,
         CHARGE,
@@ -51,7 +88,7 @@ public slots:
 
 
 Q_SIGNALS:
-    void key_event(int value);
+    void key_event(Mcu::KeyType type);
     void rotary_event(Mcu::RotaryType type);
     void brightness_event(int value);
     void battery_status_event(int index, Mcu::BatteryStatus status);

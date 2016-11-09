@@ -73,8 +73,10 @@ private:
     QSerialPort m_tty;
     QMutex m_wrMutex;
     QByteArray m_recBuffer;
-    static char m_queryPkg[7];
-    static char m_setPkg[8];
+    static char s_queryPkg[7];
+    static char s_setPkg[8];
+    static QMap<int, int> s_keyMap;
+
     Probe m_probe;
     int m_probeFlag;
 
@@ -83,8 +85,8 @@ private:
     QByteArray find_packet(QByteArray &data);
     void parse_packet(QByteArray &pkg);
 
-    void query(Cmd cmd) { m_queryPkg[4] = cmd; write(m_queryPkg, sizeof(m_queryPkg)); }
-    void set(Cmd cmd, char value) { m_setPkg[4] = cmd; m_setPkg[5] = value; write(m_setPkg, sizeof(m_setPkg));}
+    void query(Cmd cmd) { s_queryPkg[4] = cmd; write(s_queryPkg, sizeof(s_queryPkg)); }
+    void set(Cmd cmd, char value) { s_setPkg[4] = cmd; s_setPkg[5] = value; write(s_setPkg, sizeof(s_setPkg));}
 
 private slots:
     void on_readyRead_event();
