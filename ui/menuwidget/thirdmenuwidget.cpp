@@ -905,10 +905,21 @@ void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
     keyboardShowFlag = true;
     if(opendSpinBoxIndex >= 0) {
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        qDebug() << spinBox->editFlag;
+//        QModelIndex modelIndex = model->item(0, index)->index();
+
+//        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
+//        QApplication::sendEvent(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1), event);
         if(!spinBox->editFlag) {
-            const QModelIndex modelIndex = model->item(0, index)->index();
+            QModelIndex modelIndex = model->item(0, index)->index();
+//            ui->tableView->openPersistentEditor(modelIndex);
             ui->tableView->openPersistentEditor(modelIndex);
+//            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
+//            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->focusWidget()->activateWindow();
+//            ui->tableView->edit(modelIndex);
+            qDebug() << "HasFocus" << spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->hasFocus();
         }
+        qDebug() << spinBox->editFlag;
     }
 }
 
@@ -931,14 +942,21 @@ void ThirdMenuWidget::input_spinbox_number(QString string)
 {
     if(opendSpinBoxIndex >= 0) {
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
+//        QModelIndex modelIndex = model->item(0, opendSpinBoxIndex)->index();
+//        ui->tableView->openPersistentEditor(modelIndex);
+//        ui->tableView->edit(modelIndex);
+        qDebug() << spinBox->editFlag;
+//        spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
         if(spinBox->editFlag) {
-//            QModelIndex modelIndex = model->item(0, opendSpinBoxIndex)->index();
-//            ui->tableView->edit(modelIndex);
+//            if(spinBox->inputCount <= 0) {
+
+//                spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->activateWindow();
+//            }
 //            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocusPolicy(Qt::StrongFocus);
 //            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
 //            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_1, Qt::NoModifier);
 //            QCoreApplication::sendEvent(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1), event);
-
+            qDebug() << string;
             emit send_string_to_delegate(string);
             spinBox->inputCount += 1;
         }

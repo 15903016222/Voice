@@ -40,9 +40,9 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         "QComboBox::drop-down{border-style: none;}"
         "QComboBox QAbstractItemView{"
         "font: 12pt 'Times New Roman';"
-        "background-color:rgb(255, 255, 255);"
+        "background-color: rgb(255, 255, 255);"
         "margin-bottom: 45px;"
-        "outline:0px;}"
+        "outline: 0px;}"
         "QComboBox QAbstractItemView::item{height: 30px;}"
         "QComboBox QAbstractItemView::item:hover{color: yellow;"
         "background-color: rgba(0, 150, 255, 225);}"
@@ -132,12 +132,10 @@ void ComboBoxDelegate::commit_and_close_editor(const QString &str)
 
 void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 {
-  //  if(comboBoxList.size() != 0){
+    if(editFlag) {
         QKeyEvent *event;
         QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
 //        int index = comboBox->currentIndex();
-
-        if(modelItemList.count() > 1){
 //            if (type == Mcu::ROTARY_UP) {
 //                if(index == 0){
 //                    index = modelItemList.count() - 1;
@@ -151,24 +149,24 @@ void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 //                    index = index + 1;
 //                }
 //            }
-            if(type == Mcu::ROTARY_UP) {
-                event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
-            } else {
-                event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
-            }
-            QApplication::sendEvent(comboBox, event);
+        if(type == Mcu::ROTARY_UP) {
+            event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+        } else {
+            event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
         }
-//        comboBox->setCurrentIndex(index);
-  //  }
+        QApplication::sendEvent(comboBox, event);
+    }
 }
 
 void ComboBoxDelegate::key_sure(int key)
 {
-    if(key == 214) {
-        if(comboBoxList.size() != 0) {
+    if(editFlag) {
+        if(key == 214) {
             QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
             QString string = itemList.at(comboBox->currentIndex());
             commit_and_close_editor(string);
+//            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+//            QApplication::sendEvent(comboBox, event);
         }
     }
 }
