@@ -923,7 +923,7 @@ void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
     keyboardShowFlag = true;
     if(opendSpinBoxIndex >= 0) {
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
-        qDebug() << spinBox->editFlag;
+        qDebug() << "open_editor" << spinBox->editFlag;
 //        QModelIndex modelIndex = model->item(0, index)->index();
 
 //        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
@@ -935,9 +935,9 @@ void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
 //            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
 //            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->focusWidget()->activateWindow();
 //            ui->tableView->edit(modelIndex);
-            qDebug() << "HasFocus" << spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->hasFocus();
+            qDebug() << "2.HasFocus" << spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->hasFocus();
         }
-        qDebug() << spinBox->editFlag;
+        qDebug() << "open_editor" <<spinBox->editFlag;
     }
 }
 
@@ -963,7 +963,7 @@ void ThirdMenuWidget::input_spinbox_number(QString string)
 //        QModelIndex modelIndex = model->item(0, opendSpinBoxIndex)->index();
 //        ui->tableView->openPersistentEditor(modelIndex);
 //        ui->tableView->edit(modelIndex);
-        qDebug() << spinBox->editFlag;
+        qDebug() << "input_editor" <<spinBox->editFlag;
 //        spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
         if(spinBox->editFlag) {
 //            if(spinBox->inputCount <= 0) {

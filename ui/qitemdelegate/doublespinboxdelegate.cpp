@@ -1,8 +1,8 @@
 #include "doublespinboxdelegate.h"
 
-//#ifdef PC_WIN
-//#include "windows.h"
-//#endif
+#ifdef Q_OS_WIN32
+#include "windows.h"
+#endif
 
 //#ifdef PC_UNIX
 //#include  <linux/input.h>
@@ -18,6 +18,14 @@
 #include <QApplication>
 #include <QLineEdit>
 #include <QAbstractSpinBox>
+
+#ifdef Q_OS_LINUX
+#include <stdio.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
+#include <X11/extensions/XInput.h>
+#include <X11/keysym.h>
+#endif
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -80,17 +88,6 @@ void DoubleSpinBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOp
     Q_UNUSED(index);
     editor->setGeometry(option.rect);
 }
-
-//bool DoubleSpinBoxDelegate::eventFilter(QObject *object, QEvent *event)
-//{
-//    if(event->type() == QEvent::KeyPress) {
-//        qDebug() << "keyboardShowFlag" << keyboardShowFlag;
-//        QKeyEvent* e =(QKeyEvent*)event;
-//        if(e->key() == Qt::Key_Escape) {
-//            return false;
-//        }
-//    }
-//}
 
 void DoubleSpinBoxDelegate::set_number_range(QList<int> list)
 {
@@ -166,39 +163,50 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //    QLineEdit *lineEdit = new QLineEdit(doubleSpinBox);
 //    doubleSpinBox->setLineEdit(lineEdit);
 
-//    doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
-    qDebug() << "HasFocus" << doubleSpinBox->hasFocus();
-//    doubleSpinBox->setFocus();
-    QChar chr = string.at(0);
-    int key = chr.unicode();
-    qDebug() << key;
-    QWidget *widget = doubleSpinBox->focusWidget();
+    doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
+    qDebug() << "3.HasFocus" << doubleSpinBox->hasFocus();
+    doubleSpinBox->setFocus();
+//    QChar chr = string.at(0);
+//    int key = chr.unicode();
+//    qDebug() << key;
+
 //    doubleSpinBox->grabKeyboard();
 //    doubleSpinBox->activateWindow();
-    qDebug() << doubleSpinBox->hasFocus();
-    QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, key, Qt::NoModifier);
-    QApplication::sendEvent(doubleSpinBox, event);
+//    QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, key, Qt::NoModifier);
+//    QApplication::sendEvent(doubleSpinBox, event);
     qDebug() << doubleSpinBox->hasFocus();
 //    qDebug() << widget->geometry();
-//    HWND hwnd = (HWND)widget->winId();
-//    qDebug() << "string" << string;
-//    if(string == "." && decimalAmount > 0) {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
-//    } else if(string == "Left Arrow") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
-//    } else if(string == "Right Arrow") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
-//    } else if(string == "BackSpace") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
-//    } else if(string == "Delete") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
-//    } else if(string == "Enter" || string == "Close") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
-//    } else {
-//        int value = string.toInt();
-//        SendMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
-//    }
-    
+
+#ifdef Q_OS_WIN32
+    QWidget *widget = doubleSpinBox->focusWidget();
+    HWND hwnd = (HWND)widget->winId();
+    qDebug() << "string" << string;
+    if(string == "." && decimalAmount > 0) {
+        SendMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
+    } else if(string == "Left Arrow") {
+        SendMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
+    } else if(string == "Right Arrow") {
+        SendMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
+    } else if(string == "BackSpace") {
+        SendMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
+    } else if(string == "Delete") {
+        SendMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
+    } else if(string == "Enter" || string == "Close") {
+        SendMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
+    } else {
+        int value = string.toInt();
+        SendMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
+    }
+#endif
+
+#ifdef Q_OS_LINUX
+    Display *display = XOpenDisplay (NULL);
+//    KeySym keysym= XK_1;
+    XTestFakeKeyEvent(display, XKeysymToKeycode(display, XK_1), True, CurrentTime);
+    XTestFakeKeyEvent(display, XKeysymToKeycode(display, XK_1), False, CurrentTime);
+    XCloseDisplay(display);
+ #endif
+
 //    PostMessage(hwnd, WM_KEYUP, VK_HELP + value + 1, 0);
 
 //    if(string == "Enter" || string == "Close") {

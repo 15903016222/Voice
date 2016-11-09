@@ -21,7 +21,6 @@ public:
     void set_number_step(QString string);   
     void set_decimal_amount(int amount);
     QString get_number_step();
-//    bool eventFilter(QObject *object, QEvent *event);
 
     QList<QDoubleSpinBox*> spinBoxList;
     QList<int> rangeList;
