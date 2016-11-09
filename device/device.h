@@ -20,7 +20,9 @@ public:
         DEV_16_64_TOFD,
         DEV_32_64_TOFD,
         DEV_32_128_TOFD,
-        DEV_32_128_PRO_TOFD
+        DEV_32_128_PRO_TOFD,
+        DEV_PC_UNIX,
+        DEV_PC_WIN
     };
 
     static Device *get_device();
