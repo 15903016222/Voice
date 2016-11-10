@@ -124,10 +124,12 @@ QVariantMap FirstSecondMenuWidget::read_json_file(QFile *file)
     }
     file->close();
 
+#if (PHASCAN | PHASCAN_II)
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
     setFont(QFont("utf8",14,QFont::Normal));
+#endif
 
     return variantMap;
 }
