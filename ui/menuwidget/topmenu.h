@@ -45,10 +45,11 @@ signals:
     void currentDialogIndex(QString);
 
 private slots:
-    void changeLabelText(QString str);
-    void on_tableView_angle_clicked(const QModelIndex &index);
+    void changeLabelText(QString str);  
     void set_gain_header_text_close(QWidget *editor);
     void set_angle_header_text_close(QWidget *editor);
+    void on_tableView_angle_clicked(const QModelIndex &index);
+    void on_tableView_gain_clicked(const QModelIndex &index);
 };
 
 #endif // TOPMENU

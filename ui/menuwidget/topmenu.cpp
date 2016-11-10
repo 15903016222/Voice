@@ -224,14 +224,6 @@ void TopMenu::changeLabelText(QString str)
     }
 }
 
-void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
-{
-    DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_angle->itemDelegate(index));
-    if(!doubleSpinBox->editFlag) {
-        ui->tableView_angle->edit(index);
-    }
-}
-
 QStringList TopMenu::get_label_text(QString string)
 {
     QString text, textUnit;
@@ -330,5 +322,21 @@ void TopMenu::set_header_text_close(QLabel *label)
         label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE + textUnit  + HTML_TEXT_FOUR);
     } else {
         label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE + textUnit  + HTML_TEXT_FOUR);
+    }
+}
+
+void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
+{
+    DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_angle->itemDelegate(index));
+    if(!doubleSpinBox->editFlag) {
+        ui->tableView_angle->edit(index);
+    }
+}
+
+void TopMenu::on_tableView_gain_clicked(const QModelIndex &index)
+{
+    DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_gain->itemDelegate(index));
+    if(!doubleSpinBox->editFlag) {
+        ui->tableView_gain->edit(index);
     }
 }
