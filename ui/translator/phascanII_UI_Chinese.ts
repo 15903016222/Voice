@@ -2016,7 +2016,7 @@ ultrasonic phased array probes.</source>
     <message>
         <location filename="../../lib/qjson/parserrunnable.cpp" line="64"/>
         <source>An error occurred while parsing json: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>解析Json文件时发生错误</translation>
     </message>
 </context>
 <context>
@@ -2075,79 +2075,60 @@ ultrasonic phased array probes.</source>
 <context>
     <name>SystemInfoDialog</name>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="31"/>
         <source>System Infomation</source>
-        <translation>系统信息</translation>
+        <translation type="vanished">系统信息</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="42"/>
         <source>Serial Number</source>
-        <translation>序列号</translation>
+        <translation type="vanished">序列号</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="47"/>
         <source>Device Type</source>
-        <translation>设备型号</translation>
+        <translation type="vanished">设备型号</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="52"/>
         <source>Device Version</source>
-        <translation>设备版本</translation>
+        <translation type="vanished">设备版本</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="57"/>
         <source>Hardware Version</source>
-        <translation>硬件版本</translation>
+        <translation type="vanished">硬件版本</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="62"/>
         <source>Software Version</source>
-        <translation>软件版本</translation>
+        <translation type="vanished">软件版本</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="67"/>
         <source>Software Commit</source>
-        <translation>软件提交</translation>
+        <translation type="vanished">软件提交</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="72"/>
         <source>Authentication Mode</source>
-        <translation>验证模式</translation>
+        <translation type="vanished">验证模式</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="77"/>
         <source>Authentication Expire</source>
-        <translation>验证终止</translation>
+        <translation type="vanished">验证终止</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="82"/>
         <source>Run Count</source>
-        <translation>运行计数</translation>
+        <translation type="vanished">运行计数</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="87"/>
         <source>Run Time(s)</source>
-        <translation>运行时间（s）</translation>
+        <translation type="vanished">运行时间（s）</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="123"/>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="vanished">关闭</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="144"/>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation type="vanished">保存</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="159"/>
         <source>Print</source>
-        <translation type="unfinished">打印</translation>
+        <translation type="obsolete">打印</translation>
     </message>
 </context>
 <context>
@@ -2977,37 +2958,35 @@ Part</source>
 <context>
     <name>Ui::Dialog::AboutDialog</name>
     <message>
-        <location filename="../dialogwidget/about_dialog.cpp" line="19"/>
+        <location filename="../dialogwidget/about_dialog.cpp" line="18"/>
         <source>About Device</source>
-        <translation type="unfinished"></translation>
+        <translation>关于设备</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/about_dialog.cpp" line="24"/>
+        <location filename="../dialogwidget/about_dialog.cpp" line="23"/>
         <source>&lt;h3 style=&quot;text-align:center&quot;&gt;%1&lt;/h3&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Phascan has a powerful detection capability, can achieve a variety of scanning mode and focus mode,which greatly improves the detection reliability.&lt;p style=&quot;font-size:14px; text-align:center;&quot;&gt;Copyright 2008-2016 Doppler. All rights reserved.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h3 style=&quot;text-align:center&quot;&gt;%1&lt;/h3&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Phascan检测能力强大，可以实现多种扫描模式和聚焦模式，大大提高了检测的可靠性。&lt;p style=&quot;font-size:14px; text-align:center;&quot;&gt;@2008-2016 版权归多浦乐所有。&lt;/p&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>Ui::Dialog::SysInfoDialog</name>
+    <message>
+        <location filename="../dialogwidget/sysinfo_dialog.cpp" line="19"/>
+        <location filename="../dialogwidget/sysinfo_dialog.cpp" line="71"/>
+        <source>System Infomation</source>
+        <translation>系统信息</translation>
+    </message>
+    <message>
+        <location filename="../dialogwidget/sysinfo_dialog.cpp" line="26"/>
+        <source>&lt;html&gt;&lt;head&gt;&lt;title&gt;System Infomation&lt;/title&gt;&lt;style&gt;body {background-color: #CCCCCC;}table, th, td {padding:5px;border: 1px solid black;border-collapse: collapse;}table {margin:5px;}th {text-align:left;background:#CCCCFF;}td {text-align:left;}h3 {text-align:center;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;table border=1 cellspacing=1 cellpadding=0 &gt;&lt;tr&gt;&lt;th&gt;Serial Number&lt;/th&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Device Type&lt;/th&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Device Version&lt;/th&gt;&lt;td&gt;%3&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Hardware Version&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Software Version&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Software Commit&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Cert Info&lt;/th&gt;&lt;td&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Run Count&lt;/th&gt;&lt;td&gt;%5&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Run Time(s)&lt;/th&gt;&lt;td&gt;%6&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;title&gt;System Infomation&lt;/title&gt;&lt;style&gt;body {background-color: #CCCCCC;}table, th, td {padding:5px;border: 1px solid black;border-collapse: collapse;}table {margin:5px;}th {text-align:left;background:#CCCCFF;}td {text-align:left;}h3 {text-align:center;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;table border=1 cellspacing=1 cellpadding=0 &gt;&lt;tr&gt;&lt;th&gt;序列号&lt;/th&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;设备类型&lt;/th&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;设备版本&lt;/th&gt;&lt;td&gt;%3&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;硬件版本&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;软件版本&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;软件提交&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;证书信息&lt;/th&gt;&lt;td&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;运行计算&lt;/th&gt;&lt;td&gt;%5&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;运行时间(s)&lt;/th&gt;&lt;td&gt;%6&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>VerticalSliderDialog</name>
     <message>
-        <location filename="../dialogwidget/verticalsliderdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/verticalsliderdialog.ui" line="44"/>
-        <source>+</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/verticalsliderdialog.ui" line="97"/>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/verticalsliderdialog.ui" line="104"/>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="vanished">关闭</translation>
     </message>
 </context>
 <context>
