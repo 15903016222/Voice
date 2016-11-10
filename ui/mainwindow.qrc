@@ -35,6 +35,7 @@
         <file>resources/bc9.png</file>
         <file>resources/tip.jpg</file>
         <file>resources/logo.png</file>
+        <file>resources/SIMSUN.TTC</file>
     </qresource>
     <qresource prefix="/json">
         <file>resources/menuconf.json</file>
