@@ -157,6 +157,9 @@ void TopMenu::init_gain_angle()
     model_angle->item(0)->setFont(QFont("Times New Roman", 14));
     ui->tableView_angle->setItemDelegate(doubleSpinBoxAngle);
     ui->tableView_angle->show();
+
+    connect(ui->tableView_gain->itemDelegate(), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_gain_header_text_close(QWidget*)));
+    connect(ui->tableView_angle->itemDelegate(), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_angle_header_text_close(QWidget*)));
 }
 
 bool TopMenu::eventFilter(QObject *object, QEvent *event)
@@ -279,7 +282,6 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
     QString currentStep = doubleSpinBox->get_number_step();
     int stepIndex = 0;
     QStringList stepList = doubleSpinBox->stepList;
-    qDebug() << stepList;
     for(int i = 0; i < stepList.count(); i ++) {
         if(currentStep == stepList.at(i)) {
             stepIndex = i;
@@ -302,5 +304,31 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
             label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
                                                 headerTextUnit + "Δ" + stepList.at(stepIndex + 1) + HTML_TEXT_FOUR);
         }
+    }
+}
+
+void TopMenu::set_gain_header_text_close(QWidget *editor)
+{
+    Q_UNUSED(editor);
+    set_header_text_close(measurementLabelList.at(0));
+}
+
+void TopMenu::set_angle_header_text_close(QWidget *editor)
+{
+    Q_UNUSED(editor);
+    set_header_text_close(measurementLabelList.at(9));
+}
+
+void TopMenu::set_header_text_close(QLabel *label)
+{
+    QString string = label->text();
+    QStringList stringList = get_label_text(string);
+    QString headerText = stringList.at(0);
+    QString textUnit = stringList.at(1);
+    if(textUnit.contains("Δ")) {
+        textUnit = textUnit.left(textUnit.indexOf("Δ"));
+        label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE + textUnit  + HTML_TEXT_FOUR);
+    } else {
+        label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE + textUnit  + HTML_TEXT_FOUR);
     }
 }

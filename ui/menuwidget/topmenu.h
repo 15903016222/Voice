@@ -35,9 +35,10 @@ public:
     void init_ui();
     void set_top_menu_font();
     void init_gain_angle();
-    QStringList get_label_text(QString string);
     void open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index);
+    void set_header_text_close(QLabel *label);
 
+    QStringList get_label_text(QString string);
     bool eventFilter(QObject *object, QEvent *event);
 
 signals:
@@ -45,8 +46,9 @@ signals:
 
 private slots:
     void changeLabelText(QString str);
-
     void on_tableView_angle_clicked(const QModelIndex &index);
+    void set_gain_header_text_close(QWidget *editor);
+    void set_angle_header_text_close(QWidget *editor);
 };
 
 #endif // TOPMENU
