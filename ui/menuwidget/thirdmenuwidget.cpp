@@ -210,7 +210,7 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
                 item = new QStandardItem(QString("Off"));
 
                 model->setItem(0, k, item);
-                model->item(0, k)->setFlags(Qt::NoItemFlags);
+//                model->item(0, k)->setFlags(Qt::NoItemFlags);
                 ui->tableView->setItemDelegateForColumn(k, pushButton);
 
                 if(thirdMenuString.contains("Auto Detect")) {
@@ -297,6 +297,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
 
     QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
     QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
+    QModelIndex modelIndex = model->item(0, index)->index();
     qDebug() << "style" << thirdMenuMap["style"].toString().toInt();
     switch(thirdMenuMap["style"].toString().toInt()) {
     case 1: {
@@ -320,7 +321,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
             }
         }
 
-        QModelIndex modelIndex = model->item(0, index)->index();
         if(opendSpinBoxIndex >= 0) {
             change_persistent_editor(modelIndex);
         }
@@ -351,7 +351,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
     case 2: {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));        
-        QModelIndex modelIndex = model->item(0, index)->index();
         ui->tableView->edit(modelIndex);
         QPoint point = QPoint();
         QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
@@ -361,7 +360,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
     case 3: {
         PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index));
-        QModelIndex modelIndex = model->item(0, index)->index();
         pushButton->change_button_text(modelIndex);
         model->setData(modelIndex, pushButton->buttonMap.value(modelIndex)->text, Qt::EditRole);
         break;
@@ -535,7 +533,6 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
     }
 
     QVariantMap thirdMenuMap = secondMenuMap[thirdMenuString].toMap();
-
     if(thirdMenuMap["style"].toString().toInt() == 1) {
         int column = index.column();
         if(!keyboardShowFlag) {
@@ -559,6 +556,17 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
         QPoint point = QPoint();
         QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
+    }/* else if(thirdMenuMap["style"].toString().toInt() == 3) {
+        PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
+        pushButton->change_button_text(const_cast<QModelIndex&>(index));
+        model->setData(index, pushButton->buttonMap.value(index)->text, Qt::EditRole);
+
+//        QPoint point = QPoint();
+//        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonRelease, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+//        QApplication::sendEvent(pushButton->buttonMap.value(index)->, event);
+
+    }*/ else {
+
     }
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {
@@ -917,7 +925,9 @@ void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
     keyboardShowFlag = true;
     if(opendSpinBoxIndex >= 0) {
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+//        spinBox->keyboardShowFlag = true;
         qDebug() << "open_editor" << spinBox->editFlag;
+
 //        QModelIndex modelIndex = model->item(0, index)->index();
 
 //        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
