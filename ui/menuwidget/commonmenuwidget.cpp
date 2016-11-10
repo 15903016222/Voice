@@ -9,13 +9,13 @@
 #include <QDebug>
 
 static const char* COMMON_MENU_STRING[COMMON_MENU_NUMBER] = {
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Start"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Range"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Velocity"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Video filter\n(on/off)"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Reset config"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Gate\n(on/off)"),
-    QT_TRANSLATE_NOOP("CommonMenuWidget", "Focal depth")
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Start\n(mm)"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Range\n(mm)"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Velocity\n(m/s)"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Video Filter"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Reset Config"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Gate"),
+    QT_TRANSLATE_NOOP("CommonMenuWidget", "Focal Depth\n(mm)")
 };
 
 CommonMenuWidget::CommonMenuWidget(QWidget *parent) :
@@ -201,7 +201,11 @@ void CommonMenuWidget::onHeaderClicked(int index)
             }
         }
     } else if(CHOICE_WIDGET_CHAR[index].toInt() == 2) {
+        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         ui->tableView->edit(modelIndex);
+        QPoint point = QPoint();
+        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
     } else if(CHOICE_WIDGET_CHAR[index].toInt() == 3) {
         PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index));
         pushButton->change_button_text(modelIndex);
@@ -252,7 +256,6 @@ void CommonMenuWidget::on_tableView_clicked(const QModelIndex &index)
 {
     int column = index.column();
     if(CHOICE_WIDGET_CHAR[column].toInt() == 1) {
-
         ui->tableView->edit(index);
     } else if(CHOICE_WIDGET_CHAR[column].toInt() == 2) {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
