@@ -6,6 +6,7 @@
 #include "pushbuttondelegate.h"
 
 #include <QResizeEvent>
+#include <QDebug>
 
 static const char* COMMON_MENU_STRING[COMMON_MENU_NUMBER] = {
     QT_TRANSLATE_NOOP("CommonMenuWidget", "Start"),
@@ -118,7 +119,7 @@ void CommonMenuWidget::choose_widget_style(int k)
         QStandardItem *item = new QStandardItem(QString::number(0, 'f', decimal));
         model->setItem(0, k, item);
         ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
-        ui->tableView->setEditTriggers(QAbstractItemView::CurrentChanged);
+
         connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
         connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
         break;
@@ -165,13 +166,18 @@ void CommonMenuWidget::resizeEvent(QResizeEvent *event)
 
 void CommonMenuWidget::onHeaderClicked(int index)
 {
+    QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
+    QModelIndex modelIndex = model->item(0, index)->index();
     if(CHOICE_WIDGET_CHAR[index].toInt() == 1) {
-        QModelIndex modelIndex = model->item(0, index)->index();
-        ui->tableView->edit(modelIndex);
-
         //点击表头更改spinbox的步进及表头文字
         DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
-        QString currentHeaderText =  model->horizontalHeaderItem(index)->text();
+        QString headerText;
+        if(currentHeaderText.contains("Δ")) {
+            headerText = currentHeaderText.left(currentHeaderText.indexOf("Δ"));
+        } else {
+            headerText = currentHeaderText;
+        }
+
         QString currentStep = doubleSpinBox->get_number_step();
         int stepIndex = 0;
         QStringList stringList = doubleSpinBox->stepList;
@@ -181,25 +187,23 @@ void CommonMenuWidget::onHeaderClicked(int index)
                 break;
             }
         }
-        QString headerText;
-        if(currentHeaderText.contains("Δ")) {
-            headerText = currentHeaderText.left(currentHeaderText.indexOf("Δ"));
+
+        if(!doubleSpinBox->editFlag) {
+            ui->tableView->edit(modelIndex);
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
         } else {
-            headerText = currentHeaderText;
-        }
-        if(stepIndex == stringList.count() - 1) {
-            doubleSpinBox->set_number_step(stringList.at(0));
-            model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(0)));
-        } else {
-            doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
-            model->setHeaderData(index, Qt::Horizontal,QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
+            if(stepIndex == (stringList.count() - 1)) {
+                doubleSpinBox->set_number_step(stringList.at(0));
+                model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(0)));
+            } else {
+                doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
+                model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
+            }
         }
     } else if(CHOICE_WIDGET_CHAR[index].toInt() == 2) {
-        QModelIndex modelIndex = model->item(0, index)->index();
         ui->tableView->edit(modelIndex);
     } else if(CHOICE_WIDGET_CHAR[index].toInt() == 3) {
         PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index));
-        QModelIndex modelIndex = model->item(0, index)->index();
         pushButton->change_button_text(modelIndex);
         model->setData(modelIndex, pushButton->buttonMap.value(modelIndex)->text, Qt::EditRole);
     } /*else if(subVariantMap["style"].toString().toInt() == 4) {
