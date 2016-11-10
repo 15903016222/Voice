@@ -70,8 +70,15 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
 
 void DoubleSpinBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    double value = index.model()->data(index,Qt::EditRole).toDouble();
+    double value;
     QDoubleSpinBox *doubleSpinBox = static_cast<QDoubleSpinBox*>(editor);
+    QString string = index.model()->data(index, Qt::EditRole).toString();
+    if(string.contains("(")) {
+        QString number = string.mid(1, string.length() - 2);
+        value = number.toDouble();
+    } else {
+        value = index.model()->data(index, Qt::EditRole).toDouble();
+    }
     doubleSpinBox->setValue(value);
 }
 
@@ -80,7 +87,11 @@ void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
     QDoubleSpinBox *doubleSpinBox = static_cast<QDoubleSpinBox*>(editor);
     doubleSpinBox->interpretText();
     double value = doubleSpinBox->value();
-    model->setData(index, QString::number(value, 'f', decimalAmount), Qt::EditRole);
+    if(doubleSpinBox->suffix() != NULL && doubleSpinBox->prefix() != NULL) {
+        model->setData(index, "(" + QString::number(value, 'f', decimalAmount) + ")", Qt::EditRole);
+    } else {
+        model->setData(index, QString::number(value, 'f', decimalAmount), Qt::EditRole);
+    }
 }
 
 void DoubleSpinBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -120,7 +131,6 @@ void DoubleSpinBoxDelegate::set_decimal_amount(int amount)
 
 void DoubleSpinBoxDelegate::commit_and_close_editor()
 {
-    qDebug() << "commit spinbox editor";
     QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
