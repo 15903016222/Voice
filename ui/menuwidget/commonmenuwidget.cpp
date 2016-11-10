@@ -247,3 +247,24 @@ void CommonMenuWidget::set_header_text_close(QWidget *editor)
         model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText));
     }
 }
+
+void CommonMenuWidget::on_tableView_clicked(const QModelIndex &index)
+{
+    int column = index.column();
+    if(CHOICE_WIDGET_CHAR[column].toInt() == 1) {
+
+        ui->tableView->edit(index);
+    } else if(CHOICE_WIDGET_CHAR[column].toInt() == 2) {
+        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
+        ui->tableView->edit(index);
+        QPoint point = QPoint();
+        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
+    }/* else if(CHOICE_WIDGET_CHAR[index].toInt() == 3) {
+        PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
+        pushButton->change_button_text(const_cast<QModelIndex&>(index));
+        model->setData(index, pushButton->buttonMap.value(index)->text, Qt::EditRole);
+
+    }*/
+
+}

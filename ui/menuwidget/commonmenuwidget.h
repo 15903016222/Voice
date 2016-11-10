@@ -39,6 +39,8 @@ public slots:
     void onHeaderClicked(int index);
     void set_header_text_create(QStringList stringList) const;
     void set_header_text_close(QWidget *editor);
+private slots:
+    void on_tableView_clicked(const QModelIndex &index);
 };
 
 #endif // COMMONMENUWIDGET_H
