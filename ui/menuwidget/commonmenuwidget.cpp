@@ -197,6 +197,11 @@ void CommonMenuWidget::onHeaderClicked(int index)
     } else if(CHOICE_WIDGET_CHAR[index].toInt() == 2) {
         QModelIndex modelIndex = model->item(0, index)->index();
         ui->tableView->edit(modelIndex);
+    } else if(CHOICE_WIDGET_CHAR[index].toInt() == 3) {
+        PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        QModelIndex modelIndex = model->item(0, index)->index();
+        pushButton->change_button_text(modelIndex);
+        model->setData(modelIndex, pushButton->buttonMap.value(modelIndex)->text, Qt::EditRole);
     } /*else if(subVariantMap["style"].toString().toInt() == 4) {
         //点击表头弹出探头选择对话框
         ProbeDialog *probeDialog = new ProbeDialog(this);
