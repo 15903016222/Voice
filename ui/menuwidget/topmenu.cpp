@@ -194,92 +194,11 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
         emit currentDialogIndex(text);
         connect(mDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(changeLabelText(QString)));
     } else if(object == measurementLabelList.at(0) && event->type() == QEvent::MouseButtonPress) {
-        int index = 0;
-        QModelIndex modelIndex = model_gain->item(0, index)->index();
-        DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_gain->itemDelegate(modelIndex));
-        QString headerTextUnit;
+        open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, model_gain, 0);
 
-        QStringList stringList = get_label_text(measurementLabelList.at(0)->text());
-        QString headerText = stringList.at(0);
-        QString textUnit = stringList.at(1);
-
-
-        if(textUnit.contains("Δ")) {
-            headerTextUnit = textUnit.left(textUnit.indexOf("Δ"));
-        } else {
-            headerTextUnit = textUnit;
-        }
-
-        QString currentStep = doubleSpinBox->get_number_step();
-        int stepIndex = 0;
-        QStringList stepList = doubleSpinBox->stepList;
-        for(int i = 0; i < stepList.count(); i ++) {
-            if(currentStep == stepList.at(i)) {
-                stepIndex = i;
-                break;
-            }
-        }
-
-        if(!doubleSpinBox->editFlag) {
-            ui->tableView_gain->edit(modelIndex);
-            measurementLabelList.at(0)->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
-                                                headerTextUnit + "Δ" + stepList.at(stepIndex) + HTML_TEXT_FOUR);
-
-        } else {
-            if(stepIndex == (stepList.count() - 1)) {
-                doubleSpinBox->set_number_step(stepList.at(0));
-                measurementLabelList.at(0)->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
-                                                    headerTextUnit + "Δ" + stepList.at(0) + HTML_TEXT_FOUR);
-            } else {
-                doubleSpinBox->set_number_step(stepList.at(stepIndex + 1));
-                measurementLabelList.at(0)->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
-                                                    headerTextUnit + "Δ" + stepList.at(stepIndex + 1) + HTML_TEXT_FOUR);
-            }
-        }
     } else if(object == measurementLabelList.at(9) && event->type() == QEvent::MouseButtonPress) {
-        int index = 0;
-        QModelIndex modelIndex = model_angle->item(0, index)->index();
-        DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_angle->itemDelegate(modelIndex));
-        QString headerTextUnit;
+        open_editor_and_set_header_text(measurementLabelList.at(9), ui->tableView_angle, model_angle, 0);
 
-        QStringList stringList = get_label_text(measurementLabelList.at(9)->text());
-        QString headerText = stringList.at(0);
-        QString textUnit = stringList.at(1);
-
-
-        if(textUnit.contains("Δ")) {
-            headerTextUnit = textUnit.left(textUnit.indexOf("Δ"));
-        } else {
-            headerTextUnit = textUnit;
-        }
-
-        QString currentStep = doubleSpinBox->get_number_step();
-        int stepIndex = 0;
-        QStringList stepList = doubleSpinBox->stepList;
-        qDebug() << stepList;
-        for(int i = 0; i < stepList.count(); i ++) {
-            if(currentStep == stepList.at(i)) {
-                stepIndex = i;
-                break;
-            }
-        }
-
-        if(!doubleSpinBox->editFlag) {
-            ui->tableView_angle->edit(modelIndex);
-            measurementLabelList.at(9)->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
-                                                headerTextUnit + "Δ" + stepList.at(stepIndex) + HTML_TEXT_FOUR);
-
-        } else {
-            if(stepIndex == (stepList.count() - 1)) {
-                doubleSpinBox->set_number_step(stepList.at(0));
-                measurementLabelList.at(9)->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
-                                                    headerTextUnit + "Δ" + stepList.at(0) + HTML_TEXT_FOUR);
-            } else {
-                doubleSpinBox->set_number_step(stepList.at(stepIndex + 1));
-                measurementLabelList.at(9)->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
-                                                    headerTextUnit + "Δ" + stepList.at(stepIndex + 1) + HTML_TEXT_FOUR);
-            }
-        }
     }
     return QWidget::eventFilter(object, event);
 }
@@ -294,12 +213,8 @@ void TopMenu::changeLabelText(QString str)
                 text1 = str.left(index);
                 text2 = str.right(str.length() - index - 1);
                 measurementLabelList.at(i)->setText(HTML_TEXT_FIVE + text1 + HTML_TEXT_TWO + HTML_TEXT_SIX + text2 + HTML_TEXT_FOUR);
-//                                                    "</font><br><font color=white face='Times New Roman' style='font-size:12pt'>"
-//                                                    +text2+"</font>");
             } else {
-                measurementLabelList.at(i)->setText(HTML_TEXT_FIVE + str + HTML_TEXT_FOUR);/*"<font color=white face='Times New Roman' style='font-size:14pt'>"
-                                                    +str+
-                                                    "</font>");*/
+                measurementLabelList.at(i)->setText(HTML_TEXT_FIVE + str + HTML_TEXT_FOUR);
             }
             break;
         }
@@ -318,18 +233,6 @@ QStringList TopMenu::get_label_text(QString string)
 {
     QString text, textUnit;
     QStringList stringList;
-//    if(string.contains("<font color=white face='Times New Roman' style='font-size:14pt'>")) {
-//        QString string1 = "<font color=white face='Times New Roman' style='font-size:14pt'>";
-//        QString text1 = string.right(string.length() - string.indexOf(string1) - string1.length());
-//        if(text1.contains("</font><br>")) {
-//            textWithoutUnit = text1.left(text1.indexOf("</font><br>"));
-//        } else if(text1.contains("</font>")) {
-//            textWithoutUnit = text1.left(text1.indexOf("</font>"));
-//        }
-//    } else {
-//        text = string;
-//    }
-
     if(string.contains(HTML_TEXT_ONE)) {
         QString firstHtmlString = HTML_TEXT_ONE;
         QString text1 = string.right(string.length() - string.indexOf(firstHtmlString) - firstHtmlString.length());
@@ -350,9 +253,54 @@ QStringList TopMenu::get_label_text(QString string)
         text = string;
         textUnit = "";
     }
-    qDebug() << "text" << text;
     stringList.append(text);
     stringList.append(textUnit);
-    qDebug() << "stringList" << stringList;
     return stringList;
+}
+
+void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index)
+{
+    QString headerTextUnit;
+    QModelIndex modelIndex = model->item(0, index)->index();
+    DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(tableView->itemDelegate(modelIndex));
+
+
+    QStringList stringList = get_label_text(label->text());
+    QString headerText = stringList.at(0);
+    QString textUnit = stringList.at(1);
+
+
+    if(textUnit.contains("Δ")) {
+        headerTextUnit = textUnit.left(textUnit.indexOf("Δ"));
+    } else {
+        headerTextUnit = textUnit;
+    }
+
+    QString currentStep = doubleSpinBox->get_number_step();
+    int stepIndex = 0;
+    QStringList stepList = doubleSpinBox->stepList;
+    qDebug() << stepList;
+    for(int i = 0; i < stepList.count(); i ++) {
+        if(currentStep == stepList.at(i)) {
+            stepIndex = i;
+            break;
+        }
+    }
+
+    if(!doubleSpinBox->editFlag) {
+        tableView->edit(modelIndex);
+        label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
+                                            headerTextUnit + "Δ" + stepList.at(stepIndex) + HTML_TEXT_FOUR);
+
+    } else {
+        if(stepIndex == (stepList.count() - 1)) {
+            doubleSpinBox->set_number_step(stepList.at(0));
+            label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
+                                                headerTextUnit + "Δ" + stepList.at(0) + HTML_TEXT_FOUR);
+        } else {
+            doubleSpinBox->set_number_step(stepList.at(stepIndex + 1));
+            label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
+                                                headerTextUnit + "Δ" + stepList.at(stepIndex + 1) + HTML_TEXT_FOUR);
+        }
+    }
 }

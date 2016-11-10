@@ -4,6 +4,7 @@
 #include "measurementdialog.h"
 
 #include <QLabel>
+#include <QTableView>
 
 #define TOP_MENU_NUMBER 10
 
@@ -35,6 +36,7 @@ public:
     void set_top_menu_font();
     void init_gain_angle();
     QStringList get_label_text(QString string);
+    void open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index);
 
     bool eventFilter(QObject *object, QEvent *event);
 
