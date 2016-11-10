@@ -120,6 +120,7 @@ void TopMenu::init_gain_angle()
     model_gain->item(0, 1)->setForeground(Qt::yellow);
     model_gain->item(0, 0)->setFont(QFont("Times New Roman", 14));
     model_gain->item(0, 1)->setFont(QFont("Times New Roman", 10));
+
     ui->tableView_gain->setItemDelegate(doubleSpinBoxOne);
 //    ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
     ui->tableView_gain->show();
@@ -338,5 +339,10 @@ void TopMenu::on_tableView_gain_clicked(const QModelIndex &index)
     DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_gain->itemDelegate(index));
     if(!doubleSpinBox->editFlag) {
         ui->tableView_gain->edit(index);
+        if(index.column() == 1) {
+            QDoubleSpinBox *editor = doubleSpinBox->spinBoxList.at(doubleSpinBox->spinBoxList.count() - 1);
+            editor->setPrefix("(");
+            editor->setSuffix(")");
+        }
     }
 }
