@@ -48,9 +48,6 @@ private slots:
     void key_sure(Mcu::KeyType key);
     void input_number_to_lineedit(QString string);
     void valueChanged_signal(double value);
-
-protected slots:
-    void input_number(QString string);
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

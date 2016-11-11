@@ -19,14 +19,6 @@
 #include <QLineEdit>
 #include <QAbstractSpinBox>
 
-#ifdef Q_OS_LINUX
-#include <stdio.h>
-#include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
-#include <X11/extensions/XInput.h>
-#include <X11/keysym.h>
-#endif
-
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
@@ -149,32 +141,38 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
     }
 }
 
-#include <QShortcut>
 void DoubleSpinBoxDelegate::key_sure(Mcu::KeyType key)
 {
     if(editFlag) {
+        if(key == Mcu::KEY_SURE) {
             QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-//            connect(doubleSpinBox, SIGNAL(editingFinished()), this, SLOT(editFinished()));
-//            emit doubleSpinBox->editingFinished();
-//            commit_and_close_editor();
             QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
             QApplication::sendEvent(doubleSpinBox, event);
+        }
     }
 }
 
+#ifdef Q_OS_LINUX
+#include <stdio.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
+#include <X11/extensions/XInput.h>
+#include <X11/keysym.h>
+#endif
+
 void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 {
-    double newValue;
+//    double newValue;
     QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
 //    QAbstractSpinBox *spinBox = static_cast<QAbstractSpinBox*>(doubleSpinBox);
-    const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
+//    const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
 //    spinBox->setFocus();
 //    QLineEdit *lineEdit = spinBox->lineEdit();
 //    QLineEdit *lineEdit = new QLineEdit(doubleSpinBox);
 //    doubleSpinBox->setLineEdit(lineEdit);
 
     doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
-    qDebug() << "3.HasFocus" << doubleSpinBox->hasFocus();
+//    qDebug() << "3.HasFocus" << doubleSpinBox->hasFocus();
     doubleSpinBox->setFocus();
 //    QChar chr = string.at(0);
 //    int key = chr.unicode();
@@ -184,7 +182,7 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //    doubleSpinBox->activateWindow();
 //    QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, key, Qt::NoModifier);
 //    QApplication::sendEvent(doubleSpinBox, event);
-    qDebug() << doubleSpinBox->hasFocus();
+//    qDebug() << doubleSpinBox->hasFocus();
 //    qDebug() << widget->geometry();
 
 #ifdef Q_OS_WIN32
@@ -211,11 +209,28 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 
 #ifdef Q_OS_LINUX
     Display *display = XOpenDisplay (NULL);
-//    KeySym keysym= XK_1;
-    XTestFakeKeyEvent(display, XKeysymToKeycode(display, XK_1), True, CurrentTime);
-    XTestFakeKeyEvent(display, XKeysymToKeycode(display, XK_1), False, CurrentTime);
+    KeySym keysym;
+    if(string == "." && decimalAmount > 0) {
+        keysym = XK_KP_Decimal;
+    } else if(string == "Left Arrow") {
+        keysym = XK_Left;
+    } else if(string == "Right Arrow") {
+        keysym = XK_Right;
+    } else if(string == "BackSpace") {
+        keysym = XK_BackSpace;
+    } else if(string == "Delete") {
+        keysym = XK_Delete;
+    } else if(string == "Enter" || string == "Close") {
+        keysym = XK_Return;
+    } else {
+        int value = string.toInt();
+        keysym = XK_0 + value;
+    }
+
+    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), True, CurrentTime);
+    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), False, CurrentTime);
     XCloseDisplay(display);
- #endif
+#endif
 
 //    PostMessage(hwnd, WM_KEYUP, VK_HELP + value + 1, 0);
 
@@ -294,9 +309,3 @@ void DoubleSpinBoxDelegate::valueChanged_signal(double value)
 ////    }
 //}
 
-
-void DoubleSpinBoxDelegate::input_number(QString string)
-{
-//    QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-//    QLineEdit *lineEdit = doubleSpinBox->lineEdit();
-}
