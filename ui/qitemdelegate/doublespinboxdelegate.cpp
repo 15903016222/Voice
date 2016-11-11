@@ -4,14 +4,6 @@
 #include "windows.h"
 #endif
 
-//#ifdef PC_UNIX
-//#include  <linux/input.h>
-//#include <stdio.h>
-//#include <fcntl.h>
-//#include <sys/time.h>
-//#include <unistd.h>
-//#endif
-
 #include <QEvent>
 #include <QDebug>
 #include <QKeyEvent>
@@ -162,28 +154,11 @@ void DoubleSpinBoxDelegate::key_sure(Mcu::KeyType key)
 
 void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 {
-//    double newValue;
+
     QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-//    QAbstractSpinBox *spinBox = static_cast<QAbstractSpinBox*>(doubleSpinBox);
-//    const QModelIndex &index = spinBoxMap.key(doubleSpinBox);
-//    spinBox->setFocus();
-//    QLineEdit *lineEdit = spinBox->lineEdit();
-//    QLineEdit *lineEdit = new QLineEdit(doubleSpinBox);
-//    doubleSpinBox->setLineEdit(lineEdit);
 
     doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
-//    qDebug() << "3.HasFocus" << doubleSpinBox->hasFocus();
     doubleSpinBox->setFocus();
-//    QChar chr = string.at(0);
-//    int key = chr.unicode();
-//    qDebug() << key;
-
-//    doubleSpinBox->grabKeyboard();
-//    doubleSpinBox->activateWindow();
-//    QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, key, Qt::NoModifier);
-//    QApplication::sendEvent(doubleSpinBox, event);
-//    qDebug() << doubleSpinBox->hasFocus();
-//    qDebug() << widget->geometry();
 
 #ifdef Q_OS_WIN32
     QWidget *widget = doubleSpinBox->focusWidget();
@@ -232,80 +207,10 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
     XCloseDisplay(display);
 #endif
 
-//    PostMessage(hwnd, WM_KEYUP, VK_HELP + value + 1, 0);
-
-//    if(string == "Enter" || string == "Close") {
-//        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
-//        QApplication::sendEvent(widget, event);
-//    } else {
-//        if(inputCount == 0) {
-//            doubleSpinBox->cleanText();
-//            newValue = string.toInt();
-
-//        } else {
-//            double value = doubleSpinBox->value();
-//            QString addedString = QString::number(value, 10, decimalAmount) + string;
-//            newValue = addedString.toDouble();
-//        }
-//    }
-
-//    if(newValue > doubleSpinBox->maximum()) {
-//        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->maximum(), 'f', decimalAmount), Qt::EditRole);
-//        doubleSpinBox->setValue(doubleSpinBox->maximum());
-//    } else if(newValue < doubleSpinBox->minimum()) {
-//        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(doubleSpinBox->minimum(), 'f', decimalAmount), Qt::EditRole);
-//        doubleSpinBox->setValue(doubleSpinBox->minimum());
-//    } else {
-//        const_cast<QAbstractItemModel*>(index.model())->setData(index, QString::number(newValue, 'f', decimalAmount), Qt::EditRole);
-//        doubleSpinBox->setValue(newValue);
-//    }
-
-////    linux
-//    int fd_kbd;
-//    qDebug() << "open:" << fd_kbd;
-//    fd_kbd = open("/dev/input/event1", O_RDWR);
-//    if(fd_kbd <= 0) {
-//        qDebug() << "Open keyboard failed.";
-//    }
-
-//    if(string == "." && decimalAmount > 0) {
-////        PostMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
-//        simulate_key(fd_kbd, KEY_0);
-//    } else if(string == "Left Arrow") {
-//        simulate_key(fd_kbd, KEY_LEFT);
-//    } else if(string == "Right Arrow") {
-//        simulate_key(fd_kbd, KEY_RIGHT);
-//    } else if(string == "BackSpace") {
-//        simulate_key(fd_kbd, KEY_BACKSPACE);
-//    } else if(string == "Delete") {
-//        simulate_key(fd_kbd, KEY_DELETE);
-//    } else if(string == "Enter" || string == "Close") {
-//        simulate_key(fd_kbd, KEY_ENTER);
-//    } else {
-//        int value = string.toInt();
-//        simulate_key(fd_kbd, KEY_0 + value);
-//    }
-
-    //    close(fd_kbd);
 }
 
 void DoubleSpinBoxDelegate::valueChanged_signal(double value)
 {
     emit stringChanged(value);
 }
-
-//void DoubleSpinBoxDelegate::simulate_key(int fd, int value)
-//{
-//    struct input_event event;
-//    qDebug() << value;
-//    event.type = EV_KEY;
-//    event.value = 1;
-//    event.code = value;
-//    gettimeofday(&event.time, 0);
-//    write(fd, &event, sizeof(event));
-//    qDebug() << "write:" << write(fd, &event, sizeof(event));
-////    if(write(fd, &event, sizeof(event)) < 0) {
-////        qDebug() << "write failed";
-////    }
-//}
 

@@ -93,16 +93,6 @@ void MainWindow::init_ui()
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
 
-//    myInputPanelDlg = new MyInputPanel;
-
-//    myInputPanelDlg->setModal(false);
-////    myInputPanelDlg->showNormal();
-//    myInputPanelDlg->hide();
-//    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-//    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
-//    connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
-//    connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
-
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
@@ -118,7 +108,6 @@ void MainWindow::do_key_event(Mcu::KeyType type)
 
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 {
-    ui->widget_thirdMenu->set_thirdMenuValue(firstMenuNum, secondMenuNum);
     ui->widget_thirdMenu->set_third_menu_name(index, 0); //init
     firstMenuNum = index;
 
@@ -140,8 +129,6 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
 
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
-
-    ui->widget_thirdMenu->set_thirdMenuValue(firstMenuNum, secondMenuNum);
 
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }

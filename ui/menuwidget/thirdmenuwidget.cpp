@@ -127,6 +127,32 @@ void ThirdMenuWidget::set_third_menu_name(int i, int j)
     secondMenuString = widget->get_second_menu_list(i).at(j);
 
     set_model_item(0, get_third_menu_list());
+
+    if(i == 8){
+        if(j == 0){
+            model->item(0, 1)->setText(QString::number(brightness, 'f', 0));
+
+            QString opacityValue = QString::number(opacity, 'f', 0);
+            model->item(0, 2)->setText(opacityValue);
+
+        }else if(j == 1){
+            set_currentTime();
+            model->item(0, 2)->setText(language);
+
+        }else if(j == 2){
+            if(networkDialog->str_ip == NULL){
+                model->item(0, 0)->setText("192.168.1.215");
+            }else{
+                model->item(0, 0)->setText(networkDialog->str_ip);
+            }
+
+            if(networkDialog->str_subNet == NULL){
+                model->item(0, 1)->setText("255.255.255.0");
+            }else{
+                model->item(0, 1)->setText(networkDialog->str_subNet);
+            }
+        }
+    }
 }
 
 void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString)
@@ -757,35 +783,6 @@ void ThirdMenuWidget::set_currentTime()
     }
 }
 
-void ThirdMenuWidget::set_thirdMenuValue(int i, int j)
-{
-    if(i == 8){
-        if(j == 0){
-            model->item(0, 1)->setText(QString::number(brightness, 'f', 0));
-
-            QString opacityValue = QString::number(opacity, 'f', 0);
-            model->item(0, 2)->setText(opacityValue);
-
-        }else if(j == 1){
-            set_currentTime();
-            model->item(0, 2)->setText(language);
-
-        }else if(j == 2){
-            if(networkDialog->str_ip == NULL){
-                model->item(0, 0)->setText("192.168.1.215");
-            }else{
-                model->item(0, 0)->setText(networkDialog->str_ip);
-            }
-
-            if(networkDialog->str_subNet == NULL){
-                model->item(0, 1)->setText("255.255.255.0");
-            }else{
-                model->item(0, 1)->setText(networkDialog->str_subNet);
-            }
-        }
-    }
-}
-
 void ThirdMenuWidget::change_measurement_label(QString string)
 {
     for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
@@ -916,20 +913,11 @@ void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
     keyboardShowFlag = true;
     if(opendSpinBoxIndex >= 0) {
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
-//        spinBox->keyboardShowFlag = true;
         qDebug() << "open_editor" << spinBox->editFlag;
 
-//        QModelIndex modelIndex = model->item(0, index)->index();
-
-//        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
-//        QApplication::sendEvent(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1), event);
         if(!spinBox->editFlag) {
             QModelIndex modelIndex = model->item(0, index)->index();
-//            ui->tableView->openPersistentEditor(modelIndex);
             ui->tableView->openPersistentEditor(modelIndex);
-//            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
-//            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->focusWidget()->activateWindow();
-//            ui->tableView->edit(modelIndex);
             qDebug() << "2.HasFocus" << spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->hasFocus();
         }
         qDebug() << "open_editor" <<spinBox->editFlag;
@@ -955,20 +943,9 @@ void ThirdMenuWidget::input_spinbox_number(QString string)
 {
     if(opendSpinBoxIndex >= 0) {
         DoubleSpinBoxDelegate *spinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
-//        QModelIndex modelIndex = model->item(0, opendSpinBoxIndex)->index();
-//        ui->tableView->openPersistentEditor(modelIndex);
-//        ui->tableView->edit(modelIndex);
         qDebug() << "input_editor" <<spinBox->editFlag;
-//        spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
-        if(spinBox->editFlag) {
-//            if(spinBox->inputCount <= 0) {
 
-//                spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->activateWindow();
-//            }
-//            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocusPolicy(Qt::StrongFocus);
-//            spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->setFocus();
-//            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_1, Qt::NoModifier);
-//            QCoreApplication::sendEvent(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1), event);
+        if(spinBox->editFlag) {
             qDebug() << string;
             emit send_string_to_delegate(string);
             spinBox->inputCount += 1;
@@ -987,9 +964,6 @@ void ThirdMenuWidget::change_persistent_editor(QModelIndex modelIndex)
         spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)->clearFocus();
         spinBox->editFlag = false;
         spinBox->inputCount = 0;
-//        ui->tableView->edit(modelIndex);
-//        ui->tableView->openPersistentEditor(modelIndex);
-//        spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
     }
     disconnect_input_number();
 }

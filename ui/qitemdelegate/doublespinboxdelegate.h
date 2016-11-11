@@ -32,8 +32,6 @@ public:
     bool editFlag;
     bool keyboardShowFlag;
 
-//    void simulate_key(int fd, int value);
-
 private:
     Mcu *m_mcu;
 
