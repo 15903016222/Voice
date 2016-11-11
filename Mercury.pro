@@ -18,10 +18,12 @@ DEVICE = PC_WIN
 
 linux-oe-g++ {
 DEVICE = PHASCAN_II
+LIBS += -lX11 -lXtst
 }
 
 linux-arm-g++ {
 DEVICE = PHASCAN
+LIBS += -lX11 -lXtst
 }
 
 linux-g++ {
@@ -52,8 +54,6 @@ TEMPLATE = app
 PROJECT_DIR = $$PWD
 
 SOURCES += main.cpp
-
-LIBS += -lX11 -lXtst
 
 include(ui/ui.pri)
 
