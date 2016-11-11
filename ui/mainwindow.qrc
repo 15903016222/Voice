@@ -36,9 +36,7 @@
         <file>resources/tip.jpg</file>
         <file>resources/logo.png</file>
         <file>font/simhei.ttf</file>
-    </qresource>
-    <qresource prefix="/json">
-        <file>resources/menuconf.json</file>
-        <file>resources/menutr_CHN.json</file>
+        <file>json/menuconf.json</file>
+        <file>json/menutr_CHN.json</file>
     </qresource>
 </RCC>

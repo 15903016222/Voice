@@ -12,9 +12,9 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
 
     toolBox.append(ui->toolBox);
 
-    QFile *file = new QFile(":/json/resources/menuconf.json");
+    QFile *file = new QFile(":/file/json/menuconf.json");
     firstMenuMap = read_json_file(file);
-    QFile *fileTranslate = new QFile(":/json/resources/menutr_CHN.json");
+    QFile *fileTranslate = new QFile(":/file/json/menutr_CHN.json");
     translateChineseMap = read_json_file(fileTranslate);
 
     languageOption = 1;
@@ -151,7 +151,6 @@ QStringList FirstSecondMenuWidget::get_second_menu_list(int i)
 
 void FirstSecondMenuWidget::do_rotary_event(Mcu::RotaryType type)
 {
-    //  int i = ui->verticalSliderBrightness->value();
       int i = 0;
    //   m_mcu->set_brightness((char)value);
       if (type == Mcu::ROTARY_UP) {
@@ -159,7 +158,6 @@ void FirstSecondMenuWidget::do_rotary_event(Mcu::RotaryType type)
       } else {
           --i;
       }
-   //   ui->verticalSliderBrightness->setValue(i);
 }
 
 void FirstSecondMenuWidget::resize_height(int i)
