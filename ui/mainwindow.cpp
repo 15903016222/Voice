@@ -102,7 +102,7 @@ void MainWindow::init_ui()
 //    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
 //    connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
 //    connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
-
+    qDebug() << ui->widget_thirdMenu->geometry();
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
