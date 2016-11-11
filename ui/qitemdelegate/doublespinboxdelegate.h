@@ -30,6 +30,7 @@ public:
     int decimalAmount;
     int inputCount;
     bool editFlag;
+    bool keyboardShowFlag;
 
 //    void simulate_key(int fd, int value);
 
@@ -45,9 +46,11 @@ private slots:
     void commit_and_close_editor();
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(Mcu::KeyType key);
-    void editFinished();
     void input_number_to_lineedit(QString string);
     void valueChanged_signal(double value);
+
+protected slots:
+    void input_number(QString string);
 };
 
 #endif // DOUBLESPINBOXDELEGATE_H

@@ -162,12 +162,12 @@ void MeasurementDialog::slot_listViewItemClicked(QModelIndex index)
         QStandardItem *item = measurementModel->itemFromIndex(modelIndex);
 
         if(modelIndex == index) {
-            item->setForeground(QBrush(Qt::red));
+//            item->setForeground(QBrush(Qt::red));
             listView->setCurrentIndex(index);
             changedString = labelMap.key(item->text());
-        } else {
+        }/* else {
             item->setForeground(QBrush(Qt::black));
-        }
+        }*/
     }
 }
 
@@ -179,7 +179,7 @@ void MeasurementDialog::set_current_index(QString string)
             QStandardItem *item = measurementModel->item(i);
             QModelIndex modelIndex = measurementModel->indexFromItem(item);
             listView->setCurrentIndex(modelIndex);
-            item->setForeground(QBrush(Qt::red));
+//            item->setForeground(QBrush(Qt::red));
             break;
         }
     }

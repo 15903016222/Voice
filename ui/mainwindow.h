@@ -50,6 +50,7 @@ public:
     bool hiddenThirdMenuFlag;
     bool hiddenCommonMenuFlag;
     bool hiddenArrowFlag;
+    bool hiddenKeyboardFlag;
 
     int firstMenuNum;
     int secondMenuNum;

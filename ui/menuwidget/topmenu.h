@@ -4,6 +4,7 @@
 #include "measurementdialog.h"
 
 #include <QLabel>
+#include <QTableView>
 
 #define TOP_MENU_NUMBER 10
 
@@ -24,7 +25,9 @@ private:
 
 public:
     QList<QLabel* > measurementLabelList;
-    QStandardItemModel *model;
+//    QStandardItemModel *model;
+    QStandardItemModel *model_gain;
+    QStandardItemModel *model_angle;
     MeasurementDialog *mDialog;
     QString objectName;
 
@@ -32,15 +35,21 @@ public:
     void init_ui();
     void set_top_menu_font();
     void init_gain_angle();
+    void open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index);
+    void set_header_text_close(QLabel *label);
 
+    QStringList get_label_text(QString string);
     bool eventFilter(QObject *object, QEvent *event);
 
 signals:
     void currentDialogIndex(QString);
 
 private slots:
-    void changeLabelText(QString str);
-
+    void changeLabelText(QString str);  
+    void set_gain_header_text_close(QWidget *editor);
+    void set_angle_header_text_close(QWidget *editor);
+    void on_tableView_angle_clicked(const QModelIndex &index);
+    void on_tableView_gain_clicked(const QModelIndex &index);
 };
 
 #endif // TOPMENU

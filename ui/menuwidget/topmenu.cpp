@@ -5,6 +5,17 @@
 #include "thirdmenuwidget.h"
 #include "firstsecondmenuwidget.h"
 
+#include <QDebug>
+
+#define HTML_TEXT_ONE "<font color=yellow face='Times New Roman' style=font-size:14pt>"
+#define HTML_TEXT_TWO "</font><br>"
+#define HTML_TEXT_THREE "<font color=yellow face='Times New Roman' style=font-size:12pt>"
+#define HTML_TEXT_FOUR "</font>"
+#define HTML_TEXT_FIVE "<font color=white face='Times New Roman' style='font-size:14pt'>"
+#define HTML_TEXT_SIX  "<font color=white face='Times New Roman' style='font-size:12pt'>"
+
+
+
 TopMenu :: TopMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TopMenu)
@@ -30,7 +41,7 @@ void TopMenu::init_ui()
 {
     set_top_menu_font();
 
-    for(int i = 1; i < TOP_MENU_NUMBER; i ++) {
+    for(int i = 0; i < TOP_MENU_NUMBER; i ++) {
         measurementLabelList.at(i)->installEventFilter(this);
     }
 }
@@ -50,15 +61,9 @@ void TopMenu::set_top_menu_font()
             text2 = str.right(str.length() - index - 1);
 
             if(i == 1 || i == TOP_MENU_NUMBER){
-                label->setText("<font color=yellow face='Times New Roman' style=font-size:14pt>"
-                               +text1+
-                               "</font><br><font color=yellow face='Times New Roman' style=font-size:12pt>"
-                               +text2+"</font>");
+                label->setText(HTML_TEXT_ONE + text1 + HTML_TEXT_TWO + HTML_TEXT_THREE + text2 + HTML_TEXT_FOUR);
             }else{
-                label->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
-                               +text1+
-                               "</font><br><font color=white face='Times New Roman' style='font-size:12pt'>"
-                               +text2+"</font>");
+                label->setText(HTML_TEXT_FIVE + text1 + HTML_TEXT_TWO + HTML_TEXT_SIX + text2 + HTML_TEXT_FOUR);
             }
         }
     }
@@ -79,7 +84,7 @@ void TopMenu::init_gain_angle()
     ui->tableView_gain->horizontalHeader()->hide();
     ui->tableView_gain->verticalHeader()->hide();
 
-    QStandardItemModel *model_gain = new QStandardItemModel(1, 2, this);
+    model_gain = new QStandardItemModel(1, 2, this);
     ui->tableView_gain->setModel(model_gain);
 
     ThirdMenuWidget *thirdMenuWidget = new ThirdMenuWidget;
@@ -93,7 +98,7 @@ void TopMenu::init_gain_angle()
 
     QVariantMap firstMapTwo = map["Focal Law"].toMap();
     QVariantMap secondMapTwo = firstMapTwo["Angle"].toMap();
-    QVariantMap variantMapAngle = secondMapTwo["Min.Angle"].toMap();
+    QVariantMap variantMapAngle = secondMapTwo["Min. Angle"].toMap();
 
     int decimalGain = variantMapGain["decimal"].toInt();
     QList<int> rangeListGain = thirdMenuWidget->get_spinBox_range_list(variantMapGain);
@@ -115,8 +120,9 @@ void TopMenu::init_gain_angle()
     model_gain->item(0, 1)->setForeground(Qt::yellow);
     model_gain->item(0, 0)->setFont(QFont("Times New Roman", 14));
     model_gain->item(0, 1)->setFont(QFont("Times New Roman", 10));
+
     ui->tableView_gain->setItemDelegate(doubleSpinBoxOne);
-    ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
+//    ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
     ui->tableView_gain->show();
 
 #if QT_VERSION >= 0x050000
@@ -132,7 +138,7 @@ void TopMenu::init_gain_angle()
     ui->tableView_angle->horizontalHeader()->hide();
     ui->tableView_angle->verticalHeader()->hide();
 
-    QStandardItemModel *model_angle = new QStandardItemModel(1, 1, this);
+    model_angle = new QStandardItemModel(1, 1, this);
     ui->tableView_angle->setModel(model_angle);
 
     int decimalAngle = variantMapAngle["decimal"].toInt();
@@ -152,44 +158,51 @@ void TopMenu::init_gain_angle()
     model_angle->item(0)->setFont(QFont("Times New Roman", 14));
     ui->tableView_angle->setItemDelegate(doubleSpinBoxAngle);
     ui->tableView_angle->show();
+
+    connect(ui->tableView_gain->itemDelegate(), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_gain_header_text_close(QWidget*)));
+    connect(ui->tableView_angle->itemDelegate(), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_angle_header_text_close(QWidget*)));
 }
 
 bool TopMenu::eventFilter(QObject *object, QEvent *event)
 {
-    if(object == measurementLabelList.at(1) ||
+    if((object == measurementLabelList.at(1) ||
             object == measurementLabelList.at(2) ||
             object == measurementLabelList.at(3) ||
             object == measurementLabelList.at(4) ||
             object == measurementLabelList.at(5) ||
             object == measurementLabelList.at(6) ||
             object == measurementLabelList.at(7) ||
-            object == measurementLabelList.at(8))
-    {
-        if(event->type() == QEvent::MouseButtonPress) {
-            objectName = object->objectName();
-            mDialog = new MeasurementDialog;
-            mDialog->setModal(true);
-            mDialog->setWindowFlags(Qt::FramelessWindowHint);
-            mDialog->show();
+            object == measurementLabelList.at(8)) &&
+            event->type() == QEvent::MouseButtonPress) {
+        objectName = object->objectName();
+        mDialog = new MeasurementDialog;
+        mDialog->setModal(true);
+        mDialog->setWindowFlags(Qt::FramelessWindowHint);
+        mDialog->show();
 
-            connect(this, SIGNAL(currentDialogIndex(QString)), mDialog, SLOT(set_current_index(QString)));
-            QLabel *label = qobject_cast<QLabel*>(object);
-            QString string = label->text();
-            if(string.contains("<font color=white face='Times New Roman' style='font-size:14pt'>")) {
-                QString string1 = "<font color=white face='Times New Roman' style='font-size:14pt'>";
-                QString text1 = string.right(string.length() - string.indexOf(string1) - string1.length());
-                QString text2;
-                if(text1.contains("</font><br>")) {
-                    text2 = text1.left(text1.indexOf("</font><br>"));
-                } else if(text1.contains("</font>")) {
-                    text2 = text1.left(text1.indexOf("</font>"));
-                }
-                emit currentDialogIndex(text2);
-            } else {
-                emit currentDialogIndex(string);
+        connect(this, SIGNAL(currentDialogIndex(QString)), mDialog, SLOT(set_current_index(QString)));
+        QLabel *label = qobject_cast<QLabel*>(object);
+        QString string = label->text();
+        QString text;
+        if(string.contains(HTML_TEXT_FIVE)) {
+            QString firstHtmlString = HTML_TEXT_FIVE;
+            QString text1 = string.right(string.length() - string.indexOf(firstHtmlString) - firstHtmlString.length());
+            if(text1.contains(HTML_TEXT_TWO)) {
+                text = text1.left(text1.indexOf(HTML_TEXT_TWO));
+            } else if(text1.contains(HTML_TEXT_FOUR)) {
+                text = text1.left(text1.indexOf(HTML_TEXT_FOUR));
             }
-            connect(mDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(changeLabelText(QString)));
+        } else {
+            text = string;
         }
+        emit currentDialogIndex(text);
+        connect(mDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(changeLabelText(QString)));
+    } else if(object == measurementLabelList.at(0) && event->type() == QEvent::MouseButtonPress) {
+        open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, model_gain, 0);
+
+    } else if(object == measurementLabelList.at(9) && event->type() == QEvent::MouseButtonPress) {
+        open_editor_and_set_header_text(measurementLabelList.at(9), ui->tableView_angle, model_angle, 0);
+
     }
     return QWidget::eventFilter(object, event);
 }
@@ -203,16 +216,133 @@ void TopMenu::changeLabelText(QString str)
                 int index = str.indexOf("\n");
                 text1 = str.left(index);
                 text2 = str.right(str.length() - index - 1);
-                measurementLabelList.at(i)->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
-                                                    +text1+
-                                                    "</font><br><font color=white face='Times New Roman' style='font-size:12pt'>"
-                                                    +text2+"</font>");
+                measurementLabelList.at(i)->setText(HTML_TEXT_FIVE + text1 + HTML_TEXT_TWO + HTML_TEXT_SIX + text2 + HTML_TEXT_FOUR);
             } else {
-                measurementLabelList.at(i)->setText("<font color=white face='Times New Roman' style='font-size:14pt'>"
-                                                    +str+
-                                                    "</font>");
+                measurementLabelList.at(i)->setText(HTML_TEXT_FIVE + str + HTML_TEXT_FOUR);
             }
             break;
+        }
+    }
+}
+
+QStringList TopMenu::get_label_text(QString string)
+{
+    QString text, textUnit;
+    QStringList stringList;
+    if(string.contains(HTML_TEXT_ONE)) {
+        QString firstHtmlString = HTML_TEXT_ONE;
+        QString text1 = string.right(string.length() - string.indexOf(firstHtmlString) - firstHtmlString.length());
+        if(text1.contains(HTML_TEXT_TWO)) {
+            text = text1.left(text1.indexOf(HTML_TEXT_TWO));
+            if(text1.contains(HTML_TEXT_THREE)) {
+                QString secondHtmlString = HTML_TEXT_THREE;
+                QString text2 = text1.right(text1.length() - text1.indexOf(secondHtmlString) - secondHtmlString.length());
+                if(text2.contains(HTML_TEXT_FOUR)) {
+                   textUnit = text2.left(text2.indexOf(HTML_TEXT_FOUR));
+                }
+            }
+        } else if(text1.contains(HTML_TEXT_FOUR)) {
+            text = text1.left(text1.indexOf(HTML_TEXT_FOUR));
+            textUnit = "";
+        }
+    } else {
+        text = string;
+        textUnit = "";
+    }
+    stringList.append(text);
+    stringList.append(textUnit);
+    return stringList;
+}
+
+void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index)
+{
+    QString headerTextUnit;
+    QModelIndex modelIndex = model->item(0, index)->index();
+    DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(tableView->itemDelegate(modelIndex));
+
+
+    QStringList stringList = get_label_text(label->text());
+    QString headerText = stringList.at(0);
+    QString textUnit = stringList.at(1);
+
+
+    if(textUnit.contains("Δ")) {
+        headerTextUnit = textUnit.left(textUnit.indexOf("Δ"));
+    } else {
+        headerTextUnit = textUnit;
+    }
+
+    QString currentStep = doubleSpinBox->get_number_step();
+    int stepIndex = 0;
+    QStringList stepList = doubleSpinBox->stepList;
+    for(int i = 0; i < stepList.count(); i ++) {
+        if(currentStep == stepList.at(i)) {
+            stepIndex = i;
+            break;
+        }
+    }
+
+    if(!doubleSpinBox->editFlag) {
+        tableView->edit(modelIndex);
+        label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
+                                            headerTextUnit + "Δ" + stepList.at(stepIndex) + HTML_TEXT_FOUR);
+
+    } else {
+        if(stepIndex == (stepList.count() - 1)) {
+            doubleSpinBox->set_number_step(stepList.at(0));
+            label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
+                                                headerTextUnit + "Δ" + stepList.at(0) + HTML_TEXT_FOUR);
+        } else {
+            doubleSpinBox->set_number_step(stepList.at(stepIndex + 1));
+            label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
+                                                headerTextUnit + "Δ" + stepList.at(stepIndex + 1) + HTML_TEXT_FOUR);
+        }
+    }
+}
+
+void TopMenu::set_gain_header_text_close(QWidget *editor)
+{
+    Q_UNUSED(editor);
+    set_header_text_close(measurementLabelList.at(0));
+}
+
+void TopMenu::set_angle_header_text_close(QWidget *editor)
+{
+    Q_UNUSED(editor);
+    set_header_text_close(measurementLabelList.at(9));
+}
+
+void TopMenu::set_header_text_close(QLabel *label)
+{
+    QString string = label->text();
+    QStringList stringList = get_label_text(string);
+    QString headerText = stringList.at(0);
+    QString textUnit = stringList.at(1);
+    if(textUnit.contains("Δ")) {
+        textUnit = textUnit.left(textUnit.indexOf("Δ"));
+        label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE + textUnit  + HTML_TEXT_FOUR);
+    } else {
+        label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE + textUnit  + HTML_TEXT_FOUR);
+    }
+}
+
+void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
+{
+    DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_angle->itemDelegate(index));
+    if(!doubleSpinBox->editFlag) {
+        ui->tableView_angle->edit(index);
+    }
+}
+
+void TopMenu::on_tableView_gain_clicked(const QModelIndex &index)
+{
+    DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_gain->itemDelegate(index));
+    if(!doubleSpinBox->editFlag) {
+        ui->tableView_gain->edit(index);
+        if(index.column() == 1) {
+            QDoubleSpinBox *editor = doubleSpinBox->spinBoxList.at(doubleSpinBox->spinBoxList.count() - 1);
+            editor->setPrefix("(");
+            editor->setSuffix(")");
         }
     }
 }

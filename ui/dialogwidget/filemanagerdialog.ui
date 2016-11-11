@@ -365,6 +365,9 @@ QWidget#widget_4{
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
+        <property name="autoScroll">
+         <bool>true</bool>
+        </property>
         <property name="selectionMode">
          <enum>QAbstractItemView::NoSelection</enum>
         </property>
