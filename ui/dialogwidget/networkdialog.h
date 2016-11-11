@@ -28,13 +28,12 @@ public:
     QString str_ip;
     QString str_subNet;
 
-private:
-
 signals:
     void currentIP_subNetChanged(QString value);
 
 public slots:
-    void on_buttonBox_accepted(); 
+    void on_buttonBox_accepted();
+
 
 };
 

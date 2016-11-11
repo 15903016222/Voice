@@ -135,29 +135,14 @@ void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
     if(editFlag) {
         QKeyEvent *event;
         QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
-//        int index = comboBox->currentIndex();
-//            if (type == Mcu::ROTARY_UP) {
-//                if(index == 0){
-//                    index = modelItemList.count() - 1;
-//                }else {
-//                    index = index - 1;
-//                }
-//            } else {
-//                if(index == modelItemList.count() - 1){
-//                    index = 0;
-//                }else {
-//                    index = index + 1;
-//                }
-//            }
-            if(type == Mcu::ROTARY_UP) {
-                event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
-            } else {
-                event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
-            }
-            QApplication::sendEvent(comboBox, event);
+
+        if(type == Mcu::ROTARY_UP) {
+            event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+        } else {
+            event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
         }
-//        comboBox->setCurrentIndex(index);
-  //  }
+        QApplication::sendEvent(comboBox, event);
+    }
 }
 
 void ComboBoxDelegate::key_sure(Mcu::KeyType key)

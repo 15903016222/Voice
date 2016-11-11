@@ -23,7 +23,6 @@ SOURCES += \
     $$PWD/qitemdelegate/doublespinboxdelegate.cpp \
     $$PWD/qitemdelegate/pushbuttondelegate.cpp \
     $$PWD/dialogwidget/inputpanelcontext.cpp \
-    $$PWD/dialogwidget/verticalsliderdialog.cpp \
     $$PWD/dialogwidget/resetconfigdialog.cpp \
     $$PWD/dialogwidget/networkdialog.cpp \
     $$PWD/dialogwidget/datetimesetdialog.cpp \
@@ -50,7 +49,6 @@ HEADERS += \
     $$PWD/qitemdelegate/doublespinboxdelegate.h \
     $$PWD/qitemdelegate/pushbuttondelegate.h \
     $$PWD/dialogwidget/inputpanelcontext.h \
-    $$PWD/dialogwidget/verticalsliderdialog.h \
     $$PWD/dialogwidget/resetconfigdialog.h \
     $$PWD/dialogwidget/networkdialog.h \
     $$PWD/dialogwidget/datetimesetdialog.h \
@@ -74,9 +72,7 @@ FORMS += \
     $$PWD/dialogwidget/probedialog.ui \
     $$PWD/dialogwidget/wedgedialog.ui \
     $$PWD/dialogwidget/inputpanelcontext.ui \
-    $$PWD/dialogwidget/verticalsliderdialog.ui \
     $$PWD/dialogwidget/resetconfigdialog.ui \
-    $$PWD/dialogwidget/systeminfodialog.ui \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
     $$PWD/dialogwidget/filemanagerdialog.ui

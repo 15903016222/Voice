@@ -92,6 +92,7 @@ void MainWindow::init_ui()
 
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
+
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
@@ -118,8 +119,6 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
     emit clickedMenuIndex(firstMenuNum);
     show_hidden_arrow();
 
-    ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->set_currentBrightness(firstMenuNum, secondMenuNum);
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
@@ -131,10 +130,6 @@ void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
     firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
     ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
 
-    ui->widget_thirdMenu->set_currentTimeToMenu(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->set_currentIP_subNetToMenu(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->set_currentBrightness(firstMenuNum, secondMenuNum);
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 

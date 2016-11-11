@@ -20,7 +20,7 @@ private:
 
 private slots:
     void do_rotary_event(Mcu::RotaryType type);
-    void key_sure(int key);
+    void key_sure(Mcu::KeyType key);
 };
 
 #endif // SPINBOX_H

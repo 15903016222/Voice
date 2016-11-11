@@ -28,10 +28,7 @@ public:
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, QStringList thirdMenuList);
-    void set_currentBrightness(int i, int j);
-    void set_currentTimeToMenu(int i, int j);
-    void set_currentIP_subNetToMenu(int i, int j);
-    void set_currentOpacity(int i, int j);
+    void set_currentTime();
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 
@@ -56,9 +53,10 @@ public:
     int wedgeIndex;
     int dateTimeSetIndex;
     int networkIndex;
-    int brightness;
+    double brightness;
     double opacity;
     int languageOption;
+    QString language;
     int opendSpinBoxIndex;
     bool keyboardShowFlag;
 
@@ -72,8 +70,6 @@ public:
 
 signals:
     void retranslate_ui(QString);
-    void send_dialog_title_content(QMap<QString, QString>);
-    void send_spinbox_value(QList<int>);
     void translater_ZH();
     void translater_EN();
     void send_string_to_delegate(QString);

@@ -1,6 +1,7 @@
 #include "firstsecondmenuwidget.h"
 #include "ui_firstsecondmenuwidget.h"
 
+#include <QTextCodec>
 #include <QMessageBox>
 
 FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
@@ -122,6 +123,14 @@ QVariantMap FirstSecondMenuWidget::read_json_file(QFile *file)
         QMessageBox::warning(this, tr("Parsing file Error"), tr("Read file failure!"));
     }
     file->close();
+
+#if (PHASCAN | PHASCAN_II)
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
+    setFont(QFont("utf8",14,QFont::Normal));
+#endif
+
     return variantMap;
 }
 

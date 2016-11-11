@@ -30,8 +30,6 @@ public:
     QString str_date;
     QString str_time;
 
-private:
-
 signals:
     void currentDateTimeChanged(QString string);
 

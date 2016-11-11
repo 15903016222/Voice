@@ -56,15 +56,17 @@ SysInfoDialog::SysInfoDialog(QWidget *parent) :
                 "<tr><th>Software Version</th><td></td></tr>"
                 "<tr><th>Software Commit</th><td></td></tr>"
                 "<tr><th>Cert Info</th><td>%4</td></tr>"
-                "<tr><th>Run Count</th><td></td></tr>"
-                "<tr><th>Run Time(s)</th><td></td></tr>"
+                "<tr><th>Run Count</th><td>%5</td></tr>"
+                "<tr><th>Run Time(s)</th><td>%6</td></tr>"
                 "</table>"
                 "</body>"
                 "</html>")
             .arg(dev->serial_number())
             .arg(dev->type_string())
             .arg(dev->version())
-            .arg(dev->cert_info());
+            .arg(dev->cert_info())
+            .arg(QString::number((double)(dev->run_count()), 'f', 0))
+            .arg(QString::number((double)(dev->run_time()), 'f', 0));
 
     QLabel *infoTitleLabel = new QLabel(QString("<h3>%1</3>").arg(tr("System Infomation")));
     QLabel *infoLabel = new QLabel(info);
