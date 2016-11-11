@@ -54,7 +54,7 @@ public:
     int wedgeIndex;
     int dateTimeSetIndex;
     int networkIndex;
-    int brightness;
+    double brightness;
     double opacity;
     int languageOption;
     QString language;

@@ -23,6 +23,7 @@ QWidget(parent),
     ui(new Ui::ThirdMenuWidget)
 {
     ui->setupUi(this);
+    m_mcu = Mcu::get_mcu();
 
     widget = new FirstSecondMenuWidget;
     dateTimeSetDialog = new DateTimeSetDialog(this);
@@ -34,7 +35,8 @@ QWidget(parent),
     keyboardShowFlag = false;
     opendSpinBoxIndex = -1;
 
-    brightness = 50;
+    brightness = 50.0;
+    setBrightness(brightness);
     opacity = 100.0;
 
     init_standard_model();
@@ -42,7 +44,6 @@ QWidget(parent),
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 
-    m_mcu = Mcu::get_mcu();
     set_autoDetect_probeModel(false);
 
 }
@@ -760,7 +761,7 @@ void ThirdMenuWidget::set_thirdMenuValue(int i, int j)
 {
     if(i == 8){
         if(j == 0){
-            model->item(0, 1)->setText(QString::number((double)brightness, 'f', 0));
+            model->item(0, 1)->setText(QString::number(brightness, 'f', 0));
 
             QString opacityValue = QString::number(opacity, 'f', 0);
             model->item(0, 2)->setText(opacityValue);
@@ -833,7 +834,8 @@ void ThirdMenuWidget::set_edited_text(QString string)
 
 void ThirdMenuWidget::setBrightness(double value)
 {
-    brightness = (int)value;
+    brightness = value;
+
     m_mcu->set_brightness((char)brightness);
 }
 
