@@ -92,17 +92,6 @@ void MainWindow::init_ui()
 
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
-
-//    myInputPanelDlg = new MyInputPanel;
-
-//    myInputPanelDlg->setModal(false);
-////    myInputPanelDlg->showNormal();
-//    myInputPanelDlg->hide();
-//    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-//    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
-//    connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
-//    connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
-    qDebug() << ui->widget_thirdMenu->geometry();
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)

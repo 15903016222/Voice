@@ -186,7 +186,9 @@ void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QStri
 
                 model->setItem(0, k, item);
                 ui->tableView->setItemDelegateForColumn(k, comboBox);
-                connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(comboBox_current_text(QString)), this, SLOT(change_related_third_menu_data(QString)));
+                if(k == 0) {
+                    connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(comboBox_current_text(QString)), this, SLOT(change_related_third_menu_data(QString)));
+                }
                 connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(change_language(QString)), this, SLOT(retranslate_third_menu_ui(QString)));
                 break;
             }
@@ -631,7 +633,11 @@ QList<QStringList> ThirdMenuWidget::get_translate_comboBox_option_list(QVariantM
     QStringList tmpList = get_comboBox_option_list(variantMapEng).at(0);
 
     for(int index = 0; index < tmpList.count(); index ++) {
-        optionList.append(optionMap.value(tmpList.at(index)).toString());
+        if(optionMap.isEmpty()) {
+            optionList.append(tmpList.at(index));
+        } else {
+            optionList.append(optionMap.value(tmpList.at(index)).toString());
+        }
     }
 
     abbreviationList = get_abbreviate_comboBox_option_list(optionList);
