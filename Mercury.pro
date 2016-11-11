@@ -53,6 +53,8 @@ PROJECT_DIR = $$PWD
 
 SOURCES += main.cpp
 
+LIBS += -lX11 -lXtst
+
 include(ui/ui.pri)
 
 include(lib/lib.pri)
