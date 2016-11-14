@@ -1330,6 +1330,7 @@
                 ]
             },
             "Resolution":{
+                "style":"1",
                 "unit":"Step/mm",
 				"minimum":0.001,
 				"maximum":10000,
