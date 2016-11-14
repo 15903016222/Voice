@@ -210,20 +210,7 @@ void CommonMenuWidget::onHeaderClicked(int index)
         PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index));
         pushButton->change_button_text(modelIndex);
         model->setData(modelIndex, pushButton->buttonMap.value(modelIndex)->text, Qt::EditRole);
-    } /*else if(subVariantMap["style"].toString().toInt() == 4) {
-        //点击表头弹出探头选择对话框
-        ProbeDialog *probeDialog = new ProbeDialog(this);
-        probeDialog->show();
-    } else if(subVariantMap["style"].toString().toInt() == 5) {
-        //点击表头弹出楔块选择对话框
-        WedgeDialog *wedgeDialog = new WedgeDialog(this);
-        wedgeDialog->show();
-    } else if(subVariantMap["style"].toString().toInt() == 6) {
-        //点击表头弹出软键盘
-        MyInputPanel inputPanel;
-        inputPanel.showNormal();
-        inputPanel.exec();
-    }*/
+    }
 }
 
 void CommonMenuWidget::set_header_text_create(QStringList stringList) const
@@ -263,11 +250,5 @@ void CommonMenuWidget::on_tableView_clicked(const QModelIndex &index)
         QPoint point = QPoint();
         QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
-    }/* else if(CHOICE_WIDGET_CHAR[index].toInt() == 3) {
-        PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
-        pushButton->change_button_text(const_cast<QModelIndex&>(index));
-        model->setData(index, pushButton->buttonMap.value(index)->text, Qt::EditRole);
-
-    }*/
-
+    }
 }
