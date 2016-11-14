@@ -334,7 +334,7 @@ void MainWindow::slot_pushButton_keyboard_clicked()
         myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         myInputPanelDlg->setFocusPolicy(Qt::NoFocus);
         myInputPanelDlg->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
-        myInputPanelDlg->show();
+        myInputPanelDlg->exec();
 
         connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
         connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
