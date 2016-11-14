@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
  //   connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
 
     connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
+    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 }
 
 MainWindow::~MainWindow()
@@ -312,6 +313,8 @@ void MainWindow::show_hidden_Menu()
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
         show_hidden_arrow();
+        firstSecondMenu->toolBox.at(0)->setFocus();
+        qDebug()<<""<<firstSecondMenu->toolBox.at(0)->hasFocus();
     } else {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
@@ -370,5 +373,16 @@ void MainWindow::slot_setMenuOpacity(double value)
                             "QPushButton#pushButton_top{" + bc + "border-radius:8px;}"
                             "QPushButton#pushButton_bottom{" + bc + "border:none;}");
     setStyleSheet(style);
+}
+
+void MainWindow::do_rotary_event(Mcu::RotaryType type)
+{
+    if(firstSecondMenu->toolBox.at(0)->hasFocus()) {
+        if (type == Mcu::ROTARY_UP) {
+            secondMenuNum++;
+        } else {
+            secondMenuNum--;
+        }
+    }
 }
 

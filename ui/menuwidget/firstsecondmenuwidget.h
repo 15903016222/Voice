@@ -1,8 +1,6 @@
 #ifndef FIRSTSECONDMENUWIDGET_H
 #define FIRSTSECONDMENUWIDGET_H
 
-#include "mcu.h"
-
 #include <Parser>
 
 #include <QWidget>
@@ -31,6 +29,7 @@ private:
 
 public:
     QList<QToolBox*> toolBox;
+ //   QList<QWidget*> page;
     QList<QListView*> menuList;
     QList<QStandardItemModel*> modelList;
     QStringList firstMenuData;
@@ -46,13 +45,7 @@ public:
     QVariantMap read_json_file(QFile *file);
     QStringList get_second_menu_list(int i);    
 
-private:
-    Mcu *m_mcu;
-
 private slots:
-
-public slots:
-    void do_rotary_event(Mcu::RotaryType type);
 
 };
 

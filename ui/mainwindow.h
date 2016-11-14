@@ -78,6 +78,8 @@ private slots:
     void slot_keyboard_close_clicked();
     void slot_setMenuOpacity(double value);
 
+    void do_rotary_event(Mcu::RotaryType type);
+
 signals:
     void clickedMenuIndex(int);
     void show_keyboard(int);
