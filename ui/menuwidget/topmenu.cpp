@@ -84,8 +84,8 @@ void TopMenu::init_gain_angle()
     ui->tableView_gain->horizontalHeader()->hide();
     ui->tableView_gain->verticalHeader()->hide();
 
-    model_gain = new QStandardItemModel(1, 2, this);
-    ui->tableView_gain->setModel(model_gain);
+    pGain = new QStandardItemModel(1, 2, this);
+    ui->tableView_gain->setModel(pGain);
 
     ThirdMenuWidget *thirdMenuWidget = new ThirdMenuWidget;
     FirstSecondMenuWidget *mainMenuWidget = new FirstSecondMenuWidget;
@@ -112,17 +112,16 @@ void TopMenu::init_gain_angle()
 
     QStandardItem *item_gain1 = new QStandardItem(QString::number(100, 'f', decimalGain));
     QStandardItem *item_gain2 = new QStandardItem("(" + QString::number(10, 'f', decimalGain) + ")");
-    model_gain->setItem(0, 0, item_gain1);
-    model_gain->setItem(0, 1, item_gain2);
-    model_gain->item(0, 0)->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
-    model_gain->item(0, 1)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
-    model_gain->item(0, 0)->setForeground(Qt::white);
-    model_gain->item(0, 1)->setForeground(Qt::yellow);
-    model_gain->item(0, 0)->setFont(QFont("Times New Roman", 14));
-    model_gain->item(0, 1)->setFont(QFont("Times New Roman", 10));
+    pGain->setItem(0, 0, item_gain1);
+    pGain->setItem(0, 1, item_gain2);
+    pGain->item(0, 0)->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
+    pGain->item(0, 1)->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+    pGain->item(0, 0)->setForeground(Qt::white);
+    pGain->item(0, 1)->setForeground(Qt::yellow);
+    pGain->item(0, 0)->setFont(QFont("Times New Roman", 14));
+    pGain->item(0, 1)->setFont(QFont("Times New Roman", 10));
 
     ui->tableView_gain->setItemDelegate(doubleSpinBoxOne);
-//    ui->tableView_gain->setEditTriggers(QAbstractItemView::CurrentChanged);
     ui->tableView_gain->show();
 
 #if QT_VERSION >= 0x050000
@@ -138,8 +137,8 @@ void TopMenu::init_gain_angle()
     ui->tableView_angle->horizontalHeader()->hide();
     ui->tableView_angle->verticalHeader()->hide();
 
-    model_angle = new QStandardItemModel(1, 1, this);
-    ui->tableView_angle->setModel(model_angle);
+    pAngle = new QStandardItemModel(1, 1, this);
+    ui->tableView_angle->setModel(pAngle);
 
     int decimalAngle = variantMapAngle["decimal"].toInt();
     QList<int> rangeListAngle = thirdMenuWidget->get_spinBox_range_list(variantMapAngle);
@@ -152,10 +151,10 @@ void TopMenu::init_gain_angle()
     doubleSpinBoxAngle->set_decimal_amount(decimalAngle);
 
     QStandardItem *item_angle = new QStandardItem(QString::number(70, 'f', decimalAngle));
-    model_angle->setItem(0, item_angle);
-    model_angle->item(0)->setTextAlignment(Qt::AlignCenter);
-    model_angle->item(0)->setForeground(Qt::white);
-    model_angle->item(0)->setFont(QFont("Times New Roman", 14));
+    pAngle->setItem(0, item_angle);
+    pAngle->item(0)->setTextAlignment(Qt::AlignCenter);
+    pAngle->item(0)->setForeground(Qt::white);
+    pAngle->item(0)->setFont(QFont("Times New Roman", 14));
     ui->tableView_angle->setItemDelegate(doubleSpinBoxAngle);
     ui->tableView_angle->show();
 
@@ -175,12 +174,12 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             object == measurementLabelList.at(8)) &&
             event->type() == QEvent::MouseButtonPress) {
         objectName = object->objectName();
-        mDialog = new MeasurementDialog;
-        mDialog->setModal(true);
-        mDialog->setWindowFlags(Qt::FramelessWindowHint);
-        mDialog->show();
+        pDialog = new MeasurementDialog;
+        pDialog->setModal(true);
+        pDialog->setWindowFlags(Qt::FramelessWindowHint);
+        pDialog->show();
 
-        connect(this, SIGNAL(currentDialogIndex(QString)), mDialog, SLOT(set_current_index(QString)));
+        connect(this, SIGNAL(currentDialogIndex(QString)), pDialog, SLOT(set_current_index(QString)));
         QLabel *label = qobject_cast<QLabel*>(object);
         QString string = label->text();
         QString text;
@@ -196,18 +195,18 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             text = string;
         }
         emit currentDialogIndex(text);
-        connect(mDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(changeLabelText(QString)));
+        connect(pDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_labelText(QString)));
     } else if(object == measurementLabelList.at(0) && event->type() == QEvent::MouseButtonPress) {
-        open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, model_gain, 0);
+        open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, pGain, 0);
 
     } else if(object == measurementLabelList.at(9) && event->type() == QEvent::MouseButtonPress) {
-        open_editor_and_set_header_text(measurementLabelList.at(9), ui->tableView_angle, model_angle, 0);
+        open_editor_and_set_header_text(measurementLabelList.at(9), ui->tableView_angle, pAngle, 0);
 
     }
     return QWidget::eventFilter(object, event);
 }
 
-void TopMenu::changeLabelText(QString str)
+void TopMenu::change_labelText(QString str)
 {
     for(int i = 1; i < TOP_MENU_NUMBER; i++) {
         if(measurementLabelList.at(i)->objectName() == objectName ){
