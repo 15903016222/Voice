@@ -19,28 +19,25 @@ public:
     explicit IconsWidget(QWidget *parent = 0);
     ~IconsWidget();
 
+    void insert_battery1_icon(int value);
+    void insert_battery2_icon(int value);
+
+
+signals:
+    void keyboard_event();
+
+public slots:
+    void on_pushButton_scan_clicked();
+    void do_temperature_event(Mcu::TemperatureType type, int value);
+    void do_battery_status_event(int index, Mcu::BatteryStatus status);
+    void do_battery_quantity_event(int index, int value);
+
 private:
     Ui::IconsWidget *ui;
     Mcu *m_mcu;
 
-public:
-    Mcu::BatteryStatus status_batteryFirst;
-    Mcu::BatteryStatus status_batterySecond;
-
-    void insert_battery1_icon(int value);
-    void insert_battery2_icon(int value);
-
-    QList<QPushButton*> pushButton_keyboard;
-
-signals:
-
-public slots:
-//    void on_pushButton_keyboard_clicked();
-    void on_pushButton_scan_clicked();
-    void do_rotary_event(Mcu::RotaryType type);
-    void do_temperature_event(Mcu::TemperatureType type, int value);
-    void do_battery_status_event(int index, Mcu::BatteryStatus status);
-    void do_battery_quantity_event(int index, int value);
+    Mcu::BatteryStatus m_fstBatteryStatus;
+    Mcu::BatteryStatus m_sndBatteryStatus;
 
 };
 

@@ -89,7 +89,7 @@ void TopMenu::init_gain_angle()
 
     ThirdMenuWidget *thirdMenuWidget = new ThirdMenuWidget;
     FirstSecondMenuWidget *mainMenuWidget = new FirstSecondMenuWidget;
-    QFile *file = new QFile(":/json/resources/menuconf.json");
+    QFile *file = new QFile(":/file/json/menuconf.json");
     QVariantMap map = mainMenuWidget->read_json_file(file);
 
     QVariantMap firstMapOne = map["UT Settings"].toMap();

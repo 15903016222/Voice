@@ -4,6 +4,7 @@
 #include "firstsecondmenuwidget.h"
 #include "datetimesetdialog.h"
 #include "networkdialog.h"
+#include "mcu.h"
 
 #define THIRD_MENU_NUMBER 6
 

@@ -12,9 +12,9 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
 
     toolBox.append(ui->toolBox);
 
-    QFile *file = new QFile(":/json/resources/menuconf.json");
+    QFile *file = new QFile(":/file/json/menuconf.json");
     firstMenuMap = read_json_file(file);
-    QFile *fileTranslate = new QFile(":/json/resources/menutr_CHN.json");
+    QFile *fileTranslate = new QFile(":/file/json/menutr_CHN.json");
     translateChineseMap = read_json_file(fileTranslate);
 
     languageOption = 1;
@@ -22,9 +22,6 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     init_ui();
     QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
     set_second_menu_item_style(0, initModelIndex);
-
-    m_mcu = Mcu::get_mcu();
- //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 }
 
 FirstSecondMenuWidget::~FirstSecondMenuWidget()
@@ -147,19 +144,6 @@ QStringList FirstSecondMenuWidget::get_second_menu_list(int i)
         stringList  = variantList.at(0).toStringList();
     }
     return stringList;
-}
-
-void FirstSecondMenuWidget::do_rotary_event(Mcu::RotaryType type)
-{
-    //  int i = ui->verticalSliderBrightness->value();
-      int i = 0;
-   //   m_mcu->set_brightness((char)value);
-      if (type == Mcu::ROTARY_UP) {
-          ++i;
-      } else {
-          --i;
-      }
-   //   ui->verticalSliderBrightness->setValue(i);
 }
 
 void FirstSecondMenuWidget::resize_height(int i)

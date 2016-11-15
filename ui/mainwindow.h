@@ -15,7 +15,6 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindowPrivate;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -24,49 +23,49 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
+    void show_hidden_Menu();
+    void resizeEvent(QResizeEvent *event);
+    void show_hidden_arrow();
 
 protected:
-    MainWindowPrivate * const d_ptr;
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *moveEvent);
     void keyPressEvent(QKeyEvent *event);
 
 private:
-    Q_DECLARE_PRIVATE(MainWindow)
+    void init_ui();
 
-public:
+    Ui::MainWindow *ui;
+
+    QTranslator *translator;
+    Mcu *m_mcu;
+    QGraphicsOpacityEffect *effect;
+
     CommonMenuWidget * commonMenuWidget;
     FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
     MyInputPanel *myInputPanelDlg;
 
-    void show_hidden_Menu();
-    void resizeEvent(QResizeEvent *event);
-    void show_hidden_arrow();
+    bool m_hiddenFirstSecondMenuFlag;
+    bool m_hiddenThirdMenuFlag;
+    bool m_hiddenCommonMenuFlag;
+    bool m_hiddenArrowFlag;
+    bool m_hiddenKeyboardFlag;
 
-    bool hiddenFirstSecondMenuFlag;
-    bool hiddenThirdMenuFlag;
-    bool hiddenCommonMenuFlag;
-    bool hiddenArrowFlag;
-    bool hiddenKeyboardFlag;
+    int m_firstMenuNum;
+    int m_secondMenuNum;
+    int m_mainMenuStartPos;
+    int m_mainMenuEndPos;
+    int m_rotarySecondMenuNum;
 
-    int firstMenuNum;
-    int secondMenuNum;
-    int mainMenuStartPos;
-    int mainMenuEndPos;
-
-private:
-    void init_ui();
-    QTranslator *translator;
-    Mcu *m_mcu;
-    QGraphicsOpacityEffect *effect;
+signals:
+    void clickedMenuIndex(int);
+    void show_keyboard(int);
+    void close_persistent_editor(int);
 
 protected slots:
     void do_key_event(Mcu::KeyType type);
 
-private slots:
     void slot_firstMenuToolBoxCurrentChanged(int index);
     void slot_secondMenuItemClicked(QModelIndex index);
     void on_pushButton_top_clicked();
@@ -74,14 +73,12 @@ private slots:
     void slot_pushButton_commonMenuClicked();
     void scroll_menu(int index);
     void update_translator(QString string);
-    void slot_pushButton_keyboard_clicked();
+    void do_keyboard_event();
     void slot_keyboard_close_clicked();
     void slot_setMenuOpacity(double value);
 
-signals:
-    void clickedMenuIndex(int);
-    void show_keyboard(int);
-    void close_persistent_editor(int);
+    void do_rotary_event(Mcu::RotaryType type);
+    void key_sure(Mcu::KeyType key);
 
 };
 

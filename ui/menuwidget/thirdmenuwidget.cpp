@@ -401,7 +401,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         //点击表头弹出探头选择对话框
         ProbeDialog *probeDialog = new ProbeDialog(this);
         probeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        probeDialog->show();
+        probeDialog->exec();
 
         probeIndex = index;
         connect(probeDialog, SIGNAL(probeChanged(QString)), this, SLOT(select_probe(QString)));
@@ -411,7 +411,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         //点击表头弹出楔块选择对话框
         WedgeDialog *wedgeDialog = new WedgeDialog(this);
         wedgeDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        wedgeDialog->show();
+        wedgeDialog->exec();
 
         wedgeIndex = index;
         connect(wedgeDialog, SIGNAL(wedgeChanged(QString)), this, SLOT(select_wedge(QString)));
@@ -421,7 +421,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         //点击表头弹出软键盘
         InputPanelContext *inputPanel = new InputPanelContext(this);
         inputPanel->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        inputPanel->show();
+        inputPanel->exec();
 
         inputIndex = index;
         QString text = model->item(0, index)->text();
@@ -433,7 +433,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         //点击表头弹出测量值选择对话框
         MeasurementDialog *measurementDialog = new MeasurementDialog(this);
         measurementDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        measurementDialog->show();
+        measurementDialog->exec();
 
         measurementIndex = index;
         connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
@@ -443,7 +443,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         //点击表头弹出文件管理对话框
         FileManagerDialog *fileManagerDialog = new FileManagerDialog(this);
         fileManagerDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        fileManagerDialog->show();
+        fileManagerDialog->exec();
 
         break;
     }
@@ -467,7 +467,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         networkDialog->set_spinbox_value(valueList);
 
         networkDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        networkDialog->show();
+        networkDialog->exec();
 
         networkIndex = index;
         connect(networkDialog, SIGNAL(currentIP_subNetChanged(QString)), this, SLOT(set_ip_subNet(QString)));
@@ -507,7 +507,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         dateTimeSetDialog->set_spinbox_value(valueList);
 
         dateTimeSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        dateTimeSetDialog->show();
+        dateTimeSetDialog->exec();
 
         dateTimeSetIndex = index;
         connect(dateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_time(QString)));
@@ -516,7 +516,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     case 19: {
         ResetConfigDialog *resetConfigDialog = new ResetConfigDialog(this);
         resetConfigDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        resetConfigDialog->show();
+        resetConfigDialog->exec();
         break;
     }
     default: {
