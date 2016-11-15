@@ -36,8 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :
  //   slot_setMenuOpacity(100.0);
  //   connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
 
+    rotary_secondMenuNum = 0;
+
     connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
 }
 
 MainWindow::~MainWindow()
@@ -122,8 +125,7 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 
     firstSecondMenu->menuList.at(firstMenuNum)->setFocus();
-    qDebug()<<"firstMenuIndex = "<<firstMenuNum;
-    qDebug()<<"firstMenuFocus = "<<firstSecondMenu->menuList.at(firstMenuNum)->hasFocus();
+    rotary_secondMenuNum = 0;
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -318,8 +320,6 @@ void MainWindow::show_hidden_Menu()
         show_hidden_arrow();
 
         firstSecondMenu->menuList.at(firstMenuNum)->setFocus();
-        qDebug()<<"firstMenuInit = "<<firstMenuNum;
-        qDebug()<<"firstMenuInitFocus = "<<firstSecondMenu->menuList.at(firstMenuNum)->hasFocus();
     } else {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
@@ -387,14 +387,39 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
             QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
             QApplication::sendEvent(firstSecondMenu->menuList.at(firstMenuNum), event);
 
+            if(rotary_secondMenuNum > 0){
+                rotary_secondMenuNum--;
+            }
         } else {
             QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
             QApplication::sendEvent(firstSecondMenu->menuList.at(firstMenuNum), event);
 
+            if(firstMenuNum == 0 || firstMenuNum == 4 || firstMenuNum == 5 || firstMenuNum == 6 || firstMenuNum == 8){
+                if(rotary_secondMenuNum < 3){
+                    rotary_secondMenuNum++;
+                }
+            }else if(firstMenuNum == 1 || firstMenuNum == 3 || firstMenuNum == 7){
+                if(rotary_secondMenuNum < 4){
+                    rotary_secondMenuNum++;
+                }
+            }else if(firstMenuNum == 2){
+                if(rotary_secondMenuNum < 2){
+                    rotary_secondMenuNum++;
+                }
+            }
         }
 
-            qDebug()<<"do_rotary_secondNum                 = "<<firstMenuNum;
-        qDebug()<<"do_rotary_secondNum = "<<secondMenuNum;
+        qDebug()<<"do_rotary_firstNum  = "<<firstMenuNum;
+        qDebug()<<"                    rotary_secondMenuNum = "<<rotary_secondMenuNum;
+    }
+}
+
+void MainWindow::key_sure(Mcu::KeyType key)
+{
+    if(firstSecondMenu->menuList.at(firstMenuNum)->hasFocus()) {
+        if(key == Mcu::KEY_SURE) {
+            ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, rotary_secondMenuNum);
+        }
     }
 }
 

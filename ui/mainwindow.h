@@ -56,6 +56,7 @@ public:
     int secondMenuNum;
     int mainMenuStartPos;
     int mainMenuEndPos;
+    int rotary_secondMenuNum;
 
 private:
     void init_ui();
@@ -79,6 +80,7 @@ private slots:
     void slot_setMenuOpacity(double value);
 
     void do_rotary_event(Mcu::RotaryType type);
+    void key_sure(Mcu::KeyType key);
 
 signals:
     void clickedMenuIndex(int);
