@@ -116,20 +116,35 @@ bool Spi::set_lsb_first(bool flag)
     return true;
 }
 
-bool Spi::write(char *data, quint32 len)
+#include <stdio.h>
+bool Spi::write(const char *data, quint32 len)
 {
     if (! is_open() || data == NULL) {
         return false;
     }
 
-    struct spi_ioc_transfer xfer;
-    ::memset(&xfer, 0, sizeof(xfer));
-    xfer.tx_buf = (unsigned long)data;
-    xfer.len = len;
-
-    if (::ioctl(m_fd, SPI_IOC_MESSAGE(1), &xfer) == -1) {
-        return false;
+    ::printf("         0        1        2        3        4        5        6        7        8        9\n");
+    ::printf("%3d: ", 0);
+    for (int i = 0; i < len/4; ++i) {
+        if (i%10 == 0 && i != 0 ) {
+            ::printf("\n%3d: ", i/10);
+        }
+        ::printf("%08x ", *(((quint32 *)data)+i));
     }
+    ::printf("\nlen=%d\n", len);
+
+    ::write(m_fd, data, len);
+//    ::sync();
+
+//    struct spi_ioc_transfer xfer;
+//    ::memset(&xfer, 0, sizeof(xfer));
+//    xfer.tx_buf = (unsigned long)data;
+//    xfer.len = len;
+
+//    if (::ioctl(m_fd, SPI_IOC_MESSAGE(1), &xfer) == -1) {
+//        return false;
+//    }
+//    ::sync();
 
     return true;
 }

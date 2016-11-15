@@ -520,9 +520,7 @@ bool Group::reflesh(void)
 
 bool write_reg(GroupData *d, int index, int reg)
 {
-    FpgaSpi *spi = FpgaSpi::get_spi();
-    if (reg >= GROUP_REGS_NUM
-            || spi == NULL) {
+    if (reg >= GROUP_REGS_NUM) {
         return false;
     }
 
@@ -533,5 +531,5 @@ bool write_reg(GroupData *d, int index, int reg)
     data[0] = dp[0];
     data[1] = dp[reg+1];
 
-    return spi->send((char *)data, 8);
+    return FpgaSpi::get_spi()->send((char *)data, 8);
 }

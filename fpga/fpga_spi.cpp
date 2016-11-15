@@ -20,6 +20,7 @@ FpgaSpi *FpgaSpi::get_spi(void)
 }
 
 FpgaSpi::FpgaSpi()
+    : Spi()
 {
 
 #ifdef PHASCAN
@@ -34,7 +35,7 @@ FpgaSpi::FpgaSpi()
         open("/dev/spidev4.0");
         set_mode(Spi::MODE3);
         set_bits_per_word(32);
-        set_speed(2000*1000);
+        set_speed(500*1000);
 #else
 #error "Not Specify spi device"
 #endif

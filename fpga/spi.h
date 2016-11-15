@@ -51,7 +51,7 @@ public:
     bool is_lsb_first() const { return m_lsbFirst; }
     bool set_lsb_first(bool flag);
 
-    bool write(char *data, quint32 len);
+    bool write(const char *data, quint32 len);
 
 private:
     int m_fd;
