@@ -333,7 +333,14 @@ void MainWindow::slot_pushButton_keyboard_clicked()
         myInputPanelDlg = new MyInputPanel;
         myInputPanelDlg->setModal(false);
         myInputPanelDlg->showNormal();
+#if QT_VERSION >= 0x050000
+        myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus);
+#endif
+
+#if QT_VERSION < 0x050000
+        myInputPanelDlg->setAttribute(Qt::WA_ShowWithoutActivating, true);
         myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+#endif
         myInputPanelDlg->setFocusPolicy(Qt::NoFocus);
         myInputPanelDlg->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
         myInputPanelDlg->show();
