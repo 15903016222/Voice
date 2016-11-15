@@ -188,7 +188,7 @@ void CommonMenuWidget::onHeaderClicked(int index)
             }
         }
 
-        if(!doubleSpinBox->editFlag) {
+        if(!doubleSpinBox->m_editFlag) {
             ui->tableView->edit(modelIndex);
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
         } else {

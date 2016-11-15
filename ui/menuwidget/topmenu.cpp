@@ -282,7 +282,7 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
         }
     }
 
-    if(!doubleSpinBox->editFlag) {
+    if(!doubleSpinBox->m_editFlag) {
         tableView->edit(modelIndex);
         label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
                                             headerTextUnit + "Δ" + stepList.at(stepIndex) + HTML_TEXT_FOUR);
@@ -329,7 +329,7 @@ void TopMenu::set_header_text_close(QLabel *label)
 void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
 {
     DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_angle->itemDelegate(index));
-    if(!doubleSpinBox->editFlag) {
+    if(!doubleSpinBox->m_editFlag) {
         ui->tableView_angle->edit(index);
     }
 }
@@ -337,7 +337,7 @@ void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
 void TopMenu::on_tableView_gain_clicked(const QModelIndex &index)
 {
     DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_gain->itemDelegate(index));
-    if(!doubleSpinBox->editFlag) {
+    if(!doubleSpinBox->m_editFlag) {
         ui->tableView_gain->edit(index);
         if(index.column() == 1) {
             QDoubleSpinBox *editor = doubleSpinBox->spinBoxList.at(doubleSpinBox->spinBoxList.count() - 1);

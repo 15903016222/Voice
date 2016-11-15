@@ -10,7 +10,7 @@ ShowInfoWidget::ShowInfoWidget(QWidget *parent) :
     ui->setupUi(this);
 
     ui->label_5_showDateTime->installEventFilter(this);
-    showDlg = false;
+    m_showDlg = false;
 
     init_show_time();
 
@@ -38,21 +38,21 @@ void ShowInfoWidget::init_show_time()
 
 void ShowInfoWidget::slotUpdateTime()
 {
-    if(showDlg == false) {
-        str_date = QDate::currentDate().toString("yyyy-MM-dd");
-        str_time = QTime::currentTime().toString("hh:mm:ss");
+    if(m_showDlg == false) {
+        m_strDate = QDate::currentDate().toString("yyyy-MM-dd");
+        m_strTime = QTime::currentTime().toString("hh:mm:ss");
     } else {
         QDate date;
         QTime time;
-        if(count == 1) {
+        if(m_count == 1) {
             date = setTimeDlg->dateEdit.at(0)->date();
             time = setTimeDlg->timeEdit.at(0)->time();
         } else {
             QString string = ui->label_5_showDateTime->text();
-            str_date = string.left(string.indexOf(" "));
-            str_time = string.right(string.length() - string.indexOf(" ") - 1);
-            date = QDate(str_date.left(4).toInt(), str_date.mid(5, 2).toInt(), str_date.right(2).toInt());
-            time = QTime(str_time.left(2).toInt(), str_time.mid(3, 2).toInt(), str_time.right(2).toInt());
+            m_strDate = string.left(string.indexOf(" "));
+            m_strTime = string.right(string.length() - string.indexOf(" ") - 1);
+            date = QDate(m_strDate.left(4).toInt(), m_strDate.mid(5, 2).toInt(), m_strDate.right(2).toInt());
+            time = QTime(m_strTime.left(2).toInt(), m_strTime.mid(3, 2).toInt(), m_strTime.right(2).toInt());
         }
 
         QTime time1(23, 59, 59);
@@ -62,23 +62,23 @@ void ShowInfoWidget::slotUpdateTime()
         }
         time = time.addSecs(1);
 
-        str_date = date.toString("yyyy-MM-dd");
-        str_time = time.toString("hh:mm:ss");
-        count += 1;
+        m_strDate = date.toString("yyyy-MM-dd");
+        m_strTime = time.toString("hh:mm:ss");
+        m_count += 1;
     }
 
     QString dateTime;
-    dateTime.append(str_date);
+    dateTime.append(m_strDate);
     dateTime.append(" ");
-    dateTime.append(str_time);
+    dateTime.append(m_strTime);
     ui->label_5_showDateTime->setText(dateTime);
 }
 
 void ShowInfoWidget::slotPushButton_ok()
 {   
     setTimeDlg->close();
-    showDlg = true;
-    count = 1;
+    m_showDlg = true;
+    m_count = 1;
     timer->start(1000);
 }
 
