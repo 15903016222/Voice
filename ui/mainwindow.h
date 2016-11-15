@@ -46,18 +46,22 @@ private:
     CommonMenuButton *commonMenuButton;
     MyInputPanel *myInputPanelDlg;
 
-    bool hiddenFirstSecondMenuFlag;
-    bool hiddenThirdMenuFlag;
-    bool hiddenCommonMenuFlag;
-    bool hiddenArrowFlag;
-    bool hiddenKeyboardFlag;
+    bool m_hiddenFirstSecondMenuFlag;
+    bool m_hiddenThirdMenuFlag;
+    bool m_hiddenCommonMenuFlag;
+    bool m_hiddenArrowFlag;
+    bool m_hiddenKeyboardFlag;
 
-    int firstMenuNum;
-    int secondMenuNum;
-    int mainMenuStartPos;
-    int mainMenuEndPos;
-    int rotary_secondMenuNum;
+    int m_firstMenuNum;
+    int m_secondMenuNum;
+    int m_mainMenuStartPos;
+    int m_mainMenuEndPos;
+    int m_rotarySecondMenuNum;
 
+signals:
+    void clickedMenuIndex(int);
+    void show_keyboard(int);
+    void close_persistent_editor(int);
 
 protected slots:
     void do_key_event(Mcu::KeyType type);
@@ -76,10 +80,6 @@ protected slots:
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(Mcu::KeyType key);
 
-signals:
-    void clickedMenuIndex(int);
-    void show_keyboard(int);
-    void close_persistent_editor(int);
 };
 
 #endif // MAINWINDOW_H
