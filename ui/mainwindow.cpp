@@ -384,10 +384,17 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
 {
     if(firstSecondMenu->menuList.at(firstMenuNum)->hasFocus()) {
         if (type == Mcu::ROTARY_UP) {
-            secondMenuNum++;
+            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            QApplication::sendEvent(firstSecondMenu->menuList.at(firstMenuNum), event);
+
         } else {
-            secondMenuNum--;
+            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            QApplication::sendEvent(firstSecondMenu->menuList.at(firstMenuNum), event);
+
         }
+
+            qDebug()<<"do_rotary_secondNum                 = "<<firstMenuNum;
+        qDebug()<<"do_rotary_secondNum = "<<secondMenuNum;
     }
 }
 
