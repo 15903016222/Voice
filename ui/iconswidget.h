@@ -18,7 +18,6 @@ public:
     explicit IconsWidget(QWidget *parent = 0);
     ~IconsWidget();
 
-
 private:
     Ui::IconsWidget *ui;
     Mcu *m_mcu;
@@ -28,6 +27,9 @@ private:
 
     Mcu::BatteryStatus m_fstBatteryStatus;
     Mcu::BatteryStatus m_sndBatteryStatus;
+
+signals:
+    void keyboard_event();
 
 protected slots:
     void on_pushButton_scan_clicked();
