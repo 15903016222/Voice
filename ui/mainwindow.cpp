@@ -93,7 +93,6 @@ void MainWindow::init_ui()
 
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
-
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
@@ -121,6 +120,10 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
     show_hidden_arrow();
 
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
+
+    firstSecondMenu->menuList.at(firstMenuNum)->setFocus();
+    qDebug()<<"firstMenuIndex = "<<firstMenuNum;
+    qDebug()<<"firstMenuFocus = "<<firstSecondMenu->menuList.at(firstMenuNum)->hasFocus();
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -313,8 +316,10 @@ void MainWindow::show_hidden_Menu()
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
         show_hidden_arrow();
-        firstSecondMenu->toolBox.at(0)->setFocus();
-        qDebug()<<""<<firstSecondMenu->toolBox.at(0)->hasFocus();
+
+        firstSecondMenu->menuList.at(firstMenuNum)->setFocus();
+        qDebug()<<"firstMenuInit = "<<firstMenuNum;
+        qDebug()<<"firstMenuInitFocus = "<<firstSecondMenu->menuList.at(firstMenuNum)->hasFocus();
     } else {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
@@ -377,7 +382,7 @@ void MainWindow::slot_setMenuOpacity(double value)
 
 void MainWindow::do_rotary_event(Mcu::RotaryType type)
 {
-    if(firstSecondMenu->toolBox.at(0)->hasFocus()) {
+    if(firstSecondMenu->menuList.at(firstMenuNum)->hasFocus()) {
         if (type == Mcu::ROTARY_UP) {
             secondMenuNum++;
         } else {

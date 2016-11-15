@@ -29,7 +29,6 @@ private:
 
 public:
     QList<QToolBox*> toolBox;
- //   QList<QWidget*> page;
     QList<QListView*> menuList;
     QList<QStandardItemModel*> modelList;
     QStringList firstMenuData;

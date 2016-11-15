@@ -11,7 +11,6 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
     ui->setupUi(this);
 
     toolBox.append(ui->toolBox);
- //   page.append(ui->page_1);
 
     QFile *file = new QFile(":/file/json/menuconf.json");
     firstMenuMap = read_json_file(file);
