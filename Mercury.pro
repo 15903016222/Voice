@@ -28,6 +28,7 @@ LIBS += -lX11 -lXtst
 
 linux-g++ {
 DEVICE = PC_UNIX
+LIBS += -lX11 -lXtst
 }
 
 QT       += core gui
@@ -45,8 +46,6 @@ RESOURCES += ui/mainwindow.qrc
 TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
     ui/translator/phascanII_UI_English.ts
-
-CODECFORTR = utf-8
 
 TARGET = Mercury
 TEMPLATE = app
