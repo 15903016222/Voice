@@ -18,7 +18,6 @@ public:
     explicit IconsWidget(QWidget *parent = 0);
     ~IconsWidget();
 
-    QList<QPushButton*> pushButton_keyboard;
 
 private:
     Ui::IconsWidget *ui;
@@ -27,8 +26,8 @@ private:
     void insert_battery1_icon(int value);
     void insert_battery2_icon(int value);
 
-    Mcu::BatteryStatus m_batteryFirstStatus;
-    Mcu::BatteryStatus m_batterySecondStatus;
+    Mcu::BatteryStatus m_fstBatteryStatus;
+    Mcu::BatteryStatus m_sndBatteryStatus;
 
 protected slots:
     void on_pushButton_scan_clicked();

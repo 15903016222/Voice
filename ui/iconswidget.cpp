@@ -8,8 +8,7 @@ IconsWidget::IconsWidget(QWidget *parent) :
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
-    pushButton_keyboard.append(ui->pushButton_keyboard);
-
+    connect(ui->pushButton_keyboard, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));
     connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
     connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
@@ -54,16 +53,16 @@ void IconsWidget::do_temperature_event(Mcu::TemperatureType type, int value)
 void IconsWidget::do_battery_status_event(int index, Mcu::BatteryStatus status)
 {
     if (index == 0) {
-        m_batteryFirstStatus = status;
+        m_fstBatteryStatus = status;
     } else if (index == 1) {
-        m_batterySecondStatus = status;
+        m_sndBatteryStatus = status;
     }
 }
 
 void IconsWidget::insert_battery1_icon(int value)
 {
   //0:Discharge; 1:Charge; 2:No Battery; 3:Full;
-    if(m_batteryFirstStatus == 0){
+    if(m_fstBatteryStatus == 0){
     //    qDebug()<<"discharge_battery_1:  "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b0.png);");
@@ -86,7 +85,7 @@ void IconsWidget::insert_battery1_icon(int value)
         }else if(value >= 90 && value <= 100){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b9.png);");
         }
-    }else if(m_batteryFirstStatus == 1){
+    }else if(m_fstBatteryStatus == 1){
     //    qDebug()<<"charge_battery_1:     "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc0.png);");
@@ -111,10 +110,10 @@ void IconsWidget::insert_battery1_icon(int value)
         }else if(value == 100){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
         }
-    }else if(m_batteryFirstStatus == 2){
+    }else if(m_fstBatteryStatus == 2){
     //    qDebug()<<"No_Battery_battery_1: "<<value;
         ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b_error.png);");
-    }else if(m_batteryFirstStatus == 3){
+    }else if(m_fstBatteryStatus == 3){
     //    qDebug()<<"full_battery_1:       "<<value;
         ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b9.png);");
     }
@@ -123,7 +122,7 @@ void IconsWidget::insert_battery1_icon(int value)
 void IconsWidget::insert_battery2_icon(int value)
 {
   //0:Discharge; 1:Charge; 2:No Battery; 3:Full;
-    if(m_batterySecondStatus == 0){
+    if(m_sndBatteryStatus == 0){
      //   qDebug()<<"discharge_battery_2:  "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b0.png);");
@@ -146,7 +145,7 @@ void IconsWidget::insert_battery2_icon(int value)
         }else if(value >= 90 && value < 100){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b9.png);");
         }
-    }else if(m_batterySecondStatus == 1){
+    }else if(m_sndBatteryStatus == 1){
      //   qDebug()<<"charge_battery_2:     "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc0.png);");
@@ -171,10 +170,10 @@ void IconsWidget::insert_battery2_icon(int value)
         }else if(value == 100){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
         }
-    }else if(m_batterySecondStatus == 2){
+    }else if(m_sndBatteryStatus == 2){
      //   qDebug()<<"No_Battery_battery_2: "<<value;
         ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b_error.png);");
-    }else if(m_batterySecondStatus == 3){
+    }else if(m_sndBatteryStatus == 3){
      //   qDebug()<<"full_battery_2:       "<<value;
         ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b9.png);");
     }
@@ -188,7 +187,7 @@ void IconsWidget::do_battery_quantity_event(int index, int value)
         battery1_quantity.append("%");
         ui->label_battery1_quantity->setText(battery1_quantity);
 
-     //   qDebug()<<"status_battery_1        =         "<<m_batteryFirstStatus;
+     //   qDebug()<<"status_battery_1        =         "<<status_batteryFirst;
         insert_battery1_icon(value);
     } else if (index == 1) {
         QString battery2_quantity;
