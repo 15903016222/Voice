@@ -19,6 +19,7 @@ struct DelayInfo
      quint32 res2   :4;         /* bit:28-31    保留 */
 };
 
+#pragma pack(4)
 struct BeamData
 {
     /* reg (-1) */
@@ -31,7 +32,7 @@ struct BeamData
     quint32 gainOffset    :10;    /* bit:2-11 增益补偿单位0.1dB */
     quint32 res2          :3;     /* bit:12-14 保留 */
     quint32 group         :5;     /* bit:15-19 groupId */
-    quint32 info   :12;    /* bit:19-31 beam_qty */
+    quint32 info          :12;    /* bit:19-31 beam_qty */
 
     /* reg (1) */
     quint32 beamDelay     :16;    /* bit:0-15 16 单位10ns */
@@ -64,7 +65,10 @@ struct BeamData
     /* reg (8-9) */
     quint32 res10[2];
 
+    /* reg (10) */
     quint32 txEnable;
+
+    /* reg (11) */
     quint32 rxEnable;
 
     /* reg (12-13) 接收使能 */
@@ -74,12 +78,14 @@ struct BeamData
     quint64 txChannelSel;
 
     /* reg (16-47) 阵元发射信息 */
-    DelayInfo delay[32];            /* bit0-13 发射延时 bit:16-27 接收延时*/
-};
+    DelayInfo delay[32];
+}__attribute__((aligned(4)));
+#pragma pack()
 
 Beam::Beam(const int index)
     : m_index(index), d(new BeamData())
 {
+    ::memset(d, 0, sizeof(BeamData));
     d->chip = 0b0001;
     d->offset = BEAM_REGS_NUM * index;
 }
