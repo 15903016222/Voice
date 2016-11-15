@@ -15,9 +15,9 @@ struct TcgPoint
      quint32 pregain  :10;      /* bit:21-30    */
      quint32 res2     :1;       /* bit:31       保留 */
      /* TCG (1) */
-     quint32 slope    :22;      /* bit:0-21     */
-     quint32 res3     :9;       /* bit:22-30 */
-     quint32 flag     :1;       /* bit:31 */
+     quint32 slope    :22;      /* bit:0-21     前一点增益，单位0.1dB*/
+     quint32 res3     :9;       /* bit:22-30    保留*/
+     quint32 flag     :1;       /* bit:31       标志位*/
 };
 
 struct TcgData
@@ -42,42 +42,42 @@ Tcg::~Tcg()
     delete d;
 }
 
-quint32 Tcg::tcg_position(quint32 point) const
+quint32 Tcg::position(quint32 point) const
 {
     if (point >= MAX_POINTS) {
         return 0;
     }
 
-    return d->tcgPoint[point].position;
+    return d->tcgPoint[point].position * 10;
 }
 
-bool Tcg::set_tcg_position(quint32 point, quint32 val)
+bool Tcg::set_position(quint32 point, quint32 val)
 {
     if (point >= MAX_POINTS) {
         return false;
     }
-    d->tcgPoint[point].position = val;
+    d->tcgPoint[point].position = val/10;
     return true;
 }
 
-quint32 Tcg::tcg_slope(quint32 point) const
+float Tcg::slope(quint32 point) const
 {
     if (point >= MAX_POINTS) {
         return 0;
     }
-    return d->tcgPoint[point].slope;
+    return d->tcgPoint[point].slope/10.0;
 }
 
-bool Tcg::set_tcg_slope(quint32 point, quint32 val)
+bool Tcg::set_slope(quint32 point, float val)
 {
     if (point >= MAX_POINTS) {
         return false;
     }
-    d->tcgPoint[point].slope = val;
+    d->tcgPoint[point].slope = (quint32)(val*10);
     return true;
 }
 
-bool Tcg::tcg_flag(quint32 point) const
+bool Tcg::flag(quint32 point) const
 {
     if (point >= MAX_POINTS) {
         return false;
@@ -85,7 +85,7 @@ bool Tcg::tcg_flag(quint32 point) const
     return d->tcgPoint[point].flag;
 }
 
-bool Tcg::set_tcg_flag(quint32 point, bool flag)
+bool Tcg::set_flag(quint32 point, bool flag)
 {
     if (point >= MAX_POINTS) {
         return false;
