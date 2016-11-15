@@ -9,7 +9,7 @@ IconsWidget::IconsWidget(QWidget *parent) :
     ui->setupUi(this);
 
     pushButton_keyboard.append(ui->pushButton_keyboard);
-   // connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+
     connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
     connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
@@ -19,27 +19,6 @@ IconsWidget::~IconsWidget()
 {
     delete ui;
 }
-
-//void IconsWidget::on_pushButton_keyboard_clicked()
-//{
-////    MyInputPanel *myInputPanelDlg = new MyInputPanel;
-////    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint);
-//////    myInputPanelDlg->setAttribute(Qt::WA_TransparentForMouseEvents);
-//////    myInputPanelDlg->setModal(true);
-////    myInputPanelDlg.setWindowModality(Qt::WindowModal);
-//////    myInputPanelDlg->showNormal();
-////    myInputPanelDlg->show();
-
-////    MyInputPanel *myInputPanelDlg = new MyInputPanel;
-////    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-////    myInputPanelDlg->show();
-
-//    MyInputPanel myInputPanelDlg;
-//    myInputPanelDlg.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-//    myInputPanelDlg.setModal(false);
-//    myInputPanelDlg.showNormal();
-//    myInputPanelDlg.exec();
-//}
 
 void IconsWidget::on_pushButton_scan_clicked()
 {
@@ -52,18 +31,6 @@ void IconsWidget::on_pushButton_scan_clicked()
         ui->pushButton_scan->setStyleSheet("QPushButton{border-image: url(:/file/resources/clock.png)}");
     }
     scan = !scan;
-}
-
-void IconsWidget::do_rotary_event(Mcu::RotaryType type)
-{
-    int i = 50;
- //   m_mcu->set_brightness((char)i);
-    if (type == Mcu::ROTARY_UP) {
-        ++i;
-    } else {
-        --i;
-    }
-    m_mcu->set_brightness((char)i);
 }
 
 void IconsWidget::do_temperature_event(Mcu::TemperatureType type, int value)
