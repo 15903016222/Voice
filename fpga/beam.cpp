@@ -325,10 +325,6 @@ bool Beam::set_rx_delay(quint32 channel, quint32 val)
 
 bool Beam::refresh(void)
 {
-    FpgaSpi *spi = FpgaSpi::get_spi();
-    if (spi == NULL) {
-        return false;
-    }
-    return spi->send((char *)d, sizeof(BeamData));
+    return FpgaSpi::get_spi()->send((char *)d, sizeof(BeamData));
 }
 

@@ -7,13 +7,15 @@ static void test_fpga_spi(int argc, char **argv);
 
 int main(int argc, char *argv[])
 {
-    test_fpga_spi(argc, argv);
+    test_spi(argc, argv);
+//    test_fpga_spi(argc, argv);
 }
 
 void test_fpga_spi(int argc, char **argv)
 {
     char msg[800];
-    ::memset(msg, 0xbb, sizeof(msg));
+    ::memset(msg, 0, sizeof(msg));
+    msg[3] = 0x10;
 
     int num = 800;
 
@@ -39,6 +41,7 @@ void test_spi(int argc, char **argv)
 //    quint32 msg = 0xaabbccdd;
     char msg[800];
     ::memset(msg, 0xbb, sizeof(msg));
+//    msg[3] = 0x00;
 
     int num = 800;
 
@@ -59,12 +62,12 @@ void test_spi(int argc, char **argv)
         exit(1);
     }
 
-    if ( ! m_spi->set_mode(Spi::MODE3) ) {
+    if ( ! m_spi->set_mode(Spi::MODE0) ) {
         qDebug()<<"set mode failed";
         exit(1);
     }
 
-    if ( ! m_spi->set_bits_per_word(32)) {
+    if ( ! m_spi->set_bits_per_word(8)) {
         qDebug()<<"set bits per word failed";
         exit(1);
     }
@@ -82,5 +85,7 @@ void test_spi(int argc, char **argv)
     qDebug("Mode[%d] Bits[%d] Speed[%dkHz] LSB_First[%d]",
            m_spi->mode(), m_spi->bits_per_word(), m_spi->speed()/1000, m_spi->is_lsb_first());
 
-    m_spi->write((char *)&msg, num);
+    m_spi->write(msg, num);
+
+    m_spi->write(msg, 8);
 }
