@@ -8,8 +8,8 @@ IconsWidget::IconsWidget(QWidget *parent) :
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
-    pushButton_keyboard.append(ui->pushButton_keyboard);
-   // connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    // connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    connect(ui->pushButton_keyboard, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));
     connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
     connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
@@ -19,27 +19,6 @@ IconsWidget::~IconsWidget()
 {
     delete ui;
 }
-
-//void IconsWidget::on_pushButton_keyboard_clicked()
-//{
-////    MyInputPanel *myInputPanelDlg = new MyInputPanel;
-////    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint);
-//////    myInputPanelDlg->setAttribute(Qt::WA_TransparentForMouseEvents);
-//////    myInputPanelDlg->setModal(true);
-////    myInputPanelDlg.setWindowModality(Qt::WindowModal);
-//////    myInputPanelDlg->showNormal();
-////    myInputPanelDlg->show();
-
-////    MyInputPanel *myInputPanelDlg = new MyInputPanel;
-////    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-////    myInputPanelDlg->show();
-
-//    MyInputPanel myInputPanelDlg;
-//    myInputPanelDlg.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-//    myInputPanelDlg.setModal(false);
-//    myInputPanelDlg.showNormal();
-//    myInputPanelDlg.exec();
-//}
 
 void IconsWidget::on_pushButton_scan_clicked()
 {
@@ -87,16 +66,16 @@ void IconsWidget::do_temperature_event(Mcu::TemperatureType type, int value)
 void IconsWidget::do_battery_status_event(int index, Mcu::BatteryStatus status)
 {
     if (index == 0) {
-        status_batteryFirst = status;
+        m_fstBatteryStatus = status;
     } else if (index == 1) {
-        status_batterySecond = status;
+        m_sndBatteryStatus = status;
     }
 }
 
 void IconsWidget::insert_battery1_icon(int value)
 {
   //0:Discharge; 1:Charge; 2:No Battery; 3:Full;
-    if(status_batteryFirst == 0){
+    if(m_fstBatteryStatus == 0){
     //    qDebug()<<"discharge_battery_1:  "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b0.png);");
@@ -119,7 +98,7 @@ void IconsWidget::insert_battery1_icon(int value)
         }else if(value >= 90 && value <= 100){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b9.png);");
         }
-    }else if(status_batteryFirst == 1){
+    }else if(m_fstBatteryStatus == 1){
     //    qDebug()<<"charge_battery_1:     "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc0.png);");
@@ -144,10 +123,10 @@ void IconsWidget::insert_battery1_icon(int value)
         }else if(value == 100){
             ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
         }
-    }else if(status_batteryFirst == 2){
+    }else if(m_fstBatteryStatus == 2){
     //    qDebug()<<"No_Battery_battery_1: "<<value;
         ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b_error.png);");
-    }else if(status_batteryFirst == 3){
+    }else if(m_fstBatteryStatus == 3){
     //    qDebug()<<"full_battery_1:       "<<value;
         ui->label_battery1->setStyleSheet("border-image:url(:/file/resources/b9.png);");
     }
@@ -156,7 +135,7 @@ void IconsWidget::insert_battery1_icon(int value)
 void IconsWidget::insert_battery2_icon(int value)
 {
   //0:Discharge; 1:Charge; 2:No Battery; 3:Full;
-    if(status_batterySecond == 0){
+    if(m_sndBatteryStatus == 0){
      //   qDebug()<<"discharge_battery_2:  "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b0.png);");
@@ -179,7 +158,7 @@ void IconsWidget::insert_battery2_icon(int value)
         }else if(value >= 90 && value < 100){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b9.png);");
         }
-    }else if(status_batterySecond == 1){
+    }else if(m_sndBatteryStatus == 1){
      //   qDebug()<<"charge_battery_2:     "<<value;
         if(value >= 0 && value < 10){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc0.png);");
@@ -204,10 +183,10 @@ void IconsWidget::insert_battery2_icon(int value)
         }else if(value == 100){
             ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/bc_full.png);");
         }
-    }else if(status_batterySecond == 2){
+    }else if(m_sndBatteryStatus == 2){
      //   qDebug()<<"No_Battery_battery_2: "<<value;
         ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b_error.png);");
-    }else if(status_batterySecond == 3){
+    }else if(m_sndBatteryStatus == 3){
      //   qDebug()<<"full_battery_2:       "<<value;
         ui->label_battery2->setStyleSheet("border-image:url(:/file/resources/b9.png);");
     }

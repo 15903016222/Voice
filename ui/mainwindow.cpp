@@ -66,7 +66,7 @@ void MainWindow::init_ui()
     ui->scrollArea->setWidget(firstSecondMenu);
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
-    QObject::connect(ui->widgetTopRight->pushButton_keyboard.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_keyboard_clicked()));
+    QObject::connect(ui->widgetTopRight, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
 
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
@@ -304,7 +304,7 @@ void MainWindow::scroll_menu(int index)
     }
 }
 
-void MainWindow::slot_pushButton_keyboard_clicked()
+void MainWindow::do_keyboard_event()
 {
     hiddenKeyboardFlag = !hiddenKeyboardFlag;
     if(hiddenKeyboardFlag) {

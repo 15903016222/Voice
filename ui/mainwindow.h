@@ -68,7 +68,7 @@ protected slots:
     void slot_pushButton_commonMenuClicked();
     void scroll_menu(int index);
     void update_translator(QString string);
-    void slot_pushButton_keyboard_clicked();
+    void do_keyboard_event();
     void slot_keyboard_close_clicked();
     void slot_setMenuOpacity(double value);
 
