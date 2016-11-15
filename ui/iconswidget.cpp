@@ -8,7 +8,7 @@ IconsWidget::IconsWidget(QWidget *parent) :
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
-    // connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+
     connect(ui->pushButton_keyboard, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));
     connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
@@ -33,17 +33,7 @@ void IconsWidget::on_pushButton_scan_clicked()
     scan = !scan;
 }
 
-void IconsWidget::do_rotary_event(Mcu::RotaryType type)
-{
-    int i = 50;
- //   m_mcu->set_brightness((char)i);
-    if (type == Mcu::ROTARY_UP) {
-        ++i;
-    } else {
-        --i;
-    }
-    m_mcu->set_brightness((char)i);
-}
+
 
 void IconsWidget::do_temperature_event(Mcu::TemperatureType type, int value)
 {
