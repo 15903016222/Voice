@@ -27,24 +27,27 @@ MainWindow::MainWindow(QWidget *parent) :
     m_fpga->create_beam();
     m_beam = m_fpga->get_beam(0);
 
+    m_fpga->create_tcg();
+    m_tcg = m_fpga->get_tcg(0);
+
     /*** Global ***/
-    ui->spinBoxPaLawQty->setValue(m_fpga->pa_law_qty());
-    ui->spinBoxUtLawQty->setValue(m_fpga->ut_law_qty());
-    ui->comboBoxEncoderXPolarity->setCurrentIndex(m_fpga->encoder_x_polarity());
-    ui->comboBoxEncoderYPolarity->setCurrentIndex(m_fpga->encoder_y_polarity());
-    ui->comboBoxEncoderXMode->setCurrentIndex(m_fpga->encoder_x_mode());
-    ui->comboBoxEncoderYMode->setCurrentIndex(m_fpga->encoder_y_mode());
-    ui->comboBoxUt1Twin->setCurrentIndex(m_fpga->ut1_twin());
-    ui->comboBoxUt2Twin->setCurrentIndex(m_fpga->ut2_twin());
-    ui->comboBoxUt1RxDamping->setCurrentIndex(m_fpga->ut1_rx_damping());
-    ui->comboBoxUt2RxDamping->setCurrentIndex(m_fpga->ut2_rx_damping());
-    ui->comboBoxUt1TxDamping->setCurrentIndex(m_fpga->ut1_tx_damping());
-    ui->comboBoxUt2TxDamping->setCurrentIndex(m_fpga->ut2_tx_damping());
-    ui->comboBoxUtVoltage->setCurrentIndex(m_fpga->ut_voltage());
-    ui->comboBoxPaVoltage->setCurrentIndex(m_fpga->pa_voltage());
-    ui->comboBoxFreeze->setCurrentIndex(m_fpga->is_freeze());
-    ui->comboBoxSound->setCurrentIndex(m_fpga->sound());
-    ui->spinBoxEcho->setValue(m_fpga->factor_echo());
+//    ui->spinBoxPaLawQty->setValue(m_fpga->pa_law_qty());
+//    ui->spinBoxUtLawQty->setValue(m_fpga->ut_law_qty());
+//    ui->comboBoxEncoderXPolarity->setCurrentIndex(m_fpga->encoder_x_polarity());
+//    ui->comboBoxEncoderYPolarity->setCurrentIndex(m_fpga->encoder_y_polarity());
+//    ui->comboBoxEncoderXMode->setCurrentIndex(m_fpga->encoder_x_mode());
+//    ui->comboBoxEncoderYMode->setCurrentIndex(m_fpga->encoder_y_mode());
+//    ui->comboBoxUt1Twin->setCurrentIndex(m_fpga->ut1_twin());
+//    ui->comboBoxUt2Twin->setCurrentIndex(m_fpga->ut2_twin());
+//    ui->comboBoxUt1RxDamping->setCurrentIndex(m_fpga->ut1_rx_damping());
+//    ui->comboBoxUt2RxDamping->setCurrentIndex(m_fpga->ut2_rx_damping());
+//    ui->comboBoxUt1TxDamping->setCurrentIndex(m_fpga->ut1_tx_damping());
+//    ui->comboBoxUt2TxDamping->setCurrentIndex(m_fpga->ut2_tx_damping());
+//    ui->comboBoxUtVoltage->setCurrentIndex(m_fpga->ut_voltage());
+//    ui->comboBoxPaVoltage->setCurrentIndex(m_fpga->pa_voltage());
+//    ui->comboBoxFreeze->setCurrentIndex(m_fpga->is_freeze());
+//    ui->comboBoxSound->setCurrentIndex(m_fpga->sound());
+//    ui->spinBoxEcho->setValue(m_fpga->factor_echo());
 
 
     /*** Group ***/
@@ -539,7 +542,7 @@ void MainWindow::on_spinBoxGroupTxEnd_valueChanged(int arg1)
 
 void MainWindow::on_spinBoxGroupTxStart_valueChanged(int arg1)
 {
-    if (! m_group->set_tx_start(arg1)) {
+    if (! m_group->set_tx_start(arg1, true)) {
         show_warning();
     }
 }
@@ -552,7 +555,7 @@ void MainWindow::on_pushButtonGroupReflesh_clicked()
 }
 
 
-/***************  Focal Law ****************/
+/***************  Beam ****************/
 void MainWindow::on_pushButtonBeamCreate_clicked()
 {
     if (! m_fpga->create_beam()) {
@@ -568,11 +571,13 @@ void MainWindow::on_pushButtonBeamDelete_clicked()
 {
     if (! m_fpga->remove_beam()) {
         show_warning();
+        return;
     }
+
     if (m_fpga->beams() == 1) {
         ui->pushButtonBeamDelete->setEnabled(false);
     }
-    ui->comboBoxCurrentBeam->removeItem(m_fpga->beams()-1);
+    ui->comboBoxCurrentBeam->removeItem(m_fpga->beams());
 }
 
 
@@ -662,4 +667,84 @@ void MainWindow::on_pushButton_clicked()
     if ( ! m_beam->refresh() ) {
         show_warning();
     }
+}
+
+/*********************** Tcg ***********************/
+
+
+void MainWindow::on_tcgAddPushButton_clicked()
+{
+    if ( ! m_fpga->create_tcg()) {
+        show_warning();
+        return;
+    }
+
+    ui->tcgDeletePushButton->setEnabled(true);
+    ui->tcgCurrentIndexComboBox->addItem(QString::number(m_fpga->tcgs()-1));
+}
+
+void MainWindow::on_tcgDeletePushButton_clicked()
+{
+    if ( ! m_fpga->remove_tcg()) {
+        show_warning();
+        return;
+    }
+
+    if (m_fpga->tcgs() == 1) {
+        ui->tcgDeletePushButton->setEnabled(false);
+    }
+    ui->tcgCurrentIndexComboBox->removeItem(m_fpga->tcgs());
+}
+
+
+
+void MainWindow::on_tcgCurrentIndexComboBox_currentIndexChanged(int index)
+{
+    m_tcg = m_fpga->get_tcg(index);
+    ui->TcgPointcomboBox->setCurrentIndex(0);
+    on_TcgPointcomboBox_currentIndexChanged(0);
+}
+
+void MainWindow::on_TcgPointcomboBox_currentIndexChanged(int index)
+{
+    ui->tcgPositionSpinBox->setValue(m_tcg->position(index));
+    ui->tcgSlopeDoubleSpinBox->setValue(m_tcg->slope(index));
+    ui->tcgFlagComboBox->setCurrentIndex(m_tcg->flag(index));
+}
+
+
+void MainWindow::on_tcgPositionSpinBox_valueChanged(int arg1)
+{
+    if ( ! m_tcg->set_position(ui->TcgPointcomboBox->currentIndex(), arg1)) {
+        show_warning();
+        return;
+    }
+}
+
+void MainWindow::on_tcgSlopeDoubleSpinBox_valueChanged(int arg1)
+{
+    if ( ! m_tcg->set_slope(ui->TcgPointcomboBox->currentIndex(), arg1)) {
+        show_warning();
+        return;
+    }
+}
+
+void MainWindow::on_tcgFlagComboBox_currentIndexChanged(int index)
+{
+    if ( ! m_tcg->set_flag(ui->TcgPointcomboBox->currentIndex(), index)) {
+        show_warning();
+        return;
+    }
+}
+
+void MainWindow::on_tcgRefleshPushButton_clicked()
+{
+    if ( ! m_tcg->reflesh()) {
+        show_warning();
+    }
+}
+
+void MainWindow::on_quitPushButton_clicked()
+{
+    qApp->quit();
 }

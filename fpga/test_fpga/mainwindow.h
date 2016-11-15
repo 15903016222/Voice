@@ -156,10 +156,11 @@ private slots:
 
     void on_pushButtonGroupReflesh_clicked();
 
+    /********** Beam **********/
+
     void on_pushButtonBeamCreate_clicked();
 
     void on_pushButtonBeamDelete_clicked();
-
 
     void on_comboBoxCurrentBeam_currentIndexChanged(int index);
 
@@ -195,6 +196,26 @@ private slots:
 
     void on_pushButton_clicked();
 
+    /*********** Tcg ***********/
+
+    void on_tcgAddPushButton_clicked();
+
+    void on_tcgDeletePushButton_clicked();
+
+    void on_tcgCurrentIndexComboBox_currentIndexChanged(int index);
+
+    void on_TcgPointcomboBox_currentIndexChanged(int index);
+
+    void on_tcgPositionSpinBox_valueChanged(int arg1);
+
+    void on_tcgSlopeDoubleSpinBox_valueChanged(int arg1);
+
+    void on_tcgFlagComboBox_currentIndexChanged(int index);
+
+    void on_tcgRefleshPushButton_clicked();
+
+    void on_quitPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Fpga *m_fpga;
@@ -203,6 +224,7 @@ private:
 
     GroupPointer m_group;
     BeamPointer m_beam;
+    TcgPointer m_tcg;
 };
 
 #endif // MAINWINDOW_H
