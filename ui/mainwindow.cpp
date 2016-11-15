@@ -3,30 +3,9 @@
 
 #include <QDebug>
 
-class MainWindowPrivate
-{
-public:
-    MainWindowPrivate(MainWindow * parent):
-        q_ptr( parent )
-    {
-
-    }
-
-    ~MainWindowPrivate()
-    {
-
-    }
-
-protected:
-    MainWindow * const q_ptr;
-private:
-    Q_DECLARE_PUBLIC(MainWindow)
-};
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    d_ptr(new MainWindowPrivate(this))
+    ui(new Ui::MainWindow)
 {
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
@@ -46,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete d_ptr;
 }
 
 void MainWindow::init_ui()
@@ -342,7 +320,7 @@ void MainWindow::slot_pushButton_keyboard_clicked()
         myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         myInputPanelDlg->setFocusPolicy(Qt::NoFocus);
         myInputPanelDlg->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
-        myInputPanelDlg->exec();
+        myInputPanelDlg->show();
 
         connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
         connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));

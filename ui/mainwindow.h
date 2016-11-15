@@ -15,7 +15,6 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindowPrivate;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -24,27 +23,28 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
+    void show_hidden_Menu();
+    void resizeEvent(QResizeEvent *event);
+    void show_hidden_arrow();
 
 protected:
-    MainWindowPrivate * const d_ptr;
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *moveEvent);
     void keyPressEvent(QKeyEvent *event);
 
 private:
-    Q_DECLARE_PRIVATE(MainWindow)
+    void init_ui();
 
-public:
+    Ui::MainWindow *ui;
+
+    QTranslator *translator;
+    Mcu *m_mcu;
+    QGraphicsOpacityEffect *effect;
+
     CommonMenuWidget * commonMenuWidget;
     FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
     MyInputPanel *myInputPanelDlg;
-
-    void show_hidden_Menu();
-    void resizeEvent(QResizeEvent *event);
-    void show_hidden_arrow();
 
     bool hiddenFirstSecondMenuFlag;
     bool hiddenThirdMenuFlag;
@@ -58,16 +58,10 @@ public:
     int mainMenuEndPos;
     int rotary_secondMenuNum;
 
-private:
-    void init_ui();
-    QTranslator *translator;
-    Mcu *m_mcu;
-    QGraphicsOpacityEffect *effect;
 
 protected slots:
     void do_key_event(Mcu::KeyType type);
 
-private slots:
     void slot_firstMenuToolBoxCurrentChanged(int index);
     void slot_secondMenuItemClicked(QModelIndex index);
     void on_pushButton_top_clicked();
@@ -86,7 +80,6 @@ signals:
     void clickedMenuIndex(int);
     void show_keyboard(int);
     void close_persistent_editor(int);
-
 };
 
 #endif // MAINWINDOW_H
