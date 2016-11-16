@@ -1,6 +1,8 @@
 #include "measurementdialog.h"
 #include "ui_measurementdialog.h"
 
+#include <QKeyEvent>
+#include <QApplication>
 #include <QDebug>
 
 #define MEASUREMENT_NUMBER 54
@@ -72,9 +74,6 @@ MeasurementDialog::MeasurementDialog(QWidget *parent) :
     init_ui();
 
     m_changedFlag = false;
-
-    pListView->setFocus();
-    qDebug()<<"measureListViewFocus = "<<pListView->hasFocus();
 
     pMcu = Mcu::get_mcu();
     connect(pMcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
@@ -156,8 +155,8 @@ void MeasurementDialog::on_pushButton_cancel_clicked()
 void MeasurementDialog::on_pushButton_ok_clicked()
 {
     if(m_changedFlag) {
-        close();
         emit labelTextChanged(m_changedString);
+        close();
     }
 }
 
@@ -188,27 +187,23 @@ void MeasurementDialog::set_current_index(QString string)
     }
 }
 
-#include <QKeyEvent>
-#include <QApplication>
 void MeasurementDialog::do_rotary_event(Mcu::RotaryType type)
 {
-    if(pListView->hasFocus()) {
-        if (type == Mcu::ROTARY_UP) {
-            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
-            QApplication::sendEvent(pListView, event);
+    m_changedFlag = true;
 
-        } else {
-            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
-            QApplication::sendEvent(pListView, event);
-        }
+    if (type == Mcu::ROTARY_UP) {
+        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+        QApplication::sendEvent(pListView, event);
+
+    } else {
+        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+        QApplication::sendEvent(pListView, event);
     }
 }
 
 void MeasurementDialog::key_sure(Mcu::KeyType key)
 {
-    if(pListView->hasFocus()) {
-        if(key == Mcu::KEY_SURE) {
-            on_pushButton_ok_clicked();
-        }
+    if(key == Mcu::KEY_SURE) {
+        on_pushButton_ok_clicked();
     }
 }
