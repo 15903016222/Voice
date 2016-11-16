@@ -84,14 +84,14 @@ void MeasurementDialog::init_ui()
     buttonList.append(ui->pushButton_cancel);
     buttonList.append(ui->pushButton_ok);
 
-    measurementModel = new QStandardItemModel(this);
+    pMeasurementModel = new QStandardItemModel(this);
 
     for(int i = 0; i < MEASUREMENT_NUMBER; i++) {
         measurementList.append(tr(MEASUREMENT_STRING[i]));
 
         QString string = static_cast<QString>(measurementList.at(i));
         QStandardItem *item = new QStandardItem(string);
-        measurementModel->appendRow(item);
+        pMeasurementModel->appendRow(item);
         item->setForeground(QBrush(Qt::black));
         item->setFont(QFont("Times New Roman", 14));
 
@@ -114,18 +114,18 @@ void MeasurementDialog::init_ui()
         }
     }
 
-    listView = new QListView(this);
-    listView->resize(ui->scrollArea->geometry().width(), 800);
-    listView->setSpacing(3);
-    listView->setEditTriggers(QAbstractItemView::EditKeyPressed);
+    pListView = new QListView(this);
+    pListView->resize(ui->scrollArea->geometry().width(), 800);
+    pListView->setSpacing(3);
+    pListView->setEditTriggers(QAbstractItemView::EditKeyPressed);
 
     ui->scrollArea->setFrameShape(QFrame::NoFrame);
     ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->scrollArea->setWidget(listView);
-    listView->setModel(measurementModel);
-    listView->setFrameShape(QFrame::NoFrame);
-    listView->setStyleSheet("QListView{outline: 0px;}"
+    ui->scrollArea->setWidget(pListView);
+    pListView->setModel(pMeasurementModel);
+    pListView->setFrameShape(QFrame::NoFrame);
+    pListView->setStyleSheet("QListView{outline: 0px;}"
                             "QListView::item{"
                             "background-color: rgba(0, 0, 0, 0);"
                             "color: black;}"
@@ -138,7 +138,7 @@ void MeasurementDialog::init_ui()
                             "background-color: rgba(85, 175, 255, 20);"
                             "color: red;}");
 
-    connect(listView, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
+    connect(pListView, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
 }
 
 void MeasurementDialog::on_pushButton_cancel_clicked()
@@ -158,11 +158,11 @@ void MeasurementDialog::slot_listViewItemClicked(QModelIndex index)
 {
     m_changedFlag = true;
     for(int i = 0; i < MEASUREMENT_NUMBER; i++) {
-        QModelIndex modelIndex = measurementModel->index(i, 0);
-        QStandardItem *item = measurementModel->itemFromIndex(modelIndex);
+        QModelIndex modelIndex = pMeasurementModel->index(i, 0);
+        QStandardItem *item = pMeasurementModel->itemFromIndex(modelIndex);
 
         if(modelIndex == index) {
-            listView->setCurrentIndex(index);
+            pListView->setCurrentIndex(index);
             m_changedString = labelMap.key(item->text());
         }
     }
@@ -173,9 +173,9 @@ void MeasurementDialog::set_current_index(QString string)
     for(int i = 0; i < MEASUREMENT_NUMBER; i ++) {
         QString longString = MEASUREMENT_STRING[i];
         if(longString.contains(string)) {
-            QStandardItem *item = measurementModel->item(i);
-            QModelIndex modelIndex = measurementModel->indexFromItem(item);
-            listView->setCurrentIndex(modelIndex);
+            QStandardItem *item = pMeasurementModel->item(i);
+            QModelIndex modelIndex = pMeasurementModel->indexFromItem(item);
+            pListView->setCurrentIndex(modelIndex);
             break;
         }
     }

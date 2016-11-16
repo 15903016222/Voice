@@ -21,13 +21,13 @@ private:
     Ui::MeasurementDialog *ui;
 
     QList<QPushButton *> buttonList;
-    QListView *listView;
-    QStringList measurementList;
-    QStandardItemModel *measurementModel;
+    QListView *pListView;
+    QStandardItemModel *pMeasurementModel;
 
     void init_ui();
 
     QMap<QString, QString> labelMap;
+    QStringList measurementList;
     QString m_changedString;
     bool m_changedFlag;
 
