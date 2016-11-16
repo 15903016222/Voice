@@ -1,17 +1,19 @@
 #include "icons_bar.h"
 #include "ui_icons_bar.h"
 
+#include <QDebug>
+
 IconsBar::IconsBar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::IconsBar)
 {
-    m_mcu = Mcu::get_mcu();
+    Mcu *mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
-    connect(ui->pushButton_keyboard, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));
-    connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
-    connect(m_mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
-    connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
+    connect(ui->keyboardPushButton, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));
+    connect(mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
+    connect(mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
+    connect(mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
 }
 
 IconsBar::~IconsBar()
@@ -54,6 +56,15 @@ void IconsBar::do_battery_quantity_event(int index, int value)
 
     m_batteryQuantity[index] = value;
     update_battery(index);
+}
+
+void IconsBar::show_gear(bool flag)
+{
+    if (flag) {
+        ui->encoderLabel->setPixmap(QPixmap(":/file/resources/gear.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
+    } else {
+        ui->encoderLabel->setPixmap(QPixmap(":/file/resources/clock.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
+    }
 }
 
 void IconsBar::update_battery(quint32 index)

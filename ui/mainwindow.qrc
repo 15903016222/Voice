@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/file">
         <file>resources/keyboard.png</file>
-        <file>resources/set.png</file>
         <file>resources/buttonAfter.png</file>
         <file>resources/buttonBefore.png</file>
         <file>resources/arrowDown.png</file>
@@ -37,5 +36,6 @@
         <file>json/menuconf.json</file>
         <file>json/menutr_CHN.json</file>
         <file>resources/bc10.png</file>
+        <file>resources/gear.png</file>
     </qresource>
 </RCC>

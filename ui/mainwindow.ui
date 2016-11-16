@@ -61,7 +61,7 @@
         <widget class="TopMenu" name="widgetTopLeft" native="true"/>
        </item>
        <item>
-        <widget class="IconsBar" name="widgetTopRight" native="true"/>
+        <widget class="IconsBar" name="iconsBarWidget" native="true"/>
        </item>
       </layout>
      </widget>
