@@ -116,7 +116,7 @@ void ThirdMenuWidget::set_third_menu_name(int i, int j)
     m_currSecondNum = j;
 
     if(opendSpinBoxIndex >= 0) {
-        disconnect_input_number();
+//        disconnect_input_number();
         opendSpinBoxIndex = -1;
     }
 
@@ -374,7 +374,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         }
         if(opendSpinBoxIndex != index) {
             opendSpinBoxIndex = index;
-            connect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
+//            connect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
             if(m_keyboardShowFlag) {
 //                doubleSpinBox->closeEditor(doubleSpinBox->spinBoxList.at(doubleSpinBox->spinBoxList.count() -1));
                 ui->tableView->openPersistentEditor(modelIndex);
@@ -525,7 +525,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {
-        disconnect_input_number();
+//        disconnect_input_number();
         opendSpinBoxIndex = -1;
     }
 }
@@ -578,7 +578,7 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
         }
         if(opendSpinBoxIndex != column) {
             opendSpinBoxIndex = column;
-            connect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
+//            connect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
             if(m_keyboardShowFlag) {
                 ui->tableView->openPersistentEditor(index);
             }
@@ -593,7 +593,7 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
     }
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {
-        disconnect_input_number();
+//        disconnect_input_number();
         opendSpinBoxIndex = -1;
     }
 }
@@ -940,7 +940,7 @@ void ThirdMenuWidget::close_spinbox_persistent_editor(int index)
         set_header_text_close(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1));
         spinBox->m_editFlag = false;
         spinBox->m_inputCount = 0;
-        disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
+//        disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
 //       spinBox->closeEditor(static_cast<QWidget*>(spinBox->spinBoxList.at(spinBox->spinBoxList.count() -1)));
     }
 }
@@ -952,9 +952,22 @@ void ThirdMenuWidget::input_spinbox_number(QString string)
         qDebug() << "input_editor" <<spinBox->m_editFlag;
 
         if(spinBox->m_editFlag) {
-            qDebug() << string;
-            emit send_string_to_delegate(string);
-            spinBox->m_inputCount += 1;
+            QDoubleSpinBox *doubleSpinBox = spinBox->spinBoxList.at(spinBox->spinBoxList.count() - 1);
+            int decimal = spinBox->decimalAmount;
+            doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
+            doubleSpinBox->setFocus();
+//            qDebug() << string;
+//            emit send_string_to_delegate(string);
+//            spinBox->m_inputCount += 1;
+#ifdef Q_OS_WIN32
+            QWidget *widget = doubleSpinBox->focusWidget();
+            HWND hwnd = (HWND)widget->winId();
+            pVirtualKeyboard->input_number_windows(hwnd, string, decimal);
+#endif
+
+#ifdef Q_OS_LINUX
+           pVirtualKeyboard->input_number_linux(string, decimal);
+#endif
         }
     }
 }
@@ -971,10 +984,10 @@ void ThirdMenuWidget::change_persistent_editor(QModelIndex modelIndex)
         spinBox->m_editFlag = false;
         spinBox->m_inputCount = 0;
     }
-    disconnect_input_number();
+//    disconnect_input_number();
 }
 
-void ThirdMenuWidget::disconnect_input_number()
-{
-    disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
-}
+//void ThirdMenuWidget::disconnect_input_number()
+//{
+//    disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
+//}

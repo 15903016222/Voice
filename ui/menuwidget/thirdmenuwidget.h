@@ -5,6 +5,7 @@
 #include "datetimesetdialog.h"
 #include "networkdialog.h"
 #include "mcu.h"
+#include "virtualkeyboard.h"
 
 #define THIRD_MENU_NUMBER 6
 
@@ -21,7 +22,9 @@ public:
     ~ThirdMenuWidget();
 
     void set_third_menu_name(int i, int j);
-    void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent *event);   
+    void open_spinbox_persistent_editor(int index);
+    void close_spinbox_persistent_editor(int index);
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
     QStringList get_spinBox_step_list(QVariantMap variantMap);
     int opendSpinBoxIndex;
@@ -34,13 +37,14 @@ private:
     NetworkDialog *pNetworkDialog;
     QStandardItemModel *pModel;
     FirstSecondMenuWidget *pFirstSecondMenuWidget;
+    VirtualKeyboard *pVirtualKeyboard;
 
     void init_standard_model();
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void set_model_item(int startIndex, QStringList thirdMenuList);
     void set_currentTime();
     void change_persistent_editor(QModelIndex modelIndex);
-    void disconnect_input_number();
+//    void disconnect_input_number();
 
     QStringList get_translate_third_menu_list();
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap);
@@ -76,7 +80,7 @@ signals:
     void retranslate_ui(QString);
     void translater_ZH();
     void translater_EN();
-    void send_string_to_delegate(QString);
+//    void send_string_to_delegate(QString);
     void opacityChanged(double value);
 
 protected slots:
@@ -96,8 +100,6 @@ protected slots:
     void set_time(QString value);
     void set_ip_subNet(QString value);
     void retranslate_third_menu_ui(QString string);
-    void open_spinbox_persistent_editor(int index);
-    void close_spinbox_persistent_editor(int index);
     void input_spinbox_number(QString string);
     void setOpacity(double value);
 
