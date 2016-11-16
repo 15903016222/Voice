@@ -19,6 +19,8 @@ public:
     explicit MeasurementDialog(QWidget *parent = 0);
     ~MeasurementDialog();
 
+    void set_current_index(QString string);
+
 private:
     Ui::MeasurementDialog *ui;
 
@@ -34,6 +36,7 @@ private:
     QStringList measurementList;
     QString m_changedString;
     bool m_changedFlag;
+    int m_currentRow;
 
 signals:
     void labelTextChanged(QString);
@@ -42,7 +45,6 @@ private slots:
     void on_pushButton_cancel_clicked();
     void on_pushButton_ok_clicked();
     void slot_listViewItemClicked(QModelIndex index);
-    void set_current_index(QString string);
 
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(Mcu::KeyType key);

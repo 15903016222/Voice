@@ -49,7 +49,7 @@ static const char* MEASUREMENT_STRING[MEASUREMENT_NUMBER] =
     QT_TRANSLATE_NOOP("MeasurementDialog", "VsB^ Volumetric position in gate B on the scan axis"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "LA^ Leg(skip)of the indication in gate A"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "LB^ Leg(skip)of the indication in gate B"),
-    //  QT_TRANSLATE_NOOP("MeasurementDialog", "E% Peak amplitude of the envelop in gate A"),
+ //   QT_TRANSLATE_NOOP("MeasurementDialog", "E% Peak amplitude of the envelop in gate A"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "AWS-DA Indication level for AWS-D1.5A"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "AWS-DB Zero reference  level for AWS-D1.5B"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "AWS-DC Attenuation factor for AWS-D1.5 C"),
@@ -163,23 +163,22 @@ void MeasurementDialog::on_pushButton_ok_clicked()
 void MeasurementDialog::slot_listViewItemClicked(QModelIndex index)
 {
     m_changedFlag = true;
-    for(int i = 0; i < MEASUREMENT_NUMBER; i++) {
-        QModelIndex modelIndex = pMeasurementModel->index(i, 0);
-        QStandardItem *item = pMeasurementModel->itemFromIndex(modelIndex);
 
-        if(modelIndex == index) {
-            pListView->setCurrentIndex(index);
-            m_changedString = labelMap.key(item->text());
-        }
-    }
+    QStandardItem *item = pMeasurementModel->itemFromIndex(index);
+    m_changedString = labelMap.key(item->text());
 }
 
 void MeasurementDialog::set_current_index(QString string)
 {
     for(int i = 0; i < MEASUREMENT_NUMBER; i ++) {
         QString longString = MEASUREMENT_STRING[i];
+
         if(longString.contains(string)) {
             QStandardItem *item = pMeasurementModel->item(i);
+
+            m_currentRow = item->row();
+            qDebug()<<"set_current_index_row = "<<m_currentRow<<"  set_current_MEASURE = "<<m_changedString;
+
             QModelIndex modelIndex = pMeasurementModel->indexFromItem(item);
             pListView->setCurrentIndex(modelIndex);
             break;
@@ -195,10 +194,21 @@ void MeasurementDialog::do_rotary_event(Mcu::RotaryType type)
         QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
         QApplication::sendEvent(pListView, event);
 
+        if(m_currentRow > 0){
+            m_currentRow--;
+        }
+
     } else {
         QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
         QApplication::sendEvent(pListView, event);
+
+        if(m_currentRow < MEASUREMENT_NUMBER -1){
+            m_currentRow++;
+        }
     }
+
+    m_changedString = labelMap.key(MEASUREMENT_STRING[m_currentRow]);
+    qDebug()<<"do_rotaryRow = "<<m_currentRow<<"  value"<<m_changedString;
 }
 
 void MeasurementDialog::key_sure(Mcu::KeyType key)

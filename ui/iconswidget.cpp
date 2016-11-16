@@ -8,7 +8,6 @@ IconsWidget::IconsWidget(QWidget *parent) :
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
-
     connect(ui->pushButton_keyboard, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));
     connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
     connect(m_mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));

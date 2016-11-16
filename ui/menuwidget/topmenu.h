@@ -41,9 +41,6 @@ private:
     MeasurementDialog *pDialog;
     QString objectName;
 
-signals:
-    void currentDialogIndex(QString);
-
 private slots:
     void change_labelText(QString str);
     void set_gain_header_text_close(QWidget *editor);
