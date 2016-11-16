@@ -1,6 +1,8 @@
 #ifndef MEASUREMENTDIALOG_H
 #define MEASUREMENTDIALOG_H
 
+#include "mcu.h"
+
 #include <QDialog>
 #include <QListView>
 #include <QStandardItemModel>
@@ -19,6 +21,8 @@ public:
 
 private:
     Ui::MeasurementDialog *ui;
+
+    Mcu *pMcu;
 
     QList<QPushButton *> buttonList;
     QListView *pListView;
@@ -39,6 +43,9 @@ private slots:
     void on_pushButton_ok_clicked();
     void slot_listViewItemClicked(QModelIndex index);
     void set_current_index(QString string);
+
+    void do_rotary_event(Mcu::RotaryType type);
+    void key_sure(Mcu::KeyType key);
 
 };
 

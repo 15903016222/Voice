@@ -72,6 +72,13 @@ MeasurementDialog::MeasurementDialog(QWidget *parent) :
     init_ui();
 
     m_changedFlag = false;
+
+    pListView->setFocus();
+    qDebug()<<"measureListViewFocus = "<<pListView->hasFocus();
+
+    pMcu = Mcu::get_mcu();
+    connect(pMcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    connect(pMcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
 }
 
 MeasurementDialog::~MeasurementDialog()
@@ -177,6 +184,31 @@ void MeasurementDialog::set_current_index(QString string)
             QModelIndex modelIndex = pMeasurementModel->indexFromItem(item);
             pListView->setCurrentIndex(modelIndex);
             break;
+        }
+    }
+}
+
+#include <QKeyEvent>
+#include <QApplication>
+void MeasurementDialog::do_rotary_event(Mcu::RotaryType type)
+{
+    if(pListView->hasFocus()) {
+        if (type == Mcu::ROTARY_UP) {
+            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            QApplication::sendEvent(pListView, event);
+
+        } else {
+            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            QApplication::sendEvent(pListView, event);
+        }
+    }
+}
+
+void MeasurementDialog::key_sure(Mcu::KeyType key)
+{
+    if(pListView->hasFocus()) {
+        if(key == Mcu::KEY_SURE) {
+            on_pushButton_ok_clicked();
         }
     }
 }
