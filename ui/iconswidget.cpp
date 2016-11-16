@@ -63,27 +63,26 @@ void IconsWidget::update_battery(quint32 index)
     quantity.sprintf("%d%%", m_batteryQuantity[index]);
 
     QString image;
-
     switch (m_batteryStatus[index]) {
     case Mcu::DISCHARGE:
-        image.sprintf("boarder-image:url(:/file/resources/b%d.png)", m_batteryQuantity[index]%10);
+        image.sprintf(":/file/resources/b%d.png", m_batteryQuantity[index]/10);
         break;
     case Mcu::CHARGE:
-        image.sprintf("border-image:url(:/file/resources/bc%d.png)", m_batteryQuantity[index]%10);
+        image.sprintf(":/file/resources/bc%d.png", m_batteryQuantity[index]/10);
         break;
     case Mcu::BATTERY_FULL:
-        image.append("border-image:url(:/file/resources/b9.png)");
+        image.append(":/file/resources/b9.png");
         break;
     default:
-        image.append("border-image:url(:/file/resources/b_error.png)");
+        image.append(":/file/resources/b_error.png");
         break;
     }
 
     if (index == 0) {
         ui->label_battery1_quantity->setText(quantity);
-        ui->label_battery1->setStyleSheet(image);
+        ui->label_battery1->setPixmap(QPixmap(image).scaled(40, 15));
     } else if (index == 1) {
         ui->label_battery2_quantity->setText(quantity);
-        ui->label_battery2->setStyleSheet(image);
+        ui->label_battery2->setPixmap(QPixmap(image).scaled(40, 15));
     }
 }
