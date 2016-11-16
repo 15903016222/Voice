@@ -17,23 +17,23 @@ public:
     explicit ShowInfoWidget(QWidget *parent = 0);
     ~ShowInfoWidget();
 
+    void init_show_time();
+    bool eventFilter(QObject *object, QEvent *event);
+
 private:
     Ui::ShowInfoWidget *ui;
     TimeSetDialog *setTimeDlg;
     QTimer *timer;
 
-public:
-    void init_show_time();
-    bool eventFilter(QObject *object, QEvent *event);
-    bool showDlg;
-    QString str_date;
-    QString str_time;
-    int count;
+    bool m_showDlg;
+    QString m_strDate;
+    QString m_strTime;
+    int m_count;
 
 signals:
     void currentDateTime(QString);
 
-public slots:
+protected slots:
     void slotUpdateTime();
     void slotPushButton_ok();
 

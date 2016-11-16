@@ -7,7 +7,12 @@
 PushButtonDelegate::PushButtonDelegate(QObject *parent) :
 QStyledItemDelegate(parent)
 {
-    editFlag = false;
+
+}
+
+PushButtonDelegate::~PushButtonDelegate()
+{
+
 }
 
 void PushButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -84,16 +89,10 @@ void PushButtonDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewIt
 void PushButtonDelegate::set_switch_flag(QModelIndex index)
 {
     if(buttonMap.value(index)->text == "On") {
-        switchFlag = true;
+        m_switchFlag = true;
     } else {
-        switchFlag = false;
+        m_switchFlag = false;
     }
-}
-
-
-PushButtonDelegate::~PushButtonDelegate()
-{
-
 }
 
 void PushButtonDelegate::change_button_text(QModelIndex &index)
@@ -101,12 +100,12 @@ void PushButtonDelegate::change_button_text(QModelIndex &index)
     buttonMap.value(index)->state &= (~QStyle::State_Sunken);
     set_switch_flag(index);
 
-    if(switchFlag == false) {
+    if(m_switchFlag == false) {
         buttonMap.value(index)->text = "On";
-        emit switchPress(switchFlag);
+        emit switchPress(m_switchFlag);
     } else {
         buttonMap.value(index)->text = "Off";
-        emit switchPress(switchFlag);
+        emit switchPress(m_switchFlag);
     }
-    switchFlag = !switchFlag;
+    m_switchFlag = !m_switchFlag;
 }

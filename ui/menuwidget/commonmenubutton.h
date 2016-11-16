@@ -16,11 +16,10 @@ public:
     explicit CommonMenuButton(QWidget *parent = 0);
     ~CommonMenuButton();
 
+    QList<QPushButton*> pushButton_commonMenu;
+
 private:
     Ui::CommonMenuButton *ui;
-
-public:
-    QList<QPushButton*> pushButton_commonMenu;
 
 };
 

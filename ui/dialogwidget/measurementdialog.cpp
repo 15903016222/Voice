@@ -71,7 +71,7 @@ MeasurementDialog::MeasurementDialog(QWidget *parent) :
 
     init_ui();
 
-    changedFlag = false;
+    m_changedFlag = false;
 }
 
 MeasurementDialog::~MeasurementDialog()
@@ -148,26 +148,23 @@ void MeasurementDialog::on_pushButton_cancel_clicked()
 
 void MeasurementDialog::on_pushButton_ok_clicked()
 {
-    if(changedFlag) {
+    if(m_changedFlag) {
         close();
-        emit labelTextChanged(changedString);
+        emit labelTextChanged(m_changedString);
     }
 }
 
 void MeasurementDialog::slot_listViewItemClicked(QModelIndex index)
 {
-    changedFlag = true;
+    m_changedFlag = true;
     for(int i = 0; i < MEASUREMENT_NUMBER; i++) {
         QModelIndex modelIndex = measurementModel->index(i, 0);
         QStandardItem *item = measurementModel->itemFromIndex(modelIndex);
 
         if(modelIndex == index) {
-//            item->setForeground(QBrush(Qt::red));
             listView->setCurrentIndex(index);
-            changedString = labelMap.key(item->text());
-        }/* else {
-            item->setForeground(QBrush(Qt::black));
-        }*/
+            m_changedString = labelMap.key(item->text());
+        }
     }
 }
 
@@ -179,7 +176,6 @@ void MeasurementDialog::set_current_index(QString string)
             QStandardItem *item = measurementModel->item(i);
             QModelIndex modelIndex = measurementModel->indexFromItem(item);
             listView->setCurrentIndex(modelIndex);
-//            item->setForeground(QBrush(Qt::red));
             break;
         }
     }

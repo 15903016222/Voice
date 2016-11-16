@@ -13,6 +13,7 @@ class DoubleSpinBoxDelegate : public QStyledItemDelegate
 public:
     DoubleSpinBoxDelegate(QObject *parent = 0);
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -20,22 +21,24 @@ public:
     void set_number_step_list(QStringList stringList);
     void set_number_step(QString string);   
     void set_decimal_amount(int amount);
+
     QString get_number_step();
 
-    QList<QDoubleSpinBox*> spinBoxList;
-    QList<int> rangeList;
-    QMap<QModelIndex, QDoubleSpinBox*> spinBoxMap;
+    QList<QDoubleSpinBox*> spinBoxList;    
     QStringList stepList;
-    QString step;
-    int decimalAmount;
-    int inputCount;
-    bool editFlag;
-    bool keyboardShowFlag;
 
-//    void simulate_key(int fd, int value);
+    int m_inputCount;
+    bool m_editFlag;
+
 
 private:
     Mcu *m_mcu;
+
+    QMap<QModelIndex, QDoubleSpinBox*> spinBoxMap;
+    QList<int> rangeList;
+      
+    QString step;
+    int decimalAmount;
 
 signals:
     void createEditorHeaderText(QStringList) const;

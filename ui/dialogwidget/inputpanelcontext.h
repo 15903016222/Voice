@@ -15,12 +15,12 @@ public:
     explicit InputPanelContext(QWidget *parent = 0);
     ~InputPanelContext();
 
+    void set_item_current_text(QString string);
+
 private:
     Ui::InputPanelContext *ui;
 
-public:
-    bool capsLock;
-    void set_item_current_text(QString string);
+    bool m_capsLock;
 
 signals:
     void textEditFinished(QString);
