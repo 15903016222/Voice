@@ -316,29 +316,17 @@ void MainWindow::do_keyboard_event()
 {
     m_hiddenKeyboardFlag = !m_hiddenKeyboardFlag;
     if(m_hiddenKeyboardFlag) {
-        myInputPanelDlg = new MyInputPanel;
-        myInputPanelDlg->setModal(false);
-        myInputPanelDlg->showNormal();
-#if QT_VERSION >= 0x050000
-        myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus);
-#endif
+        pVirtualKeyboard = new VirtualKeyboard;
+//        pVirtualKeyboard->setModal(false);
+//        pVirtualKeyboard->showNormal();
+        pVirtualKeyboard->show();
 
-#if QT_VERSION < 0x050000
-//        myInputPanelDlg->setAttribute(Qt::WA_ShowWithoutActivating, true);
-         myInputPanelDlg->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
-        myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-#endif
-        myInputPanelDlg->setFocusPolicy(Qt::NoFocus);       
-        myInputPanelDlg->show();
-
-        connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-        connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
-        connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
-        connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
-        emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
+        connect(pVirtualKeyboard, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+        connect(pVirtualKeyboard, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
+        ui->widget_thirdMenu->open_spinbox_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
 
     } else {
-        myInputPanelDlg->close();
+        pVirtualKeyboard->close();
         slot_keyboard_close_clicked();
     }
 }
@@ -346,14 +334,11 @@ void MainWindow::do_keyboard_event()
 void MainWindow::slot_keyboard_close_clicked()
 {
     if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
-        emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+        ui->widget_thirdMenu->close_spinbox_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
     }
-
     m_hiddenKeyboardFlag = false;
-    disconnect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-    disconnect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
-    disconnect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
-    disconnect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
+    disconnect(pVirtualKeyboard, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+    disconnect(pVirtualKeyboard, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
 }
 
 void MainWindow::slot_setMenuOpacity(double value)

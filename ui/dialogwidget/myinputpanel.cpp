@@ -43,10 +43,12 @@
 //! [0]
 
 MyInputPanel::MyInputPanel():
-    QDialog(0, Qt::Tool | Qt::WindowStaysOnTopHint),
+    QDialog(0, Qt::WindowStaysOnTopHint),
     lastFocusedWidget(0)
 {
     form.setupUi(this);
+
+    setFocusPolicy(Qt::NoFocus);
 
     connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
             this, SLOT(saveFocusWidget(QWidget*,QWidget*)));
@@ -156,7 +158,7 @@ void MyInputPanel::input_text()
 
 void MyInputPanel::on_pushButton_5_clicked()
 {
-    close();
+//    close();
     QString string = form.pushButton_5->text();
     emit input_number(string);
     emit close_keyboard();
