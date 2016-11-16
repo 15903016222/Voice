@@ -30,7 +30,7 @@ SOURCES += \
     $$PWD/dialogwidget/about_dialog.cpp \
     $$PWD/dialogwidget/sysinfo_dialog.cpp \
     $$PWD/spinbox/spinbox.cpp \
-    $$PWD/fake_keyboard/virtualkeyboard.cpp
+    $$PWD/fake_keyboard/virtualkeyboard.cpp \
     $$PWD/icons_bar.cpp
 
 HEADERS += \
@@ -57,7 +57,7 @@ HEADERS += \
     $$PWD/dialogwidget/about_dialog.h \
     $$PWD/dialogwidget/sysinfo_dialog.h \
     $$PWD/spinbox/spinbox.h \
-    $$PWD/fake_keyboard/virtualkeyboard.h
+    $$PWD/fake_keyboard/virtualkeyboard.h \
     $$PWD/icons_bar.h
 
 FORMS += \
@@ -78,5 +78,5 @@ FORMS += \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
     $$PWD/dialogwidget/filemanagerdialog.ui \
-    $$PWD/fake_keyboard/virtualkeyboard.ui
+    $$PWD/fake_keyboard/virtualkeyboard.ui \
     $$PWD/icons_bar.ui
