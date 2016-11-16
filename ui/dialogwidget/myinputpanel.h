@@ -58,13 +58,18 @@ public:
 
     QList<QPushButton*> pushButton_close;
 
+private:
+    Ui::MyInputPanelForm form;
+    QWidget *lastFocusedWidget;
+    QSignalMapper signalMapper;
+
+protected:
+    bool event(QEvent *e);
+
 signals:
     void characterGenerated(QChar character);
     void close_keyboard();
     void input_number(QString);
-
-protected:
-    bool event(QEvent *e);
 
 private slots:
     void saveFocusWidget(QWidget *oldFocus, QWidget *newFocus);
@@ -72,13 +77,8 @@ private slots:
 
     void on_closeButton_clicked();
     void input_text();
-
     void on_pushButton_5_clicked();
 
-private:
-    Ui::MyInputPanelForm form;
-    QWidget *lastFocusedWidget;
-    QSignalMapper signalMapper;
 };
 
 //! [0]

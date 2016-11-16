@@ -21,19 +21,18 @@ public:
 
 private:
     Ui::WedgeDialog *ui;
+
+    QListView *pListView_1;
+    QListView *pListView_2;
+    QStandardItemModel *pWedgeTypeModel;
+    QStandardItemModel *pWedgeModel;
+    QList<QStandardItemModel*> pWedgeModelList;
+
     void init_ui();
-
-public:
-    QListView *listView_1;
-    QListView *listView_2;
-    QStandardItemModel *wedgeTypeModel;
-    QStandardItemModel *wedgeModel;
-    QList<QStandardItemModel*> wedgeModelList;
-
     void insert_wedge(int i);
     int listView_1CurrentIndex;
     int listView_2CurrentIndex;
-    QString currentItem;
+    QString m_currentItem;
 
 signals:
     void wedgeChanged(QString);

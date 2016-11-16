@@ -770,16 +770,16 @@ void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
 
 void ThirdMenuWidget::set_currentTime()
 {
-    if(pDateTimeSetDialog->str_time == NULL) {
+    if(pDateTimeSetDialog->m_strTime == NULL) {
         pModel->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
     } else {
-        pModel->item(0, 0)->setText(pDateTimeSetDialog->str_time);
+        pModel->item(0, 0)->setText(pDateTimeSetDialog->m_strTime);
     }
 
-    if(pDateTimeSetDialog->str_date == NULL) {
+    if(pDateTimeSetDialog->m_strDate == NULL) {
         pModel->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
     } else {
-        pModel->item(0, 1)->setText(pDateTimeSetDialog->str_date);
+        pModel->item(0, 1)->setText(pDateTimeSetDialog->m_strDate);
     }
 }
 

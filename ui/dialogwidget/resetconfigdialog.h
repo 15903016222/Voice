@@ -15,13 +15,10 @@ public:
     explicit ResetConfigDialog(QWidget *parent = 0);
     ~ResetConfigDialog();
 
-private:
-    Ui::ResetConfigDialog *ui;
-
-public:
     void retranslate_dialog_ui();
 
-private slots:
+private:
+    Ui::ResetConfigDialog *ui;
 
 };
 

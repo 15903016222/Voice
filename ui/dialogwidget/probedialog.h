@@ -21,19 +21,19 @@ public:
 
 private:
     Ui::ProbeDialog *ui;
-    void init_ui();
 
-public:
-    QListView *listView_1;
-    QListView *listView_2;
+    QListView *pListView_1;
+    QListView *pListView_2;
     QStandardItemModel *probeTypeModel;
     QStandardItemModel *probeModel;
     QList<QStandardItemModel*> probeModelList;
 
+    void init_ui();
     void insert_probe(int i);
+
     int listView_1CurrentIndex;
     int listView_2CurrentIndex;
-    QString currentItem;
+    QString m_currentItem;
 
 signals:
     void probeChanged(QString);

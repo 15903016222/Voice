@@ -24,7 +24,7 @@ CommonMenuWidget::CommonMenuWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     this->resize(800, 70);
-    height = this->geometry().height();
+    m_height = this->geometry().height();
     set_common_menu_name();
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
@@ -45,8 +45,8 @@ void CommonMenuWidget::init_standard_model()
 {
     model = new QStandardItemModel(1, COMMON_MENU_NUMBER, this);
     ui->tableView->setModel(model);
-    ui->tableView->horizontalHeader()->setFixedHeight(height * 45 / 70);
-    ui->tableView->verticalHeader()->setDefaultSectionSize(height * 25 / 70);
+    ui->tableView->horizontalHeader()->setFixedHeight(m_height * 45 / 70);
+    ui->tableView->verticalHeader()->setDefaultSectionSize(m_height * 25 / 70);
     ui->tableView->verticalHeader()->hide();
 
 #if QT_VERSION >= 0x050000
@@ -159,8 +159,8 @@ void CommonMenuWidget::choose_widget_style(int k)
 
 void CommonMenuWidget::resizeEvent(QResizeEvent *event)
 {
-    width = event->size().width();
-    height = event->size().height();
+    m_width = event->size().width();
+    m_height = event->size().height();
     set_common_menu_name();
 }
 
@@ -230,7 +230,7 @@ void CommonMenuWidget::set_header_text_create(QStringList stringList) const
 void CommonMenuWidget::set_header_text_close(QWidget *editor)
 {
     int editorPosX = editor->x() + editor->width();
-    int column = editorPosX / (width / COMMON_MENU_NUMBER) - 1;
+    int column = editorPosX / (m_width / COMMON_MENU_NUMBER) - 1;
     QString currentHeaderText = model->horizontalHeaderItem(column)->text();
     if(currentHeaderText.contains("Δ")) {
         model->setHeaderData(column, Qt::Horizontal,QString(currentHeaderText.left(currentHeaderText.indexOf("Δ"))));

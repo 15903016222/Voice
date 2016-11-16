@@ -18,20 +18,16 @@ public:
     explicit TimeSetDialog(QWidget *parent = 0);
     ~TimeSetDialog();
 
-private:
-    Ui::TimeSetDialog *ui;
-
-public:
     QList<QPushButton*> pushButton_ok;
     QList<QDateEdit*> dateEdit;
     QList<QTimeEdit*> timeEdit;
 
 private:
+    Ui::TimeSetDialog *ui;
+
     void init_ui();
 
-signals:
-
-public slots:
+protected slots:
     void set_date_and_time(QString string);
 
 };

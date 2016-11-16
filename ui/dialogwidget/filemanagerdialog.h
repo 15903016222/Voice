@@ -20,7 +20,10 @@ public:
 private:
     Ui::FileManagerDialog *ui;
 
-public:
+    QStandardItemModel *modelType;
+    QStandardItemModel *modelSourcePath;
+    QStandardItemModel *modelTargetPath;
+
     void init_type();
     void init_path();
     void init_source_path_tableView();
@@ -29,9 +32,7 @@ public:
 
     QStringList fileTypeList;
     QStringList filePathList;
-    QStandardItemModel *modelType;
-    QStandardItemModel *modelSourcePath;
-    QStandardItemModel *modelTargetPath;
+
 
 private slots:
 //    void onHeaderClicked(int index);

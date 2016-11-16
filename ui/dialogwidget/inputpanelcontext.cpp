@@ -11,7 +11,7 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    capsLock = true;
+    m_capsLock = true;
     on_pushButton_capsLock_clicked();
 
     for(int i = 0; i < 10; i ++) {
@@ -75,7 +75,7 @@ void InputPanelContext::on_pushButton_capsLock_clicked()
         QString string = (QChar)i;
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
 
-        if(capsLock){
+        if(m_capsLock){
             ui->pushButton_capsLock->setStyleSheet("background-color: rgb(0, 170, 0)");
             pushButton->setText((QChar)(i));
         } else{
@@ -83,7 +83,7 @@ void InputPanelContext::on_pushButton_capsLock_clicked()
             pushButton->setText((QChar)(i + 32));
         }
     }
-    capsLock = !capsLock;
+    m_capsLock = !m_capsLock;
 }
 
 void InputPanelContext::on_pushButton_Space_clicked()
