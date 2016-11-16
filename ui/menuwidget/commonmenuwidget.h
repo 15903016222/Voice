@@ -19,27 +19,25 @@ public:
     explicit CommonMenuWidget(QWidget *parent = 0);
     ~CommonMenuWidget();
 
+    void retranslate_common_menu_ui();
+    void resizeEvent(QResizeEvent *event);
+
 private:
     Ui::CommonMenuWidget *ui;
 
-public:
-    void retranslate_common_menu_ui();
-    void init_standard_model();
-    void set_common_menu_name();   
-    void choose_widget_style(int k);
-    void resizeEvent(QResizeEvent *event);
-
-    int height;
-    int width;
     QStandardItemModel *model;
 
-private:
+    void init_standard_model();
+    void set_common_menu_name();
+    void choose_widget_style(int k);
 
-public slots:
+    int m_height;
+    int m_width;
+
+private slots:
     void onHeaderClicked(int index);
     void set_header_text_create(QStringList stringList) const;
     void set_header_text_close(QWidget *editor);
-private slots:
     void on_tableView_clicked(const QModelIndex &index);
 };
 

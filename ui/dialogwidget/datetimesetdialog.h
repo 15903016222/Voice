@@ -18,17 +18,17 @@ public:
     explicit DateTimeSetDialog(QWidget *parent = 0);
     ~DateTimeSetDialog();
 
-private:
-    Ui::DateTimeSetDialog *ui;
-
-public:
     void retranslate_dialog_ui();
     void set_dialog_title(QMap<QString, QString> map);
     void set_spinbox_value(QList<int> valueList);
 
+    QString m_strDate;
+    QString m_strTime;
+
+private:
+    Ui::DateTimeSetDialog *ui;
+
     QMap<QString, QString> titleMap;
-    QString str_date;
-    QString str_time;
 
 signals:
     void currentDateTimeChanged(QString string);

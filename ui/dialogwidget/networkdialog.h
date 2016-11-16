@@ -16,17 +16,17 @@ public:
     explicit NetworkDialog(QWidget *parent = 0);
     ~NetworkDialog();
 
-private:
-    Ui::NetworkDialog *ui;
-
-public:
     void retranslate_dialog_ui();
     void set_dialog_title(QMap<QString, QString> map);
     void set_spinbox_value(QList<int> valueList);
 
-    QMap<QString, QString> titleMap;
     QString str_ip;
     QString str_subNet;
+
+private:
+    Ui::NetworkDialog *ui;
+
+    QMap<QString, QString> titleMap;
 
 signals:
     void currentIP_subNetChanged(QString value);

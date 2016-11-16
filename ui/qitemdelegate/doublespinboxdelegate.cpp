@@ -17,9 +17,9 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
     connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
-    editFlag = false;
-    keyboardShowFlag = false;
-    inputCount = 0;
+
+    m_editFlag = false;
+    m_inputCount = 0;
 }
 
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -32,17 +32,17 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
         editor->setMinimum(rangeList.at(0));
         editor->setMaximum(rangeList.at(1));
     }
-    editor->setSingleStep(step.toFloat());
-    editor->setDecimals(decimalAmount);
+    editor->setSingleStep(m_step.toFloat());
+    editor->setDecimals(m_decimalAmount);
     editor->installEventFilter(parent);
     editor->setReadOnly(false);
 
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxMap.insert(index, editor);
-    (const_cast<DoubleSpinBoxDelegate *>(this))->editFlag = true;
+    (const_cast<DoubleSpinBoxDelegate *>(this))->m_editFlag = true;
     QStringList sendList;
     sendList.append(QString::number(index.column()));
-    sendList.append(step);
+    sendList.append(m_step);
 
     emit createEditorHeaderText(sendList);
     connect(editor, SIGNAL(editingFinished()), this, SLOT(commit_and_close_editor()));
@@ -72,9 +72,9 @@ void DoubleSpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
     doubleSpinBox->interpretText();
     double value = doubleSpinBox->value();
     if(doubleSpinBox->suffix() != NULL && doubleSpinBox->prefix() != NULL) {
-        model->setData(index, "(" + QString::number(value, 'f', decimalAmount) + ")", Qt::EditRole);
+        model->setData(index, "(" + QString::number(value, 'f', m_decimalAmount) + ")", Qt::EditRole);
     } else {
-        model->setData(index, QString::number(value, 'f', decimalAmount), Qt::EditRole);
+        model->setData(index, QString::number(value, 'f', m_decimalAmount), Qt::EditRole);
     }
 }
 
@@ -96,7 +96,7 @@ void DoubleSpinBoxDelegate::set_number_step_list(QStringList stringList)
 
 void DoubleSpinBoxDelegate::set_number_step(QString string)
 {
-    step = string;
+    m_step = string;
     if(spinBoxList.size() != 0) {
         QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
         doubleSpinBox->setSingleStep(string.toFloat());
@@ -105,12 +105,12 @@ void DoubleSpinBoxDelegate::set_number_step(QString string)
 
 QString DoubleSpinBoxDelegate::get_number_step()
 {
-    return step;
+    return m_step;
 }
 
 void DoubleSpinBoxDelegate::set_decimal_amount(int amount)
 {
-    decimalAmount = amount;
+    m_decimalAmount = amount;
 }
 
 void DoubleSpinBoxDelegate::commit_and_close_editor()
@@ -118,12 +118,12 @@ void DoubleSpinBoxDelegate::commit_and_close_editor()
     QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
-    editFlag = false;
+    m_editFlag = false;
 }
 
 void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 {
-    if(editFlag) {
+    if(m_editFlag) {
         QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
         if (type == Mcu::ROTARY_UP) {
             doubleSpinBox->stepUp();
@@ -135,7 +135,7 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 
 void DoubleSpinBoxDelegate::key_sure(Mcu::KeyType key)
 {
-    if(editFlag) {
+    if(m_editFlag) {
         if(key == Mcu::KEY_SURE) {
             QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
             QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
@@ -164,7 +164,7 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
     QWidget *widget = doubleSpinBox->focusWidget();
     HWND hwnd = (HWND)widget->winId();
     qDebug() << "string" << string;
-    if(string == "." && decimalAmount > 0) {
+    if(string == "." && m_decimalAmount > 0) {
         SendMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
     } else if(string == "Left Arrow") {
         SendMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
@@ -185,7 +185,7 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 #ifdef Q_OS_LINUX
     Display *display = XOpenDisplay (NULL);
     KeySym keysym;
-    if(string == "." && decimalAmount > 0) {
+    if(string == "." && m_decimalAmount > 0) {
         keysym = XK_KP_Decimal;
     } else if(string == "Left Arrow") {
         keysym = XK_Left;

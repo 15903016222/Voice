@@ -20,18 +20,16 @@ public:
 private:
     Ui::MeasurementDialog *ui;
 
-public:
     QList<QPushButton *> buttonList;
     QListView *listView;
     QStringList measurementList;
     QStandardItemModel *measurementModel;
-    QMap<QString, QString> labelMap;
-    QString changedString;
 
-    bool changedFlag;
-
-private:
     void init_ui();
+
+    QMap<QString, QString> labelMap;
+    QString m_changedString;
+    bool m_changedFlag;
 
 signals:
     void labelTextChanged(QString);

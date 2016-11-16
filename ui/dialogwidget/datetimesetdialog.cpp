@@ -25,43 +25,43 @@ void DateTimeSetDialog::on_buttonBox_accepted()
     int valueThree = ui->spinBox_3->value();
 
     if(titleMap.keys().at(0) == "Date Set") {
-        str_date.clear();
-        str_date.append(QString::number((double)valueOne, 'f', 0));
-        str_date.append("-");
+        m_strDate.clear();
+        m_strDate.append(QString::number((double)valueOne, 'f', 0));
+        m_strDate.append("-");
         if(valueTwo < 10){
-            str_date.append("0" + QString::number((double)valueTwo, 'f', 0));
+            m_strDate.append("0" + QString::number((double)valueTwo, 'f', 0));
         }else{
-            str_date.append(QString::number((double)valueTwo, 'f', 0));
+            m_strDate.append(QString::number((double)valueTwo, 'f', 0));
         }
-        str_date.append("-");
+        m_strDate.append("-");
         if(valueThree < 10){
-            str_date.append("0" + QString::number((double)valueThree, 'f', 0));
+            m_strDate.append("0" + QString::number((double)valueThree, 'f', 0));
         }else{
-            str_date.append(QString::number((double)valueThree, 'f', 0));
+            m_strDate.append(QString::number((double)valueThree, 'f', 0));
         }
 
-        emit currentDateTimeChanged(str_date);
+        emit currentDateTimeChanged(m_strDate);
     } else {
-        str_time.clear();
+        m_strTime.clear();
         if(valueOne < 10){
-            str_time.append("0" + QString::number((double)valueOne, 'f', 0));
+            m_strTime.append("0" + QString::number((double)valueOne, 'f', 0));
         }else{
-            str_time.append(QString::number((double)valueOne, 'f', 0));
+            m_strTime.append(QString::number((double)valueOne, 'f', 0));
         }
-        str_time.append(":");
+        m_strTime.append(":");
         if(valueTwo < 10){
-            str_time.append("0" + QString::number((double)valueTwo, 'f', 0));
+            m_strTime.append("0" + QString::number((double)valueTwo, 'f', 0));
         }else{
-            str_time.append(QString::number((double)valueTwo, 'f', 0));
+            m_strTime.append(QString::number((double)valueTwo, 'f', 0));
         }
-        str_time.append(":");
+        m_strTime.append(":");
         if(valueThree < 10){
-            str_time.append("0" + QString::number((double)valueThree, 'f', 0));
+            m_strTime.append("0" + QString::number((double)valueThree, 'f', 0));
         }else{
-            str_time.append(QString::number((double)valueThree, 'f', 0));
+            m_strTime.append(QString::number((double)valueThree, 'f', 0));
         }
 
-        emit currentDateTimeChanged(str_time);
+        emit currentDateTimeChanged(m_strTime);
     }
 }
 

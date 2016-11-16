@@ -20,54 +20,57 @@ public:
     explicit ThirdMenuWidget(QWidget *parent = 0);
     ~ThirdMenuWidget();
 
+    void set_third_menu_name(int i, int j);
+    void resizeEvent(QResizeEvent *event);
+    QList<int> get_spinBox_range_list(QVariantMap variantMap);
+    QStringList get_spinBox_step_list(QVariantMap variantMap);
+    int opendSpinBoxIndex;
+
 private:
     Ui::ThirdMenuWidget *ui;
 
-public:
+    Mcu *pMcu;
+    DateTimeSetDialog *pDateTimeSetDialog;
+    NetworkDialog *pNetworkDialog;
+    QStandardItemModel *pModel;
+    FirstSecondMenuWidget *pFirstSecondMenuWidget;
+
     void init_standard_model();
-    void set_third_menu_name(int i, int j);
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
-    void resizeEvent(QResizeEvent *event);
     void set_model_item(int startIndex, QStringList thirdMenuList);
     void set_currentTime();
     void change_persistent_editor(QModelIndex modelIndex);
     void disconnect_input_number();
 
-    QStringList get_third_menu_list();
     QStringList get_translate_third_menu_list();
-    QList<int> get_spinBox_range_list(QVariantMap variantMap);
-    QStringList get_spinBox_step_list(QVariantMap variantMap);
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap);
     QList<QStringList> get_translate_comboBox_option_list(QVariantMap variantMapEng, QVariantMap variantMapTran);
     QStringList get_abbreviate_comboBox_option_list(QStringList stringList);
     QString set_long_contents_header(int index, QString string);
     QVariantMap get_translate_option_map(QString thirdMenuString);
     QList<int> get_dialog_value_list(int index, QString str);
+    QStringList get_third_menu_list();
 
-    int width;
-    int height;
-    int currFirstNum;
-    int currSecondNum;
-    int measurementIndex;
-    int inputIndex;
-    int probeIndex;
-    int wedgeIndex;
-    int dateTimeSetIndex;
-    int networkIndex;
-    double brightness;
-    double opacity;
-    int languageOption;
-    QString language;
-    int opendSpinBoxIndex;
-    bool keyboardShowFlag;
+    int m_width;
+    int m_height;
+    int m_currFirstNum;
+    int m_currSecondNum;
+    int m_measurementIndex;
+    int m_inputIndex;
+    int m_probeIndex;
+    int m_wedgeIndex;
+    int m_dateTimeSetIndex;
+    int m_networkIndex;
+    double m_brightness;
+    double m_opacity;
+    int m_languageOption;
+    QString m_language;
+    QVariantMap m_secondMenuMap;
+    QString m_firstMenuString;
+    QString m_secondMenuString;
+    QString m_relatedMenuString;
 
-    QStandardItemModel *model;
-    FirstSecondMenuWidget *widget;
-    QVariantMap secondMenuMap;
-    QVariantMap menuCacheMap;
-    QString firstMenuString;
-    QString secondMenuString;
-    QString relatedMenuString;
+    bool m_keyboardShowFlag;
 
 signals:
     void retranslate_ui(QString);
@@ -76,15 +79,9 @@ signals:
     void send_string_to_delegate(QString);
     void opacityChanged(double value);
 
-private:
-    Mcu *m_mcu;
-    DateTimeSetDialog *dateTimeSetDialog;
-    NetworkDialog *networkDialog;
-
 protected slots:
     void do_probe_event(const Probe& probe);
 
-private slots:
     void onHeaderClicked(int index);
     void change_related_third_menu_data(QString str);
     void set_header_text_create(QStringList stringList) const ;
@@ -102,8 +99,6 @@ private slots:
     void open_spinbox_persistent_editor(int index);
     void close_spinbox_persistent_editor(int index);
     void input_spinbox_number(QString string);
-
-public slots:
     void setOpacity(double value);
 
 };
