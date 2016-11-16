@@ -7,7 +7,6 @@ INCLUDEPATH += $$PWD/spinbox
 
 SOURCES += \
     $$PWD/mainwindow.cpp \
-    $$PWD/iconswidget.cpp \
     $$PWD/showinfowidget.cpp \
     $$PWD/menuwidget/topmenu.cpp \
     $$PWD/menuwidget/firstsecondmenuwidget.cpp \
@@ -29,11 +28,11 @@ SOURCES += \
     $$PWD/dialogwidget/filemanagerdialog.cpp \
     $$PWD/dialogwidget/about_dialog.cpp \
     $$PWD/dialogwidget/sysinfo_dialog.cpp \
-    $$PWD/spinbox/spinbox.cpp
+    $$PWD/spinbox/spinbox.cpp \
+    $$PWD/icons_bar.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
-    $$PWD/iconswidget.h \
     $$PWD/showinfowidget.h \
     $$PWD/menuwidget/topmenu.h \
     $$PWD/menuwidget/firstsecondmenuwidget.h \
@@ -55,11 +54,11 @@ HEADERS += \
     $$PWD/dialogwidget/filemanagerdialog.h \
     $$PWD/dialogwidget/about_dialog.h \
     $$PWD/dialogwidget/sysinfo_dialog.h \
-    $$PWD/spinbox/spinbox.h
+    $$PWD/spinbox/spinbox.h \
+    $$PWD/icons_bar.h
 
 FORMS += \
     $$PWD/mainwindow.ui \
-    $$PWD/iconswidget.ui \
     $$PWD/showinfowidget.ui \
     $$PWD/menuwidget/topmenu.ui \
     $$PWD/menuwidget/firstsecondmenuwidget.ui \
@@ -75,4 +74,5 @@ FORMS += \
     $$PWD/dialogwidget/resetconfigdialog.ui \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
-    $$PWD/dialogwidget/filemanagerdialog.ui
+    $$PWD/dialogwidget/filemanagerdialog.ui \
+    $$PWD/icons_bar.ui

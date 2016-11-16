@@ -8,16 +8,16 @@
 #include <QWidget>
 
 namespace Ui {
-class IconsWidget;
+class IconsBar;
 }
 
-class IconsWidget : public QWidget
+class IconsBar : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit IconsWidget(QWidget *parent = 0);
-    ~IconsWidget();
+    explicit IconsBar(QWidget *parent = 0);
+    ~IconsBar();
 
     void insert_battery1_icon(int value);
     void insert_battery2_icon(int value);
@@ -34,7 +34,7 @@ public slots:
 private:
     void update_battery(quint32 index);
 
-    Ui::IconsWidget *ui;
+    Ui::IconsBar *ui;
     Mcu *m_mcu;
 
     Mcu::BatteryStatus m_batteryStatus[2];

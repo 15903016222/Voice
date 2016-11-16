@@ -61,7 +61,7 @@
         <widget class="TopMenu" name="widgetTopLeft" native="true"/>
        </item>
        <item>
-        <widget class="IconsWidget" name="widgetTopRight" native="true"/>
+        <widget class="IconsBar" name="widgetTopRight" native="true"/>
        </item>
       </layout>
      </widget>
@@ -381,12 +381,6 @@ border:none;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>IconsWidget</class>
-   <extends>QWidget</extends>
-   <header>iconswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ThirdMenuWidget</class>
    <extends>QWidget</extends>
    <header>thirdmenuwidget.h</header>
@@ -396,6 +390,12 @@ border:none;
    <class>TopMenu</class>
    <extends>QWidget</extends>
    <header>topmenu.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IconsBar</class>
+   <extends>QWidget</extends>
+   <header>icons_bar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

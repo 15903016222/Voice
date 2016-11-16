@@ -1,13 +1,12 @@
-#include "iconswidget.h"
-#include "ui_iconswidget.h"
+#include "icons_bar.h"
+#include "ui_icons_bar.h"
 
-IconsWidget::IconsWidget(QWidget *parent) :
+IconsBar::IconsBar(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::IconsWidget)
+    ui(new Ui::IconsBar)
 {
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
-
 
     connect(ui->pushButton_keyboard, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));
     connect(m_mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
@@ -15,12 +14,12 @@ IconsWidget::IconsWidget(QWidget *parent) :
     connect(m_mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
 }
 
-IconsWidget::~IconsWidget()
+IconsBar::~IconsBar()
 {
     delete ui;
 }
 
-void IconsWidget::do_temperature_event(Mcu::TemperatureType type, int value)
+void IconsBar::do_temperature_event(Mcu::TemperatureType type, int value)
 {
     if (type == Mcu::TEMPERATURE_CPU) {
         QString temp_cpu;
@@ -35,7 +34,7 @@ void IconsWidget::do_temperature_event(Mcu::TemperatureType type, int value)
     }*/
 }
 
-void IconsWidget::do_battery_status_event(int index, Mcu::BatteryStatus status)
+void IconsBar::do_battery_status_event(int index, Mcu::BatteryStatus status)
 {
     if (index > 2) {
         qWarning()<<"out of battery number";
@@ -46,7 +45,7 @@ void IconsWidget::do_battery_status_event(int index, Mcu::BatteryStatus status)
     update_battery(index);
 }
 
-void IconsWidget::do_battery_quantity_event(int index, int value)
+void IconsBar::do_battery_quantity_event(int index, int value)
 {
     if (index > 2) {
         qWarning()<<"out of battery number";
@@ -57,7 +56,7 @@ void IconsWidget::do_battery_quantity_event(int index, int value)
     update_battery(index);
 }
 
-void IconsWidget::update_battery(quint32 index)
+void IconsBar::update_battery(quint32 index)
 {
     QString quantity;
     quantity.sprintf("%d%%", m_batteryQuantity[index]);
