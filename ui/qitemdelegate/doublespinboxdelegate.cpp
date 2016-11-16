@@ -1,4 +1,5 @@
 #include "doublespinboxdelegate.h"
+#include "virtualkeyboard.h"
 
 #ifdef Q_OS_WIN32
 #include "windows.h"
@@ -171,64 +172,72 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //    doubleSpinBox->setLineEdit(lineEdit);
 
     doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
-//    qDebug() << "3.HasFocus" << doubleSpinBox->hasFocus();
-    doubleSpinBox->setFocus();
+    qDebug() << "3.HasFocus" << doubleSpinBox->hasFocus();
+//    if(m_inputCount == 0) {
+//        doubleSpinBox->activateWindow();
+//        doubleSpinBox->setFocus(Qt::ActiveWindowFocusReason);
+//    } else {
+        doubleSpinBox->setFocus();
+//    }
+
 //    QChar chr = string.at(0);
 //    int key = chr.unicode();
 //    qDebug() << key;
 
 //    doubleSpinBox->grabKeyboard();
-//    doubleSpinBox->activateWindow();
+
 //    QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, key, Qt::NoModifier);
 //    QApplication::sendEvent(doubleSpinBox, event);
-//    qDebug() << doubleSpinBox->hasFocus();
+    qDebug() << doubleSpinBox->hasFocus();
+
 //    qDebug() << widget->geometry();
 
+    VirtualKeyboard *virtualKeyboard;
 #ifdef Q_OS_WIN32
     QWidget *widget = doubleSpinBox->focusWidget();
     HWND hwnd = (HWND)widget->winId();
-    qDebug() << "string" << string;
-    if(string == "." && decimalAmount > 0) {
-        SendMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
-    } else if(string == "Left Arrow") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
-    } else if(string == "Right Arrow") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
-    } else if(string == "BackSpace") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
-    } else if(string == "Delete") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
-    } else if(string == "Enter" || string == "Close") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
-    } else {
-        int value = string.toInt();
-        SendMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
-    }
+//    qDebug() << "string" << string;
+//    if(string == "." && decimalAmount > 0) {
+//        SendMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
+//    } else if(string == "Left Arrow") {
+//        SendMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
+//    } else if(string == "Right Arrow") {
+//        SendMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
+//    } else if(string == "BackSpace") {
+//        SendMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
+//    } else if(string == "Delete") {
+//        SendMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
+//    } else if(string == "Enter" || string == "Close") {
+//        SendMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
+//    } else {
+//        int value = string.toInt();
+//        SendMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
+//    }
 #endif
 
 #ifdef Q_OS_LINUX
-    Display *display = XOpenDisplay (NULL);
-    KeySym keysym;
-    if(string == "." && decimalAmount > 0) {
-        keysym = XK_KP_Decimal;
-    } else if(string == "Left Arrow") {
-        keysym = XK_Left;
-    } else if(string == "Right Arrow") {
-        keysym = XK_Right;
-    } else if(string == "BackSpace") {
-        keysym = XK_BackSpace;
-    } else if(string == "Delete") {
-        keysym = XK_Delete;
-    } else if(string == "Enter" || string == "Close") {
-        keysym = XK_Return;
-    } else {
-        int value = string.toInt();
-        keysym = XK_0 + value;
-    }
+//    Display *display = XOpenDisplay (NULL);
+//    KeySym keysym;
+//    if(string == "." && decimalAmount > 0) {
+//        keysym = XK_KP_Decimal;
+//    } else if(string == "Left Arrow") {
+//        keysym = XK_Left;
+//    } else if(string == "Right Arrow") {
+//        keysym = XK_Right;
+//    } else if(string == "BackSpace") {
+//        keysym = XK_BackSpace;
+//    } else if(string == "Delete") {
+//        keysym = XK_Delete;
+//    } else if(string == "Enter" || string == "Close") {
+//        keysym = XK_Return;
+//    } else {
+//        int value = string.toInt();
+//        keysym = XK_0 + value;
+//    }
 
-    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), True, CurrentTime);
-    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), False, CurrentTime);
-    XCloseDisplay(display);
+//    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), True, CurrentTime);
+//    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), False, CurrentTime);
+//    XCloseDisplay(display);
 #endif
 
 //    PostMessage(hwnd, WM_KEYUP, VK_HELP + value + 1, 0);

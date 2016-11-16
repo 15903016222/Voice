@@ -29,7 +29,7 @@ public:
 
     int m_inputCount;
     bool m_editFlag;
-
+    int decimalAmount;
 
 private:
     Mcu *m_mcu;
@@ -38,7 +38,7 @@ private:
     QList<int> rangeList;
       
     QString step;
-    int decimalAmount;
+
 
 signals:
     void createEditorHeaderText(QStringList) const;
