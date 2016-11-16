@@ -31,6 +31,9 @@ DEVICE = PC_UNIX
 LIBS += -lX11 -lXtst
 }
 
+target.path = /home/root
+INSTALLS += target
+
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -49,8 +52,6 @@ TRANSLATIONS += \
 
 TARGET = Mercury
 TEMPLATE = app
-
-PROJECT_DIR = $$PWD
 
 SOURCES += main.cpp
 

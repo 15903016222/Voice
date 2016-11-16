@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>IconsWidget</class>
- <widget class="QWidget" name="IconsWidget">
+ <class>IconsBar</class>
+ <widget class="QWidget" name="IconsBar">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -81,12 +81,18 @@
        <number>3</number>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton_keyboard">
+       <widget class="QPushButton" name="keyboardPushButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>45</height>
+         </size>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -303,21 +309,21 @@
           <number>3</number>
          </property>
          <item>
-          <widget class="QPushButton" name="pushButton_scan">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <widget class="QLabel" name="encoderLabel">
+           <property name="enabled">
+            <bool>true</bool>
            </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border-image: url(:/file/resources/set.png);</string>
+           <property name="minimumSize">
+            <size>
+             <width>28</width>
+             <height>28</height>
+            </size>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -349,7 +355,7 @@
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QLabel" name="label_1">
+          <widget class="QLabel" name="refLabel">
            <property name="palette">
             <palette>
              <active>
@@ -404,7 +410,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="tcgLabel">
            <property name="palette">
             <palette>
              <active>
@@ -459,7 +465,7 @@
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="tempLabel">
            <property name="palette">
             <palette>
              <active>
