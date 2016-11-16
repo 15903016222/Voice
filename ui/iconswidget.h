@@ -27,18 +27,18 @@ signals:
     void keyboard_event();
 
 public slots:
-    void on_pushButton_scan_clicked();
     void do_temperature_event(Mcu::TemperatureType type, int value);
     void do_battery_status_event(int index, Mcu::BatteryStatus status);
     void do_battery_quantity_event(int index, int value);
 
 private:
+    void update_battery(quint32 index);
+
     Ui::IconsWidget *ui;
     Mcu *m_mcu;
 
-    Mcu::BatteryStatus m_fstBatteryStatus;
-    Mcu::BatteryStatus m_sndBatteryStatus;
-
+    Mcu::BatteryStatus m_batteryStatus[2];
+    int m_batteryQuantity[2];
 };
 
 #endif // ICONSWIDGETS_H

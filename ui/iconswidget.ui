@@ -303,16 +303,7 @@
           <number>3</number>
          </property>
          <item>
-          <widget class="QPushButton" name="pushButton_scan">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
+          <widget class="QLabel" name="encoderLabel">
            <property name="styleSheet">
             <string notr="true">border-image: url(:/file/resources/set.png);</string>
            </property>
@@ -349,7 +340,7 @@
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QLabel" name="label_1">
+          <widget class="QLabel" name="refLabel">
            <property name="palette">
             <palette>
              <active>
@@ -404,7 +395,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="tcgLabel">
            <property name="palette">
             <palette>
              <active>
@@ -459,7 +450,7 @@
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="tempLabel">
            <property name="palette">
             <palette>
              <active>
