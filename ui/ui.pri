@@ -4,6 +4,7 @@ INCLUDEPATH += $$PWD/menuwidget
 INCLUDEPATH += $$PWD/dialogwidget
 INCLUDEPATH += $$PWD/qitemdelegate
 INCLUDEPATH += $$PWD/spinbox
+INCLUDEPATH += $$PWD/fake_keyboard
 
 SOURCES += \
     $$PWD/mainwindow.cpp \
@@ -29,7 +30,8 @@ SOURCES += \
     $$PWD/dialogwidget/filemanagerdialog.cpp \
     $$PWD/dialogwidget/about_dialog.cpp \
     $$PWD/dialogwidget/sysinfo_dialog.cpp \
-    $$PWD/spinbox/spinbox.cpp
+    $$PWD/spinbox/spinbox.cpp \
+    $$PWD/fake_keyboard/virtualkeyboard.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -55,7 +57,9 @@ HEADERS += \
     $$PWD/dialogwidget/filemanagerdialog.h \
     $$PWD/dialogwidget/about_dialog.h \
     $$PWD/dialogwidget/sysinfo_dialog.h \
-    $$PWD/spinbox/spinbox.h
+    $$PWD/spinbox/spinbox.h \
+    $$PWD/qitemdelegate/delegatemodel.h \
+    $$PWD/fake_keyboard/virtualkeyboard.h
 
 FORMS += \
     $$PWD/mainwindow.ui \
@@ -75,4 +79,5 @@ FORMS += \
     $$PWD/dialogwidget/resetconfigdialog.ui \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
-    $$PWD/dialogwidget/filemanagerdialog.ui
+    $$PWD/dialogwidget/filemanagerdialog.ui \
+    $$PWD/fake_keyboard/virtualkeyboard.ui
