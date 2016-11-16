@@ -25,9 +25,8 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
     connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
-    editFlag = false;
-    keyboardShowFlag = false;
-    inputCount = 0;
+    m_editFlag = false;
+    m_inputCount = 0;
 }
 
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -47,7 +46,7 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
 
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxMap.insert(index, editor);
-    (const_cast<DoubleSpinBoxDelegate *>(this))->editFlag = true;
+    (const_cast<DoubleSpinBoxDelegate *>(this))->m_editFlag = true;
     QStringList sendList;
     sendList.append(QString::number(index.column()));
     sendList.append(step);
@@ -126,12 +125,12 @@ void DoubleSpinBoxDelegate::commit_and_close_editor()
     QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
-    editFlag = false;
+    m_editFlag = false;
 }
 
 void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 {
-    if(editFlag) {
+    if(m_editFlag) {
         QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
         if (type == Mcu::ROTARY_UP) {
             doubleSpinBox->stepUp();
@@ -143,7 +142,7 @@ void DoubleSpinBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 
 void DoubleSpinBoxDelegate::key_sure(Mcu::KeyType key)
 {
-    if(editFlag) {
+    if(m_editFlag) {
         if(key == Mcu::KEY_SURE) {
             QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
             QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
@@ -238,7 +237,7 @@ void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
 //        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
 //        QApplication::sendEvent(widget, event);
 //    } else {
-//        if(inputCount == 0) {
+//        if(m_inputCount == 0) {
 //            doubleSpinBox->cleanText();
 //            newValue = string.toInt();
 
