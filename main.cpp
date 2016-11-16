@@ -2,7 +2,9 @@
 
 #include <QApplication>
 
+#if (PHASCAN | PHASCAN_II)
 static const char *FONT_FILE = "/etc/mercury/font/SONGTI.TTC";
+#endif
 
 int main(int argc, char *argv[])
 {
