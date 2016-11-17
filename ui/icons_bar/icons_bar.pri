@@ -1,4 +1,4 @@
-INCLUDEPATH = $$PWD
+INCLUDEPATH += $$PWD
 
 SOURCES += \
     $$PWD/icons_bar.cpp \
