@@ -31,6 +31,7 @@ public:
     int m_inputCount;
     bool m_editFlag;
     int decimalAmount;
+    bool m_keyboardFlag;
 
 private:
     Mcu *m_mcu;

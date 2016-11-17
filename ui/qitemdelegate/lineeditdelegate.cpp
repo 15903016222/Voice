@@ -21,6 +21,7 @@ LineEditDelegate::LineEditDelegate(QObject *parent) :
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
     connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
     m_editFlag = false;
+    m_keyboardFlag = false;
     m_inputCount = 0;
 }
 
@@ -117,35 +118,25 @@ bool LineEditDelegate::eventFilter(QObject *object, QEvent *event)
         int cursorPosition = editor->cursorPosition();
         editor->setEnabled(true);
         editor->setFocus();
-        if(e->key() == Qt::Key_Backspace) {
 
-        } else if(e->key() == Qt::Key_Delete) {
-
-        } else if(e->key() == Qt::Key_Left) {
-//            editor->cursorForward(true, 1);
-            editor->setCursorPosition(cursorPosition - 1);
-        } else if(e->key() == Qt::Key_Right) {
-//            editor->cursorBackward(true, 1);
-            editor->setCursorPosition(cursorPosition + 1);
-        } else if(e->key() == Qt::Key_Return) {
-//            emit editor->editingFinished();
-            commitData(editor);
-            closeEditor(editor);
-            editor->clearFocus();
-        } else if(e->key() == Qt::Key_Period) {
-            editor->insert(".");
-        } else if(e->key() >= 48 && e->key() <= 57) {
-            if(m_inputCount == 0) {
-                editor->insert(QString::number(e->key() - 48));
-            } else {
-                QString newString = value + QString::number(e->key() - 48);
-                const QDoubleValidator *validator = (QDoubleValidator*)(editor->validator());
-                if(newString.toDouble() <= validator->top()) {
+        if(m_keyboardFlag) {
+            if(e->key() == Qt::Key_Period) {
+                editor->insert(".");
+            } else if(e->key() >= 48 && e->key() <= 57) {
+                if(m_inputCount == 0) {
                     editor->insert(QString::number(e->key() - 48));
+                } else {
+                    QString newString = value + QString::number(e->key() - 48);
+                    const QDoubleValidator *validator = (QDoubleValidator*)(editor->validator());
+                    if(newString.toDouble() <= validator->top()) {
+                        editor->insert(QString::number(e->key() - 48));
+                    }
                 }
+                m_inputCount += 1;
             }
-            m_inputCount += 1;
-        } else if(e->key() == Qt::Key_Up) {
+        }
+
+        if(e->key() == Qt::Key_Up) {
             double newValue = value.toDouble() + step.toDouble();
             const QDoubleValidator *validator = (QDoubleValidator*)(editor->validator());
             if(newValue <= validator->top()) {
@@ -157,8 +148,6 @@ bool LineEditDelegate::eventFilter(QObject *object, QEvent *event)
             if(newValue >= validator->bottom()) {
                 editor->setText(QString::number(newValue, 'f', decimalAmount));
             }
-        } else {
-            return false;
         }
     }
     return QObject::eventFilter(object, event);
