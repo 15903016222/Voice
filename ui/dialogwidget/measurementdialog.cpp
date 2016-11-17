@@ -207,7 +207,9 @@ void MeasurementDialog::do_rotary_event(Mcu::RotaryType type)
         }
     }
 
-    m_changedString = labelMap.key(MEASUREMENT_STRING[m_currentRow]);
+    QStandardItem *item = pMeasurementModel->item(m_currentRow);
+    m_changedString = labelMap.key(item->text());
+
     qDebug()<<"do_rotaryRow = "<<m_currentRow<<"  value"<<m_changedString;
 }
 
