@@ -5,8 +5,6 @@
 #include <QDebug>
 #include <QKeyEvent>
 
-
-
 VirtualKeyboard::VirtualKeyboard(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::VirtualKeyboard)
@@ -19,7 +17,7 @@ VirtualKeyboard::VirtualKeyboard(QWidget *parent) :
         pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
-    for(int i = 1; i < 7; i ++) {
+    for(int i = 1; i < 6; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(do_click_button()));
         pushButton->setFocusPolicy(Qt::NoFocus);
@@ -45,15 +43,16 @@ void VirtualKeyboard::do_click_button()
 {
     QString string;
     QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
-    if(pushButton->objectName() == "pushButton_4") {
+    if(pushButton->objectName() == "pushButton_3") {
         string = "Left Arrow";
-    } else if(pushButton->objectName() == "pushButton_5") {
+    } else if(pushButton->objectName() == "pushButton_4") {
         string = "Right Arrow";
     } else {
         string = pushButton->text();
     }
     emit input_number(string);
     if(string == "Enter") {
+        qDebug() << "close";
         close();
         emit close_keyboard();
     }
@@ -68,11 +67,11 @@ void VirtualKeyboard::input_number_to_lineedit(QLineEdit *lineEdit, QString stri
         event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Left, Qt::NoModifier);
     } else if(string == "Right Arrow") {
         event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
-    } else if(string == "BackSpace") {
+    } else if(string == "Del") {
         event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
-    } else if(string == "Delete") {
+    } /*else if(string == "Delete") {
         event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Delete, Qt::NoModifier);
-    } else if(string == "Enter" || string == "Close") {
+    } */else if(string == "Enter" || string == "Close") {
         event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
     } else {
         int value = string.toInt();
