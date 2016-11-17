@@ -43,8 +43,7 @@ private:
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
     void set_model_item(int startIndex, QStringList thirdMenuList);
     void set_currentTime();
-    void change_persistent_editor(QModelIndex modelIndex);
-//    void disconnect_input_number();
+    void change_persistent_editor();
 
     QStringList get_translate_third_menu_list();
     QList<QStringList> get_comboBox_option_list(QVariantMap variantMap);

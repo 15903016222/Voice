@@ -355,7 +355,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         }
 
         if(opendSpinBoxIndex >= 0) {
-            change_persistent_editor(modelIndex);
+            change_persistent_editor();
         }
 
         if(m_keyboardShowFlag) {
@@ -525,7 +525,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {
-//        disconnect_input_number();
         opendSpinBoxIndex = -1;
     }
 }
@@ -574,11 +573,10 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
         }
 
         if(opendSpinBoxIndex >= 0) {
-            change_persistent_editor(index);
+            change_persistent_editor();
         }
         if(opendSpinBoxIndex != column) {
             opendSpinBoxIndex = column;
-//            connect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
             if(m_keyboardShowFlag) {
                 ui->tableView->openPersistentEditor(index);
             }
@@ -593,7 +591,6 @@ void ThirdMenuWidget::on_tableView_clicked(const QModelIndex &index)
     }
 
     if(thirdMenuMap["style"].toString().toInt() != 1 && opendSpinBoxIndex >= 0) {
-//        disconnect_input_number();
         opendSpinBoxIndex = -1;
     }
 }
@@ -919,14 +916,10 @@ void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
     m_keyboardShowFlag = true;
     if(opendSpinBoxIndex >= 0) {
         LineEditDelegate *spinBox = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(index));
-        qDebug() << "open_editor" << spinBox->m_editFlag;
-
         if(!spinBox->m_editFlag) {
             QModelIndex modelIndex = pModel->item(0, index)->index();
             ui->tableView->openPersistentEditor(modelIndex);
-            qDebug() << "2.HasFocus" << spinBox->lineEditList.at(spinBox->lineEditList.count() -1)->hasFocus();
         }
-        qDebug() << "open_editor" <<spinBox->m_editFlag;
     }
 }
 
@@ -934,17 +927,14 @@ void ThirdMenuWidget::close_spinbox_persistent_editor(int index)
 {
     LineEditDelegate *spinBox = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(index));
     m_keyboardShowFlag = false;
-    qDebug() << "close";
-    qDebug() << spinBox->m_editFlag;
     if(/*spinBox->m_inputCount > 0 && */opendSpinBoxIndex >= 0) {
         QModelIndex modelIndex = pModel->item(0, index)->index();
         ui->tableView->closePersistentEditor(modelIndex);
         qDebug() << "closeeditor";
         set_header_text_close(spinBox->lineEditList.at(spinBox->lineEditList.count() -1));
         spinBox->m_editFlag = false;
+        spinBox->m_keyboardFlag = false;
         spinBox->m_inputCount = 0;
-//        disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
-//       spinBox->closeEditor(static_cast<QWidget*>(spinBox->lineEditList.at(spinBox->lineEditList.count() -1)));
     }
 }
 
@@ -952,33 +942,19 @@ void ThirdMenuWidget::input_spinbox_number(QString string)
 {
     if(opendSpinBoxIndex >= 0) {
         LineEditDelegate *spinBox = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
-        qDebug() << "input_editor" <<spinBox->m_editFlag;
-
         if(spinBox->m_editFlag) {
             QLineEdit *doubleSpinBox = spinBox->lineEditList.at(spinBox->lineEditList.count() - 1);
             int decimal = spinBox->decimalAmount;
             doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
             doubleSpinBox->setFocus();
+            spinBox->m_keyboardFlag = true;
             pVirtualKeyboard->input_number_to_lineedit(doubleSpinBox, string, decimal);
-//            qDebug() << string;
-//            emit send_string_to_delegate(string);
-//            spinBox->m_inputCount += 1;
-//#ifdef Q_OS_WIN32
-//            QWidget *widget = doubleSpinBox->focusWidget();
-//            HWND hwnd = (HWND)widget->winId();
-//            pVirtualKeyboard->input_number_windows(hwnd, string, decimal);
-//#endif
-
-//#ifdef Q_OS_LINUX
-//           pVirtualKeyboard->input_number_linux(string, decimal);
-//#endif
-
         }
 
     }
 }
 
-void ThirdMenuWidget::change_persistent_editor(QModelIndex modelIndex)
+void ThirdMenuWidget::change_persistent_editor()
 {
     if(m_keyboardShowFlag) {
         QModelIndex modelIndexLast = pModel->item(0, opendSpinBoxIndex)->index();
@@ -988,12 +964,8 @@ void ThirdMenuWidget::change_persistent_editor(QModelIndex modelIndex)
         set_header_text_close(spinBox->lineEditList.at(spinBox->lineEditList.count() -1));
         spinBox->lineEditList.at(spinBox->lineEditList.count() -1)->clearFocus();
         spinBox->m_editFlag = false;
+        spinBox->m_keyboardFlag = false;
         spinBox->m_inputCount = 0;
     }
-//    disconnect_input_number();
 }
 
-//void ThirdMenuWidget::disconnect_input_number()
-//{
-//    disconnect(this, SIGNAL(send_string_to_delegate(QString)), ui->tableView->itemDelegateForColumn(opendSpinBoxIndex), SLOT(input_number_to_lineedit(QString)));
-//}
