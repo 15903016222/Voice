@@ -1,10 +1,11 @@
 #ifndef TOPMENU
 #define TOPMENU
 
-#include "measurementdialog.h"
+#include "measure_dialog.h"
 
 #include <QLabel>
 #include <QTableView>
+#include <QStandardItemModel>
 
 #define TOP_MENU_NUMBER 10
 
@@ -48,7 +49,6 @@ private:
     QList<QLabel* > measurementLabelList;
     QStandardItemModel *pGain;
     QStandardItemModel *pAngle;
-    MeasurementDialog *pDialog;
     QString objectName;
 };
 

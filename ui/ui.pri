@@ -6,6 +6,7 @@ INCLUDEPATH += $$PWD/qitemdelegate
 INCLUDEPATH += $$PWD/spinbox
 
 include(icons_bar/icons_bar.pri)
+include(measure_bar/measure_bar.pri)
 
 SOURCES += \
     $$PWD/mainwindow.cpp \
@@ -15,7 +16,6 @@ SOURCES += \
     $$PWD/menuwidget/thirdmenuwidget.cpp \
     $$PWD/menuwidget/commonmenuwidget.cpp \
     $$PWD/menuwidget/commonmenubutton.cpp \
-    $$PWD/dialogwidget/measurementdialog.cpp \
     $$PWD/dialogwidget/myinputpanel.cpp \
     $$PWD/dialogwidget/timesetdialog.cpp \
     $$PWD/dialogwidget/probedialog.cpp \
@@ -40,7 +40,6 @@ HEADERS += \
     $$PWD/menuwidget/thirdmenuwidget.h \
     $$PWD/menuwidget/commonmenuwidget.h \
     $$PWD/menuwidget/commonmenubutton.h \
-    $$PWD/dialogwidget/measurementdialog.h \
     $$PWD/dialogwidget/myinputpanel.h \
     $$PWD/dialogwidget/timesetdialog.h \
     $$PWD/dialogwidget/probedialog.h \
@@ -65,7 +64,6 @@ FORMS += \
     $$PWD/menuwidget/thirdmenuwidget.ui \
     $$PWD/menuwidget/commonmenuwidget.ui \
     $$PWD/menuwidget/commonmenubutton.ui \
-    $$PWD/dialogwidget/measurementdialog.ui \
     $$PWD/dialogwidget/myinputpanel.ui \
     $$PWD/dialogwidget/timesetdialog.ui \
     $$PWD/dialogwidget/probedialog.ui \
