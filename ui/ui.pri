@@ -75,5 +75,3 @@ FORMS += \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
     $$PWD/dialogwidget/filemanagerdialog.ui
-
-include(icons_bar/icons_bar.pri)
