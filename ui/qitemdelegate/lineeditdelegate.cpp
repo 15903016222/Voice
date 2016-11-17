@@ -44,7 +44,7 @@ QWidget *LineEditDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
     (const_cast<LineEditDelegate *>(this))->lineEditList.append(editor);
     (const_cast<LineEditDelegate *>(this))->lineEditMap.insert(index, editor);
     (const_cast<LineEditDelegate *>(this))->m_editFlag = true;
-    qDebug() << "m_editflag";
+
     QStringList sendList;
     sendList.append(QString::number(index.column()));
     sendList.append(step);
@@ -128,7 +128,9 @@ bool LineEditDelegate::eventFilter(QObject *object, QEvent *event)
 //            editor->cursorBackward(true, 1);
             editor->setCursorPosition(cursorPosition + 1);
         } else if(e->key() == Qt::Key_Return) {
-            emit editor->returnPressed();
+//            emit editor->editingFinished();
+            commitData(editor);
+            closeEditor(editor);
             editor->clearFocus();
         } else if(e->key() == Qt::Key_Period) {
             editor->insert(".");

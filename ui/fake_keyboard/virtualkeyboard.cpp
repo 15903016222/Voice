@@ -5,17 +5,7 @@
 #include <QDebug>
 #include <QKeyEvent>
 
-#ifdef Q_OS_WIN32
-#include "windows.h"
-#endif
 
-#ifdef Q_OS_LINUX
-#include <stdio.h>
-#include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
-#include <X11/extensions/XInput.h>
-#include <X11/keysym.h>
-#endif
 
 VirtualKeyboard::VirtualKeyboard(QWidget *parent) :
     QWidget(parent),
@@ -68,6 +58,40 @@ void VirtualKeyboard::do_click_button()
         emit close_keyboard();
     }
 }
+
+void VirtualKeyboard::input_number_to_lineedit(QLineEdit *lineEdit, QString string, int decimal)
+{
+    QKeyEvent *event;
+    if(string == "." && decimal > 0) {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Period, Qt::NoModifier);
+    } else if(string == "Left Arrow") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Left, Qt::NoModifier);
+    } else if(string == "Right Arrow") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
+    } else if(string == "BackSpace") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
+    } else if(string == "Delete") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Delete, Qt::NoModifier);
+    } else if(string == "Enter" || string == "Close") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    } else {
+        int value = string.toInt();
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_0 + value, Qt::NoModifier);
+    }
+    QApplication::sendEvent(lineEdit, event);
+}
+
+#ifdef Q_OS_WIN32
+#include "windows.h"
+#endif
+
+#ifdef Q_OS_LINUX
+#include <stdio.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/XTest.h>
+#include <X11/extensions/XInput.h>
+#include <X11/keysym.h>
+#endif
 
 #ifdef Q_OS_WIN32
 void VirtualKeyboard::input_number_windows(HWND hwnd, QString string, int decimal)
@@ -123,25 +147,3 @@ void VirtualKeyboard::input_number_linux(QString string, int decimal)
     XCloseDisplay(display);
 }
 #endif
-
-void VirtualKeyboard::input_number_to_lineedit(QLineEdit *lineEdit, QString string, int decimal)
-{
-    QKeyEvent *event;
-    if(string == "." && decimal > 0) {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Period, Qt::NoModifier);
-    } else if(string == "Left Arrow") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Left, Qt::NoModifier);
-    } else if(string == "Right Arrow") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
-    } else if(string == "BackSpace") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
-    } else if(string == "Delete") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Delete, Qt::NoModifier);
-    } else if(string == "Enter" || string == "Close") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
-    } else {
-        int value = string.toInt();
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_0 + value, Qt::NoModifier);
-    }
-    QApplication::sendEvent(lineEdit, event);
-}
