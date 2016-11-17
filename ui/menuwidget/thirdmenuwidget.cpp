@@ -431,7 +431,9 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         //点击表头弹出测量值选择对话框
         MeasurementDialog *measurementDialog = new MeasurementDialog(this);
         measurementDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        measurementDialog->exec();
+        measurementDialog->show();
+
+        measurementDialog->set_current_index(currentHeaderText);
 
         m_measurementIndex = index;
         connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
