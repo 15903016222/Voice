@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QTextCodec>
 #include <QFontDatabase>
+#include <QDebug>
 
 static const char *FONT_FILE = "/etc/mercury/font/SONGTI.TTC";
 
