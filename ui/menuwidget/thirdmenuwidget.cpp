@@ -507,7 +507,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         pDateTimeSetDialog->set_spinbox_value(valueList);
 
         pDateTimeSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        pDateTimeSetDialog->exec();
+        pDateTimeSetDialog->show();
 
         m_dateTimeSetIndex = index;
         connect(pDateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_time(QString)));
