@@ -3,6 +3,7 @@
 
 #include <QPushButton>
 #include <QDebug>
+#include <QKeyEvent>
 
 #ifdef Q_OS_WIN32
 #include "windows.h"
@@ -34,15 +35,15 @@ VirtualKeyboard::VirtualKeyboard(QWidget *parent) :
         pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
-#if QT_VERSION >= 0x050000
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus | Qt::Tool);
-#endif
+//#if QT_VERSION >= 0x050000
+//    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus | Qt::Tool);
+//#endif
 
-#if QT_VERSION < 0x050000
-    setAttribute(Qt::WA_ShowWithoutActivating, true);
+//#if QT_VERSION < 0x050000
+//    setAttribute(Qt::WA_ShowWithoutActivating, true);
 //    myInputPanelDlg->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
-#endif
+//#endif
 }
 
 VirtualKeyboard::~VirtualKeyboard()
@@ -122,3 +123,25 @@ void VirtualKeyboard::input_number_linux(QString string, int decimal)
     XCloseDisplay(display);
 }
 #endif
+
+void VirtualKeyboard::input_number_to_lineedit(QLineEdit *lineEdit, QString string, int decimal)
+{
+    QKeyEvent *event;
+    if(string == "." && decimal > 0) {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Period, Qt::NoModifier);
+    } else if(string == "Left Arrow") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Left, Qt::NoModifier);
+    } else if(string == "Right Arrow") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
+    } else if(string == "BackSpace") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
+    } else if(string == "Delete") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Delete, Qt::NoModifier);
+    } else if(string == "Enter" || string == "Close") {
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    } else {
+        int value = string.toInt();
+        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_0 + value, Qt::NoModifier);
+    }
+    QApplication::sendEvent(lineEdit, event);
+}

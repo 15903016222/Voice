@@ -2,6 +2,7 @@
 #define VIRTUALKEYBOARD_H
 
 #include <QWidget>
+#include <QLineEdit>
 
 namespace Ui {
 class VirtualKeyboard;
@@ -21,6 +22,8 @@ public:
 #ifdef Q_OS_LINUX
     void input_number_linux(QString string, int decimal);
 #endif
+
+    void input_number_to_lineedit(QLineEdit *lineEdit, QString string, int decimal);
 
 private:
     Ui::VirtualKeyboard *ui;
