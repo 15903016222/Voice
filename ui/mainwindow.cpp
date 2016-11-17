@@ -386,9 +386,6 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
                 }
             }
         }
-
-        qDebug()<<"do_rotary_firstNum  = "<<m_firstMenuNum;
-        qDebug()<<"                    m_rotarySecondMenuNum = "<<m_rotarySecondMenuNum;
     }
 }
 

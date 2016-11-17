@@ -50,6 +50,16 @@ private:
     QStandardItemModel *pAngle;
     MeasurementDialog *pDialog;
     QString objectName;
+<<<<<<< HEAD
+=======
+
+private slots:
+    void change_labelText(QString str);
+    void set_gain_header_text_close(QWidget *editor);
+    void set_angle_header_text_close(QWidget *editor);
+    void on_tableView_angle_clicked(const QModelIndex &index);
+    void on_tableView_gain_clicked(const QModelIndex &index);
+>>>>>>> origin/ui_yansy
 };
 
 #endif // TOPMENU

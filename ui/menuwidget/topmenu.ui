@@ -1273,8 +1273,8 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
          </palette>
         </property>
         <property name="text">
-         <string>TCG-SL
-(±dB)</string>
+         <string>ML
+(%)</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

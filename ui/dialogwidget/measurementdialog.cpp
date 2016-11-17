@@ -1,6 +1,8 @@
 #include "measurementdialog.h"
 #include "ui_measurementdialog.h"
 
+#include <QKeyEvent>
+#include <QApplication>
 #include <QDebug>
 
 #define MEASUREMENT_NUMBER 54
@@ -47,7 +49,7 @@ static const char* MEASUREMENT_STRING[MEASUREMENT_NUMBER] =
     QT_TRANSLATE_NOOP("MeasurementDialog", "VsB^ Volumetric position in gate B on the scan axis"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "LA^ Leg(skip)of the indication in gate A"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "LB^ Leg(skip)of the indication in gate B"),
-    //  QT_TRANSLATE_NOOP("MeasurementDialog", "E% Peak amplitude of the envelop in gate A"),
+ //   QT_TRANSLATE_NOOP("MeasurementDialog", "E% Peak amplitude of the envelop in gate A"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "AWS-DA Indication level for AWS-D1.5A"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "AWS-DB Zero reference  level for AWS-D1.5B"),
     QT_TRANSLATE_NOOP("MeasurementDialog", "AWS-DC Attenuation factor for AWS-D1.5 C"),
@@ -72,6 +74,10 @@ MeasurementDialog::MeasurementDialog(QWidget *parent) :
     init_ui();
 
     m_changedFlag = false;
+
+    pMcu = Mcu::get_mcu();
+    connect(pMcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    connect(pMcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
 }
 
 MeasurementDialog::~MeasurementDialog()
@@ -84,14 +90,14 @@ void MeasurementDialog::init_ui()
     buttonList.append(ui->pushButton_cancel);
     buttonList.append(ui->pushButton_ok);
 
-    measurementModel = new QStandardItemModel(this);
+    pMeasurementModel = new QStandardItemModel(this);
 
     for(int i = 0; i < MEASUREMENT_NUMBER; i++) {
         measurementList.append(tr(MEASUREMENT_STRING[i]));
 
         QString string = static_cast<QString>(measurementList.at(i));
         QStandardItem *item = new QStandardItem(string);
-        measurementModel->appendRow(item);
+        pMeasurementModel->appendRow(item);
         item->setForeground(QBrush(Qt::black));
         item->setFont(QFont("Times New Roman", 14));
 
@@ -114,18 +120,18 @@ void MeasurementDialog::init_ui()
         }
     }
 
-    listView = new QListView(this);
-    listView->resize(ui->scrollArea->geometry().width(), 800);
-    listView->setSpacing(3);
-    listView->setEditTriggers(QAbstractItemView::EditKeyPressed);
+    pListView = new QListView(this);
+    pListView->resize(ui->scrollArea->geometry().width(), 800);
+    pListView->setSpacing(3);
+    pListView->setEditTriggers(QAbstractItemView::EditKeyPressed);
 
     ui->scrollArea->setFrameShape(QFrame::NoFrame);
     ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->scrollArea->setWidget(listView);
-    listView->setModel(measurementModel);
-    listView->setFrameShape(QFrame::NoFrame);
-    listView->setStyleSheet("QListView{outline: 0px;}"
+    ui->scrollArea->setWidget(pListView);
+    pListView->setModel(pMeasurementModel);
+    pListView->setFrameShape(QFrame::NoFrame);
+    pListView->setStyleSheet("QListView{outline: 0px;}"
                             "QListView::item{"
                             "background-color: rgba(0, 0, 0, 0);"
                             "color: black;}"
@@ -138,7 +144,7 @@ void MeasurementDialog::init_ui()
                             "background-color: rgba(85, 175, 255, 20);"
                             "color: red;}");
 
-    connect(listView, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
+    connect(pListView, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listViewItemClicked(QModelIndex)));
 }
 
 void MeasurementDialog::on_pushButton_cancel_clicked()
@@ -149,34 +155,65 @@ void MeasurementDialog::on_pushButton_cancel_clicked()
 void MeasurementDialog::on_pushButton_ok_clicked()
 {
     if(m_changedFlag) {
-        close();
         emit labelTextChanged(m_changedString);
+        close();
     }
 }
 
 void MeasurementDialog::slot_listViewItemClicked(QModelIndex index)
 {
     m_changedFlag = true;
-    for(int i = 0; i < MEASUREMENT_NUMBER; i++) {
-        QModelIndex modelIndex = measurementModel->index(i, 0);
-        QStandardItem *item = measurementModel->itemFromIndex(modelIndex);
 
-        if(modelIndex == index) {
-            listView->setCurrentIndex(index);
-            m_changedString = labelMap.key(item->text());
-        }
-    }
+    QStandardItem *item = pMeasurementModel->itemFromIndex(index);
+    m_changedString = labelMap.key(item->text());
 }
 
 void MeasurementDialog::set_current_index(QString string)
 {
     for(int i = 0; i < MEASUREMENT_NUMBER; i ++) {
         QString longString = MEASUREMENT_STRING[i];
+
         if(longString.contains(string)) {
-            QStandardItem *item = measurementModel->item(i);
-            QModelIndex modelIndex = measurementModel->indexFromItem(item);
-            listView->setCurrentIndex(modelIndex);
+            QStandardItem *item = pMeasurementModel->item(i);
+
+            m_currentRow = item->row();
+            qDebug()<<"set_current_index_row = "<<m_currentRow<<"  set_current_MEASURE = "<<m_changedString;
+
+            QModelIndex modelIndex = pMeasurementModel->indexFromItem(item);
+            pListView->setCurrentIndex(modelIndex);
             break;
         }
+    }
+}
+
+void MeasurementDialog::do_rotary_event(Mcu::RotaryType type)
+{
+    m_changedFlag = true;
+
+    if (type == Mcu::ROTARY_UP) {
+        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+        QApplication::sendEvent(pListView, event);
+
+        if(m_currentRow > 0){
+            m_currentRow--;
+        }
+
+    } else {
+        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+        QApplication::sendEvent(pListView, event);
+
+        if(m_currentRow < MEASUREMENT_NUMBER -1){
+            m_currentRow++;
+        }
+    }
+
+    m_changedString = labelMap.key(MEASUREMENT_STRING[m_currentRow]);
+    qDebug()<<"do_rotaryRow = "<<m_currentRow<<"  value"<<m_changedString;
+}
+
+void MeasurementDialog::key_sure(Mcu::KeyType key)
+{
+    if(key == Mcu::KEY_SURE) {
+        on_pushButton_ok_clicked();
     }
 }
