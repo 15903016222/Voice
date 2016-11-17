@@ -28,8 +28,7 @@ SOURCES += \
     $$PWD/dialogwidget/filemanagerdialog.cpp \
     $$PWD/dialogwidget/about_dialog.cpp \
     $$PWD/dialogwidget/sysinfo_dialog.cpp \
-    $$PWD/spinbox/spinbox.cpp \
-    $$PWD/icons_bar.cpp
+    $$PWD/spinbox/spinbox.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -54,8 +53,7 @@ HEADERS += \
     $$PWD/dialogwidget/filemanagerdialog.h \
     $$PWD/dialogwidget/about_dialog.h \
     $$PWD/dialogwidget/sysinfo_dialog.h \
-    $$PWD/spinbox/spinbox.h \
-    $$PWD/icons_bar.h
+    $$PWD/spinbox/spinbox.h
 
 FORMS += \
     $$PWD/mainwindow.ui \
@@ -74,5 +72,6 @@ FORMS += \
     $$PWD/dialogwidget/resetconfigdialog.ui \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
-    $$PWD/dialogwidget/filemanagerdialog.ui \
-    $$PWD/icons_bar.ui
+    $$PWD/dialogwidget/filemanagerdialog.ui
+
+include(icons_bar/icons_bar.pri)

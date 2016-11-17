@@ -10,32 +10,33 @@
         <file>resources/clock.png</file>
         <file>translator/phascanII_UI_Chinese.qm</file>
         <file>translator/phascanII_UI_English.qm</file>
-        <file>resources/b_error.png</file>
-        <file>resources/b0.png</file>
-        <file>resources/b1.png</file>
-        <file>resources/b2.png</file>
-        <file>resources/b3.png</file>
-        <file>resources/b4.png</file>
-        <file>resources/b5.png</file>
-        <file>resources/b6.png</file>
-        <file>resources/b7.png</file>
-        <file>resources/b8.png</file>
-        <file>resources/b9.png</file>
-        <file>resources/bc0.png</file>
-        <file>resources/bc1.png</file>
-        <file>resources/bc2.png</file>
-        <file>resources/bc3.png</file>
-        <file>resources/bc4.png</file>
-        <file>resources/bc5.png</file>
-        <file>resources/bc6.png</file>
-        <file>resources/bc7.png</file>
-        <file>resources/bc8.png</file>
-        <file>resources/bc9.png</file>
         <file>resources/tip.jpg</file>
         <file>resources/logo.png</file>
         <file>json/menuconf.json</file>
         <file>json/menutr_CHN.json</file>
-        <file>resources/bc10.png</file>
         <file>resources/gear.png</file>
+        <file>resources/battery/b3.png</file>
+        <file>resources/battery/b_error.png</file>
+        <file>resources/battery/b0.png</file>
+        <file>resources/battery/b1.png</file>
+        <file>resources/battery/b2.png</file>
+        <file>resources/battery/b4.png</file>
+        <file>resources/battery/b5.png</file>
+        <file>resources/battery/b6.png</file>
+        <file>resources/battery/b7.png</file>
+        <file>resources/battery/b8.png</file>
+        <file>resources/battery/b9.png</file>
+        <file>resources/battery/b10.png</file>
+        <file>resources/battery/bc0.png</file>
+        <file>resources/battery/bc1.png</file>
+        <file>resources/battery/bc2.png</file>
+        <file>resources/battery/bc3.png</file>
+        <file>resources/battery/bc4.png</file>
+        <file>resources/battery/bc5.png</file>
+        <file>resources/battery/bc6.png</file>
+        <file>resources/battery/bc7.png</file>
+        <file>resources/battery/bc8.png</file>
+        <file>resources/battery/bc9.png</file>
+        <file>resources/battery/bc10.png</file>
     </qresource>
 </RCC>

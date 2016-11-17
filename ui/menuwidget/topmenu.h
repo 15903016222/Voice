@@ -25,6 +25,16 @@ public:
 
     bool eventFilter(QObject *object, QEvent *event);
 
+signals:
+    void currentDialogIndex(QString);
+
+private slots:
+    void change_labelText(QString str);
+    void set_gain_header_text_close(QWidget *editor);
+    void set_angle_header_text_close(QWidget *editor);
+    void on_tableView_angle_clicked(const QModelIndex &index);
+    void on_tableView_gain_clicked(const QModelIndex &index);
+
 private:
     Ui::TopMenu *ui;
 
@@ -40,16 +50,6 @@ private:
     QStandardItemModel *pAngle;
     MeasurementDialog *pDialog;
     QString objectName;
-
-signals:
-    void currentDialogIndex(QString);
-
-private slots:
-    void change_labelText(QString str);
-    void set_gain_header_text_close(QWidget *editor);
-    void set_angle_header_text_close(QWidget *editor);
-    void on_tableView_angle_clicked(const QModelIndex &index);
-    void on_tableView_gain_clicked(const QModelIndex &index);
 };
 
 #endif // TOPMENU
