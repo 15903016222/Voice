@@ -5,6 +5,8 @@ INCLUDEPATH += $$PWD/dialogwidget
 INCLUDEPATH += $$PWD/qitemdelegate
 INCLUDEPATH += $$PWD/spinbox
 
+include(icons_bar/icons_bar.pri)
+
 SOURCES += \
     $$PWD/mainwindow.cpp \
     $$PWD/showinfowidget.cpp \
