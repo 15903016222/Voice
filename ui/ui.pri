@@ -31,7 +31,8 @@ SOURCES += \
     $$PWD/dialogwidget/sysinfo_dialog.cpp \
     $$PWD/spinbox/spinbox.cpp \
     $$PWD/fake_keyboard/virtualkeyboard.cpp \
-    $$PWD/icons_bar.cpp
+    $$PWD/icons_bar.cpp \
+    $$PWD/qitemdelegate/lineeditdelegate.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -58,7 +59,8 @@ HEADERS += \
     $$PWD/dialogwidget/sysinfo_dialog.h \
     $$PWD/spinbox/spinbox.h \
     $$PWD/fake_keyboard/virtualkeyboard.h \
-    $$PWD/icons_bar.h
+    $$PWD/icons_bar.h \
+    $$PWD/qitemdelegate/lineeditdelegate.h
 
 FORMS += \
     $$PWD/mainwindow.ui \
