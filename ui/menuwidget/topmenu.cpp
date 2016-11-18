@@ -14,8 +14,6 @@
 #define HTML_TEXT_FIVE "<font color=white face='Times New Roman' style='font-size:14pt'>"
 #define HTML_TEXT_SIX  "<font color=white face='Times New Roman' style='font-size:12pt'>"
 
-
-
 TopMenu :: TopMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TopMenu)
@@ -25,6 +23,9 @@ TopMenu :: TopMenu(QWidget *parent) :
 
     init_gain_angle();
 
+    opendSpinBoxIndex = -1;
+    pTableViewGain = ui->tableView_gain;
+    pTableViewAngle = ui->tableView_angle;
 }
 
 TopMenu :: ~TopMenu()
@@ -121,7 +122,8 @@ void TopMenu::init_gain_angle()
     pGain->item(0, 0)->setFont(QFont("Times New Roman", 14));
     pGain->item(0, 1)->setFont(QFont("Times New Roman", 10));
 
-    ui->tableView_gain->setItemDelegate(lineEditOne);
+    ui->tableView_gain->setItemDelegateForColumn(0, lineEditOne);
+    ui->tableView_gain->setItemDelegateForColumn(1, lineEditOne);
     ui->tableView_gain->show();
 
 #if QT_VERSION >= 0x050000
@@ -152,14 +154,15 @@ void TopMenu::init_gain_angle()
 
     QStandardItem *item_angle = new QStandardItem(QString::number(70, 'f', decimalAngle));
     pAngle->setItem(0, item_angle);
-    pAngle->item(0)->setTextAlignment(Qt::AlignCenter);
-    pAngle->item(0)->setForeground(Qt::white);
-    pAngle->item(0)->setFont(QFont("Times New Roman", 14));
-    ui->tableView_angle->setItemDelegate(lineEditAngle);
+    pAngle->item(0, 0)->setTextAlignment(Qt::AlignCenter);
+    pAngle->item(0, 0)->setForeground(Qt::white);
+    pAngle->item(0, 0)->setFont(QFont("Times New Roman", 14));
+    ui->tableView_angle->setItemDelegateForColumn(0, lineEditAngle);
     ui->tableView_angle->show();
 
-    connect(ui->tableView_gain->itemDelegate(), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_gain_header_text_close(QWidget*)));
-    connect(ui->tableView_angle->itemDelegate(), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_angle_header_text_close(QWidget*)));
+    connect(ui->tableView_gain->itemDelegateForColumn(0), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_gain_header_text_close(QWidget*)));
+    connect(ui->tableView_gain->itemDelegateForColumn(1), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_gain_header_text_close(QWidget*)));
+    connect(ui->tableView_angle->itemDelegateForColumn(0), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_angle_header_text_close(QWidget*)));
 }
 
 bool TopMenu::eventFilter(QObject *object, QEvent *event)
@@ -196,12 +199,20 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
         }
         emit currentDialogIndex(text);
         connect(pDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_labelText(QString)));
+
+        if(opendSpinBoxIndex >= 0 && opendSpinBoxIndex < 2) {
+            ui->tableView_gain->closePersistentEditor(pGain->item(0, opendSpinBoxIndex)->index());
+            opendSpinBoxIndex = -1;
+        } else if(opendSpinBoxIndex == 2) {
+            ui->tableView_angle->closePersistentEditor(pAngle->item(0, 0)->index());
+            opendSpinBoxIndex = -1;
+        }
+
     } else if(object == measurementLabelList.at(0) && event->type() == QEvent::MouseButtonPress) {
         open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, pGain, 0);
 
     } else if(object == measurementLabelList.at(9) && event->type() == QEvent::MouseButtonPress) {
         open_editor_and_set_header_text(measurementLabelList.at(9), ui->tableView_angle, pAngle, 0);
-
     }
     return QWidget::eventFilter(object, event);
 }
@@ -257,7 +268,7 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
 {
     QString headerTextUnit;
     QModelIndex modelIndex = model->item(0, index)->index();
-    LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(tableView->itemDelegate(modelIndex));
+    LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(tableView->itemDelegateForColumn(index));
 
 
     QStringList stringList = get_label_text(label->text());
@@ -281,7 +292,18 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
         }
     }
 
-    if(!lineEdit->m_editFlag) {
+    if(opendSpinBoxIndex >= 0 && opendSpinBoxIndex <2 && label->objectName() == "label_1") {
+        change_persistent_editor(label, model, tableView, opendSpinBoxIndex);
+    } else if(opendSpinBoxIndex >= 0 && opendSpinBoxIndex <2 && label->objectName() == "label_10") {
+        change_persistent_editor(measurementLabelList.at(0), pGain, ui->tableView_gain, opendSpinBoxIndex);
+    } else if(opendSpinBoxIndex == 2 && label->objectName() == "label_1") {
+        change_persistent_editor(measurementLabelList.at(9), pAngle, ui->tableView_angle, 0);
+    }
+
+    if(m_keyboardShowFlag) {
+        label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
+                                            headerTextUnit + "Δ" + stepList.at(stepIndex) + HTML_TEXT_FOUR);
+    } else if(!lineEdit->m_editFlag) {
         tableView->edit(modelIndex);
         label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
                                             headerTextUnit + "Δ" + stepList.at(stepIndex) + HTML_TEXT_FOUR);
@@ -297,6 +319,18 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
                                                 headerTextUnit + "Δ" + stepList.at(stepIndex + 1) + HTML_TEXT_FOUR);
         }
     }
+
+    if(opendSpinBoxIndex != index) {
+        if(label->objectName() == "label_1") {
+            opendSpinBoxIndex = index;
+        } else if(label->objectName() == "label_10") {
+            opendSpinBoxIndex = 2;
+        }
+        if(m_keyboardShowFlag) {
+            tableView->openPersistentEditor(modelIndex);
+        }
+    }
+    qDebug() << "openIndex" << opendSpinBoxIndex;
 }
 
 void TopMenu::set_gain_header_text_close(QWidget *editor)
@@ -348,4 +382,26 @@ void TopMenu::on_tableView_gain_clicked(const QModelIndex &index)
 //                                            headerTextUnit + "Δ" + stepList.at(stepIndex) + HTML_TEXT_FOUR);
 //    }
     open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, pGain, index.column());
+}
+
+void TopMenu::change_persistent_editor(QLabel *label, QStandardItemModel *model, QTableView *tableView, int index)
+{
+    if(m_keyboardShowFlag) {
+//        int index;
+//        if(label->objectName() == "label_1") {
+//            index = 0;
+//        } else {
+//            index = opendSpinBoxIndex;
+//        }
+        QModelIndex modelIndexLast = model->item(0, index)->index();
+        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(tableView->itemDelegateForColumn(index));;
+
+
+        tableView->closePersistentEditor(modelIndexLast);
+        set_header_text_close(label);
+        lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1)->clearFocus();
+        lineEdit->m_editFlag = false;
+        lineEdit->m_keyboardFlag = false;
+        lineEdit->m_inputCount = 0;
+    }
 }
