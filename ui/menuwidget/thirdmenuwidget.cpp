@@ -28,6 +28,7 @@ QWidget(parent),
     pFirstSecondMenuWidget = new FirstSecondMenuWidget;
     pDateTimeSetDialog = new DateTimeSetDialog(this);
     pNetworkDialog = new NetworkDialog(this);
+    pTableView = ui->tableView;
 
     m_height = this->geometry().height();
     m_languageOption = 1;
@@ -911,48 +912,48 @@ QList<int> ThirdMenuWidget::get_dialog_value_list(int index, QString str)
     return valueList;
 }
 
-void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
-{    
-    m_keyboardShowFlag = true;
-    if(opendSpinBoxIndex >= 0) {
-        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(index));
-        if(!lineEdit->m_editFlag) {
-            QModelIndex modelIndex = pModel->item(0, index)->index();
-            ui->tableView->openPersistentEditor(modelIndex);
-        }
-    }
-}
+//void ThirdMenuWidget::open_spinbox_persistent_editor(int index)
+//{
+//    m_keyboardShowFlag = true;
+//    if(opendSpinBoxIndex >= 0) {
+//        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(index));
+//        if(!lineEdit->m_editFlag) {
+//            QModelIndex modelIndex = pModel->item(0, index)->index();
+//            ui->tableView->openPersistentEditor(modelIndex);
+//        }
+//    }
+//}
 
-void ThirdMenuWidget::close_spinbox_persistent_editor(int index)
-{
-    LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(index));
-    m_keyboardShowFlag = false;
-    if(/*lineEdit->m_inputCount > 0 && */opendSpinBoxIndex >= 0) {
-        QModelIndex modelIndex = pModel->item(0, index)->index();
-        ui->tableView->closePersistentEditor(modelIndex);
-        qDebug() << "closeeditor";
-        set_header_text_close(lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1));
-        lineEdit->m_editFlag = false;
-        lineEdit->m_keyboardFlag = false;
-        lineEdit->m_inputCount = 0;
-    }
-}
+//void ThirdMenuWidget::close_spinbox_persistent_editor(int index)
+//{
+//    LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(index));
+//    m_keyboardShowFlag = false;
+//    if(/*lineEdit->m_inputCount > 0 && */opendSpinBoxIndex >= 0) {
+//        QModelIndex modelIndex = pModel->item(0, index)->index();
+//        ui->tableView->closePersistentEditor(modelIndex);
+//        qDebug() << "closeeditor";
+//        set_header_text_close(lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1));
+//        lineEdit->m_editFlag = false;
+//        lineEdit->m_keyboardFlag = false;
+//        lineEdit->m_inputCount = 0;
+//    }
+//}
 
-void ThirdMenuWidget::input_spinbox_number(QString string)
-{
-    if(opendSpinBoxIndex >= 0) {
-        LineEditDelegate *lineEditDelegate = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
-        if(lineEditDelegate->m_editFlag) {
-            QLineEdit *lineEdit = lineEditDelegate->lineEditList.at(lineEditDelegate->lineEditList.count() - 1);
-            int decimal = lineEditDelegate->decimalAmount;
-            lineEdit->setFocusPolicy(Qt::StrongFocus);
-            lineEdit->setFocus();
-            lineEditDelegate->m_keyboardFlag = true;
-            pVirtualKeyboard->input_number_to_lineedit(lineEdit, string, decimal);
-        }
+//void ThirdMenuWidget::input_spinbox_number(QString string)
+//{
+//    if(opendSpinBoxIndex >= 0) {
+//        LineEditDelegate *lineEditDelegate = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
+//        if(lineEditDelegate->m_editFlag) {
+//            QLineEdit *lineEdit = lineEditDelegate->lineEditList.at(lineEditDelegate->lineEditList.count() - 1);
+//            int decimal = lineEditDelegate->decimalAmount;
+//            lineEdit->setFocusPolicy(Qt::StrongFocus);
+//            lineEdit->setFocus();
+//            lineEditDelegate->m_keyboardFlag = true;
+//            pVirtualKeyboard->input_number_to_lineedit(lineEdit, string, decimal);
+//        }
 
-    }
-}
+//    }
+//}
 
 void ThirdMenuWidget::change_persistent_editor()
 {

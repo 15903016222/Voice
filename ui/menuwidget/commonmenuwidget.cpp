@@ -29,6 +29,9 @@ CommonMenuWidget::CommonMenuWidget(QWidget *parent) :
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
 
+    opendSpinBoxIndex = -1;
+    m_keyboardShowFlag = false;
+    pTableView = ui->tableView;
 }
 
 CommonMenuWidget::~CommonMenuWidget()
@@ -101,7 +104,7 @@ void CommonMenuWidget::choose_widget_style(int k)
     case 1: {
         QList<int> rangeList;
         rangeList.append(0.00);
-        rangeList.append(100.00);
+        rangeList.append(1000.00);
         QStringList stepList;
         stepList.append("0.01");
         stepList.append("0.10");
@@ -200,6 +203,31 @@ void CommonMenuWidget::onHeaderClicked(int index)
                 model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
             }
         }
+
+        if(opendSpinBoxIndex >= 0) {
+            change_persistent_editor();
+        }
+
+        if(m_keyboardShowFlag) {
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
+        } else if(!lineEdit->m_editFlag) {
+            ui->tableView->edit(modelIndex);
+            model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
+        } else {
+            if(stepIndex == (stringList.count() - 1)) {
+                lineEdit->set_number_step(stringList.at(0));
+                model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(0)));
+            } else {
+                lineEdit->set_number_step(stringList.at(stepIndex + 1));
+                model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
+            }
+        }
+        if(opendSpinBoxIndex != index) {
+            opendSpinBoxIndex = index;
+            if(m_keyboardShowFlag) {
+                ui->tableView->openPersistentEditor(modelIndex);
+            }
+        }
     } else if(CHOICE_WIDGET_CHAR[index].toInt() == 2) {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         ui->tableView->edit(modelIndex);
@@ -210,6 +238,10 @@ void CommonMenuWidget::onHeaderClicked(int index)
         PushButtonDelegate *pushButton = static_cast<PushButtonDelegate*>(ui->tableView->itemDelegateForColumn(index));
         pushButton->change_button_text(modelIndex);
         model->setData(modelIndex, pushButton->buttonMap.value(modelIndex)->text, Qt::EditRole);
+    }
+
+    if(CHOICE_WIDGET_CHAR[index].toInt() != 1 && opendSpinBoxIndex >= 0) {
+        opendSpinBoxIndex = -1;
     }
 }
 
@@ -243,6 +275,20 @@ void CommonMenuWidget::on_tableView_clicked(const QModelIndex &index)
 {
     int column = index.column();
     if(CHOICE_WIDGET_CHAR[column].toInt() == 1) {
+        int column = index.column();
+        if(!m_keyboardShowFlag) {
+            ui->tableView->edit(index);
+        }
+
+        if(opendSpinBoxIndex >= 0) {
+            change_persistent_editor();
+        }
+        if(opendSpinBoxIndex != column) {
+            opendSpinBoxIndex = column;
+//            if(m_keyboardShowFlag) {
+//                ui->tableView->openPersistentEditor(index);
+//            }
+        }
         ui->tableView->edit(index);
     } else if(CHOICE_WIDGET_CHAR[column].toInt() == 2) {
         ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
@@ -250,5 +296,24 @@ void CommonMenuWidget::on_tableView_clicked(const QModelIndex &index)
         QPoint point = QPoint();
         QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
+    }
+
+    if(CHOICE_WIDGET_CHAR[column].toInt() != 1 && opendSpinBoxIndex >= 0) {
+        opendSpinBoxIndex = -1;
+    }
+}
+
+void CommonMenuWidget::change_persistent_editor()
+{
+    if(m_keyboardShowFlag) {
+        QModelIndex modelIndexLast = model->item(0, opendSpinBoxIndex)->index();
+        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
+
+        ui->tableView->closePersistentEditor(modelIndexLast);
+        set_header_text_close(lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1));
+        lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1)->clearFocus();
+        lineEdit->m_editFlag = false;
+        lineEdit->m_keyboardFlag = false;
+        lineEdit->m_inputCount = 0;
     }
 }

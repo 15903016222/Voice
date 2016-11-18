@@ -23,11 +23,15 @@ public:
 
     void set_third_menu_name(int i, int j);
     void resizeEvent(QResizeEvent *event);   
-    void open_spinbox_persistent_editor(int index);
-    void close_spinbox_persistent_editor(int index);
+//    void open_spinbox_persistent_editor(int index);
+//    void close_spinbox_persistent_editor(int index);
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
     QStringList get_spinBox_step_list(QVariantMap variantMap);
+
     int opendSpinBoxIndex;
+    bool m_keyboardShowFlag;
+    QTableView *pTableView;
+    QStandardItemModel *pModel;
 
 private:
     Ui::ThirdMenuWidget *ui;
@@ -35,7 +39,7 @@ private:
     Mcu *pMcu;
     DateTimeSetDialog *pDateTimeSetDialog;
     NetworkDialog *pNetworkDialog;
-    QStandardItemModel *pModel;
+
     FirstSecondMenuWidget *pFirstSecondMenuWidget;
     VirtualKeyboard *pVirtualKeyboard;
 
@@ -73,8 +77,6 @@ private:
     QString m_secondMenuString;
     QString m_relatedMenuString;
 
-    bool m_keyboardShowFlag;
-
 signals:
     void retranslate_ui(QString);
     void translater_ZH();
@@ -99,7 +101,7 @@ protected slots:
     void set_time(QString value);
     void set_ip_subNet(QString value);
     void retranslate_third_menu_ui(QString string);
-    void input_spinbox_number(QString string);
+//    void input_spinbox_number(QString string);
     void setOpacity(double value);
 
 };
