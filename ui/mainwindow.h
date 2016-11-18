@@ -78,6 +78,7 @@ protected slots:
     void do_keyboard_event();
     void slot_keyboard_close_clicked();
     void slot_setMenuOpacity(double value);
+    void do_input_number(QString string);
 
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(Mcu::KeyType key);

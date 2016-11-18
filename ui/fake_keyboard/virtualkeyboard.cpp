@@ -52,7 +52,6 @@ void VirtualKeyboard::do_click_button()
     }
     emit input_number(string);
     if(string == "Enter") {
-        qDebug() << "close";
         close();
         emit close_keyboard();
     }
@@ -80,69 +79,63 @@ void VirtualKeyboard::input_number_to_lineedit(QLineEdit *lineEdit, QString stri
     QApplication::sendEvent(lineEdit, event);
 }
 
-#ifdef Q_OS_WIN32
-#include "windows.h"
-#endif
-
-#ifdef Q_OS_LINUX
-#include <stdio.h>
-#include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
-#include <X11/extensions/XInput.h>
-#include <X11/keysym.h>
-#endif
-
-#ifdef Q_OS_WIN32
-void VirtualKeyboard::input_number_windows(HWND hwnd, QString string, int decimal)
+void VirtualKeyboard::open_persistent_editor( QStandardItemModel *model, QTableView *tableView, int index)
 {
-    if(string == "." && decimal > 0) {
-        SendMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
-    } else if(string == "Left Arrow") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
-    } else if(string == "Right Arrow") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
-    } else if(string == "BackSpace") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
-    } else if(string == "Delete") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
-    } else if(string == "Enter" || string == "Close") {
-        SendMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
-    } else {
-        int value = string.toInt();
-        SendMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
+    if(index >= 0) {
+        if(index >= model->columnCount()) {
+            index = 0;
+        }
+        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(tableView->itemDelegateForColumn(index));
+        qDebug() << lineEdit->m_editFlag;
+        if(!lineEdit->m_editFlag) {
+            QModelIndex modelIndex = model->item(0, index)->index();
+            tableView->openPersistentEditor(modelIndex);
+        }
+        qDebug() << lineEdit->m_editFlag;
     }
 }
-#endif
 
-#ifdef Q_OS_LINUX
-void VirtualKeyboard::input_number_linux(QString string, int decimal)
+void VirtualKeyboard::close_persistent_editor(QStandardItemModel *model, QTableView *tableView, int index)
 {
-    Display *display = XOpenDisplay (NULL);
-    KeySym keysym;
-
-    if(display == NULL) {
-        qDebug() << "Display id Null.";
+    qDebug() << index;
+    if(index >= model->columnCount()) {
+        index = 0;
     }
-
-    if(string == "." && decimal > 0) {
-        keysym = XK_KP_Decimal;
-    } else if(string == "Left Arrow") {
-        keysym = XK_Left;
-    } else if(string == "Right Arrow") {
-        keysym = XK_Right;
-    } else if(string == "BackSpace") {
-        keysym = XK_BackSpace;
-    } else if(string == "Delete") {
-        keysym = XK_Delete;
-    } else if(string == "Enter" || string == "Close") {
-        keysym = XK_Return;
-    } else {
-        int value = string.toInt();
-        keysym = XK_0 + value;
+    LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(tableView->itemDelegateForColumn(index));
+//    m_keyboardShowFlag = false;
+    qDebug() << model->columnCount();
+    qDebug() << index;
+    if(/*lineEdit->m_inputCount > 0 && */index >= 0) {
+        QModelIndex modelIndex = model->item(0, index)->index();
+        tableView->closePersistentEditor(modelIndex);
+        qDebug() << "closeeditor";
+//        set_header_text_close(lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1));
+        lineEdit->m_editFlag = false;
+        lineEdit->m_keyboardFlag = false;
+        lineEdit->m_inputCount = 0;
     }
-
-    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), True, CurrentTime);
-    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), False, CurrentTime);
-    XCloseDisplay(display);
 }
-#endif
+
+void VirtualKeyboard::input_lineedit_data(QTableView *tableView, QString string, int index)
+{
+    qDebug() << "index" << index;
+    if(index >= 0) {
+        if(index >= tableView->model()->columnCount()) {
+            index = 0;
+        }
+        qDebug() << "new" << index;
+        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(tableView->itemDelegateForColumn(index));
+        qDebug() << lineEdit->m_editFlag;
+        if(lineEdit->m_editFlag) {
+            qDebug() << "run1";
+            QLineEdit *editor = lineEdit->lineEditList.at(lineEdit->lineEditList.count() - 1);
+            int decimal = lineEdit->decimalAmount;
+            editor->setFocusPolicy(Qt::StrongFocus);
+            editor->setFocus();
+            lineEdit->m_keyboardFlag = true;
+            input_number_to_lineedit(editor, string, decimal);
+        }
+
+    }
+}
+

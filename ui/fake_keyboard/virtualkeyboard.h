@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include <QStandardItemModel>
+#include <QTableView>
+
+#include "lineeditdelegate.h"
 
 namespace Ui {
 class VirtualKeyboard;
@@ -16,14 +20,10 @@ public:
     explicit VirtualKeyboard(QWidget *parent = 0);
     ~VirtualKeyboard();
 
-#ifdef Q_OS_WIN32
-    void input_number_windows(HWND hwnd, QString string, int decimal);
-#endif
-#ifdef Q_OS_LINUX
-    void input_number_linux(QString string, int decimal);
-#endif
-
     void input_number_to_lineedit(QLineEdit *lineEdit, QString string, int decimal);
+    void open_persistent_editor(QStandardItemModel *model, QTableView *tableView, int index);
+    void close_persistent_editor(QStandardItemModel *model, QTableView *tableView, int index);
+    void input_lineedit_data(QTableView *tableView, QString string, int index);
 
 private:
     Ui::VirtualKeyboard *ui;

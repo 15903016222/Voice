@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "lineeditdelegate.h"
+
 #include <QResizeEvent>
 #include <QDebug>
 
@@ -211,12 +213,18 @@ void MainWindow::slot_pushButton_commonMenuClicked()
     if(m_hiddenCommonMenuFlag) {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
+        if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
+            ui->widget_thirdMenu->opendSpinBoxIndex = -1;
+        }
         m_hiddenFirstSecondMenuFlag = false;
         commonMenuWidget->show();
         commonMenuButton->raise();
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
     } else {
         commonMenuWidget->hide();
+        if(commonMenuWidget->opendSpinBoxIndex >= 0) {
+            commonMenuWidget->opendSpinBoxIndex = -1;
+        }
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
         m_hiddenFirstSecondMenuFlag = false;
     }
@@ -299,9 +307,13 @@ void MainWindow::show_hidden_Menu()
         show_hidden_arrow();
 
         firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
+
     } else {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
+        if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
+            ui->widget_thirdMenu->opendSpinBoxIndex = -1;
+        }
     }
 }
 
@@ -323,8 +335,21 @@ void MainWindow::do_keyboard_event()
         pVirtualKeyboard->show();
 
         connect(pVirtualKeyboard, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-        connect(pVirtualKeyboard, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
-        ui->widget_thirdMenu->open_spinbox_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+        connect(pVirtualKeyboard, SIGNAL(input_number(QString)), this, SLOT(do_input_number(QString)));
+//        ui->widget_thirdMenu->open_spinbox_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+        if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
+            ui->widget_thirdMenu->m_keyboardShowFlag = true;
+            pVirtualKeyboard->open_persistent_editor(ui->widget_thirdMenu->pModel, ui->widget_thirdMenu->pTableView, ui->widget_thirdMenu->opendSpinBoxIndex);
+        } else if(ui->widgetTopLeft->opendSpinBoxIndex >= 0 && ui->widgetTopLeft->opendSpinBoxIndex < 2) {
+            ui->widgetTopLeft->m_keyboardShowFlag = true;
+            pVirtualKeyboard->open_persistent_editor(ui->widgetTopLeft->pGain, ui->widgetTopLeft->pTableViewGain, ui->widgetTopLeft->opendSpinBoxIndex);
+        } else if(ui->widgetTopLeft->opendSpinBoxIndex == 2) {
+            ui->widgetTopLeft->m_keyboardShowFlag = true;
+            pVirtualKeyboard->open_persistent_editor(ui->widgetTopLeft->pAngle, ui->widgetTopLeft->pTableViewAngle, ui->widgetTopLeft->opendSpinBoxIndex);
+        } else if(commonMenuWidget->opendSpinBoxIndex >= 0) {
+            commonMenuWidget->m_keyboardShowFlag = true;
+            pVirtualKeyboard->open_persistent_editor(commonMenuWidget->model, commonMenuWidget->pTableView, commonMenuWidget->opendSpinBoxIndex);
+        }
 
     } else {
         pVirtualKeyboard->close();
@@ -334,12 +359,38 @@ void MainWindow::do_keyboard_event()
 
 void MainWindow::slot_keyboard_close_clicked()
 {
+//    if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
+//        ui->widget_thirdMenu->close_spinbox_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+//    }
     if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
-        ui->widget_thirdMenu->close_spinbox_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
+        pVirtualKeyboard->close_persistent_editor(ui->widget_thirdMenu->pModel, ui->widget_thirdMenu->pTableView, ui->widget_thirdMenu->opendSpinBoxIndex);
+        ui->widget_thirdMenu->m_keyboardShowFlag = false;
+    } else if(ui->widgetTopLeft->opendSpinBoxIndex >= 0) {
+        pVirtualKeyboard->close_persistent_editor(ui->widgetTopLeft->pGain, ui->widgetTopLeft->pTableViewGain, ui->widgetTopLeft->opendSpinBoxIndex);
+        ui->widgetTopLeft->m_keyboardShowFlag = false;
+    } else if(ui->widgetTopLeft->opendSpinBoxIndex == 2) {
+        pVirtualKeyboard->close_persistent_editor(ui->widgetTopLeft->pAngle, ui->widgetTopLeft->pTableViewAngle, ui->widgetTopLeft->opendSpinBoxIndex);
+        ui->widgetTopLeft->m_keyboardShowFlag = false;
+    } else if(commonMenuWidget->opendSpinBoxIndex >= 0) {
+        pVirtualKeyboard->close_persistent_editor(commonMenuWidget->model, commonMenuWidget->pTableView, commonMenuWidget->opendSpinBoxIndex);
+        commonMenuWidget->m_keyboardShowFlag = false;
     }
     m_hiddenKeyboardFlag = false;
     disconnect(pVirtualKeyboard, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-    disconnect(pVirtualKeyboard, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
+    disconnect(pVirtualKeyboard, SIGNAL(input_number(QString)), this, SLOT(do_input_number(QString)));
+}
+
+void MainWindow::do_input_number(QString string)
+{
+    if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
+        pVirtualKeyboard->input_lineedit_data(ui->widget_thirdMenu->pTableView, string, ui->widget_thirdMenu->opendSpinBoxIndex);
+    } else if(ui->widgetTopLeft->opendSpinBoxIndex >= 0) {
+        pVirtualKeyboard->input_lineedit_data(ui->widgetTopLeft->pTableViewGain, string, ui->widgetTopLeft->opendSpinBoxIndex);
+    } else if(ui->widgetTopLeft->opendSpinBoxIndex == 2) {
+        pVirtualKeyboard->input_lineedit_data(ui->widgetTopLeft->pTableViewAngle, string, ui->widgetTopLeft->opendSpinBoxIndex);
+    } else if(commonMenuWidget->opendSpinBoxIndex >= 0) {
+        pVirtualKeyboard->input_lineedit_data(commonMenuWidget->pTableView, string, commonMenuWidget->opendSpinBoxIndex);
+    }
 }
 
 void MainWindow::slot_setMenuOpacity(double value)
