@@ -429,16 +429,13 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
     case 7: {
         //点击表头弹出测量值选择对话框
-       MeasureDialog measureDialog;
-   //    measureDialog.exec();
+       MeasureDialog measureDialog(this, MeasureDialog::Gate_A_Peak);
+
        if (measureDialog.exec() == QDialog::Accepted) {
+           pModel->setHeaderData(index, Qt::Horizontal, measureDialog.get_type_string());
            qDebug()<<measureDialog.get_type()<<measureDialog.get_type_string();
        }
 
-//        measureDialog->set_current_index(currentHeaderText);
-
-        m_measurementIndex = index;
-//        connect(measureDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
         break;
     }
     case 11: {
@@ -784,16 +781,6 @@ void ThirdMenuWidget::set_currentTime()
         pModel->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
     } else {
         pModel->item(0, 1)->setText(pDateTimeSetDialog->m_strDate);
-    }
-}
-
-void ThirdMenuWidget::change_measurement_label(QString string)
-{
-    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-        if(i == m_measurementIndex) {
-            pModel->setHeaderData(m_measurementIndex, Qt::Horizontal, string);
-            break;
-        }
     }
 }
 

@@ -30,9 +30,27 @@ MeasureDialog::MeasureType MeasureDialog::get_type() const
     return (MeasureDialog::MeasureType)ui->listWidget->currentRow();
 }
 
-const QString MeasureDialog::get_type_string() const
+QString MeasureDialog::get_type_string()
 {
-    return ui->listWidget->currentItem()->text();
+  //  return ui->listWidget->currentItem()->text();
+    QString measureType = ui->listWidget->currentItem()->text();
+
+    if(measureType.contains(" ") == true) {
+        int index = measureType.indexOf(" ");
+        QString text = measureType.left(index);
+
+        if(measureType.contains("%") || measureType.contains("Percentage")) {
+            text = text + "\n(%)";
+        } else if(measureType.contains("dB")) {
+            text = text + "\n(dB)";
+        } else {
+            text = text + "\n(mm)";
+        }
+        m_measureTypeMap.insert(text, measureType);
+    } else {
+        m_measureTypeMap.insert(measureType, measureType);
+    }
+    return m_measureTypeMap.key(measureType);
 }
 
 void MeasureDialog::set_type(MeasureDialog::MeasureType type)
@@ -55,6 +73,6 @@ void MeasureDialog::do_rotary_event(Mcu::RotaryType type)
 void MeasureDialog::key_sure(Mcu::KeyType key)
 {
     if(key == Mcu::KEY_SURE) {
-        qDebug()<<"Key_sure= "<<get_type()<<get_type_string();
+        accept();
     }
 }

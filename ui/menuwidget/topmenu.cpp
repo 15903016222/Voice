@@ -193,6 +193,7 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
         }
 
         if (measureDialog.exec() == QDialog::Accepted) {
+            change_labelText(measureDialog.get_type_string());
             qDebug()<<measureDialog.get_type()<<measureDialog.get_type_string();
         }
 

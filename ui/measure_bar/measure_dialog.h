@@ -4,6 +4,7 @@
 #include <mcu.h>
 
 #include <QDialog>
+#include <QMap>
 
 namespace Ui {
 class MeasureDialog;
@@ -75,12 +76,14 @@ public:
     ~MeasureDialog();
 
     MeasureType get_type() const;
-    const QString get_type_string() const;
+    QString get_type_string();
     void set_type(MeasureType type);
 
 private:
     Ui::MeasureDialog *ui;
     Mcu *pMcu;
+
+    QMap<QString, QString> m_measureTypeMap;
 
 private slots:
     void do_rotary_event(Mcu::RotaryType type);
