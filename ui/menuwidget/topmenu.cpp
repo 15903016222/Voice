@@ -175,7 +175,7 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             event->type() == QEvent::MouseButtonPress) {
         objectName = object->objectName();
 
-        MeasureDialog measureDialog(this, MeasureDialog::Gate_A_Peak);
+        MeasureDialog measureDialog(this, MeasureDialog::RA);
 
         QLabel *label = qobject_cast<QLabel*>(object);
         QString string = label->text();
