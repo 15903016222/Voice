@@ -6,7 +6,6 @@
 #include "pushbuttondelegate.h"
 #include "probedialog.h"
 #include "wedgedialog.h"
-#include "measure_dialog.h"
 #include "inputpanelcontext.h"
 #include "about_dialog.h"
 #include "resetconfigdialog.h"
@@ -425,15 +424,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         QString text = pModel->item(0, index)->text();
         inputPanel->set_item_current_text(text);
         connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
-        break;
-    }
-    case 7: {
-        //点击表头弹出测量值选择对话框
-        MeasureDialog measureDialog(this, MeasureDialog::RA);
-
-        if (measureDialog.exec() == QDialog::Accepted) {
-            pModel->setHeaderData(index, Qt::Horizontal, measureDialog.get_type_string());
-        }
         break;
     }
     case 11: {

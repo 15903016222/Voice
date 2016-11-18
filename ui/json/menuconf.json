@@ -1480,70 +1480,10 @@
     },
     "Measurement":{
         "Queue_Second_Menu":[
-            "Reading",
             "Cursors",
             "TOFD",
             "Flaw Record"
         ],
-        "Reading":{
-            "Queue_Third_Menu":{
-				"first third_menu": "Reading Group",
-				"1 Weld Joint:A%/DA/PA/SA":[
-					"Reading Group",
-					"A%",
-					"DA",
-					"PA",
-					"SA"
-				],
-				"2 TOFD:A%/T-D(r)/T-D(m)/T-D(m-r)":[
-					"Reading Group",
-					"A%",
-					"T-D(r)",
-					"T-D(m)",
-					"T-D(m-r)"
-				],
-				"3 Corossion:T(A^)/ML":[
-					"Reading Group",
-					"T(A^)",
-					"ML"
-				]
-			},
-            "Reading Group":{
-				"style":"2",
-				"options":[
-					"1 Weld Joint:A%/DA/PA/SA",
-					"2 TOFD:A%/T-D(r)/T-D(m)/T-D(m-r)",
-					"3 Corossion:T(A^)/ML"
-				]
-            },
-            "A%":{
-                "style":"7"
-            },
-            "DA":{
-                "style":"7"
-            },
-            "PA":{
-                "style":"7"
-            },
-            "SA":{
-                "style":"7"
-            },
-            "T-D(r)":{
-                "style":"7"
-            },
-            "T-D(m)":{
-                "style":"7"
-            },
-            "T-D(m-r)":{
-                "style":"7"
-            },
-            "T(A^)":{
-                "style":"7"
-            },
-            "ML":{
-                "style":"7"
-            }
-        },
         "Cursors":{
             "Queue_Third_Menu":{
                 "first third_menu":"Selection",
