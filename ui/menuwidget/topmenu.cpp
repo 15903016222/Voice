@@ -175,7 +175,7 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             event->type() == QEvent::MouseButtonPress) {
         objectName = object->objectName();
 
-        MeasureDialog measureDialog(this, MeasureDialog::RA);
+        MeasureDialog measureDialog(this, MeasureDialog::Gate_A_Peak);
 
         QLabel *label = qobject_cast<QLabel*>(object);
         QString string = label->text();
@@ -197,7 +197,6 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             qDebug()<<measureDialog.get_type()<<measureDialog.get_type_string();
         }
 
-//        connect(pDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_labelText(QString)));
     } else if(object == measurementLabelList.at(0) && event->type() == QEvent::MouseButtonPress) {
         open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, pGain, 0);
 

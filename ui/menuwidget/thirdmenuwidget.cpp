@@ -429,13 +429,11 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
     case 7: {
         //点击表头弹出测量值选择对话框
-       MeasureDialog measureDialog(this, MeasureDialog::Gate_A_Peak);
+        MeasureDialog measureDialog(this, MeasureDialog::RA);
 
-       if (measureDialog.exec() == QDialog::Accepted) {
-           pModel->setHeaderData(index, Qt::Horizontal, measureDialog.get_type_string());
-           qDebug()<<measureDialog.get_type()<<measureDialog.get_type_string();
-       }
-
+        if (measureDialog.exec() == QDialog::Accepted) {
+            pModel->setHeaderData(index, Qt::Horizontal, measureDialog.get_type_string());
+        }
         break;
     }
     case 11: {
@@ -443,7 +441,6 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         FileManagerDialog *fileManagerDialog = new FileManagerDialog(this);
         fileManagerDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         fileManagerDialog->exec();
-
         break;
     }
     case 14: {

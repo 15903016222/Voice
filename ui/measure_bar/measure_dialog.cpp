@@ -32,7 +32,6 @@ MeasureDialog::MeasureType MeasureDialog::get_type() const
 
 QString MeasureDialog::get_type_string()
 {
-  //  return ui->listWidget->currentItem()->text();
     QString measureType = ui->listWidget->currentItem()->text();
 
     if(measureType.contains(" ") == true) {
@@ -50,6 +49,7 @@ QString MeasureDialog::get_type_string()
     } else {
         m_measureTypeMap.insert(measureType, measureType);
     }
+
     return m_measureTypeMap.key(measureType);
 }
 
