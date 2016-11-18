@@ -1,6 +1,8 @@
 #ifndef __MEASURE_DIALOG_H__
 #define __MEASURE_DIALOG_H__
 
+#include <mcu.h>
+
 #include <QDialog>
 
 namespace Ui {
@@ -78,6 +80,11 @@ public:
 
 private:
     Ui::MeasureDialog *ui;
+    Mcu *pMcu;
+
+private slots:
+    void do_rotary_event(Mcu::RotaryType type);
+    void key_sure(Mcu::KeyType key);
 };
 
 #endif // __MEASURE_DIALOG_H__
