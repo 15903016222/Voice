@@ -1,10 +1,11 @@
 #ifndef TOPMENU
 #define TOPMENU
 
-#include "measurementdialog.h"
+#include "measure_dialog.h"
 
 #include <QLabel>
 #include <QTableView>
+#include <QStandardItemModel>
 
 #define TOP_MENU_NUMBER 10
 
@@ -25,6 +26,16 @@ public:
 
     bool eventFilter(QObject *object, QEvent *event);
 
+signals:
+    void currentDialogIndex(QString);
+
+private slots:
+    void change_labelText(QString str);
+    void set_gain_header_text_close(QWidget *editor);
+    void set_angle_header_text_close(QWidget *editor);
+    void on_tableView_angle_clicked(const QModelIndex &index);
+    void on_tableView_gain_clicked(const QModelIndex &index);
+
 private:
     Ui::TopMenu *ui;
 
@@ -38,19 +49,7 @@ private:
     QList<QLabel* > measurementLabelList;
     QStandardItemModel *pGain;
     QStandardItemModel *pAngle;
-    MeasurementDialog *pDialog;
     QString objectName;
-
-signals:
-    void currentDialogIndex(QString);
-
-private slots:
-    void change_labelText(QString str);
-    void set_gain_header_text_close(QWidget *editor);
-    void set_angle_header_text_close(QWidget *editor);
-    void on_tableView_angle_clicked(const QModelIndex &index);
-    void on_tableView_gain_clicked(const QModelIndex &index);
-
 };
 
 #endif // TOPMENU
