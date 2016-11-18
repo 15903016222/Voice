@@ -1,7 +1,7 @@
 #include "commonmenuwidget.h"
 #include "ui_commonmenuwidget.h"
 
-#include "doublespinboxdelegate.h"
+#include "lineeditdelegate.h"
 #include "comboboxdelegate.h"
 #include "pushbuttondelegate.h"
 
@@ -109,16 +109,16 @@ void CommonMenuWidget::choose_widget_style(int k)
         stepList.append("10.00");
         int decimal = 2;
 
-        DoubleSpinBoxDelegate *doubleSpinBox = new DoubleSpinBoxDelegate(this);
-        doubleSpinBox->set_number_range(rangeList);
-        doubleSpinBox->set_number_step_list(stepList);
-        doubleSpinBox->set_number_step(stepList.at(0));
-        doubleSpinBox->set_decimal_amount(decimal);
+        LineEditDelegate *lineEdit = new LineEditDelegate(this);
+        lineEdit->set_number_range(rangeList);
+        lineEdit->set_number_step_list(stepList);
+        lineEdit->set_number_step(stepList.at(0));
+        lineEdit->set_decimal_amount(decimal);
 
         model->horizontalHeaderItem(k)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         QStandardItem *item = new QStandardItem(QString::number(0, 'f', decimal));
         model->setItem(0, k, item);
-        ui->tableView->setItemDelegateForColumn(k, doubleSpinBox);
+        ui->tableView->setItemDelegateForColumn(k, lineEdit);
 
         connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(createEditorHeaderText(QStringList)), this, SLOT(set_header_text_create(QStringList)));
         connect(ui->tableView->itemDelegateForColumn(k), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_header_text_close(QWidget*)));
@@ -170,7 +170,7 @@ void CommonMenuWidget::onHeaderClicked(int index)
     QModelIndex modelIndex = model->item(0, index)->index();
     if(CHOICE_WIDGET_CHAR[index].toInt() == 1) {
         //点击表头更改spinbox的步进及表头文字
-        DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(index));
         QString headerText;
         if(currentHeaderText.contains("Δ")) {
             headerText = currentHeaderText.left(currentHeaderText.indexOf("Δ"));
@@ -178,9 +178,9 @@ void CommonMenuWidget::onHeaderClicked(int index)
             headerText = currentHeaderText;
         }
 
-        QString currentStep = doubleSpinBox->get_number_step();
+        QString currentStep = lineEdit->get_number_step();
         int stepIndex = 0;
-        QStringList stringList = doubleSpinBox->stepList;
+        QStringList stringList = lineEdit->stepList;
         for(int i = 0; i < stringList.count(); i ++) {
             if(currentStep == stringList.at(i)) {
                 stepIndex = i;
@@ -188,15 +188,15 @@ void CommonMenuWidget::onHeaderClicked(int index)
             }
         }
 
-        if(!doubleSpinBox->m_editFlag) {
+        if(!lineEdit->m_editFlag) {
             ui->tableView->edit(modelIndex);
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
         } else {
             if(stepIndex == (stringList.count() - 1)) {
-                doubleSpinBox->set_number_step(stringList.at(0));
+                lineEdit->set_number_step(stringList.at(0));
                 model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(0)));
             } else {
-                doubleSpinBox->set_number_step(stringList.at(stepIndex + 1));
+                lineEdit->set_number_step(stringList.at(stepIndex + 1));
                 model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex + 1)));
             }
         }
