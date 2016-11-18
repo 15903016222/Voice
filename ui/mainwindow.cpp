@@ -1,30 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-class MainWindowPrivate
-{
-public:
-    MainWindowPrivate(MainWindow * parent):
-        q_ptr( parent )
-    {
-
-    }
-
-    ~MainWindowPrivate()
-    {
-
-    }
-
-protected:
-    MainWindow * const q_ptr;
-private:
-    Q_DECLARE_PUBLIC(MainWindow)
-};
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    d_ptr(new MainWindowPrivate(this))
+    ui(new Ui::MainWindow)
 {
     m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
@@ -34,13 +15,16 @@ MainWindow::MainWindow(QWidget *parent) :
  //   slot_setMenuOpacity(100.0);
  //   connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
 
+    m_rotarySecondMenuNum = 0;
+
     connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
+    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete d_ptr;
 }
 
 void MainWindow::init_ui()
@@ -53,15 +37,16 @@ void MainWindow::init_ui()
     ui->frame_showPlot->installEventFilter(this);
     ui->widget_thirdMenu->installEventFilter(this);
 
-    firstMenuNum = 0;
-    secondMenuNum = 0;
-    hiddenFirstSecondMenuFlag = false;
-    hiddenThirdMenuFlag = false;
-    hiddenCommonMenuFlag = false;
+    m_firstMenuNum = 0;
+    m_secondMenuNum = 0;
+    m_hiddenFirstSecondMenuFlag = false;
+    m_hiddenThirdMenuFlag = false;
+    m_hiddenCommonMenuFlag = false;
+    m_hiddenKeyboardFlag = false;
 
     firstSecondMenu = new FirstSecondMenuWidget(this);
 #if QT_VERSION <= QT_VERSION_CHECK(5, 0, 0)
-    firstSecondMenu->resize_height(firstMenuNum);
+    firstSecondMenu->resize_height(m_firstMenuNum);
 #endif
     commonMenuWidget = new CommonMenuWidget(this);
     commonMenuWidget->hide();
@@ -85,9 +70,8 @@ void MainWindow::init_ui()
     ui->scrollArea->setWidget(firstSecondMenu);
 
     QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
-    QObject::connect(ui->widgetTopRight->pushButton_keyboard.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_keyboard_clicked()));
-    QObject::connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
-    QObject::connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
+    QObject::connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
+
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
 }
@@ -106,33 +90,30 @@ void MainWindow::do_key_event(Mcu::KeyType type)
 void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
 {
     ui->widget_thirdMenu->set_third_menu_name(index, 0); //init
-    firstMenuNum = index;
+    m_firstMenuNum = index;
 
     QModelIndex modelIndex = firstSecondMenu->modelList.at(index)->index(0, 0);
-    firstSecondMenu->set_second_menu_item_style(firstMenuNum, modelIndex);
+    firstSecondMenu->set_second_menu_item_style(m_firstMenuNum, modelIndex);
 
-    hiddenArrowFlag = true;
+    m_hiddenArrowFlag = true;
 
-    emit clickedMenuIndex(firstMenuNum);
+    emit clickedMenuIndex(m_firstMenuNum);
     show_hidden_arrow();
 
-    ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->set_currentBrightness(firstMenuNum, secondMenuNum);
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
+
+    firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
+    m_rotarySecondMenuNum = 0;
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
 {
-    QStandardItem *item = firstSecondMenu->modelList.at(firstMenuNum)->itemFromIndex(index);
-    secondMenuNum = item->row();
+    QStandardItem *item = firstSecondMenu->modelList.at(m_firstMenuNum)->itemFromIndex(index);
+    m_secondMenuNum = item->row();
 
-    firstSecondMenu->set_second_menu_item_style(firstMenuNum, index);
-    ui->widget_thirdMenu->set_third_menu_name(firstMenuNum, secondMenuNum);
+    firstSecondMenu->set_second_menu_item_style(m_firstMenuNum, index);
+    ui->widget_thirdMenu->set_third_menu_name(m_firstMenuNum, m_secondMenuNum);
 
-    ui->widget_thirdMenu->set_currentTimeToMenu(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->set_currentIP_subNetToMenu(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->set_currentOpacity(firstMenuNum, secondMenuNum);
-    ui->widget_thirdMenu->set_currentBrightness(firstMenuNum, secondMenuNum);
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 }
 
@@ -201,22 +182,22 @@ void MainWindow::show_hidden_arrow()
     int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
 
     if(menuTopY == scrollTopY) {
-        if(hiddenArrowFlag == false) {
+        if(m_hiddenArrowFlag == false) {
               ui->pushButton_top->hide();
         } else {
             ui->pushButton_top->show();
-            hiddenArrowFlag = false;
+            m_hiddenArrowFlag = false;
          }
     } else {
         ui->pushButton_top->show();
     }
 
     if(menuBottomY == scrollBottomY ) {
-        if(hiddenArrowFlag == false) {
+        if(m_hiddenArrowFlag == false) {
             ui->pushButton_bottom->hide();
         } else {
             ui->pushButton_bottom->show();
-            hiddenArrowFlag = false;
+            m_hiddenArrowFlag = false;
          }
     } else {
         ui->pushButton_bottom->show();
@@ -225,18 +206,18 @@ void MainWindow::show_hidden_arrow()
 
 void MainWindow::slot_pushButton_commonMenuClicked()
 {
-    hiddenCommonMenuFlag = !hiddenCommonMenuFlag;
-    if(hiddenCommonMenuFlag) {
+    m_hiddenCommonMenuFlag = !m_hiddenCommonMenuFlag;
+    if(m_hiddenCommonMenuFlag) {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
-        hiddenFirstSecondMenuFlag = false;
+        m_hiddenFirstSecondMenuFlag = false;
         commonMenuWidget->show();
         commonMenuButton->raise();
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
     } else {
         commonMenuWidget->hide();
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
-        hiddenFirstSecondMenuFlag = false;
+        m_hiddenFirstSecondMenuFlag = false;
     }
 }
 
@@ -261,7 +242,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                              ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                              ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
     if(scrollRect.contains(event->pos())) {
-        mainMenuStartPos = event->pos().y();
+        m_mainMenuStartPos = event->pos().y();
     }
 }
 
@@ -271,8 +252,8 @@ void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
                              ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
                              ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
     if(scrollRect.contains(moveEvent->pos())) {
-        mainMenuEndPos = moveEvent->pos().y();
-        int scrollLength = mainMenuEndPos - mainMenuStartPos;
+        m_mainMenuEndPos = moveEvent->pos().y();
+        int scrollLength = m_mainMenuEndPos - m_mainMenuStartPos;
         int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
         int scrollTopY = ui->scrollArea->geometry().y();
         int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
@@ -305,16 +286,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::show_hidden_Menu()
 {
-    hiddenFirstSecondMenuFlag = !hiddenFirstSecondMenuFlag;
-    if(hiddenFirstSecondMenuFlag) {
+    m_hiddenFirstSecondMenuFlag = !m_hiddenFirstSecondMenuFlag;
+    if(m_hiddenFirstSecondMenuFlag) {
         ui->widget_firstSecondMenu->show();
         ui->widget_thirdMenu->show();
         commonMenuWidget->hide();
-        hiddenCommonMenuFlag = false;
+        m_hiddenCommonMenuFlag = false;
         ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
         firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
         commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
         show_hidden_arrow();
+
+        firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
     } else {
         ui->widget_firstSecondMenu->hide();
         ui->widget_thirdMenu->hide();
@@ -329,19 +312,26 @@ void MainWindow::scroll_menu(int index)
     }
 }
 
-void MainWindow::slot_pushButton_keyboard_clicked()
+void MainWindow::do_keyboard_event()
 {
-    myInputPanelDlg = new MyInputPanel;
-    myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    myInputPanelDlg->setModal(false);
-    myInputPanelDlg->showNormal();
+    m_hiddenKeyboardFlag = !m_hiddenKeyboardFlag;
+    if(m_hiddenKeyboardFlag) {
+        myInputPanelDlg = new MyInputPanel;
+        myInputPanelDlg->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        myInputPanelDlg->setFocusPolicy(Qt::NoFocus);
+        myInputPanelDlg->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
+        myInputPanelDlg->show();
 
-    emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
-    connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-    connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
+        connect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+        connect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
+        connect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
+        connect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
+        emit show_keyboard(ui->widget_thirdMenu->opendSpinBoxIndex);
 
-    myInputPanelDlg->show();
-//    ui->widget_thirdMenu->setFocus();
+    } else {
+        myInputPanelDlg->close();
+        slot_keyboard_close_clicked();
+    }
 }
 
 void MainWindow::slot_keyboard_close_clicked()
@@ -349,6 +339,12 @@ void MainWindow::slot_keyboard_close_clicked()
     if(ui->widget_thirdMenu->opendSpinBoxIndex >= 0) {
         emit close_persistent_editor(ui->widget_thirdMenu->opendSpinBoxIndex);
     }
+
+    m_hiddenKeyboardFlag = false;
+    disconnect(myInputPanelDlg, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+    disconnect(myInputPanelDlg, SIGNAL(input_number(QString)), ui->widget_thirdMenu, SLOT(input_spinbox_number(QString)));
+    disconnect(this, SIGNAL(show_keyboard(int)), ui->widget_thirdMenu, SLOT(open_spinbox_persistent_editor(int)));
+    disconnect(this, SIGNAL(close_persistent_editor(int)), ui->widget_thirdMenu, SLOT(close_spinbox_persistent_editor(int)));
 }
 
 void MainWindow::slot_setMenuOpacity(double value)
@@ -360,5 +356,45 @@ void MainWindow::slot_setMenuOpacity(double value)
                             "QPushButton#pushButton_top{" + bc + "border-radius:8px;}"
                             "QPushButton#pushButton_bottom{" + bc + "border:none;}");
     setStyleSheet(style);
+}
+
+void MainWindow::do_rotary_event(Mcu::RotaryType type)
+{
+    if(firstSecondMenu->menuList.at(m_firstMenuNum)->hasFocus()) {
+        if (type == Mcu::ROTARY_UP) {
+            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            QApplication::sendEvent(firstSecondMenu->menuList.at(m_firstMenuNum), event);
+
+            if(m_rotarySecondMenuNum > 0){
+                m_rotarySecondMenuNum--;
+            }
+        } else {
+            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            QApplication::sendEvent(firstSecondMenu->menuList.at(m_firstMenuNum), event);
+
+            if(m_firstMenuNum == 0 || m_firstMenuNum == 4 || m_firstMenuNum == 5 || m_firstMenuNum == 6 || m_firstMenuNum == 8){
+                if(m_rotarySecondMenuNum < 3){
+                    m_rotarySecondMenuNum++;
+                }
+            }else if(m_firstMenuNum == 1 || m_firstMenuNum == 3 || m_firstMenuNum == 7){
+                if(m_rotarySecondMenuNum < 4){
+                    m_rotarySecondMenuNum++;
+                }
+            }else if(m_firstMenuNum == 2){
+                if(m_rotarySecondMenuNum < 2){
+                    m_rotarySecondMenuNum++;
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::key_sure(Mcu::KeyType key)
+{
+    if(firstSecondMenu->menuList.at(m_firstMenuNum)->hasFocus()) {
+        if(key == Mcu::KEY_SURE) {
+            ui->widget_thirdMenu->set_third_menu_name(m_firstMenuNum, m_rotarySecondMenuNum);
+        }
+    }
 }
 

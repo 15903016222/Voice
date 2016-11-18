@@ -1,6 +1,7 @@
 #include "firstsecondmenuwidget.h"
 #include "ui_firstsecondmenuwidget.h"
 
+#include <QTextCodec>
 #include <QMessageBox>
 
 FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
@@ -11,19 +12,16 @@ FirstSecondMenuWidget::FirstSecondMenuWidget(QWidget *parent) :
 
     toolBox.append(ui->toolBox);
 
-    QFile *file = new QFile(":/json/resources/menuconf.json");
+    QFile *file = new QFile(":/file/json/menuconf.json");
     firstMenuMap = read_json_file(file);
-    QFile *fileTranslate = new QFile(":/json/resources/menutr_CHN.json");
+    QFile *fileTranslate = new QFile(":/file/json/menutr_CHN.json");
     translateChineseMap = read_json_file(fileTranslate);
 
-    languageOption = 1;
+    m_languageOption = 1;
 
     init_ui();
     QModelIndex initModelIndex = modelList.at(0)->index(0, 0);
     set_second_menu_item_style(0, initModelIndex);
-
-    m_mcu = Mcu::get_mcu();
- //   connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 }
 
 FirstSecondMenuWidget::~FirstSecondMenuWidget()
@@ -35,9 +33,9 @@ void FirstSecondMenuWidget::retranslate_main_menu_ui(QString string)
 {
     ui->retranslateUi(this);
     if(string == "Chinese") {
-        languageOption = 2;
+        m_languageOption = 2;
     } else if(string == "English") {
-        languageOption = 1;
+        m_languageOption = 1;
     }
     init_ui();
     QModelIndex initModelIndex = modelList.at(8)->index(1, 0);
@@ -122,35 +120,30 @@ QVariantMap FirstSecondMenuWidget::read_json_file(QFile *file)
         QMessageBox::warning(this, tr("Parsing file Error"), tr("Read file failure!"));
     }
     file->close();
+
+#if (PHASCAN | PHASCAN_II)
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
+    setFont(QFont("utf8",14,QFont::Normal));
+#endif
+
     return variantMap;
 }
 
 QStringList FirstSecondMenuWidget::get_second_menu_list(int i)
 {
     QStringList stringList;
-    if(languageOption == 1) {
+    if(m_languageOption == 1) {
         QVariantMap variantMap = firstMenuMap[firstMenuData.at(i)].toMap();
         QVariantList variantList = variantMap.values("Queue_Second_Menu");
         stringList  = variantList.at(0).toStringList();
-    } else if(languageOption == 2) {
+    } else if(m_languageOption == 2) {
         QVariantMap variantMap = translateChineseMap[firstMenuData.at(i)].toMap();
         QVariantList variantList = variantMap.values("Translate_Second_Menu");
         stringList  = variantList.at(0).toStringList();
     }
     return stringList;
-}
-
-void FirstSecondMenuWidget::do_rotary_event(Mcu::RotaryType type)
-{
-    //  int i = ui->verticalSliderBrightness->value();
-      int i = 0;
-   //   m_mcu->set_brightness((char)value);
-      if (type == Mcu::ROTARY_UP) {
-          ++i;
-      } else {
-          --i;
-      }
-   //   ui->verticalSliderBrightness->setValue(i);
 }
 
 void FirstSecondMenuWidget::resize_height(int i)

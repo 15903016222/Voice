@@ -18,15 +18,21 @@ DEVICE = PC_WIN
 
 linux-oe-g++ {
 DEVICE = PHASCAN_II
+LIBS += -lX11 -lXtst
 }
 
 linux-arm-g++ {
 DEVICE = PHASCAN
+LIBS += -lX11 -lXtst
 }
 
 linux-g++ {
 DEVICE = PC_UNIX
+LIBS += -lX11 -lXtst
 }
+
+target.path = /home/root
+INSTALLS += target
 
 QT       += core gui
 
@@ -44,12 +50,8 @@ TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
     ui/translator/phascanII_UI_English.ts
 
-CODECFORTR = utf-8
-
 TARGET = Mercury
 TEMPLATE = app
-
-PROJECT_DIR = $$PWD
 
 SOURCES += main.cpp
 

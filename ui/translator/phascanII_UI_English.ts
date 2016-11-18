@@ -2,46 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en" sourcelanguage="en">
 <context>
-    <name>AboutDialog</name>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="59"/>
-        <source>PHASCAN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="77"/>
-        <source>      PHASCAN has a powerfull detection capability,
-can achieve a variety of scanning mode and focus
-mode, which greatly improve the detection reliability.
-     CopyRight @2010-2016 Doppler All rights reserved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="111"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;SimSun&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.cndoppler.cn&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.cndoppler.cn/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="157"/>
-        <source>Credits</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/aboutdialog.ui" line="191"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CommonMenuButton</name>
     <message>
         <location filename="../menuwidget/commonmenubutton.ui" line="14"/>
@@ -91,44 +51,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="17"/>
         <source>Focal depth</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CreditsDialog</name>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="47"/>
-        <source>Written By</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="63"/>
-        <source>Yshy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="78"/>
-        <source>Jake Yang</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="93"/>
-        <source>ZJY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="116"/>
-        <source>tab_2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/creditsdialog.ui" line="160"/>
-        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -308,6 +230,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../menuwidget/firstsecondmenuwidget.ui" line="649"/>
         <source>Preference</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="122"/>
+        <source>Parsing file Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="122"/>
+        <source>Read file failure!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1744,88 +1676,15 @@ ultrasonic phased array probes.</source>
     </message>
 </context>
 <context>
-    <name>SystemInfoDialog</name>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="31"/>
-        <source>System Infomation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="42"/>
-        <source>Serial Number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="47"/>
-        <source>Device Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="52"/>
-        <source>Device Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="57"/>
-        <source>Hardware Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="62"/>
-        <source>Software Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="67"/>
-        <source>Software Commit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="72"/>
-        <source>Authentication Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="77"/>
-        <source>Authentication Expire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="82"/>
-        <source>Run Count</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="87"/>
-        <source>Run Time(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="123"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="144"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/systeminfodialog.ui" line="159"/>
-        <source>Print</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ThirdMenuWidget</name>
     <message>
         <location filename="../menuwidget/thirdmenuwidget.ui" line="23"/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menuwidget/thirdmenuwidget.cpp" line="60"/>
+        <source>Chinese</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1966,25 +1825,29 @@ ultrasonic phased array probes.</source>
     </message>
 </context>
 <context>
-    <name>VerticalSliderDialog</name>
+    <name>Ui::Dialog::AboutDialog</name>
     <message>
-        <location filename="../dialogwidget/verticalsliderdialog.ui" line="14"/>
-        <source>Dialog</source>
+        <location filename="../dialogwidget/about_dialog.cpp" line="18"/>
+        <source>About Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/verticalsliderdialog.ui" line="44"/>
-        <source>+</source>
+        <location filename="../dialogwidget/about_dialog.cpp" line="23"/>
+        <source>&lt;h3 style=&quot;text-align:center&quot;&gt;%1&lt;/h3&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Phascan has a powerful detection capability, can achieve a variety of scanning mode and focus mode,which greatly improves the detection reliability.&lt;p style=&quot;font-size:14px; text-align:center;&quot;&gt;Copyright 2008-2016 Doppler. All rights reserved.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui::Dialog::SysInfoDialog</name>
+    <message>
+        <location filename="../dialogwidget/sysinfo_dialog.cpp" line="19"/>
+        <location filename="../dialogwidget/sysinfo_dialog.cpp" line="71"/>
+        <source>System Infomation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/verticalsliderdialog.ui" line="97"/>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/verticalsliderdialog.ui" line="104"/>
-        <source>Close</source>
+        <location filename="../dialogwidget/sysinfo_dialog.cpp" line="26"/>
+        <source>&lt;html&gt;&lt;head&gt;&lt;title&gt;System Infomation&lt;/title&gt;&lt;style&gt;body {background-color: #CCCCCC;}table, th, td {padding:5px;border: 1px solid black;border-collapse: collapse;}table {margin:5px;}th {text-align:left;background:#CCCCFF;}td {text-align:left;}h3 {text-align:center;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;table border=1 cellspacing=1 cellpadding=0 &gt;&lt;tr&gt;&lt;th&gt;Serial Number&lt;/th&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Device Type&lt;/th&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Device Version&lt;/th&gt;&lt;td&gt;%3&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Hardware Version&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Software Version&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Software Commit&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Cert Info&lt;/th&gt;&lt;td&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Run Count&lt;/th&gt;&lt;td&gt;%5&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Run Time(s)&lt;/th&gt;&lt;td&gt;%6&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

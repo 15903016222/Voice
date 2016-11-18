@@ -13,6 +13,7 @@ class DoubleSpinBoxDelegate : public QStyledItemDelegate
 public:
     DoubleSpinBoxDelegate(QObject *parent = 0);
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -20,21 +21,24 @@ public:
     void set_number_step_list(QStringList stringList);
     void set_number_step(QString string);   
     void set_decimal_amount(int amount);
+
     QString get_number_step();
 
     QList<QDoubleSpinBox*> spinBoxList;
-    QList<int> rangeList;
-    QMap<QModelIndex, QDoubleSpinBox*> spinBoxMap;
     QStringList stepList;
-    QString step;
-    int decimalAmount;
-    int inputCount;
-    bool editFlag;
 
-//    void simulate_key(int fd, int value);
+    int m_inputCount;
+    bool m_editFlag;
+
 
 private:
     Mcu *m_mcu;
+
+    QMap<QModelIndex, QDoubleSpinBox*> spinBoxMap;
+    QList<int> rangeList;
+
+    QString m_step;
+    int m_decimalAmount;
 
 signals:
     void createEditorHeaderText(QStringList) const;
@@ -45,7 +49,6 @@ private slots:
     void commit_and_close_editor();
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(Mcu::KeyType key);
-    void editFinished();
     void input_number_to_lineedit(QString string);
     void valueChanged_signal(double value);
 };

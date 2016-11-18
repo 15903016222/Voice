@@ -8,6 +8,7 @@
 
 
 #include "device.h"
+#include <time.h>
 
 class DevicePrivate
 {
@@ -106,6 +107,7 @@ Device::Device()
 {
 
 }
+
 Device::~Device()
 {
     delete d;

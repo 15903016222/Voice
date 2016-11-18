@@ -283,7 +283,7 @@ WedgeDialog::~WedgeDialog()
 
 void WedgeDialog::init_ui()
 {
-    wedgeTypeModel = new QStandardItemModel(this);
+    pWedgeTypeModel = new QStandardItemModel(this);
     QStringList wedgeTypeList;
 
     for(int i = 0; i < WEDGETYPE_NUMBER; i++){
@@ -291,27 +291,27 @@ void WedgeDialog::init_ui()
 
         QString string = static_cast<QString>(wedgeTypeList.at(i));
         QStandardItem *item = new QStandardItem(string);
-        wedgeTypeModel->appendRow(item);
+        pWedgeTypeModel->appendRow(item);
         item->setForeground(QBrush(Qt::black));
         item->setFont(QFont("Times New Roman", 14));
 
-        wedgeModel = new QStandardItemModel(this);
-        wedgeModel->setObjectName("standardItemModel_" + QString::number(i));
-        wedgeModelList.append(wedgeModel);
+        pWedgeModel = new QStandardItemModel(this);
+        pWedgeModel->setObjectName("standardItemModel_" + QString::number(i));
+        pWedgeModelList.append(pWedgeModel);
     }
 
-    listView_1 = new QListView(this);
-    listView_1->resize(ui->scrollArea_1->geometry().width(), 300);
-    listView_1->setSpacing(3);
+    pListView_1 = new QListView(this);
+    pListView_1->resize(ui->scrollArea_1->geometry().width(), 300);
+    pListView_1->setSpacing(3);
     ui->scrollArea_1->setFrameShape(QFrame::NoFrame);
     ui->scrollArea_1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->scrollArea_1->setWidget(listView_1);
-    listView_1->setModel(wedgeTypeModel);
+    ui->scrollArea_1->setWidget(pListView_1);
+    pListView_1->setModel(pWedgeTypeModel);
 
     listView_1CurrentIndex = 0;
     insert_wedge(listView_1CurrentIndex);
-    connect(listView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_1ItemClicked(QModelIndex)));
+    connect(pListView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_1ItemClicked(QModelIndex)));
 }
 
 void WedgeDialog::insert_wedge(int i)
@@ -323,29 +323,29 @@ void WedgeDialog::insert_wedge(int i)
 
             QString string = static_cast<QString>(wedgeList.at(j));
             QStandardItem *item = new QStandardItem(string);
-            wedgeModelList.at(i)->appendRow(item);
+            pWedgeModelList.at(i)->appendRow(item);
             item->setForeground(QBrush(Qt::black));
             item->setFont(QFont("Times New Roman", 14));
         }
     }
-    listView_2 = new QListView(this);
-    listView_2->resize(ui->scrollArea_2->geometry().width(), 300);
-    listView_2->setSpacing(3);
+    pListView_2 = new QListView(this);
+    pListView_2->resize(ui->scrollArea_2->geometry().width(), 300);
+    pListView_2->setSpacing(3);
     ui->scrollArea_2->setFrameShape(QFrame::NoFrame);
     ui->scrollArea_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->scrollArea_2->setWidget(listView_2);
-    listView_2->setModel(wedgeModelList.at(i));
+    ui->scrollArea_2->setWidget(pListView_2);
+    pListView_2->setModel(pWedgeModelList.at(i));
 
-    connect(listView_2, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_2ItemClicked(QModelIndex)));
+    connect(pListView_2, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_2ItemClicked(QModelIndex)));
 }
 
 void WedgeDialog::slot_listView_1ItemClicked(QModelIndex index)
 {
-    QStandardItem *item = wedgeTypeModel->itemFromIndex(index);
+    QStandardItem *item = pWedgeTypeModel->itemFromIndex(index);
     listView_1CurrentIndex = item->row();
 
-    wedgeModelList.at(listView_1CurrentIndex)->clear();
+    pWedgeModelList.at(listView_1CurrentIndex)->clear();
     insert_wedge(listView_1CurrentIndex);
     ui->label->clear();
 
@@ -359,8 +359,8 @@ void WedgeDialog::slot_listView_1ItemClicked(QModelIndex index)
 
 void WedgeDialog::slot_listView_2ItemClicked(QModelIndex index)
 {
-    QStandardItem *item = wedgeModelList.at(listView_1CurrentIndex)->itemFromIndex(index);
-    currentItem = item->text();
+    QStandardItem *item = pWedgeModelList.at(listView_1CurrentIndex)->itemFromIndex(index);
+    m_currentItem = item->text();
     listView_2CurrentIndex = item->row();
 
     ui->label->clear();
@@ -370,5 +370,5 @@ void WedgeDialog::slot_listView_2ItemClicked(QModelIndex index)
 
 void WedgeDialog::on_buttonBox_accepted()
 {
-    emit wedgeChanged(currentItem);
+    emit wedgeChanged(m_currentItem);
 }

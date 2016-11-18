@@ -13,14 +13,12 @@ public:
     explicit SpinBox(QWidget *parent = 0);
     ~SpinBox();
 
-public:
-
 private:
     Mcu *m_mcu;
 
 private slots:
     void do_rotary_event(Mcu::RotaryType type);
-    void key_sure(int key);
+    void key_sure(Mcu::KeyType key);
 };
 
 #endif // SPINBOX_H

@@ -38,7 +38,18 @@
         },
         "Receiver":{
 			"Receiver":"起始接收阵元",
-            "Filter":"滤波",
+            "Filter":{
+                "Filter":"滤波",
+                "options":{
+                    "none":"无",
+                    "1M":"1M",
+                    "1.5-2.5M":"1.5-2.5M",
+                    "3-5M":"3-5M",
+                    "7.5M":"7.5M",
+                    "more than 10M":"大于10M"
+                }
+            },
+
 			"Rectifier":{
                 "Rectifier":"检波",
                 "options":{
@@ -54,7 +65,16 @@
         "Advanced":{
             "Set 80%":"设为80%",
             "dB Ref.":"设定参考",
-            "Point Qty.":"采样点",
+			"Point Qty.":{
+				"Point Qty.":"采样点",
+                "options":{
+                    "Auto":"自动",
+                    "160":"160",
+                    "320":"320",
+                    "640":"640",
+                    "UserDef":"用户自定义"
+                }
+            },
             "Scale Factor":"压缩系数",
             "Sum Gain":"总增益"
         }
@@ -68,7 +88,15 @@
             "TCG"
         ],
         "Gate":{
-            "Gate":"闸门",
+            "Gate":{
+                "Gate":"闸门",
+                "options":{
+                    "A":"A",
+                    "B":"B",
+                    "I":"I",
+                    "off":"关"
+                }
+            },
             "Start":"闸门起点",
             "Width":"闸门宽度",
             "Threshold":"闸门阈值",
@@ -404,7 +432,13 @@
             },
             "Pulse Connection":"发射起始阵元",
             "Receiver Connection":"接收起始阵元",
-            "Wave Type":"波型"
+            "Wave Type":{
+                "Wave Type":"波型",
+                "options":{
+                    "LW":"纵波",
+                    "SW":"横波"
+                }
+            }
         },
         "Angle":{
             "Min. Angle":"起始角度",

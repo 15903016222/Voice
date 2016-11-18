@@ -14,7 +14,7 @@ ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
     m_mcu = Mcu::get_mcu();
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
     connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
-    editFlag = false;
+    m_editFlag = false;
 
 }
 
@@ -22,12 +22,12 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 {
     QComboBox *editor = new QComboBox(parent);
 
-    if(itemList.empty()) {
+    if(m_itemList.empty()) {
         editor->addItem("on");
         editor->addItem("off");
     } else {
-        for(int i = 0; i < itemList.count(); i ++) {
-            editor->addItem(itemList.at(i));
+        for(int i = 0; i < m_itemList.count(); i ++) {
+            editor->addItem(m_itemList.at(i));
          }
     }
 
@@ -40,9 +40,9 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
         "QComboBox::drop-down{border-style: none;}"
         "QComboBox QAbstractItemView{"
         "font: 12pt 'Times New Roman';"
-        "background-color:rgb(255, 255, 255);"
+        "background-color: rgb(255, 255, 255);"
         "margin-bottom: 45px;"
-        "outline:0px;}"
+        "outline: 0px;}"
         "QComboBox QAbstractItemView::item{height: 30px;}"
         "QComboBox QAbstractItemView::item:hover{color: yellow;"
         "background-color: rgba(0, 150, 255, 225);}"
@@ -56,8 +56,8 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
     set_comboBox_item_width(editor);
 
     (const_cast<ComboBoxDelegate *>(this))->comboBoxList.append(editor);
-    (const_cast<ComboBoxDelegate *>(this))->comboBoxMap.insert(index, editor);
-    (const_cast<ComboBoxDelegate *>(this))->editFlag = true;
+    (const_cast<ComboBoxDelegate *>(this))->m_comboBoxMap.insert(index, editor);
+    (const_cast<ComboBoxDelegate *>(this))->m_editFlag = true;
 
     connect(editor, SIGNAL(activated(QString)), this, SLOT(commit_and_close_editor(QString)));
     return editor;
@@ -70,8 +70,8 @@ void ComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) 
 {
     QString shortText = index.model()->data(index, Qt::EditRole).toString();
     QComboBox *comboBox = static_cast<QComboBox*>(editor);
-    int i = find_list_index(modelItemList, shortText);
-    int textIndex = comboBox->findText(itemList.at(i));
+    int i = find_list_index(m_modelItemList, shortText);
+    int textIndex = comboBox->findText(m_itemList.at(i));
     comboBox->setCurrentIndex(textIndex);
 }
 
@@ -79,8 +79,8 @@ void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 {
     QComboBox *comboBox = static_cast<QComboBox*>(editor);    
     QString text = comboBox->currentText();
-    int i = find_list_index(itemList, text);
-    QString shortText = modelItemList.at(i);
+    int i = find_list_index(m_itemList, text);
+    QString shortText = m_modelItemList.at(i);
     model->setData(index, shortText, Qt::EditRole);
 }
 
@@ -92,12 +92,12 @@ void ComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionV
 
 void ComboBoxDelegate::set_comboBox_item_list(QStringList stringList)
 {
-    itemList = stringList;
+    m_itemList = stringList;
 }
 
 void ComboBoxDelegate::set_model_item_list(QStringList stringList)
 {
-    modelItemList = stringList;
+    m_modelItemList = stringList;
 }
 
 int ComboBoxDelegate::find_list_index(QStringList stringList, QString string) const
@@ -114,7 +114,7 @@ int ComboBoxDelegate::find_list_index(QStringList stringList, QString string) co
 
 void ComboBoxDelegate::set_minimum_contents_length(int width)
 {
-    minimumContentLength = width;
+    m_minimumContentLength = width;
 }
 
 void ComboBoxDelegate::commit_and_close_editor(const QString &str)
@@ -127,49 +127,30 @@ void ComboBoxDelegate::commit_and_close_editor(const QString &str)
     if(str == "Chinese" || str == "English") {
         emit change_language(str);
     }
-    editFlag = false;
+    m_editFlag = false;
 }
 
 void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
 {
-  //  if(comboBoxList.size() != 0){
-    if(editFlag) {
+    if(m_editFlag) {
         QKeyEvent *event;
         QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
-//        int index = comboBox->currentIndex();
 
-        if(modelItemList.count() > 1){
-//            if (type == Mcu::ROTARY_UP) {
-//                if(index == 0){
-//                    index = modelItemList.count() - 1;
-//                }else {
-//                    index = index - 1;
-//                }
-//            } else {
-//                if(index == modelItemList.count() - 1){
-//                    index = 0;
-//                }else {
-//                    index = index + 1;
-//                }
-//            }
-            if(type == Mcu::ROTARY_UP) {
-                event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
-            } else {
-                event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
-            }
-            QApplication::sendEvent(comboBox, event);
+        if(type == Mcu::ROTARY_UP) {
+            event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+        } else {
+            event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
         }
-//        comboBox->setCurrentIndex(index);
-  //  }
+        QApplication::sendEvent(comboBox, event);
     }
 }
 
 void ComboBoxDelegate::key_sure(Mcu::KeyType key)
 {
     if(key == Mcu::KEY_SURE) {
-        if(comboBoxList.size() != 0) {
+        if(m_editFlag) {
             QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
-            QString string = itemList.at(comboBox->currentIndex());
+            QString string = m_itemList.at(comboBox->currentIndex());
             commit_and_close_editor(string);
         }
     }
@@ -178,13 +159,13 @@ void ComboBoxDelegate::key_sure(Mcu::KeyType key)
 void ComboBoxDelegate::set_comboBox_item_width(QComboBox *editor) const
 {
     int maxSize = 0;
-    for(int i = 0; i < itemList.count(); i ++) {
+    for(int i = 0; i < m_itemList.count(); i ++) {
         int width = editor->fontMetrics().width(editor->itemText(i));
         if(maxSize < width) {
             maxSize = width;
         }
      }
-    if(minimumContentLength < maxSize) {
+    if(m_minimumContentLength < maxSize) {
         editor->view()->setFixedWidth(maxSize);
     }
 }

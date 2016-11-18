@@ -279,18 +279,18 @@ void ProbeDialog::init_ui()
         probeModelList.append(probeModel);
     }
 
-    listView_1 = new QListView(this);
-    listView_1->resize(ui->scrollArea_1->geometry().width(), 300);
-    listView_1->setSpacing(3);
+    pListView_1 = new QListView(this);
+    pListView_1->resize(ui->scrollArea_1->geometry().width(), 300);
+    pListView_1->setSpacing(3);
     ui->scrollArea_1->setFrameShape(QFrame::NoFrame);
     ui->scrollArea_1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->scrollArea_1->setWidget(listView_1);
-    listView_1->setModel(probeTypeModel);
+    ui->scrollArea_1->setWidget(pListView_1);
+    pListView_1->setModel(probeTypeModel);
 
     listView_1CurrentIndex = 0;
     insert_probe(listView_1CurrentIndex);
-    connect(listView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_1ItemClicked(QModelIndex)));
+    connect(pListView_1, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_1ItemClicked(QModelIndex)));
 }
 
 void ProbeDialog::insert_probe(int i)
@@ -307,16 +307,16 @@ void ProbeDialog::insert_probe(int i)
             item->setFont(QFont("Times New Roman", 14));
         }
     }
-    listView_2 = new QListView(this);
-    listView_2->resize(ui->scrollArea_2->geometry().width(), 300);
-    listView_2->setSpacing(3);
+    pListView_2 = new QListView(this);
+    pListView_2->resize(ui->scrollArea_2->geometry().width(), 300);
+    pListView_2->setSpacing(3);
     ui->scrollArea_2->setFrameShape(QFrame::NoFrame);
     ui->scrollArea_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->scrollArea_2->setWidget(listView_2);
-    listView_2->setModel(probeModelList.at(i));
+    ui->scrollArea_2->setWidget(pListView_2);
+    pListView_2->setModel(probeModelList.at(i));
 
-    connect(listView_2, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_2ItemClicked(QModelIndex)));
+    connect(pListView_2, SIGNAL(clicked(QModelIndex)), this, SLOT(slot_listView_2ItemClicked(QModelIndex)));
 }
 
 void ProbeDialog::slot_listView_1ItemClicked(QModelIndex index)
@@ -339,7 +339,7 @@ void ProbeDialog::slot_listView_1ItemClicked(QModelIndex index)
 void ProbeDialog::slot_listView_2ItemClicked(QModelIndex index)
 {
     QStandardItem *item = probeModelList.at(listView_1CurrentIndex)->itemFromIndex(index);
-    currentItem = item->text();
+    m_currentItem = item->text();
     listView_2CurrentIndex = item->row();
 
     ui->label->clear();
@@ -349,5 +349,5 @@ void ProbeDialog::slot_listView_2ItemClicked(QModelIndex index)
 
 void ProbeDialog::on_buttonBox_accepted()
 {
-    emit probeChanged(currentItem);
+    emit probeChanged(m_currentItem);
 }
