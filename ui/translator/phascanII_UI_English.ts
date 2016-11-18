@@ -17,40 +17,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menuwidget/commonmenuwidget.cpp" line="11"/>
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="12"/>
-        <source>Range</source>
+        <source>Start
+(mm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="13"/>
-        <source>Velocity</source>
+        <source>Range
+(mm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="14"/>
-        <source>Video filter
-(on/off)</source>
+        <source>Velocity
+(m/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="15"/>
-        <source>Reset config</source>
+        <source>Video Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="16"/>
-        <source>Gate
-(on/off)</source>
+        <source>Reset Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="17"/>
-        <source>Focal depth</source>
+        <source>Gate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menuwidget/commonmenuwidget.cpp" line="18"/>
+        <source>Focal Depth
+(mm)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -100,12 +102,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.ui" line="417"/>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="420"/>
         <source>File Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.ui" line="484"/>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="487"/>
         <source>File Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -150,32 +152,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="192"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="206"/>
         <source>Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="193"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="207"/>
         <source>File Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="194"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="208"/>
         <source>Modification Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="195"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="209"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="196"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="210"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="197"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="211"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -233,50 +235,50 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="122"/>
+        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="120"/>
         <source>Parsing file Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="122"/>
+        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="120"/>
         <source>Read file failure!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>IconsWidget</name>
+    <name>IconsBar</name>
     <message>
-        <location filename="../iconswidget.ui" line="34"/>
+        <location filename="../icons_bar/icons_bar.ui" line="34"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="399"/>
-        <source>Ref</source>
+        <location filename="../icons_bar/icons_bar.ui" line="249"/>
+        <source>DAC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="454"/>
+        <location filename="../icons_bar/icons_bar.ui" line="304"/>
         <source>TCG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="509"/>
+        <location filename="../icons_bar/icons_bar.ui" line="359"/>
         <source>50°C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="564"/>
-        <source>SV</source>
+        <location filename="../icons_bar/icons_bar.ui" line="469"/>
+        <source>V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="619"/>
+        <location filename="../icons_bar/icons_bar.ui" line="522"/>
         <source>W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="674"/>
+        <location filename="../icons_bar/icons_bar.ui" line="577"/>
         <source>0 /</source>
         <translation type="unfinished"></translation>
     </message>
@@ -688,290 +690,290 @@
     </message>
 </context>
 <context>
-    <name>MeasurementDialog</name>
+    <name>MeasureDialog</name>
     <message>
-        <location filename="../dialogwidget/measurementdialog.ui" line="14"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="14"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.ui" line="83"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/measurementdialog.ui" line="104"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="9"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="103"/>
         <source>A% Peak amplitude in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="10"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="108"/>
         <source>AdBA Signal in gate minus gate level for gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="11"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="113"/>
         <source>AdBr Difference between signal and reference in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="12"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="118"/>
         <source>B% Peak amplitude in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="13"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="123"/>
         <source>BdBB Signal in gate minus gate level for gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="14"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="128"/>
         <source>BdBr Difference between signal and reference in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="15"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="133"/>
         <source>A^ Position in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="16"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="138"/>
         <source>B^ Position in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="17"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="143"/>
         <source>I/ Position in gate I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="18"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="148"/>
         <source>I(W)/ Position in gate I in water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="19"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="153"/>
         <source>T(A^) Thickness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="20"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="158"/>
         <source>ML Percentage of Material loss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="21"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="163"/>
         <source>%(r) Amplitude value for reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="22"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="168"/>
         <source>%(m) Amplitude value of the measurement cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="23"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="173"/>
         <source>%(m-r) Amplitude (measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="24"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="178"/>
         <source>U(r) Ultrasonic position of the reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="25"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="183"/>
         <source>U(m) Ultrasonic position of the measurement cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="26"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="188"/>
         <source>U(m-r) Ultrasonic axix(measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="27"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="193"/>
         <source>P(r) Probe position of the reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="28"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="198"/>
         <source>P(m) Probe position of the measurement cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="29"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="203"/>
         <source>P(m-r) Probe (measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="30"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="208"/>
         <source>S(r)  Scan position of the reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="31"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="213"/>
         <source>S(m)  Scan position of the measurment cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="32"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="218"/>
         <source>S(m-r)  Scan (measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="33"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="223"/>
         <source>I(r) Index position of the reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="34"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="228"/>
         <source>I(m) Index position of the measurement cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="35"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="233"/>
         <source>I(m-r) Index axis(measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="36"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="238"/>
         <source>RA^ Reference point to the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="37"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="243"/>
         <source>RB^ Reference point to the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="38"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="248"/>
         <source>PA^ Probe front face to the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="39"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="253"/>
         <source>PB^ Probe front face to the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="40"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="258"/>
         <source>DA^ Depth of the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="41"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="263"/>
         <source>DB^ Depth of the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="42"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="268"/>
         <source>SA^ Sound path of the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="43"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="273"/>
         <source>SB^ Sound path of the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="44"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="278"/>
         <source>ViA^ Volumetric position in gate A on the index axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="45"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="283"/>
         <source>ViB^ Volumetric position in gate B on the index axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="46"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="288"/>
         <source>VsA^ Volumetric position in gate A on the scan axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="47"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="293"/>
         <source>VsB^ Volumetric position in gate B on the scan axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="48"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="298"/>
         <source>LA^ Leg(skip)of the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="49"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="303"/>
         <source>LB^ Leg(skip)of the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="51"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="308"/>
+        <source>E% Peak amplitude of the envelop in gate A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="313"/>
         <source>AWS-DA Indication level for AWS-D1.5A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="52"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="318"/>
         <source>AWS-DB Zero reference  level for AWS-D1.5B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="53"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="323"/>
         <source>AWS-DC Attenuation factor for AWS-D1.5 C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="54"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="328"/>
         <source>AWS-DD Indication rating for AWS-D1.5D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="55"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="333"/>
         <source>AWS-D45 Discontinuity severity class for AWS-D1.5 45</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="56"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="338"/>
         <source>AWS-D60 Discontinuity severity class for AWS-D1.5 60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="57"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="343"/>
         <source>AWS-D70 Discontinuity severity class for AWS-D1.5 70</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="58"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="348"/>
         <source>AWS-D CL Discontinuity severity class for AWS-D1.5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="59"/>
-        <source>DA-DI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="60"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="353"/>
         <source>T-D(r) TOFD Ultrasonic Axis Reference Cursor Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="61"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="358"/>
         <source>T-D(m) TOFD Ultrasonic Axis Measure Cursor Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="62"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="363"/>
         <source>T-S(m-r) TOFD Scan Axis Cursor Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="63"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="368"/>
         <source>T-D(m-r) TOFD Ultrasonic Axis Cursor Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="409"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="430"/>
+        <source>&amp;Choose</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1616,7 +1618,7 @@ ultrasonic phased array probes.</source>
 <context>
     <name>PushButtonDelegate</name>
     <message>
-        <location filename="../qitemdelegate/pushbuttondelegate.cpp" line="53"/>
+        <location filename="../qitemdelegate/pushbuttondelegate.cpp" line="58"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1683,7 +1685,7 @@ ultrasonic phased array probes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menuwidget/thirdmenuwidget.cpp" line="60"/>
+        <location filename="../menuwidget/thirdmenuwidget.cpp" line="62"/>
         <source>Chinese</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1773,8 +1775,8 @@ ultrasonic phased array probes.</source>
     </message>
     <message>
         <location filename="../menuwidget/topmenu.ui" line="1276"/>
-        <source>TCG-SL
-(±dB)</source>
+        <source>ML
+(%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

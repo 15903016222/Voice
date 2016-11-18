@@ -77,43 +77,79 @@ mode, which greatly improve the detection reliability.
 (mm)</translation>
     </message>
     <message>
-        <location filename="../menuwidget/commonmenuwidget.cpp" line="11"/>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation type="vanished">开始</translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="vanished">范围</translation>
+    </message>
+    <message>
+        <source>Velocity</source>
+        <translation type="vanished">速度</translation>
+    </message>
+    <message>
+        <source>Video filter
+(on/off)</source>
+        <translation type="vanished">视频滤波
+（开/关）</translation>
+    </message>
+    <message>
+        <source>Reset config</source>
+        <translation type="vanished">重置配置</translation>
+    </message>
+    <message>
+        <source>Gate
+(on/off)</source>
+        <translation type="vanished">闸门
+（开/关）</translation>
+    </message>
+    <message>
+        <source>Focal depth</source>
+        <translation type="vanished">聚焦深度</translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="12"/>
-        <source>Range</source>
-        <translation>范围</translation>
+        <source>Start
+(mm)</source>
+        <translation>起始点
+(mm)</translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="13"/>
-        <source>Velocity</source>
-        <translation>速度</translation>
+        <source>Range
+(mm)</source>
+        <translation>范围
+(mm)</translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="14"/>
-        <source>Video filter
-(on/off)</source>
-        <translation>视频滤波
-（开/关）</translation>
+        <source>Velocity
+(m/s)</source>
+        <translation>声速
+(m/s)</translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="15"/>
-        <source>Reset config</source>
-        <translation>重置配置</translation>
+        <source>Video Filter</source>
+        <translation>视频滤波</translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="16"/>
-        <source>Gate
-(on/off)</source>
-        <translation>闸门
-（开/关）</translation>
+        <source>Reset Config</source>
+        <translation>重置配置</translation>
     </message>
     <message>
         <location filename="../menuwidget/commonmenuwidget.cpp" line="17"/>
-        <source>Focal depth</source>
-        <translation>聚焦深度</translation>
+        <source>Gate</source>
+        <translation>闸门</translation>
+    </message>
+    <message>
+        <location filename="../menuwidget/commonmenuwidget.cpp" line="18"/>
+        <source>Focal Depth
+(mm)</source>
+        <translation>聚焦深度
+(mm)</translation>
     </message>
 </context>
 <context>
@@ -180,12 +216,12 @@ mode, which greatly improve the detection reliability.
         <translation>源路径</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.ui" line="417"/>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="420"/>
         <source>File Manager</source>
         <translation>文件管理</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.ui" line="484"/>
+        <location filename="../dialogwidget/filemanagerdialog.ui" line="487"/>
         <source>File Type</source>
         <translation>文件类型</translation>
     </message>
@@ -230,32 +266,32 @@ mode, which greatly improve the detection reliability.
         <translation>U盘存储</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="192"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="206"/>
         <source>Number</source>
         <translation>编号</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="193"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="207"/>
         <source>File Name</source>
         <translation>文件名</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="194"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="208"/>
         <source>Modification Time</source>
         <translation>修改时间</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="195"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="209"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="196"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="210"/>
         <source>Move</source>
         <translation>移动</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/filemanagerdialog.cpp" line="197"/>
+        <location filename="../dialogwidget/filemanagerdialog.cpp" line="211"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -441,12 +477,12 @@ mode, which greatly improve the detection reliability.
         <translation type="vanished">服务</translation>
     </message>
     <message>
-        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="122"/>
+        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="120"/>
         <source>Parsing file Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="122"/>
+        <location filename="../menuwidget/firstsecondmenuwidget.cpp" line="120"/>
         <source>Read file failure!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -594,39 +630,39 @@ mode, which greatly improve the detection reliability.
     </message>
 </context>
 <context>
-    <name>IconsWidget</name>
+    <name>IconsBar</name>
     <message>
-        <location filename="../iconswidget.ui" line="34"/>
+        <location filename="../icons_bar/icons_bar.ui" line="34"/>
         <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../iconswidget.ui" line="399"/>
-        <source>Ref</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="454"/>
+        <location filename="../icons_bar/icons_bar.ui" line="249"/>
+        <source>DAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../icons_bar/icons_bar.ui" line="304"/>
         <source>TCG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="509"/>
+        <location filename="../icons_bar/icons_bar.ui" line="359"/>
         <source>50°C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="564"/>
-        <source>SV</source>
+        <location filename="../icons_bar/icons_bar.ui" line="469"/>
+        <source>V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="619"/>
+        <location filename="../icons_bar/icons_bar.ui" line="522"/>
         <source>W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../iconswidget.ui" line="674"/>
+        <location filename="../icons_bar/icons_bar.ui" line="577"/>
         <source>0 /</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1038,295 +1074,518 @@ mode, which greatly improve the detection reliability.
     </message>
 </context>
 <context>
-    <name>MeasurementDialog</name>
+    <name>MeasureDialog</name>
     <message>
-        <location filename="../dialogwidget/measurementdialog.ui" line="14"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="14"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.ui" line="83"/>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/measurementdialog.ui" line="104"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="9"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="103"/>
         <source>A% Peak amplitude in gate A</source>
         <translation>A% 闸门A内峰值幅度</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="10"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="108"/>
         <source>AdBA Signal in gate minus gate level for gate A</source>
         <translation>AdBA 闸门A内峰值幅度与闸门阈值幅度之差（dB）</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="11"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="113"/>
         <source>AdBr Difference between signal and reference in gate A</source>
         <translation>AdBr 闸门A内峰值幅度与参考信号幅度之差（dB）</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="12"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="118"/>
         <source>B% Peak amplitude in gate B</source>
         <translation>B% 闸门B内峰值幅度</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="13"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="123"/>
         <source>BdBB Signal in gate minus gate level for gate B</source>
         <translation>BdBB 闸门B内峰值幅度与闸门阈值幅度之差（dB）</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="14"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="128"/>
         <source>BdBr Difference between signal and reference in gate B</source>
         <translation>BdBr 闸门B内峰值幅度与参考信号幅度之差（dB）</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="15"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="133"/>
         <source>A^ Position in gate A</source>
         <translation>A^ 闸门A内峰值位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="16"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="138"/>
         <source>B^ Position in gate B</source>
         <translation>B^ 闸门B内峰值位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="17"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="143"/>
         <source>I/ Position in gate I</source>
         <translation>I/ 闸门I的前沿位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="18"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="148"/>
         <source>I(W)/ Position in gate I in water</source>
         <translation>I(W)/ 闸门I的前沿位置（水）</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="19"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="153"/>
         <source>T(A^) Thickness</source>
         <translation>T(A^) 厚度</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="20"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="158"/>
         <source>ML Percentage of Material loss</source>
         <translation>ML 材料损失百分比</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="21"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="163"/>
         <source>%(r) Amplitude value for reference cursor</source>
         <translation>%(r) 参考光标位置的幅度值</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="22"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="168"/>
         <source>%(m) Amplitude value of the measurement cursor</source>
         <translation>%(m) 测量光标位置的幅度值</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="23"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="173"/>
         <source>%(m-r) Amplitude (measurement cursor - reference cursor)</source>
         <translation>%(m-r) 测量光标的幅度值减去参考信号的幅度值</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="24"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="178"/>
         <source>U(r) Ultrasonic position of the reference cursor</source>
         <translation>U(r) 参考光标在超声轴上的位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="25"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="183"/>
         <source>U(m) Ultrasonic position of the measurement cursor</source>
         <translation>U(m) 测量光标在超声轴上的位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="26"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="188"/>
         <source>U(m-r) Ultrasonic axix(measurement cursor - reference cursor)</source>
         <translation>U(m-r) 超声轴上的测量光标与参考光标位置之差</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="27"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="193"/>
         <source>P(r) Probe position of the reference cursor</source>
         <translation>P(r) 相对于参考光标的探头位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="28"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="198"/>
         <source>P(m) Probe position of the measurement cursor</source>
         <translation>P(m) 相对于测量光标的探头位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="29"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="203"/>
         <source>P(m-r) Probe (measurement cursor - reference cursor)</source>
         <translation>P(m-r) 探头相对于测量光标与参考光标差值的位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="30"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="208"/>
         <source>S(r)  Scan position of the reference cursor</source>
         <translation>S(r) 扫查轴上参考光标的位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="31"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="213"/>
         <source>S(m)  Scan position of the measurment cursor</source>
         <translation>S(m) 扫查轴上参测量光标的位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="32"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="218"/>
         <source>S(m-r)  Scan (measurement cursor - reference cursor)</source>
         <translation>S(m-r) 扫查轴上测量光标与参考光标的距离</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="33"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="223"/>
         <source>I(r) Index position of the reference cursor</source>
         <translation>I(r) 步进轴上的参考光标的位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="34"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="228"/>
         <source>I(m) Index position of the measurement cursor</source>
         <translation>I(m) 步进轴上的测量光标的位置</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="35"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="233"/>
         <source>I(m-r) Index axis(measurement cursor - reference cursor)</source>
         <translation>I(m-r) 步进轴上的测量光标与参考光标的距离</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="36"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="238"/>
         <source>RA^ Reference point to the indication in gate A</source>
         <translation>RA^ 声束出射点与闸门A内检测到的缺陷之间的距离</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="37"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="243"/>
         <source>RB^ Reference point to the indication in gate B</source>
         <translation>RB^ 声束出射点与闸门B内检测到的缺陷之间的距离</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="38"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="248"/>
         <source>PA^ Probe front face to the indication in gate A</source>
         <translation>PA^探头前表面与闸门A内检测到的缺陷的距离</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="39"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="253"/>
         <source>PB^ Probe front face to the indication in gate B</source>
         <translation>PB^探头前表面与闸门B内检测到的缺陷的距离</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="40"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="258"/>
         <source>DA^ Depth of the indication in gate A</source>
         <translation>DA^ 闸门A内检测到的缺陷在工件中的深度</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="41"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="263"/>
         <source>DB^ Depth of the indication in gate B</source>
         <translation>DB^ 闸门B内检测到的缺陷在工件中的深度</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="42"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="268"/>
         <source>SA^ Sound path of the indication in gate A</source>
         <translation>SA^ 声束出射点到闸门A内检测到的缺陷之间的声程</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="43"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="273"/>
         <source>SB^ Sound path of the indication in gate B</source>
         <translation>SB^ 声束出射点到闸门B内检测到的缺陷之间的声程</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="44"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="278"/>
         <source>ViA^ Volumetric position in gate A on the index axis</source>
         <translation>ViA^ 闸门A内检测到的缺陷相对于步进轴的体积定位</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="45"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="283"/>
         <source>ViB^ Volumetric position in gate B on the index axis</source>
         <translation>ViB^ 闸门B内检测到的缺陷相对于步进轴的体积定位</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="46"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="288"/>
         <source>VsA^ Volumetric position in gate A on the scan axis</source>
         <translation>VsA^ 闸门A内检测到的缺陷相对于扫查轴的体积定位</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="47"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="293"/>
         <source>VsB^ Volumetric position in gate B on the scan axis</source>
         <translation>VsB^ 闸门B内检测到的缺陷相对于扫查轴的体积定位</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="48"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="298"/>
         <source>LA^ Leg(skip)of the indication in gate A</source>
         <translation>LA^ 声波从探头到闸门A探测到的缺陷在材料中的路径改变次数</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="49"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="303"/>
         <source>LB^ Leg(skip)of the indication in gate B</source>
         <translation>LB^ 声波从探头到闸门B探测到的缺陷在材料中的路径改变次数</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="60"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="308"/>
+        <source>E% Peak amplitude of the envelop in gate A</source>
+        <translation>E% </translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="313"/>
+        <source>AWS-DA Indication level for AWS-D1.5A</source>
+        <translation>AWS-D A 根据AWS-D1.5 A标准的指示电平</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="318"/>
+        <source>AWS-DB Zero reference  level for AWS-D1.5B</source>
+        <translation>AWS-D B 根据AWS-D1.5 B标准的零点参考电平</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="323"/>
+        <source>AWS-DC Attenuation factor for AWS-D1.5 C</source>
+        <translation>AWS-D C 根据AWS-D1.5 C标准的衰减系数</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="328"/>
+        <source>AWS-DD Indication rating for AWS-D1.5D</source>
+        <translation>AWS-D D 根据AWS-D1.5 D标准的指征率</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="333"/>
+        <source>AWS-D45 Discontinuity severity class for AWS-D1.5 45</source>
+        <translation>AWS-D 45 根据AWS-D1.5 45标准的不连续性严重等级</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="338"/>
+        <source>AWS-D60 Discontinuity severity class for AWS-D1.5 60</source>
+        <translation>AWS-D 60 根据AWS-D1.5 60标准的不连续性严重等级</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="343"/>
+        <source>AWS-D70 Discontinuity severity class for AWS-D1.5 70</source>
+        <translation>AWS-D 70 根据AWS-D1.5 70标准的不连续性严重等级</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="348"/>
+        <source>AWS-D CL Discontinuity severity class for AWS-D1.5</source>
+        <translation>AWS-D CL 根据AWS-D1.5标准的不连续性严重等级</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="353"/>
         <source>T-D(r) TOFD Ultrasonic Axis Reference Cursor Depth</source>
         <translation>T-D(r) TOFD超声轴方向参考光标深度</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="61"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="358"/>
         <source>T-D(m) TOFD Ultrasonic Axis Measure Cursor Depth</source>
         <translation>T-D(m) TOFD超声轴方向测量光标深度</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="62"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="363"/>
         <source>T-S(m-r) TOFD Scan Axis Cursor Space</source>
         <translation>T-S(m-r) TOFD扫查轴参考光标与测量光标间距</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="63"/>
+        <location filename="../measure_bar/measure_dialog.ui" line="368"/>
         <source>T-D(m-r) TOFD Ultrasonic Axis Cursor Height</source>
         <translation>T-D(m-r) TOFD超声轴方向参考光标与测量光标高度</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="409"/>
+        <source>&amp;Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../measure_bar/measure_dialog.ui" line="430"/>
+        <source>&amp;Choose</source>
+        <translation>选择</translation>
+    </message>
+</context>
+<context>
+    <name>MeasurementDialog</name>
+    <message>
+        <source>OK</source>
+        <translation type="vanished">确定</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">取消</translation>
+    </message>
+    <message>
+        <source>A% Peak amplitude in gate A</source>
+        <translation type="vanished">A% 闸门A内峰值幅度</translation>
+    </message>
+    <message>
+        <source>AdBA Signal in gate minus gate level for gate A</source>
+        <translation type="vanished">AdBA 闸门A内峰值幅度与闸门阈值幅度之差（dB）</translation>
+    </message>
+    <message>
+        <source>AdBr Difference between signal and reference in gate A</source>
+        <translation type="vanished">AdBr 闸门A内峰值幅度与参考信号幅度之差（dB）</translation>
+    </message>
+    <message>
+        <source>B% Peak amplitude in gate B</source>
+        <translation type="vanished">B% 闸门B内峰值幅度</translation>
+    </message>
+    <message>
+        <source>BdBB Signal in gate minus gate level for gate B</source>
+        <translation type="vanished">BdBB 闸门B内峰值幅度与闸门阈值幅度之差（dB）</translation>
+    </message>
+    <message>
+        <source>BdBr Difference between signal and reference in gate B</source>
+        <translation type="vanished">BdBr 闸门B内峰值幅度与参考信号幅度之差（dB）</translation>
+    </message>
+    <message>
+        <source>A^ Position in gate A</source>
+        <translation type="vanished">A^ 闸门A内峰值位置</translation>
+    </message>
+    <message>
+        <source>B^ Position in gate B</source>
+        <translation type="vanished">B^ 闸门B内峰值位置</translation>
+    </message>
+    <message>
+        <source>I/ Position in gate I</source>
+        <translation type="vanished">I/ 闸门I的前沿位置</translation>
+    </message>
+    <message>
+        <source>I(W)/ Position in gate I in water</source>
+        <translation type="vanished">I(W)/ 闸门I的前沿位置（水）</translation>
+    </message>
+    <message>
+        <source>T(A^) Thickness</source>
+        <translation type="vanished">T(A^) 厚度</translation>
+    </message>
+    <message>
+        <source>ML Percentage of Material loss</source>
+        <translation type="vanished">ML 材料损失百分比</translation>
+    </message>
+    <message>
+        <source>%(r) Amplitude value for reference cursor</source>
+        <translation type="vanished">%(r) 参考光标位置的幅度值</translation>
+    </message>
+    <message>
+        <source>%(m) Amplitude value of the measurement cursor</source>
+        <translation type="vanished">%(m) 测量光标位置的幅度值</translation>
+    </message>
+    <message>
+        <source>%(m-r) Amplitude (measurement cursor - reference cursor)</source>
+        <translation type="vanished">%(m-r) 测量光标的幅度值减去参考信号的幅度值</translation>
+    </message>
+    <message>
+        <source>U(r) Ultrasonic position of the reference cursor</source>
+        <translation type="vanished">U(r) 参考光标在超声轴上的位置</translation>
+    </message>
+    <message>
+        <source>U(m) Ultrasonic position of the measurement cursor</source>
+        <translation type="vanished">U(m) 测量光标在超声轴上的位置</translation>
+    </message>
+    <message>
+        <source>U(m-r) Ultrasonic axix(measurement cursor - reference cursor)</source>
+        <translation type="vanished">U(m-r) 超声轴上的测量光标与参考光标位置之差</translation>
+    </message>
+    <message>
+        <source>P(r) Probe position of the reference cursor</source>
+        <translation type="vanished">P(r) 相对于参考光标的探头位置</translation>
+    </message>
+    <message>
+        <source>P(m) Probe position of the measurement cursor</source>
+        <translation type="vanished">P(m) 相对于测量光标的探头位置</translation>
+    </message>
+    <message>
+        <source>P(m-r) Probe (measurement cursor - reference cursor)</source>
+        <translation type="vanished">P(m-r) 探头相对于测量光标与参考光标差值的位置</translation>
+    </message>
+    <message>
+        <source>S(r)  Scan position of the reference cursor</source>
+        <translation type="vanished">S(r) 扫查轴上参考光标的位置</translation>
+    </message>
+    <message>
+        <source>S(m)  Scan position of the measurment cursor</source>
+        <translation type="vanished">S(m) 扫查轴上参测量光标的位置</translation>
+    </message>
+    <message>
+        <source>S(m-r)  Scan (measurement cursor - reference cursor)</source>
+        <translation type="vanished">S(m-r) 扫查轴上测量光标与参考光标的距离</translation>
+    </message>
+    <message>
+        <source>I(r) Index position of the reference cursor</source>
+        <translation type="vanished">I(r) 步进轴上的参考光标的位置</translation>
+    </message>
+    <message>
+        <source>I(m) Index position of the measurement cursor</source>
+        <translation type="vanished">I(m) 步进轴上的测量光标的位置</translation>
+    </message>
+    <message>
+        <source>I(m-r) Index axis(measurement cursor - reference cursor)</source>
+        <translation type="vanished">I(m-r) 步进轴上的测量光标与参考光标的距离</translation>
+    </message>
+    <message>
+        <source>RA^ Reference point to the indication in gate A</source>
+        <translation type="vanished">RA^ 声束出射点与闸门A内检测到的缺陷之间的距离</translation>
+    </message>
+    <message>
+        <source>RB^ Reference point to the indication in gate B</source>
+        <translation type="vanished">RB^ 声束出射点与闸门B内检测到的缺陷之间的距离</translation>
+    </message>
+    <message>
+        <source>PA^ Probe front face to the indication in gate A</source>
+        <translation type="vanished">PA^探头前表面与闸门A内检测到的缺陷的距离</translation>
+    </message>
+    <message>
+        <source>PB^ Probe front face to the indication in gate B</source>
+        <translation type="vanished">PB^探头前表面与闸门B内检测到的缺陷的距离</translation>
+    </message>
+    <message>
+        <source>DA^ Depth of the indication in gate A</source>
+        <translation type="vanished">DA^ 闸门A内检测到的缺陷在工件中的深度</translation>
+    </message>
+    <message>
+        <source>DB^ Depth of the indication in gate B</source>
+        <translation type="vanished">DB^ 闸门B内检测到的缺陷在工件中的深度</translation>
+    </message>
+    <message>
+        <source>SA^ Sound path of the indication in gate A</source>
+        <translation type="vanished">SA^ 声束出射点到闸门A内检测到的缺陷之间的声程</translation>
+    </message>
+    <message>
+        <source>SB^ Sound path of the indication in gate B</source>
+        <translation type="vanished">SB^ 声束出射点到闸门B内检测到的缺陷之间的声程</translation>
+    </message>
+    <message>
+        <source>ViA^ Volumetric position in gate A on the index axis</source>
+        <translation type="vanished">ViA^ 闸门A内检测到的缺陷相对于步进轴的体积定位</translation>
+    </message>
+    <message>
+        <source>ViB^ Volumetric position in gate B on the index axis</source>
+        <translation type="vanished">ViB^ 闸门B内检测到的缺陷相对于步进轴的体积定位</translation>
+    </message>
+    <message>
+        <source>VsA^ Volumetric position in gate A on the scan axis</source>
+        <translation type="vanished">VsA^ 闸门A内检测到的缺陷相对于扫查轴的体积定位</translation>
+    </message>
+    <message>
+        <source>VsB^ Volumetric position in gate B on the scan axis</source>
+        <translation type="vanished">VsB^ 闸门B内检测到的缺陷相对于扫查轴的体积定位</translation>
+    </message>
+    <message>
+        <source>LA^ Leg(skip)of the indication in gate A</source>
+        <translation type="vanished">LA^ 声波从探头到闸门A探测到的缺陷在材料中的路径改变次数</translation>
+    </message>
+    <message>
+        <source>LB^ Leg(skip)of the indication in gate B</source>
+        <translation type="vanished">LB^ 声波从探头到闸门B探测到的缺陷在材料中的路径改变次数</translation>
+    </message>
+    <message>
+        <source>T-D(r) TOFD Ultrasonic Axis Reference Cursor Depth</source>
+        <translation type="vanished">T-D(r) TOFD超声轴方向参考光标深度</translation>
+    </message>
+    <message>
+        <source>T-D(m) TOFD Ultrasonic Axis Measure Cursor Depth</source>
+        <translation type="vanished">T-D(m) TOFD超声轴方向测量光标深度</translation>
+    </message>
+    <message>
+        <source>T-S(m-r) TOFD Scan Axis Cursor Space</source>
+        <translation type="vanished">T-S(m-r) TOFD扫查轴参考光标与测量光标间距</translation>
+    </message>
+    <message>
+        <source>T-D(m-r) TOFD Ultrasonic Axis Cursor Height</source>
+        <translation type="vanished">T-D(m-r) TOFD超声轴方向参考光标与测量光标高度</translation>
     </message>
     <message>
         <source>E% Peak amplitude of the envelop in gate A</source>
         <translation type="obsolete">E% </translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="51"/>
         <source>AWS-DA Indication level for AWS-D1.5A</source>
-        <translation>AWS-D A 根据AWS-D1.5 A标准的指示电平</translation>
+        <translation type="vanished">AWS-D A 根据AWS-D1.5 A标准的指示电平</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="52"/>
         <source>AWS-DB Zero reference  level for AWS-D1.5B</source>
-        <translation>AWS-D B 根据AWS-D1.5 B标准的零点参考电平</translation>
+        <translation type="vanished">AWS-D B 根据AWS-D1.5 B标准的零点参考电平</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="53"/>
         <source>AWS-DC Attenuation factor for AWS-D1.5 C</source>
-        <translation>AWS-D C 根据AWS-D1.5 C标准的衰减系数</translation>
+        <translation type="vanished">AWS-D C 根据AWS-D1.5 C标准的衰减系数</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="54"/>
         <source>AWS-DD Indication rating for AWS-D1.5D</source>
-        <translation>AWS-D D 根据AWS-D1.5 D标准的指征率</translation>
+        <translation type="vanished">AWS-D D 根据AWS-D1.5 D标准的指征率</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="55"/>
         <source>AWS-D45 Discontinuity severity class for AWS-D1.5 45</source>
-        <translation>AWS-D 45 根据AWS-D1.5 45标准的不连续性严重等级</translation>
+        <translation type="vanished">AWS-D 45 根据AWS-D1.5 45标准的不连续性严重等级</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="56"/>
         <source>AWS-D60 Discontinuity severity class for AWS-D1.5 60</source>
-        <translation>AWS-D 60 根据AWS-D1.5 60标准的不连续性严重等级</translation>
+        <translation type="vanished">AWS-D 60 根据AWS-D1.5 60标准的不连续性严重等级</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="57"/>
         <source>AWS-D70 Discontinuity severity class for AWS-D1.5 70</source>
-        <translation>AWS-D 70 根据AWS-D1.5 70标准的不连续性严重等级</translation>
+        <translation type="vanished">AWS-D 70 根据AWS-D1.5 70标准的不连续性严重等级</translation>
     </message>
     <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="58"/>
         <source>AWS-D CL Discontinuity severity class for AWS-D1.5</source>
-        <translation>AWS-D CL 根据AWS-D1.5标准的不连续性严重等级</translation>
-    </message>
-    <message>
-        <location filename="../dialogwidget/measurementdialog.cpp" line="59"/>
-        <source>DA-DI</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">AWS-D CL 根据AWS-D1.5标准的不连续性严重等级</translation>
     </message>
 </context>
 <context>
@@ -2006,7 +2265,7 @@ ultrasonic phased array probes.</source>
         <translation type="vanished">开</translation>
     </message>
     <message>
-        <location filename="../qitemdelegate/pushbuttondelegate.cpp" line="53"/>
+        <location filename="../qitemdelegate/pushbuttondelegate.cpp" line="58"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2807,7 +3066,7 @@ Part</source>
         <translation type="vanished">工件清除</translation>
     </message>
     <message>
-        <location filename="../menuwidget/thirdmenuwidget.cpp" line="60"/>
+        <location filename="../menuwidget/thirdmenuwidget.cpp" line="62"/>
         <source>Chinese</source>
         <translation>中文</translation>
     </message>
@@ -2845,6 +3104,12 @@ Part</source>
     <message>
         <location filename="../menuwidget/topmenu.ui" line="14"/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menuwidget/topmenu.ui" line="1276"/>
+        <source>ML
+(%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2934,12 +3199,6 @@ Part</source>
         <location filename="../menuwidget/topmenu.ui" line="1147"/>
         <source>S(m-r)
 (mm)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menuwidget/topmenu.ui" line="1276"/>
-        <source>TCG-SL
-(±dB)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

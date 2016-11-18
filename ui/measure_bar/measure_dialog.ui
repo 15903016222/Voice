@@ -69,6 +69,20 @@
          <property name="cursor" stdset="0">
           <cursorShape>ArrowCursor</cursorShape>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QListWidget{outline: 0px;}
+
+QListWidget::item{
+    background-color: rgba(0, 0, 0, 0);
+    color: black;
+}
+
+QListWidget::item:Selected{
+    border: 1px solid rgba(180, 180, 180, 255);
+    background-color: rgba(85, 175, 255, 80);
+    color: red;
+}</string>
+         </property>
          <property name="lineWidth">
           <number>1</number>
          </property>

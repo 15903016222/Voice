@@ -429,14 +429,16 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
     case 7: {
         //点击表头弹出测量值选择对话框
-        MeasureDialog measurementDialog;
-        measurementDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        measurementDialog.show();
+       MeasureDialog measureDialog;
+   //    measureDialog.exec();
+       if (measureDialog.exec() == QDialog::Accepted) {
+           qDebug()<<measureDialog.get_type()<<measureDialog.get_type_string();
+       }
 
-//        measurementDialog->set_current_index(currentHeaderText);
+//        measureDialog->set_current_index(currentHeaderText);
 
         m_measurementIndex = index;
-//        connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
+//        connect(measureDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
         break;
     }
     case 11: {
