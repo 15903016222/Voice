@@ -27,10 +27,9 @@ public:
 
     QList<QLineEdit*> lineEditList;
     QStringList stepList;
-
-    int m_inputCount;
-    bool m_editFlag;
+    int m_inputCount;    
     int decimalAmount;
+    bool m_editFlag;
     bool m_keyboardFlag;
 
 private:
@@ -40,7 +39,6 @@ private:
     QList<int> rangeList;
 
     QString step;
-
 
 signals:
     void createEditorHeaderText(QStringList) const;

@@ -15,12 +15,10 @@ SOURCES += \
     $$PWD/menuwidget/commonmenuwidget.cpp \
     $$PWD/menuwidget/commonmenubutton.cpp \
     $$PWD/dialogwidget/measurementdialog.cpp \
-    $$PWD/dialogwidget/myinputpanel.cpp \
     $$PWD/dialogwidget/timesetdialog.cpp \
     $$PWD/dialogwidget/probedialog.cpp \
     $$PWD/dialogwidget/wedgedialog.cpp \
     $$PWD/qitemdelegate/comboboxdelegate.cpp \
-    $$PWD/qitemdelegate/doublespinboxdelegate.cpp \
     $$PWD/qitemdelegate/pushbuttondelegate.cpp \
     $$PWD/dialogwidget/inputpanelcontext.cpp \
     $$PWD/dialogwidget/resetconfigdialog.cpp \
@@ -43,12 +41,10 @@ HEADERS += \
     $$PWD/menuwidget/commonmenuwidget.h \
     $$PWD/menuwidget/commonmenubutton.h \
     $$PWD/dialogwidget/measurementdialog.h \
-    $$PWD/dialogwidget/myinputpanel.h \
     $$PWD/dialogwidget/timesetdialog.h \
     $$PWD/dialogwidget/probedialog.h \
     $$PWD/dialogwidget/wedgedialog.h \
     $$PWD/qitemdelegate/comboboxdelegate.h \
-    $$PWD/qitemdelegate/doublespinboxdelegate.h \
     $$PWD/qitemdelegate/pushbuttondelegate.h \
     $$PWD/dialogwidget/inputpanelcontext.h \
     $$PWD/dialogwidget/resetconfigdialog.h \
@@ -71,7 +67,6 @@ FORMS += \
     $$PWD/menuwidget/commonmenuwidget.ui \
     $$PWD/menuwidget/commonmenubutton.ui \
     $$PWD/dialogwidget/measurementdialog.ui \
-    $$PWD/dialogwidget/myinputpanel.ui \
     $$PWD/dialogwidget/timesetdialog.ui \
     $$PWD/dialogwidget/probedialog.ui \
     $$PWD/dialogwidget/wedgedialog.ui \
