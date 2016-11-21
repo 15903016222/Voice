@@ -5,6 +5,7 @@ INCLUDEPATH += $$PWD/dialogwidget
 INCLUDEPATH += $$PWD/qitemdelegate
 INCLUDEPATH += $$PWD/spinbox
 
+include(vinput/vinput.pri)
 include(icons_bar/icons_bar.pri)
 include(measure_bar/measure_bar.pri)
 
