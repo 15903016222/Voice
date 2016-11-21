@@ -44,7 +44,7 @@ void BatteryLabel::paintEvent(QPaintEvent *e)
     QPainter painter(this);
 
     QFont font = painter.font();
-    font.setPixelSize(8);
+    font.setPixelSize(9);
     painter.setFont(font);
     painter.setPen(Qt::SolidLine);
     painter.setPen(QColor(Qt::green));

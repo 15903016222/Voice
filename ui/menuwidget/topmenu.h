@@ -30,7 +30,6 @@ signals:
     void currentDialogIndex(QString);
 
 private slots:
-    void change_labelText(QString str);
     void set_gain_header_text_close(QWidget *editor);
     void set_angle_header_text_close(QWidget *editor);
     void on_tableView_angle_clicked(const QModelIndex &index);
@@ -43,6 +42,7 @@ private:
     void init_gain_angle();
     void open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index);
     void set_header_text_close(QLabel *label);
+    void change_labelText(QString str);
 
     QStringList get_label_text(QString string);
 

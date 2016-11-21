@@ -372,7 +372,7 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
             QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
             QApplication::sendEvent(firstSecondMenu->menuList.at(m_firstMenuNum), event);
 
-            if(m_firstMenuNum == 0 || m_firstMenuNum == 4 || m_firstMenuNum == 5 || m_firstMenuNum == 6 || m_firstMenuNum == 8){
+            if(m_firstMenuNum == 0 || m_firstMenuNum == 4 || m_firstMenuNum == 5 || m_firstMenuNum == 8){
                 if(m_rotarySecondMenuNum < 3){
                     m_rotarySecondMenuNum++;
                 }
@@ -380,7 +380,7 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
                 if(m_rotarySecondMenuNum < 4){
                     m_rotarySecondMenuNum++;
                 }
-            }else if(m_firstMenuNum == 2){
+            }else if(m_firstMenuNum == 2 || m_firstMenuNum == 6){
                 if(m_rotarySecondMenuNum < 2){
                     m_rotarySecondMenuNum++;
                 }

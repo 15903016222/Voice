@@ -193,10 +193,10 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
         }
 
         if (measureDialog.exec() == QDialog::Accepted) {
+            change_labelText(measureDialog.get_type_string());
             qDebug()<<measureDialog.get_type()<<measureDialog.get_type_string();
         }
 
-//        connect(pDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_labelText(QString)));
     } else if(object == measurementLabelList.at(0) && event->type() == QEvent::MouseButtonPress) {
         open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, pGain, 0);
 
