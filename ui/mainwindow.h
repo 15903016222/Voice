@@ -38,7 +38,6 @@ private:
     Ui::MainWindow *ui;
 
     QTranslator *translator;
-    Mcu *m_mcu;
     QGraphicsOpacityEffect *effect;
 
     CommonMenuWidget * commonMenuWidget;
@@ -56,7 +55,6 @@ private:
     int m_secondMenuNum;
     int m_mainMenuStartPos;
     int m_mainMenuEndPos;
-    int m_rotarySecondMenuNum;
 
 signals:
     void clickedMenuIndex(int);
@@ -78,8 +76,6 @@ protected slots:
     void slot_setMenuOpacity(double value);
 
     void do_rotary_event(Mcu::RotaryType type);
-    void key_sure(Mcu::KeyType key);
-
 };
 
 #endif // MAINWINDOW_H
