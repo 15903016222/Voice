@@ -56,7 +56,6 @@ private:
 
     QList<QLabel* > measurementLabelList;
 
-    MeasurementDialog *pDialog;
     QString objectName;
 };
 
