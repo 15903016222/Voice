@@ -1,6 +1,10 @@
 #include "measure_dialog.h"
 #include "ui_measure_dialog.h"
 
+#include <QKeyEvent>
+
+#include <QDebug>
+
 MeasureDialog::MeasureDialog(QWidget *parent, MeasureDialog::MeasureType type) :
     QDialog(parent),
     ui(new Ui::MeasureDialog)
@@ -30,4 +34,13 @@ QString MeasureDialog::get_type_string()
 void MeasureDialog::set_type(MeasureDialog::MeasureType type)
 {
     ui->tableWidget->setCurrentCell(type, 0);
+}
+
+void MeasureDialog::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Enter
+            || e->key() == Qt::Key_Return) {
+       accept();
+    }
+    QDialog::keyPressEvent(e);
 }

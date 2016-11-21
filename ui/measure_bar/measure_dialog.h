@@ -76,6 +76,9 @@ public:
     QString get_type_string();
     void set_type(MeasureType type);
 
+protected:
+    void keyPressEvent(QKeyEvent *e);
+
 private:
     Ui::MeasureDialog *ui;
 };
