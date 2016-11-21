@@ -6,6 +6,9 @@ INCLUDEPATH += $$PWD/qitemdelegate
 INCLUDEPATH += $$PWD/spinbox
 INCLUDEPATH += $$PWD/fake_keyboard
 
+include(icons_bar/icons_bar.pri)
+include(measure_bar/measure_bar.pri)
+
 SOURCES += \
     $$PWD/mainwindow.cpp \
     $$PWD/showinfowidget.cpp \
@@ -14,7 +17,6 @@ SOURCES += \
     $$PWD/menuwidget/thirdmenuwidget.cpp \
     $$PWD/menuwidget/commonmenuwidget.cpp \
     $$PWD/menuwidget/commonmenubutton.cpp \
-    $$PWD/dialogwidget/measurementdialog.cpp \
     $$PWD/dialogwidget/timesetdialog.cpp \
     $$PWD/dialogwidget/probedialog.cpp \
     $$PWD/dialogwidget/wedgedialog.cpp \
@@ -29,7 +31,6 @@ SOURCES += \
     $$PWD/dialogwidget/sysinfo_dialog.cpp \
     $$PWD/spinbox/spinbox.cpp \
     $$PWD/fake_keyboard/virtualkeyboard.cpp \
-    $$PWD/icons_bar.cpp \
     $$PWD/qitemdelegate/lineeditdelegate.cpp
 
 HEADERS += \
@@ -40,7 +41,6 @@ HEADERS += \
     $$PWD/menuwidget/thirdmenuwidget.h \
     $$PWD/menuwidget/commonmenuwidget.h \
     $$PWD/menuwidget/commonmenubutton.h \
-    $$PWD/dialogwidget/measurementdialog.h \
     $$PWD/dialogwidget/timesetdialog.h \
     $$PWD/dialogwidget/probedialog.h \
     $$PWD/dialogwidget/wedgedialog.h \
@@ -55,7 +55,6 @@ HEADERS += \
     $$PWD/dialogwidget/sysinfo_dialog.h \
     $$PWD/spinbox/spinbox.h \
     $$PWD/fake_keyboard/virtualkeyboard.h \
-    $$PWD/icons_bar.h \
     $$PWD/qitemdelegate/lineeditdelegate.h
 
 FORMS += \
@@ -66,7 +65,6 @@ FORMS += \
     $$PWD/menuwidget/thirdmenuwidget.ui \
     $$PWD/menuwidget/commonmenuwidget.ui \
     $$PWD/menuwidget/commonmenubutton.ui \
-    $$PWD/dialogwidget/measurementdialog.ui \
     $$PWD/dialogwidget/timesetdialog.ui \
     $$PWD/dialogwidget/probedialog.ui \
     $$PWD/dialogwidget/wedgedialog.ui \
@@ -75,5 +73,4 @@ FORMS += \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
     $$PWD/dialogwidget/filemanagerdialog.ui \
-    $$PWD/fake_keyboard/virtualkeyboard.ui \
-    $$PWD/icons_bar.ui
+    $$PWD/fake_keyboard/virtualkeyboard.ui 

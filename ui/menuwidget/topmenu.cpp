@@ -177,12 +177,9 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             object == measurementLabelList.at(8)) &&
             event->type() == QEvent::MouseButtonPress) {
         objectName = object->objectName();
-        pDialog = new MeasurementDialog;
-        pDialog->setModal(true);
-        pDialog->setWindowFlags(Qt::FramelessWindowHint);
-        pDialog->show();
 
-        connect(this, SIGNAL(currentDialogIndex(QString)), pDialog, SLOT(set_current_index(QString)));
+        MeasureDialog measureDialog(this, MeasureDialog::RA);
+
         QLabel *label = qobject_cast<QLabel*>(object);
         QString string = label->text();
         QString text;
@@ -197,8 +194,9 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
         } else {
             text = string;
         }
-        emit currentDialogIndex(text);
-        connect(pDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_labelText(QString)));
+
+ //       emit currentDialogIndex(text);
+ //       connect(pDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_labelText(QString)));
 
         if(opendSpinBoxIndex >= 0 && opendSpinBoxIndex < 2) {
             ui->tableView_gain->closePersistentEditor(pGain->item(0, opendSpinBoxIndex)->index());
@@ -207,6 +205,12 @@ bool TopMenu::eventFilter(QObject *object, QEvent *event)
             ui->tableView_angle->closePersistentEditor(pAngle->item(0, 0)->index());
             opendSpinBoxIndex = -1;
         }
+
+        if (measureDialog.exec() == QDialog::Accepted) {
+            qDebug()<<measureDialog.get_type()<<measureDialog.get_type_string();
+        }
+
+//        connect(pDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_labelText(QString)));
 
     } else if(object == measurementLabelList.at(0) && event->type() == QEvent::MouseButtonPress) {
         open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, pGain, 0);

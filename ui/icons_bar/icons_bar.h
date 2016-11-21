@@ -26,14 +26,15 @@ public slots:
     void do_battery_quantity_event(int index, int value);
 
     void show_gear(bool flag);
+    void show_tcg(bool flag);
+    void show_dac(bool flag);
+    void show_sensitivity_calibration(bool flag);
+    void show_velocity_calibration(bool flag);
+    void show_delay_calibration(bool flag);
+
 
 private:
-    void update_battery(quint32 index);
-
     Ui::IconsBar *ui;
-
-    Mcu::BatteryStatus m_batteryStatus[2];
-    int m_batteryQuantity[2];
 };
 
 #endif // __ICONS_BAR_H__

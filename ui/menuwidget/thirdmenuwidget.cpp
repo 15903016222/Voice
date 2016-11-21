@@ -6,7 +6,7 @@
 #include "pushbuttondelegate.h"
 #include "probedialog.h"
 #include "wedgedialog.h"
-#include "measurementdialog.h"
+#include "measure_dialog.h"
 #include "inputpanelcontext.h"
 #include "about_dialog.h"
 #include "resetconfigdialog.h"
@@ -432,12 +432,14 @@ void ThirdMenuWidget::onHeaderClicked(int index)
     }
     case 7: {
         //点击表头弹出测量值选择对话框
-        MeasurementDialog *measurementDialog = new MeasurementDialog(this);
-        measurementDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        measurementDialog->exec();
+        MeasureDialog measurementDialog;
+        measurementDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        measurementDialog.show();
+
+//        measurementDialog->set_current_index(currentHeaderText);
 
         m_measurementIndex = index;
-        connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
+//        connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
         break;
     }
     case 11: {

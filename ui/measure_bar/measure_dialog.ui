@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MeasureDialog</class>
+ <widget class="QDialog" name="MeasureDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>557</width>
+    <height>493</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>1</number>
+   </property>
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>553</width>
+        <height>459</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>1</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QListWidget" name="listWidget">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="cursor" stdset="0">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="lineWidth">
+          <number>1</number>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="spacing">
+          <number>1</number>
+         </property>
+         <property name="viewMode">
+          <enum>QListView::ListMode</enum>
+         </property>
+         <property name="selectionRectVisible">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>A% Peak amplitude in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AdBA Signal in gate minus gate level for gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AdBr Difference between signal and reference in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>B% Peak amplitude in gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>BdBB Signal in gate minus gate level for gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>BdBr Difference between signal and reference in gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>A^ Position in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>B^ Position in gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>I/ Position in gate I</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>I(W)/ Position in gate I in water</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>T(A^) Thickness</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ML Percentage of Material loss</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>%(r) Amplitude value for reference cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>%(m) Amplitude value of the measurement cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>%(m-r) Amplitude (measurement cursor - reference cursor)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>U(r) Ultrasonic position of the reference cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>U(m) Ultrasonic position of the measurement cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>U(m-r) Ultrasonic axix(measurement cursor - reference cursor)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>P(r) Probe position of the reference cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>P(m) Probe position of the measurement cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>P(m-r) Probe (measurement cursor - reference cursor)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>S(r)  Scan position of the reference cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>S(m)  Scan position of the measurment cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>S(m-r)  Scan (measurement cursor - reference cursor)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>I(r) Index position of the reference cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>I(m) Index position of the measurement cursor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>I(m-r) Index axis(measurement cursor - reference cursor)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>RA^ Reference point to the indication in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>RB^ Reference point to the indication in gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>PA^ Probe front face to the indication in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>PB^ Probe front face to the indication in gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DA^ Depth of the indication in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DB^ Depth of the indication in gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>SA^ Sound path of the indication in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>SB^ Sound path of the indication in gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ViA^ Volumetric position in gate A on the index axis</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ViB^ Volumetric position in gate B on the index axis</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>VsA^ Volumetric position in gate A on the scan axis</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>VsB^ Volumetric position in gate B on the scan axis</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>LA^ Leg(skip)of the indication in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>LB^ Leg(skip)of the indication in gate B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>E% Peak amplitude of the envelop in gate A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AWS-DA Indication level for AWS-D1.5A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AWS-DB Zero reference  level for AWS-D1.5B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AWS-DC Attenuation factor for AWS-D1.5 C</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AWS-DD Indication rating for AWS-D1.5D</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AWS-D45 Discontinuity severity class for AWS-D1.5 45</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AWS-D60 Discontinuity severity class for AWS-D1.5 60</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AWS-D70 Discontinuity severity class for AWS-D1.5 70</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AWS-D CL Discontinuity severity class for AWS-D1.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>T-D(r) TOFD Ultrasonic Axis Reference Cursor Depth</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>T-D(m) TOFD Ultrasonic Axis Measure Cursor Depth</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>T-S(m-r) TOFD Scan Axis Cursor Space</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>T-D(m-r) TOFD Ultrasonic Axis Cursor Height</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelPushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_ok">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&amp;Choose</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>cancelPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MeasureDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>423</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>372</x>
+     <y>479</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_ok</sender>
+   <signal>clicked()</signal>
+   <receiver>MeasureDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>522</x>
+     <y>476</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>479</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
