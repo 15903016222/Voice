@@ -324,16 +324,20 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
         }
     }
 
-    if(opendSpinBoxIndex != index) {
-        if(label->objectName() == "label_1") {
+    if(label->objectName() == "label_1") {
+        if(opendSpinBoxIndex != index) {
             opendSpinBoxIndex = index;
-        } else if(label->objectName() == "label_10") {
-            opendSpinBoxIndex = 2;
+            if(m_keyboardShowFlag) {
+                tableView->openPersistentEditor(modelIndex);
+            }
         }
+    } else if(label->objectName() == "label_10") {
+        opendSpinBoxIndex = 2;
         if(m_keyboardShowFlag) {
             tableView->openPersistentEditor(modelIndex);
         }
     }
+
     qDebug() << "openIndex" << opendSpinBoxIndex;
 }
 
