@@ -23,21 +23,16 @@ public:
     void retranslate_common_menu_ui();
     void resizeEvent(QResizeEvent *event);
 
-    int opendSpinBoxIndex;
-    bool m_keyboardShowFlag;
-    QStandardItemModel *model;
-    QTableView *pTableView;
-
 private:
     Ui::CommonMenuWidget *ui;
 
     void init_standard_model();
     void set_common_menu_name();
     void choose_widget_style(int k);
-    void change_persistent_editor();
 
     int m_height;
     int m_width;
+    QStandardItemModel *model;
 
 private slots:
     void onHeaderClicked(int index);

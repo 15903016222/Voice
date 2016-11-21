@@ -5,7 +5,6 @@
 #include "datetimesetdialog.h"
 #include "networkdialog.h"
 #include "mcu.h"
-#include "virtualkeyboard.h"
 
 #define THIRD_MENU_NUMBER 6
 
@@ -22,16 +21,9 @@ public:
     ~ThirdMenuWidget();
 
     void set_third_menu_name(int i, int j);
-    void resizeEvent(QResizeEvent *event);   
-//    void open_spinbox_persistent_editor(int index);
-//    void close_spinbox_persistent_editor(int index);
+    void resizeEvent(QResizeEvent *event);
     QList<int> get_spinBox_range_list(QVariantMap variantMap);
-    QStringList get_spinBox_step_list(QVariantMap variantMap);
-
-    int opendSpinBoxIndex;
-    bool m_keyboardShowFlag;
-    QTableView *pTableView;
-    QStandardItemModel *pModel;
+    QStringList get_spinBox_step_list(QVariantMap variantMap);   
 
 private:
     Ui::ThirdMenuWidget *ui;
@@ -41,7 +33,7 @@ private:
     NetworkDialog *pNetworkDialog;
 
     FirstSecondMenuWidget *pFirstSecondMenuWidget;
-    VirtualKeyboard *pVirtualKeyboard;
+    QStandardItemModel *pModel;
 
     void init_standard_model();
     void choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString);
@@ -81,7 +73,6 @@ signals:
     void retranslate_ui(QString);
     void translater_ZH();
     void translater_EN();
-//    void send_string_to_delegate(QString);
     void opacityChanged(double value);
 
 protected slots:
@@ -101,7 +92,6 @@ protected slots:
     void set_time(QString value);
     void set_ip_subNet(QString value);
     void retranslate_third_menu_ui(QString string);
-//    void input_spinbox_number(QString string);
     void setOpacity(double value);
 
 };

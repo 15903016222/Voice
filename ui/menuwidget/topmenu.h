@@ -26,13 +26,6 @@ public:
 
     bool eventFilter(QObject *object, QEvent *event);
 
-    int opendSpinBoxIndex;
-    bool m_keyboardShowFlag;
-    QStandardItemModel *pGain;
-    QStandardItemModel *pAngle;
-    QTableView *pTableViewGain;
-    QTableView *pTableViewAngle;
-
 signals:
     void currentDialogIndex(QString);
 
@@ -50,13 +43,14 @@ private:
     void init_gain_angle();
     void open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index);
     void set_header_text_close(QLabel *label);
-    void change_persistent_editor(QLabel *label, QStandardItemModel *model, QTableView *tableView, int index);
 
     QStringList get_label_text(QString string);
 
     QList<QLabel* > measurementLabelList;
 
     QString objectName;
+    QStandardItemModel *pGain;
+    QStandardItemModel *pAngle;
 };
 
 #endif // TOPMENU

@@ -4,9 +4,8 @@
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
-//#include "myinputpanel.h"
-#include "virtualkeyboard.h"
 #include "mcu.h"
+#include "virtualkeyboard.h"
 
 #include <QMainWindow>
 #include <QTranslator>
@@ -45,7 +44,6 @@ private:
     CommonMenuWidget * commonMenuWidget;
     FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
-//    MyInputPanel *myInputPanelDlg;
     VirtualKeyboard *pVirtualKeyboard;
 
     bool m_hiddenFirstSecondMenuFlag;
@@ -78,7 +76,6 @@ protected slots:
     void do_keyboard_event();
     void slot_keyboard_close_clicked();
     void slot_setMenuOpacity(double value);
-    void do_input_number(QString string);
 
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(Mcu::KeyType key);

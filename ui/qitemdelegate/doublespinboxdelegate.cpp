@@ -1,15 +1,9 @@
 #include "doublespinboxdelegate.h"
 
-//#ifdef Q_OS_WIN32
-//#include "windows.h"
-//#endif
-
 #include <QEvent>
 #include <QDebug>
 #include <QKeyEvent>
 #include <QApplication>
-#include <QLineEdit>
-#include <QAbstractSpinBox>
 
 DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -19,7 +13,6 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
 
     m_editFlag = false;
-    m_inputCount = 0;
 }
 
 QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -142,71 +135,6 @@ void DoubleSpinBoxDelegate::key_sure(Mcu::KeyType key)
             QApplication::sendEvent(doubleSpinBox, event);
         }
     }
-}
-
-//#ifdef Q_OS_LINUX
-//#include <stdio.h>
-//#include <X11/Xlib.h>
-//#include <X11/extensions/XTest.h>
-//#include <X11/extensions/XInput.h>
-//#include <X11/keysym.h>
-//#endif
-
-void DoubleSpinBoxDelegate::input_number_to_lineedit(QString string)
-{
-
-//    QDoubleSpinBox *doubleSpinBox = spinBoxList.at(spinBoxList.count() - 1);
-
-//    doubleSpinBox->setFocusPolicy(Qt::StrongFocus);
-//    doubleSpinBox->setFocus();
-
-//#ifdef Q_OS_WIN32
-//    QWidget *widget = doubleSpinBox->focusWidget();
-//    HWND hwnd = (HWND)widget->winId();
-//    qDebug() << "string" << string;
-//    if(string == "." && m_decimalAmount > 0) {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_DECIMAL, 0);
-//    } else if(string == "Left Arrow") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
-//    } else if(string == "Right Arrow") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
-//    } else if(string == "BackSpace") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_BACK, 0);
-//    } else if(string == "Delete") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_DELETE, 0);
-//    } else if(string == "Enter" || string == "Close") {
-//        SendMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
-//    } else {
-//        int value = string.toInt();
-//        SendMessage(hwnd, WM_KEYDOWN, VK_HELP + value + 1, 0);
-//    }
-//#endif
-
-//#ifdef Q_OS_LINUX
-//    Display *display = XOpenDisplay (NULL);
-//    KeySym keysym;
-//    if(string == "." && m_decimalAmount > 0) {
-//        keysym = XK_KP_Decimal;
-//    } else if(string == "Left Arrow") {
-//        keysym = XK_Left;
-//    } else if(string == "Right Arrow") {
-//        keysym = XK_Right;
-//    } else if(string == "BackSpace") {
-//        keysym = XK_BackSpace;
-//    } else if(string == "Delete") {
-//        keysym = XK_Delete;
-//    } else if(string == "Enter" || string == "Close") {
-//        keysym = XK_Return;
-//    } else {
-//        int value = string.toInt();
-//        keysym = XK_0 + value;
-//    }
-
-//    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), True, CurrentTime);
-//    XTestFakeKeyEvent(display, XKeysymToKeycode(display, keysym), False, CurrentTime);
-//    XCloseDisplay(display);
-//#endif
-
 }
 
 void DoubleSpinBoxDelegate::valueChanged_signal(double value)
