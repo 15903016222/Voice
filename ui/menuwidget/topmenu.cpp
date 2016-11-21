@@ -1,7 +1,7 @@
 #include "topmenu.h"
 #include "ui_topmenu.h"
 
-#include "lineeditdelegate.h"
+#include "doublespinboxdelegate.h"
 #include "thirdmenuwidget.h"
 #include "firstsecondmenuwidget.h"
 
@@ -105,7 +105,7 @@ void TopMenu::init_gain_angle()
     QList<int> rangeListGain = thirdMenuWidget->get_spinBox_range_list(variantMapGain);
     QStringList stepListGain = thirdMenuWidget->get_spinBox_step_list(variantMapGain);
 
-    LineEditDelegate *lineEditOne = new LineEditDelegate(this);
+    DoubleSpinBoxDelegate *lineEditOne = new DoubleSpinBoxDelegate(this);
     lineEditOne->set_number_range(rangeListGain);
     lineEditOne->set_number_step_list(stepListGain);
     lineEditOne->set_number_step(stepListGain.at(0));
@@ -146,7 +146,7 @@ void TopMenu::init_gain_angle()
     QList<int> rangeListAngle = thirdMenuWidget->get_spinBox_range_list(variantMapAngle);
     QStringList stepListAngle = thirdMenuWidget->get_spinBox_step_list(variantMapAngle);
 
-    LineEditDelegate *lineEditAngle = new LineEditDelegate(this);
+    DoubleSpinBoxDelegate *lineEditAngle = new DoubleSpinBoxDelegate(this);
     lineEditAngle->set_number_range(rangeListAngle);
     lineEditAngle->set_number_step_list(stepListAngle);
     lineEditAngle->set_number_step(stepListAngle.at(0));
@@ -272,7 +272,7 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
 {
     QString headerTextUnit;
     QModelIndex modelIndex = model->item(0, index)->index();
-    LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(tableView->itemDelegateForColumn(index));
+    DoubleSpinBoxDelegate *lineEdit = static_cast<DoubleSpinBoxDelegate*>(tableView->itemDelegateForColumn(index));
 
 
     QStringList stringList = get_label_text(label->text());
@@ -296,13 +296,13 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
         }
     }
 
-    if(opendSpinBoxIndex >= 0 && opendSpinBoxIndex <2 && label->objectName() == "label_1") {
-        change_persistent_editor(label, model, tableView, opendSpinBoxIndex);
-    } else if(opendSpinBoxIndex >= 0 && opendSpinBoxIndex <2 && label->objectName() == "label_10") {
-        change_persistent_editor(measurementLabelList.at(0), pGain, ui->tableView_gain, opendSpinBoxIndex);
-    } else if(opendSpinBoxIndex == 2 && label->objectName() == "label_1") {
-        change_persistent_editor(measurementLabelList.at(9), pAngle, ui->tableView_angle, 0);
-    }
+//    if(opendSpinBoxIndex >= 0 && opendSpinBoxIndex <2 && label->objectName() == "label_1") {
+//        change_persistent_editor(label, model, tableView, opendSpinBoxIndex);
+//    } else if(opendSpinBoxIndex >= 0 && opendSpinBoxIndex <2 && label->objectName() == "label_10") {
+//        change_persistent_editor(measurementLabelList.at(0), pGain, ui->tableView_gain, opendSpinBoxIndex);
+//    } else if(opendSpinBoxIndex == 2 && label->objectName() == "label_1") {
+//        change_persistent_editor(measurementLabelList.at(9), pAngle, ui->tableView_angle, 0);
+//    }
 
     if(m_keyboardShowFlag) {
         label->setText(HTML_TEXT_ONE + headerText + HTML_TEXT_TWO + HTML_TEXT_THREE +
@@ -369,7 +369,7 @@ void TopMenu::set_header_text_close(QLabel *label)
 
 void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
 {
-//    LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView_angle->itemDelegate(index));
+//    DoubleSpinBoxDelegate *lineEdit = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_angle->itemDelegate(index));
 //    if(!lineEdit->m_editFlag) {
 //        ui->tableView_angle->edit(index);
 //    }
@@ -378,11 +378,11 @@ void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
 
 void TopMenu::on_tableView_gain_clicked(const QModelIndex &index)
 {
-//    LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView_gain->itemDelegate(index));
+//    DoubleSpinBoxDelegate *lineEdit = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_gain->itemDelegate(index));
 //    if(!lineEdit->m_editFlag) {
 //        ui->tableView_gain->edit(index);
 //        if(index.column() == 1) {
-//            QLineEdit *editor = lineEdit->lineEditList.at(lineEdit->lineEditList.count() - 1);
+//            QLineEdit *editor = lineEdit->spinBoxList.at(lineEdit->spinBoxList.count() - 1);
 ////            editor->setPrefix("(");
 ////            editor->setSuffix(")");
 //        }
@@ -392,24 +392,24 @@ void TopMenu::on_tableView_gain_clicked(const QModelIndex &index)
     open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, pGain, index.column());
 }
 
-void TopMenu::change_persistent_editor(QLabel *label, QStandardItemModel *model, QTableView *tableView, int index)
-{
-    if(m_keyboardShowFlag) {
-//        int index;
-//        if(label->objectName() == "label_1") {
-//            index = 0;
-//        } else {
-//            index = opendSpinBoxIndex;
-//        }
-        QModelIndex modelIndexLast = model->item(0, index)->index();
-        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(tableView->itemDelegateForColumn(index));;
+//void TopMenu::change_persistent_editor(QLabel *label, QStandardItemModel *model, QTableView *tableView, int index)
+//{
+//    if(m_keyboardShowFlag) {
+////        int index;
+////        if(label->objectName() == "label_1") {
+////            index = 0;
+////        } else {
+////            index = opendSpinBoxIndex;
+////        }
+//        QModelIndex modelIndexLast = model->item(0, index)->index();
+//        DoubleSpinBoxDelegate *lineEdit = static_cast<DoubleSpinBoxDelegate*>(tableView->itemDelegateForColumn(index));;
 
 
-        tableView->closePersistentEditor(modelIndexLast);
-        set_header_text_close(label);
-        lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1)->clearFocus();
-        lineEdit->m_editFlag = false;
-        lineEdit->m_keyboardFlag = false;
-        lineEdit->m_inputCount = 0;
-    }
-}
+//        tableView->closePersistentEditor(modelIndexLast);
+//        set_header_text_close(label);
+//        lineEdit->spinBoxList.at(lineEdit->spinBoxList.count() -1)->clearFocus();
+//        lineEdit->m_editFlag = false;
+////        lineEdit->m_keyboardFlag = false;
+//        lineEdit->m_inputCount = 0;
+//    }
+//}

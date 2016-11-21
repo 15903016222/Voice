@@ -1,6 +1,8 @@
 #include "virtualkeyboard.h"
 #include "ui_virtualkeyboard.h"
 
+#include "vinput.h"
+
 #include <QPushButton>
 #include <QDebug>
 #include <QKeyEvent>
@@ -44,39 +46,75 @@ void VirtualKeyboard::do_click_button()
     QString string;
     QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
     if(pushButton->objectName() == "pushButton_3") {
-        string = "Left Arrow";
+        string = "Left";
     } else if(pushButton->objectName() == "pushButton_4") {
-        string = "Right Arrow";
+        string = "Right";
     } else {
         string = pushButton->text();
     }
-    emit input_number(string);
+    input_number(string);
     if(string == "Enter") {
         close();
         emit close_keyboard();
-    }
+    }  
 }
 
 void VirtualKeyboard::input_number_to_lineedit(QLineEdit *lineEdit, QString string, int decimal)
 {
-    QKeyEvent *event;
-    if(string == "." && decimal > 0) {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Period, Qt::NoModifier);
-    } else if(string == "Left Arrow") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Left, Qt::NoModifier);
-    } else if(string == "Right Arrow") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
+//    QKeyEvent *event;
+//    if(string == "." && decimal > 0) {
+//        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Period, Qt::NoModifier);
+//    } else if(string == "Left Arrow") {
+//        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Left, Qt::NoModifier);
+//    } else if(string == "Right Arrow") {
+//        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
+//    } else if(string == "Del") {
+//        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
+//    } /*else if(string == "Delete") {
+//        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Delete, Qt::NoModifier);
+//    } */else if(string == "Enter" || string == "Close") {
+//        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+//    } else {
+//        int value = string.toInt();
+//        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_0 + value, Qt::NoModifier);
+//    }
+//    QApplication::sendEvent(lineEdit, event);
+
+}
+void VirtualKeyboard::input_number(QString string)
+{
+//    VInput::Key key;
+    if(string == ".") {
+        VInput::get_vinput()->send(VInput::Key_Dot);
+    } else if(string == "Left") {
+        VInput::get_vinput()->send(VInput::Key_Left);
+    } else if(string == "Right") {
+        VInput::get_vinput()->send(VInput::Key_Right);
     } else if(string == "Del") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
-    } /*else if(string == "Delete") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Delete, Qt::NoModifier);
-    } */else if(string == "Enter" || string == "Close") {
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
-    } else {
-        int value = string.toInt();
-        event = new QKeyEvent(QEvent::KeyPress, Qt::Key_0 + value, Qt::NoModifier);
+        VInput::get_vinput()->send(VInput::Key_Backspace);
+    } else if(string == "Enter" || string == "Close") {
+        VInput::get_vinput()->send(VInput::Key_Enter);
+    } else  if(string == "0") {
+        VInput::get_vinput()->send(VInput::Key_0);
+    } else if(string == "1") {
+        VInput::get_vinput()->send(VInput::Key_1);
+    } else if(string == "2") {
+        VInput::get_vinput()->send(VInput::Key_2);
+    } else if(string == "3") {
+        VInput::get_vinput()->send(VInput::Key_3);
+    } else if(string == "4") {
+        VInput::get_vinput()->send(VInput::Key_4);
+    } else if(string == "5") {
+        VInput::get_vinput()->send(VInput::Key_5);
+    } else if(string == "6") {
+        VInput::get_vinput()->send(VInput::Key_6);
+    } else if(string == "7") {
+        VInput::get_vinput()->send(VInput::Key_7);
+    } else if(string == "8") {
+        VInput::get_vinput()->send(VInput::Key_8);
+    } else if(string == "9") {
+        VInput::get_vinput()->send(VInput::Key_9);
     }
-    QApplication::sendEvent(lineEdit, event);
 }
 
 void VirtualKeyboard::open_persistent_editor( QStandardItemModel *model, QTableView *tableView, int index)

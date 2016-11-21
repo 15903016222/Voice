@@ -118,20 +118,20 @@ bool LineEditDelegate::eventFilter(QObject *object, QEvent *event)
         editor->setEnabled(true);
         editor->setFocus();
 
-        if(m_keyboardFlag && e->key() == Qt::Key_Period) {
-            editor->insert(".");
-        } else if(m_keyboardFlag && e->key() >= 48 && e->key() <= 57) {
-            if(m_inputCount == 0) {
-                editor->insert(QString::number(e->key() - 48));
-            } else {
-                QString newString = value + QString::number(e->key() - 48);
-                const QDoubleValidator *validator = (QDoubleValidator*)(editor->validator());
-                if(newString.toDouble() <= validator->top()) {
-                    editor->insert(QString::number(e->key() - 48));
-                }
-            }
-            m_inputCount += 1;
-        }
+//        if(m_keyboardFlag && e->key() == Qt::Key_Period) {
+//            editor->insert(".");
+//        } else if(m_keyboardFlag && e->key() >= 48 && e->key() <= 57) {
+//            if(m_inputCount == 0) {
+//                editor->insert(QString::number(e->key() - 48));
+//            } else {
+//                QString newString = value + QString::number(e->key() - 48);
+//                const QDoubleValidator *validator = (QDoubleValidator*)(editor->validator());
+//                if(newString.toDouble() <= validator->top()) {
+//                    editor->insert(QString::number(e->key() - 48));
+//                }
+//            }
+//            m_inputCount += 1;
+//        }
 
         if(e->key() == Qt::Key_Up) {
             double newValue = value.toDouble() + step.toDouble();

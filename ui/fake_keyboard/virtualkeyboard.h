@@ -28,8 +28,10 @@ public:
 private:
     Ui::VirtualKeyboard *ui;
 
-signals:
     void input_number(QString string);
+
+signals:
+//    void input_number(QString string);
     void close_keyboard();
 
 private slots:

@@ -1,7 +1,7 @@
 #include "commonmenuwidget.h"
 #include "ui_commonmenuwidget.h"
 
-#include "lineeditdelegate.h"
+#include "doublespinboxdelegate.h"
 #include "comboboxdelegate.h"
 #include "pushbuttondelegate.h"
 
@@ -112,7 +112,7 @@ void CommonMenuWidget::choose_widget_style(int k)
         stepList.append("10.00");
         int decimal = 2;
 
-        LineEditDelegate *lineEdit = new LineEditDelegate(this);
+        DoubleSpinBoxDelegate *lineEdit = new DoubleSpinBoxDelegate(this);
         lineEdit->set_number_range(rangeList);
         lineEdit->set_number_step_list(stepList);
         lineEdit->set_number_step(stepList.at(0));
@@ -173,7 +173,7 @@ void CommonMenuWidget::onHeaderClicked(int index)
     QModelIndex modelIndex = model->item(0, index)->index();
     if(CHOICE_WIDGET_CHAR[index].toInt() == 1) {
         //点击表头更改spinbox的步进及表头文字
-        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(index));
+        DoubleSpinBoxDelegate *lineEdit = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(index));
         QString headerText;
         if(currentHeaderText.contains("Δ")) {
             headerText = currentHeaderText.left(currentHeaderText.indexOf("Δ"));
@@ -204,9 +204,9 @@ void CommonMenuWidget::onHeaderClicked(int index)
             }
         }
 
-        if(opendSpinBoxIndex >= 0) {
-            change_persistent_editor();
-        }
+//        if(opendSpinBoxIndex >= 0) {
+//            change_persistent_editor();
+//        }
 
         if(m_keyboardShowFlag) {
             model->setHeaderData(index, Qt::Horizontal, QString(headerText + "Δ" + stringList.at(stepIndex)));
@@ -280,9 +280,9 @@ void CommonMenuWidget::on_tableView_clicked(const QModelIndex &index)
             ui->tableView->edit(index);
         }
 
-        if(opendSpinBoxIndex >= 0) {
-            change_persistent_editor();
-        }
+//        if(opendSpinBoxIndex >= 0) {
+//            change_persistent_editor();
+//        }
         if(opendSpinBoxIndex != column) {
             opendSpinBoxIndex = column;
 //            if(m_keyboardShowFlag) {
@@ -303,17 +303,17 @@ void CommonMenuWidget::on_tableView_clicked(const QModelIndex &index)
     }
 }
 
-void CommonMenuWidget::change_persistent_editor()
-{
-    if(m_keyboardShowFlag) {
-        QModelIndex modelIndexLast = model->item(0, opendSpinBoxIndex)->index();
-        LineEditDelegate *lineEdit = static_cast<LineEditDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
+//void CommonMenuWidget::change_persistent_editor()
+//{
+//    if(m_keyboardShowFlag) {
+//        QModelIndex modelIndexLast = model->item(0, opendSpinBoxIndex)->index();
+//        DoubleSpinBoxDelegate *lineEdit = static_cast<DoubleSpinBoxDelegate*>(ui->tableView->itemDelegateForColumn(opendSpinBoxIndex));
 
-        ui->tableView->closePersistentEditor(modelIndexLast);
-        set_header_text_close(lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1));
-        lineEdit->lineEditList.at(lineEdit->lineEditList.count() -1)->clearFocus();
-        lineEdit->m_editFlag = false;
-        lineEdit->m_keyboardFlag = false;
-        lineEdit->m_inputCount = 0;
-    }
-}
+//        ui->tableView->closePersistentEditor(modelIndexLast);
+//        set_header_text_close(lineEdit->spinBoxList.at(lineEdit->spinBoxList.count() -1));
+//        lineEdit->spinBoxList.at(lineEdit->spinBoxList.count() -1)->clearFocus();
+//        lineEdit->m_editFlag = false;
+////        lineEdit->m_keyboardFlag = false;
+//        lineEdit->m_inputCount = 0;
+//    }
+//}
