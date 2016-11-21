@@ -6,6 +6,7 @@ INCLUDEPATH += $$PWD/qitemdelegate
 INCLUDEPATH += $$PWD/spinbox
 INCLUDEPATH += $$PWD/fake_keyboard
 
+include(vinput/vinput.pri)
 include(icons_bar/icons_bar.pri)
 include(measure_bar/measure_bar.pri)
 

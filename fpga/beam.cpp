@@ -10,7 +10,6 @@
 
 static const int BEAM_REGS_NUM      = 80;
 const quint32 Beam::MAX_CHANNELS    = 32;
-const quint32 Beam::MAX_POINTS      = 16;
 
 struct DelayInfo
 {
@@ -20,19 +19,7 @@ struct DelayInfo
      quint32 res2   :4;         /* bit:28-31    保留 */
 };
 
-struct PointInfo
-{
-    /* TCG (0) */
-     quint32 position :20;      /* bit:0-19     当前点位置,单位10ns */
-     quint32 res1     :1;       /* bit:20       保留 */
-     quint32 pregain  :10;      /* bit:21-30    */
-     quint32 res2     :1;       /* bit:31 */
-     /* TCG (1) */
-     quint32 slope    :22;      /* bit:0-21 */
-     quint32 res3     :9;       /* bit:22-30 */
-     quint32 flag     :1;       /* bit:31 */
-};
-
+#pragma pack(4)
 struct BeamData
 {
     /* reg (-1) */
@@ -45,7 +32,7 @@ struct BeamData
     quint32 gainOffset    :10;    /* bit:2-11 增益补偿单位0.1dB */
     quint32 res2          :3;     /* bit:12-14 保留 */
     quint32 group         :5;     /* bit:15-19 groupId */
-    quint32 info   :12;    /* bit:19-31 beam_qty */
+    quint32 info          :12;    /* bit:19-31 beam_qty */
 
     /* reg (1) */
     quint32 beamDelay     :16;    /* bit:0-15 16 单位10ns */
@@ -78,7 +65,10 @@ struct BeamData
     /* reg (8-9) */
     quint32 res10[2];
 
+    /* reg (10) */
     quint32 txEnable;
+
+    /* reg (11) */
     quint32 rxEnable;
 
     /* reg (12-13) 接收使能 */
@@ -88,15 +78,14 @@ struct BeamData
     quint64 txChannelSel;
 
     /* reg (16-47) 阵元发射信息 */
-    DelayInfo delay[32];            /* bit0-13 发射延时 bit:16-27 接收延时*/
-    PointInfo pointInfo[16] ;
-};
-
-//static quint8 channel_select()
+    DelayInfo delay[32];
+}__attribute__((aligned(4)));
+#pragma pack()
 
 Beam::Beam(const int index)
     : m_index(index), d(new BeamData())
 {
+    ::memset(d, 0, sizeof(BeamData));
     d->chip = 0b0001;
     d->offset = BEAM_REGS_NUM * index;
 }
@@ -334,63 +323,8 @@ bool Beam::set_rx_delay(quint32 channel, quint32 val)
     return true;
 }
 
-quint32 Beam::tcg_position(quint32 point) const
-{
-    if (point >= Beam::MAX_POINTS) {
-        return 0;
-    }
-    return d->pointInfo[point].position;
-}
-
-bool Beam::set_tcg_position(quint32 point, quint32 val)
-{
-    if (point >= Beam::MAX_POINTS) {
-        return false;
-    }
-    d->pointInfo[point].position = val;
-    return true;
-}
-
-quint32 Beam::tcg_slope(quint32 point) const
-{
-    if (point >= Beam::MAX_POINTS) {
-        return 0;
-    }
-    return d->pointInfo[point].slope;
-}
-
-bool Beam::set_tcg_slope(quint32 point, quint32 val)
-{
-    if (point >= Beam::MAX_POINTS) {
-        return false;
-    }
-    d->pointInfo[point].slope = val;
-    return true;
-}
-
-bool Beam::tcg_flag(quint32 point) const
-{
-    if (point >= Beam::MAX_POINTS) {
-        return false;
-    }
-    return d->pointInfo[point].flag;
-}
-
-bool Beam::set_tcg_flag(quint32 point, bool flag)
-{
-    if (point >= Beam::MAX_POINTS) {
-        return false;
-    }
-    d->pointInfo[point].flag = flag;
-    return true;
-}
-
 bool Beam::refresh(void)
 {
-    FpgaSpi *spi = FpgaSpi::get_spi();
-    if (spi == NULL) {
-        return false;
-    }
-    return spi->send((char *)d, sizeof(BeamData));
+    return FpgaSpi::get_spi()->send((char *)d, sizeof(BeamData));
 }
 

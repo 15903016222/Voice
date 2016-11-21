@@ -15,6 +15,7 @@
 static const int GLOBAL_REG_NUM = 32;
 const int Fpga::MAX_GROUPS_NUM = 8;
 const int Fpga::MAX_BEAMS_NUM = 1024;
+const int Fpga::MAX_TCGS_NUM = 1024;
 
 struct AlarmOutputData{
     /* reg 17 20 23 */
@@ -92,7 +93,7 @@ struct GlobalData{
     quint32 res4            :20;/* bit: 0-19    保留 */
     quint32 factorEcho      :12;/* bit: 20-32   4095/回波数 */
 
-    /* reg (29 31) */
+    /* reg (29-31) */
     quint32 res5[3];        /* 保留寄存器 */
 };
 
@@ -405,18 +406,20 @@ int Fpga::groups()
 bool Fpga::create_group()
 {
     QWriteLocker l(&m_groupsLock);
-    int size = m_groups.size();
-    if (size >= MAX_GROUPS_NUM) {
+    if (m_groups.size() >= MAX_GROUPS_NUM) {
         return false;
     }
-    m_groups.append(GroupPointer(new Group(size)));
+    m_groups.append(GroupPointer(new Group(m_groups.size())));
     return true;
 }
 
 bool Fpga::remove_group()
 {
     QWriteLocker l(&m_groupsLock);
-    m_groups.removeAt(m_groups.size()-1);
+    if (m_groups.isEmpty()) {
+        return false;
+    }
+    m_groups.removeLast();
     return true;
 }
 
@@ -435,18 +438,20 @@ int Fpga::beams()
 bool Fpga::create_beam()
 {
     QWriteLocker l(&m_beamsLock);
-    int size = m_beams.size();
-    if (size >= MAX_BEAMS_NUM) {
+    if ( m_beams.size() >= MAX_BEAMS_NUM) {
         return false;
     }
-    m_beams.append(BeamPointer(new Beam(size)));
+    m_beams.append(BeamPointer(new Beam(m_beams.size())));
     return true;
 }
 
 bool Fpga::remove_beam()
 {
     QWriteLocker l(&m_beamsLock);
-    m_beams.removeAt(m_beams.size()-1);
+    if (m_beams.isEmpty()) {
+        return false;
+    }
+    m_beams.removeLast();
     return true;
 }
 
@@ -456,10 +461,44 @@ BeamPointer &Fpga::get_beam(int index)
     return m_beams[index];
 }
 
+int Fpga::tcgs()
+{
+    QReadLocker l(&m_tcgsLock);
+    return m_tcgs.size();
+}
+
+bool Fpga::create_tcg()
+{
+    QWriteLocker l(&m_tcgsLock);
+    if (m_tcgs.size() >= MAX_TCGS_NUM) {
+        return false;
+    }
+    m_tcgs.append(TcgPointer(new Tcg(m_tcgs.size())));
+    return true;
+}
+
+bool Fpga::remove_tcg()
+{
+    QWriteLocker l(&m_tcgsLock);
+    if (m_tcgs.isEmpty()) {
+        return false;
+    }
+    m_tcgs.removeLast();
+    return true;
+}
+
+TcgPointer &Fpga::get_tcg(int index)
+{
+    QReadLocker l(&m_tcgsLock);
+    return m_tcgs[index];
+}
+
 Fpga::Fpga()
     :m_global(new GlobalData()), m_alarmOutput0(this, 0), m_alarmOutput1(this, 1), m_alarmOutput2(this, 2),
       m_alarmAnalog0(this, 0), m_alarmAnalog1(this, 1)
 {
+    qDebug()<<"sizeof(GlobalData)="<<sizeof(GlobalData);
+
     /* Global */
     ::memset(m_global, 0, sizeof(GlobalData));
     /** reg -1 **/
@@ -489,21 +528,20 @@ Fpga::Fpga()
 
 bool write_reg(GlobalData *d, int reg)
 {
-    FpgaSpi *spi = FpgaSpi::get_spi();
-    if (reg >= GLOBAL_REG_NUM
-            || spi == NULL) {
+    if (reg >= GLOBAL_REG_NUM) {
         qWarning()<<"write reg failed";
         return false;
     }
 
     d->offset = reg;
 
-    quint32 data[2] = {0};
+    qDebug()<<"reg="<<reg;
+
+    static quint32 data[2] = {0};
     quint32 *dp = (quint32 *)d;
     data[0] = dp[0];
     data[1] = dp[reg+1];
-    qDebug("0x%08x 0x%08x", data[0], data[1]);
-    return spi->send((char *)data, 8);
+    return FpgaSpi::get_spi()->send((char *)data, 8);
 }
 
 /** Alarm Output **/

@@ -12,7 +12,7 @@
 
 #include <QMutex>
 
-class FpgaSpi : Spi
+class FpgaSpi : public Spi
 {
 public:
     static FpgaSpi *get_spi(void);

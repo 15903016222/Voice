@@ -15,6 +15,9 @@ DEFINES += $$DEVICE
 TARGET = test_fpga
 TEMPLATE = app
 
+target.path = /home/root
+
+INSTALLS += target
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -23,7 +26,8 @@ SOURCES += main.cpp\
     ../fpga.cpp \
     ../fpga_spi.cpp \
     ../group.cpp \
-    ../beam.cpp
+    ../beam.cpp \
+    ../tcg.cpp
 
 HEADERS  += mainwindow.h \
     ../beam.h \
@@ -31,6 +35,7 @@ HEADERS  += mainwindow.h \
     ../gpio.h \
     ../group.h \
     ../spi.h \
-    ../fpga_spi.h
+    ../fpga_spi.h \
+    ../tcg.h
 
 FORMS    += mainwindow.ui
