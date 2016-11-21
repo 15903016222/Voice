@@ -698,272 +698,272 @@
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="103"/>
-        <source>A% Peak amplitude in gate A</source>
+        <source>A%                    Peak amplitude in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="108"/>
-        <source>AdBA Signal in gate minus gate level for gate A</source>
+        <source>AdBA                Signal in gate minus gate level for gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="113"/>
-        <source>AdBr Difference between signal and reference in gate A</source>
+        <source>AdBr                 Difference between signal and reference in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="118"/>
-        <source>B% Peak amplitude in gate B</source>
+        <source>B%                    Peak amplitude in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="123"/>
-        <source>BdBB Signal in gate minus gate level for gate B</source>
+        <source>BdBB                Signal in gate minus gate level for gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="128"/>
-        <source>BdBr Difference between signal and reference in gate B</source>
+        <source>BdBr                 Difference between signal and reference in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="133"/>
-        <source>A^ Position in gate A</source>
+        <source>A^                    Position in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="138"/>
-        <source>B^ Position in gate B</source>
+        <source>B^                    Position in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="143"/>
-        <source>I/ Position in gate I</source>
+        <source>I/                      Position in gate I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="148"/>
-        <source>I(W)/ Position in gate I in water</source>
+        <source>I(W)/                 Position in gate I in water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="153"/>
-        <source>T(A^) Thickness</source>
+        <source>T(A^)                Thickness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="158"/>
-        <source>ML Percentage of Material loss</source>
+        <source>ML                   Percentage of Material loss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="163"/>
-        <source>%(r) Amplitude value for reference cursor</source>
+        <source>%(r)                 Amplitude value for reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="168"/>
-        <source>%(m) Amplitude value of the measurement cursor</source>
+        <source>%(m)                Amplitude value of the measurement cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="173"/>
-        <source>%(m-r) Amplitude (measurement cursor - reference cursor)</source>
+        <source>%(m-r)             Amplitude (measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="178"/>
-        <source>U(r) Ultrasonic position of the reference cursor</source>
+        <source>U(r)                 Ultrasonic position of the reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="183"/>
-        <source>U(m) Ultrasonic position of the measurement cursor</source>
+        <source>U(m)               Ultrasonic position of the measurement cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="188"/>
-        <source>U(m-r) Ultrasonic axix(measurement cursor - reference cursor)</source>
+        <source>U(m-r)             Ultrasonic axix(measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="193"/>
-        <source>P(r) Probe position of the reference cursor</source>
+        <source>P(r)                  Probe position of the reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="198"/>
-        <source>P(m) Probe position of the measurement cursor</source>
+        <source>P(m)                Probe position of the measurement cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="203"/>
-        <source>P(m-r) Probe (measurement cursor - reference cursor)</source>
+        <source>P(m-r)             Probe (measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="208"/>
-        <source>S(r)  Scan position of the reference cursor</source>
+        <source>S(r)                 Scan position of the reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="213"/>
-        <source>S(m)  Scan position of the measurment cursor</source>
+        <source>S(m)                Scan position of the measurment cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="218"/>
-        <source>S(m-r)  Scan (measurement cursor - reference cursor)</source>
+        <source>S(m-r)             Scan (measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="223"/>
-        <source>I(r) Index position of the reference cursor</source>
+        <source>I(r)                  Index position of the reference cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="228"/>
-        <source>I(m) Index position of the measurement cursor</source>
+        <source>I(m)                Index position of the measurement cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="233"/>
-        <source>I(m-r) Index axis(measurement cursor - reference cursor)</source>
+        <source>I(m-r)              Index axis(measurement cursor - reference cursor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="238"/>
-        <source>RA^ Reference point to the indication in gate A</source>
+        <source>RA^                Reference point to the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="243"/>
-        <source>RB^ Reference point to the indication in gate B</source>
+        <source>RB^                Reference point to the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="248"/>
-        <source>PA^ Probe front face to the indication in gate A</source>
+        <source>PA^                Probe front face to the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="253"/>
-        <source>PB^ Probe front face to the indication in gate B</source>
+        <source>PB^                Probe front face to the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="258"/>
-        <source>DA^ Depth of the indication in gate A</source>
+        <source>DA^               Depth of the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="263"/>
-        <source>DB^ Depth of the indication in gate B</source>
+        <source>DB^               Depth of the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="268"/>
-        <source>SA^ Sound path of the indication in gate A</source>
+        <source>SA^               Sound path of the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="273"/>
-        <source>SB^ Sound path of the indication in gate B</source>
+        <source>SB^               Sound path of the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="278"/>
-        <source>ViA^ Volumetric position in gate A on the index axis</source>
+        <source>ViA^              Volumetric position in gate A on the index axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="283"/>
-        <source>ViB^ Volumetric position in gate B on the index axis</source>
+        <source>ViB^              Volumetric position in gate B on the index axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="288"/>
-        <source>VsA^ Volumetric position in gate A on the scan axis</source>
+        <source>VsA^             Volumetric position in gate A on the scan axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="293"/>
-        <source>VsB^ Volumetric position in gate B on the scan axis</source>
+        <source>VsB^             Volumetric position in gate B on the scan axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="298"/>
-        <source>LA^ Leg(skip)of the indication in gate A</source>
+        <source>LA^               Leg(skip)of the indication in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="303"/>
-        <source>LB^ Leg(skip)of the indication in gate B</source>
+        <source>LB^               Leg(skip)of the indication in gate B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="308"/>
-        <source>E% Peak amplitude of the envelop in gate A</source>
+        <source>E%                Peak amplitude of the envelop in gate A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="313"/>
-        <source>AWS-DA Indication level for AWS-D1.5A</source>
+        <source>AWS-DA        Indication level for AWS-D1.5A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="318"/>
-        <source>AWS-DB Zero reference  level for AWS-D1.5B</source>
+        <source>AWS-DB        Zero reference  level for AWS-D1.5B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="323"/>
-        <source>AWS-DC Attenuation factor for AWS-D1.5 C</source>
+        <source>AWS-DC        Attenuation factor for AWS-D1.5 C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="328"/>
-        <source>AWS-DD Indication rating for AWS-D1.5D</source>
+        <source>AWS-DD        Indication rating for AWS-D1.5D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="333"/>
-        <source>AWS-D45 Discontinuity severity class for AWS-D1.5 45</source>
+        <source>AWS-D45       Discontinuity severity class for AWS-D1.5 45</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="338"/>
-        <source>AWS-D60 Discontinuity severity class for AWS-D1.5 60</source>
+        <source>AWS-D60       Discontinuity severity class for AWS-D1.5 60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="343"/>
-        <source>AWS-D70 Discontinuity severity class for AWS-D1.5 70</source>
+        <source>AWS-D70       Discontinuity severity class for AWS-D1.5 70</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="348"/>
-        <source>AWS-D CL Discontinuity severity class for AWS-D1.5</source>
+        <source>AWS-D          CL Discontinuity severity class for AWS-D1.5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="353"/>
-        <source>T-D(r) TOFD Ultrasonic Axis Reference Cursor Depth</source>
+        <source>T-D(r)            TOFD Ultrasonic Axis Reference Cursor Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="358"/>
-        <source>T-D(m) TOFD Ultrasonic Axis Measure Cursor Depth</source>
+        <source>T-D(m)           TOFD Ultrasonic Axis Measure Cursor Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="363"/>
-        <source>T-S(m-r) TOFD Scan Axis Cursor Space</source>
+        <source>T-S(m-r)         TOFD Scan Axis Cursor Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../measure_bar/measure_dialog.ui" line="368"/>
-        <source>T-D(m-r) TOFD Ultrasonic Axis Cursor Height</source>
+        <source>T-D(m-r)         TOFD Ultrasonic Axis Cursor Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1685,7 +1685,7 @@ ultrasonic phased array probes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menuwidget/thirdmenuwidget.cpp" line="62"/>
+        <location filename="../menuwidget/thirdmenuwidget.cpp" line="61"/>
         <source>Chinese</source>
         <translation type="unfinished"></translation>
     </message>
