@@ -58,13 +58,20 @@ bool GainWidget::eventFilter(QObject *obj, QEvent *e)
         return true;
     }
 
-
-    if (e->type() == QEvent::KeyPress) {
+    if (e->type() == QEvent::KeyPress
+            || e->type() == QEvent::KeyRelease) {
         QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(e);
-        if (keyEvent->key() == Qt::Key_Enter
-                || keyEvent->key() == Qt::Key_Return) {
+        switch (keyEvent->key()) {
+        case Qt::Key_Escape:
+        case Qt::Key_Back:
+        case Qt::Key_Cancel:
+            ui->gainDoubleSpinBox->setValue(m_preGain);
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
             set_focus_out();
-            return true;
+            break;
+        default:
+            break;
         }
     } else if (e->type() == QEvent::FocusOut) {
         set_focus_out();
@@ -80,6 +87,7 @@ void GainWidget::set_focus()
     ui->gainDoubleSpinBox->setFocusPolicy(Qt::StrongFocus);
     ui->gainDoubleSpinBox->setFocus();
     ui->gainDoubleSpinBox->setReadOnly(false);
+    m_preGain = ui->gainDoubleSpinBox->value();
 }
 
 void GainWidget::set_focus_out()

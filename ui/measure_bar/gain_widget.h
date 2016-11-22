@@ -21,6 +21,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *e);
 
 private:
+    double m_preGain;
     Ui::GainWidget *ui;
     void set_focus();
     void set_focus_out();
