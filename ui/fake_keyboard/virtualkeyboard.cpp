@@ -1,11 +1,12 @@
 #include "virtualkeyboard.h"
 #include "ui_virtualkeyboard.h"
 
+#if (PHASCAN | PHASCAN_II)
 #include "vinput.h"
+#endif
 
 #include <QPushButton>
 #include <QDebug>
-#include <QKeyEvent>
 
 VirtualKeyboard::VirtualKeyboard(QWidget *parent) :
     QWidget(parent),
@@ -46,15 +47,14 @@ void VirtualKeyboard::do_click_button()
     }
     input_number(string);
     if(string == "Enter") {
-//        close();
-        qDebug() << "enter";
         hide();
-//        emit close_keyboard();
+        emit close_keyboard();
     }  
 }
 
 void VirtualKeyboard::input_number(QString string)
 {
+#if (PHASCAN | PHASCAN_II)
 //    VInput::Key key;
     if(string == ".") {
         VInput::get_vinput()->send(VInput::Key_Dot);
@@ -87,6 +87,10 @@ void VirtualKeyboard::input_number(QString string)
     } else if(string == "9") {
         VInput::get_vinput()->send(VInput::Key_9);
     }
+#endif
+#if (PC_WIN | PC_UNIX)
+    Q_UNUSED(string);
+#endif
 }
 
 

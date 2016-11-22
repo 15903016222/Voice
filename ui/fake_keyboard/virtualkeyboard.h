@@ -2,11 +2,6 @@
 #define VIRTUALKEYBOARD_H
 
 #include <QWidget>
-#include <QLineEdit>
-#include <QStandardItemModel>
-#include <QTableView>
-
-#include "lineeditdelegate.h"
 
 namespace Ui {
 class VirtualKeyboard;
