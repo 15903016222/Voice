@@ -1,5 +1,5 @@
-#include "topmenu.h"
-#include "ui_topmenu.h"
+#include "measure_bar.h"
+#include "ui_measure_bar.h"
 
 #include "doublespinboxdelegate.h"
 #include "thirdmenuwidget.h"
@@ -16,28 +16,28 @@
 
 
 
-TopMenu :: TopMenu(QWidget *parent) :
+MeasureBar :: MeasureBar(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TopMenu)
+    ui(new Ui::MeasureBar)
 {
     ui->setupUi(this);
-    init_ui();
+   // init_ui();
 
-    init_gain_angle();
+   // init_gain_angle();
 
 }
 
-TopMenu :: ~TopMenu()
+MeasureBar::~MeasureBar()
 {
     delete(ui);
 }
 
-void TopMenu::retranslate_top_menu_ui()
+void MeasureBar::retranslate_top_menu_ui()
 {
     ui->retranslateUi(this);
 }
 
-void TopMenu::init_ui()
+void MeasureBar::init_ui()
 {
     set_top_menu_font();
 
@@ -46,7 +46,7 @@ void TopMenu::init_ui()
     }
 }
 
-void TopMenu::set_top_menu_font()
+void MeasureBar::set_top_menu_font()
 {
     for(int i = 1; i <= TOP_MENU_NUMBER; i ++){
         QLabel *label = findChild<QLabel*>("label_" + QString::number(i));
@@ -69,7 +69,7 @@ void TopMenu::set_top_menu_font()
     }
 }
 
-void TopMenu::init_gain_angle()
+void MeasureBar::init_gain_angle()
 {
 #if QT_VERSION >= 0x050000
     ui->tableView_gain->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -162,52 +162,8 @@ void TopMenu::init_gain_angle()
     connect(ui->tableView_angle->itemDelegate(), SIGNAL(closeEditor(QWidget*)), this, SLOT(set_angle_header_text_close(QWidget*)));
 }
 
-bool TopMenu::eventFilter(QObject *object, QEvent *event)
-{
-    if((object == measurementLabelList.at(1) ||
-            object == measurementLabelList.at(2) ||
-            object == measurementLabelList.at(3) ||
-            object == measurementLabelList.at(4) ||
-            object == measurementLabelList.at(5) ||
-            object == measurementLabelList.at(6) ||
-            object == measurementLabelList.at(7) ||
-            object == measurementLabelList.at(8)) &&
-            event->type() == QEvent::MouseButtonPress) {
-        objectName = object->objectName();
 
-        MeasureDialog measureDialog(this, MeasureDialog::RA);
-
-        QLabel *label = qobject_cast<QLabel*>(object);
-        QString string = label->text();
-        QString text;
-        if(string.contains(HTML_TEXT_FIVE)) {
-            QString firstHtmlString = HTML_TEXT_FIVE;
-            QString text1 = string.right(string.length() - string.indexOf(firstHtmlString) - firstHtmlString.length());
-            if(text1.contains(HTML_TEXT_TWO)) {
-                text = text1.left(text1.indexOf(HTML_TEXT_TWO));
-            } else if(text1.contains(HTML_TEXT_FOUR)) {
-                text = text1.left(text1.indexOf(HTML_TEXT_FOUR));
-            }
-        } else {
-            text = string;
-        }
-
-        if (measureDialog.exec() == QDialog::Accepted) {
-            change_labelText(measureDialog.get_type_string());
-            qDebug()<<measureDialog.get_type()<<measureDialog.get_type_string();
-        }
-
-    } else if(object == measurementLabelList.at(0) && event->type() == QEvent::MouseButtonPress) {
-        open_editor_and_set_header_text(measurementLabelList.at(0), ui->tableView_gain, pGain, 0);
-
-    } else if(object == measurementLabelList.at(9) && event->type() == QEvent::MouseButtonPress) {
-        open_editor_and_set_header_text(measurementLabelList.at(9), ui->tableView_angle, pAngle, 0);
-
-    }
-    return QWidget::eventFilter(object, event);
-}
-
-void TopMenu::change_labelText(QString str)
+void MeasureBar::change_labelText(QString str)
 {
     for(int i = 1; i < TOP_MENU_NUMBER; i++) {
         if(measurementLabelList.at(i)->objectName() == objectName ){
@@ -225,7 +181,7 @@ void TopMenu::change_labelText(QString str)
     }
 }
 
-QStringList TopMenu::get_label_text(QString string)
+QStringList MeasureBar::get_label_text(QString string)
 {
     QString text, textUnit;
     QStringList stringList;
@@ -254,7 +210,7 @@ QStringList TopMenu::get_label_text(QString string)
     return stringList;
 }
 
-void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index)
+void MeasureBar::open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index)
 {
     QString headerTextUnit;
     QModelIndex modelIndex = model->item(0, index)->index();
@@ -300,19 +256,19 @@ void TopMenu::open_editor_and_set_header_text(QLabel *label, QTableView *tableVi
     }
 }
 
-void TopMenu::set_gain_header_text_close(QWidget *editor)
+void MeasureBar::set_gain_header_text_close(QWidget *editor)
 {
     Q_UNUSED(editor);
     set_header_text_close(measurementLabelList.at(0));
 }
 
-void TopMenu::set_angle_header_text_close(QWidget *editor)
+void MeasureBar::set_angle_header_text_close(QWidget *editor)
 {
     Q_UNUSED(editor);
     set_header_text_close(measurementLabelList.at(9));
 }
 
-void TopMenu::set_header_text_close(QLabel *label)
+void MeasureBar::set_header_text_close(QLabel *label)
 {
     QString string = label->text();
     QStringList stringList = get_label_text(string);
@@ -326,7 +282,7 @@ void TopMenu::set_header_text_close(QLabel *label)
     }
 }
 
-void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
+void MeasureBar::on_tableView_angle_clicked(const QModelIndex &index)
 {
     DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_angle->itemDelegate(index));
     if(!doubleSpinBox->m_editFlag) {
@@ -334,7 +290,7 @@ void TopMenu::on_tableView_angle_clicked(const QModelIndex &index)
     }
 }
 
-void TopMenu::on_tableView_gain_clicked(const QModelIndex &index)
+void MeasureBar::on_tableView_gain_clicked(const QModelIndex &index)
 {
     DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_gain->itemDelegate(index));
     if(!doubleSpinBox->m_editFlag) {
