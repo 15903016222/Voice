@@ -14,7 +14,7 @@ VirtualKeyboard::VirtualKeyboard(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    for(int i = 0; i < 10; i ++) {
+    for(int i = 1; i < 10; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("panelButton_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(do_click_button()));
         pushButton->setFocusPolicy(Qt::NoFocus);
@@ -22,7 +22,6 @@ VirtualKeyboard::VirtualKeyboard(QWidget *parent) :
 
     for(int i = 1; i < 6; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + QString::number(i));
-        connect(pushButton, SIGNAL(clicked()), this, SLOT(do_click_button()));
         pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
@@ -36,61 +35,46 @@ VirtualKeyboard::~VirtualKeyboard()
 
 void VirtualKeyboard::do_click_button()
 {
-    QString string;
     QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
-    if(pushButton->objectName() == "pushButton_3") {
-        string = "Left";
-    } else if(pushButton->objectName() == "pushButton_4") {
-        string = "Right";
-    } else {
-        string = pushButton->text();
-    }
-    input_number(string);
-    if(string == "Enter") {
-        hide();
-        emit close_keyboard();
-    }  
+    int value = pushButton->text().toInt();
+#if (PHASCAN | PHASCAN_II)
+    VInput::Key key = VInput::Key_1;
+    VInput::get_vinput()->send((VInput::Key)(key + value - 1));
+#endif
 }
 
-void VirtualKeyboard::input_number(QString string)
+#if (PHASCAN | PHASCAN_II)
+void VirtualKeyboard::on_panelButton_0_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_0);
+}
+
+void VirtualKeyboard::on_pushButton_1_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_Dot);
+}
+
+void VirtualKeyboard::on_pushButton_2_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_Backspace);
+}
+
+void VirtualKeyboard::on_pushButton_3_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_Left);
+}
+
+void VirtualKeyboard::on_pushButton_4_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_Right);
+}
+#endif
+
+void VirtualKeyboard::on_pushButton_5_clicked()
 {
 #if (PHASCAN | PHASCAN_II)
-//    VInput::Key key;
-    if(string == ".") {
-        VInput::get_vinput()->send(VInput::Key_Dot);
-    } else if(string == "Left") {
-        VInput::get_vinput()->send(VInput::Key_Left);
-    } else if(string == "Right") {
-        VInput::get_vinput()->send(VInput::Key_Right);
-    } else if(string == "Del") {
-        VInput::get_vinput()->send(VInput::Key_Backspace);
-    } else if(string == "Enter" || string == "Close") {
-        VInput::get_vinput()->send(VInput::Key_Enter);
-    } else  if(string == "0") {
-        VInput::get_vinput()->send(VInput::Key_0);
-    } else if(string == "1") {
-        VInput::get_vinput()->send(VInput::Key_1);
-    } else if(string == "2") {
-        VInput::get_vinput()->send(VInput::Key_2);
-    } else if(string == "3") {
-        VInput::get_vinput()->send(VInput::Key_3);
-    } else if(string == "4") {
-        VInput::get_vinput()->send(VInput::Key_4);
-    } else if(string == "5") {
-        VInput::get_vinput()->send(VInput::Key_5);
-    } else if(string == "6") {
-        VInput::get_vinput()->send(VInput::Key_6);
-    } else if(string == "7") {
-        VInput::get_vinput()->send(VInput::Key_7);
-    } else if(string == "8") {
-        VInput::get_vinput()->send(VInput::Key_8);
-    } else if(string == "9") {
-        VInput::get_vinput()->send(VInput::Key_9);
-    }
+    VInput::get_vinput()->send(VInput::Key_Enter);
 #endif
-#if (PC_WIN | PC_UNIX)
-    Q_UNUSED(string);
-#endif
+    hide();
+    emit close_keyboard();
 }
-
-
