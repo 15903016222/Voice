@@ -228,7 +228,7 @@ void MainWindow::update_translator(QString string)
     }
     ui->retranslateUi(this);
     ui->widgetTopLeft->retranslate_top_menu_ui();
-    ui->widgetTopLeft->set_top_menu_font();
+ //   ui->widgetTopLeft->set_top_menu_font();
     firstSecondMenu->retranslate_main_menu_ui(string);
     commonMenuWidget->retranslate_common_menu_ui();
 
