@@ -4,8 +4,8 @@
 #include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
-#include "myinputpanel.h"
 #include "mcu.h"
+#include "virtualkeyboard.h"
 
 #include <QMainWindow>
 #include <QTranslator>
@@ -43,7 +43,7 @@ private:
     CommonMenuWidget * commonMenuWidget;
     FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
-    MyInputPanel *myInputPanelDlg;
+    VirtualKeyboard *pVirtualKeyboard;
 
     bool m_hiddenFirstSecondMenuFlag;
     bool m_hiddenThirdMenuFlag;

@@ -28,7 +28,6 @@ CommonMenuWidget::CommonMenuWidget(QWidget *parent) :
     set_common_menu_name();
 
     connect(ui->tableView->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
-
 }
 
 CommonMenuWidget::~CommonMenuWidget()
@@ -101,7 +100,7 @@ void CommonMenuWidget::choose_widget_style(int k)
     case 1: {
         QList<int> rangeList;
         rangeList.append(0.00);
-        rangeList.append(100.00);
+        rangeList.append(1000.00);
         QStringList stepList;
         stepList.append("0.01");
         stepList.append("0.10");
@@ -245,10 +244,11 @@ void CommonMenuWidget::on_tableView_clicked(const QModelIndex &index)
     if(CHOICE_WIDGET_CHAR[column].toInt() == 1) {
         ui->tableView->edit(index);
     } else if(CHOICE_WIDGET_CHAR[column].toInt() == 2) {
-        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(index.column()));
+        ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView->itemDelegateForColumn(column));
         ui->tableView->edit(index);
         QPoint point = QPoint();
         QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(comboBox->comboBoxList.at(comboBox->comboBoxList.count() - 1), event);
     }
+
 }

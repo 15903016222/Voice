@@ -49,8 +49,7 @@
                     "more than 10M":"大于10M"
                 }
             },
-
-			"Rectifier":{
+            "Rectifier":{
                 "Rectifier":"检波",
                 "options":{
                     "RF":"射频",
