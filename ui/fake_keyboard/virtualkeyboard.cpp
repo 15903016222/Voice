@@ -1,9 +1,7 @@
 #include "virtualkeyboard.h"
 #include "ui_virtualkeyboard.h"
 
-#if (PHASCAN | PHASCAN_II)
 #include "vinput.h"
-#endif
 
 #include <QPushButton>
 #include <QDebug>
@@ -37,13 +35,10 @@ void VirtualKeyboard::do_click_button()
 {
     QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
     int value = pushButton->text().toInt();
-#if (PHASCAN | PHASCAN_II)
     VInput::Key key = VInput::Key_1;
     VInput::get_vinput()->send((VInput::Key)(key + value - 1));
-#endif
 }
 
-#if (PHASCAN | PHASCAN_II)
 void VirtualKeyboard::on_panelButton_0_clicked()
 {
     VInput::get_vinput()->send(VInput::Key_0);
@@ -68,13 +63,10 @@ void VirtualKeyboard::on_pushButton_4_clicked()
 {
     VInput::get_vinput()->send(VInput::Key_Right);
 }
-#endif
 
 void VirtualKeyboard::on_pushButton_5_clicked()
 {
-#if (PHASCAN | PHASCAN_II)
     VInput::get_vinput()->send(VInput::Key_Enter);
-#endif
     hide();
     emit close_keyboard();
 }
