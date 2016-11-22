@@ -6,12 +6,12 @@ HEADERS += \
 
 equals(DEVICE, "PC_WIN") {
     SOURCES += \
-        $$PWD/vinput.cpp
+        $$PWD/vinput_pc.cpp
 }
 
 equals(DEVICE, "PC_UNIX") {
     SOURCES += \
-        $$PWD/vinput.cpp
+        $$PWD/vinput_pc.cpp
 }
 
 equals(DEVICE, "PHASCAN") {
