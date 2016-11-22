@@ -10,6 +10,9 @@
     <height>493</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
@@ -31,6 +34,9 @@
    </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -42,6 +48,9 @@
         <width>560</width>
         <height>459</height>
        </rect>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
@@ -60,312 +69,580 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QListWidget" name="listWidget">
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="cursor" stdset="0">
-          <cursorShape>ArrowCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QListWidget{outline: 0px;}
-
-QListWidget::item{
-    background-color: rgba(0, 0, 0, 0);
-    color: black;
-}
-
-QListWidget::item:Selected{
-    border: 1px solid rgba(180, 180, 180, 255);
-    background-color: rgba(85, 175, 255, 80);
-    color: red;
-}</string>
-         </property>
+        <widget class="QTableWidget" name="tableWidget">
          <property name="lineWidth">
           <number>1</number>
          </property>
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
-         <property name="spacing">
-          <number>1</number>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
          </property>
-         <property name="viewMode">
-          <enum>QListView::ListMode</enum>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
          </property>
-         <property name="selectionRectVisible">
+         <property name="showGrid">
+          <bool>true</bool>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="cornerButtonEnabled">
+          <bool>true</bool>
+         </property>
+         <attribute name="horizontalHeaderVisible">
           <bool>false</bool>
-         </property>
-         <item>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>true</bool>
+         </attribute>
+         <row>
           <property name="text">
-           <string>A%                    Peak amplitude in gate A</string>
+           <string>A%</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AdBa</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AdBr</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>B%</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>BdBB</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>BdBr</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>A^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>B^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>I/</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>I(W)/</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>T(A^)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>ML</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>%(r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>%(m)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>%(m-r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>U(r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>U(m)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>U(m-r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>P(r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>P(m)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>P(m-r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>S(r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>S(m)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>S(m-r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>I(r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>I(m)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>I(m-r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>RA^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>RB^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>PA^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>PB^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>DA^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>DB^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>SA^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>SB^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>ViA^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>ViB^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>VsA^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>VsB^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>LA^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>LB^</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>E%</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AWS-DA</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AWS-DB</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AWS-DC</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AWS-DD</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AWS-D45</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AWS-D60</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AWS-D70</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>AWS-D</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>T-D(r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>T-D(m)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>T-S(m-r)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>T-D(m-r)</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>Measurement</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>Peak amplitude in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="1" column="0">
           <property name="text">
-           <string>AdBA                Signal in gate minus gate level for gate A</string>
+           <string>Signal in gate minus gate level for gate A</string>
           </property>
          </item>
-         <item>
+         <item row="2" column="0">
           <property name="text">
-           <string>AdBr                 Difference between signal and reference in gate A</string>
+           <string>Difference between signal and reference in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="3" column="0">
           <property name="text">
-           <string>B%                    Peak amplitude in gate B</string>
+           <string>Peak amplitude in gate B</string>
           </property>
          </item>
-         <item>
+         <item row="4" column="0">
           <property name="text">
-           <string>BdBB                Signal in gate minus gate level for gate B</string>
+           <string>Signal in gate minus gate level for gate B</string>
           </property>
          </item>
-         <item>
+         <item row="5" column="0">
           <property name="text">
-           <string>BdBr                 Difference between signal and reference in gate B</string>
+           <string>Difference between signal and reference in gate B</string>
           </property>
          </item>
-         <item>
+         <item row="6" column="0">
           <property name="text">
-           <string>A^                    Position in gate A</string>
+           <string>Position in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="7" column="0">
           <property name="text">
-           <string>B^                    Position in gate B</string>
+           <string>Position in gate B</string>
           </property>
          </item>
-         <item>
+         <item row="8" column="0">
           <property name="text">
-           <string>I/                      Position in gate I</string>
+           <string>Position in gate I</string>
           </property>
          </item>
-         <item>
+         <item row="9" column="0">
           <property name="text">
-           <string>I(W)/                 Position in gate I in water</string>
+           <string>Position in gate I in water</string>
           </property>
          </item>
-         <item>
+         <item row="10" column="0">
           <property name="text">
-           <string>T(A^)                Thickness</string>
+           <string>Thickness</string>
           </property>
          </item>
-         <item>
+         <item row="11" column="0">
           <property name="text">
-           <string>ML                   Percentage of Material loss</string>
+           <string>Percentage of Material loss</string>
           </property>
          </item>
-         <item>
+         <item row="12" column="0">
           <property name="text">
-           <string>%(r)                 Amplitude value for reference cursor</string>
+           <string>Amplitude value for reference cursor</string>
           </property>
          </item>
-         <item>
+         <item row="13" column="0">
           <property name="text">
-           <string>%(m)                Amplitude value of the measurement cursor</string>
+           <string>Amplitude value of the measurement cursor</string>
           </property>
          </item>
-         <item>
+         <item row="14" column="0">
           <property name="text">
-           <string>%(m-r)             Amplitude (measurement cursor - reference cursor)</string>
+           <string>Amplitude (measurement cursor - reference cursor)</string>
           </property>
          </item>
-         <item>
+         <item row="15" column="0">
           <property name="text">
-           <string>U(r)                 Ultrasonic position of the reference cursor</string>
+           <string>Ultrasonic position of the reference cursor</string>
           </property>
          </item>
-         <item>
+         <item row="16" column="0">
           <property name="text">
-           <string>U(m)               Ultrasonic position of the measurement cursor</string>
+           <string>Ultrasonic position of the measurement cursor</string>
           </property>
          </item>
-         <item>
+         <item row="17" column="0">
           <property name="text">
-           <string>U(m-r)             Ultrasonic axix(measurement cursor - reference cursor)</string>
+           <string>Ultrasonic axix(measurement cursor - reference cursor)</string>
           </property>
          </item>
-         <item>
+         <item row="18" column="0">
           <property name="text">
-           <string>P(r)                  Probe position of the reference cursor</string>
+           <string>Probe position of the reference cursor</string>
           </property>
          </item>
-         <item>
+         <item row="19" column="0">
           <property name="text">
-           <string>P(m)                Probe position of the measurement cursor</string>
+           <string>Probe position of the measurement cursor</string>
           </property>
          </item>
-         <item>
+         <item row="20" column="0">
           <property name="text">
-           <string>P(m-r)             Probe (measurement cursor - reference cursor)</string>
+           <string>Probe (measurement cursor - reference cursor)</string>
           </property>
          </item>
-         <item>
+         <item row="21" column="0">
           <property name="text">
-           <string>S(r)                 Scan position of the reference cursor</string>
+           <string>Scan position of the reference cursor</string>
           </property>
          </item>
-         <item>
+         <item row="22" column="0">
           <property name="text">
-           <string>S(m)                Scan position of the measurment cursor</string>
+           <string>Scan position of the measurment cursor</string>
           </property>
          </item>
-         <item>
+         <item row="23" column="0">
           <property name="text">
-           <string>S(m-r)             Scan (measurement cursor - reference cursor)</string>
+           <string>Scan (measurement cursor - reference cursor)</string>
           </property>
          </item>
-         <item>
+         <item row="24" column="0">
           <property name="text">
-           <string>I(r)                  Index position of the reference cursor</string>
+           <string>Index position of the reference cursor</string>
           </property>
          </item>
-         <item>
+         <item row="25" column="0">
           <property name="text">
-           <string>I(m)                Index position of the measurement cursor</string>
+           <string>Index position of the measurement cursor</string>
           </property>
          </item>
-         <item>
+         <item row="26" column="0">
           <property name="text">
-           <string>I(m-r)              Index axis(measurement cursor - reference cursor)</string>
+           <string>Index axis(measurement cursor - reference cursor)</string>
           </property>
          </item>
-         <item>
+         <item row="27" column="0">
           <property name="text">
-           <string>RA^                Reference point to the indication in gate A</string>
+           <string>Reference point to the indication in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="28" column="0">
           <property name="text">
-           <string>RB^                Reference point to the indication in gate B</string>
+           <string>Reference point to the indication in gate B</string>
           </property>
          </item>
-         <item>
+         <item row="29" column="0">
           <property name="text">
-           <string>PA^                Probe front face to the indication in gate A</string>
+           <string>Probe front face to the indication in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="30" column="0">
           <property name="text">
-           <string>PB^                Probe front face to the indication in gate B</string>
+           <string>Probe front face to the indication in gate B</string>
           </property>
          </item>
-         <item>
+         <item row="31" column="0">
           <property name="text">
-           <string>DA^               Depth of the indication in gate A</string>
+           <string>Depth of the indication in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="32" column="0">
           <property name="text">
-           <string>DB^               Depth of the indication in gate B</string>
+           <string>Depth of the indication in gate B</string>
           </property>
          </item>
-         <item>
+         <item row="33" column="0">
           <property name="text">
-           <string>SA^               Sound path of the indication in gate A</string>
+           <string>Sound path of the indication in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="34" column="0">
           <property name="text">
-           <string>SB^               Sound path of the indication in gate B</string>
+           <string>Sound path of the indication in gate B</string>
           </property>
          </item>
-         <item>
+         <item row="35" column="0">
           <property name="text">
-           <string>ViA^              Volumetric position in gate A on the index axis</string>
+           <string>Volumetric position in gate A on the index axis</string>
           </property>
          </item>
-         <item>
+         <item row="36" column="0">
           <property name="text">
-           <string>ViB^              Volumetric position in gate B on the index axis</string>
+           <string>Volumetric position in gate B on the index axis</string>
           </property>
          </item>
-         <item>
+         <item row="37" column="0">
           <property name="text">
-           <string>VsA^             Volumetric position in gate A on the scan axis</string>
+           <string>Volumetric position in gate A on the scan axis</string>
           </property>
          </item>
-         <item>
+         <item row="38" column="0">
           <property name="text">
-           <string>VsB^             Volumetric position in gate B on the scan axis</string>
+           <string>Volumetric position in gate B on the scan axis</string>
           </property>
          </item>
-         <item>
+         <item row="39" column="0">
           <property name="text">
-           <string>LA^               Leg(skip)of the indication in gate A</string>
+           <string>Leg(skip)of the indication in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="40" column="0">
           <property name="text">
-           <string>LB^               Leg(skip)of the indication in gate B</string>
+           <string>Leg(skip)of the indication in gate B</string>
           </property>
          </item>
-         <item>
+         <item row="41" column="0">
           <property name="text">
-           <string>E%                Peak amplitude of the envelop in gate A</string>
+           <string>Peak amplitude of the envelop in gate A</string>
           </property>
          </item>
-         <item>
+         <item row="42" column="0">
           <property name="text">
-           <string>AWS-DA        Indication level for AWS-D1.5A</string>
+           <string>Indication level for AWS-D1.5A</string>
           </property>
          </item>
-         <item>
+         <item row="43" column="0">
           <property name="text">
-           <string>AWS-DB        Zero reference  level for AWS-D1.5B</string>
+           <string>Zero reference  level for AWS-D1.5B</string>
           </property>
          </item>
-         <item>
+         <item row="44" column="0">
           <property name="text">
-           <string>AWS-DC        Attenuation factor for AWS-D1.5 C</string>
+           <string>Attenuation factor for AWS-D1.5 C</string>
           </property>
          </item>
-         <item>
+         <item row="45" column="0">
           <property name="text">
-           <string>AWS-DD        Indication rating for AWS-D1.5D</string>
+           <string>Indication rating for AWS-D1.5D</string>
           </property>
          </item>
-         <item>
+         <item row="46" column="0">
           <property name="text">
-           <string>AWS-D45       Discontinuity severity class for AWS-D1.5 45</string>
+           <string>Discontinuity severity class for AWS-D1.5 45</string>
           </property>
          </item>
-         <item>
+         <item row="47" column="0">
           <property name="text">
-           <string>AWS-D60       Discontinuity severity class for AWS-D1.5 60</string>
+           <string>Discontinuity severity class for AWS-D1.5 60</string>
           </property>
          </item>
-         <item>
+         <item row="48" column="0">
           <property name="text">
-           <string>AWS-D70       Discontinuity severity class for AWS-D1.5 70</string>
+           <string>Discontinuity severity class for AWS-D1.5 70</string>
           </property>
          </item>
-         <item>
+         <item row="49" column="0">
           <property name="text">
-           <string>AWS-D          CL Discontinuity severity class for AWS-D1.5</string>
+           <string>CL Discontinuity severity class for AWS-D1.5</string>
           </property>
          </item>
-         <item>
+         <item row="50" column="0">
           <property name="text">
-           <string>T-D(r)            TOFD Ultrasonic Axis Reference Cursor Depth</string>
+           <string>TOFD Ultrasonic Axis Reference Cursor Depth</string>
           </property>
          </item>
-         <item>
+         <item row="51" column="0">
           <property name="text">
-           <string>T-D(m)           TOFD Ultrasonic Axis Measure Cursor Depth</string>
+           <string>TOFD Ultrasonic Axis Measure Cursor Depth</string>
           </property>
          </item>
-         <item>
+         <item row="52" column="0">
           <property name="text">
-           <string>T-S(m-r)         TOFD Scan Axis Cursor Space</string>
+           <string>TOFD Scan Axis Cursor Space</string>
           </property>
          </item>
-         <item>
+         <item row="53" column="0">
           <property name="text">
-           <string>T-D(m-r)         TOFD Ultrasonic Axis Cursor Height</string>
+           <string>TOFD Ultrasonic Axis Cursor Height</string>
           </property>
          </item>
         </widget>
@@ -405,13 +682,16 @@ QListWidget::item:Selected{
          <bold>true</bold>
         </font>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>&amp;Cancel</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_ok">
+      <widget class="QPushButton" name="choosePushButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -425,6 +705,9 @@ QListWidget::item:Selected{
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
         <string>&amp;Choose</string>
@@ -454,7 +737,7 @@ QListWidget::item:Selected{
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_ok</sender>
+   <sender>choosePushButton</sender>
    <signal>clicked()</signal>
    <receiver>MeasureDialog</receiver>
    <slot>accept()</slot>

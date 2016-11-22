@@ -10,6 +10,7 @@
 
 #include "group.h"
 #include "beam.h"
+#include "tcg.h"
 
 #include <QMutex>
 #include <QReadWriteLock>
@@ -91,6 +92,7 @@ private:
 
 typedef QSharedPointer<Group> GroupPointer;
 typedef QSharedPointer<Beam> BeamPointer;
+typedef QSharedPointer<Tcg> TcgPointer;
 
 class Fpga
 {
@@ -198,6 +200,8 @@ public:
 
     static const int MAX_GROUPS_NUM;
     static const int MAX_BEAMS_NUM;
+    static const int MAX_TCGS_NUM;
+
     /** Group **/
     int groups();
     bool create_group();
@@ -209,6 +213,12 @@ public:
     bool create_beam();
     bool remove_beam();
     BeamPointer &get_beam(int index);
+
+    /** Tcg **/
+    int tcgs();
+    bool create_tcg();
+    bool remove_tcg();
+    TcgPointer &get_tcg(int index);
 
 protected:
     Fpga();
@@ -233,6 +243,9 @@ private:
 
     QList<BeamPointer> m_beams;
     QReadWriteLock m_beamsLock;
+
+    QList<TcgPointer> m_tcgs;
+    QReadWriteLock m_tcgsLock;
 };
 
 #endif // __FPGA_H__

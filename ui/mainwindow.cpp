@@ -1,25 +1,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "vinput.h"
+
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    m_mcu = Mcu::get_mcu();
     ui->setupUi(this);
 
     init_ui();
 
- //   slot_setMenuOpacity(100.0);
- //   connect(ui->widget_thirdMenu, SIGNAL(opacityChanged(double)), this, SLOT(slot_setMenuOpacity(double)));
-
-    m_rotarySecondMenuNum = 0;
-
-    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
-    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
+    Mcu *mcu = Mcu::get_mcu();
+    connect(mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
+    connect(mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 }
 
 MainWindow::~MainWindow()
@@ -82,6 +78,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_MENU:
         show_hidden_Menu();
         break;
+    case Mcu::KEY_SURE:
+        VInput::get_vinput()->send(VInput::Key_Enter);
+        break;
     default:
         break;
     }
@@ -103,7 +102,6 @@ void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
  //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
 
     firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
-    m_rotarySecondMenuNum = 0;
 }
 
 void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
@@ -360,41 +358,10 @@ void MainWindow::slot_setMenuOpacity(double value)
 
 void MainWindow::do_rotary_event(Mcu::RotaryType type)
 {
-    if(firstSecondMenu->menuList.at(m_firstMenuNum)->hasFocus()) {
-        if (type == Mcu::ROTARY_UP) {
-            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
-            QApplication::sendEvent(firstSecondMenu->menuList.at(m_firstMenuNum), event);
-
-            if(m_rotarySecondMenuNum > 0){
-                m_rotarySecondMenuNum--;
-            }
-        } else {
-            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
-            QApplication::sendEvent(firstSecondMenu->menuList.at(m_firstMenuNum), event);
-
-            if(m_firstMenuNum == 0 || m_firstMenuNum == 4 || m_firstMenuNum == 5 || m_firstMenuNum == 8){
-                if(m_rotarySecondMenuNum < 3){
-                    m_rotarySecondMenuNum++;
-                }
-            }else if(m_firstMenuNum == 1 || m_firstMenuNum == 3 || m_firstMenuNum == 7){
-                if(m_rotarySecondMenuNum < 4){
-                    m_rotarySecondMenuNum++;
-                }
-            }else if(m_firstMenuNum == 2 || m_firstMenuNum == 6){
-                if(m_rotarySecondMenuNum < 2){
-                    m_rotarySecondMenuNum++;
-                }
-            }
-        }
-    }
-}
-
-void MainWindow::key_sure(Mcu::KeyType key)
-{
-    if(firstSecondMenu->menuList.at(m_firstMenuNum)->hasFocus()) {
-        if(key == Mcu::KEY_SURE) {
-            ui->widget_thirdMenu->set_third_menu_name(m_firstMenuNum, m_rotarySecondMenuNum);
-        }
+    if (Mcu::ROTARY_UP == type) {
+        VInput::get_vinput()->send(VInput::Key_Up);
+    } else {
+        VInput::get_vinput()->send(VInput::Key_Down);
     }
 }
 

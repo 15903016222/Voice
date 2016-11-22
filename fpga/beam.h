@@ -17,7 +17,6 @@ class Beam
 {
 public:
     static const quint32 MAX_CHANNELS;
-    static const quint32 MAX_POINTS;
 
     explicit Beam(const int index=0);
     ~Beam();
@@ -72,20 +71,6 @@ public:
 
     quint32 rx_delay(quint32 channel) const;
     bool set_rx_delay(quint32 channel, quint32 val);
-
-    /**
-     * @brief tcg_position 返回对应TCG点的位置
-     * @param point        指定TCG点,最大点数为 MAX_POINTS-1
-     * @return             成功返回指定点的位置,单位为10ns
-     */
-    quint32 tcg_position(quint32 point) const;
-    bool set_tcg_position(quint32 poing, quint32 val);
-
-    quint32 tcg_slope(quint32 point) const;
-    bool set_tcg_slope(quint32 point, quint32 val) ;
-
-    bool tcg_flag(quint32 point) const;
-    bool set_tcg_flag(quint32 point, bool flag);
 
     bool refresh(void);
 
