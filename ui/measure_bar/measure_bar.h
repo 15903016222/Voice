@@ -1,5 +1,5 @@
-#ifndef TOPMENU
-#define TOPMENU
+#ifndef __MEASURE_BAR_H__
+#define __MEASURE_BAR_H__
 
 #include "measure_dialog.h"
 
@@ -10,39 +10,37 @@
 #define TOP_MENU_NUMBER 10
 
 namespace Ui {
-class TopMenu;
+class MeasureBar;
 }
 
-class TopMenu : public QWidget
+class MeasureBar : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TopMenu(QWidget *parent = 0);
-    ~TopMenu();
+    explicit MeasureBar(QWidget *parent = 0);
+    ~MeasureBar();
 
     void retranslate_top_menu_ui();
     void set_top_menu_font();
-
-    bool eventFilter(QObject *object, QEvent *event);
 
 signals:
     void currentDialogIndex(QString);
 
 private slots:
-    void change_labelText(QString str);
     void set_gain_header_text_close(QWidget *editor);
     void set_angle_header_text_close(QWidget *editor);
     void on_tableView_angle_clicked(const QModelIndex &index);
     void on_tableView_gain_clicked(const QModelIndex &index);
 
 private:
-    Ui::TopMenu *ui;
+    Ui::MeasureBar *ui;
 
     void init_ui();
     void init_gain_angle();
     void open_editor_and_set_header_text(QLabel *label, QTableView *tableView, QStandardItemModel *model, int index);
     void set_header_text_close(QLabel *label);
+    void change_labelText(QString str);
 
     QStringList get_label_text(QString string);
 
@@ -53,5 +51,5 @@ private:
     QStandardItemModel *pAngle;
 };
 
-#endif // TOPMENU
+#endif // __MEASURE_BAR_H__
 

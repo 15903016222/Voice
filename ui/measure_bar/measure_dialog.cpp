@@ -1,6 +1,10 @@
 #include "measure_dialog.h"
 #include "ui_measure_dialog.h"
 
+#include <QKeyEvent>
+
+#include <QDebug>
+
 MeasureDialog::MeasureDialog(QWidget *parent, MeasureDialog::MeasureType type) :
     QDialog(parent),
     ui(new Ui::MeasureDialog)
@@ -9,7 +13,7 @@ MeasureDialog::MeasureDialog(QWidget *parent, MeasureDialog::MeasureType type) :
 
     setWindowFlags( (windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::FramelessWindowHint);
 
-    ui->listWidget->setCurrentRow(type);
+    ui->tableWidget->setCurrentCell(type, 0);
 }
 
 MeasureDialog::~MeasureDialog()
@@ -19,15 +23,24 @@ MeasureDialog::~MeasureDialog()
 
 MeasureDialog::MeasureType MeasureDialog::get_type() const
 {
-    return (MeasureDialog::MeasureType)ui->listWidget->currentRow();
+    return (MeasureDialog::MeasureType)ui->tableWidget->currentRow();
 }
 
-const QString MeasureDialog::get_type_string() const
+QString MeasureDialog::get_type_string()
 {
-    return ui->listWidget->currentItem()->text();
+    return ui->tableWidget->verticalHeaderItem(ui->tableWidget->currentRow())->text();
 }
 
 void MeasureDialog::set_type(MeasureDialog::MeasureType type)
 {
-    ui->listWidget->setCurrentRow(type);
+    ui->tableWidget->setCurrentCell(type, 0);
+}
+
+void MeasureDialog::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Enter
+            || e->key() == Qt::Key_Return) {
+       accept();
+    }
+    QDialog::keyPressEvent(e);
 }

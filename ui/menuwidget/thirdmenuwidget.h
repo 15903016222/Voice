@@ -54,7 +54,6 @@ private:
     int m_height;
     int m_currFirstNum;
     int m_currSecondNum;
-    int m_measurementIndex;
     int m_inputIndex;
     int m_probeIndex;
     int m_wedgeIndex;
@@ -83,7 +82,6 @@ protected slots:
     void set_header_text_create(QStringList stringList) const ;
     void set_header_text_close(QWidget *editor) ;
     void on_tableView_clicked(const QModelIndex &index);
-    void change_measurement_label(QString string);
     void select_probe(QString string);
     void select_wedge(QString string);
     void set_edited_text(QString string);

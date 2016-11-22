@@ -536,30 +536,10 @@
     },
     "Measurement":{
         "Translate_Second_Menu":[
-            "检测结果",
             "光标",
             "TOFD",
             "缺陷记录"
         ],
-        "Reading":{
-			"Reading Group":{
-				"Reading Group":"检测结果组",
-				"options":{
-					"1 Weld Joint:A%/DA/PA/SA":"1 焊缝:A%/DA/PA/SA",
-					"2 TOFD:A%/T-D(r)/T-D(m)/T-D(m-r)":"2 TOFD:A%/T-D(r)/T-D(m)/T-D(m-r)",
-					"3 Corossion:T(A^)/ML":"3 腐蚀:T(A^)/ML"
-				}
-            },
-            "A%":"A%",
-            "DA":"DA",
-            "PA":"PA",
-            "SA":"SA",
-            "T-D(r)":"T-D(r)",
-            "T-D(m)":"T-D(m)",
-            "T-D(m-r)":"T-D(m-r)",
-            "T(A^)":"T(A^)",
-            "ML":"ML"
-        },
         "Cursors":{
             "Selection":{
                 "Selection":"选择",

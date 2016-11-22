@@ -6,7 +6,6 @@
 #include "pushbuttondelegate.h"
 #include "probedialog.h"
 #include "wedgedialog.h"
-#include "measure_dialog.h"
 #include "inputpanelcontext.h"
 #include "about_dialog.h"
 #include "resetconfigdialog.h"
@@ -408,24 +407,11 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
         break;
     }
-    case 7: {
-        //点击表头弹出测量值选择对话框
-        MeasureDialog measurementDialog;
-        measurementDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        measurementDialog.show();
-
-//        measurementDialog->set_current_index(currentHeaderText);
-
-        m_measurementIndex = index;
-//        connect(measurementDialog, SIGNAL(labelTextChanged(QString)), this, SLOT(change_measurement_label(QString)));
-        break;
-    }
     case 11: {
         //点击表头弹出文件管理对话框
         FileManagerDialog *fileManagerDialog = new FileManagerDialog(this);
         fileManagerDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         fileManagerDialog->exec();
-
         break;
     }
     case 14: {
@@ -488,7 +474,7 @@ void ThirdMenuWidget::onHeaderClicked(int index)
         pDateTimeSetDialog->set_spinbox_value(valueList);
 
         pDateTimeSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-        pDateTimeSetDialog->exec();
+        pDateTimeSetDialog->show();
 
         m_dateTimeSetIndex = index;
         connect(pDateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_time(QString)));
@@ -748,16 +734,6 @@ void ThirdMenuWidget::set_currentTime()
         pModel->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
     } else {
         pModel->item(0, 1)->setText(pDateTimeSetDialog->m_strDate);
-    }
-}
-
-void ThirdMenuWidget::change_measurement_label(QString string)
-{
-    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-        if(i == m_measurementIndex) {
-            pModel->setHeaderData(m_measurementIndex, Qt::Horizontal, string);
-            break;
-        }
     }
 }
 

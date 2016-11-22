@@ -78,7 +78,7 @@
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <item>
        <widget class="QPushButton" name="keyboardPushButton">
@@ -109,6 +109,9 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
          <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
         </property>
         <item>
          <widget class="BatteryLabel" name="fstBatteryLabel">
@@ -146,6 +149,12 @@
    </item>
    <item>
     <widget class="QWidget" name="widget_2" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="styleSheet">
       <string notr="true">QWidget#widget_2
 {

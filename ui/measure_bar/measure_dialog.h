@@ -73,8 +73,11 @@ public:
     ~MeasureDialog();
 
     MeasureType get_type() const;
-    const QString get_type_string() const;
+    QString get_type_string();
     void set_type(MeasureType type);
+
+protected:
+    void keyPressEvent(QKeyEvent *e);
 
 private:
     Ui::MeasureDialog *ui;
