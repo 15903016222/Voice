@@ -12,7 +12,6 @@ include(measure_bar/measure_bar.pri)
 SOURCES += \
     $$PWD/mainwindow.cpp \
     $$PWD/showinfowidget.cpp \
-    $$PWD/menuwidget/topmenu.cpp \
     $$PWD/menuwidget/firstsecondmenuwidget.cpp \
     $$PWD/menuwidget/thirdmenuwidget.cpp \
     $$PWD/menuwidget/commonmenuwidget.cpp \
@@ -36,7 +35,6 @@ SOURCES += \
 HEADERS += \
     $$PWD/mainwindow.h \
     $$PWD/showinfowidget.h \
-    $$PWD/menuwidget/topmenu.h \
     $$PWD/menuwidget/firstsecondmenuwidget.h \
     $$PWD/menuwidget/thirdmenuwidget.h \
     $$PWD/menuwidget/commonmenuwidget.h \
@@ -60,7 +58,6 @@ HEADERS += \
 FORMS += \
     $$PWD/mainwindow.ui \
     $$PWD/showinfowidget.ui \
-    $$PWD/menuwidget/topmenu.ui \
     $$PWD/menuwidget/firstsecondmenuwidget.ui \
     $$PWD/menuwidget/thirdmenuwidget.ui \
     $$PWD/menuwidget/commonmenuwidget.ui \
