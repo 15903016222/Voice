@@ -37,38 +37,6 @@ void MeasureBar::retranslate_top_menu_ui()
     ui->retranslateUi(this);
 }
 
-void MeasureBar::init_ui()
-{
-    set_top_menu_font();
-
-    for(int i = 0; i < TOP_MENU_NUMBER; i ++) {
-        measurementLabelList.at(i)->installEventFilter(this);
-    }
-}
-
-void MeasureBar::set_top_menu_font()
-{
-    for(int i = 1; i <= TOP_MENU_NUMBER; i ++){
-        QLabel *label = findChild<QLabel*>("label_" + QString::number(i));
-        measurementLabelList.append(label);
-
-        QString str = label->text();
-        QString text1, text2;
-
-        if(str.contains("\n") == true) {
-            int index = str.indexOf("\n");
-            text1 = str.left(index);
-            text2 = str.right(str.length() - index - 1);
-
-            if(i == 1 || i == TOP_MENU_NUMBER){
-                label->setText(HTML_TEXT_ONE + text1 + HTML_TEXT_TWO + HTML_TEXT_THREE + text2 + HTML_TEXT_FOUR);
-            }else{
-                label->setText(HTML_TEXT_FIVE + text1 + HTML_TEXT_TWO + HTML_TEXT_SIX + text2 + HTML_TEXT_FOUR);
-            }
-        }
-    }
-}
-
 void MeasureBar::init_gain_angle()
 {
 //#if QT_VERSION >= 0x050000
@@ -236,12 +204,6 @@ void MeasureBar::open_editor_and_set_header_text(QLabel *label, QTableView *tabl
                                                 headerTextUnit + "Δ" + stepList.at(stepIndex + 1) + HTML_TEXT_FOUR);
         }
     }
-}
-
-void MeasureBar::set_angle_header_text_close(QWidget *editor)
-{
-    Q_UNUSED(editor);
-    set_header_text_close(measurementLabelList.at(9));
 }
 
 void MeasureBar::set_header_text_close(QLabel *label)
