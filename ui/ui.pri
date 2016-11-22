@@ -72,6 +72,25 @@ FORMS += \
     $$PWD/dialogwidget/networkdialog.ui \
     $$PWD/dialogwidget/datetimesetdialog.ui \
     $$PWD/dialogwidget/filemanagerdialog.ui \
+    $$PWD/displaywidget/group_1/ascan_1.ui \
+    $$PWD/displaywidget/group_1/ascan_b_c_1.ui \
+    $$PWD/displaywidget/group_1/ascan_b_s_1.ui \
+    $$PWD/displaywidget/group_1/ascan_s_1.ui \
+    $$PWD/displaywidget/group_1/ascan_s_c_1.ui \
+    $$PWD/displaywidget/group_1/cscan_1.ui \
+    $$PWD/displaywidget/group_1/sscan_1.ui \
+    $$PWD/displaywidget/group_1/sscan_c_1.ui \
+    $$PWD/displaywidget/group_1/tab_1.ui \
+    $$PWD/displaywidget/group_2/ascan_2.ui \
+    $$PWD/displaywidget/group_2/ascan_s_2.ui \
+    $$PWD/displaywidget/group_2/ascan_b_c_2.ui \
+    $$PWD/displaywidget/group_2/ascan_b_s_2.ui \
+    $$PWD/displaywidget/group_2/ascan_s_c_2.ui \
+    $$PWD/displaywidget/group_2/cscan_2.ui \
+    $$PWD/displaywidget/group_2/sscan_2.ui \
+    $$PWD/displaywidget/group_2/sscan_c_2.ui \
+    $$PWD/displaywidget/group_2/sscan_c_tab_2.ui \
+    $$PWD/displaywidget/group_2/tab_2.ui \
     $$PWD/displaywidget/group_3/ascan_3.ui \
     $$PWD/displaywidget/group_3/ascan_b_c_3.ui \
     $$PWD/displaywidget/group_3/ascan_b_s_3.ui \
