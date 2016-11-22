@@ -86,6 +86,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_SURE:
         VInput::get_vinput()->send(VInput::Key_Enter);
         break;
+    case Mcu::KEY_BACK:
+        VInput::get_vinput()->send(VInput::Key_Back);
+        break;
     default:
         break;
     }
