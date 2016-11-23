@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AScan_7</class>
- <widget class="QWidget" name="AScan_7">
+ <class>AScanLayout</class>
+ <widget class="QWidget" name="AScanLayout">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -34,6 +34,9 @@
    </item>
    <item row="3" column="0">
     <widget class="QWidget" name="widget_A7" native="true"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QWidget" name="widget_A8" native="true"/>
    </item>
   </layout>
  </widget>

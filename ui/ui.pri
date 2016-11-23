@@ -33,7 +33,8 @@ SOURCES += \
     $$PWD/spinbox/spinbox.cpp \
     $$PWD/fake_keyboard/virtualkeyboard.cpp \
     $$PWD/qitemdelegate/lineeditdelegate.cpp \
-    $$PWD/qitemdelegate/doublespinboxdelegate.cpp
+    $$PWD/qitemdelegate/doublespinboxdelegate.cpp \
+    $$PWD/displaywidget/ascan_layout.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -57,7 +58,8 @@ HEADERS += \
     $$PWD/spinbox/spinbox.h \
     $$PWD/fake_keyboard/virtualkeyboard.h \
     $$PWD/qitemdelegate/lineeditdelegate.h \
-    $$PWD/qitemdelegate/doublespinboxdelegate.h
+    $$PWD/qitemdelegate/doublespinboxdelegate.h \
+    $$PWD/displaywidget/ascan_layout.h
 
 FORMS += \
     $$PWD/mainwindow.ui \
@@ -120,7 +122,6 @@ FORMS += \
     $$PWD/displaywidget/group_5/sscan_tb2_5.ui \
     $$PWD/displaywidget/group_6/ascan_6.ui \
     $$PWD/displaywidget/group_6/sscan_tb_6.ui \
-    $$PWD/displaywidget/ascan_7.ui \
-    $$PWD/displaywidget/ascan_8.ui
+    $$PWD/displaywidget/ascan_layout.ui
 
 

@@ -75,6 +75,11 @@ void MainWindow::init_ui()
     connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
     connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
     connect(pVirtualKeyboard, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
+
+    pAscanLayout = new AScanLayout(this, 8);
+    QGridLayout *displayLayout = new QGridLayout(ui->frame_showPlot);
+    displayLayout->addWidget(pAscanLayout);
+    ui->frame_showPlot->setLayout(displayLayout);
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
