@@ -9,8 +9,8 @@ DoubleSpinBoxDelegate::DoubleSpinBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
     m_mcu = Mcu::get_mcu();
-    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
+//    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+//    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
 
     m_editFlag = false;
 }
@@ -29,7 +29,12 @@ QWidget *DoubleSpinBoxDelegate::createEditor(QWidget *parent, const QStyleOption
     editor->setDecimals(m_decimalAmount);
     editor->installEventFilter(parent);
     editor->setReadOnly(false);
+    editor->setButtonSymbols(QAbstractSpinBox::NoButtons);
 
+    editor->setStyleSheet("QDoubleSpinBox{"
+                          "font: 12pt 'Times New Roman';"
+                          "selection-color: black;"
+                          "selection-background-color: rgb(255, 255, 255);}");
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxList.append(editor);
     (const_cast<DoubleSpinBoxDelegate *>(this))->spinBoxMap.insert(index, editor);
     (const_cast<DoubleSpinBoxDelegate *>(this))->m_editFlag = true;

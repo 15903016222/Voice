@@ -28,6 +28,7 @@ QWidget(parent),
     pDateTimeSetDialog = new DateTimeSetDialog(this);
     pNetworkDialog = new NetworkDialog(this);
 
+    qDebug() << this->geometry();
     m_height = this->geometry().height();
     m_languageOption = 1;
     m_language = "English";
@@ -98,7 +99,8 @@ void ThirdMenuWidget::init_standard_model()
         "color: yellow;"
         "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));"
         "border-left:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(255, 255, 255, 255), stop:1 rgba(0, 120, 195, 255));"
-        "border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));}");
+        "border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));}"
+        "QTableView{outline: 0px;}");
 
     for(int k = 0; k < THIRD_MENU_NUMBER; k++)
     {

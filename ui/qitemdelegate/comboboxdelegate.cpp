@@ -12,8 +12,8 @@ ComboBoxDelegate::ComboBoxDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
 {
     m_mcu = Mcu::get_mcu();
-    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
-    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
+//    connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+//    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(key_sure(Mcu::KeyType)));
     m_editFlag = false;
 
 }
@@ -52,6 +52,8 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
     editor->setView(new QListView());
     editor->view()->parentWidget()->setAttribute(Qt::WA_TranslucentBackground);
     editor->view()->parentWidget()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
+    editor->view()->setFocusPolicy(Qt::StrongFocus);
+    editor->view()->setFocus();
 
     set_comboBox_item_width(editor);
 
@@ -136,12 +138,16 @@ void ComboBoxDelegate::do_rotary_event(Mcu::RotaryType type)
         QKeyEvent *event;
         QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
 
+        QListView *view = static_cast<QListView*>(comboBox->view());
+        view->setFocusPolicy(Qt::StrongFocus);
+        view->setFocus();
+
         if(type == Mcu::ROTARY_UP) {
             event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
         } else {
             event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
         }
-        QApplication::sendEvent(comboBox, event);
+        QApplication::sendEvent(view, event);
     }
 }
 
@@ -150,8 +156,10 @@ void ComboBoxDelegate::key_sure(Mcu::KeyType key)
     if(key == Mcu::KEY_SURE) {
         if(m_editFlag) {
             QComboBox *comboBox = comboBoxList.at(comboBoxList.count() - 1);
-            QString string = m_itemList.at(comboBox->currentIndex());
-            commit_and_close_editor(string);
+//            QString string = m_itemList.at(comboBox->currentIndex());
+//            commit_and_close_editor(string);
+            QKeyEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Enter, Qt::NoModifier);
+            QApplication::sendEvent(comboBox, event);
         }
     }
 }
