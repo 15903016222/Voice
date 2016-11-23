@@ -34,7 +34,9 @@ SOURCES += \
     $$PWD/fake_keyboard/virtualkeyboard.cpp \
     $$PWD/qitemdelegate/lineeditdelegate.cpp \
     $$PWD/qitemdelegate/doublespinboxdelegate.cpp \
-    $$PWD/scan_layout/ascan_layout.cpp
+    $$PWD/scan_layout/ascan_layout.cpp \
+    $$PWD/scan_layout/sscan_layout.cpp \
+    $$PWD/scan_layout/stb_layout.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -59,7 +61,9 @@ HEADERS += \
     $$PWD/fake_keyboard/virtualkeyboard.h \
     $$PWD/qitemdelegate/lineeditdelegate.h \
     $$PWD/qitemdelegate/doublespinboxdelegate.h \
-    $$PWD/scan_layout/ascan_layout.h
+    $$PWD/scan_layout/ascan_layout.h \
+    $$PWD/scan_layout/sscan_layout.h \
+    $$PWD/scan_layout/stb_layout.h
 
 FORMS += \
     $$PWD/mainwindow.ui \
@@ -122,6 +126,8 @@ FORMS += \
     $$PWD/scan_layout/group_5/sscan_tb2_5.ui \
     $$PWD/scan_layout/group_6/ascan_6.ui \
     $$PWD/scan_layout/group_6/sscan_tb_6.ui \
-    $$PWD/scan_layout/ascan_layout.ui
+    $$PWD/scan_layout/ascan_layout.ui \
+    $$PWD/scan_layout/sscan_layout.ui \
+    $$PWD/scan_layout/stb_layout.ui
 
 
