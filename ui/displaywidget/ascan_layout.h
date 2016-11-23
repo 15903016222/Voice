@@ -15,6 +15,8 @@ public:
     explicit AScanLayout(QWidget *parent = 0, int group = 8);
     ~AScanLayout();
 
+    void set_display_group(int group);
+
 private:
     Ui::AScanLayout *ui;
 };
