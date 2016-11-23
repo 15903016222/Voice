@@ -35,7 +35,9 @@ SOURCES += \
     $$PWD/qitemdelegate/lineeditdelegate.cpp \
     $$PWD/qitemdelegate/doublespinboxdelegate.cpp \
     $$PWD/scan_layout/ascan_layout.cpp \
+    $$PWD/scan_layout/cscan_layout.cpp \
     $$PWD/scan_layout/sscan_layout.cpp \
+    $$PWD/scan_layout/abc_layout.cpp \
     $$PWD/scan_layout/stb_layout.cpp
 
 HEADERS += \
@@ -62,7 +64,9 @@ HEADERS += \
     $$PWD/qitemdelegate/lineeditdelegate.h \
     $$PWD/qitemdelegate/doublespinboxdelegate.h \
     $$PWD/scan_layout/ascan_layout.h \
+    $$PWD/scan_layout/cscan_layout.h \
     $$PWD/scan_layout/sscan_layout.h \
+    $$PWD/scan_layout/abc_layout.h \
     $$PWD/scan_layout/stb_layout.h
 
 FORMS += \
@@ -127,7 +131,9 @@ FORMS += \
     $$PWD/scan_layout/group_6/ascan_6.ui \
     $$PWD/scan_layout/group_6/sscan_tb_6.ui \
     $$PWD/scan_layout/ascan_layout.ui \
+    $$PWD/scan_layout/cscan_layout.ui \
     $$PWD/scan_layout/sscan_layout.ui \
+    $$PWD/scan_layout/abc_layout.ui \
     $$PWD/scan_layout/stb_layout.ui
 
 
