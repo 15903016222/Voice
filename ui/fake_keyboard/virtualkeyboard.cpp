@@ -70,3 +70,13 @@ void VirtualKeyboard::on_pushButton_5_clicked()
     hide();
     emit close_keyboard();
 }
+
+void VirtualKeyboard::on_pushButton_6_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_Minus);
+}
+
+void VirtualKeyboard::on_pushButton_8_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_Tab);
+}
