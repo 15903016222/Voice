@@ -1,3 +1,10 @@
+/**
+ * @file vinput.h
+ * @brief Virtual Key Input
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-20
+ */
 #ifndef __VINPUT_H__
 #define __VINPUT_H__
 
