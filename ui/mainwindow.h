@@ -6,7 +6,7 @@
 #include "commonmenubutton.h"
 #include "mcu.h"
 #include "virtualkeyboard.h"
-#include "ascan_layout.h"
+//#include "ascan_layout.h"
 
 #include <QMainWindow>
 #include <QTranslator>
@@ -37,7 +37,7 @@ private:
     void init_ui();
 
     Ui::MainWindow *ui;
-    AScanLayout *pAscanLayout;
+  //  AScanLayout *pAscanLayout;
 
     QTranslator *translator;
     QGraphicsOpacityEffect *effect;
