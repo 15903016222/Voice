@@ -8,6 +8,8 @@ CommonMenuButton::CommonMenuButton(QWidget *parent) :
     ui->setupUi(this);
 
     pushButton_commonMenu.append(ui->pushButton);
+
+    setStyleSheet("QWidget:focus{outline: none;}");
 }
 
 CommonMenuButton::~CommonMenuButton()

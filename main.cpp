@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QTextCodec>
+#include <QFontDatabase>
+#include <QDebug>
 
 #if (PHASCAN | PHASCAN_II)
 static const char *FONT_FILE = "/etc/mercury/font/SONGTI.TTC";

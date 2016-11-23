@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QStandardItemModel>
+#include <QTableView>
 
 #define COMMON_MENU_NUMBER 7
 static QString CHOICE_WIDGET_CHAR[COMMON_MENU_NUMBER] = {"1", "1", "1", "3", "3", "3", "1"}; // widget类型 1 是Spin Box, 2 是Combo Box, 3 是Label 4是on/off Label
@@ -25,14 +26,13 @@ public:
 private:
     Ui::CommonMenuWidget *ui;
 
-    QStandardItemModel *model;
-
     void init_standard_model();
     void set_common_menu_name();
     void choose_widget_style(int k);
 
     int m_height;
     int m_width;
+    QStandardItemModel *model;
 
 private slots:
     void onHeaderClicked(int index);

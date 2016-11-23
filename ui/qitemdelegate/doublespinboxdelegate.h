@@ -27,9 +27,7 @@ public:
     QList<QDoubleSpinBox*> spinBoxList;
     QStringList stepList;
 
-    int m_inputCount;
     bool m_editFlag;
-
 
 private:
     Mcu *m_mcu;
@@ -49,7 +47,7 @@ private slots:
     void commit_and_close_editor();
     void do_rotary_event(Mcu::RotaryType type);
     void key_sure(Mcu::KeyType key);
-    void input_number_to_lineedit(QString string);
+
     void valueChanged_signal(double value);
 };
 

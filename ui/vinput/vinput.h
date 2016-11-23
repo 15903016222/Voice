@@ -66,7 +66,8 @@ public:
         Key_Left        = 105,
         Key_Right       = 106,
         Key_Down        = 108,
-        Key_Delete      = 111
+        Key_Delete      = 111,
+        Key_Back        = 158
     };
 
     static VInput *get_vinput();
