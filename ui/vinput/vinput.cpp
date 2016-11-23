@@ -1,3 +1,10 @@
+/**
+ * @file vinput.cpp
+ * @brief Virtual Key Input
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-11-20
+ */
 #include "vinput.h"
 
 /* linux */
