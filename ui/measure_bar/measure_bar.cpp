@@ -222,8 +222,6 @@ void MeasureBar::set_header_text_close(QLabel *label)
 
 void MeasureBar::on_tableView_angle_clicked(const QModelIndex &index)
 {
-//    DoubleSpinBoxDelegate *doubleSpinBox = static_cast<DoubleSpinBoxDelegate*>(ui->tableView_angle->itemDelegate(index));
-//    if(!doubleSpinBox->m_editFlag) {
-//        ui->tableView_angle->edit(index);
-//    }
+    Q_UNUSED(index);
+  //  open_editor_and_set_header_text(measurementLabelList.at(9), ui->tableView_angle, pAngle, index.column());
 }
