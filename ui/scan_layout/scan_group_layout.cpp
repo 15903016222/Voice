@@ -35,25 +35,109 @@ void ScanGroupLayout::set_display_group(ScanType type, int group)
         }
         break;
     case 7:
+        if(type == ScanGroupLayout::A_scan){
 
+        }
         break;
     case 6:
+        if(type == ScanGroupLayout::A_scan){
 
+        }else if(type == ScanGroupLayout::S_TB){
+
+        }
         break;
     case 5:
+        if(type == ScanGroupLayout::A_scan){
 
+        }else if(type == ScanGroupLayout::S_TB){
+
+        }
         break;
     case 4:
+        if(type == ScanGroupLayout::A_scan){
 
+        }else if(type == ScanGroupLayout::C_scan){
+
+        }else if(type == ScanGroupLayout::S_scan){
+
+        }else if(type == ScanGroupLayout::A_Sscan){
+
+        }else if(type == ScanGroupLayout::S_Cscan){
+
+        }else if(type == ScanGroupLayout::C_TB){
+
+        }else if(type == ScanGroupLayout::S_TA){
+
+        }else if(type == ScanGroupLayout::S_TB){
+
+        }else if(type == ScanGroupLayout::S_TA_C_TB){
+
+        }
         break;
     case 3:
+        if(type == ScanGroupLayout::A_scan){
 
+        }else if(type == ScanGroupLayout::C_scan){
+
+        }else if(type == ScanGroupLayout::S_scan){
+
+        }else if(type == ScanGroupLayout::A_Sscan){
+
+        }else if(type == ScanGroupLayout::S_Cscan){
+
+        }else if(type == ScanGroupLayout::C_TB){
+
+        }else if(type == ScanGroupLayout::S_TA){
+
+        }else if(type == ScanGroupLayout::S_TB){
+
+        }else if(type == ScanGroupLayout::S_TA_C_TB){
+
+        }
         break;
     case 2:
+        if(type == ScanGroupLayout::A_scan){
 
+        }else if(type == ScanGroupLayout::C_scan){
+
+        }else if(type == ScanGroupLayout::S_scan){
+
+        }else if(type == ScanGroupLayout::A_Sscan){
+
+        }else if(type == ScanGroupLayout::A_S_Cscan){
+
+        }else if(type == ScanGroupLayout::A_B_Cscan){
+
+        }else if(type == ScanGroupLayout::A_B_Sscan){
+
+        }else if(type == ScanGroupLayout::S_TA_C_TB){
+
+        }else if(type == ScanGroupLayout::S_Cscan){
+
+        }else if(type == ScanGroupLayout::TA_TB){
+
+        }
         break;
     case 1:
+        if(type == ScanGroupLayout::A_scan){
 
+        }else if(type == ScanGroupLayout::C_scan){
+
+        }else if(type == ScanGroupLayout::S_scan){
+
+        }else if(type == ScanGroupLayout::A_Sscan){
+
+        }else if(type == ScanGroupLayout::A_S_Cscan){
+
+        }else if(type == ScanGroupLayout::A_B_Cscan){
+
+        }else if(type == ScanGroupLayout::A_B_Sscan){
+
+        }else if(type == ScanGroupLayout::S_Cscan){
+
+        }else if(type == ScanGroupLayout::TA_TB){
+
+        }
         break;
     default:
         break;

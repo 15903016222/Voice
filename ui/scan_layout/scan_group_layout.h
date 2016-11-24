@@ -18,15 +18,15 @@ public:
         C_scan,
         S_scan,
         A_Sscan,
-        A_B_Cscan,
-        A_B_Sscan,
-        A_S_Cscan,
         S_Cscan,
         C_TB,
         S_TB,
         S_TA,
-        S_TA_C_TB,
-        TA_TB
+        TA_TB,
+        A_B_Cscan,
+        A_B_Sscan,
+        A_S_Cscan,
+        S_TA_C_TB
     };
     explicit ScanGroupLayout(QWidget *parent = 0, ScanGroupLayout::ScanType type = ScanGroupLayout::A_scan, int group = 1);
     ~ScanGroupLayout();
