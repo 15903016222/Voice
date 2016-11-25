@@ -62,13 +62,7 @@ void FirstSecondMenuWidget::set_second_menu_name(int i)
 
 void FirstSecondMenuWidget::set_second_menu_item_style(int i, QModelIndex index)
 {
-    QStringList stringList = get_second_menu_list(i);
-    for(int j = 0; j < stringList.count(); j++) {
-        QModelIndex modelIndex = modelList.at(i)->index(j, 0);
-        if(modelIndex == index) {
-            menuList.at(i)->setCurrentIndex(modelIndex);
-        }
-    }
+    menuList.at(i)->setCurrentIndex(index);
 
     resize_height(i);
 }
@@ -82,7 +76,7 @@ void FirstSecondMenuWidget::init_ui()
                                 "QListView::item{"
                                 "background-color: rgba(0, 0, 0, 0);"
                                 "color: yellow;}"
-                                "QListView::item:Selected{"
+                                "QListView::item:selected{"
                                 "background-color: rgba(0, 0, 0, 0);"
                                 "color: red;}");
 
@@ -99,7 +93,6 @@ void FirstSecondMenuWidget::init_ui()
             modelList.clear();
         }
         modelList.append(standardItemModel);
-
 
         set_second_menu_name(i);
 
