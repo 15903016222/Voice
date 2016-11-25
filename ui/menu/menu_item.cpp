@@ -72,17 +72,9 @@ void MenuItem::set_steps(QList<double> &steps)
 bool MenuItem::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::MouseButtonPress) {
-        qDebug () << e->type();
         if (ui->doubleSpinBox->hasFocus()
                 && ! m_steps.isEmpty()) {
-            qDebug()<<m_curStep;
-
-            if ( ++m_curStep >= m_steps.size() ) {
-                m_curStep = 0;
-            }
-            qDebug()<<m_curStep;
-            ui->doubleSpinBox->setSingleStep(m_steps.at(m_curStep));
-            update_title();
+            update_step();
         } else {
             set_focus();
         }
@@ -99,11 +91,11 @@ bool MenuItem::eventFilter(QObject *obj, QEvent *e)
         case Qt::Key_Enter:
         case Qt::Key_Return:
             set_focus_out();
+            return true;
             break;
         default:
             break;
         }
-        return true;
     } else if (e->type() == QEvent::FocusOut) {
         set_focus_out();
         return true;
@@ -135,6 +127,15 @@ void MenuItem::update_title()
     msg += "</p></body></html>";
     qDebug()<<msg;
     ui->nameLabel->setText(msg);
+}
+
+void MenuItem::update_step()
+{
+    if ( ++m_curStep >= m_steps.size() ) {
+        m_curStep = 0;
+    }
+    ui->doubleSpinBox->setSingleStep(m_steps.at(m_curStep));
+    update_title();
 }
 
 void MenuItem::set_focus()

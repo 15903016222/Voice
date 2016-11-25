@@ -50,6 +50,7 @@ private:
     int m_curStep;
 
     void update_title();
+    void update_step();
     void set_focus();
     void set_focus_out();
 };
