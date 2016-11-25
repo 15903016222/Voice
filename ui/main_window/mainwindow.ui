@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>798</width>
     <height>600</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="7,3,50">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -40,336 +40,99 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="frame_top">
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="6,1">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="MeasureBar" name="widgetTopLeft" native="true"/>
-       </item>
-       <item>
-        <widget class="IconsBar" name="iconsBarWidget" native="true"/>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,16,2,4">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="MenuItem" name="gainMenuItem" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="MeasureBar" name="measureBar" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="MenuItem" name="angleMenuItem" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="IconsBar" name="iconsBarWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
-     <widget class="ShowInfoWidget" name="widgetShowInformation" native="true">
+     <widget class="ShowInfoWidget" name="statusBar" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
+      </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(210, 150, 0);</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="framePlot">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QWidget" name="widgetUSView" native="true">
-         <property name="styleSheet">
-          <string notr="true">QWidget#widgetUSView
-{
-	background-color: rgb(0, 0, 0);
-}</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout" rowstretch="43,7" columnstretch="2,7">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <property name="horizontalSpacing">
-           <number>1</number>
-          </property>
-          <property name="verticalSpacing">
-           <number>0</number>
-          </property>
-          <item row="0" column="0" rowspan="2">
-           <widget class="QWidget" name="widget_firstSecondMenu" native="true">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>30</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>2</number>
-             </property>
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item row="0" column="0">
-              <widget class="QWidget" name="widget" native="true">
-               <property name="styleSheet">
-                <string notr="true">
-QWidget#widget
-{
-	background-color: rgb(37, 76, 124);
-	border-radius:8px;
-}</string>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,18,1">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>5</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>5</number>
-                </property>
-                <item>
-                 <widget class="QFrame" name="frame_up">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_2">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_top">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(37, 76, 124);
-border:none;
-</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="mainwindow.qrc">
-                       <normaloff>:/file/resources/up.png</normaloff>:/file/resources/up.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>24</width>
-                       <height>12</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QWidget" name="widget_scrollArea" native="true">
-                  <property name="styleSheet">
-                   <string notr="true">QWidget
-{
-	background-color: rgba(67, 67, 67, 0);
-
-}</string>
-                  </property>
-                  <layout class="QGridLayout" name="gridLayout_4">
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <item row="0" column="0">
-                    <widget class="QScrollArea" name="scrollArea">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="frameShape">
-                      <enum>QFrame::NoFrame</enum>
-                     </property>
-                     <property name="verticalScrollBarPolicy">
-                      <enum>Qt::ScrollBarAlwaysOff</enum>
-                     </property>
-                     <property name="horizontalScrollBarPolicy">
-                      <enum>Qt::ScrollBarAlwaysOff</enum>
-                     </property>
-                     <property name="widgetResizable">
-                      <bool>true</bool>
-                     </property>
-                     <widget class="QWidget" name="scrollAreaWidgetContents">
-                      <property name="geometry">
-                       <rect>
-                        <x>0</x>
-                        <y>0</y>
-                        <width>178</width>
-                        <height>412</height>
-                       </rect>
-                      </property>
-                     </widget>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QFrame" name="frame_down">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_bottom">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(37, 76, 124);
-border:none;
-</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="mainwindow.qrc">
-                       <normaloff>:/file/resources/down.png</normaloff>:/file/resources/down.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>24</width>
-                       <height>12</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QFrame" name="frame_showPlot"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="ThirdMenuWidget" name="widget_thirdMenu" native="true">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     <widget class="QWidget" name="widget" native="true"/>
     </item>
    </layout>
-   <zorder>framePlot</zorder>
-   <zorder>frame_top</zorder>
-   <zorder>widgetShowInformation</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -378,12 +141,6 @@ border:none;
    <class>ShowInfoWidget</class>
    <extends>QWidget</extends>
    <header>showinfowidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ThirdMenuWidget</class>
-   <extends>QWidget</extends>
-   <header>thirdmenuwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -398,10 +155,14 @@ border:none;
    <header>measure_bar.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>MenuItem</class>
+   <extends>QWidget</extends>
+   <header>menu_item.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
- <resources>
-  <include location="mainwindow.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <slots>
   <slot>on_funcBtnClicked()</slot>

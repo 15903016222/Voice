@@ -1,6 +1,9 @@
 
 INCLUDEPATH += $$PWD
 
+RESOURCES += \
+    $$PWD/main_window.qrc
+
 include(main_window/main_window.pri)
 
 include(icons_bar/icons_bar.pri)

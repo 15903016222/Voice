@@ -44,8 +44,6 @@ equals(QT_MAJOR_VERSION, 4) {
 
 DEFINES += $$DEVICE
 
-RESOURCES += ui/mainwindow.qrc
-
 TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
     ui/translator/phascanII_UI_English.ts
