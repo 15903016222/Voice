@@ -69,6 +69,11 @@ void MenuItem::set_steps(QList<double> &steps)
      update_title();
 }
 
+void MenuItem::set_suffix(const QString &text)
+{
+    ui->doubleSpinBox->setSuffix(text);
+}
+
 bool MenuItem::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::MouseButtonPress) {
@@ -125,7 +130,6 @@ void MenuItem::update_title()
         }
     }
     msg += "</p></body></html>";
-    qDebug()<<msg;
     ui->nameLabel->setText(msg);
 }
 

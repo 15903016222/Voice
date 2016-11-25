@@ -29,6 +29,7 @@ public:
     void set_title(const QString &title);
     void set_unit(const QString &unitName);
     void set_steps(QList<double> &steps);
+    void set_suffix(const QString &text);
 
     void add_item(const QString &text);
 
