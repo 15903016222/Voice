@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Phascan-II</string>
+   <string notr="true">Mercury</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
