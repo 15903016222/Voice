@@ -128,7 +128,7 @@ void MainWindow::on_pushButton_top_clicked()
     int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
     int scrollTopY = ui->scrollArea->geometry().y();
 
-    if(menuTopY < (scrollTopY -20)) {
+    if(menuTopY < (scrollTopY - 20)) {
         ui->scrollArea->viewport()->scroll(0, 20);
     } else {
         ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);

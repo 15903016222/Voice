@@ -79,7 +79,7 @@ color: white;
 
 QToolBox::tab:selected {
 border-image: url(:/file/resources/arrowUp.png);
-font: italic, &quot;Times New Roman&quot;, bold, 12px;
+font:normal, &quot;Times New Roman&quot;, bold, 12px;
 color: red;
 }</string>
         </property>
