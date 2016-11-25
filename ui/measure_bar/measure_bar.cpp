@@ -15,12 +15,34 @@
 #define HTML_TEXT_SIX  "<font color=white face='Times New Roman' style='font-size:12pt'>"
 
 
+#include "../menu/menu_item.h"
 
 MeasureBar :: MeasureBar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MeasureBar)
 {
     ui->setupUi(this);
+
+    QList<double> steps;
+    steps.append(0.1);
+    steps.append(0.5);
+    steps.append(1.0);
+    steps.append(5.0);
+
+    /* gain menu item */
+    ui->gainWidget->set_type(MenuItem::Spin);
+    ui->gainWidget->set_title("Gain");
+    ui->gainWidget->set_unit("dB");
+    ui->gainWidget->set_steps(steps);
+    ui->gainWidget->set_suffix("(0.0)");
+
+    /* angle menu item */
+    ui->angleWidget->set_type(MenuItem::Spin);
+    ui->angleWidget->set_title(tr("Angle"));
+    ui->angleWidget->set_unit("&#176;");
+    ui->angleWidget->set_steps(steps);
+
+
    // init_ui();
 
    // init_gain_angle();
