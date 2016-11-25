@@ -18,10 +18,11 @@ VInput *VInput::get_vinput()
     return s_vinput;
 }
 
-void VInput::send(KeyType type, VInput::Key key)
+void VInput::send(VInput::Key key, bool press, bool sync)
 {
-    Q_UNUSED(type);
     Q_UNUSED(key);
+    Q_UNUSED(press);
+    Q_UNUSED(sync);
 }
 
 VInput::VInput()

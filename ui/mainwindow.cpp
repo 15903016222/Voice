@@ -86,6 +86,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_SURE:
         VInput::get_vinput()->send(VInput::Key_Enter);
         break;
+    case Mcu::KEY_BACK:
+        VInput::get_vinput()->send(VInput::Key_Back);
+        break;
     default:
         break;
     }
@@ -233,7 +236,6 @@ void MainWindow::update_translator(QString string)
     }
     ui->retranslateUi(this);
     ui->widgetTopLeft->retranslate_top_menu_ui();
-    ui->widgetTopLeft->set_top_menu_font();
     firstSecondMenu->retranslate_main_menu_ui(string);
     commonMenuWidget->retranslate_common_menu_ui();
 
