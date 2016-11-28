@@ -21,11 +21,11 @@ AboutDialog::AboutDialog(QWidget *parent)
     layout->setSizeConstraint(QLayout::SetFixedSize);
 
     const QString description = tr(
-        "<h3 style=\"text-align:center\">%1</h3>"
+        "<h3 align=\"center\">%1</h3>"
         "&nbsp;&nbsp;&nbsp;&nbsp;Phascan has a powerful detection capability, "
         "can achieve a variety of scanning mode and focus mode,"
         "which greatly improves the detection reliability."
-        "<p style=\"font-size:14px; text-align:center;\">Copyright 2008-2016 Doppler. All rights reserved.</p>")
+        "<p style=\"font-size:14px; text-align:center;\">Copyright &copy;2008-2016 Doppler(www.cndoppler.cn). All rights reserved.</p>")
         .arg("Phascan");
 
     QLabel *copyRightLabel = new QLabel(description);
