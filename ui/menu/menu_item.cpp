@@ -63,7 +63,7 @@ void MenuItem::set_unit(const QString &unitName)
     update_title();
 }
 
-void MenuItem::set_steps(QList<double> &steps)
+void MenuItem::set_steps(const QList<double> &steps)
 {
      m_steps = steps;
      update_title();
@@ -72,6 +72,27 @@ void MenuItem::set_steps(QList<double> &steps)
 void MenuItem::set_suffix(const QString &text)
 {
     ui->doubleSpinBox->setSuffix(text);
+}
+
+void MenuItem::set_range(double min, double max)
+{
+    ui->doubleSpinBox->setMinimum(min);
+    ui->doubleSpinBox->setMaximum(max);
+}
+
+void MenuItem::set_decimals(int prec)
+{
+    ui->doubleSpinBox->setDecimals(prec);
+}
+
+void MenuItem::add_combo_item(const QString &text)
+{
+    ui->comboBox->addItem(text);
+}
+
+void MenuItem::set_combo_items(const QStringList &texts)
+{
+    ui->comboBox->addItems(texts);
 }
 
 bool MenuItem::eventFilter(QObject *obj, QEvent *e)
@@ -111,7 +132,7 @@ bool MenuItem::eventFilter(QObject *obj, QEvent *e)
 
 void MenuItem::update_title()
 {
-    QString msg("<html><head/><body><p align=\"center\"><font size=4 color=yellow>");
+    QString msg("<p align=\"center\"><font size=4 color=yellow>");
     msg += m_title;
     msg += "</font>";
     if ( ! ui->doubleSpinBox->isHidden() ) {
@@ -125,11 +146,11 @@ void MenuItem::update_title()
             if (m_unit.size()) {
                 msg += " ";
             }
-            msg += "Δ";
+            msg += "&Delta;";
             msg += QString::number(ui->doubleSpinBox->singleStep(), 'f', ui->doubleSpinBox->decimals());
         }
     }
-    msg += "</p></body></html>";
+    msg += "</p>";
     ui->nameLabel->setText(msg);
 }
 
@@ -162,9 +183,4 @@ void MenuItem::set_focus_out()
         ui->doubleSpinBox->setStyleSheet("QDoubleSpinBox{selection-background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,\nstop:0.158192 rgba(0, 0, 0, 255),\nstop:0.559322 rgba(0, 130, 195, 255));\ncolor: rgb(255, 255, 255);\nborder-top:0px;\nborder-bottom:0px;\nbackground-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,\nstop:0.158192 rgba(0, 0, 0, 255),\nstop:0.559322 rgba(0, 130, 195, 255));\ncolor: rgb(255, 255, 255);\nborder-top:0px;\nborder-bottom:0px;\n}");
         update_title();
     }
-}
-
-void MenuItem::add_item(const QString &text)
-{
-    ui->comboBox->addItem(text);
 }

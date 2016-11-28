@@ -28,10 +28,13 @@ public:
 
     void set_title(const QString &title);
     void set_unit(const QString &unitName);
-    void set_steps(QList<double> &steps);
+    void set_steps(const QList<double> &steps);
     void set_suffix(const QString &text);
+    void set_range(double min, double max);
+    void set_decimals(int prec);
 
-    void add_item(const QString &text);
+    void add_combo_item(const QString &text);
+    void set_combo_items(const QStringList &texts);
 
 signals:
     void clicked();
