@@ -1,21 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>MainMenu</class>
- <widget name="MainMenu" class="QWidget">
+ <widget class="QWidget" name="MainMenu">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>179</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QWidget" name="widget" native="true">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(37, 76, 124);</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QTreeWidget" name="treeWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QTreeWidget{
+	background-color: rgba(37, 76, 124, 0);
+	outline: 0px;
+}
+
+QTreeWidget::item{
+	font: 16pt &quot;Times New Roman&quot;;
+	color: yellow;
+	margin: 5px;
+	background-color: rgba(37, 76, 124, 0); 
+}
+
+QTreeWidget::item:selected{
+	font: 16pt &quot;Times New Roman&quot;;
+	color: red;
+	background-color: rgba(37, 76, 124, 0);
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <attribute name="headerVisible">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string notr="true">1</string>
+         </property>
+        </column>
+        <item>
+         <property name="text">
+          <string>UT Settings</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>General</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Pulser</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Receiver</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Advanced</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>Gate/Curves</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Gate</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Alarm</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Output</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DAC</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>TCG</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>Display</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Selection</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Color Settings</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Properties</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>Probe/Part</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Select</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Position</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>FFT</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Part</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Advanced</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>Focal Law</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Law Config</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Angle</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Apeture</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Focal Point</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>Scan</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Inspection</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Encoder</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Area</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Start</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>Measurement</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Cursors</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>TOFD</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Flaw Record</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>File/Report</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>File</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Save Mode</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Report</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Format</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>User Field</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>Preference</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Preference</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>System</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Network</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Service</string>
+          </property>
+         </item>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

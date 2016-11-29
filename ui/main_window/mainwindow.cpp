@@ -34,6 +34,10 @@ MainWindow::MainWindow(QWidget *parent) :
     Mcu *mcu = Mcu::get_mcu();
     connect(mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
     connect(mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+
+    mainMenu = new MainMenu(this);
+    mainMenu->hide();
+    mainMenu->move(0, 175);
 }
 
 MainWindow::~MainWindow()
@@ -51,7 +55,7 @@ void MainWindow::init_ui()
 
 //    m_firstMenuNum = 0;
 //    m_secondMenuNum = 0;
-//    m_hiddenFirstSecondMenuFlag = false;
+    m_hiddenFirstSecondMenuFlag = false;
 //    m_hiddenThirdMenuFlag = false;
 //    m_hiddenCommonMenuFlag = false;
 //    m_hiddenKeyboardFlag = false;
@@ -306,8 +310,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::show_hidden_Menu()
 {
-//    m_hiddenFirstSecondMenuFlag = !m_hiddenFirstSecondMenuFlag;
-//    if(m_hiddenFirstSecondMenuFlag) {
+    m_hiddenFirstSecondMenuFlag = !m_hiddenFirstSecondMenuFlag;
+    if(m_hiddenFirstSecondMenuFlag) {
 //        ui->widget_firstSecondMenu->show();
 //        ui->widget_thirdMenu->show();
 //        commonMenuWidget->hide();
@@ -318,11 +322,13 @@ void MainWindow::show_hidden_Menu()
 //        show_hidden_arrow();
 
 //        firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
+        mainMenu->show();
 
-//    } else {
+    } else {
+        mainMenu->hide();
 //        ui->widget_firstSecondMenu->hide();
 //        ui->widget_thirdMenu->hide();
-//    }
+    }
 }
 
 void MainWindow::scroll_menu(int index)
