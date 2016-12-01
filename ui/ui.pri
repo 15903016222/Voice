@@ -19,3 +19,5 @@ include(qitemdelegate/qitemdelegate.pri)
 include(vinput/vinput.pri)
 
 include(scan_layout/scan_layout.pri)
+
+include(json/menu_json.pri)
