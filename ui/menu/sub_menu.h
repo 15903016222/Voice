@@ -5,6 +5,8 @@
 #include "menu_config.h"
 
 #include <QWidget>
+#include <QTreeWidgetItem>
+#include <QMap>
 
 namespace Ui {
 class SubMenu;
@@ -17,10 +19,16 @@ class SubMenu : public QWidget
 public:
     explicit SubMenu(QWidget *parent = 0);
     ~SubMenu();
+    QMap<QString, QString> previous;
+    QMap<QString, QString> current;
 
 private:
     Ui::SubMenu *ui;
-    void set_third_menu_content(MenuItem *widget, QVariantMap map);
+
+    bool eventFilter(QObject *object, QEvent *event);
+    void set_third_menu_and_connect(QString str1, QString str2);
+    void disconnect_previous_signals(QString str1, QString str2);
+    void get_second_menu_string(QString str1, QString str2);
 
     MenuConfig *menuConfig;
 
