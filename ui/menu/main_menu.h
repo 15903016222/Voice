@@ -22,6 +22,7 @@ private:
     Ui::MainMenu *ui;
 
     bool eventFilter(QObject *object, QEvent *event);
+    void show_or_hide_arrow();
 
     int m_languageOption;
     int m_firstCount;

@@ -3,6 +3,7 @@
 
 #include <QKeyEvent>
 #include <QWheelEvent>
+#include <QScrollBar>
 #include <QDebug>
 
 MainMenu::MainMenu(QWidget *parent) :
@@ -30,6 +31,8 @@ MainMenu::MainMenu(QWidget *parent) :
 
     connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(change_item_selection()));
 
+    show_or_hide_arrow();
+
 }
 
 MainMenu::~MainMenu()
@@ -51,15 +54,11 @@ void MainMenu::change_item_selection()
         if(index >= 4 && index < m_firstCount) {
             ui->treeWidget->scrollToItem(item, QAbstractItemView::PositionAtCenter);
         }
-
-        qDebug() << item->text(0) << initItem->text(0);
         emit click_main_menu(item->text(0), initItem->text(0));
-    } else {
-//        ui->textEdit->setText(item->text(0));
-        qDebug() << item->parent()->text(0) << item->text(0);
+    } else {        
         emit click_main_menu(item->parent()->text(0), item->text(0));
     }
-    qDebug() << "itemSelectionChanged" << ui->treeWidget->currentItem()->text(0);
+    show_or_hide_arrow();
 }
 
 bool MainMenu::eventFilter(QObject *object, QEvent *event)
@@ -124,22 +123,33 @@ bool MainMenu::eventFilter(QObject *object, QEvent *event)
 void MainMenu::on_pushButton_up_clicked()
 {
     qDebug() << "1";
-//    qDebug() << ui->treeWidget->viewport();
-//    ui->treeWidget->viewport()->scroll(0, 20);
-//    ui->treeWidget->viewport()->update();
 
-//    QTreeWidgetItem *item = ui->treeWidget->indexAbove()
-//    QPoint pos = ui->treeWidget->pos();
-//    QWheelEvent *e(pos, 20, Qt::MidButton, Qt::NoModifier, Qt::Vertical);
-//    QApplication::sendEvent(ui->treeWidget->verticalScrollBar(), e);
+    QWheelEvent *e = new QWheelEvent(QCursor::pos(), 40, Qt::MiddleButton, Qt::NoModifier, Qt::Vertical);
+    QApplication::sendEvent(ui->treeWidget->verticalScrollBar(), e);
 
-
-//    show_hidden_arrow();
+    show_or_hide_arrow();
 }
 
 void MainMenu::on_pushButton_down_clicked()
 {
     qDebug() << "2";
-//    ui->treeWidget->viewport()->scroll(0, -20);
-//    ui->treeWidget->viewport()->update();
+    QWheelEvent *e = new QWheelEvent(QCursor::pos(), -40, Qt::MiddleButton, Qt::NoModifier, Qt::Vertical);
+    QApplication::sendEvent(ui->treeWidget->verticalScrollBar(), e);
+    show_or_hide_arrow();
+}
+
+void MainMenu::show_or_hide_arrow()
+{
+    qDebug() << "show_hide_arrow";
+    if(ui->treeWidget->verticalScrollBar()->value() == 0) {
+        ui->pushButton_up->hide();
+        ui->pushButton_down->show();
+    } else if(ui->treeWidget->verticalScrollBar()->value() == ui->treeWidget->verticalScrollBar()->maximum()){
+        ui->pushButton_down->hide();
+        ui->pushButton_up->show();
+    } else {
+        qDebug() << "both";
+        ui->pushButton_up->show();
+        ui->pushButton_down->show();
+    }
 }
