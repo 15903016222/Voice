@@ -40,13 +40,13 @@ border-radius: 5px;</string>
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="spacing">
        <number>0</number>
@@ -58,6 +58,9 @@ border-radius: 5px;</string>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -78,27 +81,36 @@ border-radius: 5px;</string>
         </property>
         <property name="font">
          <font>
-          <pointsize>13</pointsize>
+          <family>Times New Roman</family>
+          <pointsize>16</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
          </font>
         </property>
         <property name="styleSheet">
          <string notr="true">QTreeWidget{
+	font: 16pt &quot;Times New Roman&quot;;
+	color: yellow;
 	background-color: rgba(37, 76, 124, 0);
 	outline: 0px;
 }
 
 QTreeWidget::item{
-	font: 16pt &quot;Times New Roman&quot;;
-	color: yellow;
-	margin: 5px;
+	margin: 8px;
 	background-color: rgba(37, 76, 124, 0); 
 }
 
 QTreeWidget::item:selected{
-	font: 16pt &quot;Times New Roman&quot;;
+	font: bold 16pt &quot;Times New Roman&quot;;
 	color: red;
 	background-color: rgba(37, 76, 124, 0);
-}</string>
+}
+
+QTreeWidget::branch{
+	image:none;
+}
+</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -359,6 +371,9 @@ QTreeWidget::item:selected{
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>

@@ -122,17 +122,13 @@ bool MainMenu::eventFilter(QObject *object, QEvent *event)
 
 void MainMenu::on_pushButton_up_clicked()
 {
-    qDebug() << "1";
-
     QWheelEvent *e = new QWheelEvent(QCursor::pos(), 40, Qt::MiddleButton, Qt::NoModifier, Qt::Vertical);
     QApplication::sendEvent(ui->treeWidget->verticalScrollBar(), e);
-
     show_or_hide_arrow();
 }
 
 void MainMenu::on_pushButton_down_clicked()
 {
-    qDebug() << "2";
     QWheelEvent *e = new QWheelEvent(QCursor::pos(), -40, Qt::MiddleButton, Qt::NoModifier, Qt::Vertical);
     QApplication::sendEvent(ui->treeWidget->verticalScrollBar(), e);
     show_or_hide_arrow();
@@ -140,7 +136,6 @@ void MainMenu::on_pushButton_down_clicked()
 
 void MainMenu::show_or_hide_arrow()
 {
-    qDebug() << "show_hide_arrow";
     if(ui->treeWidget->verticalScrollBar()->value() == 0) {
         ui->pushButton_up->hide();
         ui->pushButton_down->show();
@@ -148,7 +143,6 @@ void MainMenu::show_or_hide_arrow()
         ui->pushButton_down->hide();
         ui->pushButton_up->show();
     } else {
-        qDebug() << "both";
         ui->pushButton_up->show();
         ui->pushButton_down->show();
     }
