@@ -30,7 +30,11 @@ public:
     QVariantMap get_third_menu_map(QVariantMap variantMap, QString firstString, QString secondString, QString thirdString);
     QVariantMap read_json_file(QFile *file);
 
+    void set_related_menu_string(QString string);
+
     QVariantMap menuMap;
+    QString m_relatedMenuString;
+
 
 private:
 
@@ -48,7 +52,6 @@ private:
     QVariantMap m_secondMenuMap;
     QString m_firstMenuString;
     QString m_secondMenuString;
-    QString m_relatedMenuString;
 
 signals:
 //    void retranslate_ui(QString);

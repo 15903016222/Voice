@@ -11,6 +11,9 @@ MenuConfig::MenuConfig()
     m_languageOption = 1;
     m_language = "English";
 
+
+    m_relatedMenuString = "";
+
     QFile *file = new QFile(":/file/json/menuconf.json");
     menuMap = read_json_file(file);
     qDebug() << menuMap;
@@ -64,9 +67,25 @@ QStringList MenuConfig::get_second_menu_list(QVariantMap variantMap, QString str
 
 QStringList MenuConfig::get_third_menu_list(QVariantMap variantMap,QString firstString, QString secondString)
 {
+    QVariantList variantList;
+    QStringList thirdList;
     QVariantMap secondMap = get_second_menu_map(variantMap, firstString, secondString);
-    QVariantList variantList = secondMap.values("Queue_Third_Menu");
-    QStringList thirdList  = variantList.at(0).toStringList();
+    QVariantMap map = secondMap["Queue_Third_Menu"].toMap();
+
+    if(map.isEmpty()) {
+        variantList = secondMap.values("Queue_Third_Menu");
+    } else {
+        QString string = map.value("first third_menu").toString();
+        QVariantMap firstThirdMenuMap = secondMap[string].toMap();
+        QStringList otherThirdMenuList = get_comboBox_option_list(firstThirdMenuMap);
+        if(m_relatedMenuString == NULL || !otherThirdMenuList.contains(m_relatedMenuString)) {
+            variantList = map.values(otherThirdMenuList.at(0));
+        } else {
+            variantList = map.values(m_relatedMenuString);
+        }
+    }
+
+    thirdList = variantList.at(0).toStringList();
     qDebug() << "thirdList" << thirdList;
     return thirdList;
 }
@@ -171,4 +190,10 @@ QStringList MenuConfig::get_related_third_menu(QVariantMap variantMap, QString s
         return thirdStringList;
     }
 
+}
+
+
+void MenuConfig::set_related_menu_string(QString string)
+{
+    m_relatedMenuString = string;
 }
