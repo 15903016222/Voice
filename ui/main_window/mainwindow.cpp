@@ -38,6 +38,16 @@ MainWindow::MainWindow(QWidget *parent) :
     mainMenu = new MainMenu(this);
     mainMenu->hide();
     mainMenu->move(0, 175);
+
+    subMenu = new SubMenu(this);
+    subMenu->hide();;
+    subMenu->move(179, 530);
+
+//    menuBar = new MenuBar(this);
+//    menuBar->hide();
+//    menuBar->move(0, 90);
+
+    connect(mainMenu, SIGNAL(click_main_menu(QString, QString)), subMenu, SLOT(set_third_menu(QString, QString)));
 }
 
 MainWindow::~MainWindow()
@@ -322,10 +332,15 @@ void MainWindow::show_hidden_Menu()
 //        show_hidden_arrow();
 
 //        firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
+//        menuBar->show();
+        subMenu->show();
         mainMenu->show();
 
     } else {
         mainMenu->hide();
+//        menuBar->hide();
+        subMenu->hide();
+        qDebug() << "hide";
 //        ui->widget_firstSecondMenu->hide();
 //        ui->widget_thirdMenu->hide();
     }

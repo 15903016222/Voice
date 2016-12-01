@@ -6,7 +6,9 @@
 #include "commonmenubutton.h"
 #include "mcu.h"
 #include "virtualkeyboard.h"
+//#include "menu_bar.h"
 #include "main_menu.h"
+#include "sub_menu.h"
 
 #include <QMainWindow>
 #include <QTranslator>
@@ -47,6 +49,8 @@ private:
     VirtualKeyboard *pVirtualKeyboard;
 
     MainMenu *mainMenu;
+//    MenuBar *menuBar;
+    SubMenu *subMenu;
 
     bool m_hiddenFirstSecondMenuFlag;
     bool m_hiddenThirdMenuFlag;

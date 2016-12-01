@@ -2,8 +2,7 @@
 #define MAIN_MENU_H
 
 #include <QWidget>
-#include <QVariantMap>
-#include <QFile>
+#include <QTreeWidget>
 
 namespace Ui {
 class MainMenu;
@@ -17,7 +16,7 @@ public:
     explicit MainMenu(QWidget *parent = 0);
     ~MainMenu();
 
-    QVariantMap translateChineseMap;
+    QTreeWidget treeWidget;
 
 private:
     Ui::MainMenu *ui;
@@ -27,9 +26,13 @@ private:
     int m_languageOption;
     int m_firstCount;
 
+signals:
+    void click_main_menu(QString str1, QString str2);
+
 private slots:
     void change_item_selection();
-
+    void on_pushButton_up_clicked();
+    void on_pushButton_down_clicked();
 };
 
 #endif // MAIN_MENU_H
