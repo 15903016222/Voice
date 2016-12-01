@@ -1,6 +1,9 @@
 #ifndef SUB_MENU_H
 #define SUB_MENU_H
 
+#include "menu_item.h"
+#include "menu_config.h"
+
 #include <QWidget>
 
 namespace Ui {
@@ -17,6 +20,13 @@ public:
 
 private:
     Ui::SubMenu *ui;
+    void set_third_menu_content(MenuItem *widget, QVariantMap map);
+
+    MenuConfig *menuConfig;
+
+private slots:
+    void set_third_menu(QString str1, QString str2);
+
 };
 
 #endif // SUB_MENU_H
