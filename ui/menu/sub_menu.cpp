@@ -12,11 +12,43 @@
 #include <QKeyEvent>
 #include <QDebug>
 
+#define DIALOG_NUMBER 2
+static QString DIALOG_STRING[DIALOG_NUMBER] = {
+    "show_probe_dialog()",
+    "show_wedge_dialog()"
+};
+
 SubMenu::SubMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SubMenu)
 {
     ui->setupUi(this);
+
+    stepList1.append(0.1);
+    stepList1.append(0.5);
+    stepList1.append(1.0);
+    stepList1.append(2.0);
+    stepList1.append(6.0);
+
+    stepList2.append(0.10);
+    stepList2.append(1.00);
+    stepList2.append(10.0);
+    stepList2.append(100.0);
+
+    stepList3.append(1.00);
+    stepList3.append(10.0);
+    stepList3.append(100.0);
+    stepList3.append(1000.0);
+
+    stepList4.append(0.01);
+    stepList4.append(0.10);
+    stepList4.append(1.00);
+
+    stepList5.append(1);
+    stepList5.append(10);
+    stepList5.append(100);
+
+
 
     menuConfig = new MenuConfig;
     pNetworkDialog = new NetworkDialog(this);
@@ -24,7 +56,9 @@ SubMenu::SubMenu(QWidget *parent) :
 
     current.insert("UT Settings", "General");
 
-    set_third_menu_and_connect(current.keys().at(0), current.values().at(0));
+//    set_third_menu_and_connect(current.keys().at(0), current.values().at(0));
+    connect_current_signal(ui->subMenu_1, "UT Settings", "General", MenuItem::Spin);
+    set_general_menu();
 
 }
 
@@ -35,14 +69,395 @@ SubMenu::~SubMenu()
 
 void SubMenu::set_third_menu(QString str1, QString str2)
 {
-    QString str1_c = current.keys().at(0);
-    QString str2_c = current.values().at(0);
+//    QString str1_c = current.keys().at(0);
+//    QString str2_c = current.values().at(0);
 
-    if(str1 != str1_c || str2 != str2_c) {
-        disconnect_previous_signals(str1_c, str2_c);
-        get_second_menu_string(str1, str2);
-        set_third_menu_and_connect(str1, str2);
-    }
+//    if(str1 != str1_c || str2 != str2_c) {
+//        disconnect_previous_signals(str1_c, str2_c);
+//        get_second_menu_string(str1, str2);
+//        set_third_menu_and_connect(str1, str2);
+//    }
+
+}
+
+void SubMenu::set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals)
+{
+    widget->set_type(MenuItem::Spin);
+    widget->set_title(title);
+    widget->set_unit(unit);
+    widget->set_steps(steps);
+    widget->set_range(min, max);
+    widget->set_decimals(decimals);
+}
+
+void SubMenu::set_combobox_menu(MenuItem *widget, const QString &title, QStringList &texts)
+{
+    widget->set_type(MenuItem::Combo);
+    widget->set_title(title);
+    widget->set_combo_items(texts);
+}
+
+void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
+{
+    widget->set_type(MenuItem::None);
+    widget->set_title(title);
+}
+
+void SubMenu::set_general_menu()
+{
+    /* Gain menu item */
+    set_spinbox_menu(ui->subMenu_1, tr("Gain"), "dB", stepList1, 0, 100, 1);
+
+    /* Start menu item */
+    set_spinbox_menu(ui->subMenu_2, tr("Start"), "mm", stepList2, 0, 1000, 2);
+
+    /* Range menu item */
+    set_spinbox_menu(ui->subMenu_3, tr("Range"), "mm", stepList2, 0, 1000, 2);
+
+    /* Velocity menu item */
+    set_spinbox_menu(ui->subMenu_4, tr("Velocity"), "m/s", stepList3, 635, 12540, 1);
+
+    /* Wedge delay menu item */
+    set_spinbox_menu(ui->subMenu_5, tr("Wedge Delay"), "μs", stepList4, 0, 1000, 2);
+
+    /* UT Unit menu item */
+    QStringList option;
+    option.append(tr("Time"));
+    option.append(tr("Sound Path"));
+    option.append(tr("True Path"));
+    set_combobox_menu(ui->subMenu_6, tr("UT Unit"), option);
+
+}
+
+void SubMenu::set_pulser_menu()
+{
+    /* Tx/Rx Mode menu item */
+    QStringList option1;
+    option1.append(tr("PC"));
+    option1.append(tr("PE"));
+    option1.append(tr("TT"));
+    option1.append(tr("TOFD"));
+    set_combobox_menu(ui->subMenu_1, tr("Tx/Rx Mode"), option1);
+
+    /* Pulser menu item */
+    set_spinbox_menu(ui->subMenu_2, tr("Pulser"), "", stepList5, 1, 113, 0);
+
+    /* Voltage menu item */
+    QStringList option2;
+    option2.append(tr("50V"));
+    option2.append(tr("100V"));
+    option2.append(tr("200V"));
+    set_combobox_menu(ui->subMenu_3, tr("Voltage"), option2);
+
+    /* PW menu item */
+    QList<double> steps;
+    steps.append(2.5);
+    steps.append(10);
+    steps.append(25);
+    set_spinbox_menu(ui->subMenu_4, tr("PW"), "ns", steps, 30, 500, 1);
+
+    /* PRF menu item */
+    QStringList option3;
+    option3.append(tr("Auto Max"));
+    option3.append(tr("Max/2"));
+    option3.append(tr("Optimum"));
+    option3.append(tr("UserDef"));
+    set_combobox_menu(ui->subMenu_5, tr("PRF"), option3);
+
+    ui->subMenu_6->set_type(MenuItem::None);
+
+}
+
+void SubMenu::set_receiver_menu()
+{
+    /* Receiver menu item */
+    set_label_menu(ui->subMenu_1, tr("Receiver"));
+
+    /* Filter menu item */
+    QStringList option1;
+    option1.append(tr("none"));
+    option1.append(tr("1M"));
+    option1.append(tr("1.5M-2.5M"));
+    option1.append(tr("3-5M"));
+    option1.append(tr("7.5M"));
+    option1.append(tr("more than 10M"));
+    set_combobox_menu(ui->subMenu_2, tr("Filter"), option1);
+
+    /* Rectifier menu item */
+    QStringList option2;
+    option2.append(tr("RF"));
+    option2.append(tr("FW"));
+    option2.append(tr("HW+"));
+    option2.append(tr("HW-"));
+    set_combobox_menu(ui->subMenu_3, tr("Rectifier"), option2);
+
+    /* Video Filter menu item */
+    QStringList option3;
+    option3.append(tr("On"));
+    option3.append(tr("Off"));
+    set_combobox_menu(ui->subMenu_4, tr("Video Filter"), option3);
+
+    /* Averaging menu item */
+    QStringList option4;
+    option4.append(tr("1"));
+    option4.append(tr("2"));
+    option4.append(tr("4"));
+    option4.append(tr("8"));
+    option4.append(tr("16"));
+    set_combobox_menu(ui->subMenu_5, tr("Averaging"), option4);
+
+    ui->subMenu_6->set_type(MenuItem::None);
+}
+
+void SubMenu::set_advanced_menu()
+{
+    /* Set 80% menu item */
+    QStringList option1;
+    option1.append(tr("On"));
+    option1.append(tr("Off"));
+    set_combobox_menu(ui->subMenu_1, tr("Set 80%"), option1);
+
+    /* dB Ref. menu item */
+    QStringList option2;
+    option2.append(tr("On"));
+    option2.append(tr("Off"));
+    set_combobox_menu(ui->subMenu_2, tr("dB Ref."), option2);
+
+    /* Point Qty. menu item */
+    QStringList option3;
+    option3.append(tr("Auto"));
+    option3.append(tr("160"));
+    option3.append(tr("320"));
+    option3.append(tr("640"));
+    option3.append(tr("UserDef"));
+    set_combobox_menu(ui->subMenu_3, tr("Point Qty."), option3);
+
+    /* Scale Factor menu item */
+    set_label_menu(ui->subMenu_4, tr("Scale Factor"));
+
+    /* Sum Gain menu item */
+    set_spinbox_menu(ui->subMenu_5, tr("Sum Gain"), "dB", stepList1, 0, 100, 1);
+
+    ui->subMenu_6->set_type(MenuItem::None);
+}
+
+void SubMenu::set_gate_menu()
+{
+    /* Gate menu item */
+    QStringList option1;
+    option1.append(tr("A"));
+    option1.append(tr("B"));
+    option1.append(tr("I"));
+    option1.append(tr("Off"));
+    set_combobox_menu(ui->subMenu_1, tr("Gate"), option1);
+
+    /* Start menu item */
+    set_spinbox_menu(ui->subMenu_2, tr("Start"), "mm", stepList2, 0, 16000, 2);
+
+    /* Width menu item */
+    QList<double> steps;
+    steps.append(0.01);
+    steps.append(0.10);
+    steps.append(1.0);
+    steps.append(10.0);
+    set_spinbox_menu(ui->subMenu_3, tr("Width"), "mm", steps, 0.05, 525, 2);
+
+    /* Threshold menu item */
+    QList<double> steps2;
+    steps2.append(1);
+    steps2.append(10);
+    set_spinbox_menu(ui->subMenu_4, tr("Threshold"), "%", steps2, 0, 100, 0);
+
+    /* Synchro menu item */
+    QStringList option2;
+    option2.append(tr("Gate A"));
+    option2.append(tr("Gate I"));
+    option2.append(tr("Pulse"));
+    set_combobox_menu(ui->subMenu_5, tr("Synchro"), option2);
+
+    /* Measure Mode menu item */
+    QStringList option3;
+    option3.append(tr("Edge"));
+    option3.append(tr("Peak"));
+    set_combobox_menu(ui->subMenu_6, tr("Measure Mode"), option3);
+
+}
+
+void SubMenu::set_alarm_menu()
+{
+    /* Alarm menu item */
+    QStringList option1;
+    option1.append(tr("Alarm 1"));
+    option1.append(tr("Alarm 2"));
+    option1.append(tr("Alarm 3"));
+    set_combobox_menu(ui->subMenu_1, tr("Alarm"), option1);
+
+    /* Switch menu item */
+    QStringList option2;
+    option2.append(tr("On"));
+    option2.append(tr("Off"));
+    set_combobox_menu(ui->subMenu_2, tr("Switch"), option2);
+
+    /* Group menu item */
+    QStringList option3;
+    option3.append(tr("Group1"));
+    option3.append(tr("All"));
+    option3.append(tr("None"));
+    set_combobox_menu(ui->subMenu_3, tr("Group"), option3);
+
+    /* Condition Factor menu item */
+    QStringList option4;
+    option4.append(tr("None"));
+    option4.append(tr("Gate A"));
+    option4.append(tr("Gate B"));
+    option4.append(tr("Gate I"));
+    option4.append(tr("Not Gate A"));
+    option4.append(tr("Not Gate B"));
+    option4.append(tr("Not Gate I"));
+    option4.append(tr(">Max.Thickness"));
+    option4.append(tr("<Min.Thickness"));
+    set_combobox_menu(ui->subMenu_4, tr("Condition"), option4);
+
+    /* Operator menu item */
+    QStringList option5;
+    option5.append(tr("And"));
+    option5.append(tr("Or"));
+    set_combobox_menu(ui->subMenu_5, tr("Operator"), option5);
+
+    ui->subMenu_6->set_type(MenuItem::None);
+}
+
+void SubMenu::set_output_menu()
+{
+    /* Output menu item */
+    QStringList option1;
+    option1.append(tr("Alarm 1"));
+    option1.append(tr("Alarm 2"));
+    option1.append(tr("Alarm 3"));
+    option1.append(tr("Analog 1"));
+    option1.append(tr("Analog 2"));
+    set_combobox_menu(ui->subMenu_1, tr("Output"), option1);
+
+    /* Sound menu item */
+    QStringList option2;
+    option2.append(tr("Off No Sound"));
+    option2.append(tr("300Hz Audio Output at 300Hz"));
+    option2.append(tr("600Hz Audio Output at 600Hz"));
+    option2.append(tr("1000Hz Audio Output at 1000Hz"));
+    option2.append(tr("5000Hz Audio Output at 5000Hz"));
+    set_combobox_menu(ui->subMenu_2, tr("Sound"), option2);
+
+    /* Delay menu item */
+    QList<double> steps;
+    steps.append(0.10);
+    steps.append(1.0);
+    steps.append(10.0);
+    set_spinbox_menu(ui->subMenu_3, tr("Delay"), "mm", steps, 0, 5000, 2);
+
+    /* Hold Time menu item */
+    set_spinbox_menu(ui->subMenu_4, tr("Hold Time"), "%", steps, 0, 5000, 2);
+
+    /* Group menu item */
+    set_label_menu(ui->subMenu_5, tr("Group"));
+
+    /* Data menu item */
+    QStringList option3;
+    option3.append(tr("A%"));
+    option3.append(tr("B%"));
+    option3.append(tr("None"));
+    set_combobox_menu(ui->subMenu_6, tr("Data"), option3);
+
+}
+
+void SubMenu::set_dac_menu()
+{
+
+}
+
+void SubMenu::set_tcg_menu()
+{
+
+}
+
+void SubMenu::set_selection_menu()
+{
+    /* Group menu item */
+    QStringList option1;
+    option1.append(tr("All"));
+    option1.append(tr("Current"));
+    set_combobox_menu(ui->subMenu_1, tr("Group"), option1);
+
+    /* Display menu item */
+    QStringList option2;
+    option2.append(tr("A A-Scan"));
+    option2.append(tr("B B-Scan"));
+    option2.append(tr("C C-Scan"));
+    option2.append(tr("S S-Scan"));
+    option2.append(tr("A-B A-Scan B-Scan"));
+    option2.append(tr("A-S A-Scan S-Scan"));
+    option2.append(tr("A-B-C A-Scan B-Scan C-Scan"));
+    option2.append(tr("A-B-S A-Scan B-Scan S-Scan"));
+    option2.append(tr("A-S-[C] A-Scan S-Scan [C-Scan]"));
+    option2.append(tr("S-A-A-A S-Scan A-Scan A-Scan A-Scan"));
+    option2.append(tr("S-A-C-C S-Scan A-Scan C-Scan C-Scan"));
+    set_combobox_menu(ui->subMenu_2, tr("Display"), option2);
+
+    /* C-Scan Source menu item */
+    QStringList option3;
+    option3.append(tr("A%"));
+    option3.append(tr("B%"));
+    option3.append(tr("Thickness"));
+    option3.append(tr("I/"));
+    set_combobox_menu(ui->subMenu_3, tr("C-Scan Source"), option3);
+
+    /* Min.Thickness menu item */
+    QList<double> steps;
+    steps.append(0.01);
+    steps.append(0.10);
+    steps.append(1.0);
+    steps.append(10.0);
+    set_spinbox_menu(ui->subMenu_4, tr("Min.Thickness"), "mm", steps, 0.05, 20000, 2);
+
+    /* Max.Thickness menu item */
+    set_spinbox_menu(ui->subMenu_5, tr("Max.Thickness"), "mm", steps, 0.05, 20000, 2);
+
+    ui->subMenu_6->set_type(MenuItem::None);
+}
+
+void SubMenu::set_colorSettings_menu()
+{
+    /* Amplitude menu item */
+    set_label_menu(ui->subMenu_1, tr("Amplitude"));
+
+    /* Depth menu item */
+    set_label_menu(ui->subMenu_2, tr("Depth"));
+
+    /* TOFD menu item */
+    set_label_menu(ui->subMenu_3, tr("TOFD"));
+
+    ui->subMenu_4->set_type(MenuItem::None);
+    ui->subMenu_5->set_type(MenuItem::None);
+    ui->subMenu_6->set_type(MenuItem::None);
+
+}
+
+void SubMenu::set_properties_menu()
+{
+
+}
+
+void SubMenu::set_select_menu()
+{
+
+}
+
+void SubMenu::set_position_menu()
+{
+
+}
+
+void SubMenu:: set_fft_menu()
+{
 
 }
 
@@ -126,13 +541,20 @@ void SubMenu::connect_current_signal(MenuItem *widget, QString str2, QString str
     } else {
 //        connect(widget, SIGNAL(click()), , SLOT());
         if(str2 == "Select" && str3 == "Probe") {
-            connect(widget, SIGNAL(clicked()), this, SLOT(show_probe_dialog()));
+            QByteArray ba = DIALOG_STRING[0].toLatin1();
+            char *ch = ba.data();
+            qDebug() << ch;
+            connect(widget, SIGNAL(clicked()), this, ch);
+
         }
     }
+
+    qDebug()<<SIGNAL(clicked());
 }
 
 void SubMenu::show_probe_dialog()
 {
+    qDebug() << "run";
     ProbeDialog probeDialog;
     probeDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
     probeDialog.exec();
