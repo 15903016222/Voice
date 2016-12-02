@@ -16,7 +16,6 @@ MenuConfig::MenuConfig()
 
     QFile *file = new QFile(":/file/json/menuconf.json");
     menuMap = read_json_file(file);
-    qDebug() << menuMap;
 
 }
 
@@ -52,7 +51,6 @@ QStringList MenuConfig::get_fisrt_menu_list(QVariantMap variantMap)
     QStringList firstList;
     QVariantList variantList = variantMap.values("Queue_First_Menu");
     firstList = variantList.at(0).toStringList();
-    qDebug() << "firstList" << firstList;
     return firstList;
 }
 
@@ -61,7 +59,6 @@ QStringList MenuConfig::get_second_menu_list(QVariantMap variantMap, QString str
     QVariantMap firstMap = get_first_menu_map(variantMap, string);
     QVariantList variantList = firstMap.values("Queue_Second_Menu");
     QStringList secondList  = variantList.at(0).toStringList();
-    qDebug() << "secondList" << secondList;
     return secondList;
 }
 
@@ -86,7 +83,6 @@ QStringList MenuConfig::get_third_menu_list(QVariantMap variantMap,QString first
     }
 
     thirdList = variantList.at(0).toStringList();
-    qDebug() << "thirdList" << thirdList;
     return thirdList;
 }
 
@@ -114,10 +110,12 @@ QList<double> MenuConfig::get_spinBox_range_list(QVariantMap variantMap)
 {
     double minimum = variantMap["minimum"].toInt();
     double maximum = variantMap["maximum"].toInt();
+    if(maximum == 0) {
+        maximum = 1000;
+    }
     QList<double> rangeList;
     rangeList.append(minimum);
     rangeList.append(maximum);
-    qDebug() << "rangeList" << rangeList;
     return rangeList;
 }
 
@@ -137,7 +135,6 @@ QList<double> MenuConfig::get_spinBox_step_list(QVariantMap variantMap)
         QString string = stringList.at(i);
         stepList.append(string.toDouble());
     }
-    qDebug() << "stepList" << stepList;
     return stepList;
 }
 

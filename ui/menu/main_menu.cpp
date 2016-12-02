@@ -86,6 +86,7 @@ bool MainMenu::eventFilter(QObject *object, QEvent *event)
                 ui->treeWidget->setCurrentItem(current);
             }
             return true;
+            break;
         case Qt::Key_Down:
             if(subIndex == (previous->parent()->childCount() - 1)) {
                 if(index < m_firstCount - 1) {
@@ -100,6 +101,7 @@ bool MainMenu::eventFilter(QObject *object, QEvent *event)
                 ui->treeWidget->setCurrentItem(current);
             }
             return true;
+            break;
         case Qt::Key_Enter:
             break;
 //        case Qt::Key_Alt:
