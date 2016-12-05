@@ -2,4 +2,5 @@
 *.user
 build
 *.orig
+/Fpga
 
