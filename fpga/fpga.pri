@@ -1,6 +1,6 @@
 
-INCLUDEPATH += $$PWD
-DEPENDPATH  += $$PWD
+INCLUDEPATH += $$PWD/include
+DEPENDPATH  += $$PWD/include
 
 equals(DEVICE, "PC_WIN") {
 	LIBFPGA = Fpga_Win
@@ -18,4 +18,4 @@ else: equals(DEVICE, "PC_UNIX") {
 CONFIG(debug, debug|release) {
     LIBFPGA = $$join(LIBFPGA,,,_debug)
 }
-LIBS += -L$$PWD -l$$LIBFPGA
+LIBS += -L$$PWD/lib -l$$LIBFPGA
