@@ -55,8 +55,6 @@ SOURCES += main.cpp
 
 include(ui/ui.pri)
 
-include(lib/lib.pri)
-
 include(device/device.pri)
 
 include(mcu/mcu.pri)
