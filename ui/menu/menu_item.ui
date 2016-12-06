@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="2,1,1">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="2,1,1,1">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -156,6 +156,20 @@ border-style:none;
        <width>16</width>
        <height>16</height>
       </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">QLabel{
+background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,
+stop:0.158192 rgba(0, 0, 0, 255),
+stop:0.559322 rgba(0, 130, 195, 255));
+}</string>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </item>

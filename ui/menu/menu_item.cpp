@@ -28,9 +28,11 @@ void MenuItem::set_type(MenuItem::Type type)
 {
     ui->comboBox->hide();
     ui->doubleSpinBox->hide();
+    ui->label->hide();
 
     switch (type) {
     case None:
+        ui->label->show();
         break;
     case Spin:
         ui->doubleSpinBox->show();
@@ -49,6 +51,8 @@ void MenuItem::clean()
     ui->doubleSpinBox->clear();
     ui->comboBox->clear();
     m_curStep = 0;
+    m_title.clear();
+    m_unit.clear();
 }
 
 void MenuItem::set_title(const QString &title)
@@ -102,6 +106,7 @@ bool MenuItem::eventFilter(QObject *obj, QEvent *e)
                 && ! m_steps.isEmpty()) {
             update_step();
         } else {
+            emit clicked();
             set_focus();
         }
         return true;
