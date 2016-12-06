@@ -62,67 +62,112 @@ public:
     explicit SubMenu(QWidget *parent = 0);
     ~SubMenu();
 
-    typedef void (SubMenu::*Function)();
+    typedef void (SubMenu::*Function)(bool);
+//    typedef void (SubMenu::*DisconnectFun)();
 
 private:
     Ui::SubMenu *ui;
 
-    void set_third_menu_and_connect(QString str1, QString str2);
-    void disconnect_previous_signals(QString str1, QString str2);
-    void get_second_menu_string(Type type);
-    void connect_current_signal(MenuItem *widget, QString str2, QString str3, MenuItem::Type type);
+    void set_general_menu(bool show);
+    void set_pulser_menu(bool show);
+    void set_receiver_menu(bool show);
+    void set_advanced_menu(bool show);
 
-    void set_general_menu();
-    void set_pulser_menu();
-    void set_receiver_menu();
-    void set_advanced_menu();
+    void set_gate_menu(bool show);
+    void set_alarm_menu(bool show);
+    void set_output_menu(bool show);
+    void set_dac_menu(bool show);
+    void set_tcg_menu(bool show);
 
-    void set_gate_menu();
-    void set_alarm_menu();
-    void set_output_menu();
-    void set_dac_menu();
-    void set_tcg_menu();
+    void set_selection_menu(bool show);
+    void set_colorSettings_menu(bool show);
+    void set_properties_menu(bool show);
 
-    void set_selection_menu();
-    void set_colorSettings_menu();
-    void set_properties_menu();
+    void set_select_menu(bool show);
+    void set_position_menu(bool show);
+    void set_fft_menu(bool show);
+    void set_part_menu(bool show);
+    void set_advanced_2_menu(bool show);
 
-    void set_select_menu();
-    void set_position_menu();
-    void set_fft_menu();
-    void set_part_menu();
-    void set_advanced_2_menu();
+    void set_lawConfig_menu(bool show);
+    void set_angle_menu(bool show);
+    void set_apeture_menu(bool show);
+    void set_focalPoint_menu(bool show);
 
-    void set_lawConfig_menu();
-    void set_angle_menu();
-    void set_apeture_menu();
-    void set_focalPoint_menu();
+    void set_inspection_menu(bool show);
+    void set_encoder_menu(bool show);
+    void set_area_menu(bool show);
+    void set_start_menu(bool show);
 
-    void set_inspection_menu();
-    void set_encoder_menu();
-    void set_area_menu();
-    void set_start_menu();
+    void set_cursors_menu(bool show);
+    void set_tofd_menu(bool show);
+    void set_flawRecord_menu(bool show);
 
-    void set_cursors_menu();
-    void set_tofd_menu();
-    void set_flawRecord_menu();
+    void set_file_menu(bool show);
+    void set_saveMode_menu(bool show);
+    void set_report_menu(bool show);
+    void set_format_menu(bool show);
+    void set_userField_menu(bool show);
 
-    void set_file_menu();
-    void set_saveMode_menu();
-    void set_report_menu();
-    void set_format_menu();
-    void set_userField_menu();
+    void set_preference_menu(bool show);
+    void set_system_menu(bool show);
+    void set_network_menu(bool show);
+    void set_service_menu(bool show);
 
-    void set_preference_menu();
-    void set_system_menu();
-    void set_network_menu();
-    void set_service_menu();
+//    void disconnect_general_menu();
+//    void disconnect_pulser_menu();
+//    void disconnect_receiver_menu();
+//    void disconnect_advanced_menu();
+
+//    void disconnect_gate_menu();
+//    void disconnect_alarm_menu();
+//    void disconnect_output_menu();
+//    void disconnect_dac_menu();
+//    void disconnect_tcg_menu();
+
+//    void disconnect_selection_menu();
+//    void disconnect_colorSettings_menu();
+//    void disconnect_properties_menu();
+
+//    void disconnect_select_menu();
+//    void disconnect_position_menu();
+//    void disconnect_fft_menu();
+//    void disconnect_part_menu();
+//    void disconnect_advanced_2_menu();
+
+//    void disconnect_lawConfig_menu();
+//    void disconnect_angle_menu();
+//    void disconnect_apeture_menu();
+//    void disconnect_focalPoint_menu();
+
+//    void disconnect_inspection_menu();
+//    void disconnect_encoder_menu();
+//    void disconnect_area_menu();
+//    void disconnect_start_menu();
+
+//    void disconnect_cursors_menu();
+//    void disconnect_tofd_menu();
+//    void disconnect_flawRecord_menu();
+
+//    void disconnect_file_menu();
+//    void disconnect_saveMode_menu();
+//    void disconnect_report_menu();
+//    void disconnect_format_menu();
+//    void disconnect_userField_menu();
+
+//    void disconnect_preference_menu();
+//    void disconnect_system_menu();
+//    void disconnect_network_menu();
+//    void disconnect_service_menu();
 
     void set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals);
     void set_combobox_menu(MenuItem *widget, const QString &title, QStringList &texts);
     void set_label_menu(MenuItem *widget, const QString &title);
     void init_map();
-    void run_fun(Type type);
+//    void init_disconnect_map();
+    void run_fun(Type type, bool value);
+//    void run_disconnect_fun(Type type);
+    void get_main_menu_type(Type type);
 
     MenuConfig *menuConfig;
     NetworkDialog *pNetworkDialog;
@@ -139,6 +184,7 @@ private:
 
     QMap<QString, Type> m_typeMap;
     QMap<Type, Function> m_map;
+//    QMap<Type, DisconnectFun> m_disconnectMap;
 
 private slots:
     void set_third_menu(int num);
