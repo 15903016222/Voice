@@ -80,7 +80,6 @@ SubMenu::SubMenu(QWidget *parent) :
     switchList.append(tr("Off"));
 
     init_map();
-//    init_disconnect_map();
 
     menuConfig = new MenuConfig;
     pNetworkDialog = new NetworkDialog(this);
@@ -99,95 +98,45 @@ SubMenu::~SubMenu()
 
 void SubMenu::init_map()
 {
-//    m_map.insert(UTSettings_General, &SubMenu::set_general_menu);
-
-    m_map[UTSettings_General] = &SubMenu::set_general_menu;
-    m_map[UTSettings_Pulser] = &SubMenu::set_pulser_menu;
-    m_map[UTSettings_Receiver] = &SubMenu::set_receiver_menu;
-    m_map[UTSettings_Advanced] = &SubMenu::set_advanced_menu;
-
-    m_map[GateCurves_Gate] = &SubMenu::set_gate_menu;
-    m_map[GateCurves_Alarm] = &SubMenu::set_alarm_menu;
-    m_map[GateCurves_Output] = &SubMenu::set_output_menu;
-    m_map[GateCurves_DAC] = &SubMenu::set_dac_menu;
-    m_map[GateCurves_TCG] = &SubMenu::set_tcg_menu;
-
-    m_map[Display_Selection] = &SubMenu::set_selection_menu;
-    m_map[Display_ColorSettings] = &SubMenu::set_colorSettings_menu;
-    m_map[Displsy_Properties] = &SubMenu::set_properties_menu;
-
-    m_map[ProbePart_Select] = &SubMenu::set_select_menu;
-    m_map[ProbePart_Position] = &SubMenu::set_position_menu;
-    m_map[ProbePart_FFT] = &SubMenu::set_fft_menu;
-    m_map[ProbePart_Part] = &SubMenu::set_part_menu;
-    m_map[ProbePart_Advanced] = &SubMenu::set_advanced_2_menu;
-
-    m_map[FocalLaw_LawConfig] = &SubMenu::set_lawConfig_menu;
-    m_map[FocalLaw_Angle] = &SubMenu::set_angle_menu;
-    m_map[FocalLaw_Apeture] = &SubMenu::set_apeture_menu;
-    m_map[FacalLaw_FocalPoint] = &SubMenu::set_focalPoint_menu;
-
-    m_map[Scan_Inspection] = &SubMenu::set_inspection_menu;
-    m_map[Scan_Encoder] = &SubMenu::set_encoder_menu;
-    m_map[Scan_Area] = &SubMenu::set_area_menu;
-    m_map[Scan_Start] = &SubMenu::set_start_menu;
-
-    m_map[Measurement_Cursors] = &SubMenu::set_cursors_menu;
-    m_map[Measurement_TOFD] = &SubMenu::set_tofd_menu;
-    m_map[Measurement_FlawRecord] = &SubMenu::set_flawRecord_menu;
-
-    m_map[FileReport_File] = &SubMenu::set_file_menu;
-    m_map[FileReport_SaveMode] = &SubMenu::set_saveMode_menu;
-    m_map[FileReport_Report] = &SubMenu::set_report_menu;
-    m_map[FileReport_Format] = &SubMenu::set_format_menu;
-    m_map[FileReport_UserField] = &SubMenu::set_userField_menu;
-
-    m_map[Preference_Preference] = &SubMenu::set_preference_menu;
-    m_map[Preference_System] = &SubMenu::set_system_menu;
-    m_map[Preference_Network] = &SubMenu::set_network_menu;
-    m_map[Preference_Service] = &SubMenu::set_service_menu;
+    m_map.insert(UTSettings_General, &set_general_menu);
+    m_map.insert(UTSettings_Pulser, &set_pulser_menu);
+    m_map.insert(UTSettings_Receiver, &set_receiver_menu);
+    m_map.insert(UTSettings_Advanced, &set_advanced_menu);
+    m_map.insert(GateCurves_Gate, &set_gate_menu);
+    m_map.insert(GateCurves_Alarm, &set_alarm_menu);
+    m_map.insert(GateCurves_Output, &set_output_menu);
+    m_map.insert(GateCurves_DAC, &set_dac_menu);
+    m_map.insert(GateCurves_TCG, &set_tcg_menu);
+    m_map.insert(Display_Selection, &set_selection_menu);
+    m_map.insert(Display_ColorSettings, &set_colorSettings_menu);
+    m_map.insert(Displsy_Properties, &set_properties_menu);
+    m_map.insert(ProbePart_Select, &set_select_menu);
+    m_map.insert(ProbePart_Position, &set_position_menu);
+    m_map.insert(ProbePart_FFT, &set_fft_menu);
+    m_map.insert(ProbePart_Part, &set_part_menu);
+    m_map.insert(ProbePart_Advanced, &set_advanced_2_menu);
+    m_map.insert(FocalLaw_LawConfig, &set_lawConfig_menu);
+    m_map.insert(FocalLaw_Angle, &set_angle_menu);
+    m_map.insert(FocalLaw_Apeture, &set_apeture_menu);
+    m_map.insert(FacalLaw_FocalPoint, &set_focalPoint_menu);
+    m_map.insert(Scan_Inspection, &set_inspection_menu);
+    m_map.insert(Scan_Encoder, &set_encoder_menu);
+    m_map.insert(Scan_Area, &set_area_menu);
+    m_map.insert(Scan_Start, &set_start_menu);
+    m_map.insert(Measurement_Cursors, &set_cursors_menu);
+    m_map.insert(Measurement_TOFD, &set_tofd_menu);
+    m_map.insert(Measurement_FlawRecord, &set_flawRecord_menu);
+    m_map.insert(FileReport_File, &set_file_menu);
+    m_map.insert(FileReport_SaveMode, &set_saveMode_menu);
+    m_map.insert(FileReport_Report, &set_report_menu);
+    m_map.insert(FileReport_Format, &set_format_menu);
+    m_map.insert(FileReport_UserField, &set_userField_menu);
+    m_map.insert(Preference_Preference, &set_preference_menu);
+    m_map.insert(Preference_System, &set_system_menu);
+    m_map.insert(Preference_Network, &set_network_menu);
+    m_map.insert(Preference_Service, &set_service_menu);
 }
 
-//void SubMenu::init_disconnect_map()
-//{
-//    m_disconnectMap.insert(UTSettings_General, &disconnect_general_menu);
-//    m_disconnectMap.insert(UTSettings_Pulser, &disconnect_pulser_menu);
-//    m_disconnectMap.insert(UTSettings_Receiver, &disconnect_receiver_menu);
-//    m_disconnectMap.insert(UTSettings_Advanced, &disconnect_advanced_menu);
-//    m_disconnectMap.insert(GateCurves_Gate, &disconnect_gate_menu);
-//    m_disconnectMap.insert(GateCurves_Alarm, &disconnect_alarm_menu);
-//    m_disconnectMap.insert(GateCurves_Output, &disconnect_output_menu);
-//    m_disconnectMap.insert(GateCurves_DAC, &disconnect_dac_menu);
-//    m_disconnectMap.insert(GateCurves_TCG, &disconnect_tcg_menu);
-//    m_disconnectMap.insert(Display_Selection, &disconnect_selection_menu);
-//    m_disconnectMap.insert(Display_ColorSettings, &disconnect_colorSettings_menu);
-//    m_disconnectMap.insert(Displsy_Properties, &disconnect_properties_menu);
-//    m_disconnectMap.insert(ProbePart_Select, &disconnect_select_menu);
-//    m_disconnectMap.insert(ProbePart_Position, &disconnect_position_menu);
-//    m_disconnectMap.insert(ProbePart_FFT, &disconnect_fft_menu);
-//    m_disconnectMap.insert(ProbePart_Part, &disconnect_part_menu);
-//    m_disconnectMap.insert(ProbePart_Advanced, &disconnect_advanced_2_menu);
-//    m_disconnectMap.insert(FocalLaw_LawConfig, &disconnect_lawConfig_menu);
-//    m_disconnectMap.insert(FocalLaw_Angle, &disconnect_angle_menu);
-//    m_disconnectMap.insert(FocalLaw_Apeture, &disconnect_apeture_menu);
-//    m_disconnectMap.insert(FacalLaw_FocalPoint, &disconnect_focalPoint_menu);
-//    m_disconnectMap.insert(Scan_Inspection, &disconnect_inspection_menu);
-//    m_disconnectMap.insert(Scan_Encoder, &disconnect_encoder_menu);
-//    m_disconnectMap.insert(Scan_Area, &disconnect_area_menu);
-//    m_disconnectMap.insert(Scan_Start, &disconnect_start_menu);
-//    m_disconnectMap.insert(Measurement_Cursors, &disconnect_cursors_menu);
-//    m_disconnectMap.insert(Measurement_TOFD, &disconnect_tofd_menu);
-//    m_disconnectMap.insert(Measurement_FlawRecord, &disconnect_flawRecord_menu);
-//    m_disconnectMap.insert(FileReport_File, &disconnect_file_menu);
-//    m_disconnectMap.insert(FileReport_SaveMode, &disconnect_saveMode_menu);
-//    m_disconnectMap.insert(FileReport_Report, &disconnect_report_menu);
-//    m_disconnectMap.insert(FileReport_Format, &disconnect_format_menu);
-//    m_disconnectMap.insert(FileReport_UserField, &disconnect_userField_menu);
-//    m_disconnectMap.insert(Preference_Preference, &disconnect_preference_menu);
-//    m_disconnectMap.insert(Preference_System, &disconnect_system_menu);
-//    m_disconnectMap.insert(Preference_Network, &disconnect_network_menu);
-//    m_disconnectMap.insert(Preference_Service, &disconnect_service_menu);
-//}
 
 void SubMenu::set_third_menu(int num)
 {
@@ -233,17 +182,6 @@ void SubMenu::run_fun(Type type, bool value)
         }
     }
 }
-
-//void SubMenu::run_disconnect_fun(Type type)
-//{
-//    QMap<Type, DisconnectFun>::const_iterator it = m_disconnectMap.find(type);
-//    if(it != m_disconnectMap.end()) {
-//        DisconnectFun pFun = m_disconnectMap.value(type);
-//        if(pFun) {
-//            return (this->*pFun)();
-//        }
-//    }
-//}
 
 void SubMenu::get_main_menu_type(Type type)
 {
@@ -658,9 +596,11 @@ void SubMenu::set_select_menu(bool show)
 
         /* Probe menu item */
         set_label_menu(ui->subMenu_3, tr("Probe"));
+        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_probe_dialog()));
 
         /* Wedge menu item */
         set_label_menu(ui->subMenu_4, tr("Wedge"));
+        connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_wedge_dialog()));
 
         /* Define menu item */
         QStringList option3;
@@ -671,7 +611,8 @@ void SubMenu::set_select_menu(bool show)
         /* Auto Detect menu item */
         set_combobox_menu(ui->subMenu_6, tr("Auto Detect"), switchList);
     } else {
-
+        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_probe_dialog()));
+        disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_wedge_dialog()));
     }
 }
 
@@ -1041,6 +982,7 @@ void SubMenu::set_flawRecord_menu(bool show)
 
         /* Comment menu item */
         set_label_menu(ui->subMenu_3, tr("Comment"));
+        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         /* Display Table Menu Item */
         set_combobox_menu(ui->subMenu_4, tr("Display Table"), switchList);
@@ -1050,7 +992,7 @@ void SubMenu::set_flawRecord_menu(bool show)
 
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
-
+        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
     }
 }
 
@@ -1065,12 +1007,13 @@ void SubMenu::set_file_menu(bool show)
 
         /* File Manager menu item */
         set_label_menu(ui->subMenu_3, tr("File Manager"));
+        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_filemanager_dialog()));
 
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
-
+        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_filemanager_dialog()));
     }
 }
 
@@ -1097,11 +1040,12 @@ void SubMenu::set_saveMode_menu(bool show)
 
         /* File Name menu item */
         set_label_menu(ui->subMenu_4, tr("File Name"));
+        connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
-
+        disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
     }
 }
 
@@ -1113,20 +1057,27 @@ void SubMenu::set_report_menu(bool show)
 
         /* Report Name menu item */
         set_label_menu(ui->subMenu_2, tr("Report Name"));
+        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         /* Customer menu item */
         set_label_menu(ui->subMenu_3, tr("Customer"));
+        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         /* Part Name Menu Item */
         set_label_menu(ui->subMenu_4, tr("Part Name"));
+        connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         /* Part Number item */
         set_label_menu(ui->subMenu_5, tr("Part Number"));
+        connect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         /* Create menu item */
         set_label_menu(ui->subMenu_6, tr("Create"));
     } else {
-
+        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+        disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+        disconnect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
     }
 }
 
@@ -1177,17 +1128,22 @@ void SubMenu::set_userField_menu(bool show)
 
         /* Label menu item */
         set_label_menu(ui->subMenu_3, tr("Label"));
+        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         /* Content Menu Item */
         set_label_menu(ui->subMenu_4, tr("Content"));
+        connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         /* Edit Note Number item */
         set_label_menu(ui->subMenu_5, tr("Edit Note"));
+        connect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
         /* Print menu item */
         set_label_menu(ui->subMenu_6, tr("Print"));
     } else {
-
+        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+        disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+        disconnect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
     }
 }
 
@@ -1222,9 +1178,11 @@ void SubMenu::set_system_menu(bool show)
     if(show) {
         /* Clock Set menu item */
         set_label_menu(ui->subMenu_1, tr("Clock Set"));
+        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
 
         /* Date Set menu item */
         set_label_menu(ui->subMenu_2, tr("Date Set"));
+        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
 
         /* Language menu item */
         QStringList option1;
@@ -1236,7 +1194,8 @@ void SubMenu::set_system_menu(bool show)
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
-
+        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
+        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
     }
 }
 
@@ -1245,16 +1204,19 @@ void SubMenu::set_network_menu(bool show)
     if(show) {
         /* IP Address menu item */
         set_label_menu(ui->subMenu_1, tr("IP Address"));
+        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
 
         /* Subnet Mask menu item */
         set_label_menu(ui->subMenu_2, tr("Subnet Mask"));
+        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
 
         ui->subMenu_3->set_type(MenuItem::None);
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
-
+        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
+        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
     }
 }
 
@@ -1263,6 +1225,7 @@ void SubMenu::set_service_menu(bool show)
     if(show) {
         /* System Information Menu Item */
         set_label_menu(ui->subMenu_1, tr("System Information"));
+        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_info_dialog()));
 
         /* Cert Import menu item */
         QStringList option;
@@ -1278,11 +1241,15 @@ void SubMenu::set_service_menu(bool show)
 
         /* Reset Configuration Number item */
         set_label_menu(ui->subMenu_5, tr("Reset Configuration"));
+        connect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_resetconfig_dialog()));
 
         /* About menu item */
         set_label_menu(ui->subMenu_6, tr("About"));
+        connect(ui->subMenu_6, SIGNAL(clicked()), this, SLOT(show_about_dialog()));
     } else {
-
+        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_info_dialog()));
+        disconnect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_resetconfig_dialog()));
+        disconnect(ui->subMenu_6, SIGNAL(clicked()), this, SLOT(show_about_dialog()));
     }
 }
 

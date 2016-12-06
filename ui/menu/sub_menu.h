@@ -63,7 +63,6 @@ public:
     ~SubMenu();
 
     typedef void (SubMenu::*Function)(bool);
-//    typedef void (SubMenu::*DisconnectFun)();
 
 private:
     Ui::SubMenu *ui;
@@ -114,59 +113,11 @@ private:
     void set_network_menu(bool show);
     void set_service_menu(bool show);
 
-//    void disconnect_general_menu();
-//    void disconnect_pulser_menu();
-//    void disconnect_receiver_menu();
-//    void disconnect_advanced_menu();
-
-//    void disconnect_gate_menu();
-//    void disconnect_alarm_menu();
-//    void disconnect_output_menu();
-//    void disconnect_dac_menu();
-//    void disconnect_tcg_menu();
-
-//    void disconnect_selection_menu();
-//    void disconnect_colorSettings_menu();
-//    void disconnect_properties_menu();
-
-//    void disconnect_select_menu();
-//    void disconnect_position_menu();
-//    void disconnect_fft_menu();
-//    void disconnect_part_menu();
-//    void disconnect_advanced_2_menu();
-
-//    void disconnect_lawConfig_menu();
-//    void disconnect_angle_menu();
-//    void disconnect_apeture_menu();
-//    void disconnect_focalPoint_menu();
-
-//    void disconnect_inspection_menu();
-//    void disconnect_encoder_menu();
-//    void disconnect_area_menu();
-//    void disconnect_start_menu();
-
-//    void disconnect_cursors_menu();
-//    void disconnect_tofd_menu();
-//    void disconnect_flawRecord_menu();
-
-//    void disconnect_file_menu();
-//    void disconnect_saveMode_menu();
-//    void disconnect_report_menu();
-//    void disconnect_format_menu();
-//    void disconnect_userField_menu();
-
-//    void disconnect_preference_menu();
-//    void disconnect_system_menu();
-//    void disconnect_network_menu();
-//    void disconnect_service_menu();
-
     void set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals);
     void set_combobox_menu(MenuItem *widget, const QString &title, QStringList &texts);
     void set_label_menu(MenuItem *widget, const QString &title);
     void init_map();
-//    void init_disconnect_map();
     void run_fun(Type type, bool value);
-//    void run_disconnect_fun(Type type);
     void get_main_menu_type(Type type);
 
     MenuConfig *menuConfig;
@@ -184,7 +135,6 @@ private:
 
     QMap<QString, Type> m_typeMap;
     QMap<Type, Function> m_map;
-//    QMap<Type, DisconnectFun> m_disconnectMap;
 
 private slots:
     void set_third_menu(int num);
