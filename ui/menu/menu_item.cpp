@@ -3,6 +3,7 @@
 
 #include <QKeyEvent>
 #include <QDebug>
+#include <QListView>
 
 MenuItem::MenuItem(QWidget *parent) :
     QWidget(parent),
@@ -39,6 +40,11 @@ void MenuItem::set_type(MenuItem::Type type)
         break;
     case Combo:
         ui->comboBox->show();
+        ui->comboBox->setView(new QListView());
+        ui->comboBox->view()->parentWidget()->setAttribute(Qt::WA_TranslucentBackground);
+        ui->comboBox->view()->parentWidget()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
+        ui->comboBox->view()->setFocusPolicy(Qt::StrongFocus);
+        ui->comboBox->view()->setFocus();
         break;
     default:
         break;
