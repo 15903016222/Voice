@@ -51,11 +51,7 @@ SubMenu::SubMenu(QWidget *parent) :
 
     init_option_stringlist();
     init_step_list();
-    init_map();
-
-    menuConfig = new MenuConfig;
-    pNetworkDialog = new NetworkDialog(this);
-    pDateTimeSetDialog = new DateTimeSetDialog(this);
+    init_map();  
 
     m_typeMap.insert("current", Type::UTSettings_General);
 
@@ -65,43 +61,43 @@ SubMenu::SubMenu(QWidget *parent) :
 
 void SubMenu::init_map()
 {
-    m_map.insert(UTSettings_General, &set_general_menu);
-    m_map.insert(UTSettings_Pulser, &set_pulser_menu);
-    m_map.insert(UTSettings_Receiver, &set_receiver_menu);
-    m_map.insert(UTSettings_Advanced, &set_advanced_menu);
-    m_map.insert(GateCurves_Gate, &set_gate_menu);
-    m_map.insert(GateCurves_Alarm, &set_alarm_menu);
-    m_map.insert(GateCurves_Output, &set_output_menu);
-    m_map.insert(GateCurves_DAC, &set_dac_menu);
-    m_map.insert(GateCurves_TCG, &set_tcg_menu);
-    m_map.insert(Display_Selection, &set_selection_menu);
-    m_map.insert(Display_ColorSettings, &set_colorSettings_menu);
-    m_map.insert(Displsy_Properties, &set_properties_menu);
-    m_map.insert(ProbePart_Select, &set_select_menu);
-    m_map.insert(ProbePart_Position, &set_position_menu);
-    m_map.insert(ProbePart_FFT, &set_fft_menu);
-    m_map.insert(ProbePart_Part, &set_part_menu);
-    m_map.insert(ProbePart_Advanced, &set_advanced_2_menu);
-    m_map.insert(FocalLaw_LawConfig, &set_lawConfig_menu);
-    m_map.insert(FocalLaw_Angle, &set_angle_menu);
-    m_map.insert(FocalLaw_Apeture, &set_apeture_menu);
-    m_map.insert(FacalLaw_FocalPoint, &set_focalPoint_menu);
-    m_map.insert(Scan_Inspection, &set_inspection_menu);
-    m_map.insert(Scan_Encoder, &set_encoder_menu);
-    m_map.insert(Scan_Area, &set_area_menu);
-    m_map.insert(Scan_Start, &set_start_menu);
-    m_map.insert(Measurement_Cursors, &set_cursors_menu);
-    m_map.insert(Measurement_TOFD, &set_tofd_menu);
-    m_map.insert(Measurement_FlawRecord, &set_flawRecord_menu);
-    m_map.insert(FileReport_File, &set_file_menu);
-    m_map.insert(FileReport_SaveMode, &set_saveMode_menu);
-    m_map.insert(FileReport_Report, &set_report_menu);
-    m_map.insert(FileReport_Format, &set_format_menu);
-    m_map.insert(FileReport_UserField, &set_userField_menu);
-    m_map.insert(Preference_Preference, &set_preference_menu);
-    m_map.insert(Preference_System, &set_system_menu);
-    m_map.insert(Preference_Network, &set_network_menu);
-    m_map.insert(Preference_Service, &set_service_menu);
+    m_map.insert(UTSettings_General, &SubMenu::set_general_menu);
+    m_map.insert(UTSettings_Pulser, &SubMenu::set_pulser_menu);
+    m_map.insert(UTSettings_Receiver, &SubMenu::set_receiver_menu);
+    m_map.insert(UTSettings_Advanced, &SubMenu::set_advanced_menu);
+    m_map.insert(GateCurves_Gate, &SubMenu::set_gate_menu);
+    m_map.insert(GateCurves_Alarm, &SubMenu::set_alarm_menu);
+    m_map.insert(GateCurves_Output, &SubMenu::set_output_menu);
+    m_map.insert(GateCurves_DAC, &SubMenu::set_dac_menu);
+    m_map.insert(GateCurves_TCG, &SubMenu::set_tcg_menu);
+    m_map.insert(Display_Selection, &SubMenu::set_selection_menu);
+    m_map.insert(Display_ColorSettings, &SubMenu::set_colorSettings_menu);
+    m_map.insert(Displsy_Properties, &SubMenu::set_properties_menu);
+    m_map.insert(ProbePart_Select, &SubMenu::set_select_menu);
+    m_map.insert(ProbePart_Position, &SubMenu::set_position_menu);
+    m_map.insert(ProbePart_FFT, &SubMenu::set_fft_menu);
+    m_map.insert(ProbePart_Part, &SubMenu::set_part_menu);
+    m_map.insert(ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
+    m_map.insert(FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
+    m_map.insert(FocalLaw_Angle, &SubMenu::set_angle_menu);
+    m_map.insert(FocalLaw_Apeture, &SubMenu::set_apeture_menu);
+    m_map.insert(FacalLaw_FocalPoint, &SubMenu::set_focalPoint_menu);
+    m_map.insert(Scan_Inspection, &SubMenu::set_inspection_menu);
+    m_map.insert(Scan_Encoder, &SubMenu::set_encoder_menu);
+    m_map.insert(Scan_Area, &SubMenu::set_area_menu);
+    m_map.insert(Scan_Start, &SubMenu::set_start_menu);
+    m_map.insert(Measurement_Cursors, &SubMenu::set_cursors_menu);
+    m_map.insert(Measurement_TOFD, &SubMenu::set_tofd_menu);
+    m_map.insert(Measurement_FlawRecord, &SubMenu::set_flawRecord_menu);
+    m_map.insert(FileReport_File, &SubMenu::set_file_menu);
+    m_map.insert(FileReport_SaveMode, &SubMenu::set_saveMode_menu);
+    m_map.insert(FileReport_Report, &SubMenu::set_report_menu);
+    m_map.insert(FileReport_Format, &SubMenu::set_format_menu);
+    m_map.insert(FileReport_UserField, &SubMenu::set_userField_menu);
+    m_map.insert(Preference_Preference, &SubMenu::set_preference_menu);
+    m_map.insert(Preference_System, &SubMenu::set_system_menu);
+    m_map.insert(Preference_Network, &SubMenu::set_network_menu);
+    m_map.insert(Preference_Service, &SubMenu::set_service_menu);
 }
 
 
@@ -933,6 +929,8 @@ void SubMenu::set_preference_menu(bool show)
 void SubMenu::set_system_menu(bool show)
 {
     if(show) {
+        pDateTimeSetDialog = new DateTimeSetDialog(this);
+
         /* Clock Set menu item */
         set_label_menu(ui->subMenu_1, tr("Clock Set"));
         connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
@@ -950,12 +948,15 @@ void SubMenu::set_system_menu(bool show)
     } else {
         disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
         disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
+        delete pDateTimeSetDialog;
     }
 }
 
 void SubMenu::set_network_menu(bool show)
 {
     if(show) {
+        pNetworkDialog = new NetworkDialog(this);
+
         /* IP Address menu item */
         set_label_menu(ui->subMenu_1, tr("IP Address"));
         connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
@@ -968,9 +969,10 @@ void SubMenu::set_network_menu(bool show)
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
-    } else {
+    } else {        
         disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
         disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
+        delete pNetworkDialog;
     }
 }
 

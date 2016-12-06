@@ -2,7 +2,6 @@
 #define SUB_MENU_H
 
 #include "menu_item.h"
-#include "menu_config.h"
 #include "networkdialog.h"
 #include "datetimesetdialog.h"
 
@@ -122,7 +121,6 @@ private:
     void init_option_stringlist();
     void init_step_list();
 
-    MenuConfig *menuConfig;
     NetworkDialog *pNetworkDialog;
     DateTimeSetDialog *pDateTimeSetDialog;
 
@@ -200,8 +198,6 @@ private slots:
     void show_about_dialog();
     void show_datetime_dialog();
     void show_resetconfig_dialog();
-
-
 
 };
 
