@@ -56,16 +56,13 @@ void MainMenu::change_item_selection()
         ui->treeWidget->setCurrentItem(initItem);
 
         int index = ui->treeWidget->indexOfTopLevelItem(item);
-        if(index >= 3 && index < m_firstCount) {
-            ui->treeWidget->scrollToItem(item, QAbstractItemView::PositionAtCenter);
-        }
-
         emit click_main_menu(count_menu_number(index, 1));
     } else {
         int index = ui->treeWidget->indexOfTopLevelItem(item->parent());
         int indexChild = item->parent()->indexOfChild(item);
         emit click_main_menu(count_menu_number(index, indexChild + 1));
     }
+    ui->treeWidget->scrollToItem(item, QAbstractItemView::PositionAtCenter);
     show_or_hide_arrow();
 }
 

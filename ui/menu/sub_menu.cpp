@@ -53,7 +53,7 @@ SubMenu::SubMenu(QWidget *parent) :
     init_step_list();
     init_map();  
 
-    m_typeMap.insert("current", Type::UTSettings_General);
+    m_typeMap.insert("current", UTSettings_General);
 
     set_general_menu(true);
 
