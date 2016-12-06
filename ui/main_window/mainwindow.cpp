@@ -65,7 +65,7 @@ void MainWindow::init_ui()
 
 //    m_firstMenuNum = 0;
 //    m_secondMenuNum = 0;
-    m_hiddenFirstSecondMenuFlag = false;
+//    m_hiddenFirstSecondMenuFlag = false;
 //    m_hiddenThirdMenuFlag = false;
 //    m_hiddenCommonMenuFlag = false;
 //    m_hiddenKeyboardFlag = false;
@@ -257,35 +257,21 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Alt) {
         show_hidden_Menu();
+        qDebug() << subMenu->isHidden()<< mainMenu->isHidden();
+        return;
     }
     return QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::show_hidden_Menu()
 {
-    m_hiddenFirstSecondMenuFlag = !m_hiddenFirstSecondMenuFlag;
-    if(m_hiddenFirstSecondMenuFlag) {
-//        ui->widget_firstSecondMenu->show();
-//        ui->widget_thirdMenu->show();
-//        commonMenuWidget->hide();
-//        m_hiddenCommonMenuFlag = false;
-//        ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
-//        firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
-//        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
-//        show_hidden_arrow();
-
-//        firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
-//        menuBar->show();
+    if(subMenu->isHidden()) {
         subMenu->show();
         mainMenu->show();
-
     } else {
+        qDebug()<<__LINE__;
         mainMenu->hide();
-//        menuBar->hide();
         subMenu->hide();
-        qDebug() << "hide";
-//        ui->widget_firstSecondMenu->hide();
-//        ui->widget_thirdMenu->hide();
     }
 }
 
