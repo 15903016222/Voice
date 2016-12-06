@@ -123,63 +123,6 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     }
 }
 
-void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
-{
-//    ui->widget_thirdMenu->set_third_menu_name(index, 0); //init
-//    m_firstMenuNum = index;
-
-//    QModelIndex modelIndex = firstSecondMenu->modelList.at(index)->index(0, 0);
-//    firstSecondMenu->set_second_menu_item_style(m_firstMenuNum, modelIndex);
-
-//    m_hiddenArrowFlag = true;
-
-//    emit clickedMenuIndex(m_firstMenuNum);
-//    show_hidden_arrow();
-
-// //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
-
-//    firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
-}
-
-void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
-{
-//    QStandardItem *item = firstSecondMenu->modelList.at(m_firstMenuNum)->itemFromIndex(index);
-//    m_secondMenuNum = item->row();
-
-//    firstSecondMenu->set_second_menu_item_style(m_firstMenuNum, index);
-//    ui->widget_thirdMenu->set_third_menu_name(m_firstMenuNum, m_secondMenuNum);
-
- //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
-}
-
-void MainWindow::on_pushButton_top_clicked()
-{
-//    int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
-//    int scrollTopY = ui->scrollArea->geometry().y();
-
-//    if(menuTopY < (scrollTopY - 20)) {
-//        ui->scrollArea->viewport()->scroll(0, 20);
-//    } else {
-//        ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
-//    }
-
-//    show_hidden_arrow();
-}
-
-void MainWindow::on_pushButton_bottom_clicked()
-{
-//    int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
-//    int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
-
-//    if((menuBottomY - 20) > scrollBottomY) {
-//        ui->scrollArea->viewport()->scroll(0, -20);
-//    } else {
-//        ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
-//    }
-
-//    show_hidden_arrow();
-}
-
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
 //    int width = event->size().width();

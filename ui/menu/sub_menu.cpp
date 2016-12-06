@@ -46,39 +46,11 @@ SubMenu::SubMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    stepList1.append(0.1);
-    stepList1.append(0.5);
-    stepList1.append(1.0);
-    stepList1.append(2.0);
-    stepList1.append(6.0);
-
-    stepList2.append(0.01);
-    stepList2.append(0.10);
-    stepList2.append(1.00);
-    stepList2.append(10.0);
-    stepList2.append(100.0);
-
-    stepList3.append(1.00);
-    stepList3.append(10.0);
-    stepList3.append(100.0);
-    stepList3.append(1000.0);
-
-    stepList4.append(0.01);
-    stepList4.append(0.10);
-    stepList4.append(1.00);
-
-    stepList5.append(1);
-    stepList5.append(10);
-    stepList5.append(100);
-
-    for(int i = 0; i < MATERIAL_NUMBER; i ++) {
-        materialList.append(MATERIAL_STRING[i]);
-    }
-
-    switchList;
     switchList.append(tr("On"));
     switchList.append(tr("Off"));
 
+    init_option_stringlist();
+    init_step_list();
     init_map();
 
     menuConfig = new MenuConfig;
@@ -89,11 +61,6 @@ SubMenu::SubMenu(QWidget *parent) :
 
     set_general_menu(true);
 
-}
-
-SubMenu::~SubMenu()
-{
-    delete ui;
 }
 
 void SubMenu::init_map()
@@ -144,9 +111,9 @@ void SubMenu::set_third_menu(int num)
         MenuItem *widget = findChild<MenuItem*>("subMenu_" + QString::number(i + 1));
         widget->clean();
     }
-    run_fun(m_typeMap.value("current"), false);
-    run_fun((Type)num, true);
     get_main_menu_type((Type)num);
+    run_fun(m_typeMap.value("previous"), false);
+    run_fun((Type)num, true);
 }
 
 void SubMenu::set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals)
@@ -212,37 +179,23 @@ void SubMenu::set_general_menu(bool show)
         set_spinbox_menu(ui->subMenu_5, tr("Wedge Delay"), "μs", stepList4, 0, 1000, 2);
 
         /* UT Unit menu item */
-        QStringList option;
-        option.append(tr("Time"));
-        option.append(tr("Sound Path"));
-        option.append(tr("True Path"));
-        set_combobox_menu(ui->subMenu_6, tr("UT Unit"), option);
+        set_combobox_menu(ui->subMenu_6, tr("UT Unit"), m_list_utUnit);
     } else {
 
     }
-
 }
 
 void SubMenu::set_pulser_menu(bool show)
 {
     if(show) {
         /* Tx/Rx Mode menu item */
-        QStringList option1;
-        option1.append(tr("PC"));
-        option1.append(tr("PE"));
-        option1.append(tr("TT"));
-        option1.append(tr("TOFD"));
-        set_combobox_menu(ui->subMenu_1, tr("Tx/Rx Mode"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Tx/Rx Mode"), m_list_txrxMode);
 
         /* Pulser menu item */
         set_spinbox_menu(ui->subMenu_2, tr("Pulser"), "", stepList5, 1, 113, 0);
 
         /* Voltage menu item */
-        QStringList option2;
-        option2.append(tr("50V"));
-        option2.append(tr("100V"));
-        option2.append(tr("200V"));
-        set_combobox_menu(ui->subMenu_3, tr("Voltage"), option2);
+        set_combobox_menu(ui->subMenu_3, tr("Voltage"), m_list_voltage);
 
         /* PW menu item */
         QList<double> steps;
@@ -252,14 +205,10 @@ void SubMenu::set_pulser_menu(bool show)
         set_spinbox_menu(ui->subMenu_4, tr("PW"), "ns", steps, 30, 500, 1);
 
         /* PRF menu item */
-        QStringList option3;
-        option3.append(tr("Auto Max"));
-        option3.append(tr("Max/2"));
-        option3.append(tr("Optimum"));
-        option3.append(tr("UserDef"));
-        set_combobox_menu(ui->subMenu_5, tr("PRF"), option3);
+        set_combobox_menu(ui->subMenu_5, tr("PRF"), m_list_prf);
 
         ui->subMenu_6->set_type(MenuItem::None);
+        steps.clear();
     } else {
 
     }
@@ -272,34 +221,16 @@ void SubMenu::set_receiver_menu(bool show)
         set_label_menu(ui->subMenu_1, tr("Receiver"));
 
         /* Filter menu item */
-        QStringList option1;
-        option1.append(tr("none"));
-        option1.append(tr("1M"));
-        option1.append(tr("1.5M-2.5M"));
-        option1.append(tr("3-5M"));
-        option1.append(tr("7.5M"));
-        option1.append(tr("more than 10M"));
-        set_combobox_menu(ui->subMenu_2, tr("Filter"), option1);
+        set_combobox_menu(ui->subMenu_2, tr("Filter"), m_list_filter);
 
         /* Rectifier menu item */
-        QStringList option2;
-        option2.append(tr("RF"));
-        option2.append(tr("FW"));
-        option2.append(tr("HW+"));
-        option2.append(tr("HW-"));
-        set_combobox_menu(ui->subMenu_3, tr("Rectifier"), option2);
+        set_combobox_menu(ui->subMenu_3, tr("Rectifier"), m_list_rectifier);
 
         /* Video Filter menu item */
         set_combobox_menu(ui->subMenu_4, tr("Video Filter"), switchList);
 
         /* Averaging menu item */
-        QStringList option4;
-        option4.append(tr("1"));
-        option4.append(tr("2"));
-        option4.append(tr("4"));
-        option4.append(tr("8"));
-        option4.append(tr("16"));
-        set_combobox_menu(ui->subMenu_5, tr("Averaging"), option4);
+        set_combobox_menu(ui->subMenu_5, tr("Averaging"), m_list_averaging);
 
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
@@ -317,13 +248,7 @@ void SubMenu::set_advanced_menu(bool show)
         set_combobox_menu(ui->subMenu_2, tr("dB Ref."), switchList);
 
         /* Point Qty. menu item */
-        QStringList option3;
-        option3.append(tr("Auto"));
-        option3.append(tr("160"));
-        option3.append(tr("320"));
-        option3.append(tr("640"));
-        option3.append(tr("UserDef"));
-        set_combobox_menu(ui->subMenu_3, tr("Point Qty."), option3);
+        set_combobox_menu(ui->subMenu_3, tr("Point Qty."), m_list_pointQty);
 
         /* Scale Factor menu item */
         set_label_menu(ui->subMenu_4, tr("Scale Factor"));
@@ -341,23 +266,13 @@ void SubMenu::set_gate_menu(bool show)
 {
     if(show) {
         /* Gate menu item */
-        QStringList option1;
-        option1.append(tr("A"));
-        option1.append(tr("B"));
-        option1.append(tr("I"));
-        option1.append(tr("Off"));
-        set_combobox_menu(ui->subMenu_1, tr("Gate"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Gate"), m_list_gate);
 
         /* Start menu item */
         set_spinbox_menu(ui->subMenu_2, tr("Start"), "mm", stepList2, 0, 16000, 2);
 
         /* Width menu item */
-        QList<double> steps;
-        steps.append(0.01);
-        steps.append(0.10);
-        steps.append(1.0);
-        steps.append(10.0);
-        set_spinbox_menu(ui->subMenu_3, tr("Width"), "mm", steps, 0.05, 525, 2);
+        set_spinbox_menu(ui->subMenu_3, tr("Width"), "mm", stepList6, 0.05, 525, 2);
 
         /* Threshold menu item */
         QList<double> steps2;
@@ -366,17 +281,12 @@ void SubMenu::set_gate_menu(bool show)
         set_spinbox_menu(ui->subMenu_4, tr("Threshold"), "%", steps2, 0, 100, 0);
 
         /* Synchro menu item */
-        QStringList option2;
-        option2.append(tr("Gate A"));
-        option2.append(tr("Gate I"));
-        option2.append(tr("Pulse"));
-        set_combobox_menu(ui->subMenu_5, tr("Synchro"), option2);
+        set_combobox_menu(ui->subMenu_5, tr("Synchro"), m_list_synchro);
 
         /* Measure Mode menu item */
-        QStringList option3;
-        option3.append(tr("Edge"));
-        option3.append(tr("Peak"));
-        set_combobox_menu(ui->subMenu_6, tr("Measure Mode"), option3);
+        set_combobox_menu(ui->subMenu_6, tr("Measure Mode"), m_list_measureMode);
+
+        steps2.clear();
     } else {
 
     }
@@ -387,40 +297,19 @@ void SubMenu::set_alarm_menu(bool show)
 {
     if(show) {
         /* Alarm menu item */
-        QStringList option1;
-        option1.append(tr("Alarm 1"));
-        option1.append(tr("Alarm 2"));
-        option1.append(tr("Alarm 3"));
-        set_combobox_menu(ui->subMenu_1, tr("Alarm"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Alarm"), m_list_alarm);
 
         /* Switch menu item */
         set_combobox_menu(ui->subMenu_2, tr("Switch"), switchList);
 
         /* Group menu item */
-        QStringList option3;
-        option3.append(tr("Group1"));
-        option3.append(tr("All"));
-        option3.append(tr("None"));
-        set_combobox_menu(ui->subMenu_3, tr("Group"), option3);
+        set_combobox_menu(ui->subMenu_3, tr("Group"), m_list_group);
 
         /* Condition Factor menu item */
-        QStringList option4;
-        option4.append(tr("None"));
-        option4.append(tr("Gate A"));
-        option4.append(tr("Gate B"));
-        option4.append(tr("Gate I"));
-        option4.append(tr("Not Gate A"));
-        option4.append(tr("Not Gate B"));
-        option4.append(tr("Not Gate I"));
-        option4.append(tr(">Max.Thickness"));
-        option4.append(tr("<Min.Thickness"));
-        set_combobox_menu(ui->subMenu_4, tr("Condition"), option4);
+        set_combobox_menu(ui->subMenu_4, tr("Condition"), m_list_condition);
 
         /* Operator menu item */
-        QStringList option5;
-        option5.append(tr("And"));
-        option5.append(tr("Or"));
-        set_combobox_menu(ui->subMenu_5, tr("Operator"), option5);
+        set_combobox_menu(ui->subMenu_5, tr("Operator"), m_list_operator);
 
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
@@ -432,42 +321,22 @@ void SubMenu::set_output_menu(bool show)
 {
     if(show) {
         /* Output menu item */
-        QStringList option1;
-        option1.append(tr("Alarm 1"));
-        option1.append(tr("Alarm 2"));
-        option1.append(tr("Alarm 3"));
-        option1.append(tr("Analog 1"));
-        option1.append(tr("Analog 2"));
-        set_combobox_menu(ui->subMenu_1, tr("Output"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Output"), m_list_output);
 
         /* Sound menu item */
-        QStringList option2;
-        option2.append(tr("Off No Sound"));
-        option2.append(tr("300Hz Audio Output at 300Hz"));
-        option2.append(tr("600Hz Audio Output at 600Hz"));
-        option2.append(tr("1000Hz Audio Output at 1000Hz"));
-        option2.append(tr("5000Hz Audio Output at 5000Hz"));
-        set_combobox_menu(ui->subMenu_2, tr("Sound"), option2);
+        set_combobox_menu(ui->subMenu_2, tr("Sound"), m_list_sound);
 
         /* Delay menu item */
-        QList<double> steps;
-        steps.append(0.10);
-        steps.append(1.00);
-        steps.append(10.00);
-        set_spinbox_menu(ui->subMenu_3, tr("Delay"), "mm", steps, 0, 5000, 2);
+        set_spinbox_menu(ui->subMenu_3, tr("Delay"), "mm", stepList6, 0, 5000, 2);
 
         /* Hold Time menu item */
-        set_spinbox_menu(ui->subMenu_4, tr("Hold Time"), "%", steps, 0, 5000, 2);
+        set_spinbox_menu(ui->subMenu_4, tr("Hold Time"), "%", stepList6, 0, 5000, 2);
 
         /* Group menu item */
         set_label_menu(ui->subMenu_5, tr("Group"));
 
         /* Data menu item */
-        QStringList option3;
-        option3.append(tr("A%"));
-        option3.append(tr("B%"));
-        option3.append(tr("None"));
-        set_combobox_menu(ui->subMenu_6, tr("Data"), option3);
+        set_combobox_menu(ui->subMenu_6, tr("Data"), m_list_data);
     } else {
 
     }
@@ -495,44 +364,19 @@ void SubMenu::set_selection_menu(bool show)
 {
     if(show) {
         /* Group menu item */
-        QStringList option1;
-        option1.append(tr("All"));
-        option1.append(tr("Current"));
-        set_combobox_menu(ui->subMenu_1, tr("Group"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Group"), m_list_group2);
 
         /* Display menu item */
-        QStringList option2;
-        option2.append(tr("A A-Scan"));
-        option2.append(tr("B B-Scan"));
-        option2.append(tr("C C-Scan"));
-        option2.append(tr("S S-Scan"));
-        option2.append(tr("A-B A-Scan B-Scan"));
-        option2.append(tr("A-S A-Scan S-Scan"));
-        option2.append(tr("A-B-C A-Scan B-Scan C-Scan"));
-        option2.append(tr("A-B-S A-Scan B-Scan S-Scan"));
-        option2.append(tr("A-S-[C] A-Scan S-Scan [C-Scan]"));
-        option2.append(tr("S-A-A-A S-Scan A-Scan A-Scan A-Scan"));
-        option2.append(tr("S-A-C-C S-Scan A-Scan C-Scan C-Scan"));
-        set_combobox_menu(ui->subMenu_2, tr("Display"), option2);
+        set_combobox_menu(ui->subMenu_2, tr("Display"), m_list_display);
 
         /* C-Scan Source menu item */
-        QStringList option3;
-        option3.append(tr("A%"));
-        option3.append(tr("B%"));
-        option3.append(tr("Thickness"));
-        option3.append(tr("I/"));
-        set_combobox_menu(ui->subMenu_3, tr("C-Scan Source"), option3);
+        set_combobox_menu(ui->subMenu_3, tr("C-Scan Source"), m_list_cScanSource);
 
         /* Min.Thickness menu item */
-        QList<double> steps;
-        steps.append(0.01);
-        steps.append(0.10);
-        steps.append(1.00);
-        steps.append(10.00);
-        set_spinbox_menu(ui->subMenu_4, tr("Min.Thickness"), "mm", steps, 0.05, 20000, 2);
+        set_spinbox_menu(ui->subMenu_4, tr("Min.Thickness"), "mm", stepList6, 0.05, 20000, 2);
 
         /* Max.Thickness menu item */
-        set_spinbox_menu(ui->subMenu_5, tr("Max.Thickness"), "mm", steps, 0.06, 20000, 2);
+        set_spinbox_menu(ui->subMenu_5, tr("Max.Thickness"), "mm", stepList6, 0.06, 20000, 2);
 
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
@@ -573,26 +417,10 @@ void SubMenu::set_select_menu(bool show)
 {
     if(show) {
         /* Group menu item */
-        QStringList option1;
-        option1.append(tr("Add"));
-        option1.append(tr("1"));
-        option1.append(tr("2"));
-        option1.append(tr("3"));
-        option1.append(tr("4"));
-        option1.append(tr("5"));
-        option1.append(tr("6"));
-        option1.append(tr("7"));
-        option1.append(tr("8"));
-        option1.append(tr("Remove"));
-        set_combobox_menu(ui->subMenu_1, tr("Group"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Group"), m_list_group3);
 
         /* Group Mode menu item */
-        QStringList option2;
-        option2.append(tr("UT (PA Connector)"));
-        option2.append(tr("PA (Phassed Array)"));
-        option2.append(tr("UT1 (Conventional UT)"));
-        option2.append(tr("UT2 (Conventional UT)"));
-        set_combobox_menu(ui->subMenu_2, tr("Group Mode"), option2);
+        set_combobox_menu(ui->subMenu_2, tr("Group Mode"), m_list_groupMode);
 
         /* Probe menu item */
         set_label_menu(ui->subMenu_3, tr("Probe"));
@@ -603,10 +431,7 @@ void SubMenu::set_select_menu(bool show)
         connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_wedge_dialog()));
 
         /* Define menu item */
-        QStringList option3;
-        option3.append(tr("Probe"));
-        option3.append(tr("Wedge"));
-        set_combobox_menu(ui->subMenu_5, tr("Define"), option3);
+        set_combobox_menu(ui->subMenu_5, tr("Define"), m_list_define);
 
         /* Auto Detect menu item */
         set_combobox_menu(ui->subMenu_6, tr("Auto Detect"), switchList);
@@ -631,16 +456,12 @@ void SubMenu::set_position_menu(bool show)
         set_spinbox_menu(ui->subMenu_2, tr("Index Offset"), "mm", steps, -10000, 10000, 1);
 
         /* Skew menu item */
-        QStringList option;
-        option.append("0°");
-        option.append("90°");
-        option.append("180°");
-        option.append("270°");
-        set_combobox_menu(ui->subMenu_3, tr("Skew"), option);
+        set_combobox_menu(ui->subMenu_3, tr("Skew"), m_list_skew);
 
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
+        steps.clear();
     } else {
 
     }
@@ -672,24 +493,16 @@ void SubMenu::set_part_menu(bool show)
 {
     if(show) {
         /* Geometry menu item */
-        QStringList option1;
-        option1.append(tr("Plate"));
-        option1.append(tr("ID"));
-        option1.append(tr("OD"));
-        set_combobox_menu(ui->subMenu_1, tr("Geometry"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Geometry"), m_list_geometry);
 
         /* Thickness menu item */
-        QList<double> steps;
-        steps.append(0.10);
-        steps.append(1.00);
-        steps.append(10.00);
-        set_spinbox_menu(ui->subMenu_2, tr("Thickness"), "mm", steps, 0.05, 1000, 2);
+        set_spinbox_menu(ui->subMenu_2, tr("Thickness"), "mm", stepList6, 0.05, 1000, 2);
 
         /* Diameter menu item */
-        set_spinbox_menu(ui->subMenu_3, tr("Diameter"), "mm", steps, 0.05, 525, 2);
+        set_spinbox_menu(ui->subMenu_3, tr("Diameter"), "mm", stepList6, 0.05, 525, 2);
 
         /* Material menu item */
-        set_combobox_menu(ui->subMenu_4, tr("Material"), materialList);
+        set_combobox_menu(ui->subMenu_4, tr("Material"), m_list_material);
 
         /* Overlay menu item */
         set_combobox_menu(ui->subMenu_5, tr("Overlay"), switchList);
@@ -722,10 +535,7 @@ void SubMenu::set_lawConfig_menu(bool show)
 {
     if(show) {
         /* Law Type Menu Item */
-        QStringList option1;
-        option1.append(tr("Azimuthal"));
-        option1.append(tr("Linear"));
-        set_combobox_menu(ui->subMenu_1, tr("Law Type"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Law Type"), m_list_lawType);
 
         /* Pulse Connection menu item */
         QList<double> steps;
@@ -737,10 +547,7 @@ void SubMenu::set_lawConfig_menu(bool show)
         set_spinbox_menu(ui->subMenu_3, tr("Receiver Connection"), "mm", steps, 1, 113, 0);
 
         /* Wave Type Menu Item */
-        QStringList option2;
-        option2.append(tr("LW"));
-        option2.append(tr("SW"));
-        set_combobox_menu(ui->subMenu_4, tr("Wave Type"), option2);
+        set_combobox_menu(ui->subMenu_4, tr("Wave Type"), m_list_waveType);
 
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
@@ -770,6 +577,9 @@ void SubMenu::set_angle_menu(bool show)
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
+
+        steps.clear();
+        steps2.clear();
     } else {
 
     }
@@ -795,6 +605,7 @@ void SubMenu::set_apeture_menu(bool show)
 
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
+        steps.clear();
     } else {
 
     }
@@ -804,30 +615,19 @@ void SubMenu::set_focalPoint_menu(bool show)
 {
     if(show) {
         /* Type Menu Item */
-        QStringList option1;
-        option1.append(tr("True Depth"));
-        option1.append(tr("Half Path"));
-        option1.append(tr("Projection"));
-        option1.append(tr("Focal Plane"));
-        option1.append(tr("DDF"));
-        set_combobox_menu(ui->subMenu_1, tr("Type"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Type"), m_list_type);
 
         /* Position Start menu item */
-        QList<double> steps;
-        steps.append(0.01);
-        steps.append(0.10);
-        steps.append(1.00);
-        steps.append(10.00);
-        set_spinbox_menu(ui->subMenu_2, tr("Position Start"), "mm", steps, 0, 1000, 2);
+        set_spinbox_menu(ui->subMenu_2, tr("Position Start"), "mm", stepList6, 0, 1000, 2);
 
         /* Position End menu item */
-        set_spinbox_menu(ui->subMenu_3, tr("Position End"), "mm", steps, 1, 1000, 2);
+        set_spinbox_menu(ui->subMenu_3, tr("Position End"), "mm", stepList6, 1, 1000, 2);
 
         /* Offset Start Menu Item */
-        set_spinbox_menu(ui->subMenu_4, tr("Offset Start"), "mm", steps, 0, 1000, 2);
+        set_spinbox_menu(ui->subMenu_4, tr("Offset Start"), "mm", stepList6, 0, 1000, 2);
 
         /* Offset End Menu Item */
-        set_spinbox_menu(ui->subMenu_5, tr("Offset End"), "mm", steps, 1, 1000, 2);
+        set_spinbox_menu(ui->subMenu_5, tr("Offset End"), "mm", stepList6, 1, 1000, 2);
 
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
@@ -839,18 +639,10 @@ void SubMenu::set_inspection_menu(bool show)
 {
     if(show) {
         /* Scan Menu Item */
-        QStringList option1;
-        option1.append(tr("Time"));
-        option1.append(tr("Encoder 1"));
-        option1.append(tr("Encoder 2"));
-        set_combobox_menu(ui->subMenu_1, tr("Scan"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Scan"), m_list_scan2);
 
         /* Type menu item */
-        QStringList option2;
-        option2.append(tr("One Line"));
-        option2.append(tr("Raster Scan"));
-        option2.append(tr("Helicoidal Scan"));
-        set_combobox_menu(ui->subMenu_2, tr("Type"), option2);
+        set_combobox_menu(ui->subMenu_2, tr("Type"), m_list_type2);
 
         /* Max Scan Speed menu item */
         set_spinbox_menu(ui->subMenu_3, tr("Max Scan Speed"), "m/s", stepList2, 0, 1000, 2);
@@ -869,26 +661,16 @@ void SubMenu::set_encoder_menu(bool show)
 {
     if(show) {
         /* Encoder Menu Item */
-        QStringList option1;
-        option1.append(tr("Encoder 1"));
-        option1.append(tr("Encoder 2"));
-        set_combobox_menu(ui->subMenu_1, tr("Encoder"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Encoder"), m_list_encoder);
 
         /* Encoder Type menu item */
-        QStringList option2;
-        option2.append(tr("Up"));
-        option2.append(tr("Down"));
-        option2.append(tr("Quad"));
-        set_combobox_menu(ui->subMenu_2, tr("Encoder Type"), option2);
+        set_combobox_menu(ui->subMenu_2, tr("Encoder Type"), m_list_encoderType);
 
         /* Resolution menu item */
         set_spinbox_menu(ui->subMenu_3, tr("Resolution"), "Step/mm", stepList2, 0.01, 10000, 2);
 
         /* Polarity Menu Item */
-        QStringList option3;
-        option3.append(tr("Normal"));
-        option3.append(tr("Reverse"));
-        set_combobox_menu(ui->subMenu_4, tr("Polarity"), option3);
+        set_combobox_menu(ui->subMenu_4, tr("Polarity"), m_list_polarity);
 
         /* Origin Menu Item */
         set_spinbox_menu(ui->subMenu_5, tr("Origin"), "mm", stepList2, 0, 1000, 2);
@@ -915,12 +697,7 @@ void SubMenu::set_area_menu(bool show)
         set_spinbox_menu(ui->subMenu_2, tr("Scan End"), "mm", steps, 0, 10000, 2);
 
         /* Scan Resolution menu item */
-        QList<double> steps2;
-        steps2.append(0.01);
-        steps2.append(0.10);
-        steps2.append(1.00);
-        steps2.append(10.00);
-        set_spinbox_menu(ui->subMenu_3, tr("Scan Resolution"), "mm", steps2, 0, 100, 2);
+        set_spinbox_menu(ui->subMenu_3, tr("Scan Resolution"), "mm", stepList6, 0, 100, 2);
 
         /* Index Start Menu Item */
         set_spinbox_menu(ui->subMenu_4, tr("Index Start"), "mm", steps, 0, 10000, 2);
@@ -929,7 +706,8 @@ void SubMenu::set_area_menu(bool show)
         set_spinbox_menu(ui->subMenu_5, tr("Index End"), "mm", steps, 0, 10000, 2);
 
         /* Index Resolution Menu Item */
-        set_spinbox_menu(ui->subMenu_6, tr("Index Resolution"), "mm", steps2, 0, 100, 2);
+        set_spinbox_menu(ui->subMenu_6, tr("Index Resolution"), "mm", stepList6, 0, 100, 2);
+        steps.clear();
     } else {
 
     }
@@ -1021,19 +799,10 @@ void SubMenu::set_saveMode_menu(bool show)
 {
     if(show) {
         /* Storage Menu Item */
-        QStringList option1;
-        option1.append(tr("SD"));
-        option1.append(tr("SSG"));
-        option1.append(tr("U Storage"));
-        set_combobox_menu(ui->subMenu_1, tr("Storage"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Storage"), m_list_storage);
 
         /* Save Mode menu item */
-        QStringList option2;
-        option2.append(tr("Inspection Data"));
-        option2.append(tr("Inspection Table"));
-        option2.append(tr("Screen"));
-        option2.append(tr("Report"));
-        set_combobox_menu(ui->subMenu_2, tr("Save Mode"), option2);
+        set_combobox_menu(ui->subMenu_2, tr("Save Mode"), m_list_saveMode);
 
         /* Save Data menu item */
         set_label_menu(ui->subMenu_3, tr("Save Data"));
@@ -1110,18 +879,7 @@ void SubMenu::set_userField_menu(bool show)
 {
     if(show) {
         /* Select Menu Item */
-        QStringList option1;
-        option1.append("1");
-        option1.append("2");
-        option1.append("3");
-        option1.append("4");
-        option1.append("5");
-        option1.append("6");
-        option1.append("7");
-        option1.append("8");
-        option1.append("9");
-        option1.append("10");
-        set_combobox_menu(ui->subMenu_1, tr("Select"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Select"), m_list_select2);
 
         /* Enable menu item */
         set_combobox_menu(ui->subMenu_2, tr("Enable"), switchList);
@@ -1151,10 +909,7 @@ void SubMenu::set_preference_menu(bool show)
 {
     if(show) {
         /* Units menu item */
-        QStringList option1;
-        option1.append("Millimeters");
-        option1.append("Inches");
-        set_combobox_menu(ui->subMenu_1, tr("Units"), option1);
+        set_combobox_menu(ui->subMenu_1, tr("Units"), m_list_units);
 
         /* Bright menu item */
         QList<double> steps;
@@ -1168,6 +923,8 @@ void SubMenu::set_preference_menu(bool show)
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
+
+        steps.clear();
     } else {
 
     }
@@ -1185,10 +942,7 @@ void SubMenu::set_system_menu(bool show)
         connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
 
         /* Language menu item */
-        QStringList option1;
-        option1.append("English");
-        option1.append("Chinese");
-        set_combobox_menu(ui->subMenu_3, tr("Language"), option1);
+        set_combobox_menu(ui->subMenu_3, tr("Language"), m_list_language);
 
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
@@ -1228,10 +982,7 @@ void SubMenu::set_service_menu(bool show)
         connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_info_dialog()));
 
         /* Cert Import menu item */
-        QStringList option;
-        option.append(tr("U-Disk"));
-        option.append(tr("Network"));
-        set_combobox_menu(ui->subMenu_2, tr("Cert Import"), option);
+        set_combobox_menu(ui->subMenu_2, tr("Cert Import"), m_list_certImport);
 
         /* SW Update menu item */
         set_label_menu(ui->subMenu_3, tr("SW Update"));
@@ -1253,190 +1004,258 @@ void SubMenu::set_service_menu(bool show)
     }
 }
 
-//void SubMenu::disconnect_general_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_pulser_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_receiver_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_advanced_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_gate_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_alarm_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_output_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_dac_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_tcg_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_selection_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_colorSettings_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_properties_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_select_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_position_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_fft_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_part_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_advanced_2_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_lawConfig_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_angle_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_apeture_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_focalPoint_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_inspection_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_encoder_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_area_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_start_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_cursors_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_tofd_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_flawRecord_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_file_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_saveMode_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_report_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_format_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_userField_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_preference_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_system_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_network_menu()
-//{
-
-//}
-
-//void SubMenu::disconnect_service_menu()
-//{
-
-//}
+void SubMenu::init_option_stringlist()
+{
+
+    m_list_utUnit.append(tr("Time"));
+    m_list_utUnit.append(tr("Sound Path"));
+    m_list_utUnit.append(tr("True Path"));
+
+    m_list_txrxMode.append(tr("PC"));
+    m_list_txrxMode.append(tr("PE"));
+    m_list_txrxMode.append(tr("TT"));
+    m_list_txrxMode.append(tr("TOFD"));
+
+    m_list_voltage.append(tr("50V"));
+    m_list_voltage.append(tr("100V"));
+    m_list_voltage.append(tr("200V"));
+
+    m_list_prf.append(tr("Auto Max"));
+    m_list_prf.append(tr("Max/2"));
+    m_list_prf.append(tr("Optimum"));
+    m_list_prf.append(tr("UserDef"));
+
+    m_list_filter.append(tr("none"));
+    m_list_filter.append(tr("1M"));
+    m_list_filter.append(tr("1.5M-2.5M"));
+    m_list_filter.append(tr("3-5M"));
+    m_list_filter.append(tr("7.5M"));
+    m_list_filter.append(tr("more than 10M"));
+
+    m_list_rectifier.append(tr("RF"));
+    m_list_rectifier.append(tr("FW"));
+    m_list_rectifier.append(tr("HW+"));
+    m_list_rectifier.append(tr("HW-"));
+
+    m_list_averaging.append(tr("1"));
+    m_list_averaging.append(tr("2"));
+    m_list_averaging.append(tr("4"));
+    m_list_averaging.append(tr("8"));
+    m_list_averaging.append(tr("16"));
+
+    m_list_pointQty.append(tr("Auto"));
+    m_list_pointQty.append(tr("160"));
+    m_list_pointQty.append(tr("320"));
+    m_list_pointQty.append(tr("640"));
+    m_list_pointQty.append(tr("UserDef"));
+
+    m_list_gate.append(tr("A"));
+    m_list_gate.append(tr("B"));
+    m_list_gate.append(tr("I"));
+    m_list_gate.append(tr("Off"));
+
+    m_list_synchro.append(tr("Gate A"));
+    m_list_synchro.append(tr("Gate I"));
+    m_list_synchro.append(tr("Pulse"));
+
+
+    m_list_measureMode.append(tr("Edge"));
+    m_list_measureMode.append(tr("Peak"));
+
+    m_list_alarm.append(tr("Alarm 1"));
+    m_list_alarm.append(tr("Alarm 2"));
+    m_list_alarm.append(tr("Alarm 3"));
+
+    m_list_group.append(tr("Group1"));
+    m_list_group.append(tr("All"));
+    m_list_group.append(tr("None"));
+
+    m_list_condition.append(tr("None"));
+    m_list_condition.append(tr("Gate A"));
+    m_list_condition.append(tr("Gate B"));
+    m_list_condition.append(tr("Gate I"));
+    m_list_condition.append(tr("Not Gate A"));
+    m_list_condition.append(tr("Not Gate B"));
+    m_list_condition.append(tr("Not Gate I"));
+    m_list_condition.append(tr(">Max.Thickness"));
+    m_list_condition.append(tr("<Min.Thickness"));
+
+    m_list_operator.append(tr("And"));
+    m_list_operator.append(tr("Or"));
+
+    m_list_output.append(tr("Alarm 1"));
+    m_list_output.append(tr("Alarm 2"));
+    m_list_output.append(tr("Alarm 3"));
+    m_list_output.append(tr("Analog 1"));
+    m_list_output.append(tr("Analog 2"));
+
+    m_list_sound.append(tr("Off No Sound"));
+    m_list_sound.append(tr("300Hz Audio Output at 300Hz"));
+    m_list_sound.append(tr("600Hz Audio Output at 600Hz"));
+    m_list_sound.append(tr("1000Hz Audio Output at 1000Hz"));
+    m_list_sound.append(tr("5000Hz Audio Output at 5000Hz"));
+
+    m_list_data.append(tr("A%"));
+    m_list_data.append(tr("B%"));
+    m_list_data.append(tr("None"));
+
+//    QStringList m_list_mode;
+//    QStringList m_list_curveX;
+//    QStringList m_list_point;
+
+    m_list_group2.append(tr("All"));
+    m_list_group2.append(tr("Current"));
+
+    m_list_display.append(tr("A A-Scan"));
+    m_list_display.append(tr("B B-Scan"));
+    m_list_display.append(tr("C C-Scan"));
+    m_list_display.append(tr("S S-Scan"));
+    m_list_display.append(tr("A-B A-Scan B-Scan"));
+    m_list_display.append(tr("A-S A-Scan S-Scan"));
+    m_list_display.append(tr("A-B-C A-Scan B-Scan C-Scan"));
+    m_list_display.append(tr("A-B-S A-Scan B-Scan S-Scan"));
+    m_list_display.append(tr("A-S-[C] A-Scan S-Scan [C-Scan]"));
+    m_list_display.append(tr("S-A-A-A S-Scan A-Scan A-Scan A-Scan"));
+    m_list_display.append(tr("S-A-C-C S-Scan A-Scan C-Scan C-Scan"));
+
+    m_list_cScanSource.append(tr("A%"));
+    m_list_cScanSource.append(tr("B%"));
+    m_list_cScanSource.append(tr("Thickness"));
+    m_list_cScanSource.append(tr("I/"));
+
+//    QStringList m_list_scan;
+//    QStringList m_list_color;
+//    QStringList m_list_envelope;
+//    QStringList m_list_cScanMode;
+
+    m_list_group3.append(tr("Add"));
+    m_list_group3.append(tr("1"));
+    m_list_group3.append(tr("2"));
+    m_list_group3.append(tr("3"));
+    m_list_group3.append(tr("4"));
+    m_list_group3.append(tr("5"));
+    m_list_group3.append(tr("6"));
+    m_list_group3.append(tr("7"));
+    m_list_group3.append(tr("8"));
+    m_list_group3.append(tr("Remove"));
+
+    m_list_groupMode.append(tr("UT (PA Connector)"));
+    m_list_groupMode.append(tr("PA (Phassed Array)"));
+    m_list_groupMode.append(tr("UT1 (Conventional UT)"));
+    m_list_groupMode.append(tr("UT2 (Conventional UT)"));
+
+    m_list_define.append(tr("Probe"));
+    m_list_define.append(tr("Wedge"));
+
+    m_list_skew.append("0°");
+    m_list_skew.append("90°");
+    m_list_skew.append("180°");
+    m_list_skew.append("270°");
+
+    m_list_geometry.append(tr("Plate"));
+    m_list_geometry.append(tr("ID"));
+    m_list_geometry.append(tr("OD"));
+
+    for(int i = 0; i < MATERIAL_NUMBER; i ++) {
+        m_list_material.append(MATERIAL_STRING[i]);
+    }
+
+    m_list_lawType.append(tr("Azimuthal"));
+    m_list_lawType.append(tr("Linear"));
+
+    m_list_waveType.append(tr("LW"));
+    m_list_waveType.append(tr("SW"));
+
+    m_list_type.append(tr("True Depth"));
+    m_list_type.append(tr("Half Path"));
+    m_list_type.append(tr("Projection"));
+    m_list_type.append(tr("Focal Plane"));
+    m_list_type.append(tr("DDF"));
+
+    m_list_scan2.append(tr("Time"));
+    m_list_scan2.append(tr("Encoder 1"));
+    m_list_scan2.append(tr("Encoder 2"));
+
+    m_list_type2.append(tr("One Line"));
+    m_list_type2.append(tr("Raster Scan"));
+    m_list_type2.append(tr("Helicoidal Scan"));
+
+    m_list_encoder.append(tr("Encoder 1"));
+    m_list_encoder.append(tr("Encoder 2"));
+
+    m_list_encoderType.append(tr("Up"));
+    m_list_encoderType.append(tr("Down"));
+    m_list_encoderType.append(tr("Quad"));
+
+    m_list_polarity.append(tr("Normal"));
+    m_list_polarity.append(tr("Reverse"));
+
+//    QStringList m_list_selection;
+//    QStringList m_list_select;
+
+    m_list_storage.append(tr("SD"));
+    m_list_storage.append(tr("SSG"));
+    m_list_storage.append(tr("U Storage"));
+
+    m_list_saveMode.append(tr("Inspection Data"));
+    m_list_saveMode.append(tr("Inspection Table"));
+    m_list_saveMode.append(tr("Screen"));
+    m_list_saveMode.append(tr("Report"));
+
+    m_list_select2.append("1");
+    m_list_select2.append("2");
+    m_list_select2.append("3");
+    m_list_select2.append("4");
+    m_list_select2.append("5");
+    m_list_select2.append("6");
+    m_list_select2.append("7");
+    m_list_select2.append("8");
+    m_list_select2.append("9");
+    m_list_select2.append("10");
+
+    m_list_units.append("Millimeters");
+    m_list_units.append("Inches");
+
+    m_list_language.append("English");
+    m_list_language.append("Chinese");
+
+    m_list_certImport.append(tr("U-Disk"));
+    m_list_certImport.append(tr("Network"));
+}
+
+void SubMenu::init_step_list()
+{
+    stepList1.append(0.1);
+    stepList1.append(0.5);
+    stepList1.append(1.0);
+    stepList1.append(2.0);
+    stepList1.append(6.0);
+
+    stepList2.append(0.01);
+    stepList2.append(0.10);
+    stepList2.append(1.00);
+    stepList2.append(10.0);
+    stepList2.append(100.0);
+
+    stepList3.append(1.00);
+    stepList3.append(10.0);
+    stepList3.append(100.0);
+    stepList3.append(1000.0);
+
+    stepList4.append(0.01);
+    stepList4.append(0.10);
+    stepList4.append(1.00);
+
+    stepList5.append(1);
+    stepList5.append(10);
+    stepList5.append(100);
+
+    stepList6.append(0.01);
+    stepList6.append(0.10);
+    stepList6.append(1.00);
+    stepList6.append(10.00);
+
+}
 
 void SubMenu::show_probe_dialog()
 {
@@ -1550,6 +1369,68 @@ void SubMenu::show_resetconfig_dialog()
     ResetConfigDialog resetConfigDialog;
     resetConfigDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
     resetConfigDialog.exec();
+}
+
+SubMenu::~SubMenu()
+{
+    stepList1.clear();
+    stepList2.clear();
+    stepList3.clear();
+    stepList4.clear();
+    stepList5.clear();
+    stepList6.clear();
+
+    switchList.clear();
+    m_list_utUnit.clear();
+    m_list_txrxMode.clear();
+    m_list_voltage.clear();
+    m_list_prf.clear();
+    m_list_filter.clear();
+    m_list_rectifier.clear();
+    m_list_averaging.clear();
+    m_list_pointQty.clear();
+    m_list_gate.clear();
+    m_list_synchro.clear();
+    m_list_measureMode.clear();
+    m_list_alarm.clear();
+    m_list_group.clear();
+    m_list_condition.clear();
+    m_list_operator.clear();
+    m_list_output.clear();
+    m_list_sound.clear();
+    m_list_data.clear();
+    m_list_mode.clear();
+    m_list_curveX.clear();
+    m_list_point.clear();
+    m_list_group2.clear();
+    m_list_display.clear();
+    m_list_cScanSource.clear();
+    m_list_scan.clear();
+    m_list_color.clear();
+    m_list_envelope.clear();
+    m_list_cScanMode.clear();
+    m_list_group3.clear();
+    m_list_groupMode.clear();
+    m_list_define.clear();
+    m_list_skew.clear();
+    m_list_geometry.clear();
+    m_list_material.clear();
+    m_list_lawType.clear();
+    m_list_waveType.clear();
+    m_list_type.clear();
+    m_list_scan2.clear();
+    m_list_type2.clear();
+    m_list_encoder.clear();
+    m_list_encoderType.clear();
+    m_list_polarity.clear();
+    m_list_selection.clear();
+    m_list_select.clear();
+    m_list_storage.clear();
+    m_list_saveMode.clear();
+    m_list_select2.clear();
+    m_list_units.clear();
+
+    delete ui;
 }
 
 //void ThirdMenuWidget::set_currentTime()

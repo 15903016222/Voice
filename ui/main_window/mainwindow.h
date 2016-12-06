@@ -71,10 +71,6 @@ signals:
 protected slots:
     void do_key_event(Mcu::KeyType type);
 
-    void slot_firstMenuToolBoxCurrentChanged(int index);
-    void slot_secondMenuItemClicked(QModelIndex index);
-    void on_pushButton_top_clicked();
-    void on_pushButton_bottom_clicked();
     void slot_pushButton_commonMenuClicked();
     void scroll_menu(int index);
     void update_translator(QString string);
