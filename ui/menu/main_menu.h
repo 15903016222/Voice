@@ -23,12 +23,15 @@ private:
 
     bool eventFilter(QObject *object, QEvent *event);
     void show_or_hide_arrow();
+    int count_menu_number(int parent, int child);
 
     int m_languageOption;
     int m_firstCount;
 
+    QMap<int, int> m_map;
+
 signals:
-    void click_main_menu(QString str1, QString str2);
+    void click_main_menu(int num);
 
 private slots:
     void change_item_selection();

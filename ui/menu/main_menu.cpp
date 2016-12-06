@@ -29,6 +29,12 @@ MainMenu::MainMenu(QWidget *parent) :
     qDebug() << m_firstCount;
     ui->treeWidget->setFocus();
 
+    QTreeWidgetItem *pItem;
+    for(int i = 0; i < ui->treeWidget->topLevelItemCount(); i ++) {
+        pItem = ui->treeWidget->topLevelItem(i);
+        m_map.insert(i + 1, pItem->childCount());
+    }
+
     connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(change_item_selection()));
 
     show_or_hide_arrow();
@@ -42,7 +48,6 @@ MainMenu::~MainMenu()
 
 void MainMenu::change_item_selection()
 {
-    qDebug() << "click";
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
     if(item->childCount() > 0) {
         ui->treeWidget->collapseAll();
@@ -51,12 +56,15 @@ void MainMenu::change_item_selection()
         ui->treeWidget->setCurrentItem(initItem);
 
         int index = ui->treeWidget->indexOfTopLevelItem(item);
-        if(index >= 4 && index < m_firstCount) {
+        if(index >= 3 && index < m_firstCount) {
             ui->treeWidget->scrollToItem(item, QAbstractItemView::PositionAtCenter);
         }
-        emit click_main_menu(item->text(0), initItem->text(0));
-    } else {        
-        emit click_main_menu(item->parent()->text(0), item->text(0));
+
+        emit click_main_menu(count_menu_number(index, 1));
+    } else {
+        int index = ui->treeWidget->indexOfTopLevelItem(item->parent());
+        int indexChild = item->parent()->indexOfChild(item);
+        emit click_main_menu(count_menu_number(index, indexChild + 1));
     }
     show_or_hide_arrow();
 }
@@ -148,4 +156,14 @@ void MainMenu::show_or_hide_arrow()
         ui->pushButton_up->show();
         ui->pushButton_down->show();
     }
+}
+
+int MainMenu::count_menu_number(int parent, int child)
+{
+    int num = 0;
+    for(int i = 0; i < parent; i ++) {
+        num += m_map.value(i + 1);
+    }
+    num += child;
+    return num;
 }

@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    menuBar->hide();
 //    menuBar->move(0, 90);
 
-    connect(mainMenu, SIGNAL(click_main_menu(QString, QString)), subMenu, SLOT(set_third_menu(QString, QString)));
+    connect(mainMenu, SIGNAL(click_main_menu(int)), subMenu, SLOT(set_third_menu(int)));
 }
 
 MainWindow::~MainWindow()
