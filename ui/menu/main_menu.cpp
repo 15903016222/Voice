@@ -26,7 +26,7 @@ MainMenu::MainMenu(QWidget *parent) :
     ui->treeWidget->installEventFilter(this);
 
     m_firstCount = ui->treeWidget->topLevelItemCount();
-    qDebug() << m_firstCount;
+
     ui->treeWidget->setFocus();
 
     QTreeWidgetItem *pItem;
@@ -56,13 +56,14 @@ void MainMenu::change_item_selection()
         ui->treeWidget->setCurrentItem(initItem);
 
         int index = ui->treeWidget->indexOfTopLevelItem(item);
+        ui->treeWidget->scrollToItem(item, QAbstractItemView::PositionAtCenter);
         emit click_main_menu(count_menu_number(index, 1));
     } else {
         int index = ui->treeWidget->indexOfTopLevelItem(item->parent());
         int indexChild = item->parent()->indexOfChild(item);
+        ui->treeWidget->scrollToItem(item->parent(), QAbstractItemView::PositionAtCenter);
         emit click_main_menu(count_menu_number(index, indexChild + 1));
     }
-    ui->treeWidget->scrollToItem(item, QAbstractItemView::PositionAtCenter);
     show_or_hide_arrow();
 }
 

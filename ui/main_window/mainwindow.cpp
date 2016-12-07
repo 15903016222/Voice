@@ -43,10 +43,6 @@ MainWindow::MainWindow(QWidget *parent) :
     subMenu->hide();;
     subMenu->move(179, 530);
 
-//    menuBar = new MenuBar(this);
-//    menuBar->hide();
-//    menuBar->move(0, 90);
-
     connect(mainMenu, SIGNAL(click_main_menu(int)), subMenu, SLOT(set_third_menu(int)));
 }
 
@@ -257,7 +253,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Alt) {
         show_hidden_Menu();
-        qDebug() << subMenu->isHidden()<< mainMenu->isHidden();
         return;
     }
     return QMainWindow::keyPressEvent(event);
@@ -269,7 +264,6 @@ void MainWindow::show_hidden_Menu()
         subMenu->show();
         mainMenu->show();
     } else {
-        qDebug()<<__LINE__;
         mainMenu->hide();
         subMenu->hide();
     }

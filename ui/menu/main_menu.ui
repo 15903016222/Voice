@@ -109,6 +109,7 @@ QTreeWidget::item:selected{
 
 QTreeWidget::branch{
 	image:none;
+	background-color: rgb(37, 76, 124);
 }
 </string>
         </property>
