@@ -341,7 +341,46 @@ void SubMenu::set_output_menu(bool show)
 void SubMenu::set_dac_menu(bool show)
 {
     if(show) {
+        QString option;
+        QList<double> steps;
 
+        /* Mode menu item */
+        set_combobox_menu(ui->subMenu_1, tr("Mode"), m_list_mode);
+
+        if(option == "Setting") {
+
+            /* Curve No. menu item */
+            steps.append(1);
+            set_spinbox_menu(ui->subMenu_2, tr("Curve No."), "", steps, 1, 5, 0);
+
+            /* Curve X menu item */
+            set_combobox_menu(ui->subMenu_3, tr("Curve X"), m_list_curveX);
+
+            /* dB Offset menu item */
+            set_spinbox_menu(ui->subMenu_4, tr("dB Offset"), "dB", stepList1, -40, 40, 1);
+
+            /* Ref.Gain menu item */
+            set_spinbox_menu(ui->subMenu_5, tr("Ref.Gain"), "dB", stepList1, -40, 40, 1);
+
+            /* Switch menu item */
+            set_combobox_menu(ui->subMenu_6, tr("Switch"), switchList);
+        } else if(option == "Edit") {
+
+            /* Point menu item */
+            set_combobox_menu(ui->subMenu_2, tr("Point"), m_list_point);
+
+            /* Position menu item */
+            set_spinbox_menu(ui->subMenu_3, tr("Position"), "", stepList6, 0, 10000, 2);
+
+            /* Add Point menu item */
+            set_label_menu(ui->subMenu_4, tr("Add Point"));
+
+            /* Delete Point menu item */
+            set_label_menu(ui->subMenu_5, tr("Delete Point"));
+
+            ui->subMenu_6->set_type(MenuItem::None);
+        }
+        steps.clear();
     } else {
 
     }
@@ -350,7 +389,46 @@ void SubMenu::set_dac_menu(bool show)
 void SubMenu::set_tcg_menu(bool show)
 {
     if(show) {
+        QString option;
+        QList<double> steps;
 
+        /* Mode menu item */
+        set_combobox_menu(ui->subMenu_1, tr("Mode"), m_list_mode);
+
+        if(option == "Setting") {
+
+            /* Curve No. menu item */
+            steps.append(1);
+            set_spinbox_menu(ui->subMenu_2, tr("Curve No."), "", steps, 1, 5, 0);
+
+            /* Curve X menu item */
+            set_combobox_menu(ui->subMenu_3, tr("Curve X"), m_list_curveX);
+
+            /* dB Offset menu item */
+            set_spinbox_menu(ui->subMenu_4, tr("dB Offset"), "dB", stepList1, -40, 40, 1);
+
+            /* Switch menu item */
+            set_combobox_menu(ui->subMenu_5, tr("Switch"), switchList);
+
+            ui->subMenu_6->set_type(MenuItem::None);
+        } else if(option == "Edit") {
+
+            /* Point menu item */
+            set_combobox_menu(ui->subMenu_2, tr("Point"), m_list_point);
+
+            /* Position menu item */
+            set_spinbox_menu(ui->subMenu_3, tr("Position"), "", stepList6, 0, 10000, 2);
+
+            /* Gain menu item */
+            set_spinbox_menu(ui->subMenu_3, tr("Gain"), "dB", stepList1, 0, 100, 1);
+
+            /* Add Point menu item */
+            set_label_menu(ui->subMenu_5, tr("Add Point"));
+
+            /* Delete Point menu item */
+            set_label_menu(ui->subMenu_6, tr("Delete Point"));
+        }
+        steps.clear();
     } else {
 
     }
@@ -403,7 +481,51 @@ void SubMenu::set_colorSettings_menu(bool show)
 void SubMenu::set_properties_menu(bool show)
 {
     if(show) {
+        QString option;
 
+        /* Scan menu item */
+        set_combobox_menu(ui->subMenu_1, tr("Scan"), m_list_scan);
+
+        if(option == "A-Scan") {
+
+            /* Color menu item */
+            set_combobox_menu(ui->subMenu_2, tr("Color"), m_list_color);
+
+            /* Envelope menu item */
+            set_combobox_menu(ui->subMenu_3, tr("Envelope"), m_list_envelope);
+
+            /* Peak Holding menu item */
+            set_combobox_menu(ui->subMenu_4, tr("Peak Holding"), switchList);
+
+            /* Reference Holding menu item */
+            set_combobox_menu(ui->subMenu_5, tr("Reference Holding"), switchList);
+
+            ui->subMenu_6->set_type(MenuItem::None);
+        } else if(option == "B-Scan") {
+
+            /* Compression menu item */
+            set_combobox_menu(ui->subMenu_2, tr("Compression"), switchList);
+
+            ui->subMenu_3->set_type(MenuItem::None);
+            ui->subMenu_4->set_type(MenuItem::None);
+            ui->subMenu_5->set_type(MenuItem::None);
+            ui->subMenu_6->set_type(MenuItem::None);
+
+        } else if(option == "C-Scan") {
+
+            /* Ratio 1:1 menu item */
+            set_combobox_menu(ui->subMenu_2, tr("Ratio 1:1"), switchList);
+
+            /* C-Scan Mode menu item */
+            set_combobox_menu(ui->subMenu_3, tr("C-Scan Mode"), m_list_cScanMode);
+
+            /* Compression menu item */
+            set_combobox_menu(ui->subMenu_4, tr("Compression"), switchList);
+
+            ui->subMenu_5->set_type(MenuItem::None);
+            ui->subMenu_6->set_type(MenuItem::None);
+
+        }
     } else {
 
     }
@@ -730,7 +852,88 @@ void SubMenu::set_start_menu(bool show)
 void SubMenu::set_cursors_menu(bool show)
 {
     if(show) {
+        QString option;
+        QList<double> steps1;
+        steps1.append(0.1);
+        steps1.append(1.0);
+        steps1.append(10.0);
 
+        QList<double> steps2;
+        steps2.append(0.1);
+        steps2.append(0.5);
+        steps2.append(1.0);
+        steps2.append(5.0);
+
+        /* Selection menu item */
+        set_combobox_menu(ui->subMenu_1, tr("Selection"), m_list_selection);
+
+        if(option == "A-Scan") {
+
+            /* %(r) menu item */
+            set_spinbox_menu(ui->subMenu_2, tr("%(r)"), "%", steps1, 0, 100, 1);
+
+            /* %(m) menu item */
+            set_spinbox_menu(ui->subMenu_3, tr("%(m)"), "%", steps1, 0, 100, 1);
+
+            /* U(r) menu item */
+            set_spinbox_menu(ui->subMenu_4, tr("U(r)"), "mm", stepList6, 0, 2000, 2);
+
+            /* U(m) menu item */
+            set_spinbox_menu(ui->subMenu_5, tr("U(m)"), "mm", stepList6, 0, 2000, 2);
+
+            ui->subMenu_6->set_type(MenuItem::None);
+        } else if(option == "B-Scan") {
+
+            /* S(r) menu item */
+            set_spinbox_menu(ui->subMenu_2, tr("S(r)"), "s", steps2, 0, 10000, 1);
+
+            /* S(m) menu item */
+            set_spinbox_menu(ui->subMenu_3, tr("S(m)"), "s", steps2, 0, 10000, 1);
+
+            /* U(r) menu item */
+            set_spinbox_menu(ui->subMenu_4, tr("U(r)"), "mm", stepList6, 0, 2000, 2);
+
+            /* U(m) menu item */
+            set_spinbox_menu(ui->subMenu_5, tr("U(m)"), "mm", stepList6, 0, 2000, 2);
+
+            ui->subMenu_6->set_type(MenuItem::None);
+
+        } else if(option == "C-Scan") {
+
+            /* S(r) menu item */
+            set_spinbox_menu(ui->subMenu_2, tr("S(r)"), "s", steps2, 0, 10000, 1);
+
+            /* S(m) menu item */
+            set_spinbox_menu(ui->subMenu_3, tr("S(m)"), "s", steps2, 0, 10000, 1);
+
+            /* I(r) menu item */
+            set_spinbox_menu(ui->subMenu_4, tr("I(r)"), "mm", steps2, 0, 2000, 1);
+
+            /* I(m) menu item */
+            set_spinbox_menu(ui->subMenu_5, tr("I(m)"), "mm", steps2, 0, 2000, 1);
+
+            ui->subMenu_6->set_type(MenuItem::None);
+
+        } else if(option == "S-Scan") {
+            /* Angle menu item */
+            QList<double> steps3;
+            steps3.append(1);
+            set_spinbox_menu(ui->subMenu_2, tr("Angle"), "°", steps3, 25, 75, 0);
+
+            /* U(r) menu item */
+            set_spinbox_menu(ui->subMenu_3, tr("U(r)"), "mm", stepList6, 0, 2000, 2);
+
+            /* U(m) menu item */
+            set_spinbox_menu(ui->subMenu_4, tr("U(m)"), "mm", stepList6, 0, 2000, 2);
+
+            /* I(r) menu item */
+            set_spinbox_menu(ui->subMenu_5, tr("I(r)"), "mm", steps2, 0, 2000, 1);
+
+            /* I(m) menu item */
+            set_spinbox_menu(ui->subMenu_6, tr("I(m)"), "mm", steps2, 0, 2000, 1);
+        }
+        steps1.clear();
+        steps2.clear();
     } else {
 
     }
@@ -739,7 +942,49 @@ void SubMenu::set_cursors_menu(bool show)
 void SubMenu::set_tofd_menu(bool show)
 {
     if(show) {
+        QString option;
+        QList<double> steps;
+        steps.append(0.1);
+        steps.append(1.0);
+        steps.append(10.0);
+        steps.append(100.0);
 
+        /* Select menu item */
+        set_combobox_menu(ui->subMenu_1, tr("Select"), m_list_select);
+
+        if(option == "TOFD Settings") {
+
+            /* Wedge Sep. menu item */
+            set_spinbox_menu(ui->subMenu_2, tr("Wedge Sep."), "mm", steps, 0, 10000, 1);
+
+            /* Layer Depth menu item */
+            set_label_menu(ui->subMenu_3, tr("Layer Depth"));
+
+            /* TOFD Calculator menu item */
+            set_label_menu(ui->subMenu_4, tr("TOFD Calculator"));
+
+            /* Start menu item */
+            set_spinbox_menu(ui->subMenu_5, tr("Start"), "mm", stepList2, 0, 16000, 2);
+
+            /* Range menu item */
+            set_spinbox_menu(ui->subMenu_6, tr("Range"), "mm", stepList2, 0, 16000, 2);
+        } else if(option == "TOFD Analysis") {
+
+            /* Straightening menu item */
+            set_combobox_menu(ui->subMenu_2, tr("Straightening"), switchList);
+
+            /* Remove Lateral menu item */
+            set_combobox_menu(ui->subMenu_3, tr("Remove Lateral"), switchList);
+
+            /* Ref.Position menu item */
+            set_spinbox_menu(ui->subMenu_4, tr("Ref.Position"), "mm", stepList6, 0, 2000, 2);
+
+            /* Depth Calibration menu item */
+            set_combobox_menu(ui->subMenu_5, tr("Depth Calibration"), switchList);
+
+            ui->subMenu_6->set_type(MenuItem::None);
+
+        }
     } else {
 
     }
@@ -1101,9 +1346,16 @@ void SubMenu::init_option_stringlist()
     m_list_data.append(tr("B%"));
     m_list_data.append(tr("None"));
 
-//    QStringList m_list_mode;
-//    QStringList m_list_curveX;
-//    QStringList m_list_point;
+    m_list_mode.append(tr("Settings"));
+    m_list_mode.append(tr("Edit"));
+
+    m_list_curveX.append("1");
+    m_list_curveX.append("2");
+    m_list_curveX.append("3");
+    m_list_curveX.append("4");
+    m_list_curveX.append("5");
+
+    m_list_point.append("1");
 
     m_list_group2.append(tr("All"));
     m_list_group2.append(tr("Current"));
@@ -1125,10 +1377,22 @@ void SubMenu::init_option_stringlist()
     m_list_cScanSource.append(tr("Thickness"));
     m_list_cScanSource.append(tr("I/"));
 
-//    QStringList m_list_scan;
-//    QStringList m_list_color;
-//    QStringList m_list_envelope;
-//    QStringList m_list_cScanMode;
+    m_list_scan.append(tr("A-Scan"));
+    m_list_scan.append(tr("B-Scan"));
+    m_list_scan.append(tr("C-Scan"));
+
+    m_list_color.append(tr("Blue"));
+    m_list_color.append(tr("Green"));
+    m_list_color.append(tr("Red"));
+    m_list_color.append(tr("Yellow"));
+    m_list_color.append(tr("Black"));
+    m_list_color.append(tr("White"));
+
+    m_list_envelope.append(tr("None"));
+    m_list_envelope.append(tr("Infinite"));
+
+    m_list_cScanMode.append(tr("Sectorial"));
+    m_list_cScanMode.append(tr("Linear"));
 
     m_list_group3.append(tr("Add"));
     m_list_group3.append(tr("1"));
@@ -1192,8 +1456,13 @@ void SubMenu::init_option_stringlist()
     m_list_polarity.append(tr("Normal"));
     m_list_polarity.append(tr("Reverse"));
 
-//    QStringList m_list_selection;
-//    QStringList m_list_select;
+    m_list_selection.append(tr("A-Scan"));
+    m_list_selection.append(tr("B-Scan"));
+    m_list_selection.append(tr("C-Scan"));
+    m_list_selection.append(tr("S-Scan"));
+
+    m_list_select.append(tr("TOFD Settings"));
+    m_list_select.append(tr("TOFD Analysis"));
 
     m_list_storage.append(tr("SD"));
     m_list_storage.append(tr("SSG"));
