@@ -33,6 +33,7 @@ MainMenu::MainMenu(QWidget *parent) :
     for(int i = 0; i < ui->treeWidget->topLevelItemCount(); i ++) {
         pItem = ui->treeWidget->topLevelItem(i);
         m_map.insert(i + 1, pItem->childCount());
+        pItem->setForeground(0, QBrush(Qt::white));
     }
 
     connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(change_item_selection()));
