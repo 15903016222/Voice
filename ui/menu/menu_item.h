@@ -38,13 +38,13 @@ public:
 
     void set_label_text(const QString &text);
 
-    QString m_title;
-    QString m_labelText;
+    QString get_title();
+    QString get_label_text();
 
 signals:
     void clicked();
     void spin_event(double value);
-    void combo_event(int index);
+    void combo_enevt(int index);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
@@ -53,6 +53,8 @@ private:
     Ui::MenuItem *ui;
 
     QString m_unit;
+    QString m_title;
+    QString m_labelText;
 
     QList<double> m_steps;
     int m_curStep;

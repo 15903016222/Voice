@@ -17,7 +17,7 @@ MenuItem::MenuItem(QWidget *parent) :
     ui->comboBox->installEventFilter(this);
 
     connect(ui->doubleSpinBox, SIGNAL(valueChanged(double)), this, SIGNAL(spin_event(double)));
-    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_event(int)));
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_enevt(int)));
 
 //    ui->comboBox->setLineEdit(new QLineEdit());
 //    ui->comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
@@ -222,4 +222,14 @@ void MenuItem::set_label_text(const QString &text)
 {
     ui->label->setText(text);
     m_labelText = text;
+}
+
+QString MenuItem::get_title()
+{
+    return m_title;
+}
+
+QString MenuItem::get_label_text()
+{
+    return m_labelText;
 }

@@ -59,6 +59,8 @@ SubMenu::SubMenu(QWidget *parent) :
 
     set_general_menu(true);
 
+//    m_brightness = 50.0;
+//    set_brightness(m_brightness);
 }
 
 void SubMenu::init_map()
@@ -555,9 +557,11 @@ void SubMenu::set_select_menu(bool show)
 
         /* Auto Detect menu item */
         set_combobox_menu(ui->subMenu_6, tr("Auto Detect"), switchList);
+//        connect(ui->subMenu_6, SIGNAL(combo_event(QString)), this, SLOT(auto_detect_probe(QString)));
     } else {
         disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_probe_dialog()));
         disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_wedge_dialog()));
+//        disconnect(ui->subMenu_6, SIGNAL(combo_event(QString)), this, SLOT(auto_detect_probe(QString)));
     }
 }
 
@@ -1159,6 +1163,7 @@ void SubMenu::set_preference_menu(bool show)
         steps.append(1);
         steps.append(10);
         set_spinbox_menu(ui->subMenu_2, tr("Bright"), "%", steps, 1, 100, 0);
+        connect(ui->subMenu_2, SIGNAL(spin_event(double)), this, SLOT(set_brightness(double)));
 
         /* Opacity menu item */
         set_spinbox_menu(ui->subMenu_3, tr("Opacity"), "%", steps, 1, 100, 0);
@@ -1169,7 +1174,7 @@ void SubMenu::set_preference_menu(bool show)
 
         steps.clear();
     } else {
-
+        disconnect(ui->subMenu_2, SIGNAL(spin_event(double)), this, SLOT(set_brightness(double)));
     }
 }
 
@@ -1532,32 +1537,31 @@ void SubMenu::init_step_list()
 
 void SubMenu::show_probe_dialog()
 {
-    qDebug() << "run";
     ProbeDialog probeDialog;
-    probeDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
     probeDialog.exec();
-
-//    connect(probeDialog, SIGNAL(probeChanged(QString)), this, SLOT(select_probe(QString)));
+    QString string = probeDialog.get_current_item_text();
+    if(!string.isEmpty()){
+        ui->subMenu_3->set_label_text(string.left(string.length() - 4));
+    }
 }
 
 void SubMenu::show_wedge_dialog()
 {
     WedgeDialog wedgeDialog;
-    wedgeDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
     wedgeDialog.exec();
-
-//    connect(wedgeDialog, SIGNAL(wedgeChanged(QString)), this, SLOT(select_wedge(QString)));
+    QString string = wedgeDialog.get_current_item_text();
+    if(!string.isEmpty()){
+        ui->subMenu_4->set_label_text(string.left(string.length() - 4));
+    }
 }
 
 void SubMenu::show_input_dialog()
 {
     InputPanelContext inputPanel;
-    inputPanel.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+    MenuItem *widget = qobject_cast<MenuItem*>(sender());
+    inputPanel.set_item_current_text(widget->get_label_text());
     inputPanel.exec();
-
-//    QString text = pModel->item(0, index)->text();
-//    inputPanel->set_item_current_text(text);
-//    connect(inputPanel, SIGNAL(textEditFinished(QString)), this, SLOT(set_edited_text(QString)));
+    widget->set_label_text(inputPanel.get_text());
 }
 
 void SubMenu::show_filemanager_dialog()
@@ -1572,11 +1576,11 @@ void SubMenu::show_ip_address_dialog()
 {
     NetworkDialog *ipAddress = new NetworkDialog(this);
     QMap<QString, QString> map;
-    map.insert("IP Address", ui->subMenu_1->m_title);
+    map.insert("IP Address", ui->subMenu_1->get_title());
     ipAddress->set_dialog_title(map);
-    ipAddress->set_spinbox_value(get_dialog_value_list(ui->subMenu_1->m_labelText, "."));
+    ipAddress->set_spinbox_value(get_dialog_value_list(ui->subMenu_1->get_label_text(), QString(".")));
     ipAddress->exec();
-    ui->subMenu_1->set_label_text(ipAddress->str_ip);
+    ui->subMenu_1->set_label_text(ipAddress->get_ip());
     delete ipAddress;
 }
 
@@ -1584,11 +1588,11 @@ void SubMenu::show_subnet_mask_dialog()
 {
     NetworkDialog *subnetMask = new NetworkDialog(this);
     QMap<QString, QString> map;
-    map.insert("Subnet Mask", ui->subMenu_2->m_title);
+    map.insert("Subnet Mask", ui->subMenu_2->get_title());
     subnetMask->set_dialog_title(map);
-    subnetMask->set_spinbox_value(get_dialog_value_list(ui->subMenu_2->m_labelText, "."));
+    subnetMask->set_spinbox_value(get_dialog_value_list(ui->subMenu_2->get_label_text(), QString(".")));
     subnetMask->exec();
-    ui->subMenu_2->set_label_text(subnetMask->str_subNet);
+    ui->subMenu_2->set_label_text(subnetMask->get_subnet());
     delete subnetMask;
 }
 
@@ -1596,23 +1600,25 @@ void SubMenu::show_info_dialog()
 {
     Ui::Dialog::SysInfoDialog *infoDialog = new Ui::Dialog::SysInfoDialog(this);
     infoDialog->exec();
+    delete infoDialog;
 }
 
 void SubMenu::show_about_dialog()
 {
     Ui::Dialog::AboutDialog *aboutDialog = new Ui::Dialog::AboutDialog(this);
     aboutDialog->exec();
+    delete aboutDialog;
 }
 
 void SubMenu::show_time_dialog()
 {
     DateTimeSetDialog *timeDialog = new DateTimeSetDialog(this);
     QMap<QString, QString> map;
-    map.insert("Clock Set", ui->subMenu_1->m_title);
+    map.insert("Clock Set", ui->subMenu_1->get_title());
     timeDialog->set_dialog_title(map);
-    timeDialog->set_spinbox_value(get_dialog_value_list(ui->subMenu_1->m_labelText, ":"));
+    timeDialog->set_spinbox_value(get_dialog_value_list(ui->subMenu_1->get_label_text(), QString(":")));
     timeDialog->exec();
-    ui->subMenu_1->set_label_text(timeDialog->m_strTime);
+    ui->subMenu_1->set_label_text(timeDialog->get_time());
     delete timeDialog;
 }
 
@@ -1620,11 +1626,11 @@ void SubMenu::show_date_dialog()
 {
     DateTimeSetDialog *dateDialog = new DateTimeSetDialog(this);
     QMap<QString, QString> map;
-    map.insert("Date Set", ui->subMenu_2->m_title);
+    map.insert("Date Set", ui->subMenu_2->get_title());
     dateDialog->set_dialog_title(map);
-    dateDialog->set_spinbox_value(get_dialog_value_list(ui->subMenu_2->m_labelText, "-"));
+    dateDialog->set_spinbox_value(get_dialog_value_list(ui->subMenu_2->get_label_text(), QString("-")));
     dateDialog->exec();
-    ui->subMenu_2->set_label_text(dateDialog->m_strDate);
+    ui->subMenu_2->set_label_text(dateDialog->get_date());
     delete dateDialog;
 }
 
@@ -1697,85 +1703,29 @@ SubMenu::~SubMenu()
     delete ui;
 }
 
-//void ThirdMenuWidget::set_currentTime()
-//{
-//    if(pDateTimeSetDialog->m_strTime == NULL) {
-//        pModel->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
-//    } else {
-//        pModel->item(0, 0)->setText(pDateTimeSetDialog->m_strTime);
-//    }
+void SubMenu::set_brightness(double value)
+{
+    m_brightness = value;
 
-//    if(pDateTimeSetDialog->m_strDate == NULL) {
-//        pModel->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
-//    } else {
-//        pModel->item(0, 1)->setText(pDateTimeSetDialog->m_strDate);
-//    }
-//}
+    pMcu->set_brightness((char)m_brightness);
+}
 
-//void ThirdMenuWidget::select_probe(QString string)
-//{
-//    if(!string.isEmpty()){
-//        QString probeModel = string.left(string.length() - 4);
-//        for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-//            if(i == m_probeIndex) {
-//                pModel->item(0, i)->setText(probeModel);
-//                break;
-//            }
-//        }
-//    }
-//}
+void SubMenu::auto_detect_probe(QString string)
+{
+    if(string == "On"){
+        pMcu->notify_started();
+        pMcu->query_probe();
+        connect(pMcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
+    }else{
+    }
+}
 
-//void ThirdMenuWidget::select_wedge(QString string)
-//{
-//    if(!string.isEmpty()){
-//        QString wedgeModel = string.left(string.length() - 4);
-//        for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-//            if(i == m_wedgeIndex) {
-//                pModel->item(0, i)->setText(wedgeModel);
-//                break;
-//            }
-//        }
-//    }
-//}
+void SubMenu::do_probe_event(const Probe &probe)
+{
+    ui->subMenu_3->set_label_text(probe.model());
+}
 
-//void ThirdMenuWidget::set_edited_text(QString string)
-//{
-//    for(int i = 0; i < THIRD_MENU_NUMBER; i ++) {
-//        if(i == m_inputIndex) {
-//            pModel->item(0, i)->setText(string);
-//            break;
-//        }
-//    }
-//}
-
-//void ThirdMenuWidget::setBrightness(double value)
-//{
-//    m_brightness = value;
-
-//    pMcu->set_brightness((char)m_brightness);
-//}
-
-//void ThirdMenuWidget::set_autoDetect_probeModel(bool flag)
-//{
-//    if(!flag){
-//        pMcu->notify_started();
-//        pMcu->query_probe();
-//        connect(pMcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
-//    }else{
-//    }
-//}
-
-//void ThirdMenuWidget::set_time(QString value)
-//{
-//    pModel->item(0, m_dateTimeSetIndex)->setText(value);
-//}
-
-//void ThirdMenuWidget::do_probe_event(const Probe &probe)
-//{
-//    pModel->item(0, 2)->setText(probe.model());
-//}
-
-QList<int> SubMenu::get_dialog_value_list(QString &string, QString symbol)
+QList<int> SubMenu::get_dialog_value_list(QString string, QString symbol)
 {
     QList<int> valueList;
     QString tmpString = string;

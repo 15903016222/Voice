@@ -2,6 +2,7 @@
 #define SUB_MENU_H
 
 #include "menu_item.h"
+#include "mcu.h"
 
 #include <QWidget>
 #include <QTreeWidgetItem>
@@ -118,7 +119,11 @@ private:
     void get_main_menu_type(Type type);
     void init_option_stringlist();
     void init_step_list();
-    QList<int> get_dialog_value_list(QString &string, QString symbol);
+
+    QList<int> get_dialog_value_list(QString string, QString symbol);
+
+
+    Mcu *pMcu;
 
     QList<double> stepList1;
     QList<double> stepList2;
@@ -182,6 +187,8 @@ private:
     QMap<QString, Type> m_typeMap;
     QMap<Type, Function> m_map;
 
+    double m_brightness;  
+
 private slots:
     void set_third_menu(int num);
     void show_probe_dialog();
@@ -195,7 +202,9 @@ private slots:
     void show_date_dialog();
     void show_time_dialog();
     void show_resetconfig_dialog();
-
+    void set_brightness(double value);
+    void auto_detect_probe(QString string);
+    void do_probe_event(const Probe &probe);
 };
 
 #endif // SUB_MENU_H
