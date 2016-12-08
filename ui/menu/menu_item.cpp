@@ -18,6 +18,10 @@ MenuItem::MenuItem(QWidget *parent) :
 
     connect(ui->doubleSpinBox, SIGNAL(valueChanged(double)), this, SIGNAL(spin_event(double)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_event(int)));
+
+//    ui->comboBox->setLineEdit(new QLineEdit());
+//    ui->comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
+//    ui->comboBox->lineEdit()->setReadOnly(true);
 }
 
 MenuItem::~MenuItem()
@@ -59,6 +63,8 @@ void MenuItem::clean()
     m_curStep = 0;
     m_title.clear();
     m_unit.clear();
+    ui->label->clear();
+    m_labelText.clear();
 }
 
 void MenuItem::set_title(const QString &title)
@@ -210,4 +216,10 @@ void MenuItem::set_focus_out()
                                          "border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));}");
         update_title();
     }
+}
+
+void MenuItem::set_label_text(const QString &text)
+{
+    ui->label->setText(text);
+    m_labelText = text;
 }
