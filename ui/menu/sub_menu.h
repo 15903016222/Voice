@@ -2,8 +2,6 @@
 #define SUB_MENU_H
 
 #include "menu_item.h"
-#include "networkdialog.h"
-#include "datetimesetdialog.h"
 
 #include <QWidget>
 #include <QTreeWidgetItem>
@@ -120,9 +118,7 @@ private:
     void get_main_menu_type(Type type);
     void init_option_stringlist();
     void init_step_list();
-
-    NetworkDialog *pNetworkDialog;
-    DateTimeSetDialog *pDateTimeSetDialog;
+    QList<int> get_dialog_value_list(QString &string, QString symbol);
 
     QList<double> stepList1;
     QList<double> stepList2;
@@ -130,7 +126,6 @@ private:
     QList<double> stepList4;
     QList<double> stepList5;
     QList<double> stepList6;
-
 
     QStringList switchList;
     QStringList m_list_utUnit;
@@ -193,10 +188,12 @@ private slots:
     void show_wedge_dialog();
     void show_input_dialog();
     void show_filemanager_dialog();
-    void show_network_dialog();
+    void show_ip_address_dialog();
+    void show_subnet_mask_dialog();
     void show_info_dialog();
     void show_about_dialog();
-    void show_datetime_dialog();
+    void show_date_dialog();
+    void show_time_dialog();
     void show_resetconfig_dialog();
 
 };

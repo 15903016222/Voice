@@ -8,6 +8,8 @@
 #include "sysinfo_dialog.h"
 #include "about_dialog.h"
 #include "resetconfigdialog.h"
+#include "networkdialog.h"
+#include "datetimesetdialog.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -1174,15 +1176,16 @@ void SubMenu::set_preference_menu(bool show)
 void SubMenu::set_system_menu(bool show)
 {
     if(show) {
-        pDateTimeSetDialog = new DateTimeSetDialog(this);
 
         /* Clock Set menu item */
         set_label_menu(ui->subMenu_1, tr("Clock Set"));
-        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
+        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_time_dialog()));
+        ui->subMenu_1->set_label_text(QTime::currentTime().toString("hh:mm:ss"));
 
         /* Date Set menu item */
         set_label_menu(ui->subMenu_2, tr("Date Set"));
-        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
+        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_date_dialog()));
+        ui->subMenu_2->set_label_text(QDate::currentDate().toString("yyyy-MM-dd"));
 
         /* Language menu item */
         set_combobox_menu(ui->subMenu_3, tr("Language"), m_list_language);
@@ -1191,33 +1194,32 @@ void SubMenu::set_system_menu(bool show)
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
     } else {
-        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
-        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_datetime_dialog()));
-        delete pDateTimeSetDialog;
+        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_time_dialog()));
+        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_date_dialog()));
     }
 }
 
 void SubMenu::set_network_menu(bool show)
 {
     if(show) {
-        pNetworkDialog = new NetworkDialog(this);
 
         /* IP Address menu item */
         set_label_menu(ui->subMenu_1, tr("IP Address"));
-        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
+        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_ip_address_dialog()));
+        ui->subMenu_1->set_label_text("192.168.1.1");
 
         /* Subnet Mask menu item */
         set_label_menu(ui->subMenu_2, tr("Subnet Mask"));
-        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
+        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
+        ui->subMenu_2->set_label_text("255.255.255.0");
 
         ui->subMenu_3->set_type(MenuItem::None);
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
     } else {        
-        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
-        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_network_dialog()));
-        delete pNetworkDialog;
+        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_ip_address_dialog()));
+        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
     }
 }
 
@@ -1565,31 +1567,29 @@ void SubMenu::show_filemanager_dialog()
     fileManagerDialog.exec();
 }
 
-void SubMenu::show_network_dialog()
+
+void SubMenu::show_ip_address_dialog()
 {
-//    QVariantMap mapOne = pFirstSecondMenuWidget->translateChineseMap["Preference"].toMap();
-//    QVariantMap mapTwo = mapOne["Network"].toMap();
-//    QList<int> valueList = get_dialog_value_list(index, ".");
+    NetworkDialog *ipAddress = new NetworkDialog(this);
     QMap<QString, QString> map;
+    map.insert("IP Address", ui->subMenu_1->m_title);
+    ipAddress->set_dialog_title(map);
+    ipAddress->set_spinbox_value(get_dialog_value_list(ui->subMenu_1->m_labelText, "."));
+    ipAddress->exec();
+    ui->subMenu_1->set_label_text(ipAddress->str_ip);
+    delete ipAddress;
+}
 
-//    if(currentHeaderText.contains("IP Address")) {
-//        map["IP Address"] = "IP Address";
-//    } else if(currentHeaderText.contains(mapTwo.value("IP Address").toString())){
-//        map["IP Address"] = mapTwo.value("IP Address").toString();
-//    } else if(currentHeaderText.contains("Subnet Mask")) {
-//        map["Subnet Mask"] = "Subnet Mask";
-//    } else if(currentHeaderText.contains(mapTwo.value("Subnet Mask").toString())) {
-//        map["Subnet Mask"] = mapTwo.value("Subnet Mask").toString();
-//    }
-
-//    pNetworkDialog->set_dialog_title(map);
-//    pNetworkDialog->set_spinbox_value(valueList);
-
-    pNetworkDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-    pNetworkDialog->exec();
-
-//    m_networkIndex = index;
-//    connect(pNetworkDialog, SIGNAL(currentIP_subNetChanged(QString)), this, SLOT(set_ip_subNet(QString)));
+void SubMenu::show_subnet_mask_dialog()
+{
+    NetworkDialog *subnetMask = new NetworkDialog(this);
+    QMap<QString, QString> map;
+    map.insert("Subnet Mask", ui->subMenu_2->m_title);
+    subnetMask->set_dialog_title(map);
+    subnetMask->set_spinbox_value(get_dialog_value_list(ui->subMenu_2->m_labelText, "."));
+    subnetMask->exec();
+    ui->subMenu_2->set_label_text(subnetMask->str_subNet);
+    delete subnetMask;
 }
 
 void SubMenu::show_info_dialog()
@@ -1604,35 +1604,28 @@ void SubMenu::show_about_dialog()
     aboutDialog->exec();
 }
 
-void SubMenu::show_datetime_dialog()
+void SubMenu::show_time_dialog()
 {
+    DateTimeSetDialog *timeDialog = new DateTimeSetDialog(this);
     QMap<QString, QString> map;
-    QList<int> valueList;
-//    QVariantMap mapOne = pFirstSecondMenuWidget->translateChineseMap["Preference"].toMap();
-//    QVariantMap mapTwo = mapOne["System"].toMap();
+    map.insert("Clock Set", ui->subMenu_1->m_title);
+    timeDialog->set_dialog_title(map);
+    timeDialog->set_spinbox_value(get_dialog_value_list(ui->subMenu_1->m_labelText, ":"));
+    timeDialog->exec();
+    ui->subMenu_1->set_label_text(timeDialog->m_strTime);
+    delete timeDialog;
+}
 
-//    if(currentHeaderText.contains("Clock Set")) {
-//        valueList = get_dialog_value_list(index, ":");
-//        map["Clock Set"] = "Clock Set";
-//    } else if(currentHeaderText.contains(mapTwo.value("Clock Set").toString())){
-//        valueList = get_dialog_value_list(index, ":");
-//        map["Clock Set"] = mapTwo.value("Clock Set").toString();
-//    } else if(currentHeaderText.contains("Date Set")) {
-//        valueList = get_dialog_value_list(index, "-");
-//        map["Date Set"] = "Date Set";
-//    } else if(currentHeaderText.contains(mapTwo.value("Date Set").toString())) {
-//        valueList = get_dialog_value_list(index, "-");
-//        map["Date Set"] = mapTwo.value("Date Set").toString();
-//    }
-
-//    pDateTimeSetDialog->set_dialog_title(map);
-//    pDateTimeSetDialog->set_spinbox_value(valueList);
-
-    pDateTimeSetDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-    pDateTimeSetDialog->show();
-
-//    m_dateTimeSetIndex = index;
-//    connect(pDateTimeSetDialog, SIGNAL(currentDateTimeChanged(QString)), this, SLOT(set_time(QString)));
+void SubMenu::show_date_dialog()
+{
+    DateTimeSetDialog *dateDialog = new DateTimeSetDialog(this);
+    QMap<QString, QString> map;
+    map.insert("Date Set", ui->subMenu_2->m_title);
+    dateDialog->set_dialog_title(map);
+    dateDialog->set_spinbox_value(get_dialog_value_list(ui->subMenu_2->m_labelText, "-"));
+    dateDialog->exec();
+    ui->subMenu_2->set_label_text(dateDialog->m_strDate);
+    delete dateDialog;
 }
 
 void SubMenu::show_resetconfig_dialog()
@@ -1777,31 +1770,25 @@ SubMenu::~SubMenu()
 //    pModel->item(0, m_dateTimeSetIndex)->setText(value);
 //}
 
-//void ThirdMenuWidget::set_ip_subNet(QString value)
-//{
-//    pModel->item(0, m_networkIndex)->setText(value);
-//}
-
 //void ThirdMenuWidget::do_probe_event(const Probe &probe)
 //{
 //    pModel->item(0, 2)->setText(probe.model());
 //}
 
-//QList<int> ThirdMenuWidget::get_dialog_value_list(int index, QString str)
-//{
-//    QList<int> valueList;
-//    QString string = pModel->item(0, index)->text();
-//    QString tmpString = string;
-//    int tmpIndex = 0;
-//    for(int i = 0; i < string.length(); i ++) {
-//        if(QString(string.at(i)) == str) {
-//            valueList.append(tmpString.left(i - tmpIndex).toInt());
-//            tmpString = tmpString.right(string.count() - i - 1);
-//            tmpIndex = i + 1;
-//        }
-//        if(i == string.length() - 1) {
-//            valueList.append(tmpString.toInt());
-//        }
-//    }
-//    return valueList;
-//}
+QList<int> SubMenu::get_dialog_value_list(QString &string, QString symbol)
+{
+    QList<int> valueList;
+    QString tmpString = string;
+    int tmpIndex = 0;
+    for(int i = 0; i < string.length(); i ++) {
+        if(QString(string.at(i)) == symbol) {
+            valueList.append(tmpString.left(i - tmpIndex).toInt());
+            tmpString = tmpString.right(string.count() - i - 1);
+            tmpIndex = i + 1;
+        }
+        if(i == string.length() - 1) {
+            valueList.append(tmpString.toInt());
+        }
+    }
+    return valueList;
+}
