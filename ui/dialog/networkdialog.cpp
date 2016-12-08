@@ -61,3 +61,13 @@ void NetworkDialog::set_spinbox_value(QList<int> valueList)
     ui->spinBox_3->setValue(valueList.at(2));
     ui->spinBox_4->setValue(valueList.at(3));
 }
+
+QString NetworkDialog::get_ip()
+{
+    return str_ip;
+}
+
+QString NetworkDialog::get_subnet()
+{
+    return str_subNet;
+}

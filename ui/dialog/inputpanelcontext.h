@@ -17,10 +17,13 @@ public:
 
     void set_item_current_text(QString string);
 
+    QString get_text();
+
 private:
     Ui::InputPanelContext *ui;
 
     bool m_capsLock;
+    QString m_text;
 
 signals:
     void textEditFinished(QString);

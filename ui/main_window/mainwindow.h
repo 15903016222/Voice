@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "firstsecondmenuwidget.h"
+//#include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
 #include "mcu.h"
@@ -44,7 +44,7 @@ private:
     QGraphicsOpacityEffect *effect;
 
     CommonMenuWidget * commonMenuWidget;
-    FirstSecondMenuWidget *firstSecondMenu;
+//    FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
     VirtualKeyboard *pVirtualKeyboard;
 

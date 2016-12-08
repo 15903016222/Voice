@@ -115,3 +115,13 @@ void DateTimeSetDialog::set_spinbox_value(QList<int> valueList)
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
 }
+
+QString DateTimeSetDialog::get_date()
+{
+    return m_strDate;
+}
+
+QString DateTimeSetDialog::get_time()
+{
+    return m_strTime;
+}

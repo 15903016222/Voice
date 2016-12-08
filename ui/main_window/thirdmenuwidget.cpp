@@ -124,31 +124,31 @@ void ThirdMenuWidget::set_third_menu_name(int i, int j)
 
     set_model_item(0, get_third_menu_list());
 
-    if(i == 8){
-        if(j == 0){
-            pModel->item(0, 1)->setText(QString::number(m_brightness, 'f', 0));
+//    if(i == 8){
+//        if(j == 0){
+//            pModel->item(0, 1)->setText(QString::number(m_brightness, 'f', 0));
 
-            QString opacityValue = QString::number(m_opacity, 'f', 0);
-            pModel->item(0, 2)->setText(opacityValue);
+//            QString opacityValue = QString::number(m_opacity, 'f', 0);
+//            pModel->item(0, 2)->setText(opacityValue);
 
-        }else if(j == 1){
-            set_currentTime();
-            pModel->item(0, 2)->setText(m_language);
+//        }else if(j == 1){
+//            set_currentTime();
+//            pModel->item(0, 2)->setText(m_language);
 
-        }else if(j == 2){
-            if(pNetworkDialog->str_ip == NULL){
-                pModel->item(0, 0)->setText("192.168.1.215");
-            }else{
-                pModel->item(0, 0)->setText(pNetworkDialog->str_ip);
-            }
+//        }else if(j == 2){
+//            if(pNetworkDialog->str_ip == NULL){
+//                pModel->item(0, 0)->setText("192.168.1.215");
+//            }else{
+//                pModel->item(0, 0)->setText(pNetworkDialog->str_ip);
+//            }
 
-            if(pNetworkDialog->str_subNet == NULL){
-                pModel->item(0, 1)->setText("255.255.255.0");
-            }else{
-                pModel->item(0, 1)->setText(pNetworkDialog->str_subNet);
-            }
-        }
-    }
+//            if(pNetworkDialog->str_subNet == NULL){
+//                pModel->item(0, 1)->setText("255.255.255.0");
+//            }else{
+//                pModel->item(0, 1)->setText(pNetworkDialog->str_subNet);
+//            }
+//        }
+//    }
 }
 
 void ThirdMenuWidget::choose_widget_style(int k, QVariantMap thirdMenuMap, QString thirdMenuString)
@@ -729,17 +729,17 @@ void ThirdMenuWidget::set_model_item(int startIndex, QStringList thirdMenuList)
 
 void ThirdMenuWidget::set_currentTime()
 {
-    if(pDateTimeSetDialog->m_strTime == NULL) {
-        pModel->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
-    } else {
-        pModel->item(0, 0)->setText(pDateTimeSetDialog->m_strTime);
-    }
+//    if(pDateTimeSetDialog->m_strTime == NULL) {
+//        pModel->item(0, 0)->setText(QTime::currentTime().toString("hh:mm:ss"));
+//    } else {
+//        pModel->item(0, 0)->setText(pDateTimeSetDialog->m_strTime);
+//    }
 
-    if(pDateTimeSetDialog->m_strDate == NULL) {
-        pModel->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
-    } else {
-        pModel->item(0, 1)->setText(pDateTimeSetDialog->m_strDate);
-    }
+//    if(pDateTimeSetDialog->m_strDate == NULL) {
+//        pModel->item(0, 1)->setText(QDate::currentDate().toString("yyyy-MM-dd"));
+//    } else {
+//        pModel->item(0, 1)->setText(pDateTimeSetDialog->m_strDate);
+//    }
 }
 
 void ThirdMenuWidget::select_probe(QString string)

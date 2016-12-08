@@ -1,7 +1,7 @@
 #ifndef FIRSTSECONDMENUWIDGET_H
 #define FIRSTSECONDMENUWIDGET_H
 
-#include <Parser>
+//#include <Parser>
 
 #include <QWidget>
 #include <QToolBox>
