@@ -28,9 +28,6 @@ private:
 
     QMap<QString, QString> titleMap;
 
-signals:
-    void currentIP_subNetChanged(QString value);
-
 public slots:
     void on_buttonBox_accepted();
 

@@ -30,9 +30,6 @@ private:
 
     QMap<QString, QString> titleMap;
 
-signals:
-    void currentDateTimeChanged(QString string);
-
 public slots:
     void on_buttonBox_accepted();
     void check_date_valid(int number);
