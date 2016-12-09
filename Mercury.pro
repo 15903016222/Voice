@@ -58,3 +58,7 @@ include(ui/ui.pri)
 include(device/device.pri)
 
 include(mcu/mcu.pri)
+
+include(fpga/fpga.pri)
+
+include(source/source.pri)
