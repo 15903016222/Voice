@@ -122,7 +122,6 @@ private:
 
     QList<int> get_dialog_value_list(QString string, QString symbol);
 
-
     Mcu *pMcu;
 
     QList<double> stepList1;

@@ -1222,7 +1222,7 @@ void SubMenu::set_network_menu(bool show)
         ui->subMenu_4->set_type(MenuItem::None);
         ui->subMenu_5->set_type(MenuItem::None);
         ui->subMenu_6->set_type(MenuItem::None);
-    } else {        
+    } else {
         disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_ip_address_dialog()));
         disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
     }
