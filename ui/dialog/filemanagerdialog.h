@@ -35,11 +35,8 @@ private:
 
 
 private slots:
-//    void onHeaderClicked(int index);
     void on_pushButton_close_clicked();
-//    void on_tableView_1_clicked(const QModelIndex &index);
     void on_listView_clicked(const QModelIndex &index);
-//    void on_tableView_2_clicked(const QModelIndex &index);
 };
 
 #endif // FILEMANAGERDIALOG_H

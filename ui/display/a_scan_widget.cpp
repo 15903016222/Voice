@@ -20,9 +20,12 @@ void AscanWidget::show(const QByteArray &b)
 
 void AscanWidget::paintEvent(QPaintEvent *e)
 {
-    QWidget::paintEvent(e);
+    Q_UNUSED(e);
 
     QPainter painter(this);
+
+    painter.setBrush(Qt::black);
+    painter.drawRect(this->rect());
 
     painter.setPen(QColor(Qt::red));
 
@@ -32,7 +35,6 @@ void AscanWidget::paintEvent(QPaintEvent *e)
     form = painter.transform();
     form.rotate(180, Qt::XAxis);
     painter.setTransform(form);
-
 
     double yaxis = height()/255.0;
 
@@ -51,6 +53,6 @@ void AscanWidget::paintEvent(QPaintEvent *e)
         painter.drawLine(i*xaxis1,
                          (int)((quint8)(m_beam.at((int)(i*xaxis2)))*yaxis),
                          (i+1)*xaxis1,
-                         (int)((quint8)(m_beam.at((int)((i+1)*xaxis2)))*yaxis));
+                         (int)((quint8)(m_beam.at((int)((i+1)*xaxis2)))*yaxis)+1);
     }
 }

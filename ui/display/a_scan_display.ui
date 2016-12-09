@@ -30,9 +30,12 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="title">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 85, 127);</string>
+     </property>
      <property name="text">
-      <string/>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;A-Scan&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -48,7 +51,11 @@
       <widget class="QWidget" name="rulerWidget" native="true"/>
      </item>
      <item>
-      <widget class="AscanWidget" name="ascanWidget" native="true"/>
+      <widget class="AscanWidget" name="ascanWidget" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 0, 0);</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

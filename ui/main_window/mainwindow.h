@@ -1,12 +1,8 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef __MAIN_WINDOW_H__
+#define __MAIN_WINDOW_H__
 
-//#include "firstsecondmenuwidget.h"
-#include "commonmenuwidget.h"
-#include "commonmenubutton.h"
 #include "mcu.h"
 #include "virtualkeyboard.h"
-//#include "menu_bar.h"
 #include "main_menu.h"
 #include "sub_menu.h"
 
@@ -43,13 +39,9 @@ private:
     QTranslator *translator;
     QGraphicsOpacityEffect *effect;
 
-    CommonMenuWidget * commonMenuWidget;
-//    FirstSecondMenuWidget *firstSecondMenu;
-    CommonMenuButton *commonMenuButton;
     VirtualKeyboard *pVirtualKeyboard;
 
     MainMenu *mainMenu;
-//    MenuBar *menuBar;
     SubMenu *subMenu;
 
     bool m_hiddenFirstSecondMenuFlag;

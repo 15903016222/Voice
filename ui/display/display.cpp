@@ -16,6 +16,7 @@ Display::Display(QWidget *parent) : QWidget(parent)
     m_scanDisplay = new AscanDisplay(this);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addWidget(m_scanDisplay);
 
     source->set_freeze(false);

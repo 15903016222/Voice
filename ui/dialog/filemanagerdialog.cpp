@@ -1,8 +1,6 @@
 #include "filemanagerdialog.h"
 #include "ui_filemanagerdialog.h"
 
-#include "comboboxdelegate.h"
-
 #include <QDebug>
 
 #define FILE_TYPE_NUMBER 6
@@ -129,11 +127,6 @@ void FileManagerDialog::init_source_path_tableView()
     ui->tableView_1->horizontalHeader()->setFixedHeight(60);
     ui->tableView_1->verticalHeader()->setDefaultSectionSize(30);
 
-    ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
-    comboBox->set_comboBox_item_list(fileTypeList);
-    comboBox->set_model_item_list(fileTypeList);
-    comboBox->set_minimum_contents_length(ui->tableView_1->width());
-
     QStandardItem *item = new QStandardItem(fileTypeList.at(0));
     modelSourcePath->setItem(0, 0, item);
     modelSourcePath->item(0, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
@@ -149,7 +142,6 @@ void FileManagerDialog::init_source_path_tableView()
         "border: 0px solid black;}");
 
 
-    ui->tableView_1->setItemDelegate(comboBox);
     ui->tableView_1->show();
 }
 
@@ -177,11 +169,6 @@ void FileManagerDialog::init_target_path_tableView()
     ui->tableView_2->horizontalHeader()->setFixedHeight(60);
     ui->tableView_2->verticalHeader()->setDefaultSectionSize(30);
 
-    ComboBoxDelegate *comboBox = new ComboBoxDelegate(this);
-    comboBox->set_comboBox_item_list(fileTypeList);
-    comboBox->set_model_item_list(fileTypeList);
-    comboBox->set_minimum_contents_length(ui->tableView_2->width());
-
     QStandardItem *item = new QStandardItem(fileTypeList.at(0));
     modelTargetPath->setItem(0, 0, item);
     modelTargetPath->item(0, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
@@ -197,7 +184,6 @@ void FileManagerDialog::init_target_path_tableView()
         "border: 0px solid black;}");
 
 
-    ui->tableView_2->setItemDelegate(comboBox);
     ui->tableView_2->show();
 }
 
