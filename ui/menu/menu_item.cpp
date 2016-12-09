@@ -3,6 +3,7 @@
 
 #include <QKeyEvent>
 #include <QDebug>
+#include <QListView>
 
 MenuItem::MenuItem(QWidget *parent) :
     QWidget(parent),
@@ -16,7 +17,11 @@ MenuItem::MenuItem(QWidget *parent) :
     ui->comboBox->installEventFilter(this);
 
     connect(ui->doubleSpinBox, SIGNAL(valueChanged(double)), this, SIGNAL(spin_event(double)));
-    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_event(int)));
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_enevt(int)));
+
+//    ui->comboBox->setLineEdit(new QLineEdit());
+//    ui->comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
+//    ui->comboBox->lineEdit()->setReadOnly(true);
 }
 
 MenuItem::~MenuItem()
@@ -28,15 +33,22 @@ void MenuItem::set_type(MenuItem::Type type)
 {
     ui->comboBox->hide();
     ui->doubleSpinBox->hide();
+    ui->label->hide();
 
     switch (type) {
     case None:
+        ui->label->show();
         break;
     case Spin:
         ui->doubleSpinBox->show();
         break;
     case Combo:
         ui->comboBox->show();
+        ui->comboBox->setView(new QListView());
+        ui->comboBox->view()->parentWidget()->setAttribute(Qt::WA_TranslucentBackground);
+        ui->comboBox->view()->parentWidget()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
+        ui->comboBox->view()->setFocusPolicy(Qt::StrongFocus);
+        ui->comboBox->view()->setFocus();
         break;
     default:
         break;
@@ -49,6 +61,10 @@ void MenuItem::clean()
     ui->doubleSpinBox->clear();
     ui->comboBox->clear();
     m_curStep = 0;
+    m_title.clear();
+    m_unit.clear();
+    ui->label->clear();
+    m_labelText.clear();
 }
 
 void MenuItem::set_title(const QString &title)
@@ -98,11 +114,18 @@ void MenuItem::set_combo_items(const QStringList &texts)
 bool MenuItem::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::MouseButtonPress) {
-        if (ui->doubleSpinBox->hasFocus()
+        if(!ui->doubleSpinBox->isHidden()) {
+            if (ui->doubleSpinBox->hasFocus()
                 && ! m_steps.isEmpty()) {
-            update_step();
-        } else {
-            set_focus();
+                update_step();
+            } else {
+                set_focus();
+            }
+        } else if(!ui->comboBox->isHidden()) {
+            QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, QPoint(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+            QApplication::sendEvent(ui->comboBox, event);
+        } else if(!ui->label->isHidden()) {
+            emit clicked();
         }
         return true;
     }
@@ -180,7 +203,33 @@ void MenuItem::set_focus_out()
         ui->doubleSpinBox->setFocusPolicy(Qt::NoFocus);
         ui->doubleSpinBox->clearFocus();
         ui->doubleSpinBox->setReadOnly(true);
-        ui->doubleSpinBox->setStyleSheet("QDoubleSpinBox{selection-background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,\nstop:0.158192 rgba(0, 0, 0, 255),\nstop:0.559322 rgba(0, 130, 195, 255));\ncolor: rgb(255, 255, 255);\nborder-top:0px;\nborder-bottom:0px;\nbackground-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,\nstop:0.158192 rgba(0, 0, 0, 255),\nstop:0.559322 rgba(0, 130, 195, 255));\ncolor: rgb(255, 255, 255);\nborder-top:0px;\nborder-bottom:0px;\n}");
+        ui->doubleSpinBox->setStyleSheet("QDoubleSpinBox{"
+                                         "color: rgb(255, 255, 255);"
+                                         "border-top:0px;"
+                                         "border-bottom:0px;"
+                                         "font: 13pt 'Century Gothic';"
+                                         "color: white;"
+                                         "selection-color: white;"
+                                         "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));"
+                                         "selection-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));"
+                                         "border-left:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(255, 255, 255, 255), stop:1 rgba(0, 120, 195, 255));"
+                                         "border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));}");
         update_title();
     }
+}
+
+void MenuItem::set_label_text(const QString &text)
+{
+    ui->label->setText(text);
+    m_labelText = text;
+}
+
+QString MenuItem::get_title()
+{
+    return m_title;
+}
+
+QString MenuItem::get_label_text()
+{
+    return m_labelText;
 }

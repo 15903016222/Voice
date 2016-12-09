@@ -1,11 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "firstsecondmenuwidget.h"
+//#include "firstsecondmenuwidget.h"
 #include "commonmenuwidget.h"
 #include "commonmenubutton.h"
 #include "mcu.h"
 #include "virtualkeyboard.h"
+//#include "menu_bar.h"
+#include "main_menu.h"
+#include "sub_menu.h"
 
 #include <QMainWindow>
 #include <QTranslator>
@@ -41,9 +44,13 @@ private:
     QGraphicsOpacityEffect *effect;
 
     CommonMenuWidget * commonMenuWidget;
-    FirstSecondMenuWidget *firstSecondMenu;
+//    FirstSecondMenuWidget *firstSecondMenu;
     CommonMenuButton *commonMenuButton;
     VirtualKeyboard *pVirtualKeyboard;
+
+    MainMenu *mainMenu;
+//    MenuBar *menuBar;
+    SubMenu *subMenu;
 
     bool m_hiddenFirstSecondMenuFlag;
     bool m_hiddenThirdMenuFlag;
@@ -64,10 +71,6 @@ signals:
 protected slots:
     void do_key_event(Mcu::KeyType type);
 
-    void slot_firstMenuToolBoxCurrentChanged(int index);
-    void slot_secondMenuItemClicked(QModelIndex index);
-    void on_pushButton_top_clicked();
-    void on_pushButton_bottom_clicked();
     void slot_pushButton_commonMenuClicked();
     void scroll_menu(int index);
     void update_translator(QString string);

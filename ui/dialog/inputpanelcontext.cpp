@@ -11,6 +11,8 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+
     m_capsLock = true;
     on_pushButton_capsLock_clicked();
 
@@ -111,9 +113,9 @@ void InputPanelContext::on_pushButton_BackSpace_clicked()
 
 void InputPanelContext::on_pushButton_ok_clicked()
 {
-    QString text = ui->textEdit->toPlainText();
+    m_text.clear();
+    m_text = ui->textEdit->toPlainText();
     close();
-    emit textEditFinished(text);
 }
 
 void InputPanelContext::set_item_current_text(QString string)
@@ -168,4 +170,7 @@ void InputPanelContext::show_cursor()
     ui->textEdit->setFocus();
 }
 
-
+QString InputPanelContext::get_text()
+{
+    return m_text;
+}

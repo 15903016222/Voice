@@ -34,6 +34,16 @@ MainWindow::MainWindow(QWidget *parent) :
     Mcu *mcu = Mcu::get_mcu();
     connect(mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
     connect(mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+
+    mainMenu = new MainMenu(this);
+    mainMenu->hide();
+    mainMenu->move(0, 175);
+
+    subMenu = new SubMenu(this);
+    subMenu->hide();;
+    subMenu->move(179, 530);
+
+    connect(mainMenu, SIGNAL(click_main_menu(int)), subMenu, SLOT(set_third_menu(int)));
 }
 
 MainWindow::~MainWindow()
@@ -107,63 +117,6 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     default:
         break;
     }
-}
-
-void MainWindow::slot_firstMenuToolBoxCurrentChanged(int index)
-{
-//    ui->widget_thirdMenu->set_third_menu_name(index, 0); //init
-//    m_firstMenuNum = index;
-
-//    QModelIndex modelIndex = firstSecondMenu->modelList.at(index)->index(0, 0);
-//    firstSecondMenu->set_second_menu_item_style(m_firstMenuNum, modelIndex);
-
-//    m_hiddenArrowFlag = true;
-
-//    emit clickedMenuIndex(m_firstMenuNum);
-//    show_hidden_arrow();
-
-// //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
-
-//    firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
-}
-
-void MainWindow::slot_secondMenuItemClicked(QModelIndex index)
-{
-//    QStandardItem *item = firstSecondMenu->modelList.at(m_firstMenuNum)->itemFromIndex(index);
-//    m_secondMenuNum = item->row();
-
-//    firstSecondMenu->set_second_menu_item_style(m_firstMenuNum, index);
-//    ui->widget_thirdMenu->set_third_menu_name(m_firstMenuNum, m_secondMenuNum);
-
- //   ui->widget_thirdMenu->setOpacity(ui->widget_thirdMenu->opacity);
-}
-
-void MainWindow::on_pushButton_top_clicked()
-{
-//    int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
-//    int scrollTopY = ui->scrollArea->geometry().y();
-
-//    if(menuTopY < (scrollTopY - 20)) {
-//        ui->scrollArea->viewport()->scroll(0, 20);
-//    } else {
-//        ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
-//    }
-
-//    show_hidden_arrow();
-}
-
-void MainWindow::on_pushButton_bottom_clicked()
-{
-//    int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
-//    int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
-
-//    if((menuBottomY - 20) > scrollBottomY) {
-//        ui->scrollArea->viewport()->scroll(0, -20);
-//    } else {
-//        ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
-//    }
-
-//    show_hidden_arrow();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -300,29 +253,20 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Alt) {
         show_hidden_Menu();
+        return;
     }
     return QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::show_hidden_Menu()
 {
-//    m_hiddenFirstSecondMenuFlag = !m_hiddenFirstSecondMenuFlag;
-//    if(m_hiddenFirstSecondMenuFlag) {
-//        ui->widget_firstSecondMenu->show();
-//        ui->widget_thirdMenu->show();
-//        commonMenuWidget->hide();
-//        m_hiddenCommonMenuFlag = false;
-//        ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
-//        firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), firstSecondMenu->geometry().height());
-//        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
-//        show_hidden_arrow();
-
-//        firstSecondMenu->menuList.at(m_firstMenuNum)->setFocus();
-
-//    } else {
-//        ui->widget_firstSecondMenu->hide();
-//        ui->widget_thirdMenu->hide();
-//    }
+    if(subMenu->isHidden()) {
+        subMenu->show();
+        mainMenu->show();
+    } else {
+        mainMenu->hide();
+        subMenu->hide();
+    }
 }
 
 void MainWindow::scroll_menu(int index)

@@ -36,10 +36,15 @@ public:
     void add_combo_item(const QString &text);
     void set_combo_items(const QStringList &texts);
 
+    void set_label_text(const QString &text);
+
+    QString get_title();
+    QString get_label_text();
+
 signals:
     void clicked();
     void spin_event(double value);
-    void combo_event(int index);
+    void combo_enevt(int index);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
@@ -47,8 +52,9 @@ protected:
 private:
     Ui::MenuItem *ui;
 
-    QString m_title;
     QString m_unit;
+    QString m_title;
+    QString m_labelText;
 
     QList<double> m_steps;
     int m_curStep;

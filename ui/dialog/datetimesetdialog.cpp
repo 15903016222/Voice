@@ -6,6 +6,8 @@ DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
     ui(new Ui::DateTimeSetDialog)
 {
     ui->setupUi(this);
+
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 }
 
 DateTimeSetDialog::~DateTimeSetDialog()
@@ -40,7 +42,6 @@ void DateTimeSetDialog::on_buttonBox_accepted()
             m_strDate.append(QString::number((double)valueThree, 'f', 0));
         }
 
-        emit currentDateTimeChanged(m_strDate);
     } else {
         m_strTime.clear();
         if(valueOne < 10){
@@ -60,8 +61,6 @@ void DateTimeSetDialog::on_buttonBox_accepted()
         }else{
             m_strTime.append(QString::number((double)valueThree, 'f', 0));
         }
-
-        emit currentDateTimeChanged(m_strTime);
     }
 }
 
@@ -115,4 +114,14 @@ void DateTimeSetDialog::set_spinbox_value(QList<int> valueList)
     ui->spinBox_1->setValue(valueList.at(0));
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
+}
+
+QString DateTimeSetDialog::get_date()
+{
+    return m_strDate;
+}
+
+QString DateTimeSetDialog::get_time()
+{
+    return m_strTime;
 }

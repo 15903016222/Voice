@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="2,1,1">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="2,1,1,1">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -39,15 +39,20 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>11</pointsize>
+       <family>Century Gothic</family>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
       <string notr="true">QLabel{
-background-color:rgba(0, 130, 195);
-color: rgb(255, 255, 0);
-border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1,
-stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
+	background-color:rgba(0, 130, 195);
+	border: 0px solid black;
+	color: rgb(255, 255, 0);
+	border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), 	stop:0.559322 rgba(255, 255, 255, 255));
+	border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
 }</string>
      </property>
      <property name="text">
@@ -71,8 +76,11 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
      </property>
      <property name="font">
       <font>
-       <stylestrategy>PreferDefault</stylestrategy>
-       <kerning>true</kerning>
+       <family>Century Gothic</family>
+       <pointsize>13</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
       </font>
      </property>
      <property name="focusPolicy">
@@ -80,12 +88,14 @@ stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
      </property>
      <property name="styleSheet">
       <string notr="true">QDoubleSpinBox{
-background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,
-stop:0.158192 rgba(0, 0, 0, 255),
-stop:0.559322 rgba(0, 130, 195, 255));
-color: rgb(255, 255, 255);
-border-top:0px;
-border-bottom:0px;
+	color: rgb(255, 255, 255);
+	border-top:0px;
+	border-bottom:0px;	
+	font: 13pt 'Century Gothic';
+	color:white;
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));
+	border-left:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(255, 255, 255, 255), stop:1 rgba(0, 120, 195, 255));
+	border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));
 }</string>
      </property>
      <property name="alignment">
@@ -136,16 +146,40 @@ border-bottom:0px;
      </property>
      <property name="styleSheet">
       <string notr="true">QComboBox{
-background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,
-stop:0.158192 rgba(0, 0, 0, 255),
-stop:0.559322 rgba(0, 130, 195, 255));
-color: rgb(255, 255, 255);
-border-top:0px;
-border-bottom:0px;
+	border-top:0px;
+	border-bottom:0px;
+	font: 12pt 'Century Gothic';
+	color: white;
+	selection-background-color: rgba(0, 130, 195, 0);
+	selection-color: white;
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));
+	border-left:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(255, 255, 255, 255), stop:1 rgba(0, 120, 195, 255));
+	border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));
 }
 
 QComboBox:drop-down {
-border-style:none;
+	border-style:none;
+}
+
+QComboBox QAbstractItemView{
+	font: 12pt 'Century Gothic';
+	background-color: rgb(255, 255, 255);
+	margin-bottom: 47px;
+	outline: 0px;
+}
+
+QComboBox QAbstractItemView::item{
+	height: 30px;
+}
+
+QComboBox QAbstractItemView::item:hover{
+	color: yellow;
+	background-color: rgba(0, 150, 255, 225);
+}
+
+QComboBox QAbstractItemView::item:selected{
+	color: yellow;
+	background-color: rgba(0, 150, 255, 225);
 }</string>
      </property>
      <property name="editable">
@@ -156,6 +190,30 @@ border-style:none;
        <width>16</width>
        <height>16</height>
       </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel{
+	border-top:0px;
+	border-bottom:0px;
+	font: 13pt 'Century Gothic';
+	color: white;
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.4 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));
+	border-left:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(255, 255, 255, 255), stop:1 rgba(0, 120, 195, 255));
+	border-right:1px solid qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.3 rgba(0, 0, 0, 255), stop:1 rgba(0, 120, 195, 255));
+}</string>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </item>

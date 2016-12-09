@@ -274,6 +274,8 @@ WedgeDialog::WedgeDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     init_ui();
+
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 }
 
 WedgeDialog::~WedgeDialog()
@@ -370,5 +372,12 @@ void WedgeDialog::slot_listView_2ItemClicked(QModelIndex index)
 
 void WedgeDialog::on_buttonBox_accepted()
 {
-    emit wedgeChanged(m_currentItem);
+    close();
+}
+
+QString WedgeDialog::get_current_item_text()
+{
+    if(!m_currentItem.isEmpty()) {
+        return m_currentItem.left(m_currentItem.length() - 4);
+    }
 }

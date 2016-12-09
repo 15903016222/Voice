@@ -6,6 +6,8 @@ NetworkDialog::NetworkDialog(QWidget *parent) :
     ui(new Ui::NetworkDialog)
 {
     ui->setupUi(this);
+
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 }
 
 NetworkDialog::~NetworkDialog()
@@ -34,7 +36,6 @@ void NetworkDialog::on_buttonBox_accepted()
         str_ip.append(QString::number((double)value_3, 'f', 0));
         str_ip.append(".");
         str_ip.append(QString::number((double)value_4, 'f', 0));
-        emit currentIP_subNetChanged(str_ip);
     }else{
         str_subNet.clear();
         str_subNet.append(QString::number((double)value_1, 'f', 0));
@@ -44,7 +45,6 @@ void NetworkDialog::on_buttonBox_accepted()
         str_subNet.append(QString::number((double)value_3, 'f', 0));
         str_subNet.append(".");
         str_subNet.append(QString::number((double)value_4, 'f', 0));
-        emit currentIP_subNetChanged(str_subNet);
     }
 }
 
@@ -60,4 +60,14 @@ void NetworkDialog::set_spinbox_value(QList<int> valueList)
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
     ui->spinBox_4->setValue(valueList.at(3));
+}
+
+QString NetworkDialog::get_ip()
+{
+    return str_ip;
+}
+
+QString NetworkDialog::get_subnet()
+{
+    return str_subNet;
 }

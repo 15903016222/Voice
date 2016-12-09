@@ -253,6 +253,8 @@ ProbeDialog::ProbeDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     init_ui();
+
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 }
 
 ProbeDialog::~ProbeDialog()
@@ -350,4 +352,11 @@ void ProbeDialog::slot_listView_2ItemClicked(QModelIndex index)
 void ProbeDialog::on_buttonBox_accepted()
 {
     emit probeChanged(m_currentItem);
+}
+
+QString ProbeDialog::get_current_item_text()
+{
+    if(!m_currentItem.isEmpty()) {
+        return m_currentItem.left(m_currentItem.length() - 4);
+    }
 }

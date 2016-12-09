@@ -19,6 +19,8 @@ public:
     explicit WedgeDialog(QWidget *parent = 0);
     ~WedgeDialog();
 
+    QString get_current_item_text();
+
 private:
     Ui::WedgeDialog *ui;
 
@@ -32,6 +34,7 @@ private:
     void insert_wedge(int i);
     int listView_1CurrentIndex;
     int listView_2CurrentIndex;
+
     QString m_currentItem;
 
 signals:

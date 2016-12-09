@@ -20,16 +20,16 @@ public:
     void set_dialog_title(QMap<QString, QString> map);
     void set_spinbox_value(QList<int> valueList);
 
-    QString str_ip;
-    QString str_subNet;
+    QString get_ip();
+    QString get_subnet();
 
 private:
     Ui::NetworkDialog *ui;
 
     QMap<QString, QString> titleMap;
 
-signals:
-    void currentIP_subNetChanged(QString value);
+    QString str_ip;
+    QString str_subNet;
 
 public slots:
     void on_buttonBox_accepted();

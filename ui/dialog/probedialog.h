@@ -19,6 +19,8 @@ public:
     explicit ProbeDialog(QWidget *parent = 0);
     ~ProbeDialog();
 
+    QString get_current_item_text();
+
 private:
     Ui::ProbeDialog *ui;
 
@@ -33,6 +35,7 @@ private:
 
     int listView_1CurrentIndex;
     int listView_2CurrentIndex;
+
     QString m_currentItem;
 
 signals:
