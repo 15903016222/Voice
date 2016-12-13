@@ -48,7 +48,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QWidget" name="rulerWidget" native="true"/>
+      <widget class="RulerWidget" name="leftRulerWidget" native="true"/>
      </item>
      <item>
       <widget class="AscanWidget" name="ascanWidget" native="true">
@@ -60,7 +60,20 @@
     </layout>
    </item>
    <item>
-    <widget class="QWidget" name="widget_3" native="true"/>
+    <widget class="RulerWidget" name="bottomRulerWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -69,6 +82,12 @@
    <class>AscanWidget</class>
    <extends>QWidget</extends>
    <header>a_scan_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RulerWidget</class>
+   <extends>QWidget</extends>
+   <header>ruler_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
