@@ -51,57 +51,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::init_ui()
-{
-//    ui->widget_firstSecondMenu->hide();
-//    ui->widget_thirdMenu->hide();
-
-//    ui->frame_showPlot->installEventFilter(this);
-//    ui->widget_thirdMenu->installEventFilter(this);
-
-//    m_firstMenuNum = 0;
-//    m_secondMenuNum = 0;
-//    m_hiddenFirstSecondMenuFlag = false;
-//    m_hiddenThirdMenuFlag = false;
-//    m_hiddenCommonMenuFlag = false;
-//    m_hiddenKeyboardFlag = false;
-
-//    firstSecondMenu = new FirstSecondMenuWidget(this);
-//#if QT_VERSION <= QT_VERSION_CHECK(5, 0, 0)
-//    firstSecondMenu->resize_height(m_firstMenuNum);
-//#endif
-//    commonMenuWidget = new CommonMenuWidget(this);
-//    commonMenuWidget->hide();
-//    commonMenuButton = new CommonMenuButton(this);
-//    commonMenuButton->resize(40, 40);
-//    commonMenuButton->show();
-
-//    pVirtualKeyboard = new VirtualKeyboard(this);
-//    pVirtualKeyboard->hide();
-
-//    translator = new QTranslator(this);
-//    qApp->installTranslator(translator);
-
-//    QObject::connect(firstSecondMenu->toolBox.at(0), SIGNAL(currentChanged(int)), this, SLOT(slot_firstMenuToolBoxCurrentChanged(int)));
-
-//    for(int i = 0; i < FIRST_MENU_NUMBER; i++) {
-//        QObject::connect(firstSecondMenu->menuList.at(i), SIGNAL(clicked(QModelIndex)), this, SLOT(slot_secondMenuItemClicked(QModelIndex)));
-//    }
-
-//    ui->scrollArea = new QScrollArea(ui->widget_scrollArea);
-//    ui->scrollArea->setFrameShape(QFrame::NoFrame);
-//    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    ui->scrollArea->setWidget(firstSecondMenu);
-
-//    QObject::connect(commonMenuButton->pushButton_commonMenu.at(0), SIGNAL(clicked()), this, SLOT(slot_pushButton_commonMenuClicked()));
-//    QObject::connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
-
-//    connect(this, SIGNAL(clickedMenuIndex(int)), this, SLOT(scroll_menu(int)));
-//    connect(ui->widget_thirdMenu, SIGNAL(retranslate_ui(QString)), this, SLOT(update_translator(QString)));
-//    connect(pVirtualKeyboard, SIGNAL(close_keyboard()), this, SLOT(slot_keyboard_close_clicked()));
-}
-
 void MainWindow::do_key_event(Mcu::KeyType type)
 {
     switch (type) {
@@ -112,87 +61,11 @@ void MainWindow::do_key_event(Mcu::KeyType type)
         VInput::get_vinput()->send(VInput::Key_Enter);
         break;
     case Mcu::KEY_BACK:
-        VInput::get_vinput()->send(VInput::Key_Back);
+        VInput::get_vinput()->send(VInput::Key_Esc);
         break;
     default:
         break;
     }
-}
-
-void MainWindow::resizeEvent(QResizeEvent *event)
-{
-//    int width = event->size().width();
-//    int height = event->size().height();
-//    int oldWidth = event->oldSize().width();
-//    int oldHeight = event->oldSize().height();
-//    int menuHeight = firstSecondMenu->geometry().height();
-
-//    if(oldWidth > 0 && oldHeight > 0) {
-//        ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
-
-//        if(ui->widget_scrollArea->geometry().height() < 600) {
-//            firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / oldHeight);
-//        } else {
-//            firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
-//        }
-//        commonMenuWidget->resize(width, height * 70 / 600);
-//        commonMenuWidget->move(0, height * 530 / 600);
-//        commonMenuButton->move(width - commonMenuButton->geometry().width(), height - commonMenuButton->geometry().height());
-//    } else {
-//        ui->scrollArea->resize(ui->widget_scrollArea->geometry().width(), ui->widget_scrollArea->geometry().height());
-//        firstSecondMenu->resize(ui->widget_scrollArea->geometry().width(), height * menuHeight / this->geometry().height());
-//        commonMenuWidget->resize(width, height * 70 / 600);
-//        commonMenuWidget->move(0, height * 530 / 600);
-//        commonMenuButton->move(this->geometry().width() - commonMenuButton->geometry().width(), this->geometry().height() - commonMenuButton->geometry().height());
-//    }
-//    show_hidden_arrow();
-}
-
-void MainWindow::show_hidden_arrow()
-{
-//    int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
-//    int scrollTopY = ui->scrollArea->geometry().y();
-//    int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
-//    int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
-
-//    if(menuTopY == scrollTopY) {
-//        if(m_hiddenArrowFlag == false) {
-//              ui->pushButton_top->hide();
-//        } else {
-//            ui->pushButton_top->show();
-//            m_hiddenArrowFlag = false;
-//         }
-//    } else {
-//        ui->pushButton_top->show();
-//    }
-
-//    if(menuBottomY == scrollBottomY ) {
-//        if(m_hiddenArrowFlag == false) {
-//            ui->pushButton_bottom->hide();
-//        } else {
-//            ui->pushButton_bottom->show();
-//            m_hiddenArrowFlag = false;
-//         }
-//    } else {
-//        ui->pushButton_bottom->show();
-//    }
-}
-
-void MainWindow::slot_pushButton_commonMenuClicked()
-{
-//    m_hiddenCommonMenuFlag = !m_hiddenCommonMenuFlag;
-//    if(m_hiddenCommonMenuFlag) {
-//        ui->widget_firstSecondMenu->hide();
-//        ui->widget_thirdMenu->hide();
-//        m_hiddenFirstSecondMenuFlag = false;
-//        commonMenuWidget->show();
-//        commonMenuButton->raise();
-//        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonAfter.png)}");
-//    } else {
-//        commonMenuWidget->hide();
-//        commonMenuButton->pushButton_commonMenu.at(0)->setStyleSheet("QPushButton{border-image:url(:/file/resources/buttonBefore.png)}");
-//        m_hiddenFirstSecondMenuFlag = false;
-//    }
 }
 
 void MainWindow::update_translator(QString string)
@@ -267,14 +140,6 @@ void MainWindow::show_hidden_Menu()
         mainMenu->hide();
         subMenu->hide();
     }
-}
-
-void MainWindow::scroll_menu(int index)
-{
-//    if(index >= 4 && index < 9) {
-//        ui->scrollArea->viewport()->scroll(0, -50);
-//        ui->scrollArea->update();
-//    }
 }
 
 void MainWindow::do_keyboard_event()

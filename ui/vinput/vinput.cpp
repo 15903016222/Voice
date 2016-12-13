@@ -49,6 +49,8 @@ VInputPrivate::VInputPrivate()
     for (int i = KEY_1; i <= KEY_0; ++i) {
         ::ioctl(fd, UI_SET_KEYBIT, i);
     }
+
+    ::ioctl(fd, UI_SET_KEYBIT, KEY_ESC);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_MINUS);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_BACKSPACE);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_ENTER);
@@ -58,7 +60,6 @@ VInputPrivate::VInputPrivate()
     ::ioctl(fd, UI_SET_KEYBIT, KEY_RIGHT);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_DOWN);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_DELETE);
-    ::ioctl(fd, UI_SET_KEYBIT, KEY_BACK);
 
     /* configure input device information */
     struct uinput_user_dev uidev;

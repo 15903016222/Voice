@@ -22,18 +22,24 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void show_hidden_Menu();
-    void resizeEvent(QResizeEvent *event);
-    void show_hidden_arrow();
-
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *moveEvent);
     void keyPressEvent(QKeyEvent *event);
 
-private:
-    void init_ui();
+signals:
 
+protected slots:
+    void do_key_event(Mcu::KeyType type);
+
+    void update_translator(QString string);
+    void do_keyboard_event();
+    void slot_keyboard_close_clicked();
+    void slot_setMenuOpacity(double value);
+
+    void do_rotary_event(Mcu::RotaryType type);
+
+private:
     Ui::MainWindow *ui;
 
     QTranslator *translator;
@@ -49,28 +55,8 @@ private:
     bool m_hiddenCommonMenuFlag;
     bool m_hiddenArrowFlag;
     bool m_hiddenKeyboardFlag;
+    void show_hidden_Menu();
 
-    int m_firstMenuNum;
-    int m_secondMenuNum;
-    int m_mainMenuStartPos;
-    int m_mainMenuEndPos;
-
-signals:
-    void clickedMenuIndex(int);
-    void show_keyboard(int);
-    void close_persistent_editor(int);
-
-protected slots:
-    void do_key_event(Mcu::KeyType type);
-
-    void slot_pushButton_commonMenuClicked();
-    void scroll_menu(int index);
-    void update_translator(QString string);
-    void do_keyboard_event();
-    void slot_keyboard_close_clicked();
-    void slot_setMenuOpacity(double value);
-
-    void do_rotary_event(Mcu::RotaryType type);
 };
 
 #endif // MAINWINDOW_H
