@@ -12,8 +12,6 @@ MainMenu::MainMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_languageOption = 1;
-
     QTreeWidgetItem *item = ui->treeWidget->topLevelItem(0);
     ui->treeWidget->expandItem(item);
 
@@ -35,7 +33,6 @@ MainMenu::MainMenu(QWidget *parent) :
     connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(change_item_selection()));
 
     show_or_hide_arrow();
-
 }
 
 MainMenu::~MainMenu()
@@ -45,6 +42,8 @@ MainMenu::~MainMenu()
 
 void MainMenu::change_item_selection()
 {
+    return;
+
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
     if(item->childCount() > 0) {
         /* 一级菜单 */
@@ -68,61 +67,13 @@ void MainMenu::change_item_selection()
 
 bool MainMenu::eventFilter(QObject *object, QEvent *event)
 {
-    if(event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        QTreeWidgetItem *previous = ui->treeWidget->currentItem();
-        int index = ui->treeWidget->indexOfTopLevelItem(previous->parent());
-        int subIndex = previous->parent()->indexOfChild(previous);
-
-        QTreeWidgetItem *current;
-
-        switch (keyEvent->key()) {
-        case Qt::Key_Up:
-            if(subIndex == 0) {
-                if(index > 0) {
-                    QTreeWidgetItem *newItem = ui->treeWidget->topLevelItem(index - 1);
-                    ui->treeWidget->collapseItem(previous->parent());
-                    ui->treeWidget->expandItem(newItem);
-                    current = newItem->child(newItem->childCount() - 1);
-                    ui->treeWidget->setCurrentItem(current);
-                }
-            } else {
-                current = previous->parent()->child(subIndex - 1);
-                ui->treeWidget->setCurrentItem(current);
-            }
-            return true;
-            break;
-        case Qt::Key_Down:
-            if(subIndex == (previous->parent()->childCount() - 1)) {
-                if(index < m_firstCount - 1) {
-                    QTreeWidgetItem *newItem = ui->treeWidget->topLevelItem(index + 1);
-                    ui->treeWidget->collapseItem(previous->parent());
-                    ui->treeWidget->expandItem(newItem);
-                    current = newItem->child(0);
-                    ui->treeWidget->setCurrentItem(current);
-                }
-            } else {
-                current = previous->parent()->child(subIndex + 1);
-                ui->treeWidget->setCurrentItem(current);
-            }
-            return true;
-            break;
-        case Qt::Key_Enter:
-            break;
-//        case Qt::Key_Alt:
-//            if(this->isHidden()) {
-//                this->show();
-//            } else {
-//               this->hide();
-//            }
-
-//            return true;
-//            break;
-        default:
-            break;
-        }
+    if (event->type() == QEvent::KeyPress) {
+        return do_keypress_event(static_cast<QKeyEvent *>(event));
+    } else if ( event->type() == QEvent::KeyRelease) {
+        return do_keyrelease_event(static_cast<QKeyEvent *>(event));
+    } else {
+        return QWidget::eventFilter(object, event);
     }
-    return QWidget::eventFilter(object, event);
 }
 
 
@@ -163,4 +114,52 @@ int MainMenu::count_menu_number(int parent, int child)
     }
     num += child;
     return num;
+}
+
+bool MainMenu::do_keypress_event(QKeyEvent *e)
+{
+    QModelIndex modelIndex = ui->treeWidget->currentIndex();
+    QModelIndex nextModelIndex;
+
+    if (e->key() == Qt::Key_Up) {
+        nextModelIndex = modelIndex.sibling(modelIndex.row()-1, modelIndex.column());
+    } else if (e->key() == Qt::Key_Down) {
+        nextModelIndex = modelIndex.sibling(modelIndex.row()+1, modelIndex.column());
+    }
+
+    if (nextModelIndex.isValid()) {
+        ui->treeWidget->setCurrentIndex(nextModelIndex);
+    }
+
+    return true;
+}
+
+bool MainMenu::do_keyrelease_event(QKeyEvent *e)
+{
+    QModelIndex modelIndex = ui->treeWidget->currentIndex();
+    QModelIndex nextModelIndex;
+
+    switch ((int)e->key()) {
+    case Qt::Key_Back:
+    case Qt::Key_Cancel:
+    case Qt::Key_Escape:
+        nextModelIndex = modelIndex.parent();
+        ui->treeWidget->collapseAll();
+        break;
+    case Qt::Key_Return:
+        nextModelIndex = modelIndex.child(0, 0);
+        if (nextModelIndex.isValid()) {
+            ui->treeWidget->collapseAll();
+            ui->treeWidget->scrollTo(nextModelIndex, QTreeWidget::PositionAtCenter);
+        }
+        break;
+    default:
+        break;
+    }
+
+    if (nextModelIndex.isValid()) {
+        ui->treeWidget->setCurrentIndex(nextModelIndex);
+    }
+
+    return true;
 }
