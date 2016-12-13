@@ -7,6 +7,7 @@
 AscanWidget::AscanWidget(QWidget *parent)
     : QWidget(parent)
 {
+    m_color = QColor("#ffff7f");
 }
 
 void AscanWidget::show(const QByteArray &b)
@@ -27,7 +28,7 @@ void AscanWidget::paintEvent(QPaintEvent *e)
     painter.setBrush(Qt::black);
     painter.drawRect(this->rect());
 
-    painter.setPen(QColor(Qt::red));
+    painter.setPen(m_color);
 
     painter.translate(0, height());
 
@@ -51,7 +52,7 @@ void AscanWidget::paintEvent(QPaintEvent *e)
 
     for (int i = 0; i < num-1; ++i) {
         painter.drawLine(i*xaxis1,
-                         (int)((quint8)(m_beam.at((int)(i*xaxis2)))*yaxis),
+                         (int)((quint8)(m_beam.at((int)(i*xaxis2)))*yaxis) + 1,
                          (i+1)*xaxis1,
                          (int)((quint8)(m_beam.at((int)((i+1)*xaxis2)))*yaxis)+1);
     }
