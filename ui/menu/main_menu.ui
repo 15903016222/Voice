@@ -66,7 +66,7 @@ border-radius: 5px;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../main_window.qrc">
+         <iconset>
           <normaloff>:/file/resources/down.png</normaloff>:/file/resources/down.png</iconset>
         </property>
        </widget>
@@ -125,6 +125,12 @@ QTreeWidget::branch{
         <property name="autoScroll">
          <bool>false</bool>
         </property>
+        <property name="rootIsDecorated">
+         <bool>false</bool>
+        </property>
+        <property name="expandsOnDoubleClick">
+         <bool>false</bool>
+        </property>
         <attribute name="headerVisible">
          <bool>false</bool>
         </attribute>
@@ -136,6 +142,20 @@ QTreeWidget::branch{
         <item>
          <property name="text">
           <string>UT Settings</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
          </property>
          <item>
           <property name="text">
@@ -161,6 +181,20 @@ QTreeWidget::branch{
         <item>
          <property name="text">
           <string>Gate/Curves</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
          </property>
          <item>
           <property name="text">
@@ -192,6 +226,20 @@ QTreeWidget::branch{
          <property name="text">
           <string>Display</string>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </property>
          <item>
           <property name="text">
            <string>Selection</string>
@@ -211,6 +259,20 @@ QTreeWidget::branch{
         <item>
          <property name="text">
           <string>Probe/Part</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
          </property>
          <item>
           <property name="text">
@@ -242,6 +304,20 @@ QTreeWidget::branch{
          <property name="text">
           <string>Focal Law</string>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </property>
          <item>
           <property name="text">
            <string>Law Config</string>
@@ -266,6 +342,20 @@ QTreeWidget::branch{
         <item>
          <property name="text">
           <string>Scan</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
          </property>
          <item>
           <property name="text">
@@ -292,6 +382,20 @@ QTreeWidget::branch{
          <property name="text">
           <string>Measurement</string>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </property>
          <item>
           <property name="text">
            <string>Cursors</string>
@@ -311,6 +415,20 @@ QTreeWidget::branch{
         <item>
          <property name="text">
           <string>File/Report</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
          </property>
          <item>
           <property name="text">
@@ -341,6 +459,20 @@ QTreeWidget::branch{
         <item>
          <property name="text">
           <string>Preference</string>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
          </property>
          <item>
           <property name="text">
@@ -380,7 +512,7 @@ QTreeWidget::branch{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../main_window.qrc">
+         <iconset>
           <normaloff>:/file/resources/up.png</normaloff>:/file/resources/up.png</iconset>
         </property>
        </widget>
@@ -390,8 +522,6 @@ QTreeWidget::branch{
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../main_window.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

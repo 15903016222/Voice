@@ -20,9 +20,6 @@ MainMenu::MainMenu(QWidget *parent) :
     QTreeWidgetItem *initItem = item->child(0);
     ui->treeWidget->setCurrentItem(initItem);
 
-    ui->treeWidget->setExpandsOnDoubleClick(false);
-    ui->treeWidget->setRootIsDecorated(false);
-    ui->treeWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->treeWidget->installEventFilter(this);
 
     m_firstCount = ui->treeWidget->topLevelItemCount();
@@ -30,10 +27,9 @@ MainMenu::MainMenu(QWidget *parent) :
     ui->treeWidget->setFocus();
 
     QTreeWidgetItem *pItem;
-    for(int i = 0; i < ui->treeWidget->topLevelItemCount(); i ++) {
+    for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i) {
         pItem = ui->treeWidget->topLevelItem(i);
         m_map.insert(i + 1, pItem->childCount());
-        pItem->setForeground(0, QBrush(Qt::white));
     }
 
     connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(change_item_selection()));
@@ -51,15 +47,17 @@ void MainMenu::change_item_selection()
 {
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
     if(item->childCount() > 0) {
+        /* 一级菜单 */
         ui->treeWidget->collapseAll();
         ui->treeWidget->expandItem(item);
-        QTreeWidgetItem *initItem = item->child(0);
-        ui->treeWidget->setCurrentItem(initItem);
+
+        ui->treeWidget->setCurrentItem(item->child(0));
 
         int index = ui->treeWidget->indexOfTopLevelItem(item);
         ui->treeWidget->scrollToItem(item, QAbstractItemView::PositionAtCenter);
         emit click_main_menu(count_menu_number(index, 1));
     } else {
+        /* 二级菜单 */
         int index = ui->treeWidget->indexOfTopLevelItem(item->parent());
         int indexChild = item->parent()->indexOfChild(item);
         ui->treeWidget->scrollToItem(item->parent(), QAbstractItemView::PositionAtCenter);

@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mainMenu = new MainMenu(this);
     mainMenu->hide();
-    mainMenu->move(0, 175);
+    mainMenu->move(0, 176);
 
     subMenu = new SubMenu(this);
     subMenu->hide();;

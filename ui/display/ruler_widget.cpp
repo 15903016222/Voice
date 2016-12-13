@@ -86,7 +86,6 @@ void RulerWidget::paintEvent(QPaintEvent *e)
     markQty = (int)((m_end - m_start) / interval);
 
     QFont font = painter.font();
-    qDebug()<<font.pixelSize()<<font.pointSize();
     font.setPointSize(10);
     painter.setFont(font);
 
