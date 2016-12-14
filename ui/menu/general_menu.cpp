@@ -20,12 +20,6 @@ void GeneralMenu::show()
 
 void GeneralMenu::hide()
 {
-    ui->subMenu_1->clean();
-    ui->subMenu_2->clean();
-    ui->subMenu_3->clean();
-    ui->subMenu_4->clean();
-    ui->subMenu_5->clean();
-    ui->subMenu_6->clean();
 }
 
 void GeneralMenu::gain_item()

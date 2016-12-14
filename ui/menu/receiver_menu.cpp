@@ -30,6 +30,8 @@ void ReceiverMenu::show()
     rectifier_item();
     video_filter_item();
     averagin_item();
+
+    ui->subMenu_6->set_type(MenuItem::None);
 }
 
 void ReceiverMenu::hide()

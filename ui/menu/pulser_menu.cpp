@@ -23,6 +23,10 @@ void PulserMenu::show()
     txrx_item();
     pulser_item();
     voltage_item();
+    pw_item();
+    prf_item();
+
+    ui->subMenu_6->set_type(MenuItem::None);
 }
 
 void PulserMenu::hide()

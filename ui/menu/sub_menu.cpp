@@ -11,9 +11,11 @@
 #include "networkdialog.h"
 #include "datetimesetdialog.h"
 
+/* UT Settings */
 #include "general_menu.h"
 #include "pulser_menu.h"
 #include "receiver_menu.h"
+#include "ut_advanced_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -74,7 +76,7 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::UTSettings_General, new GeneralMenu(ui, this));
     m_map.insert(MainMenu::UTSettings_Pulser, new PulserMenu(ui, this));
     m_map.insert(MainMenu::UTSettings_Receiver, new ReceiverMenu(ui, this));
-//    m_map.insert(MainMenu::UTSettings_Advanced, &SubMenu::set_advanced_menu);
+    m_map.insert(MainMenu::UTSettings_Advanced, new UtAdvancedMenu(ui, this));
 //    m_map.insert(MainMenu::GateCurves_Gate, &SubMenu::set_gate_menu);
 //    m_map.insert(MainMenu::GateCurves_Alarm, &SubMenu::set_alarm_menu);
 //    m_map.insert(MainMenu::GateCurves_Output, &SubMenu::set_output_menu);
@@ -148,30 +150,6 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
 {
     widget->set_type(MenuItem::None);
     widget->set_title(title);
-}
-
-void SubMenu::set_advanced_menu(bool show)
-{
-    if(show) {
-        /* Set 80% menu item */
-        set_combobox_menu(ui->subMenu_1, tr("Set 80%"), switchList);
-
-        /* dB Ref. menu item */
-        set_combobox_menu(ui->subMenu_2, tr("dB Ref."), switchList);
-
-        /* Point Qty. menu item */
-        set_combobox_menu(ui->subMenu_3, tr("Point Qty."), m_list_pointQty);
-
-        /* Scale Factor menu item */
-        set_label_menu(ui->subMenu_4, tr("Scale Factor"));
-
-        /* Sum Gain menu item */
-        set_spinbox_menu(ui->subMenu_5, tr("Sum Gain"), "dB", stepList1, 0, 100, 1);
-
-        ui->subMenu_6->set_type(MenuItem::None);
-    } else {
-
-    }
 }
 
 void SubMenu::set_gate_menu(bool show)
@@ -1173,11 +1151,6 @@ void SubMenu::set_service_menu(bool show)
 void SubMenu::init_option_stringlist()
 {
 
-    m_list_pointQty.append(tr("Auto"));
-    m_list_pointQty.append(tr("160"));
-    m_list_pointQty.append(tr("320"));
-    m_list_pointQty.append(tr("640"));
-    m_list_pointQty.append(tr("UserDef"));
 
     m_list_gate.append(tr("A"));
     m_list_gate.append(tr("B"));
@@ -1529,7 +1502,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_pointQty.clear();
     m_list_gate.clear();
     m_list_synchro.clear();
     m_list_measureMode.clear();
