@@ -32,7 +32,7 @@ void MenuItem::set_type(MenuItem::Type type)
     ui->label->hide();
 
     switch (type) {
-    case None:
+    case Label:
         ui->label->show();
         break;
     case Spin:
@@ -47,6 +47,9 @@ void MenuItem::set_type(MenuItem::Type type)
         ui->comboBox->view()->setFocus();
         break;
     default:
+        ui->label->show();
+        ui->label->clear();
+        ui->nameLabel->clear();
         break;
     }
 }
