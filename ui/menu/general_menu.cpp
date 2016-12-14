@@ -1,3 +1,10 @@
+/**
+ * @file general_menu.cpp
+ * @brief UT Setting General Menu Bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-14
+ */
 #include "general_menu.h"
 
 GeneralMenu::GeneralMenu(Ui::SubMenu *ui, QObject *parent)

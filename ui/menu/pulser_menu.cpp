@@ -1,3 +1,10 @@
+/**
+ * @file pulser_menu.cpp
+ * @brief UT Setting Pulser Menu Bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-14
+ */
 #include "pulser_menu.h"
 
 PulserMenu::PulserMenu(Ui::SubMenu *ui, QObject *parent)

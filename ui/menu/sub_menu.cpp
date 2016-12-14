@@ -1,5 +1,4 @@
 #include "sub_menu.h"
-#include "ui_sub_menu.h"
 
 #include "probedialog.h"
 #include "wedgedialog.h"
@@ -16,6 +15,9 @@
 #include "pulser_menu.h"
 #include "receiver_menu.h"
 #include "ut_advanced_menu.h"
+
+/* Gate/Curves */
+#include "gate_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -77,7 +79,7 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::UTSettings_Pulser, new PulserMenu(ui, this));
     m_map.insert(MainMenu::UTSettings_Receiver, new ReceiverMenu(ui, this));
     m_map.insert(MainMenu::UTSettings_Advanced, new UtAdvancedMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_Gate, &SubMenu::set_gate_menu);
+    m_map.insert(MainMenu::GateCurves_Gate, new GateMenu(ui, this));
 //    m_map.insert(MainMenu::GateCurves_Alarm, &SubMenu::set_alarm_menu);
 //    m_map.insert(MainMenu::GateCurves_Output, &SubMenu::set_output_menu);
 //    m_map.insert(MainMenu::GateCurves_DAC, &SubMenu::set_dac_menu);
@@ -150,37 +152,6 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
 {
     widget->set_type(MenuItem::None);
     widget->set_title(title);
-}
-
-void SubMenu::set_gate_menu(bool show)
-{
-    if(show) {
-        /* Gate menu item */
-        set_combobox_menu(ui->subMenu_1, tr("Gate"), m_list_gate);
-
-        /* Start menu item */
-        set_spinbox_menu(ui->subMenu_2, tr("Start"), "mm", stepList2, 0, 16000, 2);
-
-        /* Width menu item */
-        set_spinbox_menu(ui->subMenu_3, tr("Width"), "mm", stepList6, 0.05, 525, 2);
-
-        /* Threshold menu item */
-        QList<double> steps2;
-        steps2.append(1);
-        steps2.append(10);
-        set_spinbox_menu(ui->subMenu_4, tr("Threshold"), "%", steps2, 0, 100, 0);
-
-        /* Synchro menu item */
-        set_combobox_menu(ui->subMenu_5, tr("Synchro"), m_list_synchro);
-
-        /* Measure Mode menu item */
-        set_combobox_menu(ui->subMenu_6, tr("Measure Mode"), m_list_measureMode);
-
-        steps2.clear();
-    } else {
-
-    }
-
 }
 
 void SubMenu::set_alarm_menu(bool show)
@@ -1150,21 +1121,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-
-
-    m_list_gate.append(tr("A"));
-    m_list_gate.append(tr("B"));
-    m_list_gate.append(tr("I"));
-    m_list_gate.append(tr("Off"));
-
-    m_list_synchro.append(tr("Gate A"));
-    m_list_synchro.append(tr("Gate I"));
-    m_list_synchro.append(tr("Pulse"));
-
-
-    m_list_measureMode.append(tr("Edge"));
-    m_list_measureMode.append(tr("Peak"));
-
     m_list_alarm.append(tr("Alarm 1"));
     m_list_alarm.append(tr("Alarm 2"));
     m_list_alarm.append(tr("Alarm 3"));
@@ -1502,9 +1458,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_gate.clear();
-    m_list_synchro.clear();
-    m_list_measureMode.clear();
     m_list_alarm.clear();
     m_list_group.clear();
     m_list_condition.clear();

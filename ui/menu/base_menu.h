@@ -27,6 +27,7 @@ signals:
 public slots:
 
 protected:
+    static QList<double> s_steps0;
     static QList<double> s_steps1;
     static QList<double> s_steps2;
     static QStringList s_onOff;
