@@ -18,10 +18,6 @@ MenuItem::MenuItem(QWidget *parent) :
 
     connect(ui->doubleSpinBox, SIGNAL(valueChanged(double)), this, SIGNAL(spin_event(double)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_enevt(int)));
-
-//    ui->comboBox->setLineEdit(new QLineEdit());
-//    ui->comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
-//    ui->comboBox->lineEdit()->setReadOnly(true);
 }
 
 MenuItem::~MenuItem()
@@ -117,9 +113,9 @@ bool MenuItem::eventFilter(QObject *obj, QEvent *e)
         if(!ui->doubleSpinBox->isHidden()) {
             if (ui->doubleSpinBox->hasFocus()
                 && ! m_steps.isEmpty()) {
-                update_step();
+                update_spin_step();
             } else {
-                set_focus();
+                set_spin_focus();
             }
         } else if(!ui->comboBox->isHidden()) {
             QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, QPoint(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
@@ -177,7 +173,7 @@ void MenuItem::update_title()
     ui->nameLabel->setText(msg);
 }
 
-void MenuItem::update_step()
+void MenuItem::update_spin_step()
 {
     if ( ++m_curStep >= m_steps.size() ) {
         m_curStep = 0;
@@ -186,7 +182,7 @@ void MenuItem::update_step()
     update_title();
 }
 
-void MenuItem::set_focus()
+void MenuItem::set_spin_focus()
 {
     if ( ! ui->doubleSpinBox->isHidden() ) {
         ui->doubleSpinBox->setStyleSheet("QDoubleSpinBox{\nselection-color:black; selection-background-color: rgba(255,255,255,255);\n}");
@@ -222,6 +218,44 @@ void MenuItem::set_label_text(const QString &text)
 {
     ui->label->setText(text);
     m_labelText = text;
+}
+
+void MenuItem::set_spin(const QString &title, const QString &unit, const QList<double> &steps, double min, double max, int decimals)
+{
+    ui->comboBox->hide();
+    ui->label->hide();
+    ui->doubleSpinBox->show();
+
+    m_title = title;
+    m_unit = unit;
+    m_steps = steps;
+
+    ui->doubleSpinBox->setMinimum(min);
+    ui->doubleSpinBox->setMaximum(max);
+    ui->doubleSpinBox->setDecimals(decimals);
+
+    update_title();
+}
+
+void MenuItem::set_combo(const QString &title, const QStringList &texts)
+{
+    set_type(Spin);
+
+    m_title = title;
+    ui->comboBox->addItems(texts);
+
+    update_title();
+}
+
+void MenuItem::set_label(const QString &title)
+{
+    ui->doubleSpinBox->hide();
+    ui->comboBox->hide();
+    ui->label->show();
+
+    m_title = title;
+
+    update_title();
 }
 
 QString MenuItem::get_title()

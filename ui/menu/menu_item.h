@@ -38,6 +38,10 @@ public:
 
     void set_label_text(const QString &text);
 
+    void set_spin(const QString &title, const QString &unit, const QList<double> &steps, double min, double max, int decimals);
+    void set_combo(const QString &title, const QStringList &texts);
+    void set_label(const QString &title);
+
     QString get_title();
     QString get_label_text();
 
@@ -60,8 +64,8 @@ private:
     int m_curStep;
 
     void update_title();
-    void update_step();
-    void set_focus();
+    void update_spin_step();
+    void set_spin_focus();
     void set_focus_out();
 };
 

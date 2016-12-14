@@ -5,10 +5,12 @@
 #include "menu_item.h"
 #include "mcu.h"
 
-#include "general_menu.h"
+#include "base_menu.h"
 
 #include <QTreeWidgetItem>
 #include <QMap>
+
+#include <QTimer>
 
 namespace Ui {
 class SubMenu;
@@ -21,8 +23,6 @@ class SubMenu : public QWidget
 public:
     explicit SubMenu(QWidget *parent = 0);
     ~SubMenu();
-
-    typedef void (SubMenu::*Function)(bool);
 
 public slots:
     void set_menu(MainMenu::Type type);
@@ -162,13 +162,16 @@ private:
     QStringList m_list_language;
     QStringList m_list_certImport;
 
-    QMap<MainMenu::Type, Function> m_map;
+    QMap<MainMenu::Type, BaseMenu*> m_map;
 
     double m_brightness;  
 
     MainMenu::Type m_preType;
+    MainMenu::Type m_curType;
+    QTimer *m_timer;
 
-    GeneralMenu *m_generalMenu;
+private slots:
+    void do_timeout();
 };
 
 #endif // SUB_MENU_H

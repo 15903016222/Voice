@@ -9,12 +9,14 @@ HEADERS += \
     $$PWD/menu_item.h \
     $$PWD/main_menu.h \
     $$PWD/sub_menu.h \
-    $$PWD/general_menu.h
+    $$PWD/general_menu.h \
+    $$PWD/base_menu.h
 
 SOURCES += \
     $$PWD/menu_item.cpp \
     $$PWD/main_menu.cpp \
     $$PWD/sub_menu.cpp \
-    $$PWD/general_menu.cpp
+    $$PWD/general_menu.cpp \
+    $$PWD/base_menu.cpp
 
 

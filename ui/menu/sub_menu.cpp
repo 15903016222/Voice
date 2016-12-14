@@ -11,6 +11,8 @@
 #include "networkdialog.h"
 #include "datetimesetdialog.h"
 
+#include "general_menu.h"
+
 #include <QKeyEvent>
 #include <QDebug>
 
@@ -55,9 +57,9 @@ SubMenu::SubMenu(QWidget *parent) :
     init_step_list();
     init_map();  
 
-    m_generalMenu = new GeneralMenu(ui, this);
-
-    set_general_menu(true);
+    m_timer = new QTimer();
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(do_timeout()));
+    m_timer->setInterval(200);
 
 //    m_brightness = 50.0;
 //    set_brightness(m_brightness);
@@ -65,43 +67,44 @@ SubMenu::SubMenu(QWidget *parent) :
 
 void SubMenu::init_map()
 {
-    m_map.insert(MainMenu::UTSettings_General, &SubMenu::set_general_menu);
+    BaseMenu *generalMenu = new GeneralMenu(ui, this);
+    m_map.insert(MainMenu::UTSettings_General, generalMenu);
     m_map.insert(MainMenu::UTSettings_Pulser, &SubMenu::set_pulser_menu);
-    m_map.insert(MainMenu::UTSettings_Receiver, &SubMenu::set_receiver_menu);
-    m_map.insert(MainMenu::UTSettings_Advanced, &SubMenu::set_advanced_menu);
-    m_map.insert(MainMenu::GateCurves_Gate, &SubMenu::set_gate_menu);
-    m_map.insert(MainMenu::GateCurves_Alarm, &SubMenu::set_alarm_menu);
-    m_map.insert(MainMenu::GateCurves_Output, &SubMenu::set_output_menu);
-    m_map.insert(MainMenu::GateCurves_DAC, &SubMenu::set_dac_menu);
-    m_map.insert(MainMenu::GateCurves_TCG, &SubMenu::set_tcg_menu);
-    m_map.insert(MainMenu::Display_Selection, &SubMenu::set_selection_menu);
-    m_map.insert(MainMenu::Display_ColorSettings, &SubMenu::set_colorSettings_menu);
-    m_map.insert(MainMenu::Displsy_Properties, &SubMenu::set_properties_menu);
-    m_map.insert(MainMenu::ProbePart_Select, &SubMenu::set_select_menu);
-    m_map.insert(MainMenu::ProbePart_Position, &SubMenu::set_position_menu);
-    m_map.insert(MainMenu::ProbePart_FFT, &SubMenu::set_fft_menu);
-    m_map.insert(MainMenu::ProbePart_Part, &SubMenu::set_part_menu);
-    m_map.insert(MainMenu::ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
-    m_map.insert(MainMenu::FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
-    m_map.insert(MainMenu::FocalLaw_Angle, &SubMenu::set_angle_menu);
-    m_map.insert(MainMenu::FocalLaw_Apeture, &SubMenu::set_apeture_menu);
-    m_map.insert(MainMenu::FacalLaw_FocalPoint, &SubMenu::set_focalPoint_menu);
-    m_map.insert(MainMenu::Scan_Inspection, &SubMenu::set_inspection_menu);
-    m_map.insert(MainMenu::Scan_Encoder, &SubMenu::set_encoder_menu);
-    m_map.insert(MainMenu::Scan_Area, &SubMenu::set_area_menu);
-    m_map.insert(MainMenu::Scan_Start, &SubMenu::set_start_menu);
-    m_map.insert(MainMenu::Measurement_Cursors, &SubMenu::set_cursors_menu);
-    m_map.insert(MainMenu::Measurement_TOFD, &SubMenu::set_tofd_menu);
-    m_map.insert(MainMenu::Measurement_FlawRecord, &SubMenu::set_flawRecord_menu);
-    m_map.insert(MainMenu::FileReport_File, &SubMenu::set_file_menu);
-    m_map.insert(MainMenu::FileReport_SaveMode, &SubMenu::set_saveMode_menu);
-    m_map.insert(MainMenu::FileReport_Report, &SubMenu::set_report_menu);
-    m_map.insert(MainMenu::FileReport_Format, &SubMenu::set_format_menu);
-    m_map.insert(MainMenu::FileReport_UserField, &SubMenu::set_userField_menu);
-    m_map.insert(MainMenu::Preference_Preference, &SubMenu::set_preference_menu);
-    m_map.insert(MainMenu::Preference_System, &SubMenu::set_system_menu);
-    m_map.insert(MainMenu::Preference_Network, &SubMenu::set_network_menu);
-    m_map.insert(MainMenu::Preference_Service, &SubMenu::set_service_menu);
+//    m_map.insert(MainMenu::UTSettings_Receiver, &SubMenu::set_receiver_menu);
+//    m_map.insert(MainMenu::UTSettings_Advanced, &SubMenu::set_advanced_menu);
+//    m_map.insert(MainMenu::GateCurves_Gate, &SubMenu::set_gate_menu);
+//    m_map.insert(MainMenu::GateCurves_Alarm, &SubMenu::set_alarm_menu);
+//    m_map.insert(MainMenu::GateCurves_Output, &SubMenu::set_output_menu);
+//    m_map.insert(MainMenu::GateCurves_DAC, &SubMenu::set_dac_menu);
+//    m_map.insert(MainMenu::GateCurves_TCG, &SubMenu::set_tcg_menu);
+//    m_map.insert(MainMenu::Display_Selection, &SubMenu::set_selection_menu);
+//    m_map.insert(MainMenu::Display_ColorSettings, &SubMenu::set_colorSettings_menu);
+//    m_map.insert(MainMenu::Displsy_Properties, &SubMenu::set_properties_menu);
+//    m_map.insert(MainMenu::ProbePart_Select, &SubMenu::set_select_menu);
+//    m_map.insert(MainMenu::ProbePart_Position, &SubMenu::set_position_menu);
+//    m_map.insert(MainMenu::ProbePart_FFT, &SubMenu::set_fft_menu);
+//    m_map.insert(MainMenu::ProbePart_Part, &SubMenu::set_part_menu);
+//    m_map.insert(MainMenu::ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
+//    m_map.insert(MainMenu::FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
+//    m_map.insert(MainMenu::FocalLaw_Angle, &SubMenu::set_angle_menu);
+//    m_map.insert(MainMenu::FocalLaw_Apeture, &SubMenu::set_apeture_menu);
+//    m_map.insert(MainMenu::FacalLaw_FocalPoint, &SubMenu::set_focalPoint_menu);
+//    m_map.insert(MainMenu::Scan_Inspection, &SubMenu::set_inspection_menu);
+//    m_map.insert(MainMenu::Scan_Encoder, &SubMenu::set_encoder_menu);
+//    m_map.insert(MainMenu::Scan_Area, &SubMenu::set_area_menu);
+//    m_map.insert(MainMenu::Scan_Start, &SubMenu::set_start_menu);
+//    m_map.insert(MainMenu::Measurement_Cursors, &SubMenu::set_cursors_menu);
+//    m_map.insert(MainMenu::Measurement_TOFD, &SubMenu::set_tofd_menu);
+//    m_map.insert(MainMenu::Measurement_FlawRecord, &SubMenu::set_flawRecord_menu);
+//    m_map.insert(MainMenu::FileReport_File, &SubMenu::set_file_menu);
+//    m_map.insert(MainMenu::FileReport_SaveMode, &SubMenu::set_saveMode_menu);
+//    m_map.insert(MainMenu::FileReport_Report, &SubMenu::set_report_menu);
+//    m_map.insert(MainMenu::FileReport_Format, &SubMenu::set_format_menu);
+//    m_map.insert(MainMenu::FileReport_UserField, &SubMenu::set_userField_menu);
+//    m_map.insert(MainMenu::Preference_Preference, &SubMenu::set_preference_menu);
+//    m_map.insert(MainMenu::Preference_System, &SubMenu::set_system_menu);
+//    m_map.insert(MainMenu::Preference_Network, &SubMenu::set_network_menu);
+//    m_map.insert(MainMenu::Preference_Service, &SubMenu::set_service_menu);
 }
 
 
@@ -112,28 +115,14 @@ void SubMenu::set_menu(MainMenu::Type type)
         return;
     }
 
+    m_curType = type;
+    m_timer->start();
 //    ui->subMenu_1->clean();
 //    ui->subMenu_2->clean();
 //    ui->subMenu_3->clean();
 //    ui->subMenu_4->clean();
 //    ui->subMenu_5->clean();
 //    ui->subMenu_6->clean();
-
-    QTime t;
-    t.start();
-    Function fun = m_map.value(m_preType);
-    if(fun) {
-        (this->*fun)(false);
-    }
-    qDebug()<<t.elapsed();
-
-    fun = m_map.value(type);
-    if(fun) {
-        (this->*fun)(true);
-    }
-    qDebug()<<t.elapsed();
-
-    m_preType = type;
 }
 
 void SubMenu::set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals)
@@ -157,33 +146,6 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
 {
     widget->set_type(MenuItem::None);
     widget->set_title(title);
-}
-
-void SubMenu::set_general_menu(bool show)
-{
-    if(show) {
-        m_generalMenu->show();
-        return;
-        /* Gain menu item */
-        set_spinbox_menu(ui->subMenu_1, tr("Gain"), "dB", stepList1, 0, 100, 1);
-
-        /* Start menu item */
-        set_spinbox_menu(ui->subMenu_2, tr("Start"), "mm", stepList2, 0, 1000, 2);
-
-        /* Range menu item */
-        set_spinbox_menu(ui->subMenu_3, tr("Range"), "mm", stepList2, 0, 1000, 2);
-
-        /* Velocity menu item */
-        set_spinbox_menu(ui->subMenu_4, tr("Velocity"), "m/s", stepList3, 635, 12540, 1);
-
-        /* Wedge delay menu item */
-        set_spinbox_menu(ui->subMenu_5, tr("Wedge Delay"), "μs", stepList4, 0, 1000, 2);
-
-        /* UT Unit menu item */
-        set_combobox_menu(ui->subMenu_6, tr("UT Unit"), m_list_utUnit);
-    } else {
-        m_generalMenu->hide();
-    }
 }
 
 void SubMenu::set_pulser_menu(bool show)
@@ -1644,6 +1606,8 @@ void SubMenu::show_resetconfig_dialog()
 
 SubMenu::~SubMenu()
 {
+    delete m_timer;
+
     stepList1.clear();
     stepList2.clear();
     stepList3.clear();
@@ -1742,4 +1706,21 @@ QList<int> SubMenu::get_dialog_value_list(QString string, QString symbol)
         }
     }
     return valueList;
+}
+
+void SubMenu::do_timeout()
+{
+    m_timer->stop();
+
+//    Function fun = m_map.value(m_preType);
+//    if(fun) {
+//        (this->*fun)(false);
+//    }
+
+//    fun = m_map.value(m_curType);
+//    if(fun) {
+//        (this->*fun)(true);
+//    }
+
+    m_preType = m_curType;
 }
