@@ -46,7 +46,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_output_menu(bool show);
     void set_dac_menu(bool show);
     void set_tcg_menu(bool show);
 
@@ -104,9 +103,6 @@ private:
     QList<double> stepList6;
 
     QStringList switchList;
-    QStringList m_list_output;
-    QStringList m_list_sound;
-    QStringList m_list_data;
     QStringList m_list_mode;
     QStringList m_list_curveX;
     QStringList m_list_point;

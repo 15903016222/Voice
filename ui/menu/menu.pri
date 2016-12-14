@@ -15,7 +15,8 @@ HEADERS += \
     $$PWD/receiver_menu.h \
     $$PWD/ut_advanced_menu.h \
     $$PWD/gate_menu.h \
-    $$PWD/alarm_menu.h
+    $$PWD/alarm_menu.h \
+    $$PWD/output_menu.h
 
 SOURCES += \
     $$PWD/menu_item.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
     $$PWD/receiver_menu.cpp \
     $$PWD/ut_advanced_menu.cpp \
     $$PWD/gate_menu.cpp \
-    $$PWD/alarm_menu.cpp
+    $$PWD/alarm_menu.cpp \
+    $$PWD/output_menu.cpp
 
 

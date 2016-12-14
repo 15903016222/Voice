@@ -19,6 +19,7 @@
 /* Gate/Curves */
 #include "gate_menu.h"
 #include "alarm_menu.h"
+#include "output_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -82,7 +83,7 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::UTSettings_Advanced, new UtAdvancedMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_Gate, new GateMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_Alarm, new AlarmMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_Output, &SubMenu::set_output_menu);
+    m_map.insert(MainMenu::GateCurves_Output, new OutputMenu(ui, this));
 //    m_map.insert(MainMenu::GateCurves_DAC, &SubMenu::set_dac_menu);
 //    m_map.insert(MainMenu::GateCurves_TCG, &SubMenu::set_tcg_menu);
 //    m_map.insert(MainMenu::Display_Selection, &SubMenu::set_selection_menu);
@@ -153,31 +154,6 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
 {
     widget->set_type(MenuItem::None);
     widget->set_title(title);
-}
-
-void SubMenu::set_output_menu(bool show)
-{
-    if(show) {
-        /* Output menu item */
-        set_combobox_menu(ui->subMenu_1, tr("Output"), m_list_output);
-
-        /* Sound menu item */
-        set_combobox_menu(ui->subMenu_2, tr("Sound"), m_list_sound);
-
-        /* Delay menu item */
-        set_spinbox_menu(ui->subMenu_3, tr("Delay"), "mm", stepList6, 0, 5000, 2);
-
-        /* Hold Time menu item */
-        set_spinbox_menu(ui->subMenu_4, tr("Hold Time"), "%", stepList6, 0, 5000, 2);
-
-        /* Group menu item */
-        set_label_menu(ui->subMenu_5, tr("Group"));
-
-        /* Data menu item */
-        set_combobox_menu(ui->subMenu_6, tr("Data"), m_list_data);
-    } else {
-
-    }
 }
 
 void SubMenu::set_dac_menu(bool show)
@@ -1098,22 +1074,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-    m_list_output.append(tr("Alarm 1"));
-    m_list_output.append(tr("Alarm 2"));
-    m_list_output.append(tr("Alarm 3"));
-    m_list_output.append(tr("Analog 1"));
-    m_list_output.append(tr("Analog 2"));
-
-    m_list_sound.append(tr("Off No Sound"));
-    m_list_sound.append(tr("300Hz Audio Output at 300Hz"));
-    m_list_sound.append(tr("600Hz Audio Output at 600Hz"));
-    m_list_sound.append(tr("1000Hz Audio Output at 1000Hz"));
-    m_list_sound.append(tr("5000Hz Audio Output at 5000Hz"));
-
-    m_list_data.append(tr("A%"));
-    m_list_data.append(tr("B%"));
-    m_list_data.append(tr("None"));
-
     m_list_mode.append(tr("Settings"));
     m_list_mode.append(tr("Edit"));
 
@@ -1414,9 +1374,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_output.clear();
-    m_list_sound.clear();
-    m_list_data.clear();
     m_list_mode.clear();
     m_list_curveX.clear();
     m_list_point.clear();
