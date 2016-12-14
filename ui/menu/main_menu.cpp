@@ -22,8 +22,6 @@ MainMenu::MainMenu(QWidget *parent) :
 
     ui->treeWidget->setFocus();
 
-    connect(ui->treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(do_change_arrow()));
-
     do_change_arrow();
 }
 
@@ -77,34 +75,44 @@ bool MainMenu::do_keypress_event(QKeyEvent *e)
 
 bool MainMenu::do_keyrelease_event(QKeyEvent *e)
 {
-    QModelIndex modelIndex = ui->treeWidget->currentIndex();
-    QModelIndex nextModelIndex;
-
     switch ((int)e->key()) {
     case Qt::Key_Back:
     case Qt::Key_Cancel:
     case Qt::Key_Escape:
-        nextModelIndex = modelIndex.parent();
-        ui->treeWidget->collapseAll();
+        do_keyescape_event(ui->treeWidget->currentIndex());
         break;
     case Qt::Key_Return:
-        nextModelIndex = modelIndex.child(0, 0);
-        if (nextModelIndex.isValid()) {
-            ui->treeWidget->collapseAll();
-            ui->treeWidget->scrollTo(nextModelIndex, QTreeWidget::PositionAtCenter);
-        } else {
-            emit click((Type)((modelIndex.parent().row() << 4) | modelIndex.row()));
-        }
+        do_keyreturn_event(ui->treeWidget->currentIndex());
         break;
     default:
         break;
     }
 
+    return true;
+}
+
+void MainMenu::do_keyescape_event(const QModelIndex &index)
+{
+    QModelIndex nextModelIndex = index.parent();
+
     if (nextModelIndex.isValid()) {
+        ui->treeWidget->collapseAll();
         ui->treeWidget->setCurrentIndex(nextModelIndex);
     }
+}
 
-    return true;
+void MainMenu::do_keyreturn_event(const QModelIndex &index)
+{
+    QModelIndex nextIndex = index.child(0, 0);
+    if (nextIndex.isValid()) {
+        ui->treeWidget->collapseAll();
+        ui->treeWidget->scrollTo(nextIndex, QTreeWidget::PositionAtCenter);
+    } else {
+    }
+
+    if (nextIndex.isValid()) {
+        ui->treeWidget->setCurrentIndex(nextIndex);
+    }
 }
 
 void MainMenu::do_change_arrow()
@@ -122,4 +130,26 @@ void MainMenu::do_change_arrow()
         ui->pushButton_up->show();
         ui->pushButton_down->show();
     }
+}
+
+void MainMenu::on_treeWidget_clicked(const QModelIndex &index)
+{
+    do_keyreturn_event(index);
+}
+
+void MainMenu::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    Q_UNUSED(previous);
+
+    Type type;
+
+    do_change_arrow();
+
+    if (current->childCount() > 0) {
+        return;
+    }
+
+    type = (Type)(((ui->treeWidget->indexOfTopLevelItem(current->parent()))<<4)|current->parent()->indexOfChild(current));
+
+    emit click(type);
 }

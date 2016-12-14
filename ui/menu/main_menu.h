@@ -64,6 +64,10 @@ private slots:
 
     void do_change_arrow();
 
+    void on_treeWidget_clicked(const QModelIndex &index);
+
+    void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
 private:
     Ui::MainMenu *ui;
 
@@ -71,6 +75,9 @@ private:
 
     bool do_keypress_event(QKeyEvent *e);
     bool do_keyrelease_event(QKeyEvent *e);
+
+    void do_keyescape_event(const QModelIndex &index);
+    void do_keyreturn_event(const QModelIndex &index);
 
 };
 
