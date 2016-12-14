@@ -12,6 +12,7 @@
 #include "datetimesetdialog.h"
 
 #include "general_menu.h"
+#include "pulser_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -67,9 +68,8 @@ SubMenu::SubMenu(QWidget *parent) :
 
 void SubMenu::init_map()
 {
-    BaseMenu *generalMenu = new GeneralMenu(ui, this);
-    m_map.insert(MainMenu::UTSettings_General, generalMenu);
-    m_map.insert(MainMenu::UTSettings_Pulser, &SubMenu::set_pulser_menu);
+    m_map.insert(MainMenu::UTSettings_General, new GeneralMenu(ui, this));
+    m_map.insert(MainMenu::UTSettings_Pulser, new PulserMenu(ui, this));
 //    m_map.insert(MainMenu::UTSettings_Receiver, &SubMenu::set_receiver_menu);
 //    m_map.insert(MainMenu::UTSettings_Advanced, &SubMenu::set_advanced_menu);
 //    m_map.insert(MainMenu::GateCurves_Gate, &SubMenu::set_gate_menu);
@@ -146,35 +146,6 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
 {
     widget->set_type(MenuItem::None);
     widget->set_title(title);
-}
-
-void SubMenu::set_pulser_menu(bool show)
-{
-    if(show) {
-        /* Tx/Rx Mode menu item */
-        set_combobox_menu(ui->subMenu_1, tr("Tx/Rx Mode"), m_list_txrxMode);
-
-        /* Pulser menu item */
-        set_spinbox_menu(ui->subMenu_2, tr("Pulser"), "", stepList5, 1, 113, 0);
-
-        /* Voltage menu item */
-        set_combobox_menu(ui->subMenu_3, tr("Voltage"), m_list_voltage);
-
-        /* PW menu item */
-        QList<double> steps;
-        steps.append(2.5);
-        steps.append(10);
-        steps.append(25);
-        set_spinbox_menu(ui->subMenu_4, tr("PW"), "ns", steps, 30, 500, 1);
-
-        /* PRF menu item */
-        set_combobox_menu(ui->subMenu_5, tr("PRF"), m_list_prf);
-
-        ui->subMenu_6->set_type(MenuItem::None);
-//        steps.clear();
-    } else {
-
-    }
 }
 
 void SubMenu::set_receiver_menu(bool show)
@@ -1223,25 +1194,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-
-    m_list_utUnit.append(tr("Time"));
-    m_list_utUnit.append(tr("Sound Path"));
-    m_list_utUnit.append(tr("True Path"));
-
-    m_list_txrxMode.append(tr("PC"));
-    m_list_txrxMode.append(tr("PE"));
-    m_list_txrxMode.append(tr("TT"));
-    m_list_txrxMode.append(tr("TOFD"));
-
-    m_list_voltage.append(tr("50V"));
-    m_list_voltage.append(tr("100V"));
-    m_list_voltage.append(tr("200V"));
-
-    m_list_prf.append(tr("Auto Max"));
-    m_list_prf.append(tr("Max/2"));
-    m_list_prf.append(tr("Optimum"));
-    m_list_prf.append(tr("UserDef"));
-
     m_list_filter.append(tr("none"));
     m_list_filter.append(tr("1M"));
     m_list_filter.append(tr("1.5M-2.5M"));
@@ -1616,10 +1568,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_utUnit.clear();
-    m_list_txrxMode.clear();
-    m_list_voltage.clear();
-    m_list_prf.clear();
     m_list_filter.clear();
     m_list_rectifier.clear();
     m_list_averaging.clear();

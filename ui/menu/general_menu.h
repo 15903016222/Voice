@@ -3,7 +3,6 @@
 
 #include "base_menu.h"
 
-#include <QObject>
 #include <QStringList>
 
 namespace Ui {
