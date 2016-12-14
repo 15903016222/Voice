@@ -5,6 +5,8 @@
 #include "menu_item.h"
 #include "mcu.h"
 
+#include "general_menu.h"
+
 #include <QTreeWidgetItem>
 #include <QMap>
 
@@ -21,6 +23,25 @@ public:
     ~SubMenu();
 
     typedef void (SubMenu::*Function)(bool);
+
+public slots:
+    void set_menu(MainMenu::Type type);
+
+private slots:
+    void show_probe_dialog();
+    void show_wedge_dialog();
+    void show_input_dialog();
+    void show_filemanager_dialog();
+    void show_ip_address_dialog();
+    void show_subnet_mask_dialog();
+    void show_info_dialog();
+    void show_about_dialog();
+    void show_date_dialog();
+    void show_time_dialog();
+    void show_resetconfig_dialog();
+    void set_brightness(double value);
+    void auto_detect_probe(QString string);
+    void do_probe_event(const Probe &probe);
 
 private:
     Ui::SubMenu *ui;
@@ -75,8 +96,6 @@ private:
     void set_combobox_menu(MenuItem *widget, const QString &title, QStringList &texts);
     void set_label_menu(MenuItem *widget, const QString &title);
     void init_map();
-    void run_fun(MainMenu::Type type, bool value);
-    void get_main_menu_type(MainMenu::Type type);
     void init_option_stringlist();
     void init_step_list();
 
@@ -143,27 +162,13 @@ private:
     QStringList m_list_language;
     QStringList m_list_certImport;
 
-    QMap<QString, MainMenu::Type> m_typeMap;
     QMap<MainMenu::Type, Function> m_map;
 
     double m_brightness;  
 
-private slots:
-    void set_third_menu(MainMenu::Type type);
-    void show_probe_dialog();
-    void show_wedge_dialog();
-    void show_input_dialog();
-    void show_filemanager_dialog();
-    void show_ip_address_dialog();
-    void show_subnet_mask_dialog();
-    void show_info_dialog();
-    void show_about_dialog();
-    void show_date_dialog();
-    void show_time_dialog();
-    void show_resetconfig_dialog();
-    void set_brightness(double value);
-    void auto_detect_probe(QString string);
-    void do_probe_event(const Probe &probe);
+    MainMenu::Type m_preType;
+
+    GeneralMenu *m_generalMenu;
 };
 
 #endif // SUB_MENU_H

@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     subMenu->hide();;
     subMenu->move(179, 530);
 
-    connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_third_menu(MainMenu::Type)));
+    connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_menu(MainMenu::Type)));
 }
 
 MainWindow::~MainWindow()

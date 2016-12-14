@@ -55,7 +55,7 @@ SubMenu::SubMenu(QWidget *parent) :
     init_step_list();
     init_map();  
 
-    m_typeMap.insert("current", MainMenu::UTSettings_General);
+    m_generalMenu = new GeneralMenu(ui, this);
 
     set_general_menu(true);
 
@@ -105,15 +105,35 @@ void SubMenu::init_map()
 }
 
 
-void SubMenu::set_third_menu(MainMenu::Type type)
+void SubMenu::set_menu(MainMenu::Type type)
 {
-    for(int i = 0; i < 6; i ++) {
-        MenuItem *widget = findChild<MenuItem*>("subMenu_" + QString::number(i + 1));
-        widget->clean();
+
+    if (type == m_preType) {
+        return;
     }
-    get_main_menu_type(type);
-    run_fun(m_typeMap.value("previous"), false);
-    run_fun(type, true);
+
+//    ui->subMenu_1->clean();
+//    ui->subMenu_2->clean();
+//    ui->subMenu_3->clean();
+//    ui->subMenu_4->clean();
+//    ui->subMenu_5->clean();
+//    ui->subMenu_6->clean();
+
+    QTime t;
+    t.start();
+    Function fun = m_map.value(m_preType);
+    if(fun) {
+        (this->*fun)(false);
+    }
+    qDebug()<<t.elapsed();
+
+    fun = m_map.value(type);
+    if(fun) {
+        (this->*fun)(true);
+    }
+    qDebug()<<t.elapsed();
+
+    m_preType = type;
 }
 
 void SubMenu::set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals)
@@ -139,30 +159,11 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
     widget->set_title(title);
 }
 
-void SubMenu::run_fun(MainMenu::Type type, bool value)
-{
-    QMap<MainMenu::Type, Function>::const_iterator it = m_map.find(type);
-    if(it != m_map.end()) {
-        Function pFun = m_map.value(type);
-        if(pFun) {
-            return (this->*pFun)(value);
-        }
-    }
-}
-
-void SubMenu::get_main_menu_type(MainMenu::Type type)
-{
-    if(m_typeMap.find("previous") != m_typeMap.end()) {
-        m_typeMap.remove("prevoius");
-    }
-    m_typeMap.insert("previous", m_typeMap.value("current"));
-    m_typeMap.remove("current");
-    m_typeMap.insert("current", type);
-}
-
 void SubMenu::set_general_menu(bool show)
 {
     if(show) {
+        m_generalMenu->show();
+        return;
         /* Gain menu item */
         set_spinbox_menu(ui->subMenu_1, tr("Gain"), "dB", stepList1, 0, 100, 1);
 
@@ -181,7 +182,7 @@ void SubMenu::set_general_menu(bool show)
         /* UT Unit menu item */
         set_combobox_menu(ui->subMenu_6, tr("UT Unit"), m_list_utUnit);
     } else {
-
+        m_generalMenu->hide();
     }
 }
 
@@ -208,7 +209,7 @@ void SubMenu::set_pulser_menu(bool show)
         set_combobox_menu(ui->subMenu_5, tr("PRF"), m_list_prf);
 
         ui->subMenu_6->set_type(MenuItem::None);
-        steps.clear();
+//        steps.clear();
     } else {
 
     }
