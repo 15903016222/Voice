@@ -46,7 +46,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_receiver_menu(bool show);
     void set_advanced_menu(bool show);
 
     void set_gate_menu(bool show);
@@ -109,9 +108,6 @@ private:
     QList<double> stepList6;
 
     QStringList switchList;
-    QStringList m_list_filter;
-    QStringList m_list_rectifier;
-    QStringList m_list_averaging;
     QStringList m_list_pointQty;
     QStringList m_list_gate;
     QStringList m_list_synchro;

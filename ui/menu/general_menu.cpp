@@ -1,11 +1,8 @@
 #include "general_menu.h"
-#include "ui_sub_menu.h"
 
 GeneralMenu::GeneralMenu(Ui::SubMenu *ui, QObject *parent)
-    : BaseMenu(parent)
+    : BaseMenu(ui, parent)
 {
-    this->ui = ui;
-
     m_utUnit.append(tr("Time"));
     m_utUnit.append(tr("Sound Path"));
     m_utUnit.append(tr("True Path"));

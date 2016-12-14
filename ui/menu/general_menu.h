@@ -3,12 +3,6 @@
 
 #include "base_menu.h"
 
-#include <QStringList>
-
-namespace Ui {
-class SubMenu;
-}
-
 class GeneralMenu : public BaseMenu
 {
     Q_OBJECT
@@ -22,7 +16,6 @@ signals:
 public slots:
 
 private:
-    Ui::SubMenu *ui;
 
     QStringList m_utUnit;
 

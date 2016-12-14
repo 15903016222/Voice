@@ -1,11 +1,8 @@
 #include "pulser_menu.h"
-#include "ui_sub_menu.h"
 
 PulserMenu::PulserMenu(Ui::SubMenu *ui, QObject *parent)
-    :BaseMenu(parent)
+    :BaseMenu(ui, parent)
 {
-    this->ui = ui;
-
     m_txRxMode.append(tr("PC"));
     m_txRxMode.append(tr("PE"));
     m_txRxMode.append(tr("TT"));

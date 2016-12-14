@@ -2,10 +2,6 @@
 #define __PULSER_MENU_H__
 
 #include "base_menu.h"
-#include <QStringList>
-namespace Ui {
-class SubMenu;
-}
 
 class PulserMenu : public BaseMenu
 {
@@ -15,7 +11,6 @@ public:
     void hide();
 
 private:
-    Ui::SubMenu *ui;
     QStringList m_txRxMode;
     QStringList m_voltages;
     QStringList m_prfs;

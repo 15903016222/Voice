@@ -11,7 +11,8 @@ HEADERS += \
     $$PWD/sub_menu.h \
     $$PWD/general_menu.h \
     $$PWD/base_menu.h \
-    $$PWD/pulser_menu.h
+    $$PWD/pulser_menu.h \
+    $$PWD/receiver_menu.h
 
 SOURCES += \
     $$PWD/menu_item.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     $$PWD/sub_menu.cpp \
     $$PWD/general_menu.cpp \
     $$PWD/base_menu.cpp \
-    $$PWD/pulser_menu.cpp
+    $$PWD/pulser_menu.cpp \
+    $$PWD/receiver_menu.cpp
 
 

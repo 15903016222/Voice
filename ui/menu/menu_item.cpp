@@ -239,9 +239,10 @@ void MenuItem::set_spin(const QString &title, const QString &unit, const QList<d
 
 void MenuItem::set_combo(const QString &title, const QStringList &texts)
 {
-    set_type(Spin);
+    set_type(Combo);
 
     m_title = title;
+    ui->comboBox->clear();
     ui->comboBox->addItems(texts);
 
     update_title();

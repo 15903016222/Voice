@@ -13,6 +13,7 @@
 
 #include "general_menu.h"
 #include "pulser_menu.h"
+#include "receiver_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -62,6 +63,8 @@ SubMenu::SubMenu(QWidget *parent) :
     connect(m_timer, SIGNAL(timeout()), this, SLOT(do_timeout()));
     m_timer->setInterval(200);
 
+    m_preType = MainMenu::UTSettings_Pulser;
+    set_menu(MainMenu::UTSettings_General);
 //    m_brightness = 50.0;
 //    set_brightness(m_brightness);
 }
@@ -70,7 +73,7 @@ void SubMenu::init_map()
 {
     m_map.insert(MainMenu::UTSettings_General, new GeneralMenu(ui, this));
     m_map.insert(MainMenu::UTSettings_Pulser, new PulserMenu(ui, this));
-//    m_map.insert(MainMenu::UTSettings_Receiver, &SubMenu::set_receiver_menu);
+    m_map.insert(MainMenu::UTSettings_Receiver, new ReceiverMenu(ui, this));
 //    m_map.insert(MainMenu::UTSettings_Advanced, &SubMenu::set_advanced_menu);
 //    m_map.insert(MainMenu::GateCurves_Gate, &SubMenu::set_gate_menu);
 //    m_map.insert(MainMenu::GateCurves_Alarm, &SubMenu::set_alarm_menu);
@@ -110,7 +113,6 @@ void SubMenu::init_map()
 
 void SubMenu::set_menu(MainMenu::Type type)
 {
-
     if (type == m_preType) {
         return;
     }
@@ -146,30 +148,6 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
 {
     widget->set_type(MenuItem::None);
     widget->set_title(title);
-}
-
-void SubMenu::set_receiver_menu(bool show)
-{
-    if(show) {
-        /* Receiver menu item */
-        set_label_menu(ui->subMenu_1, tr("Receiver"));
-
-        /* Filter menu item */
-        set_combobox_menu(ui->subMenu_2, tr("Filter"), m_list_filter);
-
-        /* Rectifier menu item */
-        set_combobox_menu(ui->subMenu_3, tr("Rectifier"), m_list_rectifier);
-
-        /* Video Filter menu item */
-        set_combobox_menu(ui->subMenu_4, tr("Video Filter"), switchList);
-
-        /* Averaging menu item */
-        set_combobox_menu(ui->subMenu_5, tr("Averaging"), m_list_averaging);
-
-        ui->subMenu_6->set_type(MenuItem::None);
-    } else {
-
-    }
 }
 
 void SubMenu::set_advanced_menu(bool show)
@@ -1194,23 +1172,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-    m_list_filter.append(tr("none"));
-    m_list_filter.append(tr("1M"));
-    m_list_filter.append(tr("1.5M-2.5M"));
-    m_list_filter.append(tr("3-5M"));
-    m_list_filter.append(tr("7.5M"));
-    m_list_filter.append(tr("more than 10M"));
-
-    m_list_rectifier.append(tr("RF"));
-    m_list_rectifier.append(tr("FW"));
-    m_list_rectifier.append(tr("HW+"));
-    m_list_rectifier.append(tr("HW-"));
-
-    m_list_averaging.append(tr("1"));
-    m_list_averaging.append(tr("2"));
-    m_list_averaging.append(tr("4"));
-    m_list_averaging.append(tr("8"));
-    m_list_averaging.append(tr("16"));
 
     m_list_pointQty.append(tr("Auto"));
     m_list_pointQty.append(tr("160"));
@@ -1568,9 +1529,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_filter.clear();
-    m_list_rectifier.clear();
-    m_list_averaging.clear();
     m_list_pointQty.clear();
     m_list_gate.clear();
     m_list_synchro.clear();
@@ -1660,15 +1618,15 @@ void SubMenu::do_timeout()
 {
     m_timer->stop();
 
-//    Function fun = m_map.value(m_preType);
-//    if(fun) {
-//        (this->*fun)(false);
-//    }
+    BaseMenu *menu = m_map.value(m_preType);
+    if (menu) {
+        menu->hide();
+    }
 
-//    fun = m_map.value(m_curType);
-//    if(fun) {
-//        (this->*fun)(true);
-//    }
+    menu = m_map.value(m_curType);
+    if(menu) {
+        menu->show();
+    }
 
     m_preType = m_curType;
 }
