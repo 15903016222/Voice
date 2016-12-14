@@ -20,4 +20,6 @@ include(vinput/vinput.pri)
 
 include(scan_layout/scan_layout.pri)
 
-include(display/display.pri)
+#include(display/display.pri)
+
+include(config/config.pri)

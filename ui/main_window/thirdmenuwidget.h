@@ -1,7 +1,7 @@
 #ifndef THIRDMENUWIDGET_H
 #define THIRDMENUWIDGET_H
 
-#include "firstsecondmenuwidget.h"
+//#include "firstsecondmenuwidget.h"
 #include "datetimesetdialog.h"
 #include "networkdialog.h"
 #include "mcu.h"
@@ -32,7 +32,7 @@ private:
     DateTimeSetDialog *pDateTimeSetDialog;
     NetworkDialog *pNetworkDialog;
 
-    FirstSecondMenuWidget *pFirstSecondMenuWidget;
+//    FirstSecondMenuWidget *pFirstSecondMenuWidget;
     QStandardItemModel *pModel;
 
     void init_standard_model();
