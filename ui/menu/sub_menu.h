@@ -1,10 +1,10 @@
-#ifndef SUB_MENU_H
-#define SUB_MENU_H
+#ifndef __SUB_MENU_H__
+#define __SUB_MENU_H__
 
+#include "main_menu.h"
 #include "menu_item.h"
 #include "mcu.h"
 
-#include <QWidget>
 #include <QTreeWidgetItem>
 #include <QMap>
 
@@ -17,46 +17,6 @@ class SubMenu : public QWidget
     Q_OBJECT
 
 public:
-    enum Type {
-        UTSettings_General      = 1,
-        UTSettings_Pulser,
-        UTSettings_Receiver,
-        UTSettings_Advanced,
-        GateCurves_Gate,
-        GateCurves_Alarm,
-        GateCurves_Output,
-        GateCurves_DAC,
-        GateCurves_TCG,
-        Display_Selection,
-        Display_ColorSettings,
-        Displsy_Properties,
-        ProbePart_Select,
-        ProbePart_Position,
-        ProbePart_FFT,
-        ProbePart_Part,
-        ProbePart_Advanced,
-        FocalLaw_LawConfig,
-        FocalLaw_Angle,
-        FocalLaw_Apeture,
-        FacalLaw_FocalPoint,
-        Scan_Inspection,
-        Scan_Encoder,
-        Scan_Area,
-        Scan_Start,
-        Measurement_Cursors,
-        Measurement_TOFD,
-        Measurement_FlawRecord,
-        FileReport_File,
-        FileReport_SaveMode,
-        FileReport_Report,
-        FileReport_Format,
-        FileReport_UserField,
-        Preference_Preference,
-        Preference_System,
-        Preference_Network,
-        Preference_Service
-    };
-
     explicit SubMenu(QWidget *parent = 0);
     ~SubMenu();
 
@@ -115,8 +75,8 @@ private:
     void set_combobox_menu(MenuItem *widget, const QString &title, QStringList &texts);
     void set_label_menu(MenuItem *widget, const QString &title);
     void init_map();
-    void run_fun(Type type, bool value);
-    void get_main_menu_type(Type type);
+    void run_fun(MainMenu::Type type, bool value);
+    void get_main_menu_type(MainMenu::Type type);
     void init_option_stringlist();
     void init_step_list();
 
@@ -183,13 +143,13 @@ private:
     QStringList m_list_language;
     QStringList m_list_certImport;
 
-    QMap<QString, Type> m_typeMap;
-    QMap<Type, Function> m_map;
+    QMap<QString, MainMenu::Type> m_typeMap;
+    QMap<MainMenu::Type, Function> m_map;
 
     double m_brightness;  
 
 private slots:
-    void set_third_menu(int num);
+    void set_third_menu(MainMenu::Type type);
     void show_probe_dialog();
     void show_wedge_dialog();
     void show_input_dialog();

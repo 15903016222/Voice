@@ -55,7 +55,7 @@ SubMenu::SubMenu(QWidget *parent) :
     init_step_list();
     init_map();  
 
-    m_typeMap.insert("current", UTSettings_General);
+    m_typeMap.insert("current", MainMenu::UTSettings_General);
 
     set_general_menu(true);
 
@@ -65,55 +65,55 @@ SubMenu::SubMenu(QWidget *parent) :
 
 void SubMenu::init_map()
 {
-    m_map.insert(UTSettings_General, &SubMenu::set_general_menu);
-    m_map.insert(UTSettings_Pulser, &SubMenu::set_pulser_menu);
-    m_map.insert(UTSettings_Receiver, &SubMenu::set_receiver_menu);
-    m_map.insert(UTSettings_Advanced, &SubMenu::set_advanced_menu);
-    m_map.insert(GateCurves_Gate, &SubMenu::set_gate_menu);
-    m_map.insert(GateCurves_Alarm, &SubMenu::set_alarm_menu);
-    m_map.insert(GateCurves_Output, &SubMenu::set_output_menu);
-    m_map.insert(GateCurves_DAC, &SubMenu::set_dac_menu);
-    m_map.insert(GateCurves_TCG, &SubMenu::set_tcg_menu);
-    m_map.insert(Display_Selection, &SubMenu::set_selection_menu);
-    m_map.insert(Display_ColorSettings, &SubMenu::set_colorSettings_menu);
-    m_map.insert(Displsy_Properties, &SubMenu::set_properties_menu);
-    m_map.insert(ProbePart_Select, &SubMenu::set_select_menu);
-    m_map.insert(ProbePart_Position, &SubMenu::set_position_menu);
-    m_map.insert(ProbePart_FFT, &SubMenu::set_fft_menu);
-    m_map.insert(ProbePart_Part, &SubMenu::set_part_menu);
-    m_map.insert(ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
-    m_map.insert(FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
-    m_map.insert(FocalLaw_Angle, &SubMenu::set_angle_menu);
-    m_map.insert(FocalLaw_Apeture, &SubMenu::set_apeture_menu);
-    m_map.insert(FacalLaw_FocalPoint, &SubMenu::set_focalPoint_menu);
-    m_map.insert(Scan_Inspection, &SubMenu::set_inspection_menu);
-    m_map.insert(Scan_Encoder, &SubMenu::set_encoder_menu);
-    m_map.insert(Scan_Area, &SubMenu::set_area_menu);
-    m_map.insert(Scan_Start, &SubMenu::set_start_menu);
-    m_map.insert(Measurement_Cursors, &SubMenu::set_cursors_menu);
-    m_map.insert(Measurement_TOFD, &SubMenu::set_tofd_menu);
-    m_map.insert(Measurement_FlawRecord, &SubMenu::set_flawRecord_menu);
-    m_map.insert(FileReport_File, &SubMenu::set_file_menu);
-    m_map.insert(FileReport_SaveMode, &SubMenu::set_saveMode_menu);
-    m_map.insert(FileReport_Report, &SubMenu::set_report_menu);
-    m_map.insert(FileReport_Format, &SubMenu::set_format_menu);
-    m_map.insert(FileReport_UserField, &SubMenu::set_userField_menu);
-    m_map.insert(Preference_Preference, &SubMenu::set_preference_menu);
-    m_map.insert(Preference_System, &SubMenu::set_system_menu);
-    m_map.insert(Preference_Network, &SubMenu::set_network_menu);
-    m_map.insert(Preference_Service, &SubMenu::set_service_menu);
+    m_map.insert(MainMenu::UTSettings_General, &SubMenu::set_general_menu);
+    m_map.insert(MainMenu::UTSettings_Pulser, &SubMenu::set_pulser_menu);
+    m_map.insert(MainMenu::UTSettings_Receiver, &SubMenu::set_receiver_menu);
+    m_map.insert(MainMenu::UTSettings_Advanced, &SubMenu::set_advanced_menu);
+    m_map.insert(MainMenu::GateCurves_Gate, &SubMenu::set_gate_menu);
+    m_map.insert(MainMenu::GateCurves_Alarm, &SubMenu::set_alarm_menu);
+    m_map.insert(MainMenu::GateCurves_Output, &SubMenu::set_output_menu);
+    m_map.insert(MainMenu::GateCurves_DAC, &SubMenu::set_dac_menu);
+    m_map.insert(MainMenu::GateCurves_TCG, &SubMenu::set_tcg_menu);
+    m_map.insert(MainMenu::Display_Selection, &SubMenu::set_selection_menu);
+    m_map.insert(MainMenu::Display_ColorSettings, &SubMenu::set_colorSettings_menu);
+    m_map.insert(MainMenu::Displsy_Properties, &SubMenu::set_properties_menu);
+    m_map.insert(MainMenu::ProbePart_Select, &SubMenu::set_select_menu);
+    m_map.insert(MainMenu::ProbePart_Position, &SubMenu::set_position_menu);
+    m_map.insert(MainMenu::ProbePart_FFT, &SubMenu::set_fft_menu);
+    m_map.insert(MainMenu::ProbePart_Part, &SubMenu::set_part_menu);
+    m_map.insert(MainMenu::ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
+    m_map.insert(MainMenu::FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
+    m_map.insert(MainMenu::FocalLaw_Angle, &SubMenu::set_angle_menu);
+    m_map.insert(MainMenu::FocalLaw_Apeture, &SubMenu::set_apeture_menu);
+    m_map.insert(MainMenu::FacalLaw_FocalPoint, &SubMenu::set_focalPoint_menu);
+    m_map.insert(MainMenu::Scan_Inspection, &SubMenu::set_inspection_menu);
+    m_map.insert(MainMenu::Scan_Encoder, &SubMenu::set_encoder_menu);
+    m_map.insert(MainMenu::Scan_Area, &SubMenu::set_area_menu);
+    m_map.insert(MainMenu::Scan_Start, &SubMenu::set_start_menu);
+    m_map.insert(MainMenu::Measurement_Cursors, &SubMenu::set_cursors_menu);
+    m_map.insert(MainMenu::Measurement_TOFD, &SubMenu::set_tofd_menu);
+    m_map.insert(MainMenu::Measurement_FlawRecord, &SubMenu::set_flawRecord_menu);
+    m_map.insert(MainMenu::FileReport_File, &SubMenu::set_file_menu);
+    m_map.insert(MainMenu::FileReport_SaveMode, &SubMenu::set_saveMode_menu);
+    m_map.insert(MainMenu::FileReport_Report, &SubMenu::set_report_menu);
+    m_map.insert(MainMenu::FileReport_Format, &SubMenu::set_format_menu);
+    m_map.insert(MainMenu::FileReport_UserField, &SubMenu::set_userField_menu);
+    m_map.insert(MainMenu::Preference_Preference, &SubMenu::set_preference_menu);
+    m_map.insert(MainMenu::Preference_System, &SubMenu::set_system_menu);
+    m_map.insert(MainMenu::Preference_Network, &SubMenu::set_network_menu);
+    m_map.insert(MainMenu::Preference_Service, &SubMenu::set_service_menu);
 }
 
 
-void SubMenu::set_third_menu(int num)
+void SubMenu::set_third_menu(MainMenu::Type type)
 {
     for(int i = 0; i < 6; i ++) {
         MenuItem *widget = findChild<MenuItem*>("subMenu_" + QString::number(i + 1));
         widget->clean();
     }
-    get_main_menu_type((Type)num);
+    get_main_menu_type(type);
     run_fun(m_typeMap.value("previous"), false);
-    run_fun((Type)num, true);
+    run_fun(type, true);
 }
 
 void SubMenu::set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals)
@@ -139,9 +139,9 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
     widget->set_title(title);
 }
 
-void SubMenu::run_fun(Type type, bool value)
+void SubMenu::run_fun(MainMenu::Type type, bool value)
 {
-    QMap<Type, Function>::const_iterator it = m_map.find(type);
+    QMap<MainMenu::Type, Function>::const_iterator it = m_map.find(type);
     if(it != m_map.end()) {
         Function pFun = m_map.value(type);
         if(pFun) {
@@ -150,7 +150,7 @@ void SubMenu::run_fun(Type type, bool value)
     }
 }
 
-void SubMenu::get_main_menu_type(Type type)
+void SubMenu::get_main_menu_type(MainMenu::Type type)
 {
     if(m_typeMap.find("previous") != m_typeMap.end()) {
         m_typeMap.remove("prevoius");
