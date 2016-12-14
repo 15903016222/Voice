@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVariantMap>
+#include <QSettings>
 
 class ConfigMsg : public QObject
 {
@@ -12,16 +13,17 @@ public:
     ConfigMsg();
     ~ConfigMsg();
 
-    void add_config_msg(QString groupName, QString mainMenu, QString subMenu, QVariant variant);
-    void check_map(QString &groupName, QString &mainMenu, QString &subMenu);
+    void add_config_msg(QString &groupName, QString &mainMenu, QString &subMenu, QVariant &variant);
+//    void check_map(QString &groupName, QString &mainMenu, QString &subMenu);
     QVariant get_config_msg(QString &groupName, QString &mainMenu, QString &subMenu);
     QVariantMap get_map(QString &groupName, QString &mainMenu);
-    QVariant get_message(QVariantMap map, QString &subMenu);
-    void clear_config_msg();
+//    QVariant get_message(QVariantMap map, QString &subMenu);
+//    void clear_config_msg();
 
 private:
-    QVariantMap m_mapConfig;
-    QByteArray m_array;
+//    QVariantMap m_mapConfig;
+//    QByteArray m_array;
+//    QSettings settings;
 
 };
 
