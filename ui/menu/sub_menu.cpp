@@ -18,6 +18,7 @@
 
 /* Gate/Curves */
 #include "gate_menu.h"
+#include "alarm_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -80,7 +81,7 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::UTSettings_Receiver, new ReceiverMenu(ui, this));
     m_map.insert(MainMenu::UTSettings_Advanced, new UtAdvancedMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_Gate, new GateMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_Alarm, &SubMenu::set_alarm_menu);
+    m_map.insert(MainMenu::GateCurves_Alarm, new AlarmMenu(ui, this));
 //    m_map.insert(MainMenu::GateCurves_Output, &SubMenu::set_output_menu);
 //    m_map.insert(MainMenu::GateCurves_DAC, &SubMenu::set_dac_menu);
 //    m_map.insert(MainMenu::GateCurves_TCG, &SubMenu::set_tcg_menu);
@@ -152,30 +153,6 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
 {
     widget->set_type(MenuItem::None);
     widget->set_title(title);
-}
-
-void SubMenu::set_alarm_menu(bool show)
-{
-    if(show) {
-        /* Alarm menu item */
-        set_combobox_menu(ui->subMenu_1, tr("Alarm"), m_list_alarm);
-
-        /* Switch menu item */
-        set_combobox_menu(ui->subMenu_2, tr("Switch"), switchList);
-
-        /* Group menu item */
-        set_combobox_menu(ui->subMenu_3, tr("Group"), m_list_group);
-
-        /* Condition Factor menu item */
-        set_combobox_menu(ui->subMenu_4, tr("Condition"), m_list_condition);
-
-        /* Operator menu item */
-        set_combobox_menu(ui->subMenu_5, tr("Operator"), m_list_operator);
-
-        ui->subMenu_6->set_type(MenuItem::None);
-    } else {
-
-    }
 }
 
 void SubMenu::set_output_menu(bool show)
@@ -1121,27 +1098,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-    m_list_alarm.append(tr("Alarm 1"));
-    m_list_alarm.append(tr("Alarm 2"));
-    m_list_alarm.append(tr("Alarm 3"));
-
-    m_list_group.append(tr("Group1"));
-    m_list_group.append(tr("All"));
-    m_list_group.append(tr("None"));
-
-    m_list_condition.append(tr("None"));
-    m_list_condition.append(tr("Gate A"));
-    m_list_condition.append(tr("Gate B"));
-    m_list_condition.append(tr("Gate I"));
-    m_list_condition.append(tr("Not Gate A"));
-    m_list_condition.append(tr("Not Gate B"));
-    m_list_condition.append(tr("Not Gate I"));
-    m_list_condition.append(tr(">Max.Thickness"));
-    m_list_condition.append(tr("<Min.Thickness"));
-
-    m_list_operator.append(tr("And"));
-    m_list_operator.append(tr("Or"));
-
     m_list_output.append(tr("Alarm 1"));
     m_list_output.append(tr("Alarm 2"));
     m_list_output.append(tr("Alarm 3"));
@@ -1458,10 +1414,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_alarm.clear();
-    m_list_group.clear();
-    m_list_condition.clear();
-    m_list_operator.clear();
     m_list_output.clear();
     m_list_sound.clear();
     m_list_data.clear();
