@@ -30,6 +30,12 @@ MainMenu::~MainMenu()
     delete ui;
 }
 
+void MainMenu::show()
+{
+    ui->treeWidget->setFocus();
+    QWidget::show();
+}
+
 bool MainMenu::eventFilter(QObject *object, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {

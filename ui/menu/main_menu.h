@@ -55,6 +55,8 @@ public:
     explicit MainMenu(QWidget *parent = 0);
     ~MainMenu();
 
+    void show();
+
 signals:
     void click(MainMenu::Type type);
 
