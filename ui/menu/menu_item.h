@@ -55,7 +55,7 @@ protected:
 private:
     Ui::MenuItem *ui;
 
-
+    Type m_type;
     QString m_unit;
     QString m_title;
     QString m_labelText;
@@ -64,6 +64,12 @@ private:
     void update_spin_step();
     void set_spin_focus();
     void set_focus_out();
+
+    bool do_namelabel_event(QEvent *e);
+    bool do_doubleSpinBox_event(QEvent *e);
+
+private slots:
+    bool do_comboBox_activated(const QString &label);
 };
 
 #endif // __MENU_ITEM_H__

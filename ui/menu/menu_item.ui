@@ -172,7 +172,7 @@ QComboBox:drop-down {
 QComboBox QAbstractItemView{
 	font: 12pt 'Century Gothic';
 	background-color: rgb(255, 255, 255);
-	margin-bottom: 47px;
+	margin-bottom: 0px;
 	outline: 0px;
 }
 
@@ -226,6 +226,9 @@ stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 130, 195, 255));
      </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>

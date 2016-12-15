@@ -11,12 +11,16 @@ MenuItem::MenuItem(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    m_type = Label;
+
+    ui->comboBox->hide();
+
     ui->nameLabel->installEventFilter(this);
     ui->doubleSpinBox->installEventFilter(this);
-    ui->comboBox->installEventFilter(this);
 
     connect(ui->doubleSpinBox, SIGNAL(valueChanged(double)), this, SIGNAL(spin_event(double)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_event(int)));
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)), ui->label, SLOT(setText(QString)));
 }
 
 MenuItem::~MenuItem()
@@ -26,7 +30,8 @@ MenuItem::~MenuItem()
 
 void MenuItem::set_type(MenuItem::Type type)
 {
-    ui->comboBox->hide();
+    m_type = type;
+
     ui->doubleSpinBox->hide();
     ui->label->hide();
 
@@ -38,7 +43,7 @@ void MenuItem::set_type(MenuItem::Type type)
         ui->doubleSpinBox->show();
         break;
     case Combo:
-        ui->comboBox->show();
+        ui->label->show();
         ui->comboBox->setView(new QListView());
         ui->comboBox->view()->parentWidget()->setAttribute(Qt::WA_TranslucentBackground);
         ui->comboBox->view()->parentWidget()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
@@ -51,6 +56,7 @@ void MenuItem::set_type(MenuItem::Type type)
         ui->nameLabel->clear();
         break;
     }
+
 }
 
 void MenuItem::clean()
@@ -104,40 +110,10 @@ void MenuItem::set_combo_items(const QStringList &texts)
 
 bool MenuItem::eventFilter(QObject *obj, QEvent *e)
 {
-    if (e->type() == QEvent::MouseButtonPress) {
-        if(!ui->doubleSpinBox->isHidden()) {
-            if (ui->doubleSpinBox->hasFocus()) {
-                update_spin_step();
-            } else {
-                set_spin_focus();
-            }
-        } else if(!ui->comboBox->isHidden()) {
-            QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, QPoint(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-            QApplication::sendEvent(ui->comboBox, event);
-        } else if(!ui->label->isHidden()) {
-            emit clicked();
-        }
-        return true;
-    }
-
-    if (e->type() == QEvent::KeyPress
-            || e->type() == QEvent::KeyRelease) {
-        QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(e);
-        switch (keyEvent->key()) {
-        case Qt::Key_Escape:
-        case Qt::Key_Back:
-        case Qt::Key_Cancel:
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-            set_focus_out();
-            return true;
-            break;
-        default:
-            break;
-        }
-    } else if (e->type() == QEvent::FocusOut) {
-        set_focus_out();
-        return true;
+    if (obj == ui->nameLabel) {
+        return do_namelabel_event(e);
+    } else if (obj == ui->doubleSpinBox) {
+        return do_doubleSpinBox_event(e);
     }
 
     return QWidget::eventFilter(obj, e);
@@ -215,6 +191,55 @@ void MenuItem::set_focus_out()
     }
 }
 
+bool MenuItem::do_namelabel_event(QEvent *e)
+{
+    if (e->type() != QEvent::MouseButtonRelease) {
+        return QWidget::eventFilter(ui->nameLabel, e);
+    }
+
+    if(m_type == Spin) {
+        if (ui->doubleSpinBox->hasFocus()) {
+            update_spin_step();
+        } else {
+            set_spin_focus();
+        }
+    } else if(m_type == Combo) {
+        ui->comboBox->showPopup();
+    } else if(m_type == Label) {
+        emit clicked();
+    }
+    return true;
+}
+
+bool MenuItem::do_doubleSpinBox_event(QEvent *e)
+{
+    if (e->type() == QEvent::KeyPress
+            || e->type() == QEvent::KeyRelease) {
+        QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(e);
+        switch (keyEvent->key()) {
+        case Qt::Key_Escape:
+        case Qt::Key_Back:
+        case Qt::Key_Cancel:
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+            set_focus_out();
+            break;
+        default:
+            break;
+        }
+    } else if (e->type() == QEvent::FocusOut) {
+        set_focus_out();
+    } else {
+        return QWidget::eventFilter(ui->doubleSpinBox, e);
+    }
+    return true;
+}
+
+bool MenuItem::do_comboBox_activated(const QString &label)
+{
+    ui->label->setText(label);
+}
+
 void MenuItem::set_label_text(const QString &text)
 {
     ui->label->setText(text);
@@ -223,9 +248,7 @@ void MenuItem::set_label_text(const QString &text)
 
 void MenuItem::set_spin(const QString &title, const QString &unit, double min, double max, int decimals)
 {
-    ui->comboBox->hide();
-    ui->label->hide();
-    ui->doubleSpinBox->show();
+    set_type(Spin);
 
     m_title = title;
     m_unit = unit;
@@ -258,9 +281,7 @@ void MenuItem::set_combo(const QString &title, const QStringList &texts)
 
 void MenuItem::set_label(const QString &title)
 {
-    ui->doubleSpinBox->hide();
-    ui->comboBox->hide();
-    ui->label->show();
+    set_type(Label);
 
     m_title = title;
 

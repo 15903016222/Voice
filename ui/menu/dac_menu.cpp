@@ -111,11 +111,4 @@ void DacMenu::do_mode_event(int pos)
     } else {
         m_settingFlag = false;
     }
-
-    qDebug()<<__func__<<"pos="<<pos;
-//    hide();
-    qDebug()<<__func__<<"pos="<<pos;
-
-    show();
-    qDebug()<<__func__<<"pos="<<pos;
 }
