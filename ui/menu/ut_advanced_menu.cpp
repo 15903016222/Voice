@@ -56,6 +56,6 @@ void UtAdvancedMenu::scale_factor_item()
 
 void UtAdvancedMenu::sum_gain_item()
 {
-    ui->subMenu_5->set_spin(tr("Sum Gain"), "dB", s_steps1, 0, 100, 1);
+    ui->subMenu_5->set_spin(tr("Sum Gain"), "dB", 0, 100, 1);
 }
 

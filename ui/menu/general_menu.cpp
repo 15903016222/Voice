@@ -31,27 +31,27 @@ void GeneralMenu::hide()
 
 void GeneralMenu::gain_item()
 {
-    ui->subMenu_1->set_spin(tr("Gain"), "dB", s_steps1, 0, 100, 1);
+    ui->subMenu_1->set_spin(tr("Gain"), "dB", 0, 100, 1);
 }
 
 void GeneralMenu::start_item()
 {
-    ui->subMenu_2->set_spin(tr("Start"), "mm", s_steps2, 0, 1000, 2);
+    ui->subMenu_2->set_spin(tr("Start"), "mm", 0, 1000, 2);
 }
 
 void GeneralMenu::range_item()
 {
-    ui->subMenu_3->set_spin(tr("Range"), "mm", s_steps2, 0, 1000, 2);
+    ui->subMenu_3->set_spin(tr("Range"), "mm", 0, 1000, 2);
 }
 
 void GeneralMenu::velocity_item()
 {
-    ui->subMenu_4->set_spin(tr("Velocity"), "m/s", s_steps2, 635, 12540, 1);
+    ui->subMenu_4->set_spin(tr("Velocity"), "m/s", 635, 12540, 1);
 }
 
 void GeneralMenu::wedge_item()
 {
-    ui->subMenu_5->set_spin(tr("Wedge Delay"), "μs", s_steps2, 0, 1000, 2);
+    ui->subMenu_5->set_spin(tr("Wedge Delay"), "μs", 0, 1000, 2);
 }
 
 void GeneralMenu::ut_unit_item()

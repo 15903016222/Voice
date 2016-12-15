@@ -7,8 +7,7 @@
 
 MenuItem::MenuItem(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MenuItem),
-    m_curStep(0)
+    ui(new Ui::MenuItem)
 {
     ui->setupUi(this);
 
@@ -17,7 +16,7 @@ MenuItem::MenuItem(QWidget *parent) :
     ui->comboBox->installEventFilter(this);
 
     connect(ui->doubleSpinBox, SIGNAL(valueChanged(double)), this, SIGNAL(spin_event(double)));
-    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_enevt(int)));
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(combo_event(int)));
 }
 
 MenuItem::~MenuItem()
@@ -59,7 +58,6 @@ void MenuItem::clean()
     ui->nameLabel->clear();
     ui->doubleSpinBox->clear();
     ui->comboBox->clear();
-    m_curStep = 0;
     m_title.clear();
     m_unit.clear();
     ui->label->clear();
@@ -76,12 +74,6 @@ void MenuItem::set_unit(const QString &unitName)
 {
     m_unit = unitName;
     update_title();
-}
-
-void MenuItem::set_steps(const QList<double> &steps)
-{
-     m_steps = steps;
-     update_title();
 }
 
 void MenuItem::set_suffix(const QString &text)
@@ -114,8 +106,7 @@ bool MenuItem::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::MouseButtonPress) {
         if(!ui->doubleSpinBox->isHidden()) {
-            if (ui->doubleSpinBox->hasFocus()
-                && ! m_steps.isEmpty()) {
+            if (ui->doubleSpinBox->hasFocus()) {
                 update_spin_step();
             } else {
                 set_spin_focus();
@@ -178,10 +169,17 @@ void MenuItem::update_title()
 
 void MenuItem::update_spin_step()
 {
-    if ( ++m_curStep >= m_steps.size() ) {
-        m_curStep = 0;
+    double step = ui->doubleSpinBox->singleStep() * 10;
+
+    if (step >= ui->doubleSpinBox->maximum()) {
+        step = 1;
+        for(int i=0; i < ui->doubleSpinBox->decimals(); ++i) {
+            step /= 10.0;
+        }
     }
-    ui->doubleSpinBox->setSingleStep(m_steps.at(m_curStep));
+
+    ui->doubleSpinBox->setSingleStep(step);
+
     update_title();
 }
 
@@ -223,7 +221,7 @@ void MenuItem::set_label_text(const QString &text)
     m_labelText = text;
 }
 
-void MenuItem::set_spin(const QString &title, const QString &unit, const QList<double> &steps, double min, double max, int decimals)
+void MenuItem::set_spin(const QString &title, const QString &unit, double min, double max, int decimals)
 {
     ui->comboBox->hide();
     ui->label->hide();
@@ -231,7 +229,14 @@ void MenuItem::set_spin(const QString &title, const QString &unit, const QList<d
 
     m_title = title;
     m_unit = unit;
-    m_steps = steps;
+
+    if (decimals == 2) {
+        ui->doubleSpinBox->setSingleStep(0.01);
+    } else if (decimals == 1) {
+        ui->doubleSpinBox->setSingleStep(0.1);
+    } else {
+        ui->doubleSpinBox->setSingleStep(1);
+    }
 
     ui->doubleSpinBox->setMinimum(min);
     ui->doubleSpinBox->setMaximum(max);

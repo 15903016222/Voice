@@ -38,17 +38,17 @@ void GateMenu::gate_item()
 
 void GateMenu::start_item()
 {
-    ui->subMenu_2->set_spin(tr("Start"), "mm", s_steps2, 0, 16000, 2);
+    ui->subMenu_2->set_spin(tr("Start"), "mm", 0, 16000, 2);
 }
 
 void GateMenu::width_item()
 {
-    ui->subMenu_3->set_spin(tr("Width"), "mm", s_steps1, 0.05, 525, 2);
+    ui->subMenu_3->set_spin(tr("Width"), "mm", 0.05, 525, 2);
 }
 
 void GateMenu::threshold_item()
 {
-    ui->subMenu_4->set_spin(tr("Threshold"), "%", s_steps0, 0, 100, 0);
+    ui->subMenu_4->set_spin(tr("Threshold"), "%", 0, 100, 0);
 }
 
 void GateMenu::synchro_item()

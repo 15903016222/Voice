@@ -48,7 +48,7 @@ void PulserMenu::txrx_item()
 
 void PulserMenu::pulser_item()
 {
-    ui->subMenu_2->set_spin(tr("Pulser"), "", s_steps1, 1, 113, 0);
+    ui->subMenu_2->set_spin(tr("Pulser"), "", 1, 113, 0);
 }
 
 void PulserMenu::voltage_item()
@@ -58,7 +58,7 @@ void PulserMenu::voltage_item()
 
 void PulserMenu::pw_item()
 {
-    ui->subMenu_4->set_spin(tr("PW"), "ns", s_steps1, 30, 500, 1);
+    ui->subMenu_4->set_spin(tr("PW"), "ns", 30, 500, 1);
 }
 
 void PulserMenu::prf_item()

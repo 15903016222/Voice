@@ -48,12 +48,12 @@ void OutputMenu::sound_item()
 
 void OutputMenu::delay_item()
 {
-    ui->subMenu_3->set_spin(tr("Delay"), "mm", s_steps2, 0, 5000, 2);
+    ui->subMenu_3->set_spin(tr("Delay"), "mm", 0, 5000, 2);
 }
 
 void OutputMenu::hold_time_item()
 {
-    ui->subMenu_4->set_spin(tr("Hold Time"), "%", s_steps2, 0, 5000, 2);
+    ui->subMenu_4->set_spin(tr("Hold Time"), "%", 0, 5000, 2);
 }
 
 void OutputMenu::group_item()

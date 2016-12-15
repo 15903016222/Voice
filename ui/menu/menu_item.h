@@ -28,7 +28,6 @@ public:
 
     void set_title(const QString &title);
     void set_unit(const QString &unitName);
-    void set_steps(const QList<double> &steps);
     void set_suffix(const QString &text);
     void set_range(double min, double max);
     void set_decimals(int prec);
@@ -38,7 +37,7 @@ public:
 
     void set_label_text(const QString &text);
 
-    void set_spin(const QString &title, const QString &unit, const QList<double> &steps, double min, double max, int decimals);
+    void set_spin(const QString &title, const QString &unit, double min, double max, int decimals);
     void set_combo(const QString &title, const QStringList &texts);
     void set_label(const QString &title);
 
@@ -48,7 +47,7 @@ public:
 signals:
     void clicked();
     void spin_event(double value);
-    void combo_enevt(int index);
+    void combo_event(int index);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
@@ -56,12 +55,10 @@ protected:
 private:
     Ui::MenuItem *ui;
 
+
     QString m_unit;
     QString m_title;
     QString m_labelText;
-
-    QList<double> m_steps;
-    int m_curStep;
 
     void update_title();
     void update_spin_step();
