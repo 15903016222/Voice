@@ -42,10 +42,6 @@ void MenuItem::set_type(MenuItem::Type type)
     case Combo:
         ui->label->show();
         ui->comboBox->setView(new QListView());
-        ui->comboBox->view()->parentWidget()->setAttribute(Qt::WA_TranslucentBackground);
-        ui->comboBox->view()->parentWidget()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
-        ui->comboBox->view()->setFocusPolicy(Qt::StrongFocus);
-        ui->comboBox->view()->setFocus();
         break;
     default:
         ui->label->show();
