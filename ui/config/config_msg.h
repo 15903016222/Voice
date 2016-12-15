@@ -16,6 +16,9 @@ public:
     void add_config_msg(QString &groupName, QString &mainMenu, QString &subMenu, QVariant &variant);
     void add_config_msg(QString &groupName, QString &mainMenu, QVariantMap &map);
     void insert_msg_to_map(QVariantMap &map, QString &subMenu, QVariant &variant);
+    void copy_config_msg(QString &groupName1, QString &groupName2);
+    void print_group_msg(QString &groupName);
+    void reset_config_msg();
 
     QVariant get_config_msg(QString &groupName, QString &mainMenu, QString &subMenu);
     QVariantMap get_map(QString &groupName, QString &mainMenu);
