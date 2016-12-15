@@ -108,7 +108,17 @@ void DacMenu::do_mode_event(int pos)
 {
     if (pos == 0) {
         m_settingFlag = true;
+        curve_no_item();
+        curve_x_item();
+        db_offset_item();
+        ref_gain_item();
+        switch_item();
     } else {
         m_settingFlag = false;
+        point_item();
+        position_item();
+        add_point_item();
+        delete_point_item();
+        ui->subMenu_6->set_type(MenuItem::None);
     }
 }
