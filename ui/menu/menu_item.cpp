@@ -11,10 +11,6 @@ MenuItem::MenuItem(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_type = Label;
-
-    ui->comboBox->hide();
-
     ui->nameLabel->installEventFilter(this);
     ui->doubleSpinBox->installEventFilter(this);
 
@@ -30,10 +26,11 @@ MenuItem::~MenuItem()
 
 void MenuItem::set_type(MenuItem::Type type)
 {
-    m_type = type;
-
+    ui->comboBox->hide();
     ui->doubleSpinBox->hide();
     ui->label->hide();
+
+    m_type = type;
 
     switch (type) {
     case Label:
@@ -56,7 +53,6 @@ void MenuItem::set_type(MenuItem::Type type)
         ui->nameLabel->clear();
         break;
     }
-
 }
 
 void MenuItem::clean()
@@ -110,10 +106,40 @@ void MenuItem::set_combo_items(const QStringList &texts)
 
 bool MenuItem::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == ui->nameLabel) {
-        return do_namelabel_event(e);
-    } else if (obj == ui->doubleSpinBox) {
-        return do_doubleSpinBox_event(e);
+    if (e->type() == QEvent::MouseButtonRelease) {
+        if(m_type == Spin) {
+            if (ui->doubleSpinBox->hasFocus()) {
+                update_spin_step();
+            } else {
+                set_spin_focus();
+            }
+        } else if(m_type == Combo) {
+            QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, QPoint(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+            QApplication::sendEvent(ui->comboBox, event);
+        } else if(m_type == Label) {
+            emit clicked();
+        }
+        return true;
+    }
+
+    if (e->type() == QEvent::KeyPress
+            || e->type() == QEvent::KeyRelease) {
+        QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(e);
+        switch (keyEvent->key()) {
+        case Qt::Key_Escape:
+        case Qt::Key_Back:
+        case Qt::Key_Cancel:
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+            set_focus_out();
+            return true;
+            break;
+        default:
+            break;
+        }
+    } else if (e->type() == QEvent::FocusOut) {
+        set_focus_out();
+        return true;
     }
 
     return QWidget::eventFilter(obj, e);
@@ -189,55 +215,6 @@ void MenuItem::set_focus_out()
                                          "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1,stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 130, 195, 255));}");
         update_title();
     }
-}
-
-bool MenuItem::do_namelabel_event(QEvent *e)
-{
-    if (e->type() != QEvent::MouseButtonRelease) {
-        return QWidget::eventFilter(ui->nameLabel, e);
-    }
-
-    if(m_type == Spin) {
-        if (ui->doubleSpinBox->hasFocus()) {
-            update_spin_step();
-        } else {
-            set_spin_focus();
-        }
-    } else if(m_type == Combo) {
-        ui->comboBox->showPopup();
-    } else if(m_type == Label) {
-        emit clicked();
-    }
-    return true;
-}
-
-bool MenuItem::do_doubleSpinBox_event(QEvent *e)
-{
-    if (e->type() == QEvent::KeyPress
-            || e->type() == QEvent::KeyRelease) {
-        QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(e);
-        switch (keyEvent->key()) {
-        case Qt::Key_Escape:
-        case Qt::Key_Back:
-        case Qt::Key_Cancel:
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-            set_focus_out();
-            break;
-        default:
-            break;
-        }
-    } else if (e->type() == QEvent::FocusOut) {
-        set_focus_out();
-    } else {
-        return QWidget::eventFilter(ui->doubleSpinBox, e);
-    }
-    return true;
-}
-
-bool MenuItem::do_comboBox_activated(const QString &label)
-{
-    ui->label->setText(label);
 }
 
 void MenuItem::set_label_text(const QString &text)
