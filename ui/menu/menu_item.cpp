@@ -114,8 +114,7 @@ bool MenuItem::eventFilter(QObject *obj, QEvent *e)
                 set_spin_focus();
             }
         } else if(m_type == Combo) {
-            QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonDblClick, QPoint(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-            QApplication::sendEvent(ui->comboBox, event);
+            ui->comboBox->showPopup();
         } else if(m_type == Label) {
             emit clicked();
         }
