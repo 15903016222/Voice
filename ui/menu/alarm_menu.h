@@ -5,6 +5,7 @@
 
 class AlarmMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     AlarmMenu(Ui::SubMenu *ui, QObject *parent);
     void show();

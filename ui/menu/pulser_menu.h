@@ -12,6 +12,7 @@
 
 class PulserMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     PulserMenu(Ui::SubMenu *ui, QObject *parent);
     void show();

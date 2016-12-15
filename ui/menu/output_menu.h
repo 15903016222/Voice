@@ -5,6 +5,7 @@
 
 class OutputMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     OutputMenu(Ui::SubMenu *ui, QObject *parent);
 

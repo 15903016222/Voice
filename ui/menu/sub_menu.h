@@ -46,8 +46,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_tcg_menu(bool show);
-
     void set_selection_menu(bool show);
     void set_colorSettings_menu(bool show);
     void set_properties_menu(bool show);

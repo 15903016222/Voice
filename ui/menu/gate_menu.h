@@ -5,6 +5,7 @@
 
 class GateMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     GateMenu(Ui::SubMenu *ui, QObject *parent);
 

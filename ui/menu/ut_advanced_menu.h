@@ -13,6 +13,7 @@
 
 class UtAdvancedMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     UtAdvancedMenu(Ui::SubMenu *ui, QObject *parent);
     void show();

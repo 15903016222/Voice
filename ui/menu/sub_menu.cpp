@@ -21,6 +21,7 @@
 #include "alarm_menu.h"
 #include "output_menu.h"
 #include "dac_menu.h"
+#include "tcg_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -86,7 +87,7 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::GateCurves_Alarm, new AlarmMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_Output, new OutputMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_DAC, new DacMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_TCG, &SubMenu::set_tcg_menu);
+    m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
 //    m_map.insert(MainMenu::Display_Selection, &SubMenu::set_selection_menu);
 //    m_map.insert(MainMenu::Display_ColorSettings, &SubMenu::set_colorSettings_menu);
 //    m_map.insert(MainMenu::Displsy_Properties, &SubMenu::set_properties_menu);
@@ -154,54 +155,6 @@ void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
 {
     widget->set_type(MenuItem::None);
     widget->set_title(title);
-}
-
-void SubMenu::set_tcg_menu(bool show)
-{
-//    if(show) {
-//        QString option;
-//        QList<double> steps;
-
-//        /* Mode menu item */
-//        set_combobox_menu(ui->subMenu_1, tr("Mode"), m_list_mode);
-
-//        if(option == "Setting") {
-
-//            /* Curve No. menu item */
-//            steps.append(1);
-//            set_spinbox_menu(ui->subMenu_2, tr("Curve No."), "", steps, 1, 5, 0);
-
-//            /* Curve X menu item */
-//            set_combobox_menu(ui->subMenu_3, tr("Curve X"), m_list_curveX);
-
-//            /* dB Offset menu item */
-//            set_spinbox_menu(ui->subMenu_4, tr("dB Offset"), "dB", stepList1, -40, 40, 1);
-
-//            /* Switch menu item */
-//            set_combobox_menu(ui->subMenu_5, tr("Switch"), switchList);
-
-//            ui->subMenu_6->set_type(MenuItem::None);
-//        } else if(option == "Edit") {
-
-//            /* Point menu item */
-//            set_combobox_menu(ui->subMenu_2, tr("Point"), m_list_point);
-
-//            /* Position menu item */
-//            set_spinbox_menu(ui->subMenu_3, tr("Position"), "", stepList6, 0, 10000, 2);
-
-//            /* Gain menu item */
-//            set_spinbox_menu(ui->subMenu_3, tr("Gain"), "dB", stepList1, 0, 100, 1);
-
-//            /* Add Point menu item */
-//            set_label_menu(ui->subMenu_5, tr("Add Point"));
-
-//            /* Delete Point menu item */
-//            set_label_menu(ui->subMenu_6, tr("Delete Point"));
-//        }
-//        steps.clear();
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_selection_menu(bool show)

@@ -1,8 +1,6 @@
-#include "dac_menu.h"
+#include "tcg_menu.h"
 
-#include <QDebug>
-
-DacMenu::DacMenu(Ui::SubMenu *ui, QObject *parent)
+TcgMenu::TcgMenu(Ui::SubMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
     m_modes.append(tr("Settings"));
@@ -20,10 +18,9 @@ DacMenu::DacMenu(Ui::SubMenu *ui, QObject *parent)
     m_settingFlag = true;
 }
 
-void DacMenu::show()
+void TcgMenu::show()
 {
     mode_item();
-
     if (m_settingFlag) {
         show_setting();
     } else {
@@ -31,95 +28,96 @@ void DacMenu::show()
     }
 }
 
-void DacMenu::hide()
+void TcgMenu::hide()
 {
     disconnect(ui->subMenu_1, SIGNAL(combo_event(int)), this, SLOT(do_mode_event(int)));
 }
 
-void DacMenu::mode_item()
+void TcgMenu::mode_item()
 {
     ui->subMenu_1->set_combo(tr("Mode"), m_modes);
     connect(ui->subMenu_1, SIGNAL(combo_event(int)), this, SLOT(do_mode_event(int)));
 }
 
-void DacMenu::show_setting()
+void TcgMenu::show_setting()
 {
     curve_no_item();
     curve_x_item();
     db_offset_item();
-    ref_gain_item();
     switch_item();
-}
-
-void DacMenu::show_edit()
-{
-    point_item();
-    position_item();
-    add_point_item();
-    delete_point_item();
     ui->subMenu_6->set_type(MenuItem::None);
 }
 
-void DacMenu::curve_no_item()
+void TcgMenu::show_edit()
+{
+    point_item();
+    position_item();
+    gain_item();
+    add_point_item();
+    delete_point_item();
+}
+
+void TcgMenu::curve_no_item()
 {
     ui->subMenu_2->set_spin(tr("Curve No."), "", 1, 5, 0);
 }
 
-void DacMenu::curve_x_item()
+void TcgMenu::curve_x_item()
 {
     ui->subMenu_3->set_combo(tr("Curve X"), m_curveXs);
 }
 
-void DacMenu::db_offset_item()
+void TcgMenu::db_offset_item()
 {
     ui->subMenu_4->set_spin(tr("dB Offset"), "dB", -40, 40, 1);
+
 }
 
-void DacMenu::ref_gain_item()
+void TcgMenu::switch_item()
 {
-    ui->subMenu_5->set_spin(tr("Ref.Gain"), "dB", -40, 40, 1);
+    ui->subMenu_5->set_combo(tr("Switch"), s_onOff);
 }
 
-void DacMenu::switch_item()
-{
-    ui->subMenu_6->set_combo(tr("Switch"), s_onOff);
-}
-
-void DacMenu::point_item()
+void TcgMenu::point_item()
 {
     ui->subMenu_2->set_combo(tr("Point"), m_points);
 }
 
-void DacMenu::position_item()
+void TcgMenu::position_item()
 {
-    ui->subMenu_3->set_spin(tr("Position"), "",  0, 10000, 2);
+    ui->subMenu_3->set_spin(tr("Position"), "", 0, 10000, 2);
 }
 
-void DacMenu::add_point_item()
+void TcgMenu::gain_item()
 {
-    ui->subMenu_4->set_label(tr("Add Point"));
+    ui->subMenu_4->set_spin(tr("Gain"), "dB", 0, 100, 1);
 }
 
-void DacMenu::delete_point_item()
+void TcgMenu::add_point_item()
 {
-    ui->subMenu_5->set_label(tr("Delete Point"));
+    ui->subMenu_5->set_label(tr("Add Point"));
 }
 
-void DacMenu::do_mode_event(int pos)
+void TcgMenu::delete_point_item()
+{
+    ui->subMenu_6->set_label(tr("Delete Point"));
+}
+
+void TcgMenu::do_mode_event(int pos)
 {
     if (pos == 0) {
         m_settingFlag = true;
         curve_no_item();
         curve_x_item();
         db_offset_item();
-        ref_gain_item();
         switch_item();
+        ui->subMenu_6->set_type(MenuItem::None);
     } else {
         m_settingFlag = false;
         point_item();
         position_item();
+        gain_item();
         add_point_item();
         delete_point_item();
-        ui->subMenu_6->set_type(MenuItem::None);
     }
 }
