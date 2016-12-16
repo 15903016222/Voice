@@ -176,3 +176,8 @@ void SpinMenuItem::set(const QString &title, const QString &unit, double min, do
 
     update_title();
 }
+
+double SpinMenuItem::get_current_value() const
+{
+    return ui->doubleSpinBox->value();
+}

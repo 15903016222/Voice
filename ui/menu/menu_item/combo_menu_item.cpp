@@ -68,3 +68,8 @@ void ComboMenuItem::set(const QString &title, const QStringList &texts)
     ui->comboBox->clear();
     ui->comboBox->addItems(texts);
 }
+
+int ComboMenuItem::get_current_index() const
+{
+    return ui->comboBox->currentIndex();
+}

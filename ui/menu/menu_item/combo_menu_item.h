@@ -28,6 +28,7 @@ public:
     void set_items(const QStringList &texts);
 
     void set(const QString &title, const QStringList &texts);
+    int get_current_index() const;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
