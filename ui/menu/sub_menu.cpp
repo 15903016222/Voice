@@ -31,9 +31,12 @@
 #include "gate_curves/tcg_menu.h"
 
 /* Display */
-#include "display/selection_menu.h"
+#include "display/display_selection_menu.h"
 #include "display/color_setting_menu.h"
 #include "display/properties_menu.h"
+
+/* Probe/Part */
+#include "probe_part/probe_selection_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -112,10 +115,10 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::GateCurves_Output, new OutputMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_DAC, new DacMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
-    m_map.insert(MainMenu::Display_Selection, new SelectionMenu(ui, this));
+    m_map.insert(MainMenu::Display_Selection, new DisplaySelectionMenu(ui, this));
     m_map.insert(MainMenu::Display_ColorSettings, new ColorSettingMenu(ui, this));
     m_map.insert(MainMenu::Displsy_Properties, new PropertiesMenu(ui, this));
-//    m_map.insert(MainMenu::ProbePart_Select, &SubMenu::set_select_menu);
+    m_map.insert(MainMenu::ProbePart_Select, new ProbeSelectionMenu(ui, this));
 //    m_map.insert(MainMenu::ProbePart_Position, &SubMenu::set_position_menu);
 //    m_map.insert(MainMenu::ProbePart_FFT, &SubMenu::set_fft_menu);
 //    m_map.insert(MainMenu::ProbePart_Part, &SubMenu::set_part_menu);
@@ -160,44 +163,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-//    m_curType = type;
-//    m_timer->start();
-//    ui->subMenu_1->clean();
-//    ui->subMenu_2->clean();
-//    ui->subMenu_3->clean();
-//    ui->subMenu_4->clean();
-//    ui->subMenu_5->clean();
-//    ui->subMenu_6->clean();
-}
-
-void SubMenu::set_select_menu(bool show)
-{
-//    if(show) {
-//        /* Group menu item */
-//        set_combobox_menu(ui->subMenu_1, tr("Group"), m_list_group3);
-
-//        /* Group Mode menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Group Mode"), m_list_groupMode);
-
-//        /* Probe menu item */
-//        set_label_menu(ui->subMenu_3, tr("Probe"));
-//        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_probe_dialog()));
-
-//        /* Wedge menu item */
-//        set_label_menu(ui->subMenu_4, tr("Wedge"));
-//        connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_wedge_dialog()));
-
-//        /* Define menu item */
-//        set_combobox_menu(ui->subMenu_5, tr("Define"), m_list_define);
-
-//        /* Auto Detect menu item */
-//        set_combobox_menu(ui->subMenu_6, tr("Auto Detect"), switchList);
-////        connect(ui->subMenu_6, SIGNAL(combo_event(QString)), this, SLOT(auto_detect_probe(QString)));
-//    } else {
-//        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_probe_dialog()));
-//        disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_wedge_dialog()));
-////        disconnect(ui->subMenu_6, SIGNAL(combo_event(QString)), this, SLOT(auto_detect_probe(QString)));
-//    }
 }
 
 void SubMenu::set_position_menu(bool show)
@@ -895,25 +860,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-    m_list_group3.append(tr("Add"));
-    m_list_group3.append(tr("1"));
-    m_list_group3.append(tr("2"));
-    m_list_group3.append(tr("3"));
-    m_list_group3.append(tr("4"));
-    m_list_group3.append(tr("5"));
-    m_list_group3.append(tr("6"));
-    m_list_group3.append(tr("7"));
-    m_list_group3.append(tr("8"));
-    m_list_group3.append(tr("Remove"));
-
-    m_list_groupMode.append(tr("UT (PA Connector)"));
-    m_list_groupMode.append(tr("PA (Phassed Array)"));
-    m_list_groupMode.append(tr("UT1 (Conventional UT)"));
-    m_list_groupMode.append(tr("UT2 (Conventional UT)"));
-
-    m_list_define.append(tr("Probe"));
-    m_list_define.append(tr("Wedge"));
-
     m_list_skew.append("0°");
     m_list_skew.append("90°");
     m_list_skew.append("180°");
@@ -1029,26 +975,6 @@ void SubMenu::init_step_list()
 
 }
 
-void SubMenu::show_probe_dialog()
-{
-    ProbeDialog probeDialog;
-    probeDialog.exec();
-    QString string = probeDialog.get_current_item_text();
-    if(!string.isEmpty()){
-//        ui->subMenu_3->set_label_text(string.left(string.length() - 4));
-    }
-}
-
-void SubMenu::show_wedge_dialog()
-{
-    WedgeDialog wedgeDialog;
-    wedgeDialog.exec();
-    QString string = wedgeDialog.get_current_item_text();
-    if(!string.isEmpty()){
-//        ui->subMenu_4->set_label_text(string.left(string.length() - 4));
-    }
-}
-
 void SubMenu::show_input_dialog()
 {
 //    InputPanelContext inputPanel;
@@ -1146,9 +1072,6 @@ SubMenu::~SubMenu()
 
     switchList.clear();
     m_list_display.clear();
-    m_list_group3.clear();
-    m_list_groupMode.clear();
-    m_list_define.clear();
     m_list_skew.clear();
     m_list_geometry.clear();
     m_list_material.clear();

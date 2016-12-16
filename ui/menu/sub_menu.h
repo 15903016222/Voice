@@ -32,8 +32,6 @@ public slots:
     void set_menu(MainMenu::Type type);
 
 private slots:
-    void show_probe_dialog();
-    void show_wedge_dialog();
     void show_input_dialog();
     void show_filemanager_dialog();
     void show_ip_address_dialog();
@@ -50,7 +48,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_select_menu(bool show);
     void set_position_menu(bool show);
     void set_fft_menu(bool show);
     void set_part_menu(bool show);
@@ -99,9 +96,6 @@ private:
     QStringList switchList;
 
     QStringList m_list_display;
-    QStringList m_list_group3;
-    QStringList m_list_groupMode;
-    QStringList m_list_define;
     QStringList m_list_skew;
     QStringList m_list_geometry;
     QStringList m_list_material;
