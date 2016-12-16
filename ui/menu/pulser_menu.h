@@ -14,20 +14,23 @@ class PulserMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    PulserMenu(Ui::SubMenu *ui, QObject *parent);
+    explicit PulserMenu(Ui::SubMenu *ui, QObject *parent);
+    ~PulserMenu();
+
     void show();
     void hide();
 
 private:
+    MenuItem *m_txrxItem;
+    MenuItem *m_pulserItem;
+    MenuItem *m_voltagesItem;
+    MenuItem *m_pwItem;
+    MenuItem *m_prfItem;
+    MenuItem *m_noneItem;
+
     QStringList m_txRxMode;
     QStringList m_voltages;
     QStringList m_prfs;
-
-    void txrx_item();
-    void pulser_item();
-    void voltage_item();
-    void pw_item();
-    void prf_item();
 };
 
 #endif // __PULSER_MENU_H__

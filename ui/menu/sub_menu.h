@@ -136,11 +136,6 @@ private:
     double m_brightness;  
 
     MainMenu::Type m_preType;
-    MainMenu::Type m_curType;
-    QTimer *m_timer;
-
-private slots:
-    void do_timeout();
 };
 
 #endif // SUB_MENU_H

@@ -21,6 +21,7 @@ MenuItem::MenuItem(QWidget *parent) :
 
 MenuItem::~MenuItem()
 {
+    qDebug()<<__func__<<__LINE__;;
     delete ui;
 }
 

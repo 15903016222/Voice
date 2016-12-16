@@ -13,6 +13,7 @@
 #include <QStringList>
 
 #include "ui_sub_menu.h"
+#include "menu_item.h"
 
 class BaseMenu : public QObject
 {
