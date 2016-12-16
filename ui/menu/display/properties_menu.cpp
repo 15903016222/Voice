@@ -65,24 +65,17 @@ void PropertiesMenu::show()
         /* B-Scan */
         ui->menuItem1->layout()->addWidget(m_menuItem[0]);
         ui->menuItem2->layout()->addWidget(m_compressionItem);
-        ui->menuItem3->layout()->addWidget(m_menuItem[5]);
-        ui->menuItem4->layout()->addWidget(m_menuItem[5]);
-        ui->menuItem5->layout()->addWidget(m_menuItem[5]);
         m_menuItem[0]->show();
         m_compressionItem->show();
-        m_menuItem[5]->show();
         break;
     case 2:
         /* C-Scan */
         ui->menuItem1->layout()->addWidget(m_menuItem[0]);
         ui->menuItem2->layout()->addWidget(m_ratioItem);
         ui->menuItem3->layout()->addWidget(m_cScanModeItem);
-        ui->menuItem4->layout()->addWidget(m_menuItem[5]);
-        ui->menuItem4->layout()->addWidget(m_menuItem[5]);
         m_menuItem[0]->show();
         m_ratioItem->show();
         m_cScanModeItem->show();
-        m_menuItem[5]->show();
         break;
     default:
         break;

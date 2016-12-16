@@ -13,7 +13,6 @@
 #include "label_menu_item.h"
 
 QStringList BaseMenu::s_onOff;
-//int BaseMenu::MaxItem = 6;
 
 BaseMenu::BaseMenu(Ui::SubMenu *ui, const MenuItem::Type types[], QObject *parent)
     :QObject(parent)
