@@ -16,6 +16,9 @@ signals:
 public slots:
 
 private:
+    LabelMenuItem *m_receiverItem;
+
+
     QStringList m_filters;
     QStringList m_rectifiers;
     QStringList m_averagings;

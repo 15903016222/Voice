@@ -1,8 +1,15 @@
+/**
+ * @file label_menu_item.cpp
+ * @brief label menu item
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "label_menu_item.h"
 #include "ui_label_menu_item.h"
 
 LabelMenuItem::LabelMenuItem(QWidget *parent) :
-    QWidget(parent),
+    MenuItem(parent, MenuItem::Label),
     ui(new Ui::LabelMenuItem)
 {
     ui->setupUi(this);

@@ -1,13 +1,20 @@
+/**
+ * @file combo_menu_item.h
+ * @brief combo menu item
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #ifndef __COMBO_MENU_ITEM_H__
 #define __COMBO_MENU_ITEM_H__
 
-#include <QWidget>
+#include "menu_item.h"
 
 namespace Ui {
 class ComboMenuItem;
 }
 
-class ComboMenuItem : public QWidget
+class ComboMenuItem : public MenuItem
 {
     Q_OBJECT
 
@@ -21,9 +28,6 @@ public:
     void set_items(const QStringList &texts);
 
     void set(const QString &title, const QStringList &texts);
-
-signals:
-    void value_changed(int index);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);

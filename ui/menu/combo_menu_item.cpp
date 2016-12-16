@@ -1,3 +1,10 @@
+/**
+ * @file combo_menu_item.cpp
+ * @brief combo box menu item
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "combo_menu_item.h"
 #include "ui_combo_menu_item.h"
 
@@ -5,7 +12,7 @@
 #include <QListView>
 
 ComboMenuItem::ComboMenuItem(QWidget *parent) :
-    QWidget(parent),
+    MenuItem(parent, MenuItem::Combo),
     ui(new Ui::ComboMenuItem)
 {
     ui->setupUi(this);

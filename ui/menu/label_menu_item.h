@@ -1,13 +1,20 @@
+/**
+ * @file label_menu_item.h
+ * @brief label menu item
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #ifndef __LABEL_MENU_ITEM_H__
 #define __LABEL_MENU_ITEM_H__
 
-#include <QWidget>
+#include "menu_item.h"
 
 namespace Ui {
 class LabelMenuItem;
 }
 
-class LabelMenuItem : public QWidget
+class LabelMenuItem : public MenuItem
 {
     Q_OBJECT
 

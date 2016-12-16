@@ -1,10 +1,17 @@
+/**
+ * @file spin_menu_item.cpp
+ * @brief spin menu item
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "spin_menu_item.h"
 #include "ui_spin_menu_item.h"
 
 #include <QKeyEvent>
 
 SpinMenuItem::SpinMenuItem(QWidget *parent) :
-    QWidget(parent),
+    MenuItem(parent, MenuItem::Spin),
     ui(new Ui::SpinMenuItem)
 {
     ui->setupUi(this);

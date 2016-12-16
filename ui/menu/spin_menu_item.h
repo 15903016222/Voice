@@ -1,13 +1,20 @@
+/**
+ * @file spin_menu_item.h
+ * @brief spin menu item
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #ifndef __SPIN_MENU_ITEM_H__
 #define __SPIN_MENU_ITEM_H__
 
-#include <QWidget>
+#include "menu_item.h"
 
 namespace Ui {
 class SpinMenuItem;
 }
 
-class SpinMenuItem : public QWidget
+class SpinMenuItem : public MenuItem
 {
     Q_OBJECT
 
@@ -22,9 +29,6 @@ public:
     void set_decimals(int prec);
 
     void set(const QString &title, const QString &unit, double min, double max, int decimals);
-
-signals:
-    void value_changed(double value);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
