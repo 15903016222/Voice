@@ -9,21 +9,24 @@
 #ifndef __BASE_MENU_H__
 #define __BASE_MENU_H__
 
-#include <QObject>
 #include <QStringList>
 
 #include "ui_sub_menu.h"
-#include "spin_menu_item.h"
-#include "combo_menu_item.h"
-#include "label_menu_item.h"
+#include "menu_item.h"
+
+#define MAX_ITEMS   6
 
 class BaseMenu : public QObject
 {
     Q_OBJECT
 public:
-    explicit BaseMenu(Ui::SubMenu *ui, QObject *parent = 0);
-    virtual void show() = 0;
-    virtual void hide() = 0;
+    explicit BaseMenu(Ui::SubMenu *ui,
+                      const MenuItem::Type types[MAX_ITEMS],
+                      QObject *parent = 0);
+    virtual ~BaseMenu();
+
+    virtual void show();
+    virtual void hide();
 
 signals:
 
@@ -31,6 +34,8 @@ public slots:
 
 protected:
     static QStringList s_onOff;
+
+    MenuItem *m_menuItem[MAX_ITEMS];
 
     Ui::SubMenu *ui;
 };

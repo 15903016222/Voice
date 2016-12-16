@@ -6,79 +6,40 @@
  * @date 2016-12-14
  */
 #include "pulser_menu.h"
-#include <QDebug>
+
+static const MenuItem::Type s_types[MAX_ITEMS] = {
+    MenuItem::Combo,
+    MenuItem::Spin,
+    MenuItem::Combo,
+    MenuItem::Spin,
+    MenuItem::Combo,
+    MenuItem::Label
+};
 
 PulserMenu::PulserMenu(Ui::SubMenu *ui, QObject *parent)
-    :BaseMenu(ui, parent)
+    :BaseMenu(ui, s_types, parent)
 {
-    m_txRxMode.append(tr("PC"));
-    m_txRxMode.append(tr("PE"));
-    m_txRxMode.append(tr("TT"));
-    m_txRxMode.append(tr("TOFD"));
+    QStringList txRxModesList;
+    QStringList voltagesList;
+    QStringList prfsList;
 
-    m_voltages.append("50V");
-    m_voltages.append("100V");
-    m_voltages.append("200V");
+    txRxModesList.append(tr("PC"));
+    txRxModesList.append(tr("PE"));
+    txRxModesList.append(tr("TT"));
+    txRxModesList.append(tr("TOFD"));
 
-    m_prfs.append(tr("Auto Max"));
-    m_prfs.append(tr("Max/2"));
-    m_prfs.append(tr("Optimum"));
-    m_prfs.append(tr("UserDef"));
+    voltagesList.append("50V");
+    voltagesList.append("100V");
+    voltagesList.append("200V");
 
-    m_txrxItem = new ComboMenuItem();
-    m_pulserItem = new SpinMenuItem();
-    m_voltagesItem = new ComboMenuItem();
-    m_pwItem = new SpinMenuItem();
-    m_prfItem = new ComboMenuItem();
-    m_noneItem = new LabelMenuItem();
+    prfsList.append(tr("Auto Max"));
+    prfsList.append(tr("Max/2"));
+    prfsList.append(tr("Optimum"));
+    prfsList.append(tr("UserDef"));
 
-    m_txrxItem->set(tr("Tx/Rx Mode"), m_txRxMode);
-    m_pulserItem->set(tr("Pulser"), "", 1, 113, 0);
-    m_voltagesItem->set(tr("Voltage"), m_voltages);
-    m_pwItem->set(tr("PW"), "ns", 30, 500, 1);
-    m_prfItem->set(tr("PRF"), m_prfs);
-}
-
-PulserMenu::~PulserMenu()
-{
-    delete m_txrxItem;
-    delete m_pulserItem;
-    delete m_voltagesItem;
-    delete m_pwItem;
-    delete m_prfItem;
-    delete m_noneItem;
-}
-
-void PulserMenu::show()
-{
-    ui->menuItem1->layout()->addWidget(m_txrxItem);
-    ui->menuItem2->layout()->addWidget(m_pulserItem);
-    ui->menuItem3->layout()->addWidget(m_voltagesItem);
-    ui->menuItem4->layout()->addWidget(m_pwItem);
-    ui->menuItem5->layout()->addWidget(m_prfItem);
-    ui->menuItem6->layout()->addWidget(m_noneItem);
-
-    m_txrxItem->show();
-    m_pulserItem->show();
-    m_voltagesItem->show();
-    m_pwItem->show();
-    m_prfItem->show();
-    m_noneItem->show();
-}
-
-void PulserMenu::hide()
-{
-    ui->menuItem1->layout()->removeWidget(m_txrxItem);
-    ui->menuItem2->layout()->removeWidget(m_pulserItem);
-    ui->menuItem3->layout()->removeWidget(m_voltagesItem);
-    ui->menuItem4->layout()->removeWidget(m_pwItem);
-    ui->menuItem5->layout()->removeWidget(m_prfItem);
-    ui->menuItem6->layout()->removeWidget(m_noneItem);
-
-    m_txrxItem->hide();
-    m_pulserItem->hide();
-    m_voltagesItem->hide();
-    m_pwItem->hide();
-    m_prfItem->hide();
-    m_noneItem->hide();
+    m_menuItem[0]->set(tr("Tx/Rx Mode"), txRxModesList);
+    m_menuItem[1]->set(tr("Pulser"), "", 1, 113, 0);
+    m_menuItem[2]->set(tr("Voltage"), voltagesList);
+    m_menuItem[3]->set(tr("PW"), "ns", 30, 500, 1);
+    m_menuItem[4]->set(tr("PRF"), prfsList);
 }

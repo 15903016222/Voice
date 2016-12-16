@@ -15,25 +15,6 @@ class GeneralMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit GeneralMenu(Ui::SubMenu *ui, QObject *parent = 0);
-    ~GeneralMenu();
-
-    void show();
-    void hide();
-
-signals:
-
-public slots:
-
-private:
-    SpinMenuItem *m_gainItem;
-    SpinMenuItem *m_startItem;
-    SpinMenuItem *m_rangeItem;
-    SpinMenuItem *m_velocityItem;
-    SpinMenuItem *m_wedgeItem;
-    ComboMenuItem *m_utUnitItem;
-
-    QStringList m_utUnit;
-
 };
 
 #endif // GENERALMENU_H

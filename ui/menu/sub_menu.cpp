@@ -13,15 +13,15 @@
 /* UT Settings */
 #include "general_menu.h"
 #include "pulser_menu.h"
-#include "receiver_menu.h"
-#include "ut_advanced_menu.h"
+//#include "receiver_menu.h"
+//#include "ut_advanced_menu.h"
 
-/* Gate/Curves */
-#include "gate_menu.h"
-#include "alarm_menu.h"
-#include "output_menu.h"
-#include "dac_menu.h"
-#include "tcg_menu.h"
+///* Gate/Curves */
+//#include "gate_menu.h"
+//#include "alarm_menu.h"
+//#include "output_menu.h"
+//#include "dac_menu.h"
+//#include "tcg_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>

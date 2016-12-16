@@ -15,22 +15,6 @@ class PulserMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit PulserMenu(Ui::SubMenu *ui, QObject *parent);
-    ~PulserMenu();
-
-    void show();
-    void hide();
-
-private:
-    ComboMenuItem *m_txrxItem;
-    SpinMenuItem  *m_pulserItem;
-    ComboMenuItem *m_voltagesItem;
-    SpinMenuItem  *m_pwItem;
-    ComboMenuItem *m_prfItem;
-    LabelMenuItem *m_noneItem;
-
-    QStringList m_txRxMode;
-    QStringList m_voltages;
-    QStringList m_prfs;
 };
 
 #endif // __PULSER_MENU_H__

@@ -8,6 +8,7 @@ FORMS += \
     $$PWD/sub_menu.ui
 
 HEADERS += \
+    $$PWD/menu_item.h \
     $$PWD/spin_menu_item.h \
     $$PWD/combo_menu_item.h \
     $$PWD/label_menu_item.h \
@@ -16,7 +17,6 @@ HEADERS += \
     $$PWD/base_menu.h \
     $$PWD/general_menu.h \
     $$PWD/pulser_menu.h \
-    $$PWD/menu_item.h
 #    $$PWD/receiver_menu.h \
 #    $$PWD/ut_advanced_menu.h \
 #    $$PWD/gate_menu.h \
@@ -26,6 +26,7 @@ HEADERS += \
 #    $$PWD/tcg_menu.h
 
 SOURCES += \
+    $$PWD/menu_item.cpp \
     $$PWD/spin_menu_item.cpp \
     $$PWD/combo_menu_item.cpp \
     $$PWD/label_menu_item.cpp \
@@ -33,8 +34,7 @@ SOURCES += \
     $$PWD/sub_menu.cpp \
     $$PWD/base_menu.cpp \
     $$PWD/general_menu.cpp \
-    $$PWD/pulser_menu.cpp \
-    $$PWD/menu_item.cpp
+    $$PWD/pulser_menu.cpp
 #    $$PWD/receiver_menu.cpp \
 #    $$PWD/ut_advanced_menu.cpp \
 #    $$PWD/gate_menu.cpp \
