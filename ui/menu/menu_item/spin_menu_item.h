@@ -29,6 +29,7 @@ public:
     void set_decimals(int prec);
 
     void set(const QString &title, const QString &unit, double min, double max, int decimals);
+    double get_current_value() const;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);

@@ -32,6 +32,8 @@
 
 /* Display */
 #include "display/selection_menu.h"
+#include "display/color_setting_menu.h"
+#include "display/properties_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -111,9 +113,8 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::GateCurves_DAC, new DacMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
     m_map.insert(MainMenu::Display_Selection, new SelectionMenu(ui, this));
-
-//    m_map.insert(MainMenu::Display_ColorSettings, &SubMenu::set_colorSettings_menu);
-//    m_map.insert(MainMenu::Displsy_Properties, &SubMenu::set_properties_menu);
+    m_map.insert(MainMenu::Display_ColorSettings, new ColorSettingMenu(ui, this));
+    m_map.insert(MainMenu::Displsy_Properties, new PropertiesMenu(ui, this));
 //    m_map.insert(MainMenu::ProbePart_Select, &SubMenu::set_select_menu);
 //    m_map.insert(MainMenu::ProbePart_Position, &SubMenu::set_position_menu);
 //    m_map.insert(MainMenu::ProbePart_FFT, &SubMenu::set_fft_menu);
@@ -167,79 +168,6 @@ void SubMenu::set_menu(MainMenu::Type type)
 //    ui->subMenu_4->clean();
 //    ui->subMenu_5->clean();
 //    ui->subMenu_6->clean();
-}
-
-void SubMenu::set_colorSettings_menu(bool show)
-{
-//    if(show) {
-//        /* Amplitude menu item */
-//        set_label_menu(ui->subMenu_1, tr("Amplitude"));
-
-//        /* Depth menu item */
-//        set_label_menu(ui->subMenu_2, tr("Depth"));
-
-//        /* TOFD menu item */
-//        set_label_menu(ui->subMenu_3, tr("TOFD"));
-
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_properties_menu(bool show)
-{
-//    if(show) {
-//        QString option;
-
-//        /* Scan menu item */
-//        set_combobox_menu(ui->subMenu_1, tr("Scan"), m_list_scan);
-
-//        if(option == "A-Scan") {
-
-//            /* Color menu item */
-//            set_combobox_menu(ui->subMenu_2, tr("Color"), m_list_color);
-
-//            /* Envelope menu item */
-//            set_combobox_menu(ui->subMenu_3, tr("Envelope"), m_list_envelope);
-
-//            /* Peak Holding menu item */
-//            set_combobox_menu(ui->subMenu_4, tr("Peak Holding"), switchList);
-
-//            /* Reference Holding menu item */
-//            set_combobox_menu(ui->subMenu_5, tr("Reference Holding"), switchList);
-
-//            ui->subMenu_6->set_type(MenuItem::None);
-//        } else if(option == "B-Scan") {
-
-//            /* Compression menu item */
-//            set_combobox_menu(ui->subMenu_2, tr("Compression"), switchList);
-
-//            ui->subMenu_3->set_type(MenuItem::None);
-//            ui->subMenu_4->set_type(MenuItem::None);
-//            ui->subMenu_5->set_type(MenuItem::None);
-//            ui->subMenu_6->set_type(MenuItem::None);
-
-//        } else if(option == "C-Scan") {
-
-//            /* Ratio 1:1 menu item */
-//            set_combobox_menu(ui->subMenu_2, tr("Ratio 1:1"), switchList);
-
-//            /* C-Scan Mode menu item */
-//            set_combobox_menu(ui->subMenu_3, tr("C-Scan Mode"), m_list_cScanMode);
-
-//            /* Compression menu item */
-//            set_combobox_menu(ui->subMenu_4, tr("Compression"), switchList);
-
-//            ui->subMenu_5->set_type(MenuItem::None);
-//            ui->subMenu_6->set_type(MenuItem::None);
-
-//        }
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_select_menu(bool show)
@@ -967,23 +895,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-    m_list_scan.append(tr("A-Scan"));
-    m_list_scan.append(tr("B-Scan"));
-    m_list_scan.append(tr("C-Scan"));
-
-    m_list_color.append(tr("Blue"));
-    m_list_color.append(tr("Green"));
-    m_list_color.append(tr("Red"));
-    m_list_color.append(tr("Yellow"));
-    m_list_color.append(tr("Black"));
-    m_list_color.append(tr("White"));
-
-    m_list_envelope.append(tr("None"));
-    m_list_envelope.append(tr("Infinite"));
-
-    m_list_cScanMode.append(tr("Sectorial"));
-    m_list_cScanMode.append(tr("Linear"));
-
     m_list_group3.append(tr("Add"));
     m_list_group3.append(tr("1"));
     m_list_group3.append(tr("2"));
@@ -1235,11 +1146,6 @@ SubMenu::~SubMenu()
 
     switchList.clear();
     m_list_display.clear();
-    m_list_cScanSource.clear();
-    m_list_scan.clear();
-    m_list_color.clear();
-    m_list_envelope.clear();
-    m_list_cScanMode.clear();
     m_list_group3.clear();
     m_list_groupMode.clear();
     m_list_define.clear();

@@ -50,9 +50,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_colorSettings_menu(bool show);
-    void set_properties_menu(bool show);
-
     void set_select_menu(bool show);
     void set_position_menu(bool show);
     void set_fft_menu(bool show);
@@ -102,11 +99,6 @@ private:
     QStringList switchList;
 
     QStringList m_list_display;
-    QStringList m_list_cScanSource;
-    QStringList m_list_scan;
-    QStringList m_list_color;
-    QStringList m_list_envelope;
-    QStringList m_list_cScanMode;
     QStringList m_list_group3;
     QStringList m_list_groupMode;
     QStringList m_list_define;
