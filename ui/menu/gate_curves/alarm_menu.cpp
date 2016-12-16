@@ -1,3 +1,10 @@
+/**
+ * @file alarm_menu.cpp
+ * @brief alarm menu
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "alarm_menu.h"
 
 static const MenuItem::Type s_types[MAX_ITEMS] = {

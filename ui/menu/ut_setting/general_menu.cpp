@@ -24,7 +24,7 @@ GeneralMenu::GeneralMenu(Ui::SubMenu *ui, QObject *parent)
     utUnitList.append(tr("Sound Path"));
     utUnitList.append(tr("True Path"));
 
-    m_menuItem[0]->set(tr("Gain"), "dB", 0, 100, 1);
+    m_menuItem[0]->set(tr("Gain"), "dB", 0, 90, 1);
     m_menuItem[1]->set(tr("Start"), "mm", 0, 1000, 2);
     m_menuItem[2]->set(tr("Range"), "mm", 0, 1000, 2);
     m_menuItem[3]->set(tr("Velocity"), "m/s", 635, 12540, 1);

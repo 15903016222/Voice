@@ -1,3 +1,10 @@
+/**
+ * @file sub_menu.cpp
+ * @brief Third menu
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "sub_menu.h"
 
 #include "probedialog.h"
@@ -11,17 +18,20 @@
 #include "datetimesetdialog.h"
 
 /* UT Settings */
-#include "general_menu.h"
-#include "pulser_menu.h"
-#include "receiver_menu.h"
-#include "ut_advanced_menu.h"
+#include "ut_setting/general_menu.h"
+#include "ut_setting/pulser_menu.h"
+#include "ut_setting/receiver_menu.h"
+#include "ut_setting/ut_advanced_menu.h"
 
 /* Gate/Curves */
-#include "gate_menu.h"
-#include "alarm_menu.h"
-#include "output_menu.h"
-#include "dac_menu.h"
-#include "tcg_menu.h"
+#include "gate_curves/gate_menu.h"
+#include "gate_curves/alarm_menu.h"
+#include "gate_curves/output_menu.h"
+#include "gate_curves/dac_menu.h"
+#include "gate_curves/tcg_menu.h"
+
+/* Display */
+#include "display/selection_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -100,8 +110,8 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::GateCurves_Output, new OutputMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_DAC, new DacMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
+    m_map.insert(MainMenu::Display_Selection, new SelectionMenu(ui, this));
 
-    //    m_map.insert(MainMenu::Display_Selection, &SubMenu::set_selection_menu);
 //    m_map.insert(MainMenu::Display_ColorSettings, &SubMenu::set_colorSettings_menu);
 //    m_map.insert(MainMenu::Displsy_Properties, &SubMenu::set_properties_menu);
 //    m_map.insert(MainMenu::ProbePart_Select, &SubMenu::set_select_menu);
@@ -157,30 +167,6 @@ void SubMenu::set_menu(MainMenu::Type type)
 //    ui->subMenu_4->clean();
 //    ui->subMenu_5->clean();
 //    ui->subMenu_6->clean();
-}
-
-void SubMenu::set_selection_menu(bool show)
-{
-//    if(show) {
-//        /* Group menu item */
-//        set_combobox_menu(ui->subMenu_1, tr("Group"), m_list_group2);
-
-//        /* Display menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Display"), m_list_display);
-
-//        /* C-Scan Source menu item */
-//        set_combobox_menu(ui->subMenu_3, tr("C-Scan Source"), m_list_cScanSource);
-
-//        /* Min.Thickness menu item */
-//        set_spinbox_menu(ui->subMenu_4, tr("Min.Thickness"), "mm", stepList6, 0.05, 20000, 2);
-
-//        /* Max.Thickness menu item */
-//        set_spinbox_menu(ui->subMenu_5, tr("Max.Thickness"), "mm", stepList6, 0.06, 20000, 2);
-
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_colorSettings_menu(bool show)
@@ -981,28 +967,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-
-
-    m_list_group2.append(tr("All"));
-    m_list_group2.append(tr("Current"));
-
-    m_list_display.append(tr("A A-Scan"));
-    m_list_display.append(tr("B B-Scan"));
-    m_list_display.append(tr("C C-Scan"));
-    m_list_display.append(tr("S S-Scan"));
-    m_list_display.append(tr("A-B A-Scan B-Scan"));
-    m_list_display.append(tr("A-S A-Scan S-Scan"));
-    m_list_display.append(tr("A-B-C A-Scan B-Scan C-Scan"));
-    m_list_display.append(tr("A-B-S A-Scan B-Scan S-Scan"));
-    m_list_display.append(tr("A-S-[C] A-Scan S-Scan [C-Scan]"));
-    m_list_display.append(tr("S-A-A-A S-Scan A-Scan A-Scan A-Scan"));
-    m_list_display.append(tr("S-A-C-C S-Scan A-Scan C-Scan C-Scan"));
-
-    m_list_cScanSource.append(tr("A%"));
-    m_list_cScanSource.append(tr("B%"));
-    m_list_cScanSource.append(tr("Thickness"));
-    m_list_cScanSource.append(tr("I/"));
-
     m_list_scan.append(tr("A-Scan"));
     m_list_scan.append(tr("B-Scan"));
     m_list_scan.append(tr("C-Scan"));
@@ -1270,7 +1234,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_group2.clear();
     m_list_display.clear();
     m_list_cScanSource.clear();
     m_list_scan.clear();

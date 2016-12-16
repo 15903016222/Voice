@@ -1,3 +1,10 @@
+/**
+ * @file output_menu.cpp
+ * @brief Gate/Curves ouput menu
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "output_menu.h"
 
 static const MenuItem::Type s_types[MAX_ITEMS] = {

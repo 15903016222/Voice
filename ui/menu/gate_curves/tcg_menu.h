@@ -1,3 +1,10 @@
+/**
+ * @file tcg_menu.h
+ * @brief Gate/Curves tcg menu bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #ifndef __TCG_MENU_H__
 #define __TCG_MENU_H__
 

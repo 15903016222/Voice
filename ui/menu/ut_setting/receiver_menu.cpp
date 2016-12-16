@@ -1,3 +1,10 @@
+/**
+ * @file receiver_menu.cpp
+ * @brief UT Setting receiver menu
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "receiver_menu.h"
 
 static const MenuItem::Type s_types[MAX_ITEMS] = {

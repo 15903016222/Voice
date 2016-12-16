@@ -1,3 +1,10 @@
+/**
+ * @file tcg_menu.cpp
+ * @brief Gate/Curves tcg menu bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "tcg_menu.h"
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"

@@ -1,3 +1,10 @@
+/**
+ * @file dac_menu.h
+ * @brief dac menu
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #ifndef __DAC_MENU_H__
 #define __DAC_MENU_H__
 

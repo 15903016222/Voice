@@ -1,3 +1,10 @@
+/**
+ * @file main_menu.cpp
+ * @brief main menu
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "main_menu.h"
 #include "ui_main_menu.h"
 

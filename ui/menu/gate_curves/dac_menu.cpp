@@ -1,3 +1,10 @@
+/**
+ * @file dac_menu.cpp
+ * @brief dac menu
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #include "dac_menu.h"
 #include "combo_menu_item.h"
 #include "spin_menu_item.h"

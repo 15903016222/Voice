@@ -1,3 +1,10 @@
+/**
+ * @file sub_menu.h
+ * @brief Third menu
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-16
+ */
 #ifndef __SUB_MENU_H__
 #define __SUB_MENU_H__
 
@@ -43,7 +50,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_selection_menu(bool show);
     void set_colorSettings_menu(bool show);
     void set_properties_menu(bool show);
 
@@ -95,7 +101,6 @@ private:
 
     QStringList switchList;
 
-    QStringList m_list_group2;
     QStringList m_list_display;
     QStringList m_list_cScanSource;
     QStringList m_list_scan;

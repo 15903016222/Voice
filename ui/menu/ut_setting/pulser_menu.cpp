@@ -40,6 +40,6 @@ PulserMenu::PulserMenu(Ui::SubMenu *ui, QObject *parent)
     m_menuItem[0]->set(tr("Tx/Rx Mode"), txRxModesList);
     m_menuItem[1]->set(tr("Pulser"), "", 1, 113, 0);
     m_menuItem[2]->set(tr("Voltage"), voltagesList);
-    m_menuItem[3]->set(tr("PW"), "ns", 30, 500, 1);
+    m_menuItem[3]->set(tr("PW"), "ns", 30, 1000, 1);
     m_menuItem[4]->set(tr("PRF"), prfsList);
 }
