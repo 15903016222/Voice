@@ -25,19 +25,18 @@ PulserMenu::PulserMenu(Ui::SubMenu *ui, QObject *parent)
     m_prfs.append(tr("Optimum"));
     m_prfs.append(tr("UserDef"));
 
-    m_txrxItem = new MenuItem();
-    m_pulserItem = new MenuItem();
-    m_voltagesItem = new MenuItem();
-    m_pwItem = new MenuItem();
-    m_prfItem = new MenuItem();
-    m_noneItem = new MenuItem();
+    m_txrxItem = new ComboMenuItem();
+    m_pulserItem = new SpinMenuItem();
+    m_voltagesItem = new ComboMenuItem();
+    m_pwItem = new SpinMenuItem();
+    m_prfItem = new ComboMenuItem();
+    m_noneItem = new LabelMenuItem();
 
-    m_txrxItem->set_combo(tr("Tx/Rx Mode"), m_txRxMode);
-    m_pulserItem->set_spin(tr("Pulser"), "", 1, 113, 0);
-    m_voltagesItem->set_combo(tr("Voltage"), m_voltages);
-    m_pwItem->set_spin(tr("PW"), "ns", 30, 500, 1);
-    m_prfItem->set_combo(tr("PRF"), m_prfs);
-    m_noneItem->set_type(MenuItem::None);
+    m_txrxItem->set(tr("Tx/Rx Mode"), m_txRxMode);
+    m_pulserItem->set(tr("Pulser"), "", 1, 113, 0);
+    m_voltagesItem->set(tr("Voltage"), m_voltages);
+    m_pwItem->set(tr("PW"), "ns", 30, 500, 1);
+    m_prfItem->set(tr("PRF"), m_prfs);
 }
 
 PulserMenu::~PulserMenu()

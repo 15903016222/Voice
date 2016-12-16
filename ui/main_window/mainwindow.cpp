@@ -19,11 +19,11 @@ MainWindow::MainWindow(QWidget *parent) :
     steps.append(5.0);
 
     /* gain menu item */
-    ui->gainMenuItem->set_spin(tr("Gain"), "dB", 0, 80, 1);
+    ui->gainMenuItem->set(tr("Gain"), "dB", 0, 80, 1);
     ui->gainMenuItem->set_suffix("(0.0)");
 
     /* angle menu item */
-    ui->angleMenuItem->set_spin(tr("Angle"), "&#176;", 0, 180, 1);
+    ui->angleMenuItem->set(tr("Angle"), "&#176;", 0, 180, 1);
 
     Mcu *mcu = Mcu::get_mcu();
     connect(mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));

@@ -2,15 +2,12 @@
 #define __SUB_MENU_H__
 
 #include "main_menu.h"
-#include "menu_item.h"
 #include "mcu.h"
-
-#include "base_menu.h"
 
 #include <QTreeWidgetItem>
 #include <QMap>
 
-#include <QTimer>
+#include "base_menu.h"
 
 namespace Ui {
 class SubMenu;
@@ -81,9 +78,6 @@ private:
     void set_network_menu(bool show);
     void set_service_menu(bool show);
 
-    void set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals);
-    void set_combobox_menu(MenuItem *widget, const QString &title, QStringList &texts);
-    void set_label_menu(MenuItem *widget, const QString &title);
     void init_map();
     void init_option_stringlist();
     void init_step_list();

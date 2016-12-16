@@ -1,12 +1,16 @@
 INCLUDEPATH += $$PWD
 
 FORMS += \
-    $$PWD/menu_item.ui \
+    $$PWD/spin_menu_item.ui \
+    $$PWD/combo_menu_item.ui \
+    $$PWD/label_menu_item.ui \
     $$PWD/main_menu.ui \
     $$PWD/sub_menu.ui
 
 HEADERS += \
-    $$PWD/menu_item.h \
+    $$PWD/spin_menu_item.h \
+    $$PWD/combo_menu_item.h \
+    $$PWD/label_menu_item.h \
     $$PWD/main_menu.h \
     $$PWD/sub_menu.h \
     $$PWD/base_menu.h \
@@ -21,7 +25,9 @@ HEADERS += \
 #    $$PWD/tcg_menu.h
 
 SOURCES += \
-    $$PWD/menu_item.cpp \
+    $$PWD/spin_menu_item.cpp \
+    $$PWD/combo_menu_item.cpp \
+    $$PWD/label_menu_item.cpp \
     $$PWD/main_menu.cpp \
     $$PWD/sub_menu.cpp \
     $$PWD/base_menu.cpp \

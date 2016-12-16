@@ -21,12 +21,12 @@ public:
     void hide();
 
 private:
-    MenuItem *m_txrxItem;
-    MenuItem *m_pulserItem;
-    MenuItem *m_voltagesItem;
-    MenuItem *m_pwItem;
-    MenuItem *m_prfItem;
-    MenuItem *m_noneItem;
+    ComboMenuItem *m_txrxItem;
+    SpinMenuItem  *m_pulserItem;
+    ComboMenuItem *m_voltagesItem;
+    SpinMenuItem  *m_pwItem;
+    ComboMenuItem *m_prfItem;
+    LabelMenuItem *m_noneItem;
 
     QStringList m_txRxMode;
     QStringList m_voltages;

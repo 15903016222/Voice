@@ -25,12 +25,12 @@ signals:
 public slots:
 
 private:
-    MenuItem *m_gainItem;
-    MenuItem *m_startItem;
-    MenuItem *m_rangeItem;
-    MenuItem *m_velocityItem;
-    MenuItem *m_wedgeItem;
-    MenuItem *m_utUnitItem;
+    SpinMenuItem *m_gainItem;
+    SpinMenuItem *m_startItem;
+    SpinMenuItem *m_rangeItem;
+    SpinMenuItem *m_velocityItem;
+    SpinMenuItem *m_wedgeItem;
+    ComboMenuItem *m_utUnitItem;
 
     QStringList m_utUnit;
 

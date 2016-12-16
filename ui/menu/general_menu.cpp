@@ -15,19 +15,19 @@ GeneralMenu::GeneralMenu(Ui::SubMenu *ui, QObject *parent)
     m_utUnit.append(tr("Sound Path"));
     m_utUnit.append(tr("True Path"));
 
-    m_gainItem = new MenuItem();
-    m_startItem = new MenuItem();
-    m_rangeItem = new MenuItem();
-    m_velocityItem = new MenuItem();
-    m_wedgeItem = new MenuItem();
-    m_utUnitItem = new MenuItem();
+    m_gainItem = new SpinMenuItem();
+    m_startItem = new SpinMenuItem();
+    m_rangeItem = new SpinMenuItem();
+    m_velocityItem = new SpinMenuItem();
+    m_wedgeItem = new SpinMenuItem();
+    m_utUnitItem = new ComboMenuItem();
 
-    m_gainItem->set_spin(tr("Gain"), "dB", 0, 100, 1);
-    m_startItem->set_spin(tr("Start"), "mm", 0, 1000, 2);
-    m_rangeItem->set_spin(tr("Range"), "mm", 0, 1000, 2);
-    m_velocityItem->set_spin(tr("Velocity"), "m/s", 635, 12540, 1);
-    m_wedgeItem->set_spin(tr("Wedge Delay"), "μs", 0, 1000, 2);
-    m_utUnitItem->set_combo(tr("UT Unit"), m_utUnit);
+    m_gainItem->set(tr("Gain"), "dB", 0, 100, 1);
+    m_startItem->set(tr("Start"), "mm", 0, 1000, 2);
+    m_rangeItem->set(tr("Range"), "mm", 0, 1000, 2);
+    m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1);
+    m_wedgeItem->set(tr("Wedge Delay"), "μs", 0, 1000, 2);
+    m_utUnitItem->set(tr("UT Unit"), m_utUnit);
 }
 
 GeneralMenu::~GeneralMenu()
@@ -42,7 +42,6 @@ GeneralMenu::~GeneralMenu()
 
 void GeneralMenu::show()
 {
-    qDebug()<<__func__<<__LINE__;
     ui->subMenu_1->layout()->addWidget(m_gainItem);
     ui->subMenu_2->layout()->addWidget(m_startItem);
     ui->subMenu_3->layout()->addWidget(m_rangeItem);
@@ -56,13 +55,10 @@ void GeneralMenu::show()
     m_velocityItem->show();
     m_wedgeItem->show();
     m_utUnitItem->show();
-
-    qDebug()<<__func__<<__LINE__;
 }
 
 void GeneralMenu::hide()
 {
-    qDebug()<<__func__<<__LINE__;
     ui->subMenu_1->layout()->removeWidget(m_gainItem);
     ui->subMenu_2->layout()->removeWidget(m_startItem);
     ui->subMenu_3->layout()->removeWidget(m_rangeItem);
@@ -76,6 +72,4 @@ void GeneralMenu::hide()
     m_velocityItem->hide();
     m_wedgeItem->hide();
     m_utUnitItem->hide();
-
-    qDebug()<<__func__<<__LINE__;
 }

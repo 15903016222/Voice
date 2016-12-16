@@ -150,28 +150,6 @@ void SubMenu::set_menu(MainMenu::Type type)
 //    ui->subMenu_6->clean();
 }
 
-void SubMenu::set_spinbox_menu(MenuItem *widget, const QString &title, const QString &unit, QList<double> &steps, double min, double max, int decimals)
-{
-    widget->set_type(MenuItem::Spin);
-    widget->set_title(title);
-    widget->set_unit(unit);
-    widget->set_range(min, max);
-    widget->set_decimals(decimals);
-}
-
-void SubMenu::set_combobox_menu(MenuItem *widget, const QString &title, QStringList &texts)
-{
-    widget->set_type(MenuItem::Combo);
-    widget->set_title(title);
-    widget->set_combo_items(texts);
-}
-
-void SubMenu::set_label_menu(MenuItem *widget, const QString &title)
-{
-    widget->set_type(MenuItem::None);
-    widget->set_title(title);
-}
-
 void SubMenu::set_selection_menu(bool show)
 {
 //    if(show) {
@@ -1189,11 +1167,11 @@ void SubMenu::show_wedge_dialog()
 
 void SubMenu::show_input_dialog()
 {
-    InputPanelContext inputPanel;
-    MenuItem *widget = qobject_cast<MenuItem*>(sender());
-    inputPanel.set_item_current_text(widget->get_label_text());
-    inputPanel.exec();
-    widget->set_label_text(inputPanel.get_text());
+//    InputPanelContext inputPanel;
+//    MenuItem *widget = qobject_cast<MenuItem*>(sender());
+//    inputPanel.set_item_current_text(widget->get_label_text());
+//    inputPanel.exec();
+//    widget->set_label_text(inputPanel.get_text());
 }
 
 void SubMenu::show_filemanager_dialog()

@@ -13,7 +13,9 @@
 #include <QStringList>
 
 #include "ui_sub_menu.h"
-#include "menu_item.h"
+#include "spin_menu_item.h"
+#include "combo_menu_item.h"
+#include "label_menu_item.h"
 
 class BaseMenu : public QObject
 {
