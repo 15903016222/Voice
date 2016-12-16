@@ -60,13 +60,18 @@ SubMenu::SubMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    new QVBoxLayout(ui->subMenu_1);
-    new QVBoxLayout(ui->subMenu_2);
-    new QVBoxLayout(ui->subMenu_3);
-    new QVBoxLayout(ui->subMenu_4);
-    new QVBoxLayout(ui->subMenu_5);
-    new QVBoxLayout(ui->subMenu_6);
-
+    QVBoxLayout *layout1 = new QVBoxLayout(ui->menuItem1);
+    QVBoxLayout *layout2 = new QVBoxLayout(ui->menuItem2);
+    QVBoxLayout *layout3 = new QVBoxLayout(ui->menuItem3);
+    QVBoxLayout *layout4 = new QVBoxLayout(ui->menuItem4);
+    QVBoxLayout *layout5 = new QVBoxLayout(ui->menuItem5);
+    QVBoxLayout *layout6 = new QVBoxLayout(ui->menuItem6);
+    layout1->setContentsMargins(0, 0, 0, 0);
+    layout2->setContentsMargins(0, 0, 0, 0);
+    layout3->setContentsMargins(0, 0, 0, 0);
+    layout4->setContentsMargins(0, 0, 0, 0);
+    layout5->setContentsMargins(0, 0, 0, 0);
+    layout6->setContentsMargins(0, 0, 0, 0);
 
     switchList.append(tr("On"));
     switchList.append(tr("Off"));

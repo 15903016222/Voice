@@ -30,22 +30,22 @@
     <number>0</number>
    </property>
    <item row="0" column="4">
-    <widget class="QWidget" name="subMenu_5" native="true"/>
+    <widget class="QWidget" name="menuItem5" native="true"/>
    </item>
    <item row="0" column="0">
-    <widget class="QWidget" name="subMenu_1" native="true"/>
+    <widget class="QWidget" name="menuItem1" native="true"/>
    </item>
    <item row="0" column="1">
-    <widget class="QWidget" name="subMenu_2" native="true"/>
+    <widget class="QWidget" name="menuItem2" native="true"/>
    </item>
    <item row="0" column="2">
-    <widget class="QWidget" name="subMenu_3" native="true"/>
+    <widget class="QWidget" name="menuItem3" native="true"/>
    </item>
    <item row="0" column="3">
-    <widget class="QWidget" name="subMenu_4" native="true"/>
+    <widget class="QWidget" name="menuItem4" native="true"/>
    </item>
    <item row="0" column="5">
-    <widget class="QWidget" name="subMenu_6" native="true"/>
+    <widget class="QWidget" name="menuItem6" native="true"/>
    </item>
   </layout>
  </widget>

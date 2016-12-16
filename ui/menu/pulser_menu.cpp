@@ -51,13 +51,12 @@ PulserMenu::~PulserMenu()
 
 void PulserMenu::show()
 {
-    qDebug()<<__func__<<__LINE__;
-    ui->subMenu_1->layout()->addWidget(m_txrxItem);
-    ui->subMenu_2->layout()->addWidget(m_pulserItem);
-    ui->subMenu_3->layout()->addWidget(m_voltagesItem);
-    ui->subMenu_4->layout()->addWidget(m_pwItem);
-    ui->subMenu_5->layout()->addWidget(m_prfItem);
-    ui->subMenu_6->layout()->addWidget(m_noneItem);
+    ui->menuItem1->layout()->addWidget(m_txrxItem);
+    ui->menuItem2->layout()->addWidget(m_pulserItem);
+    ui->menuItem3->layout()->addWidget(m_voltagesItem);
+    ui->menuItem4->layout()->addWidget(m_pwItem);
+    ui->menuItem5->layout()->addWidget(m_prfItem);
+    ui->menuItem6->layout()->addWidget(m_noneItem);
 
     m_txrxItem->show();
     m_pulserItem->show();
@@ -65,18 +64,16 @@ void PulserMenu::show()
     m_pwItem->show();
     m_prfItem->show();
     m_noneItem->show();
-    qDebug()<<__func__<<__LINE__;
 }
 
 void PulserMenu::hide()
 {
-    qDebug()<<__func__<<__LINE__;
-    ui->subMenu_1->layout()->removeWidget(m_txrxItem);
-    ui->subMenu_2->layout()->removeWidget(m_pulserItem);
-    ui->subMenu_3->layout()->removeWidget(m_voltagesItem);
-    ui->subMenu_4->layout()->removeWidget(m_pwItem);
-    ui->subMenu_5->layout()->removeWidget(m_prfItem);
-    ui->subMenu_6->layout()->removeWidget(m_noneItem);
+    ui->menuItem1->layout()->removeWidget(m_txrxItem);
+    ui->menuItem2->layout()->removeWidget(m_pulserItem);
+    ui->menuItem3->layout()->removeWidget(m_voltagesItem);
+    ui->menuItem4->layout()->removeWidget(m_pwItem);
+    ui->menuItem5->layout()->removeWidget(m_prfItem);
+    ui->menuItem6->layout()->removeWidget(m_noneItem);
 
     m_txrxItem->hide();
     m_pulserItem->hide();
@@ -84,6 +81,4 @@ void PulserMenu::hide()
     m_pwItem->hide();
     m_prfItem->hide();
     m_noneItem->hide();
-
-    qDebug()<<__func__<<__LINE__;
 }
