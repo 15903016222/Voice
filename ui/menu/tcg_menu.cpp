@@ -1,28 +1,63 @@
 #include "tcg_menu.h"
+#include "spin_menu_item.h"
+#include "combo_menu_item.h"
+#include "label_menu_item.h"
+
+static const MenuItem::Type s_typs[MAX_ITEMS] = {
+    MenuItem::Combo,
+    MenuItem::Spin,
+    MenuItem::Combo,
+    MenuItem::Spin,
+    MenuItem::Combo,
+    MenuItem::Label
+};
 
 TcgMenu::TcgMenu(Ui::SubMenu *ui, QObject *parent)
-    : BaseMenu(ui, parent)
+    : BaseMenu(ui, s_typs, parent)
 {
-    m_modes.append(tr("Settings"));
-    m_modes.append(tr("Edit"));
+    QStringList modeList;
+    QStringList curveXList;
+    QStringList pointList;
 
-    m_curveXs.append("1");
-    m_curveXs.append("2");
-    m_curveXs.append("3");
-    m_curveXs.append("4");
-    m_curveXs.append("5");
+    modeList.append(tr("Settings"));
+    modeList.append(tr("Edit"));
 
-    m_points.append("1");
-    m_points.append("2");
+    curveXList.append("1");
+    curveXList.append("2");
+    curveXList.append("3");
+    curveXList.append("4");
+    curveXList.append("5");
+
+    pointList.append("1");
+    pointList.append("2");
 
     m_settingFlag = true;
+
+    m_menuItem[0]->set(tr("Mode"), modeList);
+    connect(m_menuItem[0], SIGNAL(value_changed(int)), this, SLOT(do_mode_event(int)));
+
+    m_menuItem[1]->set(tr("Curve No."), "", 1, 5, 0);
+    m_menuItem[2]->set(tr("Curve X"), curveXList);
+    m_menuItem[3]->set(tr("dB Offset"), "dB", -40, 40, 1);
+    m_menuItem[4]->set(tr("Switch"), s_onOff);
+
+    m_pointItem = new ComboMenuItem();
+    m_positionItem = new SpinMenuItem();
+    m_gainItem = new SpinMenuItem();
+    m_addPointItem = new LabelMenuItem();
+    m_deletePointItem = new LabelMenuItem();
+
+    m_pointItem->set(tr("Point"), pointList);
+    m_positionItem->set(tr("Position"), "", 0, 10000, 2);
+    m_gainItem->set(tr("Gain"), "dB", 0, 100, 1);
+    m_addPointItem->set(tr("Add Point"), "");
+    m_deletePointItem->set(tr("Delete Point"), "");
 }
 
 void TcgMenu::show()
 {
-    mode_item();
     if (m_settingFlag) {
-        show_setting();
+        BaseMenu::show();
     } else {
         show_edit();
     }
@@ -30,94 +65,56 @@ void TcgMenu::show()
 
 void TcgMenu::hide()
 {
-    disconnect(ui->subMenu_1, SIGNAL(combo_event(int)), this, SLOT(do_mode_event(int)));
-}
-
-void TcgMenu::mode_item()
-{
-    ui->subMenu_1->set_combo(tr("Mode"), m_modes);
-    connect(ui->subMenu_1, SIGNAL(combo_event(int)), this, SLOT(do_mode_event(int)));
-}
-
-void TcgMenu::show_setting()
-{
-    curve_no_item();
-    curve_x_item();
-    db_offset_item();
-    switch_item();
-    ui->subMenu_6->set_type(MenuItem::None);
+    if (m_settingFlag) {
+        BaseMenu::hide();
+    } else {
+        hide_edit();
+    }
 }
 
 void TcgMenu::show_edit()
 {
-    point_item();
-    position_item();
-    gain_item();
-    add_point_item();
-    delete_point_item();
+    ui->menuItem1->layout()->addWidget(m_menuItem[0]);
+    ui->menuItem2->layout()->addWidget(m_pointItem);
+    ui->menuItem3->layout()->addWidget(m_positionItem);
+    ui->menuItem4->layout()->addWidget(m_gainItem);
+    ui->menuItem5->layout()->addWidget(m_addPointItem);
+    ui->menuItem6->layout()->addWidget(m_deletePointItem);
+
+    m_menuItem[0]->show();
+    m_pointItem->show();
+    m_positionItem->show();
+    m_gainItem->show();
+    m_addPointItem->show();
+    m_deletePointItem->show();
 }
 
-void TcgMenu::curve_no_item()
+void TcgMenu::hide_edit()
 {
-    ui->subMenu_2->set_spin(tr("Curve No."), "", 1, 5, 0);
-}
+    ui->menuItem1->layout()->removeWidget(m_menuItem[0]);
+    ui->menuItem2->layout()->removeWidget(m_pointItem);
+    ui->menuItem3->layout()->removeWidget(m_positionItem);
+    ui->menuItem4->layout()->removeWidget(m_gainItem);
+    ui->menuItem5->layout()->removeWidget(m_addPointItem);
+    ui->menuItem6->layout()->removeWidget(m_deletePointItem);
 
-void TcgMenu::curve_x_item()
-{
-    ui->subMenu_3->set_combo(tr("Curve X"), m_curveXs);
-}
-
-void TcgMenu::db_offset_item()
-{
-    ui->subMenu_4->set_spin(tr("dB Offset"), "dB", -40, 40, 1);
-
-}
-
-void TcgMenu::switch_item()
-{
-    ui->subMenu_5->set_combo(tr("Switch"), s_onOff);
-}
-
-void TcgMenu::point_item()
-{
-    ui->subMenu_2->set_combo(tr("Point"), m_points);
-}
-
-void TcgMenu::position_item()
-{
-    ui->subMenu_3->set_spin(tr("Position"), "", 0, 10000, 2);
-}
-
-void TcgMenu::gain_item()
-{
-    ui->subMenu_4->set_spin(tr("Gain"), "dB", 0, 100, 1);
-}
-
-void TcgMenu::add_point_item()
-{
-    ui->subMenu_5->set_label(tr("Add Point"));
-}
-
-void TcgMenu::delete_point_item()
-{
-    ui->subMenu_6->set_label(tr("Delete Point"));
+    m_menuItem[0]->hide();
+    m_pointItem->hide();
+    m_positionItem->hide();
+    m_gainItem->hide();
+    m_addPointItem->hide();
+    m_deletePointItem->hide();
 }
 
 void TcgMenu::do_mode_event(int pos)
 {
     if (pos == 0) {
         m_settingFlag = true;
-        curve_no_item();
-        curve_x_item();
-        db_offset_item();
-        switch_item();
-        ui->subMenu_6->set_type(MenuItem::None);
+        hide_edit();
+        BaseMenu::show();
     } else {
         m_settingFlag = false;
-        point_item();
-        position_item();
-        gain_item();
-        add_point_item();
-        delete_point_item();
+        BaseMenu::hide();
+        show_edit();
     }
 }

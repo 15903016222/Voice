@@ -13,26 +13,16 @@ public:
     void hide();
 
 private:
-    QStringList m_modes;
-    QStringList m_curveXs;
-    QStringList m_points;
+    MenuItem *m_pointItem;
+    MenuItem *m_positionItem;
+    MenuItem *m_gainItem;
+    MenuItem *m_addPointItem;
+    MenuItem *m_deletePointItem;
+
     bool m_settingFlag;
 
-    void mode_item();
-
-    void show_setting();
     void show_edit();
-
-    void curve_no_item();
-    void curve_x_item();
-    void db_offset_item();
-    void switch_item();
-
-    void point_item();
-    void position_item();
-    void gain_item();
-    void add_point_item();
-    void delete_point_item();
+    void hide_edit();
 
 private slots:
     void do_mode_event(int pos);

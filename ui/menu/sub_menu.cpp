@@ -13,15 +13,15 @@
 /* UT Settings */
 #include "general_menu.h"
 #include "pulser_menu.h"
-//#include "receiver_menu.h"
-//#include "ut_advanced_menu.h"
+#include "receiver_menu.h"
+#include "ut_advanced_menu.h"
 
-///* Gate/Curves */
-//#include "gate_menu.h"
-//#include "alarm_menu.h"
-//#include "output_menu.h"
-//#include "dac_menu.h"
-//#include "tcg_menu.h"
+/* Gate/Curves */
+#include "gate_menu.h"
+#include "alarm_menu.h"
+#include "output_menu.h"
+#include "dac_menu.h"
+#include "tcg_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -88,16 +88,20 @@ SubMenu::SubMenu(QWidget *parent) :
 
 void SubMenu::init_map()
 {
+    /* UT Setting */
     m_map.insert(MainMenu::UTSettings_General, new GeneralMenu(ui, this));
     m_map.insert(MainMenu::UTSettings_Pulser, new PulserMenu(ui, this));
-//    m_map.insert(MainMenu::UTSettings_Receiver, new ReceiverMenu(ui, this));
-//    m_map.insert(MainMenu::UTSettings_Advanced, new UtAdvancedMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_Gate, new GateMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_Alarm, new AlarmMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_Output, new OutputMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_DAC, new DacMenu(ui, this));
-//    m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
-//    m_map.insert(MainMenu::Display_Selection, &SubMenu::set_selection_menu);
+    m_map.insert(MainMenu::UTSettings_Receiver, new ReceiverMenu(ui, this));
+    m_map.insert(MainMenu::UTSettings_Advanced, new UtAdvancedMenu(ui, this));
+
+    /* Gate/Curves */
+    m_map.insert(MainMenu::GateCurves_Gate, new GateMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_Alarm, new AlarmMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_Output, new OutputMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_DAC, new DacMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
+
+    //    m_map.insert(MainMenu::Display_Selection, &SubMenu::set_selection_menu);
 //    m_map.insert(MainMenu::Display_ColorSettings, &SubMenu::set_colorSettings_menu);
 //    m_map.insert(MainMenu::Displsy_Properties, &SubMenu::set_properties_menu);
 //    m_map.insert(MainMenu::ProbePart_Select, &SubMenu::set_select_menu);

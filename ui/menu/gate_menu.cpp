@@ -1,62 +1,37 @@
 #include "gate_menu.h"
 
+static const MenuItem::Type s_types[MAX_ITEMS] = {
+    MenuItem::Combo,
+    MenuItem::Spin,
+    MenuItem::Spin,
+    MenuItem::Spin,
+    MenuItem::Combo,
+    MenuItem::Combo
+};
+
 GateMenu::GateMenu(Ui::SubMenu *ui, QObject *parent)
-    : BaseMenu(ui, parent)
+    : BaseMenu(ui, s_types, parent)
 {
-    m_gates.append(tr("A"));
-    m_gates.append(tr("B"));
-    m_gates.append(tr("I"));
-    m_gates.append(tr("Off"));
+    QStringList gatesList;
+    QStringList synchrosList;
+    QStringList measureModesList;
 
-    m_synchros.append(tr("Gate A"));
-    m_synchros.append(tr("Gate I"));
-    m_synchros.append(tr("Pulse"));
+    gatesList.append(tr("A"));
+    gatesList.append(tr("B"));
+    gatesList.append(tr("I"));
+    gatesList.append(tr("Off"));
 
-    m_measureModes.append(tr("Edge"));
-    m_measureModes.append(tr("Peak"));
-}
+    synchrosList.append(tr("Gate A"));
+    synchrosList.append(tr("Gate I"));
+    synchrosList.append(tr("Pulse"));
 
-void GateMenu::show()
-{
-    gate_item();
-    start_item();
-    width_item();
-    threshold_item();
-    synchro_item();
-    measure_mode_item();
-}
+    measureModesList.append(tr("Edge"));
+    measureModesList.append(tr("Peak"));
 
-void GateMenu::hide()
-{
-
-}
-
-void GateMenu::gate_item()
-{
-    ui->subMenu_1->set_combo(tr("Gate"), m_gates);
-}
-
-void GateMenu::start_item()
-{
-    ui->subMenu_2->set_spin(tr("Start"), "mm", 0, 16000, 2);
-}
-
-void GateMenu::width_item()
-{
-    ui->subMenu_3->set_spin(tr("Width"), "mm", 0.05, 525, 2);
-}
-
-void GateMenu::threshold_item()
-{
-    ui->subMenu_4->set_spin(tr("Threshold"), "%", 0, 100, 0);
-}
-
-void GateMenu::synchro_item()
-{
-    ui->subMenu_5->set_combo(tr("Synchro"), m_synchros);
-}
-
-void GateMenu::measure_mode_item()
-{
-    ui->subMenu_6->set_combo(tr("Measure Mode"), m_measureModes);
+    m_menuItem[0]->set(tr("Gate"), gatesList);
+    m_menuItem[1]->set(tr("Start"), "mm", 0, 16000, 2);
+    m_menuItem[2]->set(tr("Width"), "mm", 0.05, 525, 2);
+    m_menuItem[3]->set(tr("Threshold"), "%", 0, 100, 0);
+    m_menuItem[4]->set(tr("Synchro"), synchrosList);
+    m_menuItem[5]->set(tr("Measure Mode"), measureModesList);
 }

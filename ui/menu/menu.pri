@@ -17,13 +17,13 @@ HEADERS += \
     $$PWD/base_menu.h \
     $$PWD/general_menu.h \
     $$PWD/pulser_menu.h \
-#    $$PWD/receiver_menu.h \
-#    $$PWD/ut_advanced_menu.h \
-#    $$PWD/gate_menu.h \
-#    $$PWD/alarm_menu.h \
-#    $$PWD/output_menu.h \
-#    $$PWD/dac_menu.h \
-#    $$PWD/tcg_menu.h
+    $$PWD/receiver_menu.h \
+    $$PWD/ut_advanced_menu.h \
+    $$PWD/gate_menu.h \
+    $$PWD/alarm_menu.h \
+    $$PWD/output_menu.h \
+    $$PWD/dac_menu.h \
+    $$PWD/tcg_menu.h
 
 SOURCES += \
     $$PWD/menu_item.cpp \
@@ -34,13 +34,13 @@ SOURCES += \
     $$PWD/sub_menu.cpp \
     $$PWD/base_menu.cpp \
     $$PWD/general_menu.cpp \
-    $$PWD/pulser_menu.cpp
-#    $$PWD/receiver_menu.cpp \
-#    $$PWD/ut_advanced_menu.cpp \
-#    $$PWD/gate_menu.cpp \
-#    $$PWD/alarm_menu.cpp \
-#    $$PWD/output_menu.cpp \
-#    $$PWD/dac_menu.cpp \
-#    $$PWD/tcg_menu.cpp
+    $$PWD/pulser_menu.cpp \
+    $$PWD/receiver_menu.cpp \
+    $$PWD/ut_advanced_menu.cpp \
+    $$PWD/gate_menu.cpp \
+    $$PWD/alarm_menu.cpp \
+    $$PWD/output_menu.cpp \
+    $$PWD/dac_menu.cpp \
+    $$PWD/tcg_menu.cpp
 
 

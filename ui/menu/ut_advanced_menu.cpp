@@ -8,54 +8,29 @@
 
 #include "ut_advanced_menu.h"
 
+static const MenuItem::Type s_typs[MAX_ITEMS] = {
+    MenuItem::Label,
+    MenuItem::Combo,
+    MenuItem::Combo,
+    MenuItem::Label,
+    MenuItem::Spin,
+    MenuItem::Label
+};
+
 UtAdvancedMenu::UtAdvancedMenu(Ui::SubMenu *ui, QObject *parent)
-    : BaseMenu(ui, parent)
+    : BaseMenu(ui, s_typs, parent)
 {
-    m_pointQtyList.append(tr("Auto"));
-    m_pointQtyList.append(tr("160"));
-    m_pointQtyList.append(tr("320"));
-    m_pointQtyList.append(tr("640"));
-    m_pointQtyList.append(tr("UserDef"));
+    QStringList pointQtyList;
+
+    pointQtyList.append(tr("Auto"));
+    pointQtyList.append(tr("160"));
+    pointQtyList.append(tr("320"));
+    pointQtyList.append(tr("640"));
+    pointQtyList.append(tr("UserDef"));
+
+    m_menuItem[0]->set(tr("Set 80%"), "");
+    m_menuItem[1]->set(tr("dB Ref."), s_onOff);
+    m_menuItem[2]->set(tr("Point Qty."), pointQtyList);
+    m_menuItem[3]->set(tr("Scale Factor"), "");
+    m_menuItem[4]->set(tr("Sum Gain"), "dB", 0, 100, 1);
 }
-
-void UtAdvancedMenu::show()
-{
-    eight_percent_item();
-    db_ref_item();
-    point_number_item();
-    scale_factor_item();
-    sum_gain_item();
-
-    ui->subMenu_6->set_type(MenuItem::None);
-}
-
-void UtAdvancedMenu::hide()
-{
-
-}
-
-void UtAdvancedMenu::eight_percent_item()
-{
-    ui->subMenu_1->set_label(tr("Set 80%"));
-}
-
-void UtAdvancedMenu::db_ref_item()
-{
-    ui->subMenu_2->set_combo(tr("dB Ref."), s_onOff);
-}
-
-void UtAdvancedMenu::point_number_item()
-{
-    ui->subMenu_3->set_combo(tr("Point Qty."), m_pointQtyList);
-}
-
-void UtAdvancedMenu::scale_factor_item()
-{
-    ui->subMenu_4->set_label(tr("Scale Factor"));
-}
-
-void UtAdvancedMenu::sum_gain_item()
-{
-    ui->subMenu_5->set_spin(tr("Sum Gain"), "dB", 0, 100, 1);
-}
-

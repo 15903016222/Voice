@@ -16,17 +16,6 @@ class UtAdvancedMenu : public BaseMenu
     Q_OBJECT
 public:
     UtAdvancedMenu(Ui::SubMenu *ui, QObject *parent);
-    void show();
-    void hide();
-
-private:
-    QStringList m_pointQtyList;
-
-    void eight_percent_item();
-    void db_ref_item();
-    void point_number_item();
-    void scale_factor_item();
-    void sum_gain_item();
 };
 
 #endif // __UT_ADVANCED_MENU_H__

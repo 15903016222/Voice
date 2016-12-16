@@ -15,9 +15,9 @@ class MenuItem : public QWidget
     Q_OBJECT
 public:
     enum Type {
+        Label,
         Spin,
-        Combo,
-        Label
+        Combo
     };
 
     explicit MenuItem(QWidget *parent = 0, MenuItem::Type type = MenuItem::Label);
