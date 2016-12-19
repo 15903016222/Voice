@@ -42,7 +42,11 @@
 #include "probe_part/part_menu.h"
 #include "probe_part/advanced_menu.h"
 
+/* Focal Law */
 #include "focal_law/law_config_menu.h"
+#include "focal_law/angle_menu.h"
+#include "focal_law/apeture_menu.h"
+#include "focal_law/focal_point_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -108,9 +112,9 @@ void SubMenu::init_map()
 
     /* Focal Law */
     m_map.insert(MainMenu::FocalLaw_LawConfig,  new DplFocalLawMenu::LawConfigMenu(ui, this));
-//    m_map.insert(MainMenu::FocalLaw_Angle, &SubMenu::set_angle_menu);
-//    m_map.insert(MainMenu::FocalLaw_Apeture, &SubMenu::set_apeture_menu);
-//    m_map.insert(MainMenu::FacalLaw_FocalPoint, &SubMenu::set_focalPoint_menu);
+    m_map.insert(MainMenu::FocalLaw_Angle,      new DplFocalLawMenu::AngleMenu(ui, this));
+    m_map.insert(MainMenu::FocalLaw_Apeture,    new DplFocalLawMenu::ApetureMenu(ui, this));
+    m_map.insert(MainMenu::FacalLaw_FocalPoint, new DplFocalLawMenu::FocalPointMenu(ui, this));
 //    m_map.insert(MainMenu::Scan_Inspection, &SubMenu::set_inspection_menu);
 //    m_map.insert(MainMenu::Scan_Encoder, &SubMenu::set_encoder_menu);
 //    m_map.insert(MainMenu::Scan_Area, &SubMenu::set_area_menu);
@@ -147,85 +151,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_angle_menu(bool show)
-{
-//    if(show) {
-//        /* Min.Angle Menu Item */
-//        QList<double> steps;
-//        steps.append(1);
-//        steps.append(5);
-//        steps.append(10);
-//        set_spinbox_menu(ui->subMenu_1, tr("Min.Angle"), "°", steps, 25, 75, 0);
-
-//        /* Max.Angle Menu Item */
-//        set_spinbox_menu(ui->subMenu_2, tr("Max.Angle"), "°", steps, 25, 75, 0);
-
-//        /* Angle Step Menu Item */
-//        QList<double> steps2;
-//        steps2.append(1);
-//        set_spinbox_menu(ui->subMenu_3, tr("Angle Step"), "°", steps2, 1, 10, 0);
-
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-
-//        steps.clear();
-//        steps2.clear();
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_apeture_menu(bool show)
-{
-//    if(show) {
-//        /* Apeture Menu Item */
-//        QList<double> steps;
-//        steps.append(1);
-//        steps.append(5);
-//        set_spinbox_menu(ui->subMenu_1, tr("Apeture"), "", steps, 0, 64, 0);
-
-//        /* First Element menu item */
-//        set_spinbox_menu(ui->subMenu_2, tr("First Element"), "", steps, 1, 64, 0);
-
-//        /* Last Element menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Last Element"), "", steps, 1, 64, 0);
-
-//        /* Element Step Menu Item */
-//        set_spinbox_menu(ui->subMenu_4, tr("Element Step"), "", steps, 1, 32, 0);
-
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//        steps.clear();
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_focalPoint_menu(bool show)
-{
-//    if(show) {
-//        /* Type Menu Item */
-//        set_combobox_menu(ui->subMenu_1, tr("Type"), m_list_type);
-
-//        /* Position Start menu item */
-//        set_spinbox_menu(ui->subMenu_2, tr("Position Start"), "mm", stepList6, 0, 1000, 2);
-
-//        /* Position End menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Position End"), "mm", stepList6, 1, 1000, 2);
-
-//        /* Offset Start Menu Item */
-//        set_spinbox_menu(ui->subMenu_4, tr("Offset Start"), "mm", stepList6, 0, 1000, 2);
-
-//        /* Offset End Menu Item */
-//        set_spinbox_menu(ui->subMenu_5, tr("Offset End"), "mm", stepList6, 1, 1000, 2);
-
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_inspection_menu(bool show)
@@ -730,12 +655,6 @@ void SubMenu::set_service_menu(bool show)
 void SubMenu::init_option_stringlist()
 {
 
-    m_list_type.append(tr("True Depth"));
-    m_list_type.append(tr("Half Path"));
-    m_list_type.append(tr("Projection"));
-    m_list_type.append(tr("Focal Plane"));
-    m_list_type.append(tr("DDF"));
-
     m_list_scan2.append(tr("Time"));
     m_list_scan2.append(tr("Encoder 1"));
     m_list_scan2.append(tr("Encoder 2"));
@@ -922,7 +841,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_type.clear();
     m_list_scan2.clear();
     m_list_type2.clear();
     m_list_encoder.clear();

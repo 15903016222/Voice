@@ -48,10 +48,6 @@ private slots:
 private:
     Ui::BaseMenu *ui;
 
-    void set_angle_menu(bool show);
-    void set_apeture_menu(bool show);
-    void set_focalPoint_menu(bool show);
-
     void set_inspection_menu(bool show);
     void set_encoder_menu(bool show);
     void set_area_menu(bool show);
@@ -89,7 +85,6 @@ private:
 
     QStringList switchList;
 
-    QStringList m_list_type;
     QStringList m_list_scan2;
     QStringList m_list_type2;
     QStringList m_list_encoder;
