@@ -39,37 +39,10 @@
 #include "probe_part/probe_selection_menu.h"
 #include "probe_part/position_menu.h"
 #include "probe_part/fft_menu.h"
+#include "probe_part/part_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
-
-#define MATERIAL_NUMBER 24
-static QString MATERIAL_STRING[MATERIAL_NUMBER] = {
-    QT_TRANSLATE_NOOP("SubMenu", "Aluminum"),
-    QT_TRANSLATE_NOOP("SubMenu", "Steel Common"),
-    QT_TRANSLATE_NOOP("SubMenu", "Steel Stainless"),
-    QT_TRANSLATE_NOOP("SubMenu", "Brass"),
-    QT_TRANSLATE_NOOP("SubMenu", "Copper"),
-    QT_TRANSLATE_NOOP("SubMenu", "Iron"),
-    QT_TRANSLATE_NOOP("SubMenu", "Lead"),
-    QT_TRANSLATE_NOOP("SubMenu", "Nylon"),
-    QT_TRANSLATE_NOOP("SubMenu", "Silver"),
-    QT_TRANSLATE_NOOP("SubMenu", "Gold"),
-    QT_TRANSLATE_NOOP("SubMenu", "Zinc"),
-    QT_TRANSLATE_NOOP("SubMenu", "Titanium"),
-    QT_TRANSLATE_NOOP("SubMenu", "Tin"),
-    QT_TRANSLATE_NOOP("SubMenu", "Epoxy Resin"),
-    QT_TRANSLATE_NOOP("SubMenu", "Ice"),
-    QT_TRANSLATE_NOOP("SubMenu", "Nickel"),
-    QT_TRANSLATE_NOOP("SubMenu", "Plexiglass"),
-    QT_TRANSLATE_NOOP("SubMenu", "Polystyrene"),
-    QT_TRANSLATE_NOOP("SubMenu", "Orcelain"),
-    QT_TRANSLATE_NOOP("SubMenu", "PVC"),
-    QT_TRANSLATE_NOOP("SubMenu", "Quartz Glass"),
-    QT_TRANSLATE_NOOP("SubMenu", "Rubber Vulcanized"),
-    QT_TRANSLATE_NOOP("SubMenu", "Teflon"),
-    QT_TRANSLATE_NOOP("SubMenu", "Water")
-};
 
 SubMenu::SubMenu(QWidget *parent) :
     QWidget(parent),
@@ -127,7 +100,7 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::ProbePart_Select, new ProbeSelectionMenu(ui, this));
     m_map.insert(MainMenu::ProbePart_Position, new PositionMenu(ui, this));
     m_map.insert(MainMenu::ProbePart_FFT, new FftMenu(ui, this));
-//    m_map.insert(MainMenu::ProbePart_Part, &SubMenu::set_part_menu);
+    m_map.insert(MainMenu::ProbePart_Part, new PartMenu(ui, this));
 //    m_map.insert(MainMenu::ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
 //    m_map.insert(MainMenu::FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
 //    m_map.insert(MainMenu::FocalLaw_Angle, &SubMenu::set_angle_menu);
@@ -169,30 +142,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_part_menu(bool show)
-{
-//    if(show) {
-//        /* Geometry menu item */
-//        set_combobox_menu(ui->subMenu_1, tr("Geometry"), m_list_geometry);
-
-//        /* Thickness menu item */
-//        set_spinbox_menu(ui->subMenu_2, tr("Thickness"), "mm", stepList6, 0.05, 1000, 2);
-
-//        /* Diameter menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Diameter"), "mm", stepList6, 0.05, 525, 2);
-
-//        /* Material menu item */
-//        set_combobox_menu(ui->subMenu_4, tr("Material"), m_list_material);
-
-//        /* Overlay menu item */
-//        set_combobox_menu(ui->subMenu_5, tr("Overlay"), switchList);
-
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_advanced_2_menu(bool show)
@@ -818,16 +767,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-
-
-    m_list_geometry.append(tr("Plate"));
-    m_list_geometry.append(tr("ID"));
-    m_list_geometry.append(tr("OD"));
-
-    for(int i = 0; i < MATERIAL_NUMBER; i ++) {
-        m_list_material.append(MATERIAL_STRING[i]);
-    }
-
     m_list_lawType.append(tr("Azimuthal"));
     m_list_lawType.append(tr("Linear"));
 
@@ -1026,8 +965,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_geometry.clear();
-    m_list_material.clear();
     m_list_lawType.clear();
     m_list_waveType.clear();
     m_list_type.clear();

@@ -48,7 +48,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_part_menu(bool show);
     void set_advanced_2_menu(bool show);
 
     void set_lawConfig_menu(bool show);
@@ -93,8 +92,6 @@ private:
 
     QStringList switchList;
 
-    QStringList m_list_geometry;
-    QStringList m_list_material;
     QStringList m_list_lawType;
     QStringList m_list_waveType;
     QStringList m_list_type;
