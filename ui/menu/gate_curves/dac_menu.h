@@ -14,7 +14,7 @@ class DacMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    DacMenu(Ui::SubMenu *ui, QObject *parent);
+    DacMenu(Ui::BaseMenu *ui, QObject *parent);
 
     void show();
     void hide();

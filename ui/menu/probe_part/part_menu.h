@@ -8,7 +8,7 @@ namespace DplProbeMenu {
 class PartMenu : public BaseMenu
 {
 public:
-    PartMenu(Ui::SubMenu *ui, QObject *parent);
+    PartMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 }

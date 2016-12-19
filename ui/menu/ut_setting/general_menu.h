@@ -14,7 +14,7 @@ class GeneralMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit GeneralMenu(Ui::SubMenu *ui, QObject *parent = 0);
+    explicit GeneralMenu(Ui::BaseMenu *ui, QObject *parent = 0);
 };
 
 #endif // GENERALMENU_H

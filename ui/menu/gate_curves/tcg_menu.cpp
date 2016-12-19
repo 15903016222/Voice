@@ -19,7 +19,7 @@ static const MenuItem::Type s_typs[MAX_ITEMS] = {
     MenuItem::Label
 };
 
-TcgMenu::TcgMenu(Ui::SubMenu *ui, QObject *parent)
+TcgMenu::TcgMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, s_typs, parent)
 {
     QStringList modeList;

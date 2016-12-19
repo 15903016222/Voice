@@ -16,7 +16,7 @@ static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Label
 };
 
-ReceiverMenu::ReceiverMenu(Ui::SubMenu *ui, QObject *parent)
+ReceiverMenu::ReceiverMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, s_types, parent)
 {
     QStringList filtersList;

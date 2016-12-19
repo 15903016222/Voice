@@ -11,7 +11,7 @@
 
 #include <QStringList>
 
-#include "ui_sub_menu.h"
+#include "ui_base_menu.h"
 #include "menu_item.h"
 
 #define MAX_ITEMS   6
@@ -20,7 +20,7 @@ class BaseMenu : public QObject
 {
     Q_OBJECT
 public:
-    explicit BaseMenu(Ui::SubMenu *ui,
+    explicit BaseMenu(Ui::BaseMenu *ui,
                       const MenuItem::Type types[MAX_ITEMS],
                       QObject *parent = 0);
     virtual ~BaseMenu();
@@ -37,7 +37,7 @@ protected:
 
     MenuItem *m_menuItem[MAX_ITEMS];
 
-    Ui::SubMenu *ui;
+    Ui::BaseMenu *ui;
 };
 
 #endif // __BASE_MENU_H__

@@ -16,7 +16,7 @@ static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Label
 };
 
-PulserMenu::PulserMenu(Ui::SubMenu *ui, QObject *parent)
+PulserMenu::PulserMenu(Ui::BaseMenu *ui, QObject *parent)
     :BaseMenu(ui, s_types, parent)
 {
     QStringList txRxModesList;

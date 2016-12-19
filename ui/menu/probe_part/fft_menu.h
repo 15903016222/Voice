@@ -8,7 +8,7 @@ namespace DplProbeMenu {
 class FftMenu : public BaseMenu
 {
 public:
-    FftMenu(Ui::SubMenu *ui, QObject *parent);
+    FftMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 }

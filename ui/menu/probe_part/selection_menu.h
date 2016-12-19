@@ -17,7 +17,7 @@ class SelectionMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    SelectionMenu(Ui::SubMenu *ui, QObject *parent);
+    SelectionMenu(Ui::BaseMenu *ui, QObject *parent);
 
 private slots:
     void do_probeItem_clicked();

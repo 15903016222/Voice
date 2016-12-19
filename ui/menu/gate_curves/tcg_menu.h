@@ -14,7 +14,7 @@ class TcgMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    TcgMenu(Ui::SubMenu *ui, QObject *parent);
+    TcgMenu(Ui::BaseMenu *ui, QObject *parent);
 
     void show();
     void hide();

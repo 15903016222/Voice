@@ -14,7 +14,7 @@ class PulserMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit PulserMenu(Ui::SubMenu *ui, QObject *parent);
+    explicit PulserMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 #endif // __PULSER_MENU_H__

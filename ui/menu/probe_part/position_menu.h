@@ -16,7 +16,7 @@ class PositionMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    PositionMenu(Ui::SubMenu *ui, QObject *parent);
+    PositionMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 }

@@ -13,7 +13,7 @@ static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Label,
 };
 
-ColorSettingMenu::ColorSettingMenu(Ui::SubMenu *ui, QObject *parent) :
+ColorSettingMenu::ColorSettingMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, s_types, parent)
 {
     /* Amplitude menu item */

@@ -14,7 +14,7 @@
 
 QStringList BaseMenu::s_onOff;
 
-BaseMenu::BaseMenu(Ui::SubMenu *ui, const MenuItem::Type types[], QObject *parent)
+BaseMenu::BaseMenu(Ui::BaseMenu *ui, const MenuItem::Type types[], QObject *parent)
     :QObject(parent)
 {
     this->ui = ui;

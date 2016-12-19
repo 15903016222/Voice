@@ -17,7 +17,7 @@ static const MenuItem::Type s_typs[MAX_ITEMS] = {
     MenuItem::Label
 };
 
-UtAdvancedMenu::UtAdvancedMenu(Ui::SubMenu *ui, QObject *parent)
+UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, s_typs, parent)
 {
     QStringList pointQtyList;

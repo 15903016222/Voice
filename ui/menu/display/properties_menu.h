@@ -9,7 +9,7 @@ class PropertiesMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    PropertiesMenu(Ui::SubMenu *ui, QObject *parent);
+    PropertiesMenu(Ui::BaseMenu *ui, QObject *parent);
 
     void show();
     void hide();

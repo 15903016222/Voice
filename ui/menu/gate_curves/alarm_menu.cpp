@@ -16,7 +16,7 @@ static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Label
 };
 
-AlarmMenu::AlarmMenu(Ui::SubMenu *ui, QObject *parent)
+AlarmMenu::AlarmMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, s_types, parent)
 {
     QStringList alarmList;

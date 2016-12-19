@@ -18,7 +18,7 @@ static const MenuItem::Type s_type[MAX_ITEMS] = {
     MenuItem::Combo
 };
 
-SelectionMenu::SelectionMenu(Ui::SubMenu *ui, QObject *parent) :
+SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, s_type, parent)
 {
     QStringList groupList;

@@ -9,7 +9,7 @@ static const MenuItem::Type s_type[MAX_ITEMS] = {
     MenuItem::Combo
 };
 
-FftMenu::FftMenu(Ui::SubMenu *ui, QObject *parent) :
+FftMenu::FftMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, s_type, parent)
 {
     m_menuItem[0]->set(tr("Gain"), "dB", 0, 100, 1);

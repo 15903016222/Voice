@@ -14,7 +14,7 @@ class ReceiverMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit ReceiverMenu(Ui::SubMenu *ui, QObject *parent = 0);
+    explicit ReceiverMenu(Ui::BaseMenu *ui, QObject *parent = 0);
 };
 
 #endif // __RECEIVER_MENU_H__

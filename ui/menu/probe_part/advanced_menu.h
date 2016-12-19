@@ -8,7 +8,7 @@ namespace DplProbeMenu {
 class AdvancedMenu : public BaseMenu
 {
 public:
-    AdvancedMenu(Ui::SubMenu *ui, QObject *parent);
+    AdvancedMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 }

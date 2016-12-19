@@ -16,7 +16,7 @@ class ColorSettingMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    ColorSettingMenu(Ui::SubMenu *ui, QObject *parent);
+    ColorSettingMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 }

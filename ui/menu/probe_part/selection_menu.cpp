@@ -27,7 +27,7 @@ public:
     LabelMenuItem *m_wedgeMenuItem;
 };
 
-SelectionMenu::SelectionMenu(Ui::SubMenu *ui, QObject *parent) :
+SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, s_types, parent),
     d(new SelectionMenuprivate)
 {

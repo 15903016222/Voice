@@ -7,7 +7,7 @@ static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Label
 };
 
-AdvancedMenu::AdvancedMenu(Ui::SubMenu *ui, QObject *parent) :
+AdvancedMenu::AdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, s_types, parent)
 {
     m_menuItem[0]->set(tr("Load Part"), "");

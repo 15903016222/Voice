@@ -47,7 +47,7 @@
 
 SubMenu::SubMenu(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SubMenu)
+    ui(new Ui::BaseMenu)
 {
     ui->setupUi(this);
 

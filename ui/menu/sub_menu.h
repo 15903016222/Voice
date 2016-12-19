@@ -17,7 +17,7 @@
 #include "base_menu.h"
 
 namespace Ui {
-class SubMenu;
+class BaseMenu;
 }
 
 class SubMenu : public QWidget
@@ -46,7 +46,7 @@ private slots:
     void do_probe_event(const Probe &probe);
 
 private:
-    Ui::SubMenu *ui;
+    Ui::BaseMenu *ui;
 
     void set_lawConfig_menu(bool show);
     void set_angle_menu(bool show);

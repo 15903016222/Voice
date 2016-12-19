@@ -2,7 +2,7 @@ INCLUDEPATH += $$PWD
 
 FORMS += \
     $$PWD/main_menu.ui \
-    $$PWD/sub_menu.ui
+    $$PWD/base_menu.ui
 
 HEADERS += \
     $$PWD/main_menu.h \

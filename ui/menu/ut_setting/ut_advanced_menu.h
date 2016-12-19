@@ -15,7 +15,7 @@ class UtAdvancedMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    UtAdvancedMenu(Ui::SubMenu *ui, QObject *parent);
+    UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 #endif // __UT_ADVANCED_MENU_H__

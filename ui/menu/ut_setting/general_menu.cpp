@@ -16,7 +16,7 @@ static const MenuItem::Type types[MAX_ITEMS] = {
     MenuItem::Combo
 };
 
-GeneralMenu::GeneralMenu(Ui::SubMenu *ui, QObject *parent)
+GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, types, parent)
 {
     QStringList utUnitList;

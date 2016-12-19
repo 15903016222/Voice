@@ -15,7 +15,7 @@ namespace DplDisplayMenu {
 class SelectionMenu : public BaseMenu
 {
 public:
-    SelectionMenu(Ui::SubMenu *ui, QObject *parent);
+    SelectionMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 }

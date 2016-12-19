@@ -14,7 +14,7 @@ class OutputMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    OutputMenu(Ui::SubMenu *ui, QObject *parent);
+    OutputMenu(Ui::BaseMenu *ui, QObject *parent);
 };
 
 #endif // OUTPUTMENU_H

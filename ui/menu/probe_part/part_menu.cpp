@@ -10,7 +10,7 @@ static const MenuItem::Type s_type[MAX_ITEMS] = {
     MenuItem::Combo
 };
 
-PartMenu::PartMenu(Ui::SubMenu *ui, QObject *parent) :
+PartMenu::PartMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, s_type, parent)
 {
 

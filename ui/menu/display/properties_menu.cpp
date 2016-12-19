@@ -10,7 +10,7 @@ static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Combo
 };
 
-PropertiesMenu::PropertiesMenu(Ui::SubMenu *ui, QObject *parent) :
+PropertiesMenu::PropertiesMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, s_types, parent)
 {
     QStringList scanList;

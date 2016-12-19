@@ -15,7 +15,7 @@ static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Combo
 };
 
-PositionMenu::PositionMenu(Ui::SubMenu *ui, QObject *parent) :
+PositionMenu::PositionMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, s_types, parent)
 {
 
