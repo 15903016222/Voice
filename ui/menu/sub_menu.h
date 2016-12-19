@@ -48,7 +48,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_fft_menu(bool show);
     void set_part_menu(bool show);
     void set_advanced_2_menu(bool show);
 

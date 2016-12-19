@@ -38,6 +38,7 @@
 /* Probe/Part */
 #include "probe_part/probe_selection_menu.h"
 #include "probe_part/position_menu.h"
+#include "probe_part/fft_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -125,7 +126,7 @@ void SubMenu::init_map()
     /* Probe/Part */
     m_map.insert(MainMenu::ProbePart_Select, new ProbeSelectionMenu(ui, this));
     m_map.insert(MainMenu::ProbePart_Position, new PositionMenu(ui, this));
-//    m_map.insert(MainMenu::ProbePart_FFT, &SubMenu::set_fft_menu);
+    m_map.insert(MainMenu::ProbePart_FFT, new FftMenu(ui, this));
 //    m_map.insert(MainMenu::ProbePart_Part, &SubMenu::set_part_menu);
 //    m_map.insert(MainMenu::ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
 //    m_map.insert(MainMenu::FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
@@ -168,28 +169,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu:: set_fft_menu(bool show)
-{
-//    if(show) {
-//        /* Gain menu item */
-//        set_spinbox_menu(ui->subMenu_1, tr("Gain"), "dB", stepList1, 0, 100, 1);
-
-//        /* Start menu item */
-//        set_spinbox_menu(ui->subMenu_2, tr("Start"), "mm", stepList2, 0, 16000, 2);
-
-//        /* Width menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Width"), "mm", stepList3, 0.05, 525, 2);
-
-//        /* Switch menu item */
-//        set_combobox_menu(ui->subMenu_4, tr("Switch"), switchList);
-
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_part_menu(bool show)

@@ -1,0 +1,12 @@
+#ifndef __FFT_MENU_H__
+#define __FFT_MENU_H__
+
+#include "base_menu.h"
+
+class FftMenu : public BaseMenu
+{
+public:
+    FftMenu(Ui::SubMenu *ui, QObject *parent);
+};
+
+#endif // __FFT_MENU_H__
