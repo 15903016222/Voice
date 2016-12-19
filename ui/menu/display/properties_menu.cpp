@@ -1,6 +1,8 @@
 #include "properties_menu.h"
 #include "combo_menu_item.h"
 
+namespace DplDisplayMenu {
+
 static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Combo,
     MenuItem::Combo,
@@ -104,4 +106,6 @@ void PropertiesMenu::do_mode_changed(int i)
     Q_UNUSED(i);
     hide();
     show();
+}
+
 }

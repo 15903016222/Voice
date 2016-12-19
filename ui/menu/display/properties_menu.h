@@ -3,6 +3,8 @@
 
 #include "base_menu.h"
 
+namespace DplDisplayMenu {
+
 class PropertiesMenu : public BaseMenu
 {
     Q_OBJECT
@@ -21,4 +23,5 @@ private slots:
     void do_mode_changed(int i);
 };
 
+}
 #endif // __PROPERTIES_MENU_H__

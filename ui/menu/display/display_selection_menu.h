@@ -10,10 +10,13 @@
 
 #include "base_menu.h"
 
-class DisplaySelectionMenu : public BaseMenu
+namespace DplDisplayMenu {
+
+class SelectionMenu : public BaseMenu
 {
 public:
-    DisplaySelectionMenu(Ui::SubMenu *ui, QObject *parent);
+    SelectionMenu(Ui::SubMenu *ui, QObject *parent);
 };
 
+}
 #endif // __DISPLAY_SELECTION_MENU_H__

@@ -93,9 +93,9 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
 
     /* Display */
-    m_map.insert(MainMenu::Display_Selection, new DisplaySelectionMenu(ui, this));
-    m_map.insert(MainMenu::Display_ColorSettings, new ColorSettingMenu(ui, this));
-    m_map.insert(MainMenu::Displsy_Properties, new PropertiesMenu(ui, this));
+    m_map.insert(MainMenu::Display_Selection,   new DplDisplayMenu::SelectionMenu(ui, this));
+    m_map.insert(MainMenu::Display_ColorSettings,   new DplDisplayMenu::ColorSettingMenu(ui, this));
+    m_map.insert(MainMenu::Displsy_Properties,  new DplDisplayMenu::PropertiesMenu(ui, this));
 
     /* Probe/Part */
     m_map.insert(MainMenu::ProbePart_Select,    new DplProbeMenu::SelectionMenu(ui, this));

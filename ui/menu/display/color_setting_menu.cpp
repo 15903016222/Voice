@@ -7,6 +7,8 @@
  */
 #include "color_setting_menu.h"
 
+namespace DplDisplayMenu {
+
 static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Label,
 };
@@ -22,4 +24,6 @@ ColorSettingMenu::ColorSettingMenu(Ui::SubMenu *ui, QObject *parent) :
 
     /* TOFD menu item */
     m_menuItem[2]->set(tr("TOFD"), "");
+}
+
 }

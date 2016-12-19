@@ -7,3 +7,4 @@ SOURCES += \
     $$PWD/color_setting_menu.cpp \
     $$PWD/properties_menu.cpp \
     $$PWD/display_selection_menu.cpp
+

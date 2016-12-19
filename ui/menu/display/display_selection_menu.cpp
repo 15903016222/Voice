@@ -7,6 +7,8 @@
  */
 #include "display_selection_menu.h"
 
+namespace DplDisplayMenu {
+
 static const MenuItem::Type s_type[MAX_ITEMS] = {
     MenuItem::Combo,
     MenuItem::Combo,
@@ -16,7 +18,7 @@ static const MenuItem::Type s_type[MAX_ITEMS] = {
     MenuItem::Combo
 };
 
-DisplaySelectionMenu::DisplaySelectionMenu(Ui::SubMenu *ui, QObject *parent) :
+SelectionMenu::SelectionMenu(Ui::SubMenu *ui, QObject *parent) :
     BaseMenu(ui, s_type, parent)
 {
     QStringList groupList;
@@ -60,4 +62,6 @@ DisplaySelectionMenu::DisplaySelectionMenu(Ui::SubMenu *ui, QObject *parent) :
 
     /* Data compression */
     m_menuItem[5]->set(tr("Data<br>Compression"), s_onOff);
+}
+
 }

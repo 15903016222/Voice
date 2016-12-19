@@ -10,6 +10,8 @@
 
 #include "base_menu.h"
 
+namespace DplDisplayMenu {
+
 class ColorSettingMenu : public BaseMenu
 {
     Q_OBJECT
@@ -17,4 +19,5 @@ public:
     ColorSettingMenu(Ui::SubMenu *ui, QObject *parent);
 };
 
+}
 #endif // __COLOR_SETTING_MENU_H__
