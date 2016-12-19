@@ -48,11 +48,6 @@ private slots:
 private:
     Ui::BaseMenu *ui;
 
-    void set_inspection_menu(bool show);
-    void set_encoder_menu(bool show);
-    void set_area_menu(bool show);
-    void set_start_menu(bool show);
-
     void set_cursors_menu(bool show);
     void set_tofd_menu(bool show);
     void set_flawRecord_menu(bool show);
@@ -85,11 +80,6 @@ private:
 
     QStringList switchList;
 
-    QStringList m_list_scan2;
-    QStringList m_list_type2;
-    QStringList m_list_encoder;
-    QStringList m_list_encoderType;
-    QStringList m_list_polarity;
     QStringList m_list_selection;
     QStringList m_list_select;
     QStringList m_list_storage;

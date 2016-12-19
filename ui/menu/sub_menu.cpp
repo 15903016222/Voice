@@ -48,6 +48,12 @@
 #include "focal_law/apeture_menu.h"
 #include "focal_law/focal_point_menu.h"
 
+/* Scan */
+#include "scan/inspection_menu.h"
+#include "scan/encoder_menu.h"
+#include "scan/area_menu.h"
+#include "scan/start_menu.h"
+
 #include <QKeyEvent>
 #include <QDebug>
 
@@ -115,11 +121,14 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::FocalLaw_Angle,      new DplFocalLawMenu::AngleMenu(ui, this));
     m_map.insert(MainMenu::FocalLaw_Apeture,    new DplFocalLawMenu::ApetureMenu(ui, this));
     m_map.insert(MainMenu::FacalLaw_FocalPoint, new DplFocalLawMenu::FocalPointMenu(ui, this));
-//    m_map.insert(MainMenu::Scan_Inspection, &SubMenu::set_inspection_menu);
-//    m_map.insert(MainMenu::Scan_Encoder, &SubMenu::set_encoder_menu);
-//    m_map.insert(MainMenu::Scan_Area, &SubMenu::set_area_menu);
-//    m_map.insert(MainMenu::Scan_Start, &SubMenu::set_start_menu);
-//    m_map.insert(MainMenu::Measurement_Cursors, &SubMenu::set_cursors_menu);
+
+    /* Scan */
+    m_map.insert(MainMenu::Scan_Inspection, new DplScanMenu::InspectionMenu(ui, this));
+    m_map.insert(MainMenu::Scan_Encoder,    new DplScanMenu::EncoderMenu(ui, this));
+    m_map.insert(MainMenu::Scan_Area,       new DplScanMenu::AreaMenu(ui, this));
+    m_map.insert(MainMenu::Scan_Start,      new DplScanMenu::StartMenu(ui, this));
+
+    //    m_map.insert(MainMenu::Measurement_Cursors, &SubMenu::set_cursors_menu);
 //    m_map.insert(MainMenu::Measurement_TOFD, &SubMenu::set_tofd_menu);
 //    m_map.insert(MainMenu::Measurement_FlawRecord, &SubMenu::set_flawRecord_menu);
 //    m_map.insert(MainMenu::FileReport_File, &SubMenu::set_file_menu);
@@ -151,102 +160,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_inspection_menu(bool show)
-{
-//    if(show) {
-//        /* Scan Menu Item */
-//        set_combobox_menu(ui->subMenu_1, tr("Scan"), m_list_scan2);
-
-//        /* Type menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Type"), m_list_type2);
-
-//        /* Max Scan Speed menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Max Scan Speed"), "m/s", stepList2, 0, 1000, 2);
-
-//        /* Max Scan Speed(rpm) Menu Item */
-//        set_spinbox_menu(ui->subMenu_4, tr("Max Scan Speed(rpm)"), "m/s", stepList2, 0, 1000, 0);
-
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_encoder_menu(bool show)
-{
-//    if(show) {
-//        /* Encoder Menu Item */
-//        set_combobox_menu(ui->subMenu_1, tr("Encoder"), m_list_encoder);
-
-//        /* Encoder Type menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Encoder Type"), m_list_encoderType);
-
-//        /* Resolution menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Resolution"), "Step/mm", stepList2, 0.01, 10000, 2);
-
-//        /* Polarity Menu Item */
-//        set_combobox_menu(ui->subMenu_4, tr("Polarity"), m_list_polarity);
-
-//        /* Origin Menu Item */
-//        set_spinbox_menu(ui->subMenu_5, tr("Origin"), "mm", stepList2, 0, 1000, 2);
-
-//        /* Preset Menu Item */
-//        set_label_menu(ui->subMenu_6, tr("Preset"));
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_area_menu(bool show)
-{
-//    if(show) {
-//        /* Scan Start Menu Item */
-//        QList<double> steps;
-//        steps.append(10.00);
-//        steps.append(100.00);
-//        steps.append(1000.00);
-//        steps.append(10000.00);
-//        set_spinbox_menu(ui->subMenu_1, tr("Scan Start"), "mm", steps, 0, 10000, 2);
-
-//        /* Scan End menu item */
-//        set_spinbox_menu(ui->subMenu_2, tr("Scan End"), "mm", steps, 0, 10000, 2);
-
-//        /* Scan Resolution menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Scan Resolution"), "mm", stepList6, 0, 100, 2);
-
-//        /* Index Start Menu Item */
-//        set_spinbox_menu(ui->subMenu_4, tr("Index Start"), "mm", steps, 0, 10000, 2);
-
-//        /* Index End Menu Item */
-//        set_spinbox_menu(ui->subMenu_5, tr("Index End"), "mm", steps, 0, 10000, 2);
-
-//        /* Index Resolution Menu Item */
-//        set_spinbox_menu(ui->subMenu_6, tr("Index Resolution"), "mm", stepList6, 0, 100, 2);
-//        steps.clear();
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_start_menu(bool show)
-{
-//    if(show) {
-//        /* Start Menu Item */
-//        set_spinbox_menu(ui->subMenu_1, tr("Scan"), "mm", stepList2, 0, 10000, 2);
-
-//        /* Pause menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Pause"), switchList);
-
-//        ui->subMenu_3->set_type(MenuItem::None);
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_cursors_menu(bool show)
@@ -655,23 +568,9 @@ void SubMenu::set_service_menu(bool show)
 void SubMenu::init_option_stringlist()
 {
 
-    m_list_scan2.append(tr("Time"));
-    m_list_scan2.append(tr("Encoder 1"));
-    m_list_scan2.append(tr("Encoder 2"));
 
-    m_list_type2.append(tr("One Line"));
-    m_list_type2.append(tr("Raster Scan"));
-    m_list_type2.append(tr("Helicoidal Scan"));
 
-    m_list_encoder.append(tr("Encoder 1"));
-    m_list_encoder.append(tr("Encoder 2"));
 
-    m_list_encoderType.append(tr("Up"));
-    m_list_encoderType.append(tr("Down"));
-    m_list_encoderType.append(tr("Quad"));
-
-    m_list_polarity.append(tr("Normal"));
-    m_list_polarity.append(tr("Reverse"));
 
     m_list_selection.append(tr("A-Scan"));
     m_list_selection.append(tr("B-Scan"));
@@ -841,11 +740,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_scan2.clear();
-    m_list_type2.clear();
-    m_list_encoder.clear();
-    m_list_encoderType.clear();
-    m_list_polarity.clear();
     m_list_selection.clear();
     m_list_select.clear();
     m_list_storage.clear();
