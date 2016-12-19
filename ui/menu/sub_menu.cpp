@@ -42,6 +42,8 @@
 #include "probe_part/part_menu.h"
 #include "probe_part/advanced_menu.h"
 
+#include "focal_law/law_config_menu.h"
+
 #include <QKeyEvent>
 #include <QDebug>
 
@@ -103,7 +105,9 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::ProbePart_FFT,       new DplProbeMenu::FftMenu(ui, this));
     m_map.insert(MainMenu::ProbePart_Part,      new DplProbeMenu::PartMenu(ui, this));
     m_map.insert(MainMenu::ProbePart_Advanced,  new DplProbeMenu::AdvancedMenu(ui, this));
-//    m_map.insert(MainMenu::FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
+
+    /* Focal Law */
+    m_map.insert(MainMenu::FocalLaw_LawConfig,  new DplFocalLawMenu::LawConfigMenu(ui, this));
 //    m_map.insert(MainMenu::FocalLaw_Angle, &SubMenu::set_angle_menu);
 //    m_map.insert(MainMenu::FocalLaw_Apeture, &SubMenu::set_apeture_menu);
 //    m_map.insert(MainMenu::FacalLaw_FocalPoint, &SubMenu::set_focalPoint_menu);
@@ -143,31 +147,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_lawConfig_menu(bool show)
-{
-//    if(show) {
-//        /* Law Type Menu Item */
-//        set_combobox_menu(ui->subMenu_1, tr("Law Type"), m_list_lawType);
-
-//        /* Pulse Connection menu item */
-//        QList<double> steps;
-//        steps.append(1);
-//        steps.append(10);
-//        set_spinbox_menu(ui->subMenu_2, tr("Pulse Connection"), "mm", steps, 1, 113, 0);
-
-//        /* Receiver Connection menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Receiver Connection"), "mm", steps, 1, 113, 0);
-
-//        /* Wave Type Menu Item */
-//        set_combobox_menu(ui->subMenu_4, tr("Wave Type"), m_list_waveType);
-
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_angle_menu(bool show)
@@ -750,11 +729,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-    m_list_lawType.append(tr("Azimuthal"));
-    m_list_lawType.append(tr("Linear"));
-
-    m_list_waveType.append(tr("LW"));
-    m_list_waveType.append(tr("SW"));
 
     m_list_type.append(tr("True Depth"));
     m_list_type.append(tr("Half Path"));
@@ -948,8 +922,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_lawType.clear();
-    m_list_waveType.clear();
     m_list_type.clear();
     m_list_scan2.clear();
     m_list_type2.clear();
