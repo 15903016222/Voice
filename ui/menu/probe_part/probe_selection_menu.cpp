@@ -1,3 +1,10 @@
+/**
+ * @file probe_selection_menu.cpp
+ * @brief Probe/Part Select Menu Bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-19
+ */
 #include "probe_selection_menu.h"
 #include "label_menu_item.h"
 

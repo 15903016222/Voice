@@ -48,7 +48,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_position_menu(bool show);
     void set_fft_menu(bool show);
     void set_part_menu(bool show);
     void set_advanced_2_menu(bool show);
@@ -95,8 +94,6 @@ private:
 
     QStringList switchList;
 
-    QStringList m_list_display;
-    QStringList m_list_skew;
     QStringList m_list_geometry;
     QStringList m_list_material;
     QStringList m_list_lawType;

@@ -37,6 +37,7 @@
 
 /* Probe/Part */
 #include "probe_part/probe_selection_menu.h"
+#include "probe_part/position_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -115,11 +116,15 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::GateCurves_Output, new OutputMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_DAC, new DacMenu(ui, this));
     m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
+
+    /* Display */
     m_map.insert(MainMenu::Display_Selection, new DisplaySelectionMenu(ui, this));
     m_map.insert(MainMenu::Display_ColorSettings, new ColorSettingMenu(ui, this));
     m_map.insert(MainMenu::Displsy_Properties, new PropertiesMenu(ui, this));
+
+    /* Probe/Part */
     m_map.insert(MainMenu::ProbePart_Select, new ProbeSelectionMenu(ui, this));
-//    m_map.insert(MainMenu::ProbePart_Position, &SubMenu::set_position_menu);
+    m_map.insert(MainMenu::ProbePart_Position, new PositionMenu(ui, this));
 //    m_map.insert(MainMenu::ProbePart_FFT, &SubMenu::set_fft_menu);
 //    m_map.insert(MainMenu::ProbePart_Part, &SubMenu::set_part_menu);
 //    m_map.insert(MainMenu::ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
@@ -163,32 +168,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_position_menu(bool show)
-{
-//    if(show) {
-//        /* Scan Offset menu item */
-//        QList<double> steps;
-//        steps.append(0.1);
-//        steps.append(1.0);
-//        steps.append(5.0);
-//        steps.append(10.0);
-//        set_spinbox_menu(ui->subMenu_1, tr("Scan Offset"), "mm", steps, -10000, 10000, 1);
-
-//        /* Index Offset menu item */
-//        set_spinbox_menu(ui->subMenu_2, tr("Index Offset"), "mm", steps, -10000, 10000, 1);
-
-//        /* Skew menu item */
-//        set_combobox_menu(ui->subMenu_3, tr("Skew"), m_list_skew);
-
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//        steps.clear();
-//    } else {
-
-//    }
 }
 
 void SubMenu:: set_fft_menu(bool show)
@@ -860,10 +839,7 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-    m_list_skew.append("0°");
-    m_list_skew.append("90°");
-    m_list_skew.append("180°");
-    m_list_skew.append("270°");
+
 
     m_list_geometry.append(tr("Plate"));
     m_list_geometry.append(tr("ID"));
@@ -1071,8 +1047,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_display.clear();
-    m_list_skew.clear();
     m_list_geometry.clear();
     m_list_material.clear();
     m_list_lawType.clear();
