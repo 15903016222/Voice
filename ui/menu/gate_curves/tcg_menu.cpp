@@ -81,12 +81,12 @@ void TcgMenu::hide()
 
 void TcgMenu::show_edit()
 {
-    ui->menuItem1->layout()->addWidget(m_menuItem[0]);
-    ui->menuItem2->layout()->addWidget(m_pointItem);
-    ui->menuItem3->layout()->addWidget(m_positionItem);
-    ui->menuItem4->layout()->addWidget(m_gainItem);
-    ui->menuItem5->layout()->addWidget(m_addPointItem);
-    ui->menuItem6->layout()->addWidget(m_deletePointItem);
+    ui->menuItem0->layout()->addWidget(m_menuItem[0]);
+    ui->menuItem1->layout()->addWidget(m_pointItem);
+    ui->menuItem2->layout()->addWidget(m_positionItem);
+    ui->menuItem3->layout()->addWidget(m_gainItem);
+    ui->menuItem4->layout()->addWidget(m_addPointItem);
+    ui->menuItem5->layout()->addWidget(m_deletePointItem);
 
     m_menuItem[0]->show();
     m_pointItem->show();
@@ -98,12 +98,12 @@ void TcgMenu::show_edit()
 
 void TcgMenu::hide_edit()
 {
-    ui->menuItem1->layout()->removeWidget(m_menuItem[0]);
-    ui->menuItem2->layout()->removeWidget(m_pointItem);
-    ui->menuItem3->layout()->removeWidget(m_positionItem);
-    ui->menuItem4->layout()->removeWidget(m_gainItem);
-    ui->menuItem5->layout()->removeWidget(m_addPointItem);
-    ui->menuItem6->layout()->removeWidget(m_deletePointItem);
+    ui->menuItem0->layout()->removeWidget(m_menuItem[0]);
+    ui->menuItem1->layout()->removeWidget(m_pointItem);
+    ui->menuItem2->layout()->removeWidget(m_positionItem);
+    ui->menuItem3->layout()->removeWidget(m_gainItem);
+    ui->menuItem4->layout()->removeWidget(m_addPointItem);
+    ui->menuItem5->layout()->removeWidget(m_deletePointItem);
 
     m_menuItem[0]->hide();
     m_pointItem->hide();

@@ -26,7 +26,6 @@ private:
     MenuItem *m_positionItem;
     MenuItem *m_addPointItem;
     MenuItem *m_deletePointItem;
-    MenuItem *m_noneItem;
 
     void show_edit();
     void hide_edit();

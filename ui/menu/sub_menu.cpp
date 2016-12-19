@@ -76,12 +76,12 @@ SubMenu::SubMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QVBoxLayout *layout1 = new QVBoxLayout(ui->menuItem1);
-    QVBoxLayout *layout2 = new QVBoxLayout(ui->menuItem2);
-    QVBoxLayout *layout3 = new QVBoxLayout(ui->menuItem3);
-    QVBoxLayout *layout4 = new QVBoxLayout(ui->menuItem4);
-    QVBoxLayout *layout5 = new QVBoxLayout(ui->menuItem5);
-    QVBoxLayout *layout6 = new QVBoxLayout(ui->menuItem6);
+    QVBoxLayout *layout1 = new QVBoxLayout(ui->menuItem0);
+    QVBoxLayout *layout2 = new QVBoxLayout(ui->menuItem1);
+    QVBoxLayout *layout3 = new QVBoxLayout(ui->menuItem2);
+    QVBoxLayout *layout4 = new QVBoxLayout(ui->menuItem3);
+    QVBoxLayout *layout5 = new QVBoxLayout(ui->menuItem4);
+    QVBoxLayout *layout6 = new QVBoxLayout(ui->menuItem5);
     layout1->setContentsMargins(0, 0, 0, 0);
     layout2->setContentsMargins(0, 0, 0, 0);
     layout3->setContentsMargins(0, 0, 0, 0);

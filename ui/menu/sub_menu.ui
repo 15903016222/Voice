@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget#menuItem1,#menuItem2,#menuItem3,#menuItem4,#menuItem5,#menuItem6
+   <string notr="true">QWidget#menuItem0,#menuItem1,#menuItem2,#menuItem3,#menuItem4,#menuItem5
 {
 	border-left:  1px solid qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(0, 130, 195, 255), stop:0.1 rgba(0, 130, 195, 255), stop:0.333 rgba(255, 255, 255, 255), stop:0.667 rgba(255, 255, 255, 255), stop:0.9 rgba(0, 130, 195, 255), stop:1 rgba(0, 130, 195, 255));
 	border-right: 1px solid qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(0, 130, 195, 255), stop:0.1 rgba(0, 130, 195, 255), stop:0.333 rgba(0, 0, 0, 255), stop:0.667 rgba(0, 0, 0, 255), stop:0.9 rgba(0, 130, 195, 255), stop:1 rgba(0, 130, 195, 255));
@@ -44,22 +44,22 @@ stop:0.852440666 rgba(0, 130, 195, 255));
     <number>0</number>
    </property>
    <item row="0" column="4">
-    <widget class="QWidget" name="menuItem5" native="true"/>
-   </item>
-   <item row="0" column="0">
-    <widget class="QWidget" name="menuItem1" native="true"/>
-   </item>
-   <item row="0" column="1">
-    <widget class="QWidget" name="menuItem2" native="true"/>
-   </item>
-   <item row="0" column="2">
-    <widget class="QWidget" name="menuItem3" native="true"/>
-   </item>
-   <item row="0" column="3">
     <widget class="QWidget" name="menuItem4" native="true"/>
    </item>
+   <item row="0" column="0">
+    <widget class="QWidget" name="menuItem0" native="true"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QWidget" name="menuItem1" native="true"/>
+   </item>
+   <item row="0" column="2">
+    <widget class="QWidget" name="menuItem2" native="true"/>
+   </item>
+   <item row="0" column="3">
+    <widget class="QWidget" name="menuItem3" native="true"/>
+   </item>
    <item row="0" column="5">
-    <widget class="QWidget" name="menuItem6" native="true"/>
+    <widget class="QWidget" name="menuItem5" native="true"/>
    </item>
   </layout>
  </widget>

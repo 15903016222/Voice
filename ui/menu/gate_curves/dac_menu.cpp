@@ -53,7 +53,6 @@ DacMenu::DacMenu(Ui::SubMenu *ui, QObject *parent)
     m_positionItem = new SpinMenuItem();
     m_addPointItem = new LabelMenuItem();
     m_deletePointItem = new LabelMenuItem();
-    m_noneItem = new LabelMenuItem();
 
     m_pointItem->set(tr("Point"), pointList);
     m_positionItem->set(tr("Position"), "",  0, 10000, 2);
@@ -81,36 +80,32 @@ void DacMenu::hide()
 
 void DacMenu::show_edit()
 {
-    ui->menuItem1->layout()->addWidget(m_menuItem[0]);
-    ui->menuItem2->layout()->addWidget(m_pointItem);
-    ui->menuItem3->layout()->addWidget(m_positionItem);
-    ui->menuItem4->layout()->addWidget(m_addPointItem);
-    ui->menuItem5->layout()->addWidget(m_deletePointItem);
-    ui->menuItem6->layout()->addWidget(m_noneItem);
+    ui->menuItem0->layout()->addWidget(m_menuItem[0]);
+    ui->menuItem1->layout()->addWidget(m_pointItem);
+    ui->menuItem2->layout()->addWidget(m_positionItem);
+    ui->menuItem3->layout()->addWidget(m_addPointItem);
+    ui->menuItem4->layout()->addWidget(m_deletePointItem);
 
     m_menuItem[0]->show();
     m_pointItem->show();
     m_positionItem->show();
     m_addPointItem->show();
     m_deletePointItem->show();
-    m_noneItem->show();
 }
 
 void DacMenu::hide_edit()
 {
-    ui->menuItem1->layout()->removeWidget(m_menuItem[0]);
-    ui->menuItem2->layout()->removeWidget(m_pointItem);
-    ui->menuItem3->layout()->removeWidget(m_positionItem);
-    ui->menuItem4->layout()->removeWidget(m_addPointItem);
-    ui->menuItem5->layout()->removeWidget(m_deletePointItem);
-    ui->menuItem6->layout()->removeWidget(m_noneItem);
+    ui->menuItem0->layout()->removeWidget(m_menuItem[0]);
+    ui->menuItem1->layout()->removeWidget(m_pointItem);
+    ui->menuItem2->layout()->removeWidget(m_positionItem);
+    ui->menuItem3->layout()->removeWidget(m_addPointItem);
+    ui->menuItem4->layout()->removeWidget(m_deletePointItem);
 
     m_menuItem[0]->hide();
     m_pointItem->hide();
     m_positionItem->hide();
     m_addPointItem->hide();
     m_deletePointItem->hide();
-    m_noneItem->hide();
 }
 
 void DacMenu::do_mode_event(int pos)

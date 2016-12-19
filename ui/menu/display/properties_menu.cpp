@@ -63,16 +63,16 @@ void PropertiesMenu::show()
         break;
     case 1:
         /* B-Scan */
-        ui->menuItem1->layout()->addWidget(m_menuItem[0]);
-        ui->menuItem2->layout()->addWidget(m_compressionItem);
+        ui->menuItem0->layout()->addWidget(m_menuItem[0]);
+        ui->menuItem1->layout()->addWidget(m_compressionItem);
         m_menuItem[0]->show();
         m_compressionItem->show();
         break;
     case 2:
         /* C-Scan */
-        ui->menuItem1->layout()->addWidget(m_menuItem[0]);
-        ui->menuItem2->layout()->addWidget(m_ratioItem);
-        ui->menuItem3->layout()->addWidget(m_cScanModeItem);
+        ui->menuItem0->layout()->addWidget(m_menuItem[0]);
+        ui->menuItem1->layout()->addWidget(m_ratioItem);
+        ui->menuItem2->layout()->addWidget(m_cScanModeItem);
         m_menuItem[0]->show();
         m_ratioItem->show();
         m_cScanModeItem->show();
@@ -87,12 +87,12 @@ void PropertiesMenu::hide()
     /* A-Scan */
     BaseMenu::hide();
 
-    ui->menuItem2->layout()->removeWidget(m_compressionItem);
+    ui->menuItem1->layout()->removeWidget(m_compressionItem);
 
     m_compressionItem->hide();
 
-    ui->menuItem2->layout()->removeWidget(m_ratioItem);
-    ui->menuItem3->layout()->removeWidget(m_cScanModeItem);
+    ui->menuItem1->layout()->removeWidget(m_ratioItem);
+    ui->menuItem2->layout()->removeWidget(m_cScanModeItem);
 
 
     m_ratioItem->hide();

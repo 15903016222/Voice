@@ -51,12 +51,12 @@ BaseMenu::~BaseMenu()
 
 void BaseMenu::show()
 {
-    ui->menuItem1->layout()->addWidget(m_menuItem[0]);
-    ui->menuItem2->layout()->addWidget(m_menuItem[1]);
-    ui->menuItem3->layout()->addWidget(m_menuItem[2]);
-    ui->menuItem4->layout()->addWidget(m_menuItem[3]);
-    ui->menuItem5->layout()->addWidget(m_menuItem[4]);
-    ui->menuItem6->layout()->addWidget(m_menuItem[5]);
+    ui->menuItem0->layout()->addWidget(m_menuItem[0]);
+    ui->menuItem1->layout()->addWidget(m_menuItem[1]);
+    ui->menuItem2->layout()->addWidget(m_menuItem[2]);
+    ui->menuItem3->layout()->addWidget(m_menuItem[3]);
+    ui->menuItem4->layout()->addWidget(m_menuItem[4]);
+    ui->menuItem5->layout()->addWidget(m_menuItem[5]);
 
     m_menuItem[0]->show();
     m_menuItem[1]->show();
@@ -68,12 +68,12 @@ void BaseMenu::show()
 
 void BaseMenu::hide()
 {
-    ui->menuItem1->layout()->removeWidget(m_menuItem[0]);
-    ui->menuItem2->layout()->removeWidget(m_menuItem[1]);
-    ui->menuItem3->layout()->removeWidget(m_menuItem[2]);
-    ui->menuItem4->layout()->removeWidget(m_menuItem[3]);
-    ui->menuItem5->layout()->removeWidget(m_menuItem[4]);
-    ui->menuItem6->layout()->removeWidget(m_menuItem[5]);
+    ui->menuItem0->layout()->removeWidget(m_menuItem[0]);
+    ui->menuItem1->layout()->removeWidget(m_menuItem[1]);
+    ui->menuItem2->layout()->removeWidget(m_menuItem[2]);
+    ui->menuItem3->layout()->removeWidget(m_menuItem[3]);
+    ui->menuItem4->layout()->removeWidget(m_menuItem[4]);
+    ui->menuItem5->layout()->removeWidget(m_menuItem[5]);
 
     m_menuItem[0]->hide();
     m_menuItem[1]->hide();
