@@ -36,10 +36,11 @@
 #include "display/properties_menu.h"
 
 /* Probe/Part */
-#include "probe_part/probe_selection_menu.h"
+#include "probe_part/selection_menu.h"
 #include "probe_part/position_menu.h"
 #include "probe_part/fft_menu.h"
 #include "probe_part/part_menu.h"
+#include "probe_part/advanced_menu.h"
 
 #include <QKeyEvent>
 #include <QDebug>
@@ -97,11 +98,11 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::Displsy_Properties, new PropertiesMenu(ui, this));
 
     /* Probe/Part */
-    m_map.insert(MainMenu::ProbePart_Select, new ProbeSelectionMenu(ui, this));
-    m_map.insert(MainMenu::ProbePart_Position, new PositionMenu(ui, this));
-    m_map.insert(MainMenu::ProbePart_FFT, new FftMenu(ui, this));
-    m_map.insert(MainMenu::ProbePart_Part, new PartMenu(ui, this));
-//    m_map.insert(MainMenu::ProbePart_Advanced, &SubMenu::set_advanced_2_menu);
+    m_map.insert(MainMenu::ProbePart_Select,    new DplProbeMenu::SelectionMenu(ui, this));
+    m_map.insert(MainMenu::ProbePart_Position,  new DplProbeMenu::PositionMenu(ui, this));
+    m_map.insert(MainMenu::ProbePart_FFT,       new DplProbeMenu::FftMenu(ui, this));
+    m_map.insert(MainMenu::ProbePart_Part,      new DplProbeMenu::PartMenu(ui, this));
+    m_map.insert(MainMenu::ProbePart_Advanced,  new DplProbeMenu::AdvancedMenu(ui, this));
 //    m_map.insert(MainMenu::FocalLaw_LawConfig, &SubMenu::set_lawConfig_menu);
 //    m_map.insert(MainMenu::FocalLaw_Angle, &SubMenu::set_angle_menu);
 //    m_map.insert(MainMenu::FocalLaw_Apeture, &SubMenu::set_apeture_menu);
@@ -142,24 +143,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_advanced_2_menu(bool show)
-{
-//    if(show) {
-//        /* Load Part menu item */
-//        set_label_menu(ui->subMenu_1, tr("Load Part"));
-
-//        /* Clear Part menu item */
-//        set_label_menu(ui->subMenu_2, tr("Clear Part"));
-
-//        ui->subMenu_3->set_type(MenuItem::None);
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-
-//    }
 }
 
 void SubMenu::set_lawConfig_menu(bool show)

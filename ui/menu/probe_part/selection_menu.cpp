@@ -5,8 +5,10 @@
  * @version 0.1
  * @date 2016-12-19
  */
-#include "probe_selection_menu.h"
+#include "selection_menu.h"
 #include "label_menu_item.h"
+
+namespace DplProbeMenu {
 
 static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Combo,
@@ -17,17 +19,17 @@ static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Combo
 };
 
-class ProbeSelectionMenuprivate
+class SelectionMenuprivate
 {
 public:
-    ProbeSelectionMenuprivate() {}
+    SelectionMenuprivate() {}
     LabelMenuItem *m_probeMenuItem;
     LabelMenuItem *m_wedgeMenuItem;
 };
 
-ProbeSelectionMenu::ProbeSelectionMenu(Ui::SubMenu *ui, QObject *parent) :
+SelectionMenu::SelectionMenu(Ui::SubMenu *ui, QObject *parent) :
     BaseMenu(ui, s_types, parent),
-    d(new ProbeSelectionMenuprivate)
+    d(new SelectionMenuprivate)
 {
     QStringList groupList;
     QStringList modeList;
@@ -69,7 +71,7 @@ ProbeSelectionMenu::ProbeSelectionMenu(Ui::SubMenu *ui, QObject *parent) :
 
 }
 
-void ProbeSelectionMenu::do_probeItem_clicked()
+void SelectionMenu::do_probeItem_clicked()
 {
 //    ProbeDialog probeDialog;
 //    probeDialog.exec();
@@ -78,11 +80,13 @@ void ProbeSelectionMenu::do_probeItem_clicked()
 //    }
 }
 
-void ProbeSelectionMenu::do_wedgeItem_clicked()
+void SelectionMenu::do_wedgeItem_clicked()
 {
 //    WedgeDialog wedgeDialog;
 //    wedgeDialog.exec();
 //    QString string = wedgeDialog.get_current_item_text();
 //    if(!string.isEmpty()){
 //    }
+}
+
 }

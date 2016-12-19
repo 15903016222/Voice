@@ -48,8 +48,6 @@ private slots:
 private:
     Ui::SubMenu *ui;
 
-    void set_advanced_2_menu(bool show);
-
     void set_lawConfig_menu(bool show);
     void set_angle_menu(bool show);
     void set_apeture_menu(bool show);

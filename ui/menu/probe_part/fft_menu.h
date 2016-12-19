@@ -3,10 +3,13 @@
 
 #include "base_menu.h"
 
+namespace DplProbeMenu {
+
 class FftMenu : public BaseMenu
 {
 public:
     FftMenu(Ui::SubMenu *ui, QObject *parent);
 };
 
+}
 #endif // __FFT_MENU_H__

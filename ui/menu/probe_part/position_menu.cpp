@@ -7,6 +7,8 @@
  */
 #include "position_menu.h"
 
+namespace DplProbeMenu {
+
 static const MenuItem::Type s_types[MAX_ITEMS] = {
     MenuItem::Spin,
     MenuItem::Spin,
@@ -30,4 +32,6 @@ PositionMenu::PositionMenu(Ui::SubMenu *ui, QObject *parent) :
             skews.append("180°");
             skews.append("270°");
             m_menuItem[2]->set(tr("Skew"), skews);
+}
+
 }

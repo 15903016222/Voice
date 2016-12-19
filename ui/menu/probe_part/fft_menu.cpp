@@ -1,5 +1,7 @@
 #include "fft_menu.h"
 
+namespace DplProbeMenu {
+
 static const MenuItem::Type s_type[MAX_ITEMS] = {
     MenuItem::Spin,
     MenuItem::Spin,
@@ -20,4 +22,6 @@ FftMenu::FftMenu(Ui::SubMenu *ui, QObject *parent) :
 
     /* Switch menu item */
     m_menuItem[3]->set(tr("Switch"), s_onOff);
+}
+
 }

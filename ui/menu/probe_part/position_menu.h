@@ -10,11 +10,15 @@
 
 #include "base_menu.h"
 
+namespace DplProbeMenu {
+
 class PositionMenu : public BaseMenu
 {
     Q_OBJECT
 public:
     PositionMenu(Ui::SubMenu *ui, QObject *parent);
 };
+
+}
 
 #endif // __POSITION_MENU_H__

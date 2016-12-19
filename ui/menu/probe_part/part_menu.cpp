@@ -1,5 +1,7 @@
 #include "part_menu.h"
 
+namespace DplProbeMenu {
+
 static const MenuItem::Type s_type[MAX_ITEMS] = {
     MenuItem::Combo,
     MenuItem::Spin,
@@ -55,4 +57,6 @@ PartMenu::PartMenu(Ui::SubMenu *ui, QObject *parent) :
 
     /* Overlay menu item */
     m_menuItem[4]->set(tr("Overlay"), s_onOff);
+}
+
 }
