@@ -12,20 +12,27 @@
 
 namespace DplProbeMenu {
 
-class SelectionMenuprivate;
 class SelectionMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    SelectionMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit SelectionMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~SelectionMenu();
+
+    void show();
+    void hide();
 
 private slots:
     void do_probeItem_clicked();
     void do_wedgeItem_clicked();
 
 private:
-    SelectionMenuprivate *d;
-
+    MenuItem *m_groupItem;
+    MenuItem *m_groupModeItem;
+    MenuItem *m_probeItem;
+    MenuItem *m_wedgeItem;
+    MenuItem *m_defineItem;
+    MenuItem *m_autoDetectItem;
 };
 
 }

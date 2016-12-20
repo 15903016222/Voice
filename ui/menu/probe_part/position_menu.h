@@ -16,7 +16,16 @@ class PositionMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    PositionMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit PositionMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~PositionMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_scanOffsetItem;
+    MenuItem *m_indexOffsetItem;
+    MenuItem *m_skewItem;
 };
 
 }

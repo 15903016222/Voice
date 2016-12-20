@@ -14,8 +14,21 @@ namespace DplDisplayMenu {
 
 class SelectionMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    SelectionMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit SelectionMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~SelectionMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_groupItem;
+    MenuItem *m_displayItem;
+    MenuItem *m_cSourceitem;
+    MenuItem *m_minThicknessItem;
+    MenuItem *m_maxThicknessItem;
+    MenuItem *m_dataCompressionItem;
 };
 
 }

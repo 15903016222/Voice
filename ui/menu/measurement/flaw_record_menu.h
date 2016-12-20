@@ -9,10 +9,21 @@ class FlawRecordMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    FlawRecordMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit FlawRecordMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~FlawRecordMenu();
+
+    void show();
+    void hide();
 
 private slots:
     void do_comment_clicked();
+
+private:
+    MenuItem *m_addDeleteItem;
+    MenuItem *m_flawImageItem;
+    MenuItem *m_commentItem;
+    MenuItem *m_displayTableItem;
+    MenuItem *m_exportRecordItem;
 };
 
 }

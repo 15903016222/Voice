@@ -7,8 +7,19 @@ namespace DplScanMenu {
 
 class InspectionMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    InspectionMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit InspectionMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~InspectionMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_scanItem;
+    MenuItem *m_typeItem;
+    MenuItem *m_maxScanSpeedItem;
+    MenuItem *m_maxScanSpeedRPMItem;
 };
 
 }

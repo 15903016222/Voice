@@ -14,7 +14,19 @@ class OutputMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    OutputMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit OutputMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~OutputMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_outputItem;
+    MenuItem *m_soundItem;
+    MenuItem *m_delayItem;
+    MenuItem *m_holdTimeItem;
+    MenuItem *m_groupItem;
+    MenuItem *m_dataItem;
 };
 
-#endif // OUTPUTMENU_H
+#endif // __OUTPUT_MENU_H__

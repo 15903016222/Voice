@@ -7,8 +7,20 @@ namespace DplFocalLawMenu {
 
 class FocalPointMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    FocalPointMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit FocalPointMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~FocalPointMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_typeItem;
+    MenuItem *m_positionStartItem;
+    MenuItem *m_positionEndItem;
+    MenuItem *m_offsetStartItem;
+    MenuItem *m_offsetEndItem;
 };
 
 }

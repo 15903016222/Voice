@@ -7,18 +7,12 @@
  */
 
 #include "ut_advanced_menu.h"
-
-static const MenuItem::Type s_typs[MAX_ITEMS] = {
-    MenuItem::Label,
-    MenuItem::Combo,
-    MenuItem::Combo,
-    MenuItem::Label,
-    MenuItem::Spin,
-    MenuItem::Label
-};
+#include "label_menu_item.h"
+#include "combo_menu_item.h"
+#include "spin_menu_item.h"
 
 UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent)
-    : BaseMenu(ui, s_typs, parent)
+    : BaseMenu(ui, parent)
 {
     QStringList pointQtyList;
 
@@ -28,9 +22,55 @@ UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent)
     pointQtyList.append(tr("640"));
     pointQtyList.append(tr("UserDef"));
 
-    m_menuItem[0]->set(tr("Set 80%"), "");
-    m_menuItem[1]->set(tr("dB Ref."), s_onOff);
-    m_menuItem[2]->set(tr("Point Qty."), pointQtyList);
-    m_menuItem[3]->set(tr("Scale Factor"), "");
-    m_menuItem[4]->set(tr("Sum Gain"), "dB", 0, 100, 1);
+    m_eightPercentItem = new LabelMenuItem;
+    m_eightPercentItem->set(tr("Set 80%"), "");
+
+    m_dbRefItem = new ComboMenuItem;
+    m_dbRefItem->set(tr("dB Ref."), s_onOff);
+
+    m_pointQtyItem = new ComboMenuItem;
+    m_pointQtyItem->set(tr("Point Qty."), pointQtyList);
+
+    m_scaleFactorItem = new LabelMenuItem;
+    m_scaleFactorItem->set(tr("Scale Factor"), "");
+
+    m_sumGainItem = new SpinMenuItem;
+    m_sumGainItem->set(tr("Sum Gain"), "dB", 0, 100, 1);
+}
+
+UtAdvancedMenu::~UtAdvancedMenu()
+{
+    delete m_eightPercentItem;
+    delete m_dbRefItem;
+    delete m_pointQtyItem;
+    delete m_scaleFactorItem;
+    delete m_sumGainItem;
+}
+
+void UtAdvancedMenu::show()
+{
+    ui->menuItem0->layout()->addWidget(m_eightPercentItem);
+    ui->menuItem1->layout()->addWidget(m_dbRefItem);
+    ui->menuItem2->layout()->addWidget(m_pointQtyItem);
+    ui->menuItem3->layout()->addWidget(m_scaleFactorItem);
+    ui->menuItem4->layout()->addWidget(m_sumGainItem);
+    m_eightPercentItem->show();
+    m_dbRefItem->show();
+    m_pointQtyItem->show();
+    m_scaleFactorItem->show();
+    m_sumGainItem->show();
+}
+
+void UtAdvancedMenu::hide()
+{
+    ui->menuItem0->layout()->removeWidget(m_eightPercentItem);
+    ui->menuItem1->layout()->removeWidget(m_dbRefItem);
+    ui->menuItem2->layout()->removeWidget(m_pointQtyItem);
+    ui->menuItem3->layout()->removeWidget(m_scaleFactorItem);
+    ui->menuItem4->layout()->removeWidget(m_sumGainItem);
+    m_eightPercentItem->hide();
+    m_dbRefItem->hide();
+    m_pointQtyItem->hide();
+    m_scaleFactorItem->hide();
+    m_sumGainItem->hide();
 }

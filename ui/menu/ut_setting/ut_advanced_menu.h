@@ -15,7 +15,18 @@ class UtAdvancedMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~UtAdvancedMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_eightPercentItem;
+    MenuItem *m_dbRefItem;
+    MenuItem *m_pointQtyItem;
+    MenuItem *m_scaleFactorItem;
+    MenuItem *m_sumGainItem;
 };
 
 #endif // __UT_ADVANCED_MENU_H__

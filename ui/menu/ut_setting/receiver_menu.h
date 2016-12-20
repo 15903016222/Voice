@@ -15,6 +15,17 @@ class ReceiverMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit ReceiverMenu(Ui::BaseMenu *ui, QObject *parent = 0);
+    ~ReceiverMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_receiverItem;
+    MenuItem *m_filterItem;
+    MenuItem *m_rectifierItem;
+    MenuItem *m_videoFilterItem;
+    MenuItem *m_averaginItem;
 };
 
 #endif // __RECEIVER_MENU_H__

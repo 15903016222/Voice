@@ -16,7 +16,16 @@ class ColorSettingMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    ColorSettingMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit ColorSettingMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~ColorSettingMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_amplitudeItem;
+    MenuItem *m_depthItem;
+    MenuItem *m_tofdItem;
 };
 
 }

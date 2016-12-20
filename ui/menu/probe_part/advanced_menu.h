@@ -7,8 +7,17 @@ namespace DplProbeMenu {
 
 class AdvancedMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    AdvancedMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit AdvancedMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~AdvancedMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_loadPartItem;
+    MenuItem *m_clearPartItem;
 };
 
 }

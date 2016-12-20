@@ -6,8 +6,21 @@ namespace DplScanMenu {
 
 class EncoderMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    EncoderMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit EncoderMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~EncoderMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_encoderItem;
+    MenuItem *m_encoderTypeItem;
+    MenuItem *m_resolutionItem;
+    MenuItem *m_polarityItem;
+    MenuItem *m_originItem;
+    MenuItem *m_presetItem;
 };
 
 }

@@ -15,6 +15,18 @@ class GeneralMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit GeneralMenu(Ui::BaseMenu *ui, QObject *parent = 0);
+    ~GeneralMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_gainItem;
+    MenuItem *m_startItem;
+    MenuItem *m_rangeItem;
+    MenuItem *m_velocityItem;
+    MenuItem *m_wedgeDelayItem;
+    MenuItem *m_utUnitItem;
 };
 
 #endif // GENERALMENU_H

@@ -6,20 +6,13 @@
  * @date 2016-12-16
  */
 #include "display_selection_menu.h"
+#include "combo_menu_item.h"
+#include "spin_menu_item.h"
 
 namespace DplDisplayMenu {
 
-static const MenuItem::Type s_type[MAX_ITEMS] = {
-    MenuItem::Combo,
-    MenuItem::Combo,
-    MenuItem::Combo,
-    MenuItem::Spin,
-    MenuItem::Spin,
-    MenuItem::Combo
-};
-
 SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, s_type, parent)
+    BaseMenu(ui, parent)
 {
     QStringList groupList;
     QStringList displayList;
@@ -45,23 +38,72 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     cScanSourceList.append(tr("Thickness"));
     cScanSourceList.append(tr("I/"));
 
+    m_groupItem = new ComboMenuItem();
+    m_displayItem = new ComboMenuItem;
+    m_cSourceitem = new ComboMenuItem;
+    m_minThicknessItem = new SpinMenuItem;
+    m_maxThicknessItem = new SpinMenuItem;
+    m_dataCompressionItem = new ComboMenuItem;
+
     /* Group menu item */
-    m_menuItem[0]->set(tr("Group"), groupList);
+    m_groupItem->set(tr("Group"), groupList);
 
     /* Display menu item */
-    m_menuItem[1]->set(tr("Display"), displayList);
+    m_displayItem->set(tr("Display"), displayList);
 
     /* C-Scan Source menu item */
-    m_menuItem[2]->set(tr("C-Scan<br>Source"), cScanSourceList);
+    m_cSourceitem->set(tr("C-Scan<br>Source"), cScanSourceList);
 
     /* Min.Thickness menu item */
-    m_menuItem[3]->set(tr("Min.Thickness"), "mm", 0.05, 20000, 2);
+    m_minThicknessItem->set(tr("Min.Thickness"), "mm", 0.05, 20000, 2);
 
     /* Max.Thickness menu item */
-    m_menuItem[4]->set(tr("Max.Thickness"), "mm", 0.06, 20000, 2);
+    m_maxThicknessItem->set(tr("Max.Thickness"), "mm", 0.06, 20000, 2);
 
     /* Data compression */
-    m_menuItem[5]->set(tr("Data<br>Compression"), s_onOff);
+    m_dataCompressionItem->set(tr("Data<br>Compression"), s_onOff);
+}
+
+SelectionMenu::~SelectionMenu()
+{
+    delete m_groupItem;
+    delete m_displayItem;
+    delete m_cSourceitem;
+    delete m_minThicknessItem;
+    delete m_maxThicknessItem;
+    delete m_dataCompressionItem;
+}
+
+void SelectionMenu::show()
+{
+    ui->menuItem0->layout()->addWidget(m_groupItem);
+    ui->menuItem1->layout()->addWidget(m_displayItem);
+    ui->menuItem2->layout()->addWidget(m_cSourceitem);
+    ui->menuItem3->layout()->addWidget(m_minThicknessItem);
+    ui->menuItem4->layout()->addWidget(m_maxThicknessItem);
+    ui->menuItem5->layout()->addWidget(m_dataCompressionItem);
+    m_groupItem->show();
+    m_displayItem->show();
+    m_cSourceitem->show();
+    m_minThicknessItem->show();
+    m_maxThicknessItem->show();
+    m_dataCompressionItem->show();
+}
+
+void SelectionMenu::hide()
+{
+    ui->menuItem0->layout()->removeWidget(m_groupItem);
+    ui->menuItem1->layout()->removeWidget(m_displayItem);
+    ui->menuItem2->layout()->removeWidget(m_cSourceitem);
+    ui->menuItem3->layout()->removeWidget(m_minThicknessItem);
+    ui->menuItem4->layout()->removeWidget(m_maxThicknessItem);
+    ui->menuItem5->layout()->removeWidget(m_dataCompressionItem);
+    m_groupItem->hide();
+    m_displayItem->hide();
+    m_cSourceitem->hide();
+    m_minThicknessItem->hide();
+    m_maxThicknessItem->hide();
+    m_dataCompressionItem->hide();
 }
 
 }

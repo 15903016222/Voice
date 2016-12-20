@@ -1,19 +1,39 @@
 #include "advanced_menu.h"
+#include "label_menu_item.h"
 
 namespace DplProbeMenu {
 
-static const MenuItem::Type s_types[MAX_ITEMS] = {
-    MenuItem::Label,
-    MenuItem::Label
-};
-
 AdvancedMenu::AdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, s_types, parent)
+    BaseMenu(ui, parent)
 {
-    m_menuItem[0]->set(tr("Load Part"), "");
+    m_loadPartItem = new LabelMenuItem;
+    m_loadPartItem->set(tr("Load Part"), "");
 
     /* Clear Part menu item */
-    m_menuItem[1]->set(tr("Clear Part"), "");
+    m_clearPartItem = new LabelMenuItem;
+    m_clearPartItem->set(tr("Clear Part"), "");
+}
+
+AdvancedMenu::~AdvancedMenu()
+{
+    delete m_loadPartItem;
+    delete m_clearPartItem;
+}
+
+void AdvancedMenu::show()
+{
+    ui->menuItem0->layout()->addWidget(m_loadPartItem);
+    ui->menuItem1->layout()->addWidget(m_clearPartItem);
+    m_loadPartItem->show();
+    m_clearPartItem->show();
+}
+
+void AdvancedMenu::hide()
+{
+    ui->menuItem0->layout()->removeWidget(m_loadPartItem);
+    ui->menuItem1->layout()->removeWidget(m_clearPartItem);
+    m_loadPartItem->hide();
+    m_clearPartItem->hide();
 }
 
 }

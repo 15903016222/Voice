@@ -14,7 +14,19 @@ class GateMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    GateMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit GateMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~GateMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_gateItem;
+    MenuItem *m_startItem;
+    MenuItem *m_widthItem;
+    MenuItem *m_thresholdItem;
+    MenuItem *m_synchroItem;
+    MenuItem *m_measureModeItem;
 };
 
 #endif // GATEMENU_H

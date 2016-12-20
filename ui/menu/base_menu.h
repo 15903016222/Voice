@@ -14,28 +14,18 @@
 #include "ui_base_menu.h"
 #include "menu_item.h"
 
-#define MAX_ITEMS   6
-
 class BaseMenu : public QObject
 {
     Q_OBJECT
 public:
-    explicit BaseMenu(Ui::BaseMenu *ui,
-                      const MenuItem::Type types[MAX_ITEMS],
-                      QObject *parent = 0);
+    explicit BaseMenu(Ui::BaseMenu *ui, QObject *parent = 0);
     virtual ~BaseMenu();
 
-    virtual void show();
-    virtual void hide();
-
-signals:
-
-public slots:
+    virtual void show() = 0;
+    virtual void hide() = 0;
 
 protected:
     static QStringList s_onOff;
-
-    MenuItem *m_menuItem[MAX_ITEMS];
 
     Ui::BaseMenu *ui;
 };

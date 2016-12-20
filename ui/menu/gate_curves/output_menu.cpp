@@ -6,18 +6,12 @@
  * @date 2016-12-16
  */
 #include "output_menu.h"
-
-static const MenuItem::Type s_types[MAX_ITEMS] = {
-    MenuItem::Combo,
-    MenuItem::Combo,
-    MenuItem::Spin,
-    MenuItem::Spin,
-    MenuItem::Label,
-    MenuItem::Combo
-};
+#include "combo_menu_item.h"
+#include "spin_menu_item.h"
+#include "label_menu_item.h"
 
 OutputMenu::OutputMenu(Ui::BaseMenu *ui, QObject *parent)
-    : BaseMenu(ui, s_types, parent)
+    : BaseMenu(ui, parent)
 {
     QStringList outputList;
     QStringList soundList;
@@ -39,10 +33,59 @@ OutputMenu::OutputMenu(Ui::BaseMenu *ui, QObject *parent)
     dataList.append(tr("B%"));
     dataList.append(tr("None"));
 
-    m_menuItem[0]->set(tr("Output"), outputList);
-    m_menuItem[1]->set(tr("Sound"), soundList);
-    m_menuItem[2]->set(tr("Delay"), "mm", 0, 5000, 2);
-    m_menuItem[3]->set(tr("Hold Time"), "%", 0, 5000, 2);
-    m_menuItem[4]->set(tr("Group"), "");
-    m_menuItem[5]->set(tr("Data"), dataList);
+    m_outputItem = new ComboMenuItem;
+    m_soundItem = new ComboMenuItem;
+    m_delayItem = new SpinMenuItem;
+    m_holdTimeItem = new SpinMenuItem;
+    m_groupItem = new LabelMenuItem;
+    m_dataItem = new ComboMenuItem;
+
+    m_outputItem->set(tr("Output"), outputList);
+    m_soundItem->set(tr("Sound"), soundList);
+    m_delayItem->set(tr("Delay"), "mm", 0, 5000, 2);
+    m_holdTimeItem->set(tr("Hold Time"), "%", 0, 5000, 2);
+    m_groupItem->set(tr("Group"), "");
+    m_dataItem->set(tr("Data"), dataList);
+}
+
+OutputMenu::~OutputMenu()
+{
+    delete m_outputItem;
+    delete m_soundItem;
+    delete m_delayItem;
+    delete m_holdTimeItem;
+    delete m_groupItem;
+    delete m_dataItem;
+}
+
+void OutputMenu::show()
+{
+    ui->menuItem0->layout()->addWidget(m_outputItem);
+    ui->menuItem1->layout()->addWidget(m_soundItem);
+    ui->menuItem2->layout()->addWidget(m_delayItem);
+    ui->menuItem3->layout()->addWidget(m_holdTimeItem);
+    ui->menuItem4->layout()->addWidget(m_groupItem);
+    ui->menuItem5->layout()->addWidget(m_dataItem);
+    m_outputItem->show();
+    m_soundItem->show();
+    m_delayItem->show();
+    m_holdTimeItem->show();
+    m_groupItem->show();
+    m_dataItem->show();
+}
+
+void OutputMenu::hide()
+{
+    ui->menuItem0->layout()->removeWidget(m_outputItem);
+    ui->menuItem1->layout()->removeWidget(m_soundItem);
+    ui->menuItem2->layout()->removeWidget(m_delayItem);
+    ui->menuItem3->layout()->removeWidget(m_holdTimeItem);
+    ui->menuItem4->layout()->removeWidget(m_groupItem);
+    ui->menuItem5->layout()->removeWidget(m_dataItem);
+    m_outputItem->hide();
+    m_soundItem->hide();
+    m_delayItem->hide();
+    m_holdTimeItem->hide();
+    m_groupItem->hide();
+    m_dataItem->hide();
 }

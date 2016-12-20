@@ -7,8 +7,18 @@ namespace DplFocalLawMenu {
 
 class AngleMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    AngleMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit AngleMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~AngleMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_minAngleItem;
+    MenuItem *m_maxAngleItem;
+    MenuItem *m_angleStepItem;
 };
 
 }

@@ -7,8 +7,19 @@ namespace DplProbeMenu {
 
 class FftMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    FftMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit FftMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~FftMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_gainItem;
+    MenuItem *m_startItem;
+    MenuItem *m_widthItem;
+    MenuItem *m_switchItem;
 };
 
 }

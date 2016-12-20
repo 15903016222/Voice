@@ -14,7 +14,18 @@ class AlarmMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    AlarmMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit AlarmMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~AlarmMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_alarmItem;
+    MenuItem *m_switchItem;
+    MenuItem *m_groupItem;
+    MenuItem *m_conditionItem;
+    MenuItem *m_operatorItem;
 };
 
 #endif // ALARMMENU_H

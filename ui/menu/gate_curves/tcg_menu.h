@@ -14,19 +14,30 @@ class TcgMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    TcgMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit TcgMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~TcgMenu();
 
     void show();
     void hide();
 
 private:
+    MenuItem *m_modeItem;
+
+    /* Setting */
+    MenuItem *m_curveNoItem;
+    MenuItem *m_curveXItem;
+    MenuItem *m_dbOffsetItem;
+    MenuItem *m_switchItem;
+
+    /* Edit */
     MenuItem *m_pointItem;
     MenuItem *m_positionItem;
     MenuItem *m_gainItem;
     MenuItem *m_addPointItem;
     MenuItem *m_deletePointItem;
 
-    bool m_settingFlag;
+    void show_setting();
+    void hide_setting();
 
     void show_edit();
     void hide_edit();

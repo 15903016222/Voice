@@ -6,8 +6,21 @@ namespace DplScanMenu {
 
 class AreaMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    AreaMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit AreaMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~AreaMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_scanStartItem;
+    MenuItem *m_scanEndItem;
+    MenuItem *m_scanResolutionItem;
+    MenuItem *m_indexStartItem;
+    MenuItem *m_indexEndItem;
+    MenuItem *m_indexResolutionItem;
 };
 
 }

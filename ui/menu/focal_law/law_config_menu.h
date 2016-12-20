@@ -7,8 +7,19 @@ namespace DplFocalLawMenu {
 
 class LawConfigMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    LawConfigMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit LawConfigMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~LawConfigMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_lawTypeItem;
+    MenuItem *m_pulseConnectionItem;
+    MenuItem *m_receiverConnectionItem;
+    MenuItem *m_waveTypeItem;
 };
 
 }

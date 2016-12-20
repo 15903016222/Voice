@@ -16,13 +16,25 @@ public:
     void hide();
 
 private:
+    MenuItem *m_selectItem;
+
+    MenuItem *m_wedgeItem;
+    MenuItem *m_layerDepthItem;
+    MenuItem *m_tofdCalItem;
+    MenuItem *m_startItem;
+    MenuItem *m_rangeItem;
+
     MenuItem *m_straighteningItem;
     MenuItem *m_removeLateralItem;
     MenuItem *m_refPositionItem;
     MenuItem *m_depthCalibrationItem;
 
+    void show_setting();
+    void hide_setting();
+
     void show_analysis();
     void hide_analysis();
+
 
 private slots:
     void do_select_changed(int index);

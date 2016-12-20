@@ -9,25 +9,40 @@ class CursorsMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    CursorsMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit CursorsMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~CursorsMenu();
+
+    void show();
+    void hide();
 
 private:
-    MenuItem *m_bSrItem;
-    MenuItem *m_bSmItem;
-    MenuItem *m_bUrItem;
-    MenuItem *m_bUmItem;
+    MenuItem *m_selectionItem;
 
-    MenuItem *m_cSrItem;
-    MenuItem *m_cSmItem;
-    MenuItem *m_cIrItem;
-    MenuItem *m_cImItem;
+    MenuItem *m_rItem;      /* %(r) */
+    MenuItem *m_mItem;      /* %(m) */
 
-    MenuItem *m_angleItem;
+    MenuItem *m_urItem;     /* U(r) */
+    MenuItem *m_umItem;     /* U(m) */
+
+    MenuItem *m_srItem;     /* S(r) */
+    MenuItem *m_smItem;     /* S(m) */
+
+    MenuItem *m_irItem;     /* I(r) */
+    MenuItem *m_imItem;     /* I(m) */
+
+    MenuItem *m_angelItem;
 
     void show_a_scan();
+    void hide_a_scan();
+
     void show_b_scan();
+    void hide_b_scan();
+
     void show_c_scan();
+    void hide_c_scan();
+
     void show_s_scan();
+    void hide_s_scan();
 
 private slots:
     void do_selections_changed(int index);

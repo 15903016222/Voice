@@ -3,15 +3,8 @@
 
 namespace DplDisplayMenu {
 
-static const MenuItem::Type s_types[MAX_ITEMS] = {
-    MenuItem::Combo,
-    MenuItem::Combo,
-    MenuItem::Combo,
-    MenuItem::Combo
-};
-
 PropertiesMenu::PropertiesMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, s_types, parent)
+    BaseMenu(ui, parent)
 {
     QStringList scanList;
     QStringList colorList;
@@ -35,14 +28,19 @@ PropertiesMenu::PropertiesMenu(Ui::BaseMenu *ui, QObject *parent) :
     cScanModeList.append(tr("Sectorial"));
     cScanModeList.append(tr("Linear"));
 
-    m_menuItem[0]->set(tr("Scan"), scanList);
-    connect(m_menuItem[0], SIGNAL(value_changed(int)), this, SLOT(do_mode_changed(int)));
+    m_scanItem = new ComboMenuItem;
+    m_scanItem->set(tr("Scan"), scanList);
+    connect(m_scanItem, SIGNAL(value_changed(int)), this, SLOT(do_mode_changed(int)));
 
     /* A-Scan */
-    m_menuItem[1]->set(tr("Color"), colorList);
-    m_menuItem[2]->set(tr("Envelope"), envelopeList);
-    m_menuItem[3]->set(tr("Peak Holding"), s_onOff);
-    m_menuItem[4]->set(tr("Reference Holding"), s_onOff);
+    m_colorItem = new ComboMenuItem;
+    m_envelopItem = new ComboMenuItem;
+    m_peakHoldingItem = new ComboMenuItem;
+    m_referenceholdingItem = new ComboMenuItem;
+    m_colorItem->set(tr("Color"), colorList);
+    m_envelopItem->set(tr("Envelope"), envelopeList);
+    m_peakHoldingItem->set(tr("Peak Holding"), s_onOff);
+    m_referenceholdingItem->set(tr("Reference Holding"), s_onOff);
 
     /* B-Scan */
     m_compressionItem = new ComboMenuItem();
@@ -56,28 +54,34 @@ PropertiesMenu::PropertiesMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_cScanModeItem->set(tr("C-Scan Mode"), cScanModeList);
 }
 
+PropertiesMenu::~PropertiesMenu()
+{
+    delete m_scanItem;
+
+    delete m_colorItem;
+    delete m_envelopItem;
+    delete m_peakHoldingItem;
+    delete m_referenceholdingItem;
+
+    delete m_compressionItem;
+    delete m_ratioItem;
+    delete m_cScanModeItem;
+}
+
 void PropertiesMenu::show()
 {
-    switch (m_menuItem[0]->get_current_index()) {
+    switch (m_scanItem->get_current_index()) {
     case 0:
         /* A-Scan */
-        BaseMenu::show();
+        show_a_scan();
         break;
     case 1:
         /* B-Scan */
-        ui->menuItem0->layout()->addWidget(m_menuItem[0]);
-        ui->menuItem1->layout()->addWidget(m_compressionItem);
-        m_menuItem[0]->show();
-        m_compressionItem->show();
+        show_b_scan();
         break;
     case 2:
         /* C-Scan */
-        ui->menuItem0->layout()->addWidget(m_menuItem[0]);
-        ui->menuItem1->layout()->addWidget(m_ratioItem);
-        ui->menuItem2->layout()->addWidget(m_cScanModeItem);
-        m_menuItem[0]->show();
-        m_ratioItem->show();
-        m_cScanModeItem->show();
+        show_c_scan();
         break;
     default:
         break;
@@ -87,18 +91,58 @@ void PropertiesMenu::show()
 void PropertiesMenu::hide()
 {
     /* A-Scan */
-    BaseMenu::hide();
+    ui->menuItem0->layout()->removeWidget(m_scanItem);
+    ui->menuItem1->layout()->removeWidget(m_colorItem);
+    ui->menuItem2->layout()->removeWidget(m_envelopItem);
+    ui->menuItem3->layout()->removeWidget(m_peakHoldingItem);
+    ui->menuItem4->layout()->removeWidget(m_referenceholdingItem);
+    m_scanItem->hide();
+    m_colorItem->hide();
+    m_envelopItem->hide();
+    m_peakHoldingItem->hide();
+    m_referenceholdingItem->hide();
 
+    /* B-Scan */
     ui->menuItem1->layout()->removeWidget(m_compressionItem);
-
     m_compressionItem->hide();
 
+    /* C-Scan */
     ui->menuItem1->layout()->removeWidget(m_ratioItem);
     ui->menuItem2->layout()->removeWidget(m_cScanModeItem);
-
-
     m_ratioItem->hide();
     m_cScanModeItem->hide();
+}
+
+void PropertiesMenu::show_a_scan()
+{
+    ui->menuItem0->layout()->addWidget(m_scanItem);
+    ui->menuItem1->layout()->addWidget(m_colorItem);
+    ui->menuItem2->layout()->addWidget(m_envelopItem);
+    ui->menuItem3->layout()->addWidget(m_peakHoldingItem);
+    ui->menuItem4->layout()->addWidget(m_referenceholdingItem);
+    m_scanItem->show();
+    m_colorItem->show();
+    m_envelopItem->show();
+    m_peakHoldingItem->show();
+    m_referenceholdingItem->show();
+}
+
+void PropertiesMenu::show_b_scan()
+{
+    ui->menuItem0->layout()->addWidget(m_scanItem);
+    ui->menuItem1->layout()->addWidget(m_compressionItem);
+    m_scanItem->show();
+    m_compressionItem->show();
+}
+
+void PropertiesMenu::show_c_scan()
+{
+    ui->menuItem0->layout()->addWidget(m_scanItem);
+    ui->menuItem1->layout()->addWidget(m_ratioItem);
+    ui->menuItem2->layout()->addWidget(m_cScanModeItem);
+    m_scanItem->show();
+    m_ratioItem->show();
+    m_cScanModeItem->show();
 }
 
 void PropertiesMenu::do_mode_changed(int i)

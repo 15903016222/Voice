@@ -7,8 +7,17 @@ namespace DplScanMenu {
 
 class StartMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
-    StartMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit StartMenu(Ui::BaseMenu *ui, QObject *parent);
+    ~StartMenu();
+
+    void show();
+    void hide();
+
+private:
+    MenuItem *m_scanItem;
+    MenuItem *m_pauseItem;
 };
 
 }

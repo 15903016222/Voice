@@ -1,34 +1,70 @@
 #include "flaw_record_menu.h"
+#include "label_menu_item.h"
+#include "combo_menu_item.h"
 
 namespace DplMeasurementMenu {
 
-static const MenuItem::Type s_types[MAX_ITEMS] = {
-    MenuItem::Label,
-    MenuItem::Combo,
-    MenuItem::Label,
-    MenuItem::Combo,
-    MenuItem::Label
-};
-
 FlawRecordMenu::FlawRecordMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, s_types, parent)
+    BaseMenu(ui, parent)
 {
     /* Add/Delete Menu Item */
-    m_menuItem[0]->set(tr("Add/Delete"), "");
+    m_addDeleteItem = new LabelMenuItem;
+    m_addDeleteItem->set(tr("Add/Delete"), "");
 
     /* Flaw Image menu item */
-    m_menuItem[1]->set(tr("Flaw Image"), s_onOff);
+    m_flawImageItem = new ComboMenuItem;
+    m_flawImageItem->set(tr("Flaw Image"), s_onOff);
 
     /* Comment menu item */
-    m_menuItem[2]->set(tr("Comment"), "");
-    connect(m_menuItem[2], SIGNAL(clicked()), this, SLOT(do_comment_clicked()));
+    m_commentItem = new LabelMenuItem;
+    m_commentItem->set(tr("Comment"), "");
+    connect(m_commentItem, SIGNAL(clicked()), this, SLOT(do_comment_clicked()));
 
     /* Display Table Menu Item */
-    m_menuItem[3]->set(tr("Display Table"), s_onOff);
+    m_displayTableItem = new ComboMenuItem;
+    m_displayTableItem->set(tr("Display Table"), s_onOff);
 
     /* Export Record Menu Item */
-    m_menuItem[4]->set(tr("Export Record"), "");
+    m_exportRecordItem = new LabelMenuItem;
+    m_exportRecordItem->set(tr("Export Record"), "");
 
+}
+
+FlawRecordMenu::~FlawRecordMenu()
+{
+    delete m_addDeleteItem;
+    delete m_flawImageItem;
+    delete m_commentItem;
+    delete m_displayTableItem;
+    delete m_exportRecordItem;
+}
+
+void FlawRecordMenu::show()
+{
+    ui->menuItem0->layout()->addWidget(m_addDeleteItem);
+    ui->menuItem1->layout()->addWidget(m_flawImageItem);
+    ui->menuItem2->layout()->addWidget(m_commentItem);
+    ui->menuItem3->layout()->addWidget(m_displayTableItem);
+    ui->menuItem4->layout()->addWidget(m_exportRecordItem);
+    m_addDeleteItem->show();
+    m_flawImageItem->show();
+    m_commentItem->show();
+    m_displayTableItem->show();
+    m_exportRecordItem->show();
+}
+
+void FlawRecordMenu::hide()
+{
+    ui->menuItem0->layout()->removeWidget(m_addDeleteItem);
+    ui->menuItem1->layout()->removeWidget(m_flawImageItem);
+    ui->menuItem2->layout()->removeWidget(m_commentItem);
+    ui->menuItem3->layout()->removeWidget(m_displayTableItem);
+    ui->menuItem4->layout()->removeWidget(m_exportRecordItem);
+    m_addDeleteItem->hide();
+    m_flawImageItem->hide();
+    m_commentItem->hide();
+    m_displayTableItem->hide();
+    m_exportRecordItem->hide();
 }
 
 void FlawRecordMenu::do_comment_clicked()
