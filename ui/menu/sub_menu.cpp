@@ -54,6 +54,11 @@
 #include "scan/area_menu.h"
 #include "scan/start_menu.h"
 
+/* Measurement */
+#include "measurement/cursors_menu.h"
+#include "measurement/tofd_menu.h"
+#include "measurement/flaw_record_menu.h"
+
 #include <QKeyEvent>
 #include <QDebug>
 
@@ -123,14 +128,15 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::FacalLaw_FocalPoint, new DplFocalLawMenu::FocalPointMenu(ui, this));
 
     /* Scan */
-    m_map.insert(MainMenu::Scan_Inspection, new DplScanMenu::InspectionMenu(ui, this));
-    m_map.insert(MainMenu::Scan_Encoder,    new DplScanMenu::EncoderMenu(ui, this));
-    m_map.insert(MainMenu::Scan_Area,       new DplScanMenu::AreaMenu(ui, this));
-    m_map.insert(MainMenu::Scan_Start,      new DplScanMenu::StartMenu(ui, this));
+    m_map.insert(MainMenu::Scan_Inspection,     new DplScanMenu::InspectionMenu(ui, this));
+    m_map.insert(MainMenu::Scan_Encoder,        new DplScanMenu::EncoderMenu(ui, this));
+    m_map.insert(MainMenu::Scan_Area,           new DplScanMenu::AreaMenu(ui, this));
+    m_map.insert(MainMenu::Scan_Start,          new DplScanMenu::StartMenu(ui, this));
 
-    //    m_map.insert(MainMenu::Measurement_Cursors, &SubMenu::set_cursors_menu);
-//    m_map.insert(MainMenu::Measurement_TOFD, &SubMenu::set_tofd_menu);
-//    m_map.insert(MainMenu::Measurement_FlawRecord, &SubMenu::set_flawRecord_menu);
+    /* Measurement */
+    m_map.insert(MainMenu::Measurement_Cursors, new DplMeasurementMenu::CursorsMenu(ui, this));
+    m_map.insert(MainMenu::Measurement_TOFD,    new DplMeasurementMenu::TofdMenu(ui, this));
+    m_map.insert(MainMenu::Measurement_FlawRecord,  new DplMeasurementMenu::FlawRecordMenu(ui, this));
 //    m_map.insert(MainMenu::FileReport_File, &SubMenu::set_file_menu);
 //    m_map.insert(MainMenu::FileReport_SaveMode, &SubMenu::set_saveMode_menu);
 //    m_map.insert(MainMenu::FileReport_Report, &SubMenu::set_report_menu);
@@ -160,172 +166,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_cursors_menu(bool show)
-{
-//    if(show) {
-//        QString option;
-//        QList<double> steps1;
-//        steps1.append(0.1);
-//        steps1.append(1.0);
-//        steps1.append(10.0);
-
-//        QList<double> steps2;
-//        steps2.append(0.1);
-//        steps2.append(0.5);
-//        steps2.append(1.0);
-//        steps2.append(5.0);
-
-//        /* Selection menu item */
-//        set_combobox_menu(ui->subMenu_1, tr("Selection"), m_list_selection);
-
-//        if(option == "A-Scan") {
-
-//            /* %(r) menu item */
-//            set_spinbox_menu(ui->subMenu_2, tr("%(r)"), "%", steps1, 0, 100, 1);
-
-//            /* %(m) menu item */
-//            set_spinbox_menu(ui->subMenu_3, tr("%(m)"), "%", steps1, 0, 100, 1);
-
-//            /* U(r) menu item */
-//            set_spinbox_menu(ui->subMenu_4, tr("U(r)"), "mm", stepList6, 0, 2000, 2);
-
-//            /* U(m) menu item */
-//            set_spinbox_menu(ui->subMenu_5, tr("U(m)"), "mm", stepList6, 0, 2000, 2);
-
-//            ui->subMenu_6->set_type(MenuItem::None);
-//        } else if(option == "B-Scan") {
-
-//            /* S(r) menu item */
-//            set_spinbox_menu(ui->subMenu_2, tr("S(r)"), "s", steps2, 0, 10000, 1);
-
-//            /* S(m) menu item */
-//            set_spinbox_menu(ui->subMenu_3, tr("S(m)"), "s", steps2, 0, 10000, 1);
-
-//            /* U(r) menu item */
-//            set_spinbox_menu(ui->subMenu_4, tr("U(r)"), "mm", stepList6, 0, 2000, 2);
-
-//            /* U(m) menu item */
-//            set_spinbox_menu(ui->subMenu_5, tr("U(m)"), "mm", stepList6, 0, 2000, 2);
-
-//            ui->subMenu_6->set_type(MenuItem::None);
-
-//        } else if(option == "C-Scan") {
-
-//            /* S(r) menu item */
-//            set_spinbox_menu(ui->subMenu_2, tr("S(r)"), "s", steps2, 0, 10000, 1);
-
-//            /* S(m) menu item */
-//            set_spinbox_menu(ui->subMenu_3, tr("S(m)"), "s", steps2, 0, 10000, 1);
-
-//            /* I(r) menu item */
-//            set_spinbox_menu(ui->subMenu_4, tr("I(r)"), "mm", steps2, 0, 2000, 1);
-
-//            /* I(m) menu item */
-//            set_spinbox_menu(ui->subMenu_5, tr("I(m)"), "mm", steps2, 0, 2000, 1);
-
-//            ui->subMenu_6->set_type(MenuItem::None);
-
-//        } else if(option == "S-Scan") {
-//            /* Angle menu item */
-//            QList<double> steps3;
-//            steps3.append(1);
-//            set_spinbox_menu(ui->subMenu_2, tr("Angle"), "°", steps3, 25, 75, 0);
-
-//            /* U(r) menu item */
-//            set_spinbox_menu(ui->subMenu_3, tr("U(r)"), "mm", stepList6, 0, 2000, 2);
-
-//            /* U(m) menu item */
-//            set_spinbox_menu(ui->subMenu_4, tr("U(m)"), "mm", stepList6, 0, 2000, 2);
-
-//            /* I(r) menu item */
-//            set_spinbox_menu(ui->subMenu_5, tr("I(r)"), "mm", steps2, 0, 2000, 1);
-
-//            /* I(m) menu item */
-//            set_spinbox_menu(ui->subMenu_6, tr("I(m)"), "mm", steps2, 0, 2000, 1);
-//        }
-//        steps1.clear();
-//        steps2.clear();
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_tofd_menu(bool show)
-{
-//    if(show) {
-//        QString option;
-//        QList<double> steps;
-//        steps.append(0.1);
-//        steps.append(1.0);
-//        steps.append(10.0);
-//        steps.append(100.0);
-
-//        /* Select menu item */
-//        set_combobox_menu(ui->subMenu_1, tr("Select"), m_list_select);
-
-//        if(option == "TOFD Settings") {
-
-//            /* Wedge Sep. menu item */
-//            set_spinbox_menu(ui->subMenu_2, tr("Wedge Sep."), "mm", steps, 0, 10000, 1);
-
-//            /* Layer Depth menu item */
-//            set_label_menu(ui->subMenu_3, tr("Layer Depth"));
-
-//            /* TOFD Calculator menu item */
-//            set_label_menu(ui->subMenu_4, tr("TOFD Calculator"));
-
-//            /* Start menu item */
-//            set_spinbox_menu(ui->subMenu_5, tr("Start"), "mm", stepList2, 0, 16000, 2);
-
-//            /* Range menu item */
-//            set_spinbox_menu(ui->subMenu_6, tr("Range"), "mm", stepList2, 0, 16000, 2);
-//        } else if(option == "TOFD Analysis") {
-
-//            /* Straightening menu item */
-//            set_combobox_menu(ui->subMenu_2, tr("Straightening"), switchList);
-
-//            /* Remove Lateral menu item */
-//            set_combobox_menu(ui->subMenu_3, tr("Remove Lateral"), switchList);
-
-//            /* Ref.Position menu item */
-//            set_spinbox_menu(ui->subMenu_4, tr("Ref.Position"), "mm", stepList6, 0, 2000, 2);
-
-//            /* Depth Calibration menu item */
-//            set_combobox_menu(ui->subMenu_5, tr("Depth Calibration"), switchList);
-
-//            ui->subMenu_6->set_type(MenuItem::None);
-
-//        }
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_flawRecord_menu(bool show)
-{
-//    if(show) {
-//        /* Add/Delete Menu Item */
-//        set_label_menu(ui->subMenu_1, tr("Add/Delete"));
-
-//        /* Flaw Image menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Flaw Image"), switchList);
-
-//        /* Comment menu item */
-//        set_label_menu(ui->subMenu_3, tr("Comment"));
-//        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        /* Display Table Menu Item */
-//        set_combobox_menu(ui->subMenu_4, tr("Display Table"), switchList);
-
-//        /* Export Record Menu Item */
-//        set_label_menu(ui->subMenu_5, tr("Export Record"));
-
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-//        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//    }
 }
 
 void SubMenu::set_file_menu(bool show)
@@ -567,19 +407,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-
-
-
-
-
-    m_list_selection.append(tr("A-Scan"));
-    m_list_selection.append(tr("B-Scan"));
-    m_list_selection.append(tr("C-Scan"));
-    m_list_selection.append(tr("S-Scan"));
-
-    m_list_select.append(tr("TOFD Settings"));
-    m_list_select.append(tr("TOFD Analysis"));
-
     m_list_storage.append(tr("SD"));
     m_list_storage.append(tr("SSG"));
     m_list_storage.append(tr("U Storage"));
@@ -642,15 +469,6 @@ void SubMenu::init_step_list()
     stepList6.append(1.00);
     stepList6.append(10.00);
 
-}
-
-void SubMenu::show_input_dialog()
-{
-//    InputPanelContext inputPanel;
-//    MenuItem *widget = qobject_cast<MenuItem*>(sender());
-//    inputPanel.set_item_current_text(widget->get_label_text());
-//    inputPanel.exec();
-//    widget->set_label_text(inputPanel.get_text());
 }
 
 void SubMenu::show_filemanager_dialog()
@@ -740,8 +558,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_selection.clear();
-    m_list_select.clear();
     m_list_storage.clear();
     m_list_saveMode.clear();
     m_list_select2.clear();
