@@ -66,7 +66,7 @@ border-radius: 5px;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../main_window.qrc">
           <normaloff>:/file/resources/down.png</normaloff>:/file/resources/down.png</iconset>
         </property>
        </widget>
@@ -489,11 +489,6 @@ QTreeWidget::branch{
            <string>Network</string>
           </property>
          </item>
-         <item>
-          <property name="text">
-           <string>Service</string>
-          </property>
-         </item>
         </item>
        </widget>
       </item>
@@ -512,7 +507,7 @@ QTreeWidget::branch{
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../main_window.qrc">
           <normaloff>:/file/resources/up.png</normaloff>:/file/resources/up.png</iconset>
         </property>
        </widget>
@@ -522,6 +517,8 @@ QTreeWidget::branch{
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../main_window.qrc"/>
+ </resources>
  <connections/>
 </ui>

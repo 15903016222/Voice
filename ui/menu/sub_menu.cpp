@@ -66,6 +66,11 @@
 #include "file_report/save_mode_menu.h"
 #include "file_report/user_field_menu.h"
 
+/* Preference */
+#include "preference/network_menu.h"
+#include "preference/preference_menu.h"
+#include "preference/system_menu.h"
+
 #include <QKeyEvent>
 #include <QDebug>
 
@@ -88,17 +93,10 @@ SubMenu::SubMenu(QWidget *parent) :
     layout5->setContentsMargins(0, 0, 0, 0);
     layout6->setContentsMargins(0, 0, 0, 0);
 
-    switchList.append(tr("On"));
-    switchList.append(tr("Off"));
-
-    init_option_stringlist();
-    init_step_list();
     init_map();  
 
     m_preType = MainMenu::UTSettings_Pulser;
     set_menu(MainMenu::UTSettings_General);
-//    m_brightness = 50.0;
-//    set_brightness(m_brightness);
 }
 
 void SubMenu::init_map()
@@ -153,10 +151,9 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::FileReport_UserField,new DplFileReportMenu::UserFieldMenu(ui, this));
 
     /* Preference */
-//        m_map.insert(MainMenu::Preference_Preference, &SubMenu::set_preference_menu);
-//    m_map.insert(MainMenu::Preference_System, &SubMenu::set_system_menu);
-//    m_map.insert(MainMenu::Preference_Network, &SubMenu::set_network_menu);
-//    m_map.insert(MainMenu::Preference_Service, &SubMenu::set_service_menu);
+    m_map.insert(MainMenu::Preference_Preference, new DplPreferenceMenu::PreferenceMenu(ui, this));
+    m_map.insert(MainMenu::Preference_System,   new DplPreferenceMenu::SystemMenu(ui, this));
+    m_map.insert(MainMenu::Preference_Network,  new DplPreferenceMenu::NetworkMenu(ui, this));
 }
 
 
@@ -177,159 +174,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_preference_menu(bool show)
-{
-//    if(show) {
-//        /* Units menu item */
-//        set_combobox_menu(ui->subMenu_1, tr("Units"), m_list_units);
-
-//        /* Bright menu item */
-//        QList<double> steps;
-//        steps.append(1);
-//        steps.append(10);
-//        set_spinbox_menu(ui->subMenu_2, tr("Bright"), "%", steps, 1, 100, 0);
-//        connect(ui->subMenu_2, SIGNAL(spin_event(double)), this, SLOT(set_brightness(double)));
-
-//        /* Opacity menu item */
-//        set_spinbox_menu(ui->subMenu_3, tr("Opacity"), "%", steps, 1, 100, 0);
-
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-
-//        steps.clear();
-//    } else {
-//        disconnect(ui->subMenu_2, SIGNAL(spin_event(double)), this, SLOT(set_brightness(double)));
-//    }
-}
-
-void SubMenu::set_system_menu(bool show)
-{
-//    if(show) {
-
-//        /* Clock Set menu item */
-//        set_label_menu(ui->subMenu_1, tr("Clock Set"));
-//        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_time_dialog()));
-//        ui->subMenu_1->set_label_text(QTime::currentTime().toString("hh:mm:ss"));
-
-//        /* Date Set menu item */
-//        set_label_menu(ui->subMenu_2, tr("Date Set"));
-//        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_date_dialog()));
-//        ui->subMenu_2->set_label_text(QDate::currentDate().toString("yyyy-MM-dd"));
-
-//        /* Language menu item */
-//        set_combobox_menu(ui->subMenu_3, tr("Language"), m_list_language);
-
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-//        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_time_dialog()));
-//        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_date_dialog()));
-//    }
-}
-
-void SubMenu::set_network_menu(bool show)
-{
-//    if(show) {
-
-//        /* IP Address menu item */
-//        set_label_menu(ui->subMenu_1, tr("IP Address"));
-//        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_ip_address_dialog()));
-//        ui->subMenu_1->set_label_text("192.168.1.1");
-
-//        /* Subnet Mask menu item */
-//        set_label_menu(ui->subMenu_2, tr("Subnet Mask"));
-//        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
-//        ui->subMenu_2->set_label_text("255.255.255.0");
-
-//        ui->subMenu_3->set_type(MenuItem::None);
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-//        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_ip_address_dialog()));
-//        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
-//    }
-}
-
-void SubMenu::set_service_menu(bool show)
-{
-//    if(show) {
-//        /* System Information Menu Item */
-//        set_label_menu(ui->subMenu_1, tr("System Information"));
-//        connect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_info_dialog()));
-
-//        /* Cert Import menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Cert Import"), m_list_certImport);
-
-//        /* SW Update menu item */
-//        set_label_menu(ui->subMenu_3, tr("SW Update"));
-
-//        /* HW Update Menu Item */
-//        set_label_menu(ui->subMenu_4, tr("HW Update"));
-
-//        /* Reset Configuration Number item */
-//        set_label_menu(ui->subMenu_5, tr("Reset Configuration"));
-//        connect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_resetconfig_dialog()));
-
-//        /* About menu item */
-//        set_label_menu(ui->subMenu_6, tr("About"));
-//        connect(ui->subMenu_6, SIGNAL(clicked()), this, SLOT(show_about_dialog()));
-//    } else {
-//        disconnect(ui->subMenu_1, SIGNAL(clicked()), this, SLOT(show_info_dialog()));
-//        disconnect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_resetconfig_dialog()));
-//        disconnect(ui->subMenu_6, SIGNAL(clicked()), this, SLOT(show_about_dialog()));
-//    }
-}
-
-void SubMenu::init_option_stringlist()
-{
-
-    m_list_units.append("Millimeters");
-    m_list_units.append("Inches");
-
-    m_list_language.append("English");
-    m_list_language.append("Chinese");
-
-    m_list_certImport.append(tr("U-Disk"));
-    m_list_certImport.append(tr("Network"));
-}
-
-void SubMenu::init_step_list()
-{
-    stepList1.append(0.1);
-    stepList1.append(0.5);
-    stepList1.append(1.0);
-    stepList1.append(2.0);
-    stepList1.append(6.0);
-
-    stepList2.append(0.01);
-    stepList2.append(0.10);
-    stepList2.append(1.00);
-    stepList2.append(10.0);
-    stepList2.append(100.0);
-
-    stepList3.append(1.00);
-    stepList3.append(10.0);
-    stepList3.append(100.0);
-    stepList3.append(1000.0);
-
-    stepList4.append(0.01);
-    stepList4.append(0.10);
-    stepList4.append(1.00);
-
-    stepList5.append(1);
-    stepList5.append(10);
-    stepList5.append(100);
-
-    stepList6.append(0.01);
-    stepList6.append(0.10);
-    stepList6.append(1.00);
-    stepList6.append(10.00);
-
 }
 
 
@@ -404,16 +248,6 @@ void SubMenu::show_resetconfig_dialog()
 
 SubMenu::~SubMenu()
 {
-    stepList1.clear();
-    stepList2.clear();
-    stepList3.clear();
-    stepList4.clear();
-    stepList5.clear();
-    stepList6.clear();
-
-    switchList.clear();
-    m_list_units.clear();
-
     delete ui;
 }
 

@@ -46,31 +46,12 @@ private slots:
 private:
     Ui::BaseMenu *ui;
 
-    void set_preference_menu(bool show);
-    void set_system_menu(bool show);
-    void set_network_menu(bool show);
-    void set_service_menu(bool show);
-
     void init_map();
-    void init_option_stringlist();
-    void init_step_list();
 
     QList<int> get_dialog_value_list(QString string, QString symbol);
 
     Mcu *pMcu;
 
-    QList<double> stepList1;
-    QList<double> stepList2;
-    QList<double> stepList3;
-    QList<double> stepList4;
-    QList<double> stepList5;
-    QList<double> stepList6;
-
-    QStringList switchList;
-
-    QStringList m_list_units;
-    QStringList m_list_language;
-    QStringList m_list_certImport;
 
     QMap<MainMenu::Type, BaseMenu*> m_map;
 
