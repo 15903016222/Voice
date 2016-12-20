@@ -59,6 +59,13 @@
 #include "measurement/tofd_menu.h"
 #include "measurement/flaw_record_menu.h"
 
+/* File/Report */
+#include "file_report/file_menu.h"
+#include "file_report/format_menu.h"
+#include "file_report/report_menu.h"
+#include "file_report/save_mode_menu.h"
+#include "file_report/user_field_menu.h"
+
 #include <QKeyEvent>
 #include <QDebug>
 
@@ -137,12 +144,16 @@ void SubMenu::init_map()
     m_map.insert(MainMenu::Measurement_Cursors, new DplMeasurementMenu::CursorsMenu(ui, this));
     m_map.insert(MainMenu::Measurement_TOFD,    new DplMeasurementMenu::TofdMenu(ui, this));
     m_map.insert(MainMenu::Measurement_FlawRecord,  new DplMeasurementMenu::FlawRecordMenu(ui, this));
-//    m_map.insert(MainMenu::FileReport_File, &SubMenu::set_file_menu);
-//    m_map.insert(MainMenu::FileReport_SaveMode, &SubMenu::set_saveMode_menu);
-//    m_map.insert(MainMenu::FileReport_Report, &SubMenu::set_report_menu);
-//    m_map.insert(MainMenu::FileReport_Format, &SubMenu::set_format_menu);
-//    m_map.insert(MainMenu::FileReport_UserField, &SubMenu::set_userField_menu);
-//    m_map.insert(MainMenu::Preference_Preference, &SubMenu::set_preference_menu);
+
+    /* File/Report */
+    m_map.insert(MainMenu::FileReport_File,     new DplFileReportMenu::FileMenu(ui, this));
+    m_map.insert(MainMenu::FileReport_SaveMode, new DplFileReportMenu::SaveModeMenu(ui, this));
+    m_map.insert(MainMenu::FileReport_Report,   new DplFileReportMenu::ReportMenu(ui, this));
+    m_map.insert(MainMenu::FileReport_Format,   new DplFileReportMenu::FormatMenu(ui, this));
+    m_map.insert(MainMenu::FileReport_UserField,new DplFileReportMenu::UserFieldMenu(ui, this));
+
+    /* Preference */
+//        m_map.insert(MainMenu::Preference_Preference, &SubMenu::set_preference_menu);
 //    m_map.insert(MainMenu::Preference_System, &SubMenu::set_system_menu);
 //    m_map.insert(MainMenu::Preference_Network, &SubMenu::set_network_menu);
 //    m_map.insert(MainMenu::Preference_Service, &SubMenu::set_service_menu);
@@ -166,137 +177,6 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_preType = type;
-}
-
-void SubMenu::set_file_menu(bool show)
-{
-//    if(show) {
-//        /* Save Setup As Menu Item */
-//        set_label_menu(ui->subMenu_1, tr("Save Setup As"));
-
-//        /* Open menu item */
-//        set_label_menu(ui->subMenu_2, tr("Open"));
-
-//        /* File Manager menu item */
-//        set_label_menu(ui->subMenu_3, tr("File Manager"));
-//        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_filemanager_dialog()));
-
-//        ui->subMenu_4->set_type(MenuItem::None);
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-//        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_filemanager_dialog()));
-//    }
-}
-
-void SubMenu::set_saveMode_menu(bool show)
-{
-//    if(show) {
-//        /* Storage Menu Item */
-//        set_combobox_menu(ui->subMenu_1, tr("Storage"), m_list_storage);
-
-//        /* Save Mode menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Save Mode"), m_list_saveMode);
-
-//        /* Save Data menu item */
-//        set_label_menu(ui->subMenu_3, tr("Save Data"));
-
-//        /* File Name menu item */
-//        set_label_menu(ui->subMenu_4, tr("File Name"));
-//        connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        ui->subMenu_5->set_type(MenuItem::None);
-//        ui->subMenu_6->set_type(MenuItem::None);
-//    } else {
-//        disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//    }
-}
-
-void SubMenu::set_report_menu(bool show)
-{
-//    if(show) {
-//        /* Template Menu Item */
-//        set_label_menu(ui->subMenu_1, tr("Template"));
-
-//        /* Report Name menu item */
-//        set_label_menu(ui->subMenu_2, tr("Report Name"));
-//        connect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        /* Customer menu item */
-//        set_label_menu(ui->subMenu_3, tr("Customer"));
-//        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        /* Part Name Menu Item */
-//        set_label_menu(ui->subMenu_4, tr("Part Name"));
-//        connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        /* Part Number item */
-//        set_label_menu(ui->subMenu_5, tr("Part Number"));
-//        connect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        /* Create menu item */
-//        set_label_menu(ui->subMenu_6, tr("Create"));
-//    } else {
-//        disconnect(ui->subMenu_2, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//        disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//        disconnect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//    }
-}
-
-void SubMenu::set_format_menu(bool show)
-{
-//    if(show) {
-//        /* Probe/Wedge Info Menu Item */
-//        set_combobox_menu(ui->subMenu_1, tr("Probe/Wedge Info"), switchList);
-
-//        /* Inspection Info menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Inspection Info"), switchList);
-
-//        /* Scan Info menu item */
-//        set_combobox_menu(ui->subMenu_3, tr("Scan Info"), switchList);
-
-//        /* Encoder Info Menu Item */
-//        set_combobox_menu(ui->subMenu_4, tr("Encoder Info"), switchList);
-
-//        /* DAC/TCG Info Number item */
-//        set_combobox_menu(ui->subMenu_5, tr("DAC/TCG Info"), switchList);
-
-//        /* Flaw Record Table menu item */
-//        set_combobox_menu(ui->subMenu_6, tr("Flaw Record Table"), switchList);
-//    } else {
-
-//    }
-}
-
-void SubMenu::set_userField_menu(bool show)
-{
-//    if(show) {
-//        /* Select Menu Item */
-//        set_combobox_menu(ui->subMenu_1, tr("Select"), m_list_select2);
-
-//        /* Enable menu item */
-//        set_combobox_menu(ui->subMenu_2, tr("Enable"), switchList);
-
-//        /* Label menu item */
-//        set_label_menu(ui->subMenu_3, tr("Label"));
-//        connect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        /* Content Menu Item */
-//        set_label_menu(ui->subMenu_4, tr("Content"));
-//        connect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        /* Edit Note Number item */
-//        set_label_menu(ui->subMenu_5, tr("Edit Note"));
-//        connect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-
-//        /* Print menu item */
-//        set_label_menu(ui->subMenu_6, tr("Print"));
-//    } else {
-//        disconnect(ui->subMenu_3, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//        disconnect(ui->subMenu_4, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//        disconnect(ui->subMenu_5, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
-//    }
 }
 
 void SubMenu::set_preference_menu(bool show)
@@ -407,25 +287,6 @@ void SubMenu::set_service_menu(bool show)
 
 void SubMenu::init_option_stringlist()
 {
-    m_list_storage.append(tr("SD"));
-    m_list_storage.append(tr("SSG"));
-    m_list_storage.append(tr("U Storage"));
-
-    m_list_saveMode.append(tr("Inspection Data"));
-    m_list_saveMode.append(tr("Inspection Table"));
-    m_list_saveMode.append(tr("Screen"));
-    m_list_saveMode.append(tr("Report"));
-
-    m_list_select2.append("1");
-    m_list_select2.append("2");
-    m_list_select2.append("3");
-    m_list_select2.append("4");
-    m_list_select2.append("5");
-    m_list_select2.append("6");
-    m_list_select2.append("7");
-    m_list_select2.append("8");
-    m_list_select2.append("9");
-    m_list_select2.append("10");
 
     m_list_units.append("Millimeters");
     m_list_units.append("Inches");
@@ -469,13 +330,6 @@ void SubMenu::init_step_list()
     stepList6.append(1.00);
     stepList6.append(10.00);
 
-}
-
-void SubMenu::show_filemanager_dialog()
-{
-    FileManagerDialog fileManagerDialog;
-    fileManagerDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-    fileManagerDialog.exec();
 }
 
 
@@ -558,9 +412,6 @@ SubMenu::~SubMenu()
     stepList6.clear();
 
     switchList.clear();
-    m_list_storage.clear();
-    m_list_saveMode.clear();
-    m_list_select2.clear();
     m_list_units.clear();
 
     delete ui;

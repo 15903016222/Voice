@@ -32,7 +32,6 @@ public slots:
     void set_menu(MainMenu::Type type);
 
 private slots:
-    void show_filemanager_dialog();
     void show_ip_address_dialog();
     void show_subnet_mask_dialog();
     void show_info_dialog();
@@ -46,14 +45,6 @@ private slots:
 
 private:
     Ui::BaseMenu *ui;
-
-    void set_flawRecord_menu(bool show);
-
-    void set_file_menu(bool show);
-    void set_saveMode_menu(bool show);
-    void set_report_menu(bool show);
-    void set_format_menu(bool show);
-    void set_userField_menu(bool show);
 
     void set_preference_menu(bool show);
     void set_system_menu(bool show);
@@ -77,9 +68,6 @@ private:
 
     QStringList switchList;
 
-    QStringList m_list_storage;
-    QStringList m_list_saveMode;
-    QStringList m_list_select2;
     QStringList m_list_units;
     QStringList m_list_language;
     QStringList m_list_certImport;
