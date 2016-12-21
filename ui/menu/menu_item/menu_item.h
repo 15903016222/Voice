@@ -27,7 +27,6 @@ public:
     virtual void set(const QString &title, const QString &unit, double min, double max, int decimals);
 
     virtual int get_current_index() const { return 0; }
-    virtual double get_current_value() const { return 0; }
 
     void set_type(MenuItem::Type type) { m_type = type; }
     MenuItem::Type type() const { return m_type;}
