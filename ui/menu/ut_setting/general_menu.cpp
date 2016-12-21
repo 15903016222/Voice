@@ -30,7 +30,7 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1);
 
     m_wedgeDelayItem = new SpinMenuItem();
-    m_wedgeDelayItem->set(tr("Wedge Delay"), "μs", 0, 1000, 2);
+    m_wedgeDelayItem->set(tr("Wedge Delay"), "&micro;s", 0, 1000, 2);
 
     m_utUnitItem = new ComboMenuItem();
     m_utUnitItem->set(tr("UT Unit"), utUnitList);

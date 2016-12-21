@@ -25,10 +25,10 @@ PositionMenu::PositionMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* Skew menu item */
     m_skewItem = new ComboMenuItem;
     QStringList skews;
-    skews.append("0°");
-    skews.append("90°");
-    skews.append("180°");
-    skews.append("270°");
+    skews.append("0\260");
+    skews.append("90\260");
+    skews.append("180\260");
+    skews.append("270\260");
     m_skewItem->set(tr("Skew"), skews);
 }
 

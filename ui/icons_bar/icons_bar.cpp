@@ -25,7 +25,7 @@ void IconsBar::do_temperature_event(Mcu::TemperatureType type, int value)
 {
     if (type == Mcu::TEMPERATURE_CPU) {
         QString temp_cpu;
-        temp_cpu.sprintf("%d°C", value);
+        temp_cpu.sprintf("%d\260C", value);
         ui->tempLabel->setText(temp_cpu);
     } /*else if (type == Mcu::TEMPERATURE_FPGA) {
         ui->label_2->setNum(value);
