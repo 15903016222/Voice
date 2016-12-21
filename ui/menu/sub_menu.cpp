@@ -7,16 +7,6 @@
  */
 #include "sub_menu.h"
 
-#include "probedialog.h"
-#include "wedgedialog.h"
-#include "inputpanelcontext.h"
-#include "filemanagerdialog.h"
-#include "sysinfo_dialog.h"
-#include "about_dialog.h"
-#include "resetconfigdialog.h"
-#include "networkdialog.h"
-#include "datetimesetdialog.h"
-
 /* UT Settings */
 #include "ut_setting/general_menu.h"
 #include "ut_setting/pulser_menu.h"
@@ -70,9 +60,6 @@
 #include "preference/network_menu.h"
 #include "preference/preference_menu.h"
 #include "preference/system_menu.h"
-
-#include <QKeyEvent>
-#include <QDebug>
 
 SubMenu::SubMenu(QWidget *parent) :
     QWidget(parent),
@@ -176,117 +163,7 @@ void SubMenu::set_menu(MainMenu::Type type)
     m_preType = type;
 }
 
-
-void SubMenu::show_ip_address_dialog()
-{
-    NetworkDialog *ipAddress = new NetworkDialog(this);
-    QMap<QString, QString> map;
-//    map.insert("IP Address", ui->subMenu_1->get_title());
-    ipAddress->set_dialog_title(map);
-//    ipAddress->set_spinbox_value(get_dialog_value_list(ui->subMenu_1->get_label_text(), QString(".")));
-    ipAddress->exec();
-//    ui->subMenu_1->set_label_text(ipAddress->get_ip());
-    delete ipAddress;
-}
-
-void SubMenu::show_subnet_mask_dialog()
-{
-    NetworkDialog *subnetMask = new NetworkDialog(this);
-    QMap<QString, QString> map;
-//    map.insert("Subnet Mask", ui->subMenu_2->get_title());
-    subnetMask->set_dialog_title(map);
-//    subnetMask->set_spinbox_value(get_dialog_value_list(ui->subMenu_2->get_label_text(), QString(".")));
-    subnetMask->exec();
-//    ui->subMenu_2->set_label_text(subnetMask->get_subnet());
-    delete subnetMask;
-}
-
-void SubMenu::show_info_dialog()
-{
-    Ui::Dialog::SysInfoDialog *infoDialog = new Ui::Dialog::SysInfoDialog(this);
-    infoDialog->exec();
-    delete infoDialog;
-}
-
-void SubMenu::show_about_dialog()
-{
-    Ui::Dialog::AboutDialog *aboutDialog = new Ui::Dialog::AboutDialog(this);
-    aboutDialog->exec();
-    delete aboutDialog;
-}
-
-void SubMenu::show_time_dialog()
-{
-    DateTimeSetDialog *timeDialog = new DateTimeSetDialog(this);
-    QMap<QString, QString> map;
-//    map.insert("Clock Set", ui->subMenu_1->get_title());
-    timeDialog->set_dialog_title(map);
-//    timeDialog->set_spinbox_value(get_dialog_value_list(ui->subMenu_1->get_label_text(), QString(":")));
-    timeDialog->exec();
-//    ui->subMenu_1->set_label_text(timeDialog->get_time());
-    delete timeDialog;
-}
-
-void SubMenu::show_date_dialog()
-{
-    DateTimeSetDialog *dateDialog = new DateTimeSetDialog(this);
-    QMap<QString, QString> map;
-//    map.insert("Date Set", ui->subMenu_2->get_title());
-    dateDialog->set_dialog_title(map);
-//    dateDialog->set_spinbox_value(get_dialog_value_list(ui->subMenu_2->get_label_text(), QString("-")));
-    dateDialog->exec();
-//    ui->subMenu_2->set_label_text(dateDialog->get_date());
-    delete dateDialog;
-}
-
-void SubMenu::show_resetconfig_dialog()
-{
-    ResetConfigDialog resetConfigDialog;
-    resetConfigDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-    resetConfigDialog.exec();
-}
-
 SubMenu::~SubMenu()
 {
     delete ui;
-}
-
-void SubMenu::set_brightness(double value)
-{
-    m_brightness = value;
-
-    pMcu->set_brightness((char)m_brightness);
-}
-
-void SubMenu::auto_detect_probe(QString string)
-{
-    if(string == "On"){
-        pMcu->notify_started();
-        pMcu->query_probe();
-        connect(pMcu, SIGNAL(probe_event(const Probe&)), this, SLOT(do_probe_event(const Probe&)));
-    }else{
-    }
-}
-
-void SubMenu::do_probe_event(const Probe &probe)
-{
-//    ui->subMenu_3->set_label_text(probe.model());
-}
-
-QList<int> SubMenu::get_dialog_value_list(QString string, QString symbol)
-{
-    QList<int> valueList;
-    QString tmpString = string;
-    int tmpIndex = 0;
-    for(int i = 0; i < string.length(); i ++) {
-        if(QString(string.at(i)) == symbol) {
-            valueList.append(tmpString.left(i - tmpIndex).toInt());
-            tmpString = tmpString.right(string.count() - i - 1);
-            tmpIndex = i + 1;
-        }
-        if(i == string.length() - 1) {
-            valueList.append(tmpString.toInt());
-        }
-    }
-    return valueList;
 }
