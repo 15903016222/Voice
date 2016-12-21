@@ -128,6 +128,7 @@ public:
     int tx_start(void);
     bool set_tx_start(int val, bool reflesh = false);
 
+    void init();
     bool reflesh(void);
 private:
     int m_index;
