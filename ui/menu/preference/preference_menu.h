@@ -1,3 +1,10 @@
+/**
+ * @file preference_menu.h
+ * @brief Preference Menu Bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-21
+ */
 #ifndef __PREFERENCE_MENU_H__
 #define __PREFERENCE_MENU_H__
 

@@ -1,3 +1,10 @@
+/**
+ * @file network_menu.cpp
+ * @brief network menu bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-21
+ */
 #include "network_menu.h"
 #include "label_menu_item.h"
 

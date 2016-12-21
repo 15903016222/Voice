@@ -1,3 +1,10 @@
+/**
+ * @file system_menu.cpp
+ * @brief system menu bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-21
+ */
 #include "system_menu.h"
 #include "label_menu_item.h"
 #include "combo_menu_item.h"

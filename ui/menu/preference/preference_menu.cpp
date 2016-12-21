@@ -1,3 +1,10 @@
+/**
+ * @file preference_menu.cpp
+ * @brief Preference Menu Bar
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @version 0.1
+ * @date 2016-12-21
+ */
 #include "preference_menu.h"
 #include "combo_menu_item.h"
 #include "spin_menu_item.h"
