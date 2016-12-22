@@ -11,6 +11,8 @@
 #include "base_menu.h"
 #include "fpga.h"
 
+namespace DplUtSettingMenu {
+
 class GeneralMenu : public BaseMenu
 {
     Q_OBJECT
@@ -38,6 +40,9 @@ private:
 
 private slots:
     void do_gainItem_changed(double gain);
+    void do_startItem_changed(double pos);
+    void do_rangeItem_changed(double value);
 };
 
+}
 #endif // GENERALMENU_H

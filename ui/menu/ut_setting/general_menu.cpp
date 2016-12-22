@@ -11,6 +11,8 @@
 
 #include <QDebug>
 
+namespace DplUtSettingMenu {
+
 GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -28,6 +30,7 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
 
     m_startItem = new SpinMenuItem();
     m_startItem->set(tr("Start"), "mm", 0, 1000, 2);
+    connect(m_startItem, SIGNAL(value_changed(double)), this, SLOT(do_startItem_changed(double)));
 
     m_rangeItem = new SpinMenuItem();
     m_rangeItem->set(tr("Range"), "mm", 0, 1000, 2);
@@ -87,4 +90,17 @@ void GeneralMenu::hide()
 void GeneralMenu::do_gainItem_changed(double gain)
 {
     m_fpga->current_group()->set_gain(gain, true);
+}
+
+void GeneralMenu::do_startItem_changed(double pos)
+{
+    m_fpga->current_group()->set_sample_start(pos, true);
+}
+
+void GeneralMenu::do_rangeItem_changed(double value)
+{
+    m_fpga->current_group()->set_sample_range(value);
+//    m_fpga->current_group()->
+}
+
 }

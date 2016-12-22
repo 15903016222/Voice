@@ -10,6 +10,8 @@
 
 #include "base_menu.h"
 
+namespace DplUtSettingMenu {
+
 class PulserMenu : public BaseMenu
 {
     Q_OBJECT
@@ -28,4 +30,5 @@ private:
     MenuItem *m_prfItem;
 };
 
+}
 #endif // __PULSER_MENU_H__

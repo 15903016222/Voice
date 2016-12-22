@@ -11,6 +11,8 @@
 
 #include "base_menu.h"
 
+namespace DplUtSettingMenu {
+
 class UtAdvancedMenu : public BaseMenu
 {
     Q_OBJECT
@@ -29,4 +31,5 @@ private:
     MenuItem *m_sumGainItem;
 };
 
+}
 #endif // __UT_ADVANCED_MENU_H__

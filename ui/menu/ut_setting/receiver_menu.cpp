@@ -9,6 +9,8 @@
 #include "label_menu_item.h"
 #include "combo_menu_item.h"
 
+namespace DplUtSettingMenu {
+
 ReceiverMenu::ReceiverMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -87,4 +89,4 @@ void ReceiverMenu::hide()
     m_averaginItem->hide();
 }
 
-
+}

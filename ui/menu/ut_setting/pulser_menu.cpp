@@ -9,6 +9,8 @@
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"
 
+namespace DplUtSettingMenu {
+
 PulserMenu::PulserMenu(Ui::BaseMenu *ui, QObject *parent)
     :BaseMenu(ui, parent)
 {
@@ -81,4 +83,6 @@ void PulserMenu::hide()
     m_voltageItem->hide();
     m_pwItem->hide();
     m_prfItem->hide();
+}
+
 }
