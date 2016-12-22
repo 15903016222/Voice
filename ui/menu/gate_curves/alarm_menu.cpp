@@ -8,6 +8,8 @@
 #include "alarm_menu.h"
 #include "combo_menu_item.h"
 
+namespace DplGateCurvesMenu {
+
 AlarmMenu::AlarmMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -88,4 +90,6 @@ void AlarmMenu::hide()
     m_groupItem->hide();
     m_conditionItem->hide();
     m_operatorItem->hide();
+}
+
 }

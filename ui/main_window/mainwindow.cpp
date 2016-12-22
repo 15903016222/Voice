@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     subMenu = new SubMenu(this);
     subMenu->hide();;
     subMenu->move(179, 530);
-    GeneralMenu *generalMenu = dynamic_cast<GeneralMenu *>(subMenu->get_menu(MainMenu::UTSettings_General));
+    DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(subMenu->get_menu(MainMenu::UTSettings_General));
     connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
 

@@ -10,6 +10,8 @@
 #include "combo_menu_item.h"
 #include "label_menu_item.h"
 
+namespace DplGateCurvesMenu {
+
 TcgMenu::TcgMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -167,4 +169,6 @@ void TcgMenu::do_mode_event(int pos)
         hide_setting();
         show_edit();
     }
+}
+
 }

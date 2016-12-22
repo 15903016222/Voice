@@ -10,6 +10,8 @@
 
 #include "base_menu.h"
 
+namespace DplGateCurvesMenu {
+
 class DacMenu : public BaseMenu
 {
     Q_OBJECT
@@ -45,4 +47,5 @@ private slots:
     void do_mode_event(int pos);
 };
 
+}
 #endif // DACMENU_H

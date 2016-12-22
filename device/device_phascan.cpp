@@ -41,7 +41,8 @@ static const QString s_typeMap[TYPE_MAX] = {
 class DevicePrivate
 {
 public:
-    DevicePrivate();
+    explicit DevicePrivate();
+    ~DevicePrivate();
 
     bool mount() { return ! ::system("mount /dev/mtdblock2 /home/tt/.phascan"); }
     bool umount() { return ! ::system("umount /home/tt/.phascan"); }
@@ -59,6 +60,8 @@ public:
     Cert m_cert;
 
     QReadWriteLock m_rwlock;
+
+    DplConfig::Config *m_config;
 
 private:
     QString get_serial_number();
@@ -96,6 +99,11 @@ DevicePrivate::DevicePrivate()
         ::fscanf(fp, "%ld", &m_time);
         ::fclose(fp);
     }
+}
+
+DevicePrivate::~DevicePrivate()
+{
+    delete m_config;
 }
 
 QString DevicePrivate::get_serial_number()

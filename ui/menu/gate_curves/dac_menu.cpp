@@ -10,6 +10,8 @@
 #include "spin_menu_item.h"
 #include "label_menu_item.h"
 
+namespace DplGateCurvesMenu {
+
 DacMenu::DacMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -163,4 +165,6 @@ void DacMenu::do_mode_event(int pos)
         hide_setting();
         show_edit();
     }
+}
+
 }

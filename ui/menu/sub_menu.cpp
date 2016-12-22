@@ -89,17 +89,17 @@ SubMenu::SubMenu(QWidget *parent) :
 void SubMenu::init_map()
 {
     /* UT Setting */
-    m_map.insert(MainMenu::UTSettings_General, new GeneralMenu(ui, this));
-    m_map.insert(MainMenu::UTSettings_Pulser, new PulserMenu(ui, this));
-    m_map.insert(MainMenu::UTSettings_Receiver, new ReceiverMenu(ui, this));
-    m_map.insert(MainMenu::UTSettings_Advanced, new UtAdvancedMenu(ui, this));
+    m_map.insert(MainMenu::UTSettings_General,  new DplUtSettingMenu::GeneralMenu(ui, this));
+    m_map.insert(MainMenu::UTSettings_Pulser,   new DplUtSettingMenu::PulserMenu(ui, this));
+    m_map.insert(MainMenu::UTSettings_Receiver, new DplUtSettingMenu::ReceiverMenu(ui, this));
+    m_map.insert(MainMenu::UTSettings_Advanced, new DplUtSettingMenu::UtAdvancedMenu(ui, this));
 
     /* Gate/Curves */
-    m_map.insert(MainMenu::GateCurves_Gate, new GateMenu(ui, this));
-    m_map.insert(MainMenu::GateCurves_Alarm, new AlarmMenu(ui, this));
-    m_map.insert(MainMenu::GateCurves_Output, new OutputMenu(ui, this));
-    m_map.insert(MainMenu::GateCurves_DAC, new DacMenu(ui, this));
-    m_map.insert(MainMenu::GateCurves_TCG, new TcgMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_Gate,     new DplGateCurvesMenu::GateMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_Alarm,    new DplGateCurvesMenu::AlarmMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_Output,   new DplGateCurvesMenu::OutputMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_DAC,      new DplGateCurvesMenu::DacMenu(ui, this));
+    m_map.insert(MainMenu::GateCurves_TCG,      new DplGateCurvesMenu::TcgMenu(ui, this));
 
     /* Display */
     m_map.insert(MainMenu::Display_Selection,   new DplDisplayMenu::SelectionMenu(ui, this));

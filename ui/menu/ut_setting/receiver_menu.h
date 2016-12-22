@@ -10,6 +10,8 @@
 
 #include "base_menu.h"
 
+namespace DplUtSettingMenu {
+
 class ReceiverMenu : public BaseMenu
 {
     Q_OBJECT
@@ -28,4 +30,5 @@ private:
     MenuItem *m_averaginItem;
 };
 
+}
 #endif // __RECEIVER_MENU_H__

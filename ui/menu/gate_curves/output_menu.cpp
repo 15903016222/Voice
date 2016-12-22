@@ -10,6 +10,8 @@
 #include "spin_menu_item.h"
 #include "label_menu_item.h"
 
+namespace DplGateCurvesMenu {
+
 OutputMenu::OutputMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -88,4 +90,6 @@ void OutputMenu::hide()
     m_holdTimeItem->hide();
     m_groupItem->hide();
     m_dataItem->hide();
+}
+
 }

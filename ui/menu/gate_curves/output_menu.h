@@ -10,6 +10,8 @@
 
 #include "base_menu.h"
 
+namespace DplGateCurvesMenu {
+
 class OutputMenu : public BaseMenu
 {
     Q_OBJECT
@@ -29,4 +31,5 @@ private:
     MenuItem *m_dataItem;
 };
 
+}
 #endif // __OUTPUT_MENU_H__

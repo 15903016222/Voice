@@ -11,6 +11,8 @@
 #include "combo_menu_item.h"
 #include "spin_menu_item.h"
 
+namespace DplUtSettingMenu {
+
 UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -73,4 +75,6 @@ void UtAdvancedMenu::hide()
     m_pointQtyItem->hide();
     m_scaleFactorItem->hide();
     m_sumGainItem->hide();
+}
+
 }

@@ -10,6 +10,8 @@
 
 #include "base_menu.h"
 
+namespace DplGateCurvesMenu {
+
 class GateMenu : public BaseMenu
 {
     Q_OBJECT
@@ -29,4 +31,5 @@ private:
     MenuItem *m_measureModeItem;
 };
 
+}
 #endif // GATEMENU_H

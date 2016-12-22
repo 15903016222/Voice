@@ -11,6 +11,8 @@
 #include <QDateTime>
 #include <QMutex>
 
+#include "config/config.h"
+
 class DevicePrivate;
 
 class Device
@@ -46,6 +48,8 @@ public:
     const QString cert_info() const;
 
     bool is_valid() const;
+
+    DplConfig::Config *get_config();
 
 protected:
     explicit Device();

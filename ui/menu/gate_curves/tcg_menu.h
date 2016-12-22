@@ -10,6 +10,8 @@
 
 #include "base_menu.h"
 
+namespace DplGateCurvesMenu {
+
 class TcgMenu : public BaseMenu
 {
     Q_OBJECT
@@ -46,4 +48,5 @@ private slots:
     void do_mode_event(int pos);
 };
 
+}
 #endif // __TCG_MENU_H__

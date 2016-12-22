@@ -10,6 +10,8 @@
 
 #include "base_menu.h"
 
+namespace DplGateCurvesMenu {
+
 class AlarmMenu : public BaseMenu
 {
     Q_OBJECT
@@ -27,5 +29,7 @@ private:
     MenuItem *m_conditionItem;
     MenuItem *m_operatorItem;
 };
+
+}
 
 #endif // ALARMMENU_H

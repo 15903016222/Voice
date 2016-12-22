@@ -9,6 +9,8 @@
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"
 
+namespace DplGateCurvesMenu {
+
 GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -83,4 +85,6 @@ void GateMenu::hide()
     m_thresholdItem->hide();
     m_synchroItem->hide();
     m_measureModeItem->hide();
+}
+
 }
