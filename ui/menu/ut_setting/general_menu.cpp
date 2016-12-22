@@ -9,6 +9,8 @@
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"
 
+#include <QDebug>
+
 GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
@@ -84,5 +86,5 @@ void GeneralMenu::hide()
 
 void GeneralMenu::do_gainItem_changed(double gain)
 {
-    m_fpga->get_group(0)->set_gain(gain, true);
+    m_fpga->current_group()->set_gain(gain, true);
 }

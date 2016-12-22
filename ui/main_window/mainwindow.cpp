@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "ui_info.h"
 #include "vinput.h"
 #include "fpga.h"
 #include "ut_setting/general_menu.h"
@@ -16,8 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    DplUi::UiInfo *uiInfo = DplUi::UiInfo::get_instance();
 
     /* Fpga */
     DplFpga::Fpga::get_fpga()->create_group();
