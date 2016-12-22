@@ -57,7 +57,7 @@ CursorsMenu::CursorsMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_imItem->set(tr("I(m)"), "mm", 0, 2000, 1);
 
     /* Angle menu item */
-    m_angelItem->set(tr("Angle"), "°", 25, 75, 0);
+    m_angelItem->set(tr("Angle"), "\260", 25, 75, 0);
 }
 
 CursorsMenu::~CursorsMenu()
