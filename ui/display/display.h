@@ -22,7 +22,6 @@ public:
         ACC_SCAN,
         AS_SCAN,
         ASC_SCAN,
-
     };
 
     explicit Display(QWidget *parent = 0);

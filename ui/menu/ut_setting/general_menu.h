@@ -9,6 +9,7 @@
 #define __GENERAL_MENU_H__
 
 #include "base_menu.h"
+#include "fpga.h"
 
 class GeneralMenu : public BaseMenu
 {
@@ -33,6 +34,7 @@ private:
     MenuItem *m_velocityItem;
     MenuItem *m_wedgeDelayItem;
     MenuItem *m_utUnitItem;
+    DplFpga::Fpga *m_fpga;
 
 private slots:
     void do_gainItem_changed(double gain);

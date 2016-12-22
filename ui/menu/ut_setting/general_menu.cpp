@@ -12,6 +12,8 @@
 GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
+    m_fpga = DplFpga::Fpga::get_fpga();
+
     QStringList utUnitList;
     utUnitList.append(tr("Time"));
     utUnitList.append(tr("Sound Path"));
@@ -82,5 +84,5 @@ void GeneralMenu::hide()
 
 void GeneralMenu::do_gainItem_changed(double gain)
 {
-    DplFpga::Fpga::get_fpga()->get_group(0)->set_gain(gain, true);
+    m_fpga->get_group(0)->set_gain(gain, true);
 }

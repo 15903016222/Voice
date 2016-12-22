@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "ui_info.h"
 #include "vinput.h"
 #include "fpga.h"
 #include "ut_setting/general_menu.h"
@@ -16,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    DplUi::UiInfo *uiInfo = DplUi::UiInfo::get_instance();
+
     /* Fpga */
     DplFpga::Fpga::get_fpga()->create_group();
     DplFpga::GroupPointer group = DplFpga::Fpga::get_fpga()->get_group(0);
@@ -28,14 +31,17 @@ MainWindow::MainWindow(QWidget *parent) :
     /* angle menu item */
     ui->angleMenuItem->set(tr("Angle"), "&#176;", 0, 180, 1);
 
+    /* Mcu */
     Mcu *mcu = Mcu::get_mcu();
     connect(mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
     connect(mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
+    /* Main Menu */
     mainMenu = new MainMenu(this);
     mainMenu->hide();
     mainMenu->move(0, 176);
 
+    /* Sub Menu */
     subMenu = new SubMenu(this);
     subMenu->hide();;
     subMenu->move(179, 530);
