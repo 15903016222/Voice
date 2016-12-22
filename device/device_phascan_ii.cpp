@@ -15,6 +15,8 @@
 #include <fcntl.h>
 #include <time.h>
 
+namespace DplDevice {
+
 static const char *CERT_FILE = "/etc/mercury/cert";
 static const char *PUB_PEM_FILE = "/etc/mercury/pem";
 static const char *TIME_FILE = "/etc/mercury/time";
@@ -224,4 +226,6 @@ Device::Device()
 Device::~Device()
 {
     delete d;
+}
+
 }

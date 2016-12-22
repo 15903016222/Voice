@@ -6,9 +6,10 @@
  * @date 2016-10-25
  */
 
-
 #include "device.h"
 #include <time.h>
+
+namespace DplDevice {
 
 class DevicePrivate
 {
@@ -111,4 +112,6 @@ Device::Device()
 Device::~Device()
 {
     delete d;
+}
+
 }

@@ -22,6 +22,8 @@
 #include <fcntl.h>
 #include <time.h>
 
+namespace DplDevice {
+
 #define MTD_DEVICE  "/dev/mtdblock2"
 
 static const char *CERT_FILE = "/home/tt/.phascan/auth.cert";
@@ -60,8 +62,6 @@ public:
     Cert m_cert;
 
     QReadWriteLock m_rwlock;
-
-    DplConfig::Config *m_config;
 
 private:
     QString get_serial_number();
@@ -103,7 +103,6 @@ DevicePrivate::DevicePrivate()
 
 DevicePrivate::~DevicePrivate()
 {
-    delete m_config;
 }
 
 QString DevicePrivate::get_serial_number()
@@ -350,4 +349,6 @@ const QString Device::cert_info() const
 bool Device::is_valid() const
 {
     return d->check_cert();
+}
+
 }

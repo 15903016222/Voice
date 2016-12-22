@@ -3,7 +3,6 @@ INCLUDEPATH += $$PWD
 HEADERS += \
     $$PWD/device.h
 
-SOURCES +=
 
 equals(DEVICE, "PC_UNIX") {
     SOURCES += \

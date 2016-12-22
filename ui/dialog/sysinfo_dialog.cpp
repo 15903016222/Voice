@@ -21,7 +21,7 @@ SysInfoDialog::SysInfoDialog(QWidget *parent) :
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSizeConstraint(QLayout::SetFixedSize);
 
-    Device *dev = Device::get_device();
+    DplDevice::Device *dev = DplDevice::Device::get_device();
 
     const QString info = tr(
                 "<html><head><title>System Infomation</title>"
