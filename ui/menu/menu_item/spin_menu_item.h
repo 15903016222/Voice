@@ -31,6 +31,9 @@ public:
     void set(const QString &title, const QString &unit, double min, double max, int decimals);
     double get_value() const;
 
+public slots:
+    void set_value(double value);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
 

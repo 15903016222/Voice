@@ -12,7 +12,7 @@
 #include <QStringList>
 
 #include "ui_base_menu.h"
-#include "menu_item.h"
+#include "spin_menu_item.h"
 
 class BaseMenu : public QObject
 {

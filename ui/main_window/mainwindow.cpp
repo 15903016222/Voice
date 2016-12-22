@@ -2,9 +2,13 @@
 #include "ui_mainwindow.h"
 
 #include "vinput.h"
+#include "fpga.h"
+#include "ut_setting/general_menu.h"
 
 #include <QDebug>
 #include <QResizeEvent>
+
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,14 +16,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QList<double> steps;
-    steps.append(0.1);
-    steps.append(0.5);
-    steps.append(1.0);
-    steps.append(5.0);
+    /* Fpga */
+    DplFpga::Fpga::get_fpga()->create_group();
+    DplFpga::GroupPointer group = DplFpga::Fpga::get_fpga()->get_group(0);
+    group->init();
 
     /* gain menu item */
-    ui->gainMenuItem->set(tr("Gain"), "dB", 0, 80, 1);
+    ui->gainMenuItem->set(tr("Gain"), "dB", 0, 90, 1);
     ui->gainMenuItem->set_suffix("(0.0)");
 
     /* angle menu item */
@@ -36,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
     subMenu = new SubMenu(this);
     subMenu->hide();;
     subMenu->move(179, 530);
+    GeneralMenu *generalMenu = dynamic_cast<GeneralMenu *>(subMenu->get_menu(MainMenu::UTSettings_General));
+    connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
+    connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
 
     connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_menu(MainMenu::Type)));
 }

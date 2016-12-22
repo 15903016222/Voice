@@ -25,6 +25,7 @@ Display::Display(QWidget *parent) : QWidget(parent)
 bool Display::set_type(Display::Type type)
 {
     m_type = type;
+    return true;
 }
 
 void Display::set_show_all(bool flag)

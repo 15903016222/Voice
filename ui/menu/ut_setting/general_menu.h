@@ -20,13 +20,22 @@ public:
     void show();
     void hide();
 
+public slots:
+    void set_gain(double gain) { m_gainItem->set_value(gain); }
+
+signals:
+    void gain_changed(double gain);
+
 private:
-    MenuItem *m_gainItem;
+    SpinMenuItem *m_gainItem;
     MenuItem *m_startItem;
     MenuItem *m_rangeItem;
     MenuItem *m_velocityItem;
     MenuItem *m_wedgeDelayItem;
     MenuItem *m_utUnitItem;
+
+private slots:
+    void do_gainItem_changed(double gain);
 };
 
 #endif // GENERALMENU_H

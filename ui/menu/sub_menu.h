@@ -25,6 +25,8 @@ public:
     explicit SubMenu(QWidget *parent = 0);
     ~SubMenu();
 
+    BaseMenu *get_menu(MainMenu::Type type) { return m_map.value(type); }
+
 public slots:
     void set_menu(MainMenu::Type type);
 

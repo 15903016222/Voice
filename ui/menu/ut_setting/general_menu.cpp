@@ -19,6 +19,8 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
 
     m_gainItem = new SpinMenuItem();
     m_gainItem->set(tr("Gain"), "dB", 0, 90, 1);
+    connect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
+    connect(m_gainItem, SIGNAL(value_changed(double)), this, SIGNAL(gain_changed(double)));
 
     m_startItem = new SpinMenuItem();
     m_startItem->set(tr("Start"), "mm", 0, 1000, 2);
@@ -76,4 +78,9 @@ void GeneralMenu::hide()
     m_velocityItem->hide();
     m_wedgeDelayItem->hide();
     m_utUnitItem->hide();
+}
+
+void GeneralMenu::do_gainItem_changed(double gain)
+{
+    DplFpga::Fpga::get_fpga()->get_group(0)->set_gain(gain, true);
 }
