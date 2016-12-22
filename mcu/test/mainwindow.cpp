@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonSndBatteryStatus, &QPushButton::clicked, m_mcu, &Mcu::query_second_battery_status);
 #endif
 
-    connect(m_mcu, SIGNAL(key_event(int)), ui->labelKey, SLOT(setNum(int)));
+    connect(m_mcu, SIGNAL(key_event(Mcu::KeyType)), ui->labelKey, SLOT(setNum(int)));
     connect(m_mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
     connect(ui->pushButtonPowerOff, SIGNAL(clicked(bool)), m_mcu, SLOT(set_poweroff()));
