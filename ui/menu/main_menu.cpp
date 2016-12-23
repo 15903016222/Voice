@@ -18,6 +18,9 @@ MainMenu::MainMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->treeWidget->setColumnWidth(0, 145);
+    ui->treeWidget->setColumnWidth(1, 33);
+
     QTreeWidgetItem *item = ui->treeWidget->topLevelItem(0);
 
     ui->treeWidget->expandItem(item);

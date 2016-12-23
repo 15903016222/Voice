@@ -36,5 +36,7 @@
         <file>resources/battery/bc8.png</file>
         <file>resources/battery/bc9.png</file>
         <file>resources/battery/bc10.png</file>
+        <file>resources/triangle_down.png</file>
+        <file>resources/triangle_up.png</file>
     </qresource>
 </RCC>

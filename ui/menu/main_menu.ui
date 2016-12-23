@@ -32,8 +32,14 @@
    <item row="0" column="0">
     <widget class="QWidget" name="widget" native="true">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(37, 76, 124);
-border-radius: 5px;</string>
+      <string notr="true">QWidget{
+	background-color: rgba(37, 76, 124, 225);
+	border-radius: 5px;
+}
+
+QWidget QPushButton{	
+	background-color: rgba(37, 76, 124, 0);
+}</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,20,1">
       <property name="leftMargin">
@@ -61,6 +67,9 @@ border-radius: 5px;</string>
         </property>
         <property name="focusPolicy">
          <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>
@@ -109,7 +118,7 @@ QTreeWidget::item:selected{
 
 QTreeWidget::branch{
 	image:none;
-	background-color: rgb(37, 76, 124);
+	background-color: rgba(37, 76, 124, 0);
 }
 </string>
         </property>
@@ -131,12 +140,20 @@ QTreeWidget::branch{
         <property name="expandsOnDoubleClick">
          <bool>false</bool>
         </property>
+        <property name="columnCount">
+         <number>2</number>
+        </property>
         <attribute name="headerVisible">
          <bool>false</bool>
         </attribute>
         <column>
          <property name="text">
           <string notr="true">1</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>2</string>
          </property>
         </column>
         <item>
@@ -157,24 +174,44 @@ QTreeWidget::branch{
            </color>
           </brush>
          </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+         </property>
          <item>
           <property name="text">
            <string>General</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </item>
          <item>
           <property name="text">
            <string>Pulser</string>
           </property>
+          <property name="text">
+           <string/>
+          </property>
          </item>
          <item>
           <property name="text">
            <string>Receiver</string>
           </property>
+          <property name="text">
+           <string/>
+          </property>
          </item>
          <item>
           <property name="text">
            <string>Advanced</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </item>
         </item>
@@ -195,6 +232,14 @@ QTreeWidget::branch{
             <blue>255</blue>
            </color>
           </brush>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
          </property>
          <item>
           <property name="text">
@@ -240,6 +285,14 @@ QTreeWidget::branch{
            </color>
           </brush>
          </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+         </property>
          <item>
           <property name="text">
            <string>Selection</string>
@@ -273,6 +326,14 @@ QTreeWidget::branch{
             <blue>255</blue>
            </color>
           </brush>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
          </property>
          <item>
           <property name="text">
@@ -318,6 +379,14 @@ QTreeWidget::branch{
            </color>
           </brush>
          </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+         </property>
          <item>
           <property name="text">
            <string>Law Config</string>
@@ -356,6 +425,14 @@ QTreeWidget::branch{
             <blue>255</blue>
            </color>
           </brush>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
          </property>
          <item>
           <property name="text">
@@ -396,6 +473,14 @@ QTreeWidget::branch{
            </color>
           </brush>
          </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+         </property>
          <item>
           <property name="text">
            <string>Cursors</string>
@@ -429,6 +514,14 @@ QTreeWidget::branch{
             <blue>255</blue>
            </color>
           </brush>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
          </property>
          <item>
           <property name="text">
@@ -473,6 +566,14 @@ QTreeWidget::branch{
             <blue>255</blue>
            </color>
           </brush>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../main_window.qrc">
+           <normaloff>:/file/resources/triangle_up.png</normaloff>
+           <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
          </property>
          <item>
           <property name="text">
