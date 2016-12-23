@@ -3,6 +3,8 @@ INCLUDEPATH += $$PWD
 HEADERS += \
     $$PWD/device.h
 
+SOURCES += \
+    $$PWD/device.cpp
 
 equals(DEVICE, "PC_UNIX") {
     SOURCES += \
@@ -16,7 +18,8 @@ equals(DEVICE, "PC_WIN") {
 
 equals(DEVICE, "PHASCAN"){
     HEADERS += \
-        $$PWD/cert.h
+        $$PWD/cert.h \
+        $$PWD/device_phascan.h
     SOURCES += \
         $$PWD/cert.cpp \
         $$PWD/device_phascan.cpp

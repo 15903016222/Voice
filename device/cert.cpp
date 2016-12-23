@@ -15,6 +15,7 @@
 #include <QDateTime>
 #include <QDebug>
 
+namespace DplDevice {
 
 class CertPrivate
 {
@@ -154,4 +155,6 @@ QString Cert::info() const
         info += QDateTime::fromTime_t(d->m_expire).toString("yyyy-M-d H:m");
     }
     return info;
+}
+
 }

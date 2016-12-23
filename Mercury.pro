@@ -53,9 +53,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-include(ui/ui.pri)
-
 include(device/device.pri)
+
+include(ui/ui.pri)
 
 include(mcu/mcu.pri)
 

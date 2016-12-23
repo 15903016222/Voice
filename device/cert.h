@@ -11,6 +11,8 @@
 
 #include <QString>
 
+namespace DplDevice {
+
 class CertPrivate;
 
 class Cert
@@ -44,4 +46,5 @@ private:
     CertPrivate *d;
 };
 
-#endif // CERT_H
+}
+#endif // __ERT_H__
