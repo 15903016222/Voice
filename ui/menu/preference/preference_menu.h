@@ -22,7 +22,6 @@ public:
     void hide();
 
 private:
-    MenuItem *m_unitItem;
     MenuItem *m_brightItem;
     MenuItem *m_opacityItem;
     MenuItem *m_languageItem;

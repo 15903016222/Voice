@@ -15,13 +15,6 @@ namespace DplPreferenceMenu {
 PreferenceMenu::PreferenceMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
-    /* Units menu item */
-    m_unitItem = new ComboMenuItem;
-    QStringList unitList;
-    unitList.append("Millimeters");
-    unitList.append("Inches");
-    m_unitItem->set(tr("Units"), unitList);
-
     /* Bright menu item */
     m_brightItem = new SpinMenuItem;
     m_brightItem->set(tr("Bright"), "%", 1, 100, 0);
@@ -49,7 +42,6 @@ PreferenceMenu::PreferenceMenu(Ui::BaseMenu *ui, QObject *parent) :
 
 PreferenceMenu::~PreferenceMenu()
 {
-    delete m_unitItem;
     delete m_brightItem;
     delete m_opacityItem;
     delete m_languageItem;
@@ -59,13 +51,11 @@ PreferenceMenu::~PreferenceMenu()
 
 void PreferenceMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(m_unitItem);
-    ui->menuItem1->layout()->addWidget(m_brightItem);
-    ui->menuItem2->layout()->addWidget(m_opacityItem);
-    ui->menuItem3->layout()->addWidget(m_languageItem);
-    ui->menuItem4->layout()->addWidget(m_startingPageItem);
-    ui->menuItem5->layout()->addWidget(m_gatemodeItem);
-    m_unitItem->show();
+    ui->menuItem0->layout()->addWidget(m_brightItem);
+    ui->menuItem1->layout()->addWidget(m_opacityItem);
+    ui->menuItem2->layout()->addWidget(m_languageItem);
+    ui->menuItem3->layout()->addWidget(m_startingPageItem);
+    ui->menuItem4->layout()->addWidget(m_gatemodeItem);
     m_brightItem->show();
     m_opacityItem->show();
     m_languageItem->show();
@@ -75,13 +65,11 @@ void PreferenceMenu::show()
 
 void PreferenceMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(m_unitItem);
-    ui->menuItem1->layout()->removeWidget(m_brightItem);
-    ui->menuItem2->layout()->removeWidget(m_opacityItem);
-    ui->menuItem3->layout()->removeWidget(m_languageItem);
-    ui->menuItem4->layout()->removeWidget(m_startingPageItem);
-    ui->menuItem5->layout()->removeWidget(m_gatemodeItem);
-    m_unitItem->hide();
+    ui->menuItem0->layout()->removeWidget(m_brightItem);
+    ui->menuItem1->layout()->removeWidget(m_opacityItem);
+    ui->menuItem2->layout()->removeWidget(m_languageItem);
+    ui->menuItem3->layout()->removeWidget(m_startingPageItem);
+    ui->menuItem4->layout()->removeWidget(m_gatemodeItem);
     m_brightItem->hide();
     m_opacityItem->hide();
     m_languageItem->hide();
