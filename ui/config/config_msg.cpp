@@ -14,8 +14,9 @@ ConfigMsg::ConfigMsg()
 {
     path = "Mercury.conf";
     m_array = read_config_file(path);
-    qDebug() << m_array;
     m_mapConfig = MsgPack::unpack(m_array).toMap();
+    qDebug() << m_array;
+    qDebug() << m_mapConfig;
 }
 
 ConfigMsg::~ConfigMsg()
@@ -70,7 +71,7 @@ QVariant ConfigMsg::get_config_msg(QString &groupName, QString &mainMenu, QStrin
 {
     QVariant variant;
     QVariantMap mainMenuMap = get_menu_map(groupName, mainMenu);
-
+    qDebug() << mainMenuMap;
     if(!mainMenuMap.isEmpty() && mainMenuMap.contains(subMenu)) {
         variant = mainMenuMap.value(subMenu);
     }
@@ -120,15 +121,10 @@ QByteArray ConfigMsg::read_config_file(QString &path)
     if(!file->open(QIODevice::ReadWrite)) {
         qDebug() << "Failed to open the file.";
     }
-//    QTextStream out(file);
-//    QString string = out.readAll();
-//    QByteArray array = string.toLatin1();
     QByteArray array = file->readAll();
-    qDebug() << "read_config_file" << array;
-    qDebug() << MsgPack::unpack(array).toMap();
     file->close();
     lock.unlock();
-    return array;
+    return array.right(array.length() - 4);
 }
 
 void ConfigMsg::write_config_file()
@@ -137,6 +133,7 @@ void ConfigMsg::write_config_file()
     QFile *file = new QFile(path);
     file->open(QIODevice::ReadWrite);
     QDataStream in(file);
+    in.setVersion(QDataStream::Qt_4_8);
     in << m_array;
     file->close();
     lock.unlock();

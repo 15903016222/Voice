@@ -26,13 +26,14 @@ public:
     QVariantMap get_group_map(QString &groupName);
     QVariantMap get_menu_map(QString &groupName, QString &mainMenu);
     QByteArray read_config_file(QString &path);
+    void write_config_file();
 
     int get_group_amount();
 
 private:
     void clear_config_msg();   
     void reset_config_msg();
-    void write_config_file();
+
 
     QReadWriteLock lock;
     QVariantMap m_mapConfig;
