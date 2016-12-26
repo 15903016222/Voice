@@ -28,6 +28,8 @@ public:
     void set_items(const QStringList &texts);
 
     void set(const QString &title, const QStringList &texts);
+
+    void set_current_index(int index);
     int get_current_index() const;
 
 protected:

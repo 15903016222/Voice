@@ -16,7 +16,7 @@ public:
     void hide();
 
 private:
-    MenuItem *m_selectItem;
+    ComboMenuItem *m_selectItem;
 
     MenuItem *m_wedgeItem;
     MenuItem *m_layerDepthItem;
@@ -24,10 +24,10 @@ private:
     MenuItem *m_startItem;
     MenuItem *m_rangeItem;
 
-    MenuItem *m_straighteningItem;
-    MenuItem *m_removeLateralItem;
+    ComboMenuItem *m_straighteningItem;
+    ComboMenuItem *m_removeLateralItem;
     MenuItem *m_refPositionItem;
-    MenuItem *m_depthCalibrationItem;
+    ComboMenuItem *m_depthCalibrationItem;
 
     void show_setting();
     void hide_setting();

@@ -23,12 +23,12 @@ public:
     void hide();
 
 private:
-    MenuItem *m_groupItem;
-    MenuItem *m_displayItem;
-    MenuItem *m_cSourceitem;
+    ComboMenuItem *m_groupItem;
+    ComboMenuItem *m_displayItem;
+    ComboMenuItem *m_cSourceitem;
     MenuItem *m_minThicknessItem;
     MenuItem *m_maxThicknessItem;
-    MenuItem *m_dataCompressionItem;
+    ComboMenuItem *m_dataCompressionItem;
 };
 
 }

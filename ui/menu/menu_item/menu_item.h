@@ -23,10 +23,7 @@ public:
     explicit MenuItem(QWidget *parent = 0, MenuItem::Type type = MenuItem::Label);
 
     virtual void set(const QString &title, const QString &text);
-    virtual void set(const QString &title, const QStringList &texts);
     virtual void set(const QString &title, const QString &unit, double min, double max, int decimals);
-
-    virtual int get_current_index() const { return 0; }
 
     void set_type(MenuItem::Type type) { m_type = type; }
     MenuItem::Type type() const { return m_type;}

@@ -69,6 +69,11 @@ void ComboMenuItem::set(const QString &title, const QStringList &texts)
     ui->comboBox->addItems(texts);
 }
 
+void ComboMenuItem::set_current_index(int index)
+{
+    ui->comboBox->setCurrentIndex(index);
+}
+
 int ComboMenuItem::get_current_index() const
 {
     return ui->comboBox->currentIndex();

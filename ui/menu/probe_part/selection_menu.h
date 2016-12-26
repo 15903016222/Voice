@@ -27,12 +27,12 @@ private slots:
     void do_wedgeItem_clicked();
 
 private:
-    MenuItem *m_groupItem;
-    MenuItem *m_groupModeItem;
+    ComboMenuItem *m_groupItem;
+    ComboMenuItem *m_groupModeItem;
     MenuItem *m_probeItem;
     MenuItem *m_wedgeItem;
-    MenuItem *m_defineItem;
-    MenuItem *m_autoDetectItem;
+    ComboMenuItem *m_defineItem;
+    ComboMenuItem *m_autoDetectItem;
 };
 
 }

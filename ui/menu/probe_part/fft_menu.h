@@ -19,7 +19,7 @@ private:
     MenuItem *m_gainItem;
     MenuItem *m_startItem;
     MenuItem *m_widthItem;
-    MenuItem *m_switchItem;
+    ComboMenuItem *m_switchItem;
 };
 
 }

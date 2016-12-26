@@ -24,10 +24,10 @@ public:
 
 private:
     MenuItem *m_receiverItem;
-    MenuItem *m_filterItem;
-    MenuItem *m_rectifierItem;
-    MenuItem *m_videoFilterItem;
-    MenuItem *m_averaginItem;
+    ComboMenuItem *m_filterItem;
+    ComboMenuItem *m_rectifierItem;
+    ComboMenuItem *m_videoFilterItem;
+    ComboMenuItem *m_averaginItem;
 };
 
 }

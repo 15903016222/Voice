@@ -35,14 +35,16 @@ private:
     SpinMenuItem *m_rangeItem;
     SpinMenuItem *m_velocityItem;
     SpinMenuItem *m_wedgeDelayItem;
-    MenuItem *m_utUnitItem;
-    DplDevice::Device *m_device;
+    ComboMenuItem *m_utUnitItem;
+    DplDevice::GroupPointer m_group;
 
 private slots:
     void do_gainItem_changed(double gain);
     void do_startItem_changed(double pos);
     void do_rangeItem_changed(double value);
     void do_velocityItem_changed(double value);
+
+    void do_current_group_changed();
 };
 
 }

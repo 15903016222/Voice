@@ -17,7 +17,7 @@ public:
 
 private:
     MenuItem *m_scanItem;
-    MenuItem *m_pauseItem;
+    ComboMenuItem *m_pauseItem;
 };
 
 }

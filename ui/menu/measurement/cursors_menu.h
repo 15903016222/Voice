@@ -16,7 +16,7 @@ public:
     void hide();
 
 private:
-    MenuItem *m_selectionItem;
+    ComboMenuItem *m_selectionItem;
 
     MenuItem *m_rItem;      /* %(r) */
     MenuItem *m_mItem;      /* %(m) */

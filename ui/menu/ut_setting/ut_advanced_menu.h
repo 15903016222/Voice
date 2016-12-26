@@ -25,8 +25,8 @@ public:
 
 private:
     MenuItem *m_eightPercentItem;
-    MenuItem *m_dbRefItem;
-    MenuItem *m_pointQtyItem;
+    ComboMenuItem *m_dbRefItem;
+    ComboMenuItem *m_pointQtyItem;
     MenuItem *m_scaleFactorItem;
     MenuItem *m_sumGainItem;
 };

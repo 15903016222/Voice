@@ -15,8 +15,8 @@ public:
     void hide();
 
 private:
-    MenuItem *m_storageItem;
-    MenuItem *m_saveModeItem;
+    ComboMenuItem *m_storageItem;
+    ComboMenuItem *m_saveModeItem;
     MenuItem *m_saveDataItem;
     MenuItem *m_fileName;
 };

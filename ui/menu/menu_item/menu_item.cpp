@@ -18,12 +18,6 @@ void MenuItem::set(const QString &title, const QString &text)
     Q_UNUSED(text);
 }
 
-void MenuItem::set(const QString &title, const QStringList &texts)
-{
-    Q_UNUSED(title);
-    Q_UNUSED(&texts);
-}
-
 void MenuItem::set(const QString &title, const QString &unit, double min, double max, int decimals)
 {
     Q_UNUSED(title);

@@ -17,16 +17,16 @@ public:
 
 private:
 
-    MenuItem *m_scanItem;
+    ComboMenuItem *m_scanItem;
 
-    MenuItem *m_colorItem;
-    MenuItem *m_envelopItem;
-    MenuItem *m_peakHoldingItem;
-    MenuItem *m_referenceholdingItem;
+    ComboMenuItem *m_colorItem;
+    ComboMenuItem *m_envelopItem;
+    ComboMenuItem *m_peakHoldingItem;
+    ComboMenuItem *m_referenceholdingItem;
 
-    MenuItem *m_compressionItem;
-    MenuItem *m_ratioItem;
-    MenuItem *m_cScanModeItem;
+    ComboMenuItem *m_compressionItem;
+    ComboMenuItem *m_ratioItem;
+    ComboMenuItem *m_cScanModeItem;
 
     void show_a_scan();
     void show_b_scan();

@@ -20,8 +20,8 @@ signals:
 public slots:
 
 private:
-    MenuItem *m_selectItem;
-    MenuItem *m_enableItem;
+    ComboMenuItem *m_selectItem;
+    ComboMenuItem *m_enableItem;
     MenuItem *m_labelItem;
     MenuItem *m_contentItem;
     MenuItem *m_editNoteItem;

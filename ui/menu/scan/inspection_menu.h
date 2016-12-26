@@ -16,8 +16,8 @@ public:
     void hide();
 
 private:
-    MenuItem *m_scanItem;
-    MenuItem *m_typeItem;
+    ComboMenuItem *m_scanItem;
+    ComboMenuItem *m_typeItem;
     MenuItem *m_maxScanSpeedItem;
     MenuItem *m_maxScanSpeedRPMItem;
 };

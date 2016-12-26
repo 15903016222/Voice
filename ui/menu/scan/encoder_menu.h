@@ -15,10 +15,10 @@ public:
     void hide();
 
 private:
-    MenuItem *m_encoderItem;
-    MenuItem *m_encoderTypeItem;
+    ComboMenuItem *m_encoderItem;
+    ComboMenuItem *m_encoderTypeItem;
     MenuItem *m_resolutionItem;
-    MenuItem *m_polarityItem;
+    ComboMenuItem *m_polarityItem;
     MenuItem *m_originItem;
     MenuItem *m_presetItem;
 };

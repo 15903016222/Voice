@@ -23,12 +23,12 @@ public:
     void hide();
 
 private:
-    MenuItem *m_gateItem;
+    ComboMenuItem *m_gateItem;
     MenuItem *m_startItem;
     MenuItem *m_widthItem;
     MenuItem *m_thresholdItem;
-    MenuItem *m_synchroItem;
-    MenuItem *m_measureModeItem;
+    ComboMenuItem *m_synchroItem;
+    ComboMenuItem *m_measureModeItem;
 };
 
 }

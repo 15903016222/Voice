@@ -25,7 +25,7 @@ public:
 private:
     MenuItem *m_scanOffsetItem;
     MenuItem *m_indexOffsetItem;
-    MenuItem *m_skewItem;
+    ComboMenuItem *m_skewItem;
 };
 
 }

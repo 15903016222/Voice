@@ -16,7 +16,7 @@ public:
     void hide();
 
 private:
-    MenuItem *m_typeItem;
+    ComboMenuItem *m_typeItem;
     MenuItem *m_positionStartItem;
     MenuItem *m_positionEndItem;
     MenuItem *m_offsetStartItem;

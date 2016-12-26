@@ -16,10 +16,10 @@ public:
     void hide();
 
 private:
-    MenuItem *m_lawTypeItem;
+    ComboMenuItem *m_lawTypeItem;
     MenuItem *m_pulseConnectionItem;
     MenuItem *m_receiverConnectionItem;
-    MenuItem *m_waveTypeItem;
+    ComboMenuItem *m_waveTypeItem;
 };
 
 }

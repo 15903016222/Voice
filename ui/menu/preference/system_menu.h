@@ -24,7 +24,7 @@ public:
 private:
     MenuItem *m_dateItem;
     MenuItem *m_timeItem;
-    MenuItem *m_certItem;
+    ComboMenuItem *m_certItem;
     MenuItem *m_updateItem;
     MenuItem *m_resetCfgItem;
     MenuItem *m_infoItem;

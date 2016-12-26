@@ -23,17 +23,17 @@ public:
     void hide();
 
 private:
-    MenuItem *m_modeItem;
+    ComboMenuItem *m_modeItem;
 
     /* Setting */
     MenuItem *m_curveNoItem;
-    MenuItem *m_curveXItem;
+    ComboMenuItem *m_curveXItem;
     MenuItem *m_dbOffsetItem;
     MenuItem *m_refGainItem;
-    MenuItem *m_switchItem;
+    ComboMenuItem *m_switchItem;
 
     /* Edit */
-    MenuItem *m_pointItem;
+    ComboMenuItem *m_pointItem;
     MenuItem *m_positionItem;
     MenuItem *m_addPointItem;
     MenuItem *m_deletePointItem;

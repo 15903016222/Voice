@@ -20,9 +20,9 @@ private slots:
 
 private:
     MenuItem *m_addDeleteItem;
-    MenuItem *m_flawImageItem;
+    ComboMenuItem *m_flawImageItem;
     MenuItem *m_commentItem;
-    MenuItem *m_displayTableItem;
+    ComboMenuItem *m_displayTableItem;
     MenuItem *m_exportRecordItem;
 };
 

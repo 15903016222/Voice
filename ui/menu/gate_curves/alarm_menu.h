@@ -23,11 +23,11 @@ public:
     void hide();
 
 private:
-    MenuItem *m_alarmItem;
-    MenuItem *m_switchItem;
-    MenuItem *m_groupItem;
-    MenuItem *m_conditionItem;
-    MenuItem *m_operatorItem;
+    ComboMenuItem *m_alarmItem;
+    ComboMenuItem *m_switchItem;
+    ComboMenuItem *m_groupItem;
+    ComboMenuItem *m_conditionItem;
+    ComboMenuItem *m_operatorItem;
 };
 
 }
