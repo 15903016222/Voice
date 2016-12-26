@@ -101,7 +101,6 @@ bool Cert::load(const QString &certFile, const QString &pubPemFile)
         return false;
     }
 
-    qDebug()<<__func__<<__LINE__;
     QXmlStreamReader xml(data);
     while ( !xml.atEnd() || !xml.hasError()) {
         if ( ! xml.readNextStartElement() ) {
@@ -121,7 +120,6 @@ bool Cert::load(const QString &certFile, const QString &pubPemFile)
             }
         }
     }
-    qDebug()<<__func__<<__LINE__;
     if (xml.hasError()) {
         qWarning()<<xml.errorString();
         return false;

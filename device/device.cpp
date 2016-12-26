@@ -71,10 +71,7 @@ DevicePrivate::DevicePrivate()
 {
     m_version = get_version();
     m_time = get_time();
-    qDebug()<<__func__<<__LINE__;
     m_cert.load(CERT_FILE, PUB_PEM_FILE);
-    qDebug()<<__func__<<__LINE__;
-
 }
 
 time_t DevicePrivate::get_time()
@@ -106,7 +103,6 @@ Device *Device::get_instance()
 {
     QMutexLocker l(&s_mutex);
     if (s_device == NULL) {
-        qDebug()<<__func__<<__LINE__;
 #ifdef PHASCAN
         s_device = new DevicePhascan();
 #elif PHASCAN_II
@@ -115,7 +111,6 @@ Device *Device::get_instance()
 #error "Not specified device"
 #endif
     }
-    qDebug()<<__func__<<__LINE__;
 
     return s_device;
 }
@@ -153,15 +148,11 @@ bool Device::import_cert(const QString &certFile)
     }
 
     QWriteLocker l(&d->m_rwlock);
-    qDebug()<<__func__<<__LINE__;
     bool ret = d->m_cert.load(CERT_FILE, PUB_PEM_FILE);
-    qDebug()<<__func__<<__LINE__;
     for (int i = 0; i < TYPE_MAX; ++i) {
-        qDebug()<<__func__<<__LINE__;
         if (s_typeMap[i] == d->m_cert.get_device_type()) {
             d->m_type = (Device::Type)i;
         }
-        qDebug()<<__func__<<__LINE__;
     }
     return ret;
 }

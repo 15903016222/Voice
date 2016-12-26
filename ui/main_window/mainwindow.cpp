@@ -19,9 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Fpga */
     DplDevice::Device::get_instance()->create_group();
     DplDevice::GroupPointer group = DplDevice::Device::get_instance()->get_group(0);
-    qDebug()<<__func__<<__LINE__<<group.isNull()<<group;
     group->init();
-    qDebug()<<__func__<<__LINE__;
 
 
     /* gain menu item */
