@@ -9,6 +9,7 @@
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"
 
+#include <qmath.h>
 #include <QDebug>
 
 namespace DplUtSettingMenu {
@@ -102,7 +103,19 @@ void GeneralMenu::do_gainItem_changed(double gain)
 
 void GeneralMenu::do_startItem_changed(double pos)
 {
-    m_device->current_group()->set_sample_start(pos, true);
+    DplDevice::GroupPointer group = m_device->current_group();
+    int start;
+    if (group->ut_unit() == DplDevice::Group::TruePath) {
+        start = (int)(pos * 2000000.0 /
+                (qCos(group->current_angle()) * group->velocity()));
+    } else if (group->ut_unit() == DplDevice::Group::SoundPath) {
+        start = (int)(pos * 2000000.0 / group->velocity());
+    } else {
+        /* 显示方式为时间 */
+        start = (int) (pos * 1000.0);
+    }
+
+    group->set_start(start);
 }
 
 void GeneralMenu::do_rangeItem_changed(double value)

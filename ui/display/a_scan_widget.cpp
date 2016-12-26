@@ -1,7 +1,6 @@
 #include "a_scan_widget.h"
 
 #include <QPainter>
-
 #include <QDebug>
 
 AscanWidget::AscanWidget(QWidget *parent)

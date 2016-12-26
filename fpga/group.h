@@ -95,9 +95,6 @@ public:
     bool tcg(void);
     bool enable_tcg(bool flag, bool reflesh = false);
 
-    int rx_time(void);
-    bool set_rx_time(int val, bool reflesh = false);
-
     int idel_time(void);
     bool set_idel_time(int val, bool reflesh = false);
 
@@ -125,19 +122,6 @@ public:
     int reject(void);
     bool set_reject(int val, bool reflesh = false);
 
-    /**
-     * @brief sample_start  获取采样起点
-     * @return              返回采样起点值，单位(ns)
-     */
-    int sample_start(void);
-
-    /**
-     * @brief set_sample_start  设置采样起点
-     * @param val               采样起点值，单位(ns)
-     * @param reflesh           下发配置标志
-     * @return                  成功返回true，否则返回false
-     */
-    bool set_sample_start(int val, bool reflesh = false);
 
     int average(void);
     bool set_average(int val, bool reflesh = false);
@@ -156,6 +140,35 @@ public:
 
     void init();
     bool reflesh(void);
+
+protected:
+    /**
+     * @brief sample_start  获取采样起点
+     * @return              返回采样起点值，单位(ns)
+     */
+    int sample_start(void);
+
+    /**
+     * @brief set_sample_start  设置采样起点
+     * @param val               采样起点值，单位(ns)
+     * @param reflesh           下发配置标志
+     * @return                  成功返回true，否则返回false
+     */
+    bool set_sample_start(int val, bool reflesh = false);
+
+    /**
+     * @brief rx_time   获取接收工作时间
+     * @return          接收工作时间，单位(ns)
+     */
+    int rx_time(void);
+
+    /**
+     * @brief set_rx_time   设置接收工作时间
+     * @param val           时间，单位(ns)
+     * @param reflesh       下发配置标志
+     * @return              成功返回true，失败返回false
+     */
+    bool set_rx_time(int val, bool reflesh = false);
 
 private:
     GroupPrivate *d;
