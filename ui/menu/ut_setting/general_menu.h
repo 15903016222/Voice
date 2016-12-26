@@ -9,7 +9,7 @@
 #define __GENERAL_MENU_H__
 
 #include "base_menu.h"
-#include "fpga.h"
+#include "device.h"
 
 namespace DplUtSettingMenu {
 
@@ -36,7 +36,7 @@ private:
     MenuItem *m_velocityItem;
     MenuItem *m_wedgeDelayItem;
     MenuItem *m_utUnitItem;
-    DplFpga::Fpga *m_fpga;
+    DplDevice::Device *m_device;
 
 private slots:
     void do_gainItem_changed(double gain);

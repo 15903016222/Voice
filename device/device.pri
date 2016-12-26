@@ -1,10 +1,12 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/device.h
+    $$PWD/device.h \
+    $$PWD/group.h
 
 SOURCES += \
-    $$PWD/device.cpp
+    $$PWD/device.cpp \
+    $$PWD/group.cpp
 
 equals(DEVICE, "PC_UNIX") {
     SOURCES += \

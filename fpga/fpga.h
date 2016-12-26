@@ -205,15 +205,6 @@ public:
     static const int MAX_BEAMS_NUM;
     static const int MAX_TCGS_NUM;
 
-    /** Group **/
-    int groups();
-    bool create_group();
-    bool remove_group();
-    GroupPointer &get_group(int index);
-
-    bool set_current_group(int index);
-    GroupPointer &current_group() { QReadLocker l(&m_groupsLock); return m_curGroup; }
-
     /** Beam **/
     int beams();
     bool create_beam();

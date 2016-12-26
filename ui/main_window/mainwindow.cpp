@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "device.h"
 #include "vinput.h"
-#include "fpga.h"
 #include "ut_setting/general_menu.h"
 
 #include <QDebug>
@@ -17,9 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     /* Fpga */
-    DplFpga::Fpga::get_fpga()->create_group();
-    DplFpga::GroupPointer group = DplFpga::Fpga::get_fpga()->get_group(0);
+    DplDevice::Device::get_instance()->create_group();
+    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->get_group(0);
+    qDebug()<<__func__<<__LINE__<<group.isNull()<<group;
     group->init();
+    qDebug()<<__func__<<__LINE__;
+
 
     /* gain menu item */
     ui->gainMenuItem->set(tr("Gain"), "dB", 0, 90, 1);

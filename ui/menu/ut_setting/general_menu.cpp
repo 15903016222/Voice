@@ -16,7 +16,7 @@ namespace DplUtSettingMenu {
 GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
-    m_fpga = DplFpga::Fpga::get_fpga();
+    m_device = DplDevice::Device::get_instance();
 
     QStringList utUnitList;
     utUnitList.append(tr("Time"));
@@ -89,17 +89,17 @@ void GeneralMenu::hide()
 
 void GeneralMenu::do_gainItem_changed(double gain)
 {
-    m_fpga->current_group()->set_gain(gain, true);
+    m_device->current_group()->set_gain(gain, true);
 }
 
 void GeneralMenu::do_startItem_changed(double pos)
 {
-    m_fpga->current_group()->set_sample_start(pos, true);
+    m_device->current_group()->set_sample_start(pos, true);
 }
 
 void GeneralMenu::do_rangeItem_changed(double value)
 {
-    m_fpga->current_group()->set_sample_range(value);
+    m_device->current_group()->set_sample_range(value);
 //    m_fpga->current_group()->
 }
 

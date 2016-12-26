@@ -70,7 +70,12 @@ QByteArray CertPrivate::read_cert_file(const QString &certFile, const QString &p
     }
 
     QTextStream out(fp.data());
-    return out.readAll().toUtf8();
+    QString msg = out.readAll();
+    if (msg.isEmpty()) {
+        return NULL;
+    } else {
+        return msg.toUtf8();
+    }
 }
 
 
@@ -96,6 +101,7 @@ bool Cert::load(const QString &certFile, const QString &pubPemFile)
         return false;
     }
 
+    qDebug()<<__func__<<__LINE__;
     QXmlStreamReader xml(data);
     while ( !xml.atEnd() || !xml.hasError()) {
         if ( ! xml.readNextStartElement() ) {
@@ -115,6 +121,7 @@ bool Cert::load(const QString &certFile, const QString &pubPemFile)
             }
         }
     }
+    qDebug()<<__func__<<__LINE__;
     if (xml.hasError()) {
         qWarning()<<xml.errorString();
         return false;

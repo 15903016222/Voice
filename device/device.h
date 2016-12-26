@@ -8,11 +8,17 @@
 #ifndef __DEVICE_H__
 #define __DEVICE_H__
 
-#include <QDateTime>
-#include <QMutex>
+#include "group.h"
 #include "cert.h"
 
+#include <QDateTime>
+#include <QMutex>
+
+
+
 namespace DplDevice {
+
+typedef QSharedPointer<Group> GroupPointer;
 
 class DevicePrivate;
 
@@ -72,6 +78,46 @@ public:
      * @return          true为有效，false为无效
      */
     virtual bool is_valid() const = 0;
+
+    /* Group */
+    /**
+     * @brief groups    获取组数量
+     * @return          返回组数
+     */
+    int groups();
+
+    /**
+     * @brief create_group  创建组
+     * @return              成功返回true，失败返回false
+     */
+    bool create_group();
+
+    /**
+     * @brief remove_group  删除指定的组
+     * @param               组号
+     * @return              成功返回true，失败返回false
+     */
+    bool remove_group(int id);
+
+    /**
+     * @brief get_group 获取指定组
+     * @param index     指定组号
+     * @return          成功返回指定组，失败返回空组
+     */
+    GroupPointer &get_group(int index);
+
+    /**
+     * @brief set_current_group 指定当前组
+     * @param index             组号
+     * @return                  成功返回true，失败返回false
+     */
+    bool set_current_group(int index);
+
+    /**
+     * @brief current_group 获取当前组
+     * @return              返回当前组
+     */
+    GroupPointer &current_group();
 
 protected:
     explicit Device();

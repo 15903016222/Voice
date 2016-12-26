@@ -13,7 +13,7 @@
 
 namespace DplFpga {
 
-struct GroupData;
+class GroupPrivate;
 
 class FPGASHARED_EXPORT Group
 {
@@ -21,7 +21,11 @@ public:
     explicit Group(const int index);
     ~Group();
 
-    int index(void) { QReadLocker l(&m_rwlock); return m_index; }
+    /**
+     * @brief index 获取组序号
+     * @return      返回组序号
+     */
+    int index(void);
 
     /* 频带选择 */
     enum FreqBand {             /* 探头频率  对应带宽   采样频率 */
@@ -50,7 +54,18 @@ public:
     int compress_rato(void);
     bool set_compress_rato(int val, bool reflesh = false);
 
-    float gain(void);     /* 单位　dB */
+    /**
+     * @brief gain  获取增益
+     * @return      返回增益值， 单位(dB)
+     */
+    float gain(void);
+
+    /**
+     * @brief set_gain  设置增益
+     * @param gain      增益值
+     * @param reflesh   下发FPGA配置
+     * @return          成功返回true， 失败返回false
+     */
     bool set_gain(float gain, bool reflesh = false);
 
     int thickness_factor(void);
@@ -110,7 +125,18 @@ public:
     int reject(void);
     bool set_reject(int val, bool reflesh = false);
 
+    /**
+     * @brief sample_start  获取采样起点
+     * @return              返回采样起点值，单位(ns)
+     */
     int sample_start(void);
+
+    /**
+     * @brief set_sample_start  设置采样起点
+     * @param val               采样起点值，单位(ns)
+     * @param reflesh           下发配置标志
+     * @return                  成功返回true，否则返回false
+     */
     bool set_sample_start(int val, bool reflesh = false);
 
     int average(void);
@@ -130,9 +156,9 @@ public:
 
     void init();
     bool reflesh(void);
+
 private:
-    int m_index;
-    GroupData *d;
+    GroupPrivate *d;
     QReadWriteLock m_rwlock;
 };
 

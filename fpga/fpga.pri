@@ -1,7 +1,4 @@
 
-INCLUDEPATH += $$PWD/include
-DEPENDPATH  += $$PWD/include
-
 equals(DEVICE, "PC_WIN") {
 	LIBFPGA = Fpga_Win
 }
