@@ -37,6 +37,7 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
 
     m_velocityItem = new SpinMenuItem();
     m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1);
+    connect(m_velocityItem, SIGNAL(value_changed(double)), this, SLOT(do_velocityItem_changed(double)));
 
     m_wedgeDelayItem = new SpinMenuItem();
     m_wedgeDelayItem->set(tr("Wedge Delay"), "&micro;s", 0, 1000, 2);
@@ -73,6 +74,13 @@ void GeneralMenu::show()
 
 void GeneralMenu::hide()
 {
+    DplDevice::GroupPointer group = m_device->current_group();
+    m_gainItem->set_value(group->gain());
+//    m_startItem->set_value(group->start());
+//    m_rangeItem->set_value(group->range());
+    m_velocityItem->set_value(group->velocity());
+//    m_wedgeDelayItem->set_value(group->wedgetDelay());
+
     ui->menuItem0->layout()->removeWidget(m_gainItem);
     ui->menuItem1->layout()->removeWidget(m_startItem);
     ui->menuItem2->layout()->removeWidget(m_rangeItem);
@@ -100,7 +108,12 @@ void GeneralMenu::do_startItem_changed(double pos)
 void GeneralMenu::do_rangeItem_changed(double value)
 {
     m_device->current_group()->set_sample_range(value);
-//    m_fpga->current_group()->
+    //    m_fpga->current_group()->
+}
+
+void GeneralMenu::do_velocityItem_changed(double value)
+{
+    m_device->current_group()->set_velocity(value);
 }
 
 }
