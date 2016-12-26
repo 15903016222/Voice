@@ -181,7 +181,7 @@ int Device::groups()
     return d->m_groups.size();
 }
 
-bool Device::create_group()
+bool Device::add_group()
 {
     QWriteLocker l(&d->m_groupsRWLock);
     if (d->m_groups.size() >= MAX_GROUPS_NUM) {
@@ -189,6 +189,7 @@ bool Device::create_group()
     }
     d->m_groups.append(GroupPointer(new Group(d->m_groups.size())));
     d->m_curGroup = d->m_groups.last();
+    emit current_group_changed();
     return true;
 }
 
@@ -200,7 +201,10 @@ bool Device::remove_group(int id)
         return false;
     }
     d->m_groups.removeAt(id);
-    d->m_curGroup = d->m_groups.first();
+    if (d->m_curGroup->index() == id) {
+        d->m_curGroup = d->m_groups.last();
+        emit current_group_changed();
+    }
     return true;
 }
 
@@ -213,10 +217,12 @@ GroupPointer &Device::get_group(int index)
 bool Device::set_current_group(int index)
 {
     QWriteLocker l(&d->m_groupsRWLock);
-    if (index >= d->m_groups.size()) {
+    if (index >= d->m_groups.size()
+            || index == d->m_curGroup->index()) {
         return false;
     }
     d->m_curGroup = d->m_groups[index];
+    emit current_group_changed();
     return true;
 }
 
@@ -226,8 +232,9 @@ GroupPointer &Device::current_group()
     return d->m_curGroup;
 }
 
-Device::Device()
-    : d(new DevicePrivate())
+Device::Device(QObject *parent) :
+    QObject(parent),
+    d(new DevicePrivate())
 {
 
 }

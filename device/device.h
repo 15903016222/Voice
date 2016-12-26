@@ -14,16 +14,15 @@
 #include <QDateTime>
 #include <QMutex>
 
-
-
 namespace DplDevice {
 
 typedef QSharedPointer<Group> GroupPointer;
 
 class DevicePrivate;
 
-class Device
+class Device : public QObject
 {
+    Q_OBJECT
 public:
     enum Type {
         DEV_16_64_TOFD,
@@ -90,7 +89,7 @@ public:
      * @brief create_group  创建组
      * @return              成功返回true，失败返回false
      */
-    bool create_group();
+    bool add_group();
 
     /**
      * @brief remove_group  删除指定的组
@@ -119,8 +118,11 @@ public:
      */
     GroupPointer &current_group();
 
+signals:
+    void current_group_changed();
+
 protected:
-    explicit Device();
+    explicit Device(QObject *parent = 0);
     ~Device();
 
 private:
