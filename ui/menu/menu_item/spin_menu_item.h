@@ -28,6 +28,7 @@ public:
     void set_range(double min, double max);
     void set_decimals(int prec);
 
+    void set(const QString &unit, double min, double max, int decimals) { set(m_title, unit, min, max, decimals); }
     void set(const QString &title, const QString &unit, double min, double max, int decimals);
     double get_value() const;
 
