@@ -232,6 +232,16 @@ GroupPointer &Device::current_group()
     return d->m_curGroup;
 }
 
+int Device::beam_qty()
+{
+    QReadLocker l(&d->m_groupsRWLock);
+    int qty = 0;
+    for (int i = 0; i < d->m_groups.size(); ++i) {
+        qty += d->m_groups[i]->beam_qty();
+    }
+    return qty;
+}
+
 Device::Device(QObject *parent) :
     QObject(parent),
     d(new DevicePrivate())

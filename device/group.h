@@ -40,6 +40,18 @@ public:
     void set_start(int value);
 
     /**
+     * @brief range 获取声程轴的范围值
+     * @return      返回范围值，单位(ns)
+     */
+    int range();
+
+    /**
+     * @brief set_range 设置声程轴的范围值
+     * @param value     范围值，单位(ns)
+     */
+    void set_range(int value);
+
+    /**
      * @brief velocity  获取声速
      * @return          返回声速大小，单位为(m/s)
      */
@@ -69,8 +81,41 @@ public:
      */
     double current_angle();
 
+    enum PointQtyMode {
+        PointQtyAuto,
+        PointQty160,
+        PointQty320,
+        PointQty640,
+        PointQtyUserDef
+    };
+    /**
+     * @brief point_qty_mode    获取采样点模式
+     * @return                  采样点模式
+     */
+    PointQtyMode point_qty_mode();
+
+    /**
+     * @brief set_point_qty_mode    设置采样点模式
+     * @param mode                  采样点模式
+     * @return                      成功返回true，否则false
+     */
+    bool set_point_qty_mode(PointQtyMode mode);
+
+    /**
+     * @brief beam_qty  获取组包含的beam数
+     * @return          返回beam数
+     */
+    int beam_qty();
+
+    /**
+     * @brief max_rx_time   获取最大接收时间
+     * @return              返回最大接收时间，单位(ns)
+     */
+    int max_rx_time();
 private:
     GroupPrivate *d;
+
+    void update_sample();
 };
 
 }
