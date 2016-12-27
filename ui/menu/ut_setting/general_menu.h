@@ -25,11 +25,15 @@ public:
 
 public slots:
     void set_gain(double gain) { m_gainItem->set_value(gain); }
+    void update();
 
 signals:
     void gain_changed(double gain);
+    void ut_unit_changed();
 
 private:
+    bool m_updateFlag;
+
     SpinMenuItem *m_gainItem;
     SpinMenuItem *m_startItem;
     SpinMenuItem *m_rangeItem;
@@ -43,8 +47,11 @@ private slots:
     void do_startItem_changed(double pos);
     void do_rangeItem_changed(double value);
     void do_velocityItem_changed(double value);
+    void do_utUnitItem_changed(int index);
 
     void do_current_group_changed();
+
+    void update_start_item();
 };
 
 }

@@ -5,6 +5,8 @@
  * @version 0.1
  * @date 2016-11-04
  */
+#ifndef __DEVICE_GROUP_H__
+#define __DEVICE_GROUP_H__
 
 #include <QObject>
 #include "fpga/group.h"
@@ -119,3 +121,4 @@ private:
 };
 
 }
+#endif // __DEVICE_GROUP_H__

@@ -10,6 +10,7 @@
 #include "device.h"
 
 #include <QReadWriteLock>
+#include <QDebug>
 
 namespace DplDevice {
 
@@ -40,8 +41,14 @@ public:
 
 GroupPrivate::GroupPrivate()
 {
+    m_start = 0;
+    m_range = 57020;
+    m_wedgeDelay = 0;
     m_utUnit = Group::SoundPath;
+    m_velocity = 3240;
     m_currentAngle = 30;
+
+    m_pointQtyMode == Group::PointQtyAuto;
 }
 
 int GroupPrivate::max_beam_delay()

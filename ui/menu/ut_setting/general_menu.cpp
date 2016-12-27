@@ -32,7 +32,6 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     connect(m_gainItem, SIGNAL(value_changed(double)), this, SIGNAL(gain_changed(double)));
 
     m_startItem = new SpinMenuItem();
-    m_startItem->set(tr("Start"), "mm", 0, 1000, 2);
     connect(m_startItem, SIGNAL(value_changed(double)), this, SLOT(do_startItem_changed(double)));
 
     m_rangeItem = new SpinMenuItem();
@@ -47,6 +46,7 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
 
     m_utUnitItem = new ComboMenuItem();
     m_utUnitItem->set(tr("UT Unit"), utUnitList);
+    connect(m_utUnitItem, SIGNAL(value_changed(int)), this, SLOT(do_utUnitItem_changed(int)));
 }
 
 GeneralMenu::~GeneralMenu()
@@ -61,6 +61,9 @@ GeneralMenu::~GeneralMenu()
 
 void GeneralMenu::show()
 {
+    if (m_updateFlag) {
+        update();
+    }
     ui->menuItem0->layout()->addWidget(m_gainItem);
     ui->menuItem1->layout()->addWidget(m_startItem);
     ui->menuItem2->layout()->addWidget(m_rangeItem);
@@ -91,6 +94,12 @@ void GeneralMenu::hide()
     m_utUnitItem->hide();
 }
 
+void GeneralMenu::update()
+{
+    update_start_item();
+    m_updateFlag = false;
+}
+
 void GeneralMenu::do_gainItem_changed(double gain)
 {
     m_group->set_gain(gain, true);
@@ -114,8 +123,17 @@ void GeneralMenu::do_startItem_changed(double pos)
 
 void GeneralMenu::do_rangeItem_changed(double value)
 {
-//    m_group->set_sample_range(value);
-    //    m_fpga->current_group()->
+    int range;
+    if (m_group->ut_unit() == DplDevice::Group::TruePath) {
+        range = (int)(value * 2000000.0 /
+                (qCos(m_group->current_angle()) * m_group->velocity()));
+    } else if (m_group->ut_unit() == DplDevice::Group::SoundPath) {
+        range = (int)(value * 2000000.0 / m_group->velocity());
+    } else {
+        /* 显示方式为时间 */
+        range = (int) (value * 1000.0);
+    }
+    m_group->set_range(range);
 }
 
 void GeneralMenu::do_velocityItem_changed(double value)
@@ -123,21 +141,48 @@ void GeneralMenu::do_velocityItem_changed(double value)
     m_group->set_velocity(value);
 }
 
+void GeneralMenu::do_utUnitItem_changed(int index)
+{
+    m_group->set_ut_unit((DplDevice::Group::UtUnit)index);
+    update();
+    emit ut_unit_changed();
+}
+
 void GeneralMenu::do_current_group_changed()
 {
     m_group = DplDevice::Device::get_instance()->current_group();
+    if (m_gainItem->isHidden()) {
+        m_updateFlag = true;
+    } else {
+        update();
+    }
+}
 
-    m_gainItem->set_value(m_group->gain());
+void GeneralMenu::update_start_item()
+{
+    double upper = 0;
+    double value = 0;
+    QString unit = "mm";
 
-    m_startItem->set_value(m_group->start());
+    qDebug()<<"unit="<<m_group->ut_unit()<<"range="<<m_group->range()<<"velocity="<<m_group->velocity();
+    if (m_group->ut_unit() == DplDevice::Group::TruePath) {
+        upper = (m_group->max_rx_time() - m_group->range()) * m_group->velocity() / (2*1000*1000);
+        upper *= qCos(m_group->current_angle());
 
-//    m_rangeItem->set_value(m_group->range());
+        value = m_group->start() * m_group->velocity() / (2*1000*1000);
+        value *= qCos(m_group->current_angle());
+    } else if (m_group->ut_unit() == DplDevice::Group::SoundPath) {
+        upper = (m_group->max_rx_time() - m_group->range()) * m_group->velocity() / (2*1000*1000);
+        value = m_group->start() * m_group->velocity() / (2*1000*1000);
+    } else {
+        upper = (m_group->max_rx_time() - m_group->range()) / 1000;
+        value = m_group->start()/1000;
+        unit = "&micro;s";
+    }
+    qDebug()<<__func__<<"upper="<<upper;
 
-    m_wedgeDelayItem->set_value(m_group->wedge_delay()/1000.0);
-
-    m_velocityItem->set_value(m_group->velocity());
-
-    m_utUnitItem->set_current_index(m_group->ut_unit());
+    m_startItem->set(tr("Start"), unit, 0, upper, 2);
+    m_startItem->set_value(value);
 }
 
 }
