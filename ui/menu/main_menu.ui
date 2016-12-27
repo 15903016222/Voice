@@ -90,37 +90,49 @@ QWidget QPushButton{
         </property>
         <property name="font">
          <font>
-          <family>Times New Roman</family>
-          <pointsize>16</pointsize>
+          <family>Abyssinica SIL</family>
+          <pointsize>13</pointsize>
           <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::WheelFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">QTreeWidget{
-	font: 16pt &quot;Times New Roman&quot;;
-	color: yellow;
 	background-color: rgba(37, 76, 124, 0);
 	outline: 0px;
 }
 
-QTreeWidget::item{
+QTreeWidget::item:has-children{
+	font: 14pt &quot;Arial&quot;;
+	color:white;
 	margin: 8px;
 	background-color: rgba(37, 76, 124, 0); 
+	background-clip: margin;
+}
+
+QTreeWidget::item:!has-children {
+	font: 13pt &quot;Arial&quot;;
+	color:yellow;
+	margin: 8px;
+	margin-left: 30px;
+	background-color: rgba(37, 76, 124, 0); 
+	background-clip: margin;
 }
 
 QTreeWidget::item:selected{
-	font: bold 16pt &quot;Times New Roman&quot;;
-	color: red;
-	background-color: rgba(37, 76, 124, 0);
+	font: bold 13pt &quot;Arial&quot;;
+	color: yellow;
+	background-color: qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(230, 230, 230, 200), stop:0.1 rgba(200, 200, 200, 127), stop:0.9 rgba(200, 200, 200, 127), stop:1 rgba(230, 230, 230, 200));
 }
 
 QTreeWidget::branch{
 	image:none;
-	background-color: rgba(37, 76, 124, 0);
-}
-</string>
+	background-color:  rgba(37, 76, 124, 0); 
+}</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -133,6 +145,15 @@ QTreeWidget::branch{
         </property>
         <property name="autoScroll">
          <bool>false</bool>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="indentation">
+         <number>0</number>
         </property>
         <property name="rootIsDecorated">
          <bool>false</bool>
@@ -162,7 +183,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -221,7 +243,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -273,7 +296,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -315,7 +339,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -367,7 +392,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -414,7 +440,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -461,7 +488,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -503,7 +531,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -555,7 +584,8 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <pointsize>17</pointsize>
+           <family>Arial</family>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="foreground">
