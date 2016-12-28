@@ -183,7 +183,6 @@ void SpinMenuItem::add()
         m_value += m_step;
     }
 
-    qDebug()<<m_value;
     update_value();
 
     emit value_changed(m_value);
@@ -201,7 +200,6 @@ void SpinMenuItem::sub()
         m_value -= m_step;
     }
 
-    qDebug()<<m_value;
     update_value();
 
     emit value_changed(m_value);
