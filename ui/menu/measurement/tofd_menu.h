@@ -18,15 +18,15 @@ public:
 private:
     ComboMenuItem *m_selectItem;
 
-    MenuItem *m_wedgeItem;
+    SpinMenuItem *m_wedgeItem;
     MenuItem *m_layerDepthItem;
     MenuItem *m_tofdCalItem;
-    MenuItem *m_startItem;
-    MenuItem *m_rangeItem;
+    SpinMenuItem *m_startItem;
+    SpinMenuItem *m_rangeItem;
 
     ComboMenuItem *m_straighteningItem;
     ComboMenuItem *m_removeLateralItem;
-    MenuItem *m_refPositionItem;
+    SpinMenuItem *m_refPositionItem;
     ComboMenuItem *m_depthCalibrationItem;
 
     void show_setting();

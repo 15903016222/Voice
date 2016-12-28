@@ -24,9 +24,9 @@ public:
 
 private:
     ComboMenuItem *m_gateItem;
-    MenuItem *m_startItem;
-    MenuItem *m_widthItem;
-    MenuItem *m_thresholdItem;
+    SpinMenuItem *m_startItem;
+    SpinMenuItem *m_widthItem;
+    SpinMenuItem *m_thresholdItem;
     ComboMenuItem *m_synchroItem;
     ComboMenuItem *m_measureModeItem;
 };

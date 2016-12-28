@@ -18,8 +18,8 @@ public:
 private:
     ComboMenuItem *m_scanItem;
     ComboMenuItem *m_typeItem;
-    MenuItem *m_maxScanSpeedItem;
-    MenuItem *m_maxScanSpeedRPMItem;
+    SpinMenuItem *m_maxScanSpeedItem;
+    SpinMenuItem *m_maxScanSpeedRPMItem;
 };
 
 }

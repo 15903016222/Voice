@@ -25,6 +25,10 @@ public:
 
 public slots:
     void set_gain(double gain) { m_gainItem->set_value(gain); }
+
+    /**
+     * @brief update    更新菜单数据
+     */
     void update();
 
 signals:
@@ -51,7 +55,9 @@ private slots:
 
     void do_current_group_changed();
 
+    void update_gain_item();
     void update_start_item();
+
 };
 
 }

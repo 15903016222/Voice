@@ -17,10 +17,10 @@ public:
 
 private:
     ComboMenuItem *m_typeItem;
-    MenuItem *m_positionStartItem;
-    MenuItem *m_positionEndItem;
-    MenuItem *m_offsetStartItem;
-    MenuItem *m_offsetEndItem;
+    SpinMenuItem *m_positionStartItem;
+    SpinMenuItem *m_positionEndItem;
+    SpinMenuItem *m_offsetStartItem;
+    SpinMenuItem *m_offsetEndItem;
 };
 
 }

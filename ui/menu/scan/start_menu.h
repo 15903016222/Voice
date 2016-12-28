@@ -16,7 +16,7 @@ public:
     void hide();
 
 private:
-    MenuItem *m_scanItem;
+    SpinMenuItem *m_scanItem;
     ComboMenuItem *m_pauseItem;
 };
 

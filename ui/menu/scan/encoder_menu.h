@@ -17,9 +17,9 @@ public:
 private:
     ComboMenuItem *m_encoderItem;
     ComboMenuItem *m_encoderTypeItem;
-    MenuItem *m_resolutionItem;
+    SpinMenuItem *m_resolutionItem;
     ComboMenuItem *m_polarityItem;
-    MenuItem *m_originItem;
+    SpinMenuItem *m_originItem;
     MenuItem *m_presetItem;
 };
 

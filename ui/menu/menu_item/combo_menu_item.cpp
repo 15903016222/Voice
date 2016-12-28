@@ -12,7 +12,7 @@
 #include <QListView>
 
 ComboMenuItem::ComboMenuItem(QWidget *parent) :
-    MenuItem(parent, MenuItem::Combo),
+    MenuItem(parent),
     ui(new Ui::ComboMenuItem)
 {
     ui->setupUi(this);

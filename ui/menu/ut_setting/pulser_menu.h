@@ -24,9 +24,9 @@ public:
 
 private:
     ComboMenuItem *m_txrxModeItem;
-    MenuItem *m_pulserItem;
+    SpinMenuItem *m_pulserItem;
     ComboMenuItem *m_voltageItem;
-    MenuItem *m_pwItem;
+    SpinMenuItem *m_pwItem;
     ComboMenuItem *m_prfItem;
 };
 

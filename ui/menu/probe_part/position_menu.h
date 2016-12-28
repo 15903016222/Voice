@@ -23,8 +23,8 @@ public:
     void hide();
 
 private:
-    MenuItem *m_scanOffsetItem;
-    MenuItem *m_indexOffsetItem;
+    SpinMenuItem *m_scanOffsetItem;
+    SpinMenuItem *m_indexOffsetItem;
     ComboMenuItem *m_skewItem;
 };
 

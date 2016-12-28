@@ -22,8 +22,8 @@ public:
     void hide();
 
 private:
-    MenuItem *m_brightItem;
-    MenuItem *m_opacityItem;
+    SpinMenuItem *m_brightItem;
+    SpinMenuItem *m_opacityItem;
     ComboMenuItem *m_languageItem;
     ComboMenuItem *m_startingPageItem;
     ComboMenuItem *m_gatemodeItem;

@@ -17,8 +17,8 @@ public:
 
 private:
     ComboMenuItem *m_geometryItem;
-    MenuItem *m_thicknessItem;
-    MenuItem *m_diameterItem;
+    SpinMenuItem *m_thicknessItem;
+    SpinMenuItem *m_diameterItem;
     ComboMenuItem *m_materialItem;
     ComboMenuItem *m_overlayItem;
 };

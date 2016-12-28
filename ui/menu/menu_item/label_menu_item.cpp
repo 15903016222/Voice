@@ -9,7 +9,7 @@
 #include "ui_label_menu_item.h"
 
 LabelMenuItem::LabelMenuItem(QWidget *parent) :
-    MenuItem(parent, MenuItem::Label),
+    MenuItem(parent),
     ui(new Ui::LabelMenuItem)
 {
     ui->setupUi(this);

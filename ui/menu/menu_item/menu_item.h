@@ -14,29 +14,13 @@ class MenuItem : public QWidget
 {
     Q_OBJECT
 public:
-    enum Type {
-        Label,
-        Spin,
-        Combo
-    };
-
-    explicit MenuItem(QWidget *parent = 0, MenuItem::Type type = MenuItem::Label);
+    explicit MenuItem(QWidget *parent = 0);
 
     virtual void set(const QString &title, const QString &text);
-    virtual void set(const QString &title, const QString &unit, double min, double max, int decimals);
-
-    void set_type(MenuItem::Type type) { m_type = type; }
-    MenuItem::Type type() const { return m_type;}
 
 signals:
-    void value_changed(double value);
     void value_changed(int index);
     void clicked();
-
-public slots:
-
-private:
-    Type m_type;
 };
 
 #endif // __MENU_ITEM_H__

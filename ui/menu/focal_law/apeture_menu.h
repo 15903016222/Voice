@@ -16,10 +16,10 @@ public:
     void hide();
 
 private:
-    MenuItem *m_apetureItem;
-    MenuItem *m_firstElementItem;
-    MenuItem *m_lastElementItem;
-    MenuItem *m_elementStep;
+    SpinMenuItem *m_apetureItem;
+    SpinMenuItem *m_firstElementItem;
+    SpinMenuItem *m_lastElementItem;
+    SpinMenuItem *m_elementStep;
 };
 
 }

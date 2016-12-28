@@ -16,9 +16,9 @@ public:
     void hide();
 
 private:
-    MenuItem *m_minAngleItem;
-    MenuItem *m_maxAngleItem;
-    MenuItem *m_angleStepItem;
+    SpinMenuItem *m_minAngleItem;
+    SpinMenuItem *m_maxAngleItem;
+    SpinMenuItem *m_angleStepItem;
 };
 
 }

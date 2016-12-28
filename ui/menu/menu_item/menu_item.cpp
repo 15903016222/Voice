@@ -7,22 +7,12 @@
  */
 #include "menu_item.h"
 
-MenuItem::MenuItem(QWidget *parent, MenuItem::Type type) : QWidget(parent)
+MenuItem::MenuItem(QWidget *parent) : QWidget(parent)
 {
-    m_type = type;
 }
 
 void MenuItem::set(const QString &title, const QString &text)
 {
     Q_UNUSED(title);
     Q_UNUSED(text);
-}
-
-void MenuItem::set(const QString &title, const QString &unit, double min, double max, int decimals)
-{
-    Q_UNUSED(title);
-    Q_UNUSED(unit);
-    Q_UNUSED(min);
-    Q_UNUSED(max);
-    Q_UNUSED(decimals);
 }

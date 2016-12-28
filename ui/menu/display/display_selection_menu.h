@@ -26,8 +26,8 @@ private:
     ComboMenuItem *m_groupItem;
     ComboMenuItem *m_displayItem;
     ComboMenuItem *m_cSourceitem;
-    MenuItem *m_minThicknessItem;
-    MenuItem *m_maxThicknessItem;
+    SpinMenuItem *m_minThicknessItem;
+    SpinMenuItem *m_maxThicknessItem;
     ComboMenuItem *m_dataCompressionItem;
 };
 

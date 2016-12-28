@@ -26,15 +26,15 @@ private:
     ComboMenuItem *m_modeItem;
 
     /* Setting */
-    MenuItem *m_curveNoItem;
+    SpinMenuItem *m_curveNoItem;
     ComboMenuItem *m_curveXItem;
-    MenuItem *m_dbOffsetItem;
+    SpinMenuItem *m_dbOffsetItem;
     ComboMenuItem *m_switchItem;
 
     /* Edit */
     ComboMenuItem *m_pointItem;
-    MenuItem *m_positionItem;
-    MenuItem *m_gainItem;
+    SpinMenuItem *m_positionItem;
+    SpinMenuItem *m_gainItem;
     MenuItem *m_addPointItem;
     MenuItem *m_deletePointItem;
 

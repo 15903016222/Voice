@@ -28,12 +28,16 @@ public:
     void set_range(double min, double max);
     void set_decimals(int prec);
 
-    void set(const QString &unit, double min, double max, int decimals) { set(m_title, unit, min, max, decimals); }
+    void set(const QString &unit, double min, double max, int decimals);
     void set(const QString &title, const QString &unit, double min, double max, int decimals);
+
     double get_value() const;
 
 public slots:
     void set_value(double value);
+
+signals:
+    void value_changed(double value);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
@@ -44,10 +48,56 @@ private:
     QString m_unit;
     QString m_title;
 
+    QString m_suffix;
+
+    double m_value;
+    double m_max;
+    double m_min;
+    double m_step;
+    int m_decimals;
+
     void update_title();
     void update_spin_step();
     void set_focus();
     void set_focus_out();
+
+    void update_value();
+    void add();
+    void sub();
 };
+
+inline void SpinMenuItem::set_title(const QString &title)
+{
+    m_title = title;
+    update_title();
+}
+
+inline void SpinMenuItem::set_unit(const QString &unitName)
+{
+    m_unit = unitName;
+    update_title();
+}
+
+inline void SpinMenuItem::set_suffix(const QString &text)
+{
+    m_suffix = text;
+    update_value();
+}
+
+inline void SpinMenuItem::set(const QString &unit, double min, double max, int decimals)
+{
+    set(m_title, unit, min, max, decimals);
+}
+
+inline double SpinMenuItem::get_value() const
+{
+    return m_value;
+}
+
+inline void SpinMenuItem::set_value(double value)
+{
+    m_value = value;
+    update_value();
+}
 
 #endif // __MENU_ITEM_H__

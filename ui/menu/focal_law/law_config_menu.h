@@ -17,8 +17,8 @@ public:
 
 private:
     ComboMenuItem *m_lawTypeItem;
-    MenuItem *m_pulseConnectionItem;
-    MenuItem *m_receiverConnectionItem;
+    SpinMenuItem *m_pulseConnectionItem;
+    SpinMenuItem *m_receiverConnectionItem;
     ComboMenuItem *m_waveTypeItem;
 };
 

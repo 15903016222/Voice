@@ -18,19 +18,19 @@ public:
 private:
     ComboMenuItem *m_selectionItem;
 
-    MenuItem *m_rItem;      /* %(r) */
-    MenuItem *m_mItem;      /* %(m) */
+    SpinMenuItem *m_rItem;      /* %(r) */
+    SpinMenuItem *m_mItem;      /* %(m) */
 
-    MenuItem *m_urItem;     /* U(r) */
-    MenuItem *m_umItem;     /* U(m) */
+    SpinMenuItem *m_urItem;     /* U(r) */
+    SpinMenuItem *m_umItem;     /* U(m) */
 
-    MenuItem *m_srItem;     /* S(r) */
-    MenuItem *m_smItem;     /* S(m) */
+    SpinMenuItem *m_srItem;     /* S(r) */
+    SpinMenuItem *m_smItem;     /* S(m) */
 
-    MenuItem *m_irItem;     /* I(r) */
-    MenuItem *m_imItem;     /* I(m) */
+    SpinMenuItem *m_irItem;     /* I(r) */
+    SpinMenuItem *m_imItem;     /* I(m) */
 
-    MenuItem *m_angelItem;
+    SpinMenuItem *m_angelItem;
 
     void show_a_scan();
     void hide_a_scan();

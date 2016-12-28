@@ -16,9 +16,9 @@ public:
     void hide();
 
 private:
-    MenuItem *m_gainItem;
-    MenuItem *m_startItem;
-    MenuItem *m_widthItem;
+    SpinMenuItem *m_gainItem;
+    SpinMenuItem *m_startItem;
+    SpinMenuItem *m_widthItem;
     ComboMenuItem *m_switchItem;
 };
 

@@ -28,7 +28,7 @@ private:
     ComboMenuItem *m_dbRefItem;
     ComboMenuItem *m_pointQtyItem;
     MenuItem *m_scaleFactorItem;
-    MenuItem *m_sumGainItem;
+    SpinMenuItem *m_sumGainItem;
 };
 
 }
