@@ -33,25 +33,25 @@ public:
      * @brief start 获取声程轴上的起始值
      * @return      起始值,单位(ns)
      */
-    int start();
+    double start();
 
     /**
      * @brief set_start 设置声程轴的起始值
      * @param value     起始值，单位(ns)
      */
-    void set_start(int value);
+    void set_start(double value);
 
     /**
      * @brief range 获取声程轴的范围值
      * @return      返回范围值，单位(ns)
      */
-    int range();
+    double range();
 
     /**
      * @brief set_range 设置声程轴的范围值
      * @param value     范围值，单位(ns)
      */
-    void set_range(int value);
+    void set_range(double value);
 
     /**
      * @brief velocity  获取声速

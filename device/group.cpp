@@ -26,8 +26,8 @@ public:
     int max_beam_delay();
 
     /* variables */
-    int m_start;                /* 声程轴起始点,单位(ns) */
-    int m_range;                /* 范围值, 单位(ns) */
+    double m_start;             /* 声程轴起始点,单位(ns) */
+    double m_range;             /* 范围值, 单位(ns) */
     int m_wedgeDelay;           /* 楔块延迟时间，单位(ns) */
     Group::UtUnit m_utUnit;     /* Ut Unit */
 
@@ -82,14 +82,15 @@ void Group::set_ut_unit(Group::UtUnit type)
     d->m_utUnit = type;
 }
 
-int Group::start()
+double Group::start()
 {
     QReadLocker l(&d->m_rwlock);
     return d->m_start;
 }
 
-void Group::set_start(int value)
+void Group::set_start(double value)
 {
+    qDebug()<<__func__<<__LINE__<<"start="<<value;
     QWriteLocker l(&d->m_rwlock);
     if (value == d->m_start) {
         return;
@@ -99,13 +100,13 @@ void Group::set_start(int value)
     update_sample();
 }
 
-int Group::range()
+double Group::range()
 {
     QReadLocker l(&d->m_rwlock);
     return d->m_range;
 }
 
-void Group::set_range(int value)
+void Group::set_range(double value)
 {
     QWriteLocker l(&d->m_rwlock);
     int range = value;
