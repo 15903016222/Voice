@@ -51,7 +51,17 @@ public:
     Group::RectifierType rectifier(void);
     bool set_rectifier(Group::RectifierType type, bool reflesh = false);
 
+    /**
+     * @brief compress_rato 获取采样点压缩系数
+     * @return              压缩系数
+     */
     int compress_rato(void);
+    /**
+     * @brief set_compress_rato
+     * @param val
+     * @param reflesh
+     * @return
+     */
     bool set_compress_rato(int val, bool reflesh = false);
 
     /**
@@ -86,7 +96,18 @@ public:
     int sample_range(void);
     bool set_sample_range(int range, bool reflesh = false);
 
+    /**
+     * @brief point_qty 获取压缩后的采样点数
+     * @return          采样点数, 单位(ns)
+     */
     int point_qty(void);
+
+    /**
+     * @brief set_point_qty 设置压缩后的采样点数
+     * @param qty           采样点数，单位(ns)
+     * @param reflesh       下发配置标志
+     * @return              成功返回true，否则false
+     */
     bool set_point_qty(int qty, bool reflesh = false);
 
     int tcg_point_qty(void);
