@@ -46,6 +46,8 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     m_utUnitItem = new ComboMenuItem();
     m_utUnitItem->set(tr("UT Unit"), utUnitList);
     connect(m_utUnitItem, SIGNAL(value_changed(int)), this, SLOT(do_utUnitItem_changed(int)));
+
+    m_updateFlag = true;
 }
 
 GeneralMenu::~GeneralMenu()
@@ -103,16 +105,11 @@ void GeneralMenu::update()
 
 void GeneralMenu::do_gainItem_changed(double gain)
 {
-    if (m_group->gain() == gain) {
-        return;
-    }
     m_group->set_gain(gain, true);
 }
 
 void GeneralMenu::do_startItem_changed(double pos)
 {
-    qDebug()<<__func__<<__LINE__<<"pos="<<pos<<m_startItem->get_value();
-
     double start;
     if (m_group->ut_unit() == DplDevice::Group::TruePath) {
         start = (pos * 2000000.0 /
@@ -176,7 +173,6 @@ void GeneralMenu::update_start_item()
     double value = 0.0;
     QString unit = "mm";
 
-    qDebug()<<"start="<<m_group->start()<<"range="<<m_group->range()<<"velocity="<<m_group->velocity();
     if (m_group->ut_unit() == DplDevice::Group::TruePath) {
         upper = (m_group->max_rx_time() - m_group->range()) * m_group->velocity() / (2*1000*1000);
         upper *= qCos(m_group->current_angle());
@@ -192,7 +188,6 @@ void GeneralMenu::update_start_item()
         unit = "&micro;s";
     }
 
-    qDebug()<<__func__<<"upper="<<upper<<"value="<<value;
     m_startItem->set(tr("Start"), unit, 0, upper, 2);
     m_startItem->set_value(value);
 }
