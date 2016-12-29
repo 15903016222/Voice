@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Sub Menu */
     subMenu = new SubMenu(this);
     subMenu->hide();;
-    subMenu->move(180, 531);
+    subMenu->move(179, 530);
     DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(subMenu->get_menu(MainMenu::UTSettings_General));
     connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
@@ -201,7 +201,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         mainMenu->resize(qRound((qreal)mainMenuWidth * width / oldWidth), qRound((qreal)mainMenuHeight * height / oldHeight));
         subMenu->resize(qRound((qreal)subMenuWidth * width / oldWidth), qRound((qreal)subMenuHeight * height / oldHeight));
         mainMenu->move(0, height - mainMenu->geometry().height() + 1);
-        subMenu->move(mainMenu->geometry().width() + 1, height - subMenu->geometry().height() + 1);
+        subMenu->move(mainMenu->geometry().width(), height - subMenu->geometry().height());
     } else {
         mainMenu->resize(mainMenuWidth, mainMenuHeight);
         subMenu->resize(subMenuWidth, subMenuHeight);

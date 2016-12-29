@@ -174,7 +174,7 @@ void MainMenu::set_opacity_main_menu(double value)
 {
     QString alpha = QString::number(qRound(qreal(value / 100 * 256 - 1)));
     qDebug() << alpha;
-    ui->widget->setStyleSheet(QString("QWidget{background-color:rgba(37, 76, 124," + alpha + ");" +
+    ui->widget->setStyleSheet(QString("QWidget{background-color:rgba(0, 100, 150," + alpha + ");" +
                               "border-radius: 5px;}" + "QWidget QPushButton{background-color: rgba(37, 76, 124, 0);}"));
 
 }
