@@ -18,9 +18,6 @@ MainMenu::MainMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->treeWidget->setColumnWidth(0, 145);
-    ui->treeWidget->setColumnWidth(1, 33);
-
     QTreeWidgetItem *item = ui->treeWidget->topLevelItem(0);
 
     ui->treeWidget->expandItem(item);
@@ -179,5 +176,13 @@ void MainMenu::set_opacity_main_menu(double value)
     qDebug() << alpha;
     ui->widget->setStyleSheet(QString("QWidget{background-color:rgba(37, 76, 124," + alpha + ");" +
                               "border-radius: 5px;}" + "QWidget QPushButton{background-color: rgba(37, 76, 124, 0);}"));
+
+}
+
+void MainMenu::resizeEvent(QResizeEvent *event)
+{
+    int width = event->size().width();
+    ui->treeWidget->setColumnWidth(0, width * 4 / 5);
+    ui->treeWidget->setColumnWidth(1, width / 5);
 
 }

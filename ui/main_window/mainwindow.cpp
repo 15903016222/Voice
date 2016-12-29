@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Sub Menu */
     subMenu = new SubMenu(this);
     subMenu->hide();;
-    subMenu->move(179, 530);
+    subMenu->move(180, 531);
     DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(subMenu->get_menu(MainMenu::UTSettings_General));
     connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
@@ -184,4 +184,27 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
     } else {
         VInput::get_vinput()->send(VInput::Key_Down);
     }
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    int width = event->size().width();
+    int height = event->size().height();
+    int oldWidth = event->oldSize().width();
+    int oldHeight = event->oldSize().height();
+    int mainMenuWidth = mainMenu->geometry().width();
+    int mainMenuHeight = mainMenu->geometry().height();
+    int subMenuWidth = subMenu->geometry().width();
+    int subMenuHeight = subMenu->geometry().height();
+
+    if(oldWidth > 0 && oldHeight > 0) {
+        mainMenu->resize(qRound((qreal)mainMenuWidth * width / oldWidth), qRound((qreal)mainMenuHeight * height / oldHeight));
+        subMenu->resize(qRound((qreal)subMenuWidth * width / oldWidth), qRound((qreal)subMenuHeight * height / oldHeight));
+        mainMenu->move(0, height - mainMenu->geometry().height() + 1);
+        subMenu->move(mainMenu->geometry().width() + 1, height - subMenu->geometry().height() + 1);
+    } else {
+        mainMenu->resize(mainMenuWidth, mainMenuHeight);
+        subMenu->resize(subMenuWidth, subMenuHeight);
+    }
+    mainMenu->do_change_arrow();
 }
