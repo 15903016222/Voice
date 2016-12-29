@@ -47,7 +47,7 @@
       <item>
        <widget class="SpinMenuItem" name="gainMenuItem" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -63,7 +63,7 @@
       <item>
        <widget class="MeasureBar" name="measureBar" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -79,7 +79,7 @@
       <item>
        <widget class="SpinMenuItem" name="angleMenuItem" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -95,7 +95,7 @@
       <item>
        <widget class="IconsBar" name="iconsBarWidget" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -113,7 +113,7 @@
     <item>
      <widget class="ShowInfoWidget" name="statusBar" native="true">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+       <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -160,15 +160,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>DplDisplay::Display</class>
-   <extends>QWidget</extends>
-   <header>display.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SpinMenuItem</class>
    <extends>QWidget</extends>
    <header>spin_menu_item.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DplDisplay::Display</class>
+   <extends>QWidget</extends>
+   <header>display.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
