@@ -21,7 +21,7 @@
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -32,14 +32,7 @@
    <item row="0" column="0">
     <widget class="QWidget" name="widget" native="true">
      <property name="styleSheet">
-      <string notr="true">QWidget{
-	background-color: rgba(37, 76, 124, 225);
-	border-radius: 5px;
-}
-
-QWidget QPushButton{	
-	background-color: rgba(37, 76, 124, 0);
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,20,1">
       <property name="leftMargin">
@@ -90,8 +83,8 @@ QWidget QPushButton{
         </property>
         <property name="font">
          <font>
-          <family>Abyssinica SIL</family>
-          <pointsize>13</pointsize>
+          <family>Arial</family>
+          <pointsize>14</pointsize>
           <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
@@ -102,20 +95,19 @@ QWidget QPushButton{
         </property>
         <property name="styleSheet">
          <string notr="true">QTreeWidget{
+	font: 14pt &quot;Arial&quot;;
 	background-color: rgba(37, 76, 124, 0);
 	outline: 0px;
 }
 
 QTreeWidget::item:has-children{
-	font: 14pt &quot;Arial&quot;;
-	color:white;
+	color: white;
 	margin: 8px;
 	background-color: rgba(37, 76, 124, 0); 
 	background-clip: margin;
 }
 
 QTreeWidget::item:!has-children {
-	font: 13pt &quot;Arial&quot;;
 	color:yellow;
 	margin: 8px;
 	margin-left: 30px;
@@ -124,7 +116,6 @@ QTreeWidget::item:!has-children {
 }
 
 QTreeWidget::item:selected{
-	font: bold 13pt &quot;Arial&quot;;
 	color: yellow;
 	background-color: qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(230, 230, 230, 200), stop:0.1 rgba(200, 200, 200, 127), stop:0.9 rgba(200, 200, 200, 127), stop:1 rgba(230, 230, 230, 200));
 }
@@ -183,8 +174,7 @@ QTreeWidget::branch{
          </property>
          <property name="font">
           <font>
-           <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -244,7 +234,7 @@ QTreeWidget::branch{
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -297,7 +287,7 @@ QTreeWidget::branch{
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -340,7 +330,7 @@ QTreeWidget::branch{
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -393,7 +383,7 @@ QTreeWidget::branch{
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -441,7 +431,7 @@ QTreeWidget::branch{
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -489,7 +479,7 @@ QTreeWidget::branch{
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -532,7 +522,7 @@ QTreeWidget::branch{
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
@@ -585,7 +575,7 @@ QTreeWidget::branch{
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="foreground">
