@@ -2,12 +2,13 @@
 #include "ui_mainwindow.h"
 
 #include "vinput.h"
-#include "fpga.h"
+//#include "fpga.h"
 #include "ut_setting/general_menu.h"
+#include "preference/preference_menu.h"
 
 #include <QDebug>
 #include <QResizeEvent>
-
+#include <QFontDatabase>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -17,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     /* Fpga */
-    DplFpga::Fpga::get_fpga()->create_group();
-    DplFpga::GroupPointer group = DplFpga::Fpga::get_fpga()->get_group(0);
-    group->init();
+//    DplFpga::Fpga::get_fpga()->create_group();
+//    DplFpga::GroupPointer group = DplFpga::Fpga::get_fpga()->get_group(0);
+//    group->init();
 
     /* gain menu item */
     ui->gainMenuItem->set(tr("Gain"), "dB", 0, 90, 1);
@@ -47,6 +48,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
 
     connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_menu(MainMenu::Type)));
+
+    DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(subMenu->get_menu(MainMenu::Preference_Preference));
+    connect(preferenceMenu, SIGNAL(opacity_changed(double)), mainMenu, SLOT(set_opacity_main_menu(double)));
+
 }
 
 MainWindow::~MainWindow()
@@ -180,4 +185,3 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
         VInput::get_vinput()->send(VInput::Key_Down);
     }
 }
-

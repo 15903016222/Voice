@@ -33,6 +33,8 @@ MainMenu::MainMenu(QWidget *parent) :
     ui->treeWidget->setFocus();
 
     do_change_arrow();
+
+    set_opacity_main_menu(80);
 }
 
 MainMenu::~MainMenu()
@@ -84,6 +86,7 @@ bool MainMenu::do_keypress_event(QKeyEvent *e)
 
     if (nextModelIndex.isValid()) {
         ui->treeWidget->setCurrentIndex(nextModelIndex);
+
     }
 
     return true;
@@ -168,4 +171,13 @@ void MainMenu::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeW
     type = (Type)(((ui->treeWidget->indexOfTopLevelItem(current->parent()))<<4)|current->parent()->indexOfChild(current));
 
     emit click(type);
+}
+
+void MainMenu::set_opacity_main_menu(double value)
+{
+    QString alpha = QString::number(qRound(qreal(value / 100 * 256 - 1)));
+    qDebug() << alpha;
+    ui->widget->setStyleSheet(QString("QWidget{background-color:rgba(37, 76, 124," + alpha + ");" +
+                              "border-radius: 5px;}" + "QWidget QPushButton{background-color: rgba(37, 76, 124, 0);}"));
+
 }
