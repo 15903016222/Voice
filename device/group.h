@@ -31,27 +31,27 @@ public:
 
     /**
      * @brief start 获取声程轴上的起始值
-     * @return      起始值,单位(采样精度)
+     * @return      起始值,单位(ns)
      */
-    int start();
+    double start();
 
     /**
      * @brief set_start 设置声程轴的起始值
-     * @param value     起始值，单位(采样精度)
+     * @param value     起始值，单位(ns)
      */
-    void set_start(int value);
+    void set_start(double value);
 
     /**
      * @brief range 获取声程轴的范围值
-     * @return      返回范围值，单位(采样精度)
+     * @return      返回范围值，单位(ns)
      */
-    int range();
+    double range();
 
     /**
      * @brief set_range 设置声程轴的范围值
-     * @param value     范围值，单位(采样精度)
+     * @param value     范围值，单位(ns)
      */
-    void set_range(int value);
+    void set_range(double value);
 
     /**
      * @brief velocity  获取声速
@@ -67,13 +67,13 @@ public:
 
     /**
      * @brief wedge_delay   楔块延迟时间
-     * @return              返回楔块延迟时间，单位(采样精度)
+     * @return              返回楔块延迟时间，单位(ns)
      */
     int wedge_delay();
 
     /**
      * @brief set_wedge_delay   设置楔块延迟时间
-     * @param value             延迟时间，单位(采样精度)
+     * @param value             延迟时间，单位(ns)
      */
     void set_wedge_delay(int value);
 
@@ -111,21 +111,21 @@ public:
 
     /**
      * @brief max_sample_time   获取最大Start+Range时间
-     * @return              返回最大Start+Range时间，单位(采样精度)
+     * @return              返回最大Start+Range时间，单位(ns)
      */
-    int max_sample_time();
+    double max_sample_time();
 
     /**
      * @brief max_start 获取最大的start时间
-     * @return          时间，单位(采样精度)
+     * @return          时间，单位(ns)
      */
-    int max_start();
+    double max_start();
 
     /**
      * @brief max_range 获取最大的range时间
-     * @return          时间，单位(采样精度)
+     * @return          时间，单位(ns)
      */
-    int max_range();
+    double max_range();
 
 private:
     GroupPrivate *d;
@@ -133,12 +133,12 @@ private:
     void update_sample();
 };
 
-inline int Group::max_start()
+inline double Group::max_start()
 {
     return max_sample_time() - range();
 }
 
-inline int Group::max_range()
+inline double Group::max_range()
 {
     return max_sample_time() - start();
 }
