@@ -113,6 +113,13 @@ public:
      */
     float sample_precision();
 
+    /**
+     * @brief loading_time  获取FPGA每条Beam设置寄存器的时间
+     * @return              时间, 单位(采样精度)
+     */
+    int loading_time();
+
+
     /* Global */
     int pa_law_qty();                     /* PA聚焦法则数 */
     bool set_pa_law_qty(int qty, bool reflesh = false);
