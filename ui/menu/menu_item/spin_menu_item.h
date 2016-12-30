@@ -27,6 +27,7 @@ public:
     void set_suffix(const QString &text);
     void set_range(double min, double max);
     void set_decimals(int prec);
+    void set_step(double step);
 
     void set(const QString &unit, double min, double max, int decimals);
     void set(const QString &title, const QString &unit, double min, double max, int decimals);
@@ -54,6 +55,7 @@ private:
     double m_max;
     double m_min;
     double m_step;
+    double m_baseStep;
     int m_decimals;
 
     void update_title();

@@ -50,7 +50,7 @@ void SpinMenuItem::set_decimals(int prec)
 {
     m_decimals = prec;
 
-    m_step = 1/qPow(10, prec);
+    m_step = m_baseStep;
 
     QString msg="[0-9]";
     if (prec > 0) {
@@ -62,6 +62,13 @@ void SpinMenuItem::set_decimals(int prec)
     ui->lineEdit->setValidator(validator);
 
     update_value();
+}
+
+void SpinMenuItem::set_step(double step)
+{
+    m_baseStep = step;
+    m_step = step;
+    update_title();
 }
 
 bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
@@ -132,7 +139,7 @@ void SpinMenuItem::update_spin_step()
     m_step *= 10;
 
     if (m_step >= m_max) {
-        m_step = 1/qPow(10, m_decimals);
+        m_step = m_baseStep;
     }
 
     update_title();
