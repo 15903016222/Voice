@@ -52,17 +52,18 @@ public:
     bool set_rectifier(Group::RectifierType type, bool reflesh = false);
 
     /**
-     * @brief compress_rato 获取采样点压缩系数
-     * @return              压缩系数
+     * @brief compress_ratio 获取采样点压缩系数
+     * @return               压缩系数
      */
-    int compress_rato(void);
+    int compress_ratio(void);
+
     /**
-     * @brief set_compress_rato
-     * @param val
-     * @param reflesh
-     * @return
+     * @brief set_compress_ratio    设置采样点压缩系数
+     * @param val                   压缩系数
+     * @param reflesh               下发配置标志
+     * @return                      成功返回true，否则为false
      */
-    bool set_compress_rato(int val, bool reflesh = false);
+    bool set_compress_ratio(int val, bool reflesh = false);
 
     /**
      * @brief gain  获取增益
@@ -98,13 +99,13 @@ public:
 
     /**
      * @brief point_qty 获取压缩后的采样点数
-     * @return          采样点数, 单位(ns)
+     * @return          采样点数
      */
     int point_qty(void);
 
     /**
      * @brief set_point_qty 设置压缩后的采样点数
-     * @param qty           采样点数，单位(ns)
+     * @param qty           采样点数
      * @param reflesh       下发配置标志
      * @return              成功返回true，否则false
      */
@@ -165,13 +166,13 @@ public:
 protected:
     /**
      * @brief sample_start  获取采样起点
-     * @return              返回采样起点值，单位(ns)
+     * @return              返回采样起点值，单位(采样精度)
      */
     int sample_start(void);
 
     /**
      * @brief set_sample_start  设置采样起点
-     * @param val               采样起点值，单位(ns)
+     * @param val               采样起点值，单位(采样精度)
      * @param reflesh           下发配置标志
      * @return                  成功返回true，否则返回false
      */
@@ -179,13 +180,13 @@ protected:
 
     /**
      * @brief rx_time   获取接收工作时间
-     * @return          接收工作时间，单位(ns)
+     * @return          接收工作时间，单位(采样精度)
      */
     int rx_time(void);
 
     /**
      * @brief set_rx_time   设置接收工作时间
-     * @param val           时间，单位(ns)
+     * @param val           时间，单位(采样精度)
      * @param reflesh       下发配置标志
      * @return              成功返回true，失败返回false
      */

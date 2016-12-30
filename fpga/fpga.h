@@ -103,9 +103,15 @@ class FPGASHARED_EXPORT Fpga
     friend class AlarmAnalog;
 
 public:
-    static Fpga* get_fpga(void);
+    static Fpga* get_instance(void);
 
     bool reset();
+
+    /**
+     * @brief sample_precision  采样精度
+     * @return                  返回采样精度, 单位(ns)
+     */
+    float sample_precision();
 
     /* Global */
     int pa_law_qty();                     /* PA聚焦法则数 */
