@@ -31,6 +31,9 @@ MainMenu::MainMenu(QWidget *parent) :
 
     do_change_arrow();
 
+//    setAttribute(Qt::WA_TranslucentBackground);
+
+    opacityEffect = new QGraphicsOpacityEffect;
     set_opacity_main_menu(80);
 }
 
@@ -172,11 +175,9 @@ void MainMenu::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeW
 
 void MainMenu::set_opacity_main_menu(double value)
 {
-    QString alpha = QString::number(qRound(qreal(value / 100 * 256 - 1)));
-    qDebug() << alpha;
-    ui->widget->setStyleSheet(QString("QWidget{background-color:rgba(0, 100, 150," + alpha + ");" +
-                              "border-radius: 5px;}" + "QWidget QPushButton{background-color: rgba(37, 76, 124, 0);}"));
-
+    qreal alpha = value / 100;
+    opacityEffect->setOpacity(alpha);
+    ui->widget->setGraphicsEffect(opacityEffect);
 }
 
 void MainMenu::resizeEvent(QResizeEvent *event)
