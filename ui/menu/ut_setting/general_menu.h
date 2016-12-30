@@ -57,6 +57,7 @@ private slots:
 
     void update_gain_item();
     void update_start_item();
+    void update_range_item();
 
 };
 
