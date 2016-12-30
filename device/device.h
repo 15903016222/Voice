@@ -123,6 +123,13 @@ public:
      * @return          返回beam的总数
      */
     int beam_qty();
+
+    /**
+     * @brief sample_precision  获取采样时间精度
+     * @return                  采样时间时间精度，单位(ns)
+     */
+    double sample_precision();
+
 signals:
     void current_group_changed();
 

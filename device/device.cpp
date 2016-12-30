@@ -6,6 +6,8 @@
  * @date 2016-10-21
  */
 
+#include "fpga/fpga.h"
+
 #ifdef PHASCAN
 #include "device_phascan.h"
 #elif PHASCAN_II
@@ -50,6 +52,8 @@ class DevicePrivate
 public:
     DevicePrivate();
 
+    DplFpga::Fpga *m_fpga;
+
     QReadWriteLock m_rwlock;
 
     QString m_version;
@@ -57,11 +61,12 @@ public:
     Cert m_cert;
     Device::Type m_type;
 
+    double m_samplePrecision;    /*采样频率倒数，采样时间精度*/
+
     /* Group */
     QList<GroupPointer> m_groups;
     GroupPointer m_curGroup;
     QReadWriteLock m_groupsRWLock;
-
 private:
     QByteArray get_version();
     time_t get_time();
@@ -72,6 +77,9 @@ DevicePrivate::DevicePrivate()
     m_version = get_version();
     m_time = get_time();
     m_cert.load(CERT_FILE, PUB_PEM_FILE);
+
+    m_fpga = DplFpga::Fpga::get_fpga();
+    m_samplePrecision = (1000.0*1000*1000)/m_fpga->sample_frequency();
 }
 
 time_t DevicePrivate::get_time()
@@ -240,6 +248,11 @@ int Device::beam_qty()
         qty += d->m_groups[i]->beam_qty();
     }
     return qty;
+}
+
+double Device::sample_precision()
+{
+    return d->m_samplePrecision;
 }
 
 Device::Device(QObject *parent) :
