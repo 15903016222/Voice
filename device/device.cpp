@@ -61,8 +61,6 @@ public:
     Cert m_cert;
     Device::Type m_type;
 
-    double m_samplePrecision;    /*采样频率倒数，采样时间精度*/
-
     /* Group */
     QList<GroupPointer> m_groups;
     GroupPointer m_curGroup;
@@ -78,8 +76,7 @@ DevicePrivate::DevicePrivate()
     m_time = get_time();
     m_cert.load(CERT_FILE, PUB_PEM_FILE);
 
-    m_fpga = DplFpga::Fpga::get_fpga();
-    m_samplePrecision = (1000.0*1000*1000)/m_fpga->sample_frequency();
+    m_fpga = DplFpga::Fpga::get_instance();
 }
 
 time_t DevicePrivate::get_time()
@@ -248,11 +245,6 @@ int Device::beam_qty()
         qty += d->m_groups[i]->beam_qty();
     }
     return qty;
-}
-
-double Device::sample_precision()
-{
-    return d->m_samplePrecision;
 }
 
 Device::Device(QObject *parent) :
