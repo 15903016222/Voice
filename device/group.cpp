@@ -7,6 +7,7 @@
  */
 
 #include "group.h"
+#include "fpga/fpga.h"
 #include "device.h"
 
 #include <QReadWriteLock>
@@ -21,14 +22,14 @@ public:
 
     /**
      * @brief max_beam_delay    获取最大的BeamDelay
-     * @return                  BeamDelay值，　单位(ns)
+     * @return                  BeamDelay值，　单位(采样精度)
      */
     int max_beam_delay();
 
     /* variables */
-    double m_start;             /* 声程轴起始点,单位(ns) */
-    double m_range;             /* 范围值, 单位(ns) */
-    int m_wedgeDelay;           /* 楔块延迟时间，单位(ns) */
+    int m_start;                /* 声程轴起始点,单位(采样精度) */
+    int m_range;                /* 范围值, 单位(采样精度) */
+    int m_wedgeDelay;           /* 楔块延迟时间，单位(采样精度) */
     Group::UtUnit m_utUnit;     /* Ut Unit */
 
     double m_velocity;          /* 声速， 单位(m/s) */
@@ -48,7 +49,7 @@ GroupPrivate::GroupPrivate()
     m_velocity = 3240;
     m_currentAngle = 30;
 
-    m_pointQtyMode == Group::PointQtyAuto;
+    m_pointQtyMode = Group::PointQtyAuto;
 }
 
 int GroupPrivate::max_beam_delay()
@@ -82,15 +83,14 @@ void Group::set_ut_unit(Group::UtUnit type)
     d->m_utUnit = type;
 }
 
-double Group::start()
+int Group::start()
 {
     QReadLocker l(&d->m_rwlock);
     return d->m_start;
 }
 
-void Group::set_start(double value)
+void Group::set_start(int value)
 {
-    qDebug()<<__func__<<__LINE__<<"start="<<value;
     QWriteLocker l(&d->m_rwlock);
     if (value == d->m_start) {
         return;
@@ -100,42 +100,47 @@ void Group::set_start(double value)
     update_sample();
 }
 
-double Group::range()
+int Group::range()
 {
     QReadLocker l(&d->m_rwlock);
     return d->m_range;
 }
 
-void Group::set_range(double value)
+void Group::set_range(int value)
 {
     QWriteLocker l(&d->m_rwlock);
-    int range = value;
-    int pointQty = point_qty();
+
+    int maxPointQty = value;
+    int curPointQty = point_qty();
+    int widthPointQty = 640;
 
     if (PointQtyAuto == d->m_pointQtyMode) {
-        if (range <= 6400) {
-            pointQty = range;
+        if (maxPointQty <= widthPointQty) {
+            curPointQty = maxPointQty;
         } else {
-            int compressRate = range / 6400 ;
-            if (range%6400) {
+            int compressRate = maxPointQty / widthPointQty;
+            if (maxPointQty%widthPointQty) {
                 ++compressRate;
             }
-            pointQty = range / compressRate;
+            curPointQty = maxPointQty / compressRate;
         }
     }
 
-    range = ((range + pointQty/2)/pointQty)*pointQty;
+    if (! maxPointQty%curPointQty) {
+        /* 类似四舍五入 */
+        maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
+    }
 
-    if (range == d->m_range) {
+    if (maxPointQty*fpga->sample_precision() == d->m_range) {
         return;
     }
-    d->m_range = range;
+    d->m_range = maxPointQty;
 
-    set_point_qty(pointQty);
-    if (d->m_range/pointQty) {
-        set_compress_rato(d->m_range/pointQty, true);
+    set_point_qty(curPointQty);
+    if (maxPointQty/curPointQty) {
+        set_compress_ratio(maxPointQty/curPointQty, true);
     } else {
-        set_compress_rato(1, true);
+        set_compress_ratio(1, true);
     }
     update_sample();
 }
@@ -184,6 +189,7 @@ bool Group::set_point_qty_mode(Group::PointQtyMode mode)
 {
     QWriteLocker l(&d->m_rwlock);
     d->m_pointQtyMode = mode;
+    return true;
 }
 
 int Group::beam_qty()
@@ -192,18 +198,19 @@ int Group::beam_qty()
     return 1;
 }
 
-int Group::max_rx_time()
+int Group::max_sample_time()
 {
+    DplFpga::Fpga *fpga = DplFpga::Fpga::get_instance();
     int beamQty = Device::get_instance()->beam_qty();
-    int maxDelay = d->max_beam_delay();
-    int ret;
+    // prf为1即(1s)时，rx_time时间为最大
     // 1_000_000_000 / 4    idle_time + rx_time >= 4 * rx_time
-    // one beam cycle = 20480(loading time) +  beam delay + wedge delay + sample start + sample range + 50
-    ret =  (250*1000*1000) / beamQty - 20480  - maxDelay - wedge_delay() - 50;
-    if(ret > 1000*1000) {
-        ret = 1000*1000;
+    // one beam cycle = loading time +  beam delay + wedge delay + sample start + sample range + 50 /* 单位 ns */
+    int beamCycle =  (250*1000*1000) / fpga->sample_precision() / beamQty;
+    int max = beamCycle - (fpga->loading_time()  - d->max_beam_delay() - d->m_wedgeDelay - 5);
+    if(max > 1000*1000/fpga->sample_precision()) {
+        max = 1000*1000/fpga->sample_precision();
     }
-    return ret ;
+    return max ;
 }
 
 void Group::update_sample()

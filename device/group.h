@@ -31,27 +31,27 @@ public:
 
     /**
      * @brief start 获取声程轴上的起始值
-     * @return      起始值,单位(ns)
+     * @return      起始值,单位(采样精度)
      */
-    double start();
+    int start();
 
     /**
      * @brief set_start 设置声程轴的起始值
-     * @param value     起始值，单位(ns)
+     * @param value     起始值，单位(采样精度)
      */
-    void set_start(double value);
+    void set_start(int value);
 
     /**
      * @brief range 获取声程轴的范围值
-     * @return      返回范围值，单位(ns)
+     * @return      返回范围值，单位(采样精度)
      */
-    double range();
+    int range();
 
     /**
      * @brief set_range 设置声程轴的范围值
-     * @param value     范围值，单位(ns)
+     * @param value     范围值，单位(采样精度)
      */
-    void set_range(double value);
+    void set_range(int value);
 
     /**
      * @brief velocity  获取声速
@@ -67,13 +67,13 @@ public:
 
     /**
      * @brief wedge_delay   楔块延迟时间
-     * @return              返回楔块延迟时间，单位(ns)
+     * @return              返回楔块延迟时间，单位(采样精度)
      */
     int wedge_delay();
 
     /**
      * @brief set_wedge_delay   设置楔块延迟时间
-     * @param value             延迟时间，单位(ns)
+     * @param value             延迟时间，单位(采样精度)
      */
     void set_wedge_delay(int value);
 
@@ -110,15 +110,38 @@ public:
     int beam_qty();
 
     /**
-     * @brief max_rx_time   获取最大接收时间
-     * @return              返回最大接收时间，单位(ns)
+     * @brief max_sample_time   获取最大Start+Range时间
+     * @return              返回最大Start+Range时间，单位(采样精度)
      */
-    int max_rx_time();
+    int max_sample_time();
+
+    /**
+     * @brief max_start 获取最大的start时间
+     * @return          时间，单位(采样精度)
+     */
+    int max_start();
+
+    /**
+     * @brief max_range 获取最大的range时间
+     * @return          时间，单位(采样精度)
+     */
+    int max_range();
+
 private:
     GroupPrivate *d;
 
     void update_sample();
 };
+
+inline int Group::max_start()
+{
+    return max_sample_time() - range();
+}
+
+inline int Group::max_range()
+{
+    return max_sample_time() - start();
+}
 
 }
 #endif // __DEVICE_GROUP_H__
