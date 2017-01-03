@@ -63,6 +63,7 @@ public:
     ~MainMenu();
 
     void show();
+    void do_change_arrow();
 
 signals:
     void click(MainMenu::Type type);
@@ -71,11 +72,10 @@ private slots:
     void on_pushButton_up_clicked();
     void on_pushButton_down_clicked();
 
-    void do_change_arrow();
-
     void on_treeWidget_clicked(const QModelIndex &index);
 
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void set_opacity_main_menu(double value);
 
 private:
     Ui::MainMenu *ui;
@@ -87,6 +87,7 @@ private:
 
     void do_keyescape_event(const QModelIndex &index);
     void do_keyreturn_event(const QModelIndex &index);
+    void resizeEvent(QResizeEvent *event);
 
 };
 

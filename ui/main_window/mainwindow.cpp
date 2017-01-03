@@ -4,10 +4,11 @@
 #include "device.h"
 #include "vinput.h"
 #include "ut_setting/general_menu.h"
+#include "preference/preference_menu.h"
 
 #include <QDebug>
 #include <QResizeEvent>
-
+#include <QFontDatabase>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -49,6 +50,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
 
     connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_menu(MainMenu::Type)));
+
+    DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(subMenu->get_menu(MainMenu::Preference_Preference));
+    connect(preferenceMenu, SIGNAL(opacity_changed(double)), mainMenu, SLOT(set_opacity_main_menu(double)));
+
 }
 
 MainWindow::~MainWindow()
@@ -183,3 +188,25 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
     }
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    int width = event->size().width();
+    int height = event->size().height();
+    int oldWidth = event->oldSize().width();
+    int oldHeight = event->oldSize().height();
+    int mainMenuWidth = mainMenu->geometry().width();
+    int mainMenuHeight = mainMenu->geometry().height();
+    int subMenuWidth = subMenu->geometry().width();
+    int subMenuHeight = subMenu->geometry().height();
+
+    if(oldWidth > 0 && oldHeight > 0) {
+        mainMenu->resize(qRound((qreal)mainMenuWidth * width / oldWidth), qRound((qreal)mainMenuHeight * height / oldHeight));
+        subMenu->resize(qRound((qreal)subMenuWidth * width / oldWidth), qRound((qreal)subMenuHeight * height / oldHeight));
+        mainMenu->move(0, height - mainMenu->geometry().height() + 1);
+        subMenu->move(mainMenu->geometry().width(), height - subMenu->geometry().height());
+    } else {
+        mainMenu->resize(mainMenuWidth, mainMenuHeight);
+        subMenu->resize(subMenuWidth, subMenuHeight);
+    }
+    mainMenu->do_change_arrow();
+}

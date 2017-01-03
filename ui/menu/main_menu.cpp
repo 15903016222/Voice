@@ -30,6 +30,11 @@ MainMenu::MainMenu(QWidget *parent) :
     ui->treeWidget->setFocus();
 
     do_change_arrow();
+
+//    setAttribute(Qt::WA_TranslucentBackground);
+
+    opacityEffect = new QGraphicsOpacityEffect;
+    set_opacity_main_menu(80);
 }
 
 MainMenu::~MainMenu()
@@ -81,6 +86,7 @@ bool MainMenu::do_keypress_event(QKeyEvent *e)
 
     if (nextModelIndex.isValid()) {
         ui->treeWidget->setCurrentIndex(nextModelIndex);
+
     }
 
     return true;
@@ -165,4 +171,19 @@ void MainMenu::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeW
     type = (Type)(((ui->treeWidget->indexOfTopLevelItem(current->parent()))<<4)|current->parent()->indexOfChild(current));
 
     emit click(type);
+}
+
+void MainMenu::set_opacity_main_menu(double value)
+{
+    qreal alpha = value / 100;
+    opacityEffect->setOpacity(alpha);
+    ui->widget->setGraphicsEffect(opacityEffect);
+}
+
+void MainMenu::resizeEvent(QResizeEvent *event)
+{
+    int width = event->size().width();
+    ui->treeWidget->setColumnWidth(0, width * 4 / 5);
+    ui->treeWidget->setColumnWidth(1, width / 5);
+
 }

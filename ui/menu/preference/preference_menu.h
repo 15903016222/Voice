@@ -14,6 +14,7 @@ namespace DplPreferenceMenu {
 
 class PreferenceMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     explicit PreferenceMenu(Ui::BaseMenu *ui, QObject *parent);
     ~PreferenceMenu();
@@ -27,6 +28,9 @@ private:
     ComboMenuItem *m_languageItem;
     ComboMenuItem *m_startingPageItem;
     ComboMenuItem *m_gatemodeItem;
+
+signals:
+    void opacity_changed(double value);
 };
 
 }

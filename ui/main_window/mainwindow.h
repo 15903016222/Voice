@@ -56,6 +56,7 @@ private:
     bool m_hiddenArrowFlag;
     bool m_hiddenKeyboardFlag;
     void show_hidden_Menu();
+    void resizeEvent(QResizeEvent *event);
 
 };
 

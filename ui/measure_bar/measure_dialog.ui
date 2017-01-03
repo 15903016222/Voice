@@ -16,7 +16,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="12,1">
    <property name="spacing">
     <number>1</number>
    </property>
@@ -37,6 +37,9 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -45,8 +48,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>560</width>
-        <height>459</height>
+        <width>562</width>
+        <height>452</height>
        </rect>
       </property>
       <property name="focusPolicy">
@@ -70,6 +73,15 @@
        </property>
        <item>
         <widget class="QTableWidget" name="tableWidget">
+         <property name="styleSheet">
+          <string notr="true">QTableWidget{
+	font:14pt &quot;Arial&quot;;
+}
+</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="lineWidth">
           <number>1</number>
          </property>
@@ -99,6 +111,12 @@
          </attribute>
          <attribute name="verticalHeaderVisible">
           <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderDefaultSectionSize">
+          <number>35</number>
+         </attribute>
+         <attribute name="verticalHeaderMinimumSectionSize">
+          <number>30</number>
          </attribute>
          <row>
           <property name="text">
@@ -653,6 +671,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -676,14 +697,20 @@
        </property>
        <property name="font">
         <font>
-         <family>Times New Roman</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
+         <family>Arial</family>
+         <pointsize>14</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+	font:14pt &quot;Arial&quot;;
+}</string>
        </property>
        <property name="text">
         <string>&amp;Cancel</string>
@@ -700,14 +727,20 @@
        </property>
        <property name="font">
         <font>
-         <family>Times New Roman</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
+         <family>Arial</family>
+         <pointsize>14</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+	font:14pt &quot;Arial&quot;;
+}</string>
        </property>
        <property name="text">
         <string>&amp;Choose</string>
