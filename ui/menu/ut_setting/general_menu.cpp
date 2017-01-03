@@ -195,9 +195,8 @@ void GeneralMenu::update_start_item()
         }
     }
 
-    m_startItem->set(tr("Start"), unit, 0, max, 2);
+    m_startItem->set(tr("Start"), unit, 0, max, 2, step);
     m_startItem->set_value(value);
-    m_startItem->set_step(step);
 }
 
 void GeneralMenu::update_range_item()
@@ -240,9 +239,8 @@ void GeneralMenu::update_range_item()
         }
     }
 
-    m_rangeItem->set(tr("Range"), unit, min, max, 2);
+    m_rangeItem->set(tr("Range"), unit, min, max, 2, step);
     m_rangeItem->set_value(value);
-    m_rangeItem->set_step(step);
 }
 
 }

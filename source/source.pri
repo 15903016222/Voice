@@ -1,10 +1,6 @@
 
-INCLUDEPATH += $$PWD/include
-DEPENDPATH  += $$PWD/include
-
-
 equals(DEVICE, "PC_WIN") {
-        LIBSOURCE = Source_Win
+      LIBSOURCE = Source_Win
 }
 else: equals(DEVICE, "PHASCAN_II") {
       LIBSOURCE = Source_Phascan_II

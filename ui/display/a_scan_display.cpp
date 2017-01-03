@@ -20,7 +20,7 @@ AscanDisplay::~AscanDisplay()
     delete ui;
 }
 
-void AscanDisplay::show(DplSource::BeamSource &beam)
+void AscanDisplay::show(DplSource::Beam &beam)
 {
     QByteArray wave;
     beam.get_wave(wave);

@@ -23,8 +23,8 @@ PreferenceMenu::PreferenceMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* Opacity menu item */
     m_opacityItem = new SpinMenuItem;
     m_opacityItem->set(tr("Opacity"), "%", 20, 100, 0);
-    connect(m_opacityItem, SIGNAL(value_changed(double)), this, SIGNAL(opacity_changed(double)));
     m_opacityItem->set_value(80);
+    connect(m_opacityItem, SIGNAL(value_changed(double)), this, SIGNAL(opacity_changed(double)));
 
     /* Language menu item */
     m_languageItem = new ComboMenuItem;
