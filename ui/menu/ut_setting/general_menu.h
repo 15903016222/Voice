@@ -48,7 +48,7 @@ private:
 
 private slots:
     void do_gainItem_changed(double gain);
-    void do_startItem_changed(double pos);
+    void do_startItem_changed(double value);
     void do_rangeItem_changed(double value);
     void do_velocityItem_changed(double value);
     void do_utUnitItem_changed(int index);

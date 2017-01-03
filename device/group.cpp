@@ -11,6 +11,7 @@
 #include "device.h"
 
 #include <QReadWriteLock>
+#include <qmath.h>
 #include <QDebug>
 
 namespace DplDevice {
@@ -46,11 +47,11 @@ GroupPrivate::GroupPrivate()
     m_precision = DplFpga::Fpga::get_instance()->sample_precision();
 
     m_start = 0;
-    m_range = 57020*m_precision;
+    m_range = 5702 * m_precision;
     m_wedgeDelay = 0;
     m_utUnit = Group::SoundPath;
     m_velocity = 3240;
-    m_currentAngle = 30;
+    m_currentAngle = M_PI/6;
 
     m_pointQtyMode = Group::PointQtyAuto;
 }
@@ -129,14 +130,15 @@ void Group::set_range(double value)
         }
     }
 
-    if (! maxPointQty%curPointQty) {
+    if (maxPointQty%curPointQty) {
         /* 类似四舍五入 */
         maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
     }
 
-    if (maxPointQty * d->m_precision == d->m_range) {
-        return;
-    }
+//    if (d->m_range == maxPointQty * d->m_precision) {
+//        return false;
+//    }
+
     d->m_range = maxPointQty * d->m_precision;
 
     set_point_qty(curPointQty);
@@ -180,6 +182,12 @@ double Group::current_angle()
 {
     QReadLocker l(&d->m_rwlock);
     return d->m_currentAngle;
+}
+
+void Group::set_current_angle(double angle)
+{
+    QWriteLocker l(&d->m_rwlock);
+    d->m_currentAngle = angle;
 }
 
 Group::PointQtyMode Group::point_qty_mode()

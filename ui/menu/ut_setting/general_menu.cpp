@@ -109,14 +109,14 @@ void GeneralMenu::do_gainItem_changed(double gain)
     m_group->set_gain(gain, true);
 }
 
-void GeneralMenu::do_startItem_changed(double pos)
+void GeneralMenu::do_startItem_changed(double value)
 {
     double start;
 
     if (m_group->ut_unit() == DplDevice::Group::Time) {
-        start = pos * 1000;
+        start = value * 1000;
     } else {
-        start = pos * 2 * 1000 * 1000 / m_group->velocity();
+        start = value * 2 * 1000 * 1000 / m_group->velocity();
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             start /= qCos(m_group->current_angle());
         }
@@ -128,15 +128,15 @@ void GeneralMenu::do_startItem_changed(double pos)
 void GeneralMenu::do_rangeItem_changed(double value)
 {
     double range;
-    if (m_group->ut_unit() == DplDevice::Group::TruePath) {
-        range = (value * 2000000.0 /
-                (qCos(m_group->current_angle()) * m_group->velocity()));
-    } else if (m_group->ut_unit() == DplDevice::Group::SoundPath) {
-        range = (value * 2000000.0 / m_group->velocity());
+    if (m_group->ut_unit() == DplDevice::Group::Time) {
+        range = value * 1000.0;
     } else {
-        /* 显示方式为时间 */
-        range = (value * 1000.0);
+        range = value * 2* 1000* 1000 / m_group->velocity();
+        if (m_group->ut_unit() == DplDevice::Group::TruePath) {
+            range /= qCos(m_group->current_angle());
+        }
     }
+
     m_group->set_range(range);
 }
 
@@ -177,7 +177,6 @@ void GeneralMenu::update_start_item()
     float precision = DplFpga::Fpga::get_instance()->sample_precision();
     QString unit = "mm";
 
-    qDebug()<< "value = "<< m_group->start();
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         /* 时间显示全声程 */
         max = m_group->max_start() / 1000;
@@ -222,8 +221,8 @@ void GeneralMenu::update_range_item()
             min = m_group->point_qty() * precision / 1000.0;
         }
         value = m_group->range() / 1000;
+        step = precision / 1000;
         unit = "&micro;s";
-        step = precision;
     } else {
         if (m_group->point_qty_mode() == DplDevice::Group::PointQtyAuto) {
             min = (32 * precision) * m_group->velocity() / (2*1000*1000);
@@ -231,16 +230,19 @@ void GeneralMenu::update_range_item()
             min = (m_group->point_qty() * precision) * m_group->velocity() / (2*1000*1000);
         }
         value = m_group->range() * m_group->velocity() / (2*1000*1000);
+        step = precision * m_group->velocity() / (2*1000*1000);
 
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             min *= qCos(m_group->current_angle());
             max *= qCos(m_group->current_angle());
             value *= qCos(m_group->current_angle());
+            step *= qCos(m_group->current_angle());
         }
     }
 
     m_rangeItem->set(tr("Range"), unit, min, max, 2);
     m_rangeItem->set_value(value);
+    m_rangeItem->set_step(step);
 }
 
 }

@@ -79,9 +79,15 @@ public:
 
     /**
      * @brief current_angle 获取当前入射角度
-     * @return              角度值，单位(度)
+     * @return              角度值，单位(MI_P)
      */
     double current_angle();
+
+    /**
+     * @brief set_current_angle 设置当前入射角度
+     * @param angle             角度，单位(MI_P)
+     */
+    void set_current_angle(double angle);
 
     enum PointQtyMode {
         PointQtyAuto,
