@@ -112,7 +112,7 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 
 void SpinMenuItem::update_title()
 {
-    QString msg("<p align=\"center\"><font size=4 color=yellow>");
+    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
     msg += m_title;
     msg += "</font>";
 
@@ -163,7 +163,7 @@ void SpinMenuItem::set_focus_out()
                                 "color: rgb(255, 255, 255);"
                                 "border-top:0px;"
                                 "border-bottom:0px;"
-                                "font: 13pt 'Century Gothic';"
+                                "font: 14pt 'Arial';"
                                 "color: white;"
                                 "selection-color: white;"
                                 "selection-background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));color: rgb(255, 255, 255);"
