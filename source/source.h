@@ -20,9 +20,9 @@ public:
     static void destroyed();
 
     enum Type {
-        SOURCE_DMA,
-        SOURCE_FILE,
-        SOURCE_NET
+        SOURCE_DMA,     /* DMA源 */
+        SOURCE_FILE,    /* 文件源 */
+        SOURCE_NET      /* 网络源 */
     };
 
     /**
@@ -61,8 +61,8 @@ public:
 
     static const int MAX_GROUPS;
     int groups();
-    bool create_group(int beamNum, int pointNum);
-    bool remove_group();
+    bool add_group(int beamQty, int pointQty);
+    bool remove_group(int index);
     const GroupSourcePointer &get_group(int index);
 
 //    void set_position(int scanAxis, int indexAxis);
