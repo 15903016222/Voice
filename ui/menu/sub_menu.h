@@ -29,6 +29,7 @@ public:
 
 public slots:
     void set_menu(MainMenu::Type type);
+    void set_opacity_main_menu(double value);
 
 private:
     Ui::BaseMenu *ui;
@@ -38,6 +39,8 @@ private:
     QMap<MainMenu::Type, BaseMenu*> m_map;
 
     MainMenu::Type m_preType;
+
+    QGraphicsOpacityEffect *m_opacityEffect;
 };
 
 #endif // SUB_MENU_H

@@ -84,6 +84,9 @@ SubMenu::SubMenu(QWidget *parent) :
 
     m_preType = MainMenu::UTSettings_Pulser;
     set_menu(MainMenu::UTSettings_General);
+
+    m_opacityEffect = new QGraphicsOpacityEffect;
+    set_opacity_main_menu(80);
 }
 
 void SubMenu::init_map()
@@ -166,4 +169,11 @@ void SubMenu::set_menu(MainMenu::Type type)
 SubMenu::~SubMenu()
 {
     delete ui;
+}
+
+void SubMenu::set_opacity_main_menu(double value)
+{
+    qreal alpha = value / 100;
+    m_opacityEffect->setOpacity(alpha);
+    ui->widget->setGraphicsEffect(m_opacityEffect);
 }
