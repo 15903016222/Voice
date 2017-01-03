@@ -31,7 +31,7 @@ MainMenu::MainMenu(QWidget *parent) :
 
     do_change_arrow();
 
-    opacityEffect = new QGraphicsOpacityEffect;
+    m_opacityEffect = new QGraphicsOpacityEffect;
     set_opacity_main_menu(80);
 }
 
@@ -174,8 +174,8 @@ void MainMenu::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeW
 void MainMenu::set_opacity_main_menu(double value)
 {
     qreal alpha = value / 100;
-    opacityEffect->setOpacity(alpha);
-    ui->widget->setGraphicsEffect(opacityEffect);
+    m_opacityEffect->setOpacity(alpha);
+    ui->widget->setGraphicsEffect(m_opacityEffect);
 }
 
 void MainMenu::resizeEvent(QResizeEvent *event)

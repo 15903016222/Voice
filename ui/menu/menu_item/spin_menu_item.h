@@ -30,7 +30,7 @@ public:
     void set_step(double step);
 
     void set(const QString &unit, double min, double max, int decimals);
-    void set(const QString &title, const QString &unit, double min, double max, int decimals);
+    void set(const QString &title, const QString &unit, double min, double max, int decimals, double step = 1);
 
     double get_value() const;
 

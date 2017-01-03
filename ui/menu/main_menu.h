@@ -81,7 +81,7 @@ private slots:
 private:
     Ui::MainMenu *ui;
 
-    QGraphicsOpacityEffect *opacityEffect;
+    QGraphicsOpacityEffect *m_opacityEffect;
 
     bool eventFilter(QObject *object, QEvent *event);
 

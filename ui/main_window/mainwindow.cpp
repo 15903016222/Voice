@@ -49,10 +49,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
 
-    connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_menu(MainMenu::Type)));
-
     DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(subMenu->get_menu(MainMenu::Preference_Preference));
     connect(preferenceMenu, SIGNAL(opacity_changed(double)), mainMenu, SLOT(set_opacity_main_menu(double)));
+
+    connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_menu(MainMenu::Type)));
 
 }
 

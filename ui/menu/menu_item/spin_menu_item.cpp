@@ -212,13 +212,16 @@ void SpinMenuItem::sub()
     emit value_changed(m_value);
 }
 
-void SpinMenuItem::set(const QString &title, const QString &unit, double min, double max, int decimals)
+void SpinMenuItem::set(const QString &title, const QString &unit, double min, double max, int decimals, double step)
 {
     m_title = title;
     m_unit = unit;
 
     m_min = min;
     m_max = max;
+
+    m_baseStep = step;
+    m_step = step;
 
     set_decimals(decimals);
 
