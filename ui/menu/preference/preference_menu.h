@@ -9,6 +9,7 @@
 #define __PREFERENCE_MENU_H__
 
 #include "base_menu.h"
+#include "mcu.h"
 
 namespace DplPreferenceMenu {
 
@@ -29,8 +30,13 @@ private:
     ComboMenuItem *m_startingPageItem;
     ComboMenuItem *m_gatemodeItem;
 
+    Mcu *m_mcu;
+
 signals:
     void opacity_changed(double value);
+
+private slots:
+    void set_brightness(double value);
 };
 
 }
