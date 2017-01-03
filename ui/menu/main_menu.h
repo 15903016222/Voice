@@ -9,6 +9,7 @@
 #define __MAIN_MENU_H__
 
 #include <QTreeWidget>
+#include <QGraphicsOpacityEffect>
 
 namespace Ui {
 class MainMenu;
@@ -79,6 +80,8 @@ private slots:
 
 private:
     Ui::MainMenu *ui;
+
+    QGraphicsOpacityEffect *opacityEffect;
 
     bool eventFilter(QObject *object, QEvent *event);
 

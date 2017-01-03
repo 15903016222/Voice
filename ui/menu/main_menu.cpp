@@ -31,8 +31,6 @@ MainMenu::MainMenu(QWidget *parent) :
 
     do_change_arrow();
 
-//    setAttribute(Qt::WA_TranslucentBackground);
-
     opacityEffect = new QGraphicsOpacityEffect;
     set_opacity_main_menu(80);
 }
