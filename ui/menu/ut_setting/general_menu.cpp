@@ -112,7 +112,7 @@ void GeneralMenu::update()
 
 void GeneralMenu::do_gainItem_changed(double gain)
 {
-    m_group->set_gain(gain, true);
+    m_group->set_gain(gain);
 }
 
 void GeneralMenu::do_startItem_changed(double value)

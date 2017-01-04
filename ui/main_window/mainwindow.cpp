@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "device.h"
+#include <device/device.h>
 #include "vinput.h"
 #include "ut_setting/general_menu.h"
 #include "preference/preference_menu.h"

@@ -9,7 +9,8 @@
 #define __GENERAL_MENU_H__
 
 #include "base_menu.h"
-#include "device.h"
+
+#include <device/device.h>
 
 namespace DplUtSettingMenu {
 

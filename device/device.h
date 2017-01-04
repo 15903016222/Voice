@@ -8,9 +8,10 @@
 #ifndef __DEVICE_H__
 #define __DEVICE_H__
 
-#include "fpga/fpga.h"
 #include "group.h"
 #include "cert.h"
+
+#include <fpga/fpga.h>
 
 #include <QDateTime>
 #include <QMutex>
