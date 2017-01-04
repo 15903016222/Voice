@@ -18,6 +18,7 @@ class GroupPrivate;
 
 class Group : public DplFpga::Group
 {
+    Q_OBJECT
 public:
     explicit Group(int index);
     ~Group();

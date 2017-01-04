@@ -142,15 +142,7 @@ void Group::set_range(double value)
 
     d->m_range = maxPointQty * d->m_precision;
 
-    DplSource::Source *source = DplSource::Source::get_instance();
-    DplSource::GroupPointer groupSource = source->get_group(index());
-    groupSource->set_point_qty(curPointQty);
-
-    set_point_qty(curPointQty, true);
-    if (source->is_running()) {
-        source->start(200);
-    }
-
+    set_point_qty(curPointQty);
 
     if (maxPointQty/curPointQty) {
         set_compress_ratio(maxPointQty/curPointQty, true);
