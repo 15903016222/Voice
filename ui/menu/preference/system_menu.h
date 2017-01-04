@@ -14,6 +14,7 @@ namespace DplPreferenceMenu {
 
 class SystemMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     explicit SystemMenu(Ui::BaseMenu *ui, QObject *parent);
     ~SystemMenu();
@@ -22,12 +23,18 @@ public:
     void hide();
 
 private:
-    MenuItem *m_dateItem;
-    MenuItem *m_timeItem;
+    LabelMenuItem *m_dateItem;
+    LabelMenuItem *m_timeItem;
     ComboMenuItem *m_certItem;
     MenuItem *m_updateItem;
     MenuItem *m_resetCfgItem;
     MenuItem *m_infoItem;
+
+private slots:
+    void show_time_dialog();
+    void show_date_dialog();
+    void show_resetconfig_dialog();
+    void show_info_dialog();
 };
 
 }
