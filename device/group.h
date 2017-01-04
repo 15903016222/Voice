@@ -135,6 +135,9 @@ public:
      */
     double max_range();
 
+signals:
+    void velocity_changed(double val);
+
 private:
     GroupPrivate *d;
 

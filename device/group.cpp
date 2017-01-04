@@ -161,7 +161,11 @@ double Group::velocity()
 void Group::set_velocity(double value)
 {
     QWriteLocker l(&d->m_rwlock);
+    if (d->m_velocity == value) {
+        return;
+    }
     d->m_velocity = value;
+    emit velocity_changed(value);
 }
 
 int Group::wedge_delay()

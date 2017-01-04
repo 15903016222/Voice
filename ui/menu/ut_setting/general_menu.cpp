@@ -37,7 +37,7 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     connect(m_rangeItem, SIGNAL(value_changed(double)), this, SLOT(do_rangeItem_changed(double)));
 
     m_velocityItem = new SpinMenuItem();
-    m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1);
+    m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1, 0.1);
     connect(m_velocityItem, SIGNAL(value_changed(double)), this, SLOT(do_velocityItem_changed(double)));
 
     m_wedgeDelayItem = new SpinMenuItem();
@@ -100,7 +100,11 @@ void GeneralMenu::update()
     update_gain_item();
     update_start_item();
     update_range_item();
+
+    m_velocityItem->set_value(m_group->velocity());
+
     m_utUnitItem->set_current_index(m_group->ut_unit());
+
     m_updateFlag = false;
 }
 
