@@ -6,6 +6,8 @@ ResetConfigDialog::ResetConfigDialog(QWidget *parent) :
     ui(new Ui::ResetConfigDialog)
 {
     ui->setupUi(this);
+
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 }
 
 ResetConfigDialog::~ResetConfigDialog()

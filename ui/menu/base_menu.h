@@ -14,6 +14,7 @@
 #include "ui_base_menu.h"
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"
+#include "label_menu_item.h"
 
 class BaseMenu : public QObject
 {
