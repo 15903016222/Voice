@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    /* Fpga */
+    /* Device */
     DplDevice::Device::get_instance()->add_group();
     DplDevice::GroupPointer group = DplDevice::Device::get_instance()->get_group(0);
     group->init();

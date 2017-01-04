@@ -19,6 +19,7 @@
 #include <QFile>
 #include <QReadWriteLock>
 #include <QDebug>
+#include <source/source.h>
 
 namespace DplDevice {
 
@@ -53,6 +54,7 @@ public:
     DevicePrivate();
 
     DplFpga::Fpga *m_fpga;
+    DplSource::Source *m_source;
 
     QReadWriteLock m_rwlock;
 
@@ -77,6 +79,7 @@ DevicePrivate::DevicePrivate()
     m_cert.load(CERT_FILE, PUB_PEM_FILE);
 
     m_fpga = DplFpga::Fpga::get_instance();
+    m_source = DplSource::Source::get_instance();
 }
 
 time_t DevicePrivate::get_time()
@@ -194,6 +197,7 @@ bool Device::add_group()
     }
     d->m_groups.append(GroupPointer(new Group(d->m_groups.size())));
     d->m_curGroup = d->m_groups.last();
+    d->m_source->add_group(d->m_curGroup->beam_qty(), d->m_curGroup->point_qty());
     emit current_group_changed();
     return true;
 }
@@ -206,6 +210,7 @@ bool Device::remove_group(int id)
         return false;
     }
     d->m_groups.removeAt(id);
+    d->m_source->remove_group(id);
     if (d->m_curGroup->index() == id) {
         d->m_curGroup = d->m_groups.last();
         emit current_group_changed();

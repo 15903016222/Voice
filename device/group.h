@@ -9,7 +9,8 @@
 #define __DEVICE_GROUP_H__
 
 #include <QObject>
-#include "fpga/group.h"
+
+#include <fpga/group.h>
 
 namespace DplDevice {
 

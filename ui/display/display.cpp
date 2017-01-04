@@ -12,8 +12,6 @@ Display::Display(QWidget *parent) : QWidget(parent)
     DplSource::Source *source = DplSource::Source::get_instance();
     connect(source, SIGNAL(data_event()), this, SLOT(do_source_data_event()));
 
-    source->create_group(16, 605);
-
     m_scanDisplay = new AscanDisplay(this);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
