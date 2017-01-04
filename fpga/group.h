@@ -76,10 +76,8 @@ public:
     /**
      * @brief set_gain  设置增益
      * @param gain      增益值
-     * @param reflesh   下发FPGA配置
-     * @return          成功返回true， 失败返回false
      */
-    bool set_gain(float gain, bool reflesh = false);
+    void set_gain(float gain);
 
     int thickness_factor(void);
     bool set_thickness_factor(int factor, bool reflesh = false);
@@ -194,6 +192,7 @@ protected:
     bool set_rx_time(int val, bool reflesh = false);
 
 signals:
+    void gain_changed(float val);
     void point_qty_changed(int val);
 
 private:
