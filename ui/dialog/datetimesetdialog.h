@@ -40,6 +40,8 @@ private:
 private slots:
     void on_buttonBox_accepted();
     void check_date_valid(int number);
+    void set_prefix(int value);
+
 };
 
 #endif // DATETIMESETDIALOG_H
