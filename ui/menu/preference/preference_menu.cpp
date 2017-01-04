@@ -15,10 +15,13 @@ namespace DplPreferenceMenu {
 PreferenceMenu::PreferenceMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
+    m_mcu = Mcu::get_mcu();
+
     /* Bright menu item */
     m_brightItem = new SpinMenuItem;
     m_brightItem->set(tr("Bright"), "%", 1, 100, 0);
-//    connect(m_brightItem, SIGNAL(spin_event(double)), this, SLOT(set_brightness(double)));
+    connect(m_brightItem, SIGNAL(value_changed(double)), this, SLOT(set_brightness(double)));
+    m_brightItem->set_value(100);
 
     /* Opacity menu item */
     m_opacityItem = new SpinMenuItem;
@@ -77,6 +80,11 @@ void PreferenceMenu::hide()
     m_languageItem->hide();
     m_startingPageItem->hide();
     m_gatemodeItem->hide();
+}
+
+void PreferenceMenu::set_brightness(double value)
+{
+    m_mcu->set_brightness((char)value);
 }
 
 }

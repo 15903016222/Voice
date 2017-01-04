@@ -14,20 +14,9 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget#menuItem0,#menuItem1,#menuItem2,#menuItem3,#menuItem4,#menuItem5
-{
-	border-left:  1px solid qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(0, 130, 195, 255), stop:0.1 rgba(0, 130, 195, 255), stop:0.333 rgba(255, 255, 255, 255), stop:0.667 rgba(255, 255, 255, 255), stop:0.9 rgba(0, 130, 195, 255), stop:1 rgba(0, 130, 195, 255));
-	border-right: 1px solid qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(0, 130, 195, 255), stop:0.1 rgba(0, 130, 195, 255), stop:0.333 rgba(0, 0, 0, 255), stop:0.667 rgba(0, 0, 0, 255), stop:0.9 rgba(0, 130, 195, 255), stop:1 rgba(0, 130, 195, 255));
-	background-color:  qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1,
-stop:0 rgba(0, 130, 195, 255), 
-stop:0.666 rgba(0, 130, 195, 255), 
-stop:0.667 rgba(0, 0, 0, 255), 
-stop:0.718730666 rgba(0, 0, 0, 255),
-stop:0.852440666 rgba(0, 130, 195, 255));
-}
-</string>
+   <string notr="true"/>
   </property>
-  <layout class="QGridLayout" name="gridLayout" columnstretch="1,1,1,1,1,1">
+  <layout class="QGridLayout" name="gridLayout_2">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -43,23 +32,58 @@ stop:0.852440666 rgba(0, 130, 195, 255));
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="4">
-    <widget class="QWidget" name="menuItem4" native="true"/>
-   </item>
    <item row="0" column="0">
-    <widget class="QWidget" name="menuItem0" native="true"/>
-   </item>
-   <item row="0" column="1">
-    <widget class="QWidget" name="menuItem1" native="true"/>
-   </item>
-   <item row="0" column="2">
-    <widget class="QWidget" name="menuItem2" native="true"/>
-   </item>
-   <item row="0" column="3">
-    <widget class="QWidget" name="menuItem3" native="true"/>
-   </item>
-   <item row="0" column="5">
-    <widget class="QWidget" name="menuItem5" native="true"/>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="styleSheet">
+      <string notr="true">QWidget#menuItem0,#menuItem1,#menuItem2,#menuItem3,#menuItem4,#menuItem5
+{
+	border-left:  1px solid qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(0, 130, 195, 255), stop:0.1 rgba(0, 130, 195, 255), stop:0.333 rgba(255, 255, 255, 255), stop:0.667 rgba(255, 255, 255, 255), stop:0.9 rgba(0, 130, 195, 255), stop:1 rgba(0, 130, 195, 255));
+	border-right: 1px solid qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(0, 130, 195, 255), stop:0.1 rgba(0, 130, 195, 255), stop:0.333 rgba(0, 0, 0, 255), stop:0.667 rgba(0, 0, 0, 255), stop:0.9 rgba(0, 130, 195, 255), stop:1 rgba(0, 130, 195, 255));
+	background-color:  qlineargradient(spread:repeat, x1:0.5, y1:0, x2:0.5, y2:1,
+stop:0 rgba(0, 130, 195, 255), 
+stop:0.666 rgba(0, 130, 195, 255), 
+stop:0.667 rgba(0, 0, 0, 255), 
+stop:0.718730666 rgba(0, 0, 0, 255),
+stop:0.852440666 rgba(0, 130, 195, 255));
+}
+</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="1,1,1,1,1,1">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QWidget" name="menuItem0" native="true"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QWidget" name="menuItem1" native="true"/>
+      </item>
+      <item row="0" column="3">
+       <widget class="QWidget" name="menuItem3" native="true"/>
+      </item>
+      <item row="0" column="4">
+       <widget class="QWidget" name="menuItem4" native="true"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QWidget" name="menuItem2" native="true"/>
+      </item>
+      <item row="0" column="5">
+       <widget class="QWidget" name="menuItem5" native="true"/>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>

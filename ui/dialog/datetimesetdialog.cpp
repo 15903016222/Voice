@@ -8,6 +8,9 @@ DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+    ui->spinBox_1->setSingleStep(1);
+    ui->spinBox_2->setSingleStep(1);
+    ui->spinBox_3->setSingleStep(1);
 }
 
 DateTimeSetDialog::~DateTimeSetDialog()
@@ -26,40 +29,40 @@ void DateTimeSetDialog::on_buttonBox_accepted()
     int valueTwo = ui->spinBox_2->value();
     int valueThree = ui->spinBox_3->value();
 
-    if(titleMap.keys().at(0) == "Date Set") {
+    if(m_titleMap.keys().at(0) == "Date Set") {
         m_strDate.clear();
-        m_strDate.append(QString::number((double)valueOne, 'f', 0));
+        m_strDate.append(QString::number(valueOne));
         m_strDate.append("-");
         if(valueTwo < 10){
-            m_strDate.append("0" + QString::number((double)valueTwo, 'f', 0));
+            m_strDate.append("0" + QString::number(valueTwo));
         }else{
-            m_strDate.append(QString::number((double)valueTwo, 'f', 0));
+            m_strDate.append(QString::number(valueTwo));
         }
         m_strDate.append("-");
         if(valueThree < 10){
-            m_strDate.append("0" + QString::number((double)valueThree, 'f', 0));
+            m_strDate.append("0" + QString::number(valueThree));
         }else{
-            m_strDate.append(QString::number((double)valueThree, 'f', 0));
+            m_strDate.append(QString::number(valueThree));
         }
 
     } else {
         m_strTime.clear();
         if(valueOne < 10){
-            m_strTime.append("0" + QString::number((double)valueOne, 'f', 0));
+            m_strTime.append("0" + QString::number(valueOne));
         }else{
-            m_strTime.append(QString::number((double)valueOne, 'f', 0));
+            m_strTime.append(QString::number(valueOne));
         }
         m_strTime.append(":");
         if(valueTwo < 10){
-            m_strTime.append("0" + QString::number((double)valueTwo, 'f', 0));
+            m_strTime.append("0" + QString::number(valueTwo));
         }else{
-            m_strTime.append(QString::number((double)valueTwo, 'f', 0));
+            m_strTime.append(QString::number(valueTwo));
         }
         m_strTime.append(":");
         if(valueThree < 10){
-            m_strTime.append("0" + QString::number((double)valueThree, 'f', 0));
+            m_strTime.append("0" + QString::number(valueThree));
         }else{
-            m_strTime.append(QString::number((double)valueThree, 'f', 0));
+            m_strTime.append(QString::number(valueThree));
         }
     }
 }
@@ -78,10 +81,10 @@ void DateTimeSetDialog::check_date_valid(int number)
     }
 }
 
-void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> map)
+void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> &map)
 {
     ui->label->setText(map.values().at(0));
-    titleMap = map;
+    m_titleMap = map;
     if(map.keys().at(0) == "Date Set") {
         ui->spinBox_1->setMinimum(1970);
         ui->spinBox_2->setMinimum(1);
@@ -109,8 +112,19 @@ void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> map)
     }
 }
 
-void DateTimeSetDialog::set_spinbox_value(QList<int> valueList)
+void DateTimeSetDialog::set_time_value(QString &string)
 {
+    QString str = ":";
+    QList<int> valueList = get_value_list(string, str);
+    ui->spinBox_1->setValue(valueList.at(0));
+    ui->spinBox_2->setValue(valueList.at(1));
+    ui->spinBox_3->setValue(valueList.at(2));
+}
+
+void DateTimeSetDialog::set_date_value(QString &string)
+{
+    QString str = "-";
+    QList<int> valueList = get_value_list(string, str);
     ui->spinBox_1->setValue(valueList.at(0));
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
@@ -124,4 +138,20 @@ QString DateTimeSetDialog::get_date()
 QString DateTimeSetDialog::get_time()
 {
     return m_strTime;
+}
+
+QList<int> DateTimeSetDialog::get_value_list(QString &text, QString &str)
+{
+    QList<int> valueList;
+    QString tmpString = text;
+    int tmpIndex = 0;
+    for(int i = 0; i < text.length() - 1; i ++) {
+        if(QString(text.at(i)) == str) {
+            valueList.append(tmpString.left(i - tmpIndex).toInt());
+            tmpString = tmpString.right(text.count() - i - 1);
+            tmpIndex = i + 1;
+        }
+    }
+    valueList.append(tmpString.toInt());
+    return valueList;
 }

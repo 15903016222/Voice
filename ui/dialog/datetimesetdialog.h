@@ -19,8 +19,9 @@ public:
     ~DateTimeSetDialog();
 
     void retranslate_dialog_ui();
-    void set_dialog_title(QMap<QString, QString> map);
-    void set_spinbox_value(QList<int> valueList);
+    void set_dialog_title(QMap<QString, QString> &map);
+    void set_time_value(QString &string);
+    void set_date_value(QString &string);
 
     QString get_date();
     QString get_time();
@@ -28,15 +29,17 @@ public:
 private:
     Ui::DateTimeSetDialog *ui;
 
-    QMap<QString, QString> titleMap;
+    QMap<QString, QString> m_titleMap;
 
     QString m_strDate;
     QString m_strTime;
+    QString m_strPre;
 
-public slots:
+    QList<int> get_value_list(QString &text, QString &str);
+
+private slots:
     void on_buttonBox_accepted();
     void check_date_valid(int number);
-
 };
 
 #endif // DATETIMESETDIALOG_H

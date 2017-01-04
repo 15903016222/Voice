@@ -34,7 +34,7 @@ ComboMenuItem::~ComboMenuItem()
 
 void ComboMenuItem::set_title(const QString &title)
 {
-    QString msg("<p align=\"center\"><font size=4 color=yellow>");
+    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
     msg += title;
     msg += "</font>";
     msg += "</p>";

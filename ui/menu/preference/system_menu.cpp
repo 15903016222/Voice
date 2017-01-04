@@ -8,8 +8,12 @@
 #include "system_menu.h"
 #include "label_menu_item.h"
 #include "combo_menu_item.h"
+#include "datetimesetdialog.h"
+#include "resetconfigdialog.h"
+#include "sysinfo_dialog.h"
 
 #include <QDate>
+#include <QDebug>
 
 namespace DplPreferenceMenu {
 
@@ -19,12 +23,12 @@ SystemMenu::SystemMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* Date */
     m_dateItem = new LabelMenuItem;
     m_dateItem->set(tr("Date"), QDate::currentDate().toString("yyyy-MM-dd"));
-//    connect(m_dateItem, SIGNAL(clicked()), this, SLOT(show_date_dialog()));
+    connect(m_dateItem, SIGNAL(clicked()), this, SLOT(show_date_dialog()));
 
     /* Time */
     m_timeItem = new LabelMenuItem;
     m_timeItem->set(tr("Time"), QTime::currentTime().toString("hh:mm:ss"));
-//    connect(m_timeItem, SIGNAL(clicked()), this, SLOT(show_time_dialog()));
+    connect(m_timeItem, SIGNAL(clicked()), this, SLOT(show_time_dialog()));
 
     /* Cert Import menu item */
     m_certItem = new ComboMenuItem;
@@ -40,12 +44,12 @@ SystemMenu::SystemMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* Reset Configuration */
     m_resetCfgItem = new LabelMenuItem;
     m_resetCfgItem->set(tr("Reset Config"), "");
-//    connect(m_resetItem, SIGNAL(clicked()), this, SLOT(show_resetconfig_dialog()));
+    connect(m_resetCfgItem, SIGNAL(clicked()), this, SLOT(show_resetconfig_dialog()));
 
     /* System Information */
     m_infoItem = new LabelMenuItem;
     m_infoItem->set(tr("System Info."), "");
-//    connect(m_informationItem, SIGNAL(clicked()), this, SLOT(show_info_dialog()));
+    connect(m_infoItem, SIGNAL(clicked()), this, SLOT(show_info_dialog()));
 
 }
 
@@ -89,6 +93,50 @@ void SystemMenu::hide()
     m_updateItem->hide();
     m_resetCfgItem->hide();
     m_infoItem->hide();
+}
+
+void SystemMenu::show_time_dialog()
+{
+    DateTimeSetDialog *timeDialog = new DateTimeSetDialog;
+    QMap<QString, QString> map;
+    map.insert("Time Set", m_timeItem->get_title());
+    timeDialog->set_dialog_title(map);
+    QString str = m_timeItem->get_text();
+    timeDialog->set_time_value(str);
+    if (timeDialog->exec() == DateTimeSetDialog::Accepted) {
+        m_timeItem->set_text(timeDialog->get_time());
+    } else {
+        m_timeItem->set_text(str);
+    }
+    delete timeDialog;
+}
+
+void SystemMenu::show_date_dialog()
+{
+    DateTimeSetDialog *dateDialog = new DateTimeSetDialog;
+    QMap<QString, QString> map;
+    map.insert("Date Set", m_dateItem->get_title());
+    QString str = m_dateItem->get_text();
+    dateDialog->set_dialog_title(map);
+    dateDialog->set_date_value(str);
+    if (dateDialog->exec() == DateTimeSetDialog::Accepted) {
+        m_dateItem->set_text(dateDialog->get_date());
+    } else {
+        m_dateItem->set_text(str);
+    }
+    delete dateDialog;
+}
+
+void SystemMenu::show_resetconfig_dialog()
+{
+    ResetConfigDialog resetConfigDialog;
+    resetConfigDialog.exec();
+}
+
+void SystemMenu::show_info_dialog()
+{
+    Ui::Dialog::SysInfoDialog infoDialog;
+    infoDialog.exec();
 }
 
 }

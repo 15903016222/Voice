@@ -24,11 +24,12 @@ LabelMenuItem::~LabelMenuItem()
 
 void LabelMenuItem::set_title(const QString &title)
 {
-    QString msg("<p align=\"center\"><font size=4 color=yellow>");
+    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
     msg += title;
     msg += "</font>";
     msg += "</p>";
     ui->nameLabel->setText(msg);
+    m_title = title;
 }
 
 bool LabelMenuItem::eventFilter(QObject *obj, QEvent *e)
@@ -44,6 +45,7 @@ bool LabelMenuItem::eventFilter(QObject *obj, QEvent *e)
 void LabelMenuItem::set_text(const QString &text)
 {
     ui->label->setText(text);
+    m_text = text;
 }
 
 void LabelMenuItem::set(const QString &title, const QString &text)

@@ -28,7 +28,9 @@ public:
 
     void set(const QString &title, const QString &text);
 
-    QString get_text();
+    QString get_title() const;
+
+    QString get_text() const;
 
 signals:
     void clicked();
@@ -38,6 +40,19 @@ protected:
 
 private:
     Ui::LabelMenuItem *ui;
+
+    QString m_title;
+    QString m_text;
 };
+
+inline QString LabelMenuItem::get_title() const
+{
+    return m_title;
+}
+
+inline QString LabelMenuItem::get_text() const
+{
+    return m_text;
+}
 
 #endif // __LABEL_MENU_ITEM_H__
