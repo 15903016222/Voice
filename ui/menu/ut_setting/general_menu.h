@@ -51,6 +51,7 @@ private slots:
     void do_startItem_changed(double value);
     void do_rangeItem_changed(double value);
     void do_velocityItem_changed(double value);
+    void do_wedgeDelayItem_changed(double value);
     void do_utUnitItem_changed(int index);
 
     void do_current_group_changed();

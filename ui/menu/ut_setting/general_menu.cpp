@@ -103,6 +103,8 @@ void GeneralMenu::update()
 
     m_velocityItem->set_value(m_group->velocity());
 
+    m_wedgeDelayItem->set_value(m_group->wedge_delay() / 1000.0);
+
     m_utUnitItem->set_current_index(m_group->ut_unit());
 
     m_updateFlag = false;
@@ -147,6 +149,11 @@ void GeneralMenu::do_rangeItem_changed(double value)
 void GeneralMenu::do_velocityItem_changed(double value)
 {
     m_group->set_velocity(value);
+}
+
+void GeneralMenu::do_wedgeDelayItem_changed(double value)
+{
+    m_group->set_wedge_delay(value*1000);
 }
 
 void GeneralMenu::do_utUnitItem_changed(int index)
