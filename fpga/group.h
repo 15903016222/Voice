@@ -16,7 +16,7 @@ namespace DplFpga {
 
 class GroupPrivate;
 
-class FPGASHARED_EXPORT Group : QObject
+class FPGASHARED_EXPORT Group : public QObject
 {
     Q_OBJECT
 public:
