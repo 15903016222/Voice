@@ -10,13 +10,15 @@
 
 #include "fpga_global.h"
 #include <QReadWriteLock>
+#include <QObject>
 
 namespace DplFpga {
 
 class GroupPrivate;
 
-class FPGASHARED_EXPORT Group
+class FPGASHARED_EXPORT Group : QObject
 {
+    Q_OBJECT
 public:
     explicit Group(const int index);
     ~Group();
@@ -106,10 +108,9 @@ public:
     /**
      * @brief set_point_qty 设置压缩后的采样点数
      * @param qty           采样点数
-     * @param reflesh       下发配置标志
      * @return              成功返回true，否则false
      */
-    bool set_point_qty(int qty, bool reflesh = false);
+    bool set_point_qty(int qty);
 
     int tcg_point_qty(void);
     bool set_tcg_point_qty(int qty, bool reflesh = false);
@@ -191,6 +192,9 @@ protected:
      * @return              成功返回true，失败返回false
      */
     bool set_rx_time(int val, bool reflesh = false);
+
+signals:
+    void point_qty_changed(int val);
 
 private:
     GroupPrivate *d;
