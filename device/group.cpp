@@ -84,16 +84,21 @@ Group::UtUnit Group::ut_unit()
 
 void Group::set_ut_unit(Group::UtUnit type)
 {
-    QWriteLocker l(&d->m_rwlock);
-    if (d->m_utUnit != type) {
+    {
+        QWriteLocker l(&d->m_rwlock);
+        if (d->m_utUnit == type) {
+            return;
+        }
         d->m_utUnit = type;
-        emit ut_unit_changed(type);
     }
+    emit ut_unit_changed(type);
 }
 
 double Group::start()
 {
+    qDebug()<<__func__<<__LINE__;
     QReadLocker l(&d->m_rwlock);
+    qDebug()<<__func__<<__LINE__;
     return d->m_start;
 }
 
@@ -163,11 +168,13 @@ double Group::velocity()
 
 void Group::set_velocity(double value)
 {
-    QWriteLocker l(&d->m_rwlock);
-    if (d->m_velocity == value) {
-        return;
+    {
+        QWriteLocker l(&d->m_rwlock);
+        if (d->m_velocity == value) {
+            return;
+        }
+        d->m_velocity = value;
     }
-    d->m_velocity = value;
     emit velocity_changed(value);
 }
 

@@ -18,8 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     /* Device */
-    DplDevice::Device::get_instance()->add_group();
-    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->get_group(0);
+    DplDevice::Device *dev = DplDevice::Device::get_instance();
+    if (dev->groups() == 0) {
+        dev->add_group();
+    }
+    DplDevice::GroupPointer group = dev->get_group(0);
     group->init();
 
 
