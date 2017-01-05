@@ -1,5 +1,7 @@
 #include "datetimesetdialog.h"
 #include "ui_datetimesetdialog.h"
+
+#include <QKeyEvent>
 #include <QDebug>
 
 DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
@@ -27,15 +29,6 @@ DateTimeSetDialog::~DateTimeSetDialog()
 void DateTimeSetDialog::retranslate_dialog_ui()
 {
     ui->retranslateUi(this);
-}
-
-void DateTimeSetDialog::on_buttonBox_accepted()
-{    
-    if(m_titleMap.keys().at(0) == "Date Set") {
-        set_datetime_string(m_strDate);
-    } else {
-        set_datetime_string(m_strTime);
-    }
 }
 
 void DateTimeSetDialog::set_datetime_string(QString &str)
@@ -88,7 +81,6 @@ void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> &map)
         ui->spinBox_1->setMaximum(23);
         ui->spinBox_2->setMaximum(59);
         ui->spinBox_3->setMaximum(59);
-
     }
 }
 
@@ -107,7 +99,10 @@ void DateTimeSetDialog::set_date_value(QString &string)
 {
     QString str = "-";
     QList<int> valueList = get_value_list(string, str);
+    qDebug() << valueList;
     ui->spinBox_1->setValue(valueList.at(0));
+    qDebug() << valueList.at(0);
+    qDebug() << ui->spinBox_1->value();
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
     ui->label_2->setText(str);
@@ -147,5 +142,34 @@ void DateTimeSetDialog::set_prefix(int value)
         spinBox->setPrefix("");
     } else {
         spinBox->setPrefix("0");
+    }
+}
+
+void DateTimeSetDialog::on_pushButton_ok_clicked()
+{
+    if(m_titleMap.keys().at(0) == "Date Set") {
+        set_datetime_string(m_strDate);
+    } else {
+        set_datetime_string(m_strTime);
+    }
+    accept();
+}
+
+void DateTimeSetDialog::on_pushButton_cancel_clicked()
+{
+    reject();
+}
+
+void DateTimeSetDialog::keyPressEvent(QKeyEvent *e)
+{
+    switch ((int)e->key()) {
+    case Qt::Key_Escape:
+        reject();
+        break;
+    case Qt::Key_Return:
+        on_pushButton_ok_clicked();
+        break;
+    default:
+        break;
     }
 }
