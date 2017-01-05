@@ -7,6 +7,7 @@
  */
 #include "network_menu.h"
 #include "label_menu_item.h"
+#include "networkdialog.h"
 
 namespace DplPreferenceMenu {
 
@@ -16,12 +17,12 @@ NetworkMenu::NetworkMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* IP Address menu item */
     m_ipItem = new LabelMenuItem;
     m_ipItem->set(tr("IP Address"), "192.168.1.1");
-//    connect(m_ipItem, SIGNAL(clicked()), this, SLOT(show_ip_address_dialog()));
+    connect(m_ipItem, SIGNAL(clicked()), this, SLOT(show_ip_address_dialog()));
 
     /* Subnet Mask menu item */
     m_maskItem = new LabelMenuItem;
     m_maskItem->set(tr("Subnet Mask"), "255.255.255.0");
-//    connect(m_maskItem, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
+    connect(m_maskItem, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
 }
 
 NetworkMenu::~NetworkMenu()
@@ -44,6 +45,44 @@ void NetworkMenu::hide()
     ui->menuItem1->layout()->removeWidget(m_maskItem);
     m_ipItem->hide();
     m_maskItem->hide();
+}
+
+void NetworkMenu::show_ip_address_dialog()
+{
+    NetworkDialog *dialog = new NetworkDialog;
+//    QMap<QString, QString> map;
+//    map.insert("IP Address Set", m_ipItem->get_title());
+    QString title = m_ipItem->get_title();
+    QString str = m_ipItem->get_text();
+
+    dialog->set_dialog_title(title);
+    dialog->set_spinbox_value(str);
+
+    if (dialog->exec() == NetworkDialog::Accepted) {
+        m_ipItem->set_text(dialog->get_text());
+    } else {
+        m_ipItem->set_text(str);
+    }
+    delete dialog;
+}
+
+void NetworkMenu::show_subnet_mask_dialog()
+{
+    NetworkDialog *dialog = new NetworkDialog;
+//    QMap<QString, QString> map;
+//    map.insert("Subnet Mask Set", m_maskItem->get_title());
+    QString title = m_maskItem->get_title();
+    QString str = m_maskItem->get_text();
+
+    dialog->set_dialog_title(title);
+    dialog->set_spinbox_value(str);
+
+    if (dialog->exec() == NetworkDialog::Accepted) {
+        m_maskItem->set_text(dialog->get_text());
+    } else {
+        m_maskItem->set_text(str);
+    }
+    delete dialog;
 }
 
 }
