@@ -17,24 +17,24 @@ public:
     ~NetworkDialog();
 
     void retranslate_dialog_ui();
-    void set_dialog_title(QMap<QString, QString> map);
-    void set_spinbox_value(QList<int> valueList);
+    void set_dialog_title(QString &string);
+    void set_spinbox_value(QString &string);
 
-    QString get_ip();
-    QString get_subnet();
+    QString get_text();
+
+protected:
+    void keyPressEvent(QKeyEvent *e);
 
 private:
     Ui::NetworkDialog *ui;
+    QMap<QString, QString> m_titleMap;
+    QString m_str;
 
-    QMap<QString, QString> titleMap;
+    QList<int> get_value_list(QString &text, QString &str);  
 
-    QString str_ip;
-    QString str_subNet;
-
-public slots:
-    void on_buttonBox_accepted();
-
-
+private slots:
+    void on_pushButton_cancel_clicked();
+    void on_pushButton_ok_clicked();
 };
 
 #endif // NETWORKDIALOG_H
