@@ -27,7 +27,7 @@ private:
     DplDevice::GroupPointer m_group;
 
 private slots:
-    void do_ut_unit_changed(DplDevice::Group::UtUnit unit);
+    void update_bottom_ruler();
 };
 
 #endif // __A_SCAN_DISPLAY_H__

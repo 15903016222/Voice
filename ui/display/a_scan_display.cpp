@@ -16,7 +16,15 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
             this,
-            SLOT(do_ut_unit_changed(DplDevice::Group::UtUnit)));
+            SLOT(update_bottom_ruler()));
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(start_changed(double)),
+            this,
+            SLOT(update_bottom_ruler()));
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(range_changed(double)),
+            this,
+            SLOT(update_bottom_ruler()));
 
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
     ui->leftRulerWidget->set_direction(RulerWidget::Down);
@@ -38,10 +46,11 @@ void AscanDisplay::show(DplSource::Beam &beam)
     ui->ascanWidget->show(wave);
 }
 
-void AscanDisplay::do_ut_unit_changed(DplDevice::Group::UtUnit unit)
+void AscanDisplay::update_bottom_ruler()
 {
     double start = m_group->start() / 1000;         /*单位(us)*/
     double end = (start + m_group->range()) / 1000; /*单位(us)*/
+    DplDevice::Group::UtUnit unit = m_group->ut_unit();
 
     if (DplDevice::Group::Time == unit) {
         ui->bottomRulerWidget->set_unit("(us)");
