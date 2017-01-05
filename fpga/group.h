@@ -62,10 +62,8 @@ public:
     /**
      * @brief set_compress_ratio    设置采样点压缩系数
      * @param val                   压缩系数
-     * @param reflesh               下发配置标志
-     * @return                      成功返回true，否则为false
      */
-    bool set_compress_ratio(int val, bool reflesh = false);
+    void set_compress_ratio(int val);
 
     /**
      * @brief gain  获取增益
@@ -194,6 +192,7 @@ protected:
 signals:
     void gain_changed(float val);
     void point_qty_changed(int val);
+    void compress_ratio_changed(int val);
 
 private:
     GroupPrivate *d;
