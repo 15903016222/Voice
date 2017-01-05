@@ -2,7 +2,6 @@
 #include "ui_datetimesetdialog.h"
 
 #include <QKeyEvent>
-#include <QDebug>
 
 DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
     QDialog(parent),
@@ -44,8 +43,6 @@ void DateTimeSetDialog::set_datetime_string(QString &str)
 void DateTimeSetDialog::check_date_valid(int number)
 {
     Q_UNUSED(number);
-    qDebug() << "number";
-    qDebug() << ui->spinBox_1->value() << ui->spinBox_2->value() << ui->spinBox_3->value();
     QDate date = QDate(ui->spinBox_1->value(), ui->spinBox_2->value(), ui->spinBox_3->value());
     if(date.isValid()) {
         return;
@@ -99,10 +96,7 @@ void DateTimeSetDialog::set_date_value(QString &string)
 {
     QString str = "-";
     QList<int> valueList = get_value_list(string, str);
-    qDebug() << valueList;
     ui->spinBox_1->setValue(valueList.at(0));
-    qDebug() << valueList.at(0);
-    qDebug() << ui->spinBox_1->value();
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
     ui->label_2->setText(str);

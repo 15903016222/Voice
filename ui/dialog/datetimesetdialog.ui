@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>319</width>
-    <height>208</height>
+    <width>320</width>
+    <height>210</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,22 +33,42 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QFrame" name="frame">
+    <widget class="QWidget" name="widget" native="true">
      <property name="styleSheet">
-      <string notr="true">QFrame#frame{
+      <string notr="true">QWidget#widget{
 	background-color:rgba(220, 220, 220, 204);
 }
 
-QFrame#label{
+QWidget#label{
 	background-color:rgba(0, 0, 0, 0);
 }
 
-QFrame#line{
-	color:black;
+QWidget#widget_2{
+	background-color: rgba(0, 0, 0, 0)
+}
+
+QWidget QPushButton{
+	font: 16pt &quot;Arial&quot;;
+}
+
+QWidget#widget_3{
+	background-color: rgb(55, 55, 55);
+}
+
+QWidget QLabel{
+	color: rgb(125, 125, 125);
+	font: bold 24pt &quot;Arial&quot;;
+	background-color: rgba(55, 55, 55, 0);
+
+}
+QWidget QSpinBox{
+  	color: rgb(125, 125, 125);
+	font: bold 24pt &quot;Arial&quot;;
+	background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:0.5, stop:0 rgba(220, 220, 220, 255), stop:0.957143 rgba(190, 190, 190, 255), stop:1 rgba(220, 220, 220, 255));
+	selection-color: rgb(125, 125, 125);
+	border: 0px solid;
+	border-radius: 2px;
 }</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout" rowstretch="2,1,6,3">
       <property name="leftMargin">
@@ -99,7 +119,7 @@ color: rgb(50, 50, 50);</string>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QWidget" name="widget" native="true">
+       <widget class="QWidget" name="widget_3" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -107,27 +127,7 @@ color: rgb(50, 50, 50);</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">QWidget#widget{
-	border-radius: 2px;
-	background-color: rgb(55, 55, 55);
-}
-
-QWidget QLabel{
-	color: rgb(125, 125, 125);
-	font: bold 24pt &quot;Arial&quot;;
-	background-color: rgba(55, 55, 55, 0);
-}
-
-QWidget QSpinBox{
-   color: rgb(125, 125, 125);
-	font: bold 24pt &quot;Arial&quot;;
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:0.5, stop:0 rgba(220, 220, 220, 255), stop:0.957143 rgba(190, 190, 190, 255), stop:1 rgba(220, 220, 220, 255));
-	selection-background-color: rgba(0, 0, 0, 0);
-	selection-color: rgb(125, 125, 125);
-	border: 0px solid;
-	border-radius: 2px;
-}
-</string>
+         <string notr="true"/>
         </property>
         <layout class="QGridLayout" name="gridLayout_3" columnstretch="5,1,5,1,5">
          <property name="topMargin">
@@ -210,9 +210,7 @@ QWidget QSpinBox{
       <item row="3" column="0">
        <widget class="QWidget" name="widget_2" native="true">
         <property name="styleSheet">
-         <string notr="true">QWidget#widget_2{
-	background-color: rgba(0, 0, 0, 0)
-}</string>
+         <string notr="true"/>
         </property>
         <layout class="QGridLayout" name="gridLayout_4" columnstretch="2,1,1">
          <property name="leftMargin">
@@ -258,7 +256,7 @@ QWidget QSpinBox{
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>Cancel</string>
+            <string>&amp;Cancel</string>
            </property>
           </widget>
          </item>
@@ -274,7 +272,7 @@ QWidget QSpinBox{
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>Ok</string>
+            <string>&amp;Ok</string>
            </property>
           </widget>
          </item>

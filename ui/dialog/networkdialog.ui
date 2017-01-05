@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>321</width>
-    <height>130</height>
+    <width>320</width>
+    <height>210</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,34 +17,121 @@
    <string notr="true">background-color: rgb(236, 236, 236);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
-    <widget class="QFrame" name="frame">
-     <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="1" column="0">
+    <widget class="QWidget" name="widget" native="true">
+     <property name="styleSheet">
+      <string notr="true">QWidget#widget{
+	background-color: rgba(220, 220, 220, 204);
+
+}
+
+QWidget#label{
+	font: bold 18pt &quot;Arial&quot;;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QWidget#widget_3{
+	border-left: 1px solid gray;
+	border-bottom: 1px solid gray;
+	border-right: 1px solid gray;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QWidget#widget_6{
+	border-left: 1px solid gray;
+	border-top: 1px solid gray;
+	border-top-left-radius: 4px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QWidget#widget_8{
+	border-top: 1px solid gray;
+	border-right: 1px solid gray;
+	border-top-right-radius: 4px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QWidget#widget_2{
+	background-color: rgba(0, 0, 0, 0);
+	font: 16pt &quot;Arial&quot;;
+}
+
+QWidget#widget_5,#widget_7{
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QWidget QPushButton{
+	font: 16pt &quot;Arial&quot;;
+}
+
+QWidget#widget_9{
+	border-radius: 5px;
+	background-color: rgb(55, 55, 55);
+	/*background-color:rgb(9, 157, 247);*/
+	/*background-color: rgb(0, 130, 195);*/
+}
+
+QWidget#label_2,#label_3,#label_4{
+	color: rgb(125, 125, 125);
+	font: bold 16pt &quot;Arial&quot;;
+	background-color: rgba(55, 55, 55, 0);
+}
+
+QWidget QSpinBox{
+   color: rgb(125, 125, 125);
+	font: bold 16pt &quot;Arial&quot;;
+	background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:0.5, stop:0 rgba(220, 220, 220, 255), stop:0.957143 rgba(190, 190, 190, 255), stop:1 rgba(220, 220, 220, 255));
+	selection-background-color: rgba(0, 0, 0, 0);
+	selection-color: rgb(125, 125, 125);
+	border: 0px solid;
+	border-radius: 2px;
+}
+</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,4,2" columnstretch="1,3,4">
       <property name="leftMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <property name="spacing">
        <number>0</number>
       </property>
-      <property name="horizontalSpacing">
-       <number>6</number>
-      </property>
-      <property name="verticalSpacing">
-       <number>9</number>
-      </property>
       <item row="0" column="0">
+       <widget class="QWidget" name="widget_5" native="true"/>
+      </item>
+      <item row="0" column="1" rowspan="2">
        <widget class="QLabel" name="label">
         <property name="font">
          <font>
           <family>Arial</family>
-          <pointsize>14</pointsize>
+          <pointsize>18</pointsize>
           <weight>75</weight>
+          <italic>false</italic>
           <bold>true</bold>
          </font>
         </property>
@@ -56,114 +143,287 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>9</number>
-        </property>
-        <item>
-         <widget class="SpinBox" name="spinBox_1">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="SpinBox" name="spinBox_2">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="SpinBox" name="spinBox_3">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="SpinBox" name="spinBox_4">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="0" column="2">
+       <widget class="QWidget" name="widget_7" native="true"/>
       </item>
-      <item row="2" column="0">
-       <widget class="QDialogButtonBox" name="buttonBox">
-        <property name="standardButtons">
-         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-        </property>
+      <item row="1" column="0">
+       <widget class="QWidget" name="widget_6" native="true"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QWidget" name="widget_8" native="true"/>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="QWidget" name="widget_3" native="true">
+        <layout class="QGridLayout" name="gridLayout_5">
+         <property name="leftMargin">
+          <number>6</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
+          <number>9</number>
+         </property>
+         <item row="1" column="0">
+          <widget class="QWidget" name="widget_9" native="true">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_3" columnstretch="4,1,4,1,4,1,4">
+            <property name="leftMargin">
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>10</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
+            <property name="bottomMargin">
+             <number>10</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QSpinBox" name="spinBox_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>65</width>
+                <height>65</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>16</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>255</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QSpinBox" name="spinBox_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>65</width>
+                <height>65</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>16</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>255</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QSpinBox" name="spinBox_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>65</width>
+                <height>65</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>16</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>255</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="6">
+             <widget class="QSpinBox" name="spinBox_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>65</width>
+                <height>65</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>16</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>255</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="3">
+       <widget class="QWidget" name="widget_2" native="true">
+        <layout class="QGridLayout" name="gridLayout_4">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>108</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButton_cancel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>&amp;Cancel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pushButton_ok">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>&amp;Ok</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -171,46 +431,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>SpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>spinbox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>NetworkDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>136</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>136</x>
-     <y>52</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>NetworkDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>136</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>136</x>
-     <y>52</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
