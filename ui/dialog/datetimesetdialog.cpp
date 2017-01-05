@@ -31,46 +31,21 @@ void DateTimeSetDialog::retranslate_dialog_ui()
 
 void DateTimeSetDialog::on_buttonBox_accepted()
 {    
-    int valueOne = ui->spinBox_1->value();
-    int valueTwo = ui->spinBox_2->value();
-    int valueThree = ui->spinBox_3->value();
-
     if(m_titleMap.keys().at(0) == "Date Set") {
-        m_strDate.clear();
-        m_strDate.append(QString::number(valueOne));
-        m_strDate.append("-");
-        if(valueTwo < 10){
-            m_strDate.append("0" + QString::number(valueTwo));
-        }else{
-            m_strDate.append(QString::number(valueTwo));
-        }
-        m_strDate.append("-");
-        if(valueThree < 10){
-            m_strDate.append("0" + QString::number(valueThree));
-        }else{
-            m_strDate.append(QString::number(valueThree));
-        }
-
+        set_datetime_string(m_strDate);
     } else {
-        m_strTime.clear();
-        if(valueOne < 10){
-            m_strTime.append("0" + QString::number(valueOne));
-        }else{
-            m_strTime.append(QString::number(valueOne));
-        }
-        m_strTime.append(":");
-        if(valueTwo < 10){
-            m_strTime.append("0" + QString::number(valueTwo));
-        }else{
-            m_strTime.append(QString::number(valueTwo));
-        }
-        m_strTime.append(":");
-        if(valueThree < 10){
-            m_strTime.append("0" + QString::number(valueThree));
-        }else{
-            m_strTime.append(QString::number(valueThree));
-        }
+        set_datetime_string(m_strTime);
     }
+}
+
+void DateTimeSetDialog::set_datetime_string(QString &str)
+{
+    str.clear();
+    str.append(ui->spinBox_1->prefix() + QString::number(ui->spinBox_1->value()));
+    str.append(ui->label_2->text());
+    str.append(ui->spinBox_2->prefix() + QString::number(ui->spinBox_2->value()));
+    str.append(ui->label_3->text());
+    str.append(ui->spinBox_3->prefix() + QString::number(ui->spinBox_3->value()));
 }
 
 void DateTimeSetDialog::check_date_valid(int number)
@@ -87,7 +62,6 @@ void DateTimeSetDialog::check_date_valid(int number)
             ui->spinBox_3->setValue(days);
         }
     }
-
 }
 
 void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> &map)
@@ -103,7 +77,6 @@ void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> &map)
         ui->spinBox_2->setMaximum(12);
         ui->spinBox_3->setMaximum(31);
 
-        qDebug() << "Date";
         connect(ui->spinBox_1, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
         connect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
         connect(ui->spinBox_3, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
@@ -115,11 +88,6 @@ void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> &map)
         ui->spinBox_1->setMaximum(23);
         ui->spinBox_2->setMaximum(59);
         ui->spinBox_3->setMaximum(59);
-
-        qDebug() << "Time";
-        disconnect(ui->spinBox_1, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
-        disconnect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
-        disconnect(ui->spinBox_3, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
 
     }
 }

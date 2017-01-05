@@ -22,6 +22,7 @@ public:
     void set_dialog_title(QMap<QString, QString> &map);
     void set_time_value(QString &string);
     void set_date_value(QString &string);
+    void set_datetime_string(QString &str);
 
     QString get_date();
     QString get_time();
