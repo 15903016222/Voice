@@ -238,6 +238,7 @@ void GeneralMenu::update_range_item()
         } else {
             min = (m_group->point_qty() * precision) * m_group->velocity() / (2*1000*1000);
         }
+        max *= m_group->velocity() / (2*1000);
         value = m_group->range() * m_group->velocity() / (2*1000*1000);
         step = precision * m_group->velocity() / (2*1000*1000);
 
