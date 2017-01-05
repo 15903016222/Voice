@@ -136,6 +136,8 @@ public:
     double max_range();
 
 signals:
+    void start_changed(double val);
+    void range_changed(double val);
     void velocity_changed(double val);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
 

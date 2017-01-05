@@ -96,21 +96,22 @@ void Group::set_ut_unit(Group::UtUnit type)
 
 double Group::start()
 {
-    qDebug()<<__func__<<__LINE__;
     QReadLocker l(&d->m_rwlock);
-    qDebug()<<__func__<<__LINE__;
     return d->m_start;
 }
 
 void Group::set_start(double value)
 {
-    QWriteLocker l(&d->m_rwlock);
-    if (value == d->m_start) {
-        return;
-    }
-    d->m_start = value;
+    {
+        QWriteLocker l(&d->m_rwlock);
+        if (value == d->m_start) {
+            return;
+        }
+        d->m_start = value;
 
-    update_sample();
+        update_sample();
+    }
+    emit start_changed(value);
 }
 
 double Group::range()
@@ -121,43 +122,46 @@ double Group::range()
 
 void Group::set_range(double value)
 {
-    QWriteLocker l(&d->m_rwlock);
+    {
+        QWriteLocker l(&d->m_rwlock);
 
-    int maxPointQty = value / d->m_precision;
-    int curPointQty = point_qty();
-    int widthPointQty = 640;
+        int maxPointQty = value / d->m_precision;
+        int curPointQty = point_qty();
+        int widthPointQty = 640;
 
-    if (PointQtyAuto == d->m_pointQtyMode) {
-        if (maxPointQty <= widthPointQty) {
-            curPointQty = maxPointQty;
-        } else {
-            int compressRate = maxPointQty / widthPointQty;
-            if (maxPointQty%widthPointQty) {
-                ++compressRate;
+        if (PointQtyAuto == d->m_pointQtyMode) {
+            if (maxPointQty <= widthPointQty) {
+                curPointQty = maxPointQty;
+            } else {
+                int compressRate = maxPointQty / widthPointQty;
+                if (maxPointQty%widthPointQty) {
+                    ++compressRate;
+                }
+                curPointQty = maxPointQty / compressRate;
             }
-            curPointQty = maxPointQty / compressRate;
         }
+
+        if (maxPointQty%curPointQty) {
+            /* 类似四舍五入 */
+            maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
+        }
+
+        //    if (d->m_range == maxPointQty * d->m_precision) {
+        //        return false;
+        //    }
+
+        d->m_range = maxPointQty * d->m_precision;
+
+        set_point_qty(curPointQty);
+
+        if (maxPointQty/curPointQty) {
+            set_compress_ratio(maxPointQty/curPointQty);
+        } else {
+            set_compress_ratio(1);
+        }
+        update_sample();
     }
-
-    if (maxPointQty%curPointQty) {
-        /* 类似四舍五入 */
-        maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
-    }
-
-//    if (d->m_range == maxPointQty * d->m_precision) {
-//        return false;
-//    }
-
-    d->m_range = maxPointQty * d->m_precision;
-
-    set_point_qty(curPointQty);
-
-    if (maxPointQty/curPointQty) {
-        set_compress_ratio(maxPointQty/curPointQty);
-    } else {
-        set_compress_ratio(1);
-    }
-    update_sample();
+    emit range_changed(d->m_range);
 }
 
 double Group::velocity()
