@@ -148,9 +148,9 @@ void Group::set_range(double value)
     set_point_qty(curPointQty);
 
     if (maxPointQty/curPointQty) {
-        set_compress_ratio(maxPointQty/curPointQty, true);
+        set_compress_ratio(maxPointQty/curPointQty);
     } else {
-        set_compress_ratio(1, true);
+        set_compress_ratio(1);
     }
     update_sample();
 }
