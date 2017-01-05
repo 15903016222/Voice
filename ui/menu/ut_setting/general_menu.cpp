@@ -161,7 +161,6 @@ void GeneralMenu::do_utUnitItem_changed(int index)
     m_group->set_ut_unit((DplDevice::Group::UtUnit)index);
     update_start_item();
     update_range_item();
-    emit ut_unit_changed();
 }
 
 void GeneralMenu::do_current_group_changed()

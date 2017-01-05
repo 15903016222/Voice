@@ -85,7 +85,10 @@ Group::UtUnit Group::ut_unit()
 void Group::set_ut_unit(Group::UtUnit type)
 {
     QWriteLocker l(&d->m_rwlock);
-    d->m_utUnit = type;
+    if (d->m_utUnit != type) {
+        d->m_utUnit = type;
+        emit ut_unit_changed(type);
+    }
 }
 
 double Group::start()

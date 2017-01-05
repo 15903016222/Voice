@@ -34,7 +34,6 @@ public slots:
 
 signals:
     void gain_changed(double gain);
-    void ut_unit_changed();
 
 private:
     bool m_updateFlag;

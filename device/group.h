@@ -137,6 +137,7 @@ public:
 
 signals:
     void velocity_changed(double val);
+    void ut_unit_changed(DplDevice::Group::UtUnit type);
 
 private:
     GroupPrivate *d;
