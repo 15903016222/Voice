@@ -104,9 +104,8 @@ public:
     /**
      * @brief set_point_qty 设置压缩后的采样点数
      * @param qty           采样点数
-     * @return              成功返回true，否则false
      */
-    bool set_point_qty(int qty);
+    void set_point_qty(int qty);
 
     int tcg_point_qty(void);
     bool set_tcg_point_qty(int qty, bool reflesh = false);
