@@ -23,6 +23,24 @@ public:
     explicit Group(int index);
     ~Group();
 
+    enum Mode {
+        UT,
+        PA,
+        UT1,
+        UT2
+    };
+    /**
+     * @brief mode  获取组模式
+     * @return      组模式
+     */
+    Mode mode();
+
+    /**
+     * @brief set_mode  设置组模式
+     * @param mode      组模式
+     */
+    void set_mode(Mode mode);
+
     enum UtUnit {
         Time,
         SoundPath,
@@ -136,6 +154,7 @@ public:
     double max_range();
 
 signals:
+    void mode_changed(DplDevice::Group::Mode mode);
     void start_changed(double val);
     void range_changed(double val);
     void velocity_changed(double val);

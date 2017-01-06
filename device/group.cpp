@@ -29,6 +29,7 @@ public:
     int max_beam_delay();
 
     /* variables */
+    Group::Mode m_mode;         /* 组模式 */
     float m_precision;          /* 采样精度， 单位(ns) */
     double m_start;             /* 声程轴起始点,单位(ns) */
     double m_range;             /* 范围值, 单位(ns) */
@@ -74,6 +75,24 @@ Group::Group(int index) :
 Group::~Group()
 {
     delete d;
+}
+
+Group::Mode Group::mode()
+{
+    QReadLocker l(&d->m_rwlock);
+    return d->m_mode;
+}
+
+void Group::set_mode(Group::Mode mode)
+{
+    {
+        QWriteLocker l(&d->m_rwlock);
+        if (d->m_mode == mode) {
+            return;
+        }
+        d->m_mode = mode;
+    }
+    emit mode_changed(mode);
 }
 
 Group::UtUnit Group::ut_unit()
