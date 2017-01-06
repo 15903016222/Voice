@@ -15,6 +15,10 @@ namespace DplProbeMenu {
 SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
+    DplDevice::Device *dev = DplDevice::Device::get_instance();
+    connect(dev, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
+    m_group = dev->current_group();
+
     m_groupItem = new ComboMenuItem;
     m_groupModeItem = new ComboMenuItem;
     m_probeItem = new LabelMenuItem;
@@ -46,7 +50,10 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     defineList.append(tr("Wedge"));
 
     m_groupItem->set(tr("Group"), groupList);
+
     m_groupModeItem->set(tr("Group Mode"), modeList);
+    connect(m_groupModeItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_groupModeItem_changed(int)));
 
     m_probeItem->set(tr("Probe"), "");
     connect(m_probeItem, SIGNAL(clicked()), this, SLOT(do_probeItem_clicked()));
@@ -57,6 +64,8 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_defineItem->set(tr("Define"), defineList);
 
     m_autoDetectItem->set(tr("Auto Detect"), s_onOff);
+
+    m_updateFlag = true;
 }
 
 SelectionMenu::~SelectionMenu()
@@ -71,6 +80,9 @@ SelectionMenu::~SelectionMenu()
 
 void SelectionMenu::show()
 {
+    if (m_updateFlag) {
+        update();
+    }
     ui->menuItem0->layout()->addWidget(m_groupItem);
     ui->menuItem1->layout()->addWidget(m_groupModeItem);
     ui->menuItem2->layout()->addWidget(m_probeItem);
@@ -116,7 +128,29 @@ void SelectionMenu::do_wedgeItem_clicked()
 //    wedgeDialog.exec();
 //    QString string = wedgeDialog.get_current_item_text();
 //    if(!string.isEmpty()){
-//    }
+    //    }
+}
+
+void SelectionMenu::do_groupModeItem_changed(int index)
+{
+    m_group->set_mode(static_cast<DplDevice::Group::Mode>(index));
+}
+
+void SelectionMenu::do_current_group_changed()
+{
+    m_group = DplDevice::Device::get_instance()->current_group();
+    if (m_probeItem->isHidden()) {
+        m_updateFlag = true;
+    } else {
+        update();
+    }
+}
+
+void SelectionMenu::update()
+{
+    m_groupModeItem->set_current_index(m_group->mode());
+
+    m_updateFlag = false;
 }
 
 }
