@@ -22,10 +22,13 @@ public slots:
 private:
     ComboMenuItem *m_selectItem;
     ComboMenuItem *m_enableItem;
-    MenuItem *m_labelItem;
-    MenuItem *m_contentItem;
-    MenuItem *m_editNoteItem;
+    LabelMenuItem *m_labelItem;
+    LabelMenuItem *m_contentItem;
+    LabelMenuItem *m_editNoteItem;
     MenuItem *m_printItem;
+
+private slots:
+    void show_input_dialog();
 };
 
 }

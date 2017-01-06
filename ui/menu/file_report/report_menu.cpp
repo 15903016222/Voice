@@ -1,5 +1,6 @@
 #include "report_menu.h"
 #include "label_menu_item.h"
+#include "inputpanelcontext.h"
 
 namespace DplFileReportMenu {
 
@@ -13,22 +14,22 @@ ReportMenu::ReportMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* Report Name menu item */
     m_reportNameItem = new LabelMenuItem;
     m_reportNameItem->set(tr("Report Name"), "");
-//    connect(m_reportNameItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+    connect(m_reportNameItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
     /* Customer menu item */
     m_customerItem = new LabelMenuItem;
     m_customerItem->set(tr("Customer"), "");
-//    connect(m_customerItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+    connect(m_customerItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
     /* Part Name Menu Item */
     m_partNameItem = new LabelMenuItem;
     m_partNameItem->set(tr("Part Name"), "");
-//    connect(m_partNameItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+    connect(m_partNameItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
     /* Part Number item */
     m_partNumberItem = new LabelMenuItem;
     m_partNumberItem->set(tr("Part Number"), "");
-//    connect(m_partNumberItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+    connect(m_partNumberItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
     /* Create menu item */
     m_createItem = new LabelMenuItem;
@@ -76,6 +77,21 @@ void ReportMenu::hide()
     m_partNameItem->hide();
     m_partNumberItem->hide();
     m_createItem->hide();
+}
+
+void ReportMenu::show_input_dialog()
+{
+    InputPanelContext *inputPanel = new InputPanelContext;
+    LabelMenuItem *menu = qobject_cast<LabelMenuItem*>(sender());
+    QString text = menu->get_text();
+
+    inputPanel->set_item_current_text(text);
+    if (inputPanel->exec() == InputPanelContext::Accepted) {
+        menu->set_text(inputPanel->get_text());
+    } else {
+        menu->set_text(text);
+    }
+    delete inputPanel;
 }
 
 }

@@ -7,6 +7,7 @@ namespace DplFileReportMenu {
 
 class ReportMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     explicit ReportMenu(Ui::BaseMenu *ui, QObject *parent);
     ~ReportMenu();
@@ -16,11 +17,14 @@ public:
 
 private:
     MenuItem *m_templateItem;
-    MenuItem *m_reportNameItem;
-    MenuItem *m_customerItem;
-    MenuItem *m_partNameItem;
-    MenuItem *m_partNumberItem;
+    LabelMenuItem *m_reportNameItem;
+    LabelMenuItem *m_customerItem;
+    LabelMenuItem *m_partNameItem;
+    LabelMenuItem *m_partNumberItem;
     MenuItem *m_createItem;
+
+private slots:
+    void show_input_dialog();
 };
 
 }
