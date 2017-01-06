@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>589</width>
-    <height>343</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="font">
@@ -20,6 +20,23 @@
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#frame_0 QPushButton {
+	font: bold 14pt &quot;Arial&quot;;
+}
+
+QWidget#frame_1 QPushButton {
+	font: bold 14pt &quot;Arial&quot;;
+}
+
+QWidget#frame_2 QPushButton {
+	font: 14pt &quot;Arial&quot;;
+}
+
+QWidget QTextEdit {
+	font:bold 14pt &quot;ARial&quot;;
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <property name="leftMargin">
@@ -107,6 +124,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>~</string>
           </property>
@@ -131,6 +151,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>!</string>
@@ -157,6 +180,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>@</string>
           </property>
@@ -181,6 +207,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>#</string>
@@ -207,6 +236,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>$</string>
           </property>
@@ -231,6 +263,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>%</string>
@@ -257,6 +292,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>^</string>
           </property>
@@ -281,6 +319,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>*</string>
@@ -307,6 +348,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>(</string>
           </property>
@@ -331,6 +375,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>)</string>
@@ -357,6 +404,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>[</string>
           </property>
@@ -381,6 +431,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>]</string>
@@ -407,6 +460,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>&lt;</string>
           </property>
@@ -431,6 +487,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>&gt;</string>
@@ -457,6 +516,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>1</string>
           </property>
@@ -481,6 +543,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>2</string>
@@ -507,6 +572,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>3</string>
           </property>
@@ -531,6 +599,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>4</string>
@@ -557,6 +628,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>5</string>
           </property>
@@ -581,6 +655,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>6</string>
@@ -607,6 +684,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>7</string>
           </property>
@@ -631,6 +711,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>8</string>
@@ -657,6 +740,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>9</string>
           </property>
@@ -681,6 +767,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>0</string>
@@ -707,6 +796,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>-</string>
           </property>
@@ -731,6 +823,9 @@
             <width>16777215</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>+</string>
@@ -757,6 +852,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>BackSpace</string>
           </property>
@@ -775,6 +873,9 @@
             <width>80</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>Tab</string>
@@ -801,6 +902,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>Q</string>
           </property>
@@ -825,6 +929,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>W</string>
@@ -851,6 +958,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>E</string>
           </property>
@@ -875,6 +985,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>R</string>
@@ -901,6 +1014,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>T</string>
           </property>
@@ -925,6 +1041,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>Y</string>
@@ -951,6 +1070,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>U</string>
           </property>
@@ -975,6 +1097,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>I</string>
@@ -1001,6 +1126,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>O</string>
           </property>
@@ -1025,6 +1153,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>P</string>
@@ -1051,6 +1182,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>{</string>
           </property>
@@ -1075,6 +1209,9 @@
             <width>16777215</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>}</string>
@@ -1103,11 +1240,15 @@
           </property>
           <property name="font">
            <font>
-            <family>Times New Roman</family>
-            <pointsize>12</pointsize>
+            <family>Arial</family>
+            <pointsize>14</pointsize>
             <weight>75</weight>
+            <italic>false</italic>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(0, 170, 0)</string>
@@ -1137,6 +1278,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>A</string>
           </property>
@@ -1161,6 +1305,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>S</string>
@@ -1187,6 +1334,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>F</string>
           </property>
@@ -1211,6 +1361,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>G</string>
@@ -1237,6 +1390,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>H</string>
           </property>
@@ -1261,6 +1417,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>J</string>
@@ -1287,6 +1446,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>K</string>
           </property>
@@ -1311,6 +1473,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>L</string>
@@ -1337,6 +1502,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>;</string>
           </property>
@@ -1361,6 +1529,9 @@
             <width>16777215</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>Enter</string>
@@ -1387,6 +1558,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>Shift</string>
           </property>
@@ -1411,6 +1585,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>Z</string>
@@ -1437,6 +1614,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>X</string>
           </property>
@@ -1461,6 +1641,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>C</string>
@@ -1487,6 +1670,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>V</string>
           </property>
@@ -1511,6 +1697,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>B</string>
@@ -1537,6 +1726,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>N</string>
           </property>
@@ -1561,6 +1753,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>M</string>
@@ -1587,6 +1782,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>'</string>
           </property>
@@ -1612,6 +1810,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>&quot;</string>
           </property>
@@ -1630,6 +1831,9 @@
             <width>40</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>↑</string>
@@ -1656,6 +1860,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>Ctrl</string>
           </property>
@@ -1680,6 +1887,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>Alt</string>
@@ -1706,6 +1916,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>|</string>
           </property>
@@ -1730,6 +1943,9 @@
             <width>16777215</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>\</string>
@@ -1756,6 +1972,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>Space</string>
           </property>
@@ -1780,6 +1999,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>,</string>
@@ -1806,6 +2028,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>.</string>
           </property>
@@ -1831,6 +2056,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>:</string>
           </property>
@@ -1849,6 +2077,9 @@
             <width>40</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>←</string>
@@ -1869,6 +2100,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>↓</string>
           </property>
@@ -1887,6 +2121,9 @@
             <width>40</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>→</string>
@@ -1913,6 +2150,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>D</string>
           </property>
@@ -1938,6 +2178,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>?</string>
           </property>
@@ -1962,6 +2205,9 @@
             <width>30</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>/</string>
@@ -2002,8 +2248,11 @@
           <height>35</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
-         <string>Ok</string>
+         <string>&amp;Ok</string>
         </property>
        </widget>
       </item>
@@ -2021,8 +2270,11 @@
           <height>35</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
-         <string>Cancel</string>
+         <string>&amp;Cancel</string>
         </property>
        </widget>
       </item>

@@ -19,43 +19,24 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     for(int i = 0; i < 10; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-        pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
     for(int i = 1; i <= 28; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("symbol_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-        pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
     for(int i = 1; i < 3; i ++ ) {
         QFrame *frame = findChild<QFrame*>("frame_" + QString::number(i));
-        frame->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
+//        frame->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
     }
 
     for(int i = 65; i <= 90; i ++) {
         QString string = (QChar)i;
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-        pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
-    ui->pushButton_alt->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_arrow_down->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_arrow_left->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_arrow_right->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_arrow_up->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_BackSpace->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_capsLock->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_Enter->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_Shift->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_Space->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_Tab->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_ctrl->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_cancel->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_ok->setFocusPolicy(Qt::NoFocus);
-
-    ui->textEdit->setStyleSheet("QTextEdit{font:12pt 'Times New Roman';}");
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(show_cursor()));
 }
 
@@ -115,7 +96,7 @@ void InputPanelContext::on_pushButton_ok_clicked()
 {
     m_text.clear();
     m_text = ui->textEdit->toPlainText();
-    close();
+    accept();
 }
 
 void InputPanelContext::set_item_current_text(QString string)
@@ -173,4 +154,9 @@ void InputPanelContext::show_cursor()
 QString InputPanelContext::get_text()
 {
     return m_text;
+}
+
+void InputPanelContext::on_pushButton_cancel_clicked()
+{
+    reject();
 }
