@@ -1,8 +1,7 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/mcu.h \
-    $$PWD/probe.h
+    $$PWD/mcu.h
 
 SOURCES += \
     $$PWD/mcu.cpp

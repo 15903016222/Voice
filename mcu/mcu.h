@@ -1,8 +1,6 @@
 #ifndef __MCU_H__
 #define __MCU_H__
 
-#include "probe.h"
-
 #include <QObject>
 #include <QMutex>
 
@@ -94,7 +92,7 @@ Q_SIGNALS:
     void battery_status_event(int index, Mcu::BatteryStatus status);
     void battery_quantity_event(int index, int value);
     void temperature_event(Mcu::TemperatureType type, int value);
-    void probe_event(const Probe& probe);
+    void probe_event(const QByteArray &probeData);
     void poweroff_event(void);
 
 protected:

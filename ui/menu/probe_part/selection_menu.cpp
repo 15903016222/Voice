@@ -6,9 +6,7 @@
  * @date 2016-12-19
  */
 #include "selection_menu.h"
-#include "combo_menu_item.h"
-#include "spin_menu_item.h"
-#include "label_menu_item.h"
+#include "probe_dialog.h"
 
 namespace DplProbeMenu {
 
@@ -115,11 +113,8 @@ void SelectionMenu::hide()
 
 void SelectionMenu::do_probeItem_clicked()
 {
-//    ProbeDialog probeDialog;
-//    probeDialog.exec();
-//    QString string = probeDialog.get_current_item_text();
-//    if(!string.isEmpty()){
-//    }
+    ProbeDialog probeDialog;
+    probeDialog.exec();
 }
 
 void SelectionMenu::do_wedgeItem_clicked()

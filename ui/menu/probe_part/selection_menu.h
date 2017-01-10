@@ -34,7 +34,7 @@ private:
 
     ComboMenuItem *m_groupItem;
     ComboMenuItem *m_groupModeItem;
-    MenuItem *m_probeItem;
+    LabelMenuItem *m_probeItem;
     MenuItem *m_wedgeItem;
     ComboMenuItem *m_defineItem;
     ComboMenuItem *m_autoDetectItem;

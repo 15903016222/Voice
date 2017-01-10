@@ -171,18 +171,7 @@ void McuOmap::on_ttyS0_readyRead_event()
         if (m_buffer.size() < 549) {
             return;
         }
-        const ProbeData *probeData = (ProbeData *)m_buffer.mid(3).constData();
-        Probe probe;
-        probe.set_type((Probe::ProbeType)probeData->paType);
-//        qDebug()<<"ut type"<<probe->utType;
-        probe.set_model(probeData->model);
-        probe.set_serial(probeData->serial);
-        probe.set_elements_quantity(probeData->elemQty);
-//        qDebug()<<"freq2"<<probe->freq2;
-        probe.set_pitch(probeData->pitch);
-        probe.set_freq(probeData->freq);
-        probe.set_reference_point(probeData->point);
-        emit probe_event(probe);
+        emit probe_event(m_buffer.mid(3).constData());
     }
 
     m_buffer.clear();
