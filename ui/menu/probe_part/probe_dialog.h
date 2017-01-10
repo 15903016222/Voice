@@ -16,7 +16,7 @@ public:
     explicit ProbeDialog(QWidget *parent = 0);
     ~ProbeDialog();
 
-    const QString &get_probe() const;
+    const QString &get_path() const;
 
 signals:
     void probe_changed(QString);
@@ -37,7 +37,7 @@ private slots:
     void on_cancelPushButton_clicked();
 };
 
-inline const QString &ProbeDialog::get_probe() const
+inline const QString &ProbeDialog::get_path() const
 {
     return m_probePath;
 }
