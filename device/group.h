@@ -11,6 +11,7 @@
 #include <QObject>
 
 #include <fpga/group.h>
+#include <probe/probe.h>
 
 namespace DplDevice {
 
@@ -152,6 +153,8 @@ public:
      * @return          时间，单位(ns)
      */
     double max_range();
+
+    DplProbe::ProbePointer get_probe() const;
 
 signals:
     void mode_changed(DplDevice::Group::Mode mode);

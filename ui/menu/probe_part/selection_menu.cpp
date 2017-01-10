@@ -7,6 +7,7 @@
  */
 #include "selection_menu.h"
 #include "probe_dialog.h"
+#include <QDebug>
 
 namespace DplProbeMenu {
 
@@ -114,7 +115,13 @@ void SelectionMenu::hide()
 void SelectionMenu::do_probeItem_clicked()
 {
     ProbeDialog probeDialog;
-    probeDialog.exec();
+    if (QDialog::Rejected == probeDialog.exec()) {
+        return;
+    }
+    DplProbe::ProbePointer probePointer = m_group->get_probe();
+    if (probePointer->load(probeDialog.get_path()) ) {
+        m_probeItem->set_text(probePointer->model());
+    }
 }
 
 void SelectionMenu::do_wedgeItem_clicked()

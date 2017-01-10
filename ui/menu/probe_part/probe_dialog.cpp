@@ -15,7 +15,7 @@ ProbeDialog::ProbeDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 
-    QDir dir(get_path());
+    QDir dir(get_dir());
 
     QStringList dirStringList = dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
     ui->dirListWidget->insertItems(0, dirStringList);
@@ -50,7 +50,7 @@ bool ProbeDialog::eventFilter(QObject *obj, QEvent *e)
     return true;
 }
 
-QString ProbeDialog::get_path()
+QString ProbeDialog::get_dir()
 {
     QString path = "/opt/mercury/probe/";
     DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
@@ -67,7 +67,7 @@ QString ProbeDialog::get_path()
 
 void ProbeDialog::on_dirListWidget_currentTextChanged(const QString &currentText)
 {
-    QString path = get_path() + currentText;
+    QString path = get_dir() + currentText;
 
     QDir dir(path);
     QStringList filesStringList = dir.entryList(QDir::Files|QDir::NoSymLinks, QDir::Name);
@@ -78,18 +78,17 @@ void ProbeDialog::on_dirListWidget_currentTextChanged(const QString &currentText
 
 void ProbeDialog::on_fileListWidget_currentTextChanged(const QString &currentText)
 {
-    m_probePath = get_path();
+    m_probePath = get_dir();
     m_probePath += ui->dirListWidget->currentItem()->text() + "/";
     m_probePath += currentText;
 
     DplProbe::Probe probe;
     if (probe.load(m_probePath)) {
         ui->label->setText(probe.show());
-        m_probePath.clear();
     } else {
+        m_probePath.clear();
         ui->label->setText(tr("Ultrasonic phased array probe family."));
     }
-
 }
 
 void ProbeDialog::on_okPushButton_clicked()

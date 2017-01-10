@@ -2,10 +2,14 @@
 #define __PROBE_H__
 
 #include <QObject>
+#include <QSharedPointer>
 
 namespace DplProbe {
 
 class ProbePrivate;
+class Probe;
+typedef QSharedPointer<Probe> ProbePointer;
+
 class Probe : public QObject
 {
     Q_OBJECT

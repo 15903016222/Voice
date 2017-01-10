@@ -8,6 +8,7 @@
 
 #include "group.h"
 #include "device.h"
+
 #include <fpga/fpga.h>
 #include <source/source.h>
 
@@ -41,10 +42,13 @@ public:
 
     Group::PointQtyMode m_pointQtyMode; /* 采样点模式 */
 
+    DplProbe::ProbePointer m_probe;
+
     QReadWriteLock m_rwlock;
 };
 
-GroupPrivate::GroupPrivate()
+GroupPrivate::GroupPrivate() :
+    m_probe(new DplProbe::Probe())
 {
     m_precision = DplFpga::Fpga::get_instance()->sample_precision();
 
@@ -265,6 +269,11 @@ double Group::max_sample_time()
         max = 1000*1000;
     }
     return max ;
+}
+
+DplProbe::ProbePointer Group::get_probe() const
+{
+    return d->m_probe;
 }
 
 void Group::update_sample()

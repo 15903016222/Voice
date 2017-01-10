@@ -28,7 +28,7 @@ private:
     Ui::ProbeDialog *ui;
     QString m_probePath;
 
-    QString get_path();
+    QString get_dir();
 
 private slots:
     void on_dirListWidget_currentTextChanged(const QString &currentText);
