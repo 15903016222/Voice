@@ -87,6 +87,18 @@ public:
     void set_pitch(int val);
 
     /**
+     * @brief element_size  获取阵元尺寸
+     * @return              阵元尺寸，单位(um)
+     */
+    int element_size() const;
+
+    /**
+     * @brief set_element_size  设置阵元尺寸
+     * @param val               尺寸，单位(um)
+     */
+    void set_element_size(int val);
+
+    /**
      * @brief freq  获取频率
      * @return      频率(kHz)
      */
@@ -113,14 +125,16 @@ public:
     /**
      * @brief load  加载探头文件
      * @param file  探头文件
+     * @return      成功返回true， 否则false
      */
     bool load(const QString &fileName);
 
     /**
      * @brief save  保存探头数据
      * @param file  保存文件
+     * @return      成功返回true，否则false
      */
-    void save(const QString &fileName);
+    bool save(const QString &fileName);
 
     /**
      * @brief show  显示探头信息
@@ -132,7 +146,6 @@ signals:
 
 public slots:
 
-
 private:
     Probe::Type m_type;
     QString m_model;
@@ -140,6 +153,7 @@ private:
     int m_elemQty;
     int m_freq;
     int m_pitch;
+    int m_elemSize;
     int m_refPoint;
 
     void update_pa(const QByteArray &bytes);
@@ -194,6 +208,16 @@ inline int Probe::pitch() const
 inline void Probe::set_pitch(int val)
 {
     m_pitch = val;
+}
+
+inline int Probe::element_size() const
+{
+    return m_elemSize;
+}
+
+inline void Probe::set_element_size(int val)
+{
+    m_elemSize = val;
 }
 
 inline int Probe::freq() const

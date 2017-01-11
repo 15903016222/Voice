@@ -22,12 +22,10 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_groupModeItem = new ComboMenuItem;
     m_probeItem = new LabelMenuItem;
     m_wedgeItem = new LabelMenuItem;
-    m_defineItem = new ComboMenuItem;
     m_autoDetectItem = new ComboMenuItem;
 
     QStringList groupList;
     QStringList modeList;
-    QStringList defineList;
 
     groupList.append(tr("Add"));
     groupList.append("1");
@@ -45,9 +43,6 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     modeList.append(tr("UT1 (Conventional UT)"));
     modeList.append(tr("UT2 (Conventional UT)"));
 
-    defineList.append(tr("Probe"));
-    defineList.append(tr("Wedge"));
-
     m_groupItem->set(tr("Group"), groupList);
 
     m_groupModeItem->set(tr("Group Mode"), modeList);
@@ -60,8 +55,6 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_wedgeItem->set(tr("Wedge"), "");
     connect(m_wedgeItem, SIGNAL(clicked()), this, SLOT(do_wedgeItem_clicked()));
 
-    m_defineItem->set(tr("Define"), defineList);
-
     m_autoDetectItem->set(tr("Auto Detect"), s_onOff);
 
     m_updateFlag = true;
@@ -73,7 +66,6 @@ SelectionMenu::~SelectionMenu()
     delete m_groupModeItem;
     delete m_probeItem;
     delete m_wedgeItem;
-    delete m_defineItem;
     delete m_autoDetectItem;
 }
 
@@ -86,13 +78,11 @@ void SelectionMenu::show()
     ui->menuItem1->layout()->addWidget(m_groupModeItem);
     ui->menuItem2->layout()->addWidget(m_probeItem);
     ui->menuItem3->layout()->addWidget(m_wedgeItem);
-    ui->menuItem4->layout()->addWidget(m_defineItem);
-    ui->menuItem5->layout()->addWidget(m_autoDetectItem);
+    ui->menuItem4->layout()->addWidget(m_autoDetectItem);
     m_groupItem->show();
     m_groupModeItem->show();
     m_probeItem->show();
     m_wedgeItem->show();
-    m_defineItem->show();
     m_autoDetectItem->show();
 }
 
@@ -102,13 +92,11 @@ void SelectionMenu::hide()
     ui->menuItem1->layout()->removeWidget(m_groupModeItem);
     ui->menuItem2->layout()->removeWidget(m_probeItem);
     ui->menuItem3->layout()->removeWidget(m_wedgeItem);
-    ui->menuItem4->layout()->removeWidget(m_defineItem);
-    ui->menuItem5->layout()->removeWidget(m_autoDetectItem);
+    ui->menuItem4->layout()->removeWidget(m_autoDetectItem);
     m_groupItem->hide();
     m_groupModeItem->hide();
     m_probeItem->hide();
     m_wedgeItem->hide();
-    m_defineItem->hide();
     m_autoDetectItem->hide();
 }
 

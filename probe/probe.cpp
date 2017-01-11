@@ -52,7 +52,7 @@ void Probe::update_ut(const QByteArray &bytes)
     m_model = data->model;
     m_serial = data->serial;
     m_freq = data->elemQty | (data->freq2<<8);
-    m_pitch = data->pitch;
+    m_elemSize = data->pitch;
 
     m_elemQty = 1;
     m_refPoint = 0;
@@ -89,6 +89,40 @@ bool Probe::load(const QString &fileName)
     return TRUE ;
 }
 
+bool Probe::save(const QString &fileName)
+{
+    QFile file(fileName);
+    ProbeData data;
+
+    if (! file.open(QIODevice::WriteOnly)) {
+        return false;
+    }
+
+    ::memset(&data, 0, sizeof(data));
+
+    ::strncpy(data.serial, m_serial.toUtf8().data(), 20);
+    ::strncpy(data.model, m_model.toUtf8().data(), 20);
+
+    if (m_type == CONVENTION) {
+        data.utProbeType = 1;
+        data.elemQty = m_freq & 0xff;
+        data.freq2 = m_freq >> 8;
+        data.pitch = m_elemSize;
+    } else {
+        data.paType = m_type;
+        data.elemQty = m_elemQty;
+        data.pitch = m_pitch;
+        data.freq = m_freq;
+        data.refPoint = m_refPoint;
+
+        file.seek(4);
+    }
+
+    file.write((char *)&data, sizeof(ProbeData));
+
+    return true;
+}
+
 const QString Probe::show() const
 {
     QString msg;
@@ -101,7 +135,7 @@ const QString Probe::show() const
         msg += "\nFreq\t: ";
         msg += QString::number(m_freq/1000.0)+" MHz";
         msg += "\nSize\t: ";
-        msg += QString::number(m_pitch/1000.0, 'f', 2) + " mm";
+        msg += QString::number(m_elemSize/1000.0, 'f', 2) + " mm";
         msg += "\n";
     } else {
         msg = "Type\t: ";

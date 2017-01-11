@@ -30,11 +30,17 @@ private:
 
     QString get_dir();
 
+    void init_system_tab();
+    void init_define_tab();
+
 private slots:
     void on_dirListWidget_currentTextChanged(const QString &currentText);
     void on_fileListWidget_currentTextChanged(const QString &currentText);
     void on_okPushButton_clicked();
     void on_cancelPushButton_clicked();
+    void on_cancelDefinePushButton_clicked();
+    void on_savePushButton_clicked();
+    void on_defineListWidget_currentTextChanged(const QString &currentText);
 };
 
 inline const QString &ProbeDialog::get_path() const

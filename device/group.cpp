@@ -52,6 +52,8 @@ GroupPrivate::GroupPrivate() :
 {
     m_precision = DplFpga::Fpga::get_instance()->sample_precision();
 
+    m_mode = Group::UT1;
+
     m_start = 0;
     m_range = 5702 * m_precision;
     m_wedgeDelay = 0;

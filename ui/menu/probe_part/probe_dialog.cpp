@@ -15,10 +15,8 @@ ProbeDialog::ProbeDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 
-    QDir dir(get_dir());
-
-    QStringList dirStringList = dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
-    ui->dirListWidget->insertItems(0, dirStringList);
+    init_system_tab();
+    init_define_tab();
 
     ui->dirListWidget->installEventFilter(this);
     ui->fileListWidget->installEventFilter(this);
@@ -65,6 +63,36 @@ QString ProbeDialog::get_dir()
     return path;
 }
 
+void ProbeDialog::init_system_tab()
+{
+    QDir dir(get_dir());
+
+    QStringList dirStringList = dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
+    ui->dirListWidget->insertItems(0, dirStringList);
+}
+
+void ProbeDialog::init_define_tab()
+{
+    QString path = get_dir();
+    path += "user";
+    QDir dir(path);
+    QStringList filesStringList = dir.entryList(QDir::Files|QDir::NoSymLinks, QDir::Name);
+    ui->defineListWidget->clear();
+    ui->defineListWidget->insertItems(0, filesStringList);
+
+    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    if (group->mode() == DplDevice::Group::UT1
+            || group->mode() == DplDevice::Group::UT2) {
+        ui->typeComboBox->hide();
+        ui->typeLabel->hide();
+        ui->elemQtyLabel->hide();
+        ui->elemQtySpinBox->hide();
+        ui->refPointDoubleSpinBox->hide();
+        ui->refPointLabel->hide();
+        ui->pitchLabel->setText(tr("Element Size"));
+    }
+}
+
 void ProbeDialog::on_dirListWidget_currentTextChanged(const QString &currentText)
 {
     QString path = get_dir() + currentText;
@@ -99,4 +127,66 @@ void ProbeDialog::on_okPushButton_clicked()
 void ProbeDialog::on_cancelPushButton_clicked()
 {
     this->reject();
+}
+
+void ProbeDialog::on_cancelDefinePushButton_clicked()
+{
+    this->reject();
+}
+
+void ProbeDialog::on_savePushButton_clicked()
+{
+    if (ui->modelLineEdit->text().isEmpty()
+            || ui->serialLineEdit->text().isEmpty()) {
+        return;
+    }
+
+    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    DplProbe::Probe probe;
+    QString path = get_dir();
+
+    path += "user/";
+    path += ui->modelLineEdit->text();
+
+    probe.set_serial(ui->serialLineEdit->text());
+    probe.set_model(ui->modelLineEdit->text());
+    probe.set_freq(ui->freqDoubleSpinBox->value()*1000);
+
+    if (group->mode() == DplDevice::Group::UT1
+            || group->mode() == DplDevice::Group::UT2) {
+        path += ".oup";
+        probe.set_type(DplProbe::Probe::CONVENTION);
+        probe.set_element_size(ui->pitchDoubleSpinBox->value()*1000);
+    } else {
+        path += ".opp";
+        switch (ui->typeComboBox->currentIndex()) {
+        case 1:
+            probe.set_type(DplProbe::Probe::CUSTOM);
+            break;
+        case 3:
+            probe.set_type(DplProbe::Probe::ANGLE_BEAM);
+            break;
+        case 5:
+            probe.set_type(DplProbe::Probe::CONTACT);
+            break;
+        case 6:
+            probe.set_type(DplProbe::Probe::IMMERSION);
+            break;
+        default:
+            probe.set_type(DplProbe::Probe::UNKNOWN);
+            break;
+        }
+        probe.set_element_qty(ui->elemQtySpinBox->value());
+        probe.set_pitch(ui->pitchDoubleSpinBox->value()*1000);
+        probe.set_refpoint(ui->refPointDoubleSpinBox->value()*1000);
+    }
+
+    if (probe.save(path)) {
+        init_define_tab();
+    }
+}
+
+void ProbeDialog::on_defineListWidget_currentTextChanged(const QString &currentText)
+{
+
 }
