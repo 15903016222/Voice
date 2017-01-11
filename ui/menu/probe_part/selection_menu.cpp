@@ -19,7 +19,7 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_group = dev->current_group();
 
     m_groupItem = new ComboMenuItem;
-    m_groupModeItem = new ComboMenuItem;
+    m_modeItem = new ComboMenuItem;
     m_probeItem = new LabelMenuItem;
     m_wedgeItem = new LabelMenuItem;
     m_autoDetectItem = new ComboMenuItem;
@@ -45,8 +45,8 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
 
     m_groupItem->set(tr("Group"), groupList);
 
-    m_groupModeItem->set(tr("Group Mode"), modeList);
-    connect(m_groupModeItem, SIGNAL(value_changed(int)),
+    m_modeItem->set(tr("Mode"), modeList);
+    connect(m_modeItem, SIGNAL(value_changed(int)),
             this, SLOT(do_groupModeItem_changed(int)));
 
     m_probeItem->set(tr("Probe"), "");
@@ -63,7 +63,7 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
 SelectionMenu::~SelectionMenu()
 {
     delete m_groupItem;
-    delete m_groupModeItem;
+    delete m_modeItem;
     delete m_probeItem;
     delete m_wedgeItem;
     delete m_autoDetectItem;
@@ -75,12 +75,12 @@ void SelectionMenu::show()
         update();
     }
     ui->menuItem0->layout()->addWidget(m_groupItem);
-    ui->menuItem1->layout()->addWidget(m_groupModeItem);
+    ui->menuItem1->layout()->addWidget(m_modeItem);
     ui->menuItem2->layout()->addWidget(m_probeItem);
     ui->menuItem3->layout()->addWidget(m_wedgeItem);
     ui->menuItem4->layout()->addWidget(m_autoDetectItem);
     m_groupItem->show();
-    m_groupModeItem->show();
+    m_modeItem->show();
     m_probeItem->show();
     m_wedgeItem->show();
     m_autoDetectItem->show();
@@ -89,12 +89,12 @@ void SelectionMenu::show()
 void SelectionMenu::hide()
 {
     ui->menuItem0->layout()->removeWidget(m_groupItem);
-    ui->menuItem1->layout()->removeWidget(m_groupModeItem);
+    ui->menuItem1->layout()->removeWidget(m_modeItem);
     ui->menuItem2->layout()->removeWidget(m_probeItem);
     ui->menuItem3->layout()->removeWidget(m_wedgeItem);
     ui->menuItem4->layout()->removeWidget(m_autoDetectItem);
     m_groupItem->hide();
-    m_groupModeItem->hide();
+    m_modeItem->hide();
     m_probeItem->hide();
     m_wedgeItem->hide();
     m_autoDetectItem->hide();
@@ -138,7 +138,7 @@ void SelectionMenu::do_current_group_changed()
 
 void SelectionMenu::update()
 {
-    m_groupModeItem->set_current_index(m_group->mode());
+    m_modeItem->set_current_index(m_group->mode());
 
     m_updateFlag = false;
 }

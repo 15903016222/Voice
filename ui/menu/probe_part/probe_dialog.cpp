@@ -183,10 +183,28 @@ void ProbeDialog::on_savePushButton_clicked()
 
     if (probe.save(path)) {
         init_define_tab();
+        m_probePath = path;
     }
 }
 
-void ProbeDialog::on_defineListWidget_currentTextChanged(const QString &currentText)
+void ProbeDialog::on_saveApplyPushButton_clicked()
 {
+    on_savePushButton_clicked();
 
+    if (ui->modelLineEdit->text().isEmpty()
+            || ui->serialLineEdit->text().isEmpty()) {
+        return;
+    }
+
+    this->accept();
+}
+
+void ProbeDialog::on_delPushButton_clicked()
+{
+    QString path = get_dir();
+    path += "user/";
+    path += ui->defineListWidget->currentItem()->text();
+    if (QFile::remove(path)) {
+        init_define_tab();
+    }
 }

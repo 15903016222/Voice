@@ -40,7 +40,8 @@ private slots:
     void on_cancelPushButton_clicked();
     void on_cancelDefinePushButton_clicked();
     void on_savePushButton_clicked();
-    void on_defineListWidget_currentTextChanged(const QString &currentText);
+    void on_saveApplyPushButton_clicked();
+    void on_delPushButton_clicked();
 };
 
 inline const QString &ProbeDialog::get_path() const

@@ -33,7 +33,7 @@ private:
     bool m_updateFlag;
 
     ComboMenuItem *m_groupItem;
-    ComboMenuItem *m_groupModeItem;
+    ComboMenuItem *m_modeItem;
     LabelMenuItem *m_probeItem;
     MenuItem *m_wedgeItem;
     ComboMenuItem *m_autoDetectItem;

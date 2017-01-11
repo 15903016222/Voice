@@ -37,7 +37,7 @@ background-color: rgba(255, 255, 255, 0);
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="systemTab">
       <attribute name="title">
@@ -206,7 +206,7 @@ background-color: rgba(255, 255, 255, 0);
           <widget class="QListWidget" name="defineListWidget"/>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="delPushButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -404,7 +404,7 @@ background-color: rgba(255, 255, 255, 0);
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="saveApplyPushButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                <horstretch>0</horstretch>
