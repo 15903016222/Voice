@@ -203,7 +203,13 @@ void ProbeDialog::on_delPushButton_clicked()
 {
     QString path = get_dir();
     path += "user/";
+
+    if (ui->defineListWidget->currentItem() == NULL) {
+        return;
+    }
+
     path += ui->defineListWidget->currentItem()->text();
+
     if (QFile::remove(path)) {
         init_define_tab();
     }

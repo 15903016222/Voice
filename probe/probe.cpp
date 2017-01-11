@@ -9,7 +9,7 @@ struct ProbeData
 {
     /*PA 时候先读走4个字节*/
     qint16  res0;
-    quint8  paType;	/* 探头类型: 1,是Custom; 3,是angle beam; 5,是 Contact; 6,是Immersion */
+    quint8  paType;         /* 探头类型: 1,是Custom; 3,是angle beam; 5,是 Contact; 6,是Immersion */
     qint8   res1;
     quint8  utProbeType;	/* 探头类型 1 n/a 0 converntional */
     qint8	res2;
