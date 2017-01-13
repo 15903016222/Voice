@@ -37,7 +37,7 @@ background-color: rgba(255, 255, 255, 0);
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="selectTab">
       <attribute name="title">
@@ -334,6 +334,12 @@ background-color: rgba(255, 255, 255, 0);
                <property name="suffix">
                 <string> MHz</string>
                </property>
+               <property name="minimum">
+                <double>0.500000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>20.000000000000000</double>
+               </property>
                <property name="value">
                 <double>1.000000000000000</double>
                </property>
@@ -351,7 +357,7 @@ background-color: rgba(255, 255, 255, 0);
                 <number>1</number>
                </property>
                <property name="maximum">
-                <number>512</number>
+                <number>1024</number>
                </property>
               </widget>
              </item>

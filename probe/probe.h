@@ -17,8 +17,8 @@ public:
     enum Type {
         UNKNOWN     = 0,
         CUSTOM      = 1,    /* 自定义 */
-        ANGLE_BEAM  = 3,    /* 斜探头 */
-        CONTACT     = 5,    /* 接触式 */
+        ANGLE_BEAM  = 3,    /* 角度声速类型 */
+        CONTACT     = 5,    /* 直接接触式类型 */
         IMMERSION   = 6,    /* 水浸式 */
         CONVENTION  = 7     /* 常规 */
     };

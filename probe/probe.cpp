@@ -92,32 +92,36 @@ bool Probe::load(const QString &fileName)
 bool Probe::save(const QString &fileName)
 {
     QFile file(fileName);
+    QFileInfo info(fileName);
     ProbeData data;
-
-    if (! file.open(QIODevice::WriteOnly)) {
-        return false;
-    }
+    int seek = 0;
 
     ::memset(&data, 0, sizeof(data));
 
     ::strncpy(data.serial, m_serial.toUtf8().data(), 20);
     ::strncpy(data.model, m_model.toUtf8().data(), 20);
 
-    if (m_type == CONVENTION) {
+    if (info.suffix() == "oup") {
         data.utProbeType = 1;
         data.elemQty = m_freq & 0xff;
         data.freq2 = m_freq >> 8;
         data.pitch = m_elemSize;
-    } else {
+    } else if (info.suffix() == "opp") {
         data.paType = m_type;
         data.elemQty = m_elemQty;
         data.pitch = m_pitch;
         data.freq = m_freq;
         data.refPoint = m_refPoint;
 
-        file.seek(4);
+        seek = 4;
+    } else {
+        return false;
     }
 
+    if (! file.open(QIODevice::WriteOnly)) {
+        return false;
+    }
+    file.seek(seek);
     file.write((char *)&data, sizeof(ProbeData));
 
     return true;
