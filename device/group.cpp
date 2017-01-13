@@ -34,7 +34,6 @@ public:
     float m_precision;          /* 采样精度， 单位(ns) */
     double m_start;             /* 声程轴起始点,单位(ns) */
     double m_range;             /* 范围值, 单位(ns) */
-    double m_wedgeDelay;        /* 楔块延迟时间，单位(ns) */
     Group::UtUnit m_utUnit;     /* Ut Unit */
 
     double m_velocity;          /* 声速， 单位(m/s) */
@@ -42,13 +41,10 @@ public:
 
     Group::PointQtyMode m_pointQtyMode; /* 采样点模式 */
 
-    DplProbe::ProbePointer m_probe;
-
     QReadWriteLock m_rwlock;
 };
 
-GroupPrivate::GroupPrivate() :
-    m_probe(new DplProbe::Probe())
+GroupPrivate::GroupPrivate()
 {
     m_precision = DplFpga::Fpga::get_instance()->sample_precision();
 
@@ -56,7 +52,6 @@ GroupPrivate::GroupPrivate() :
 
     m_start = 0;
     m_range = 5702 * m_precision;
-    m_wedgeDelay = 0;
     m_utUnit = Group::SoundPath;
     m_velocity = 3240;
     m_currentAngle = M_PI/6;
@@ -73,9 +68,14 @@ int GroupPrivate::max_beam_delay()
 /* Group */
 Group::Group(int index) :
     DplFpga::Group(index),
-    d(new GroupPrivate())
+    d(new GroupPrivate()),
+    m_probe(new DplProbe::Probe()),
+    m_wedge(new DplProbe::Wedge())
 {
-
+    connect(static_cast<DplProbe::Wedge *>(m_wedge.data()),
+            SIGNAL(delay_changed(int)),
+            this,
+            SLOT(update_sample()));
 }
 
 Group::~Group()
@@ -207,22 +207,6 @@ void Group::set_velocity(double value)
     emit velocity_changed(value);
 }
 
-int Group::wedge_delay()
-{
-    QReadLocker l(&d->m_rwlock);
-    return d->m_wedgeDelay;
-}
-
-void Group::set_wedge_delay(int value)
-{
-    QWriteLocker l(&d->m_rwlock);
-    if (d->m_wedgeDelay == value) {
-        return;
-    }
-    d->m_wedgeDelay = value;
-    update_sample();
-}
-
 double Group::current_angle()
 {
     QReadLocker l(&d->m_rwlock);
@@ -265,7 +249,7 @@ double Group::max_sample_time()
     double max = beamCycle
             - fpga->loading_time() * d->m_precision
             - d->max_beam_delay()
-            - d->m_wedgeDelay
+            - m_wedge->delay()
             - 50;
     if(max > 1000*1000) {
         max = 1000*1000;
@@ -273,16 +257,11 @@ double Group::max_sample_time()
     return max ;
 }
 
-DplProbe::ProbePointer Group::get_probe() const
-{
-    return d->m_probe;
-}
-
 void Group::update_sample()
 {
-    set_sample_start((d->m_wedgeDelay + d->m_start)/d->m_precision, true);
-    set_sample_range((d->m_wedgeDelay + d->m_start + d->m_range)/d->m_precision, true);
-    set_rx_time((d->max_beam_delay() + d->m_wedgeDelay + d->m_start + d->m_range + 50)/d->m_precision, true);
+    set_sample_start((m_wedge->delay() + d->m_start)/d->m_precision, true);
+    set_sample_range((m_wedge->delay() + d->m_start + d->m_range)/d->m_precision, true);
+    set_rx_time((d->max_beam_delay() + m_wedge->delay() + d->m_start + d->m_range + 50)/d->m_precision, true);
 }
 
 }

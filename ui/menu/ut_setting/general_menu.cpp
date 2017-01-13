@@ -42,6 +42,7 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
 
     m_wedgeDelayItem = new SpinMenuItem();
     m_wedgeDelayItem->set(tr("Wedge Delay"), "&micro;s", 0, 1000, 2);
+    connect(m_wedgeDelayItem, SIGNAL(value_changed(double)), this, SLOT(do_wedgeDelayItem_changed(double)));
 
     m_utUnitItem = new ComboMenuItem();
     m_utUnitItem->set(tr("UT Unit"), utUnitList);
@@ -103,7 +104,7 @@ void GeneralMenu::update()
 
     m_velocityItem->set_value(m_group->velocity());
 
-    m_wedgeDelayItem->set_value(m_group->wedge_delay() / 1000.0);
+    m_wedgeDelayItem->set_value(m_group->get_wedge()->delay() / 1000.0);
 
     m_utUnitItem->set_current_index(m_group->ut_unit());
 
@@ -153,7 +154,8 @@ void GeneralMenu::do_velocityItem_changed(double value)
 
 void GeneralMenu::do_wedgeDelayItem_changed(double value)
 {
-    m_group->set_wedge_delay(value*1000);
+    DplProbe::WedgePointer wedge = m_group->get_wedge();
+    wedge->set_delay(value*1000);
 }
 
 void GeneralMenu::do_utUnitItem_changed(int index)

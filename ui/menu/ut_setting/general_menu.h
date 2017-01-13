@@ -44,6 +44,7 @@ private:
     SpinMenuItem *m_velocityItem;
     SpinMenuItem *m_wedgeDelayItem;
     ComboMenuItem *m_utUnitItem;
+
     DplDevice::GroupPointer m_group;
 
 private slots:
