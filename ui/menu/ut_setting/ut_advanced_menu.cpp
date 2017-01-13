@@ -7,15 +7,17 @@
  */
 
 #include "ut_advanced_menu.h"
-#include "label_menu_item.h"
-#include "combo_menu_item.h"
-#include "spin_menu_item.h"
+#include <QDebug>
 
 namespace DplUtSettingMenu {
 
 UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
+    DplDevice::Device *device = DplDevice::Device::get_instance();
+    m_group = DplDevice::Device::get_instance()->current_group();
+    connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
+
     QStringList pointQtyList;
 
     pointQtyList.append(tr("Auto"));
@@ -35,9 +37,15 @@ UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent)
 
     m_scaleFactorItem = new LabelMenuItem;
     m_scaleFactorItem->set(tr("Scale Factor"), "");
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(compress_ratio_changed(int)),
+            this,
+            SLOT(update_scale_factor_item()));
 
     m_sumGainItem = new SpinMenuItem;
     m_sumGainItem->set(tr("Sum Gain"), "dB", 0, 100, 1);
+
+    m_updateFlag = true;
 }
 
 UtAdvancedMenu::~UtAdvancedMenu()
@@ -51,6 +59,9 @@ UtAdvancedMenu::~UtAdvancedMenu()
 
 void UtAdvancedMenu::show()
 {
+    if (m_updateFlag) {
+        update();
+    }
     ui->menuItem0->layout()->addWidget(m_eightPercentItem);
     ui->menuItem1->layout()->addWidget(m_dbRefItem);
     ui->menuItem2->layout()->addWidget(m_pointQtyItem);
@@ -75,6 +86,40 @@ void UtAdvancedMenu::hide()
     m_pointQtyItem->hide();
     m_scaleFactorItem->hide();
     m_sumGainItem->hide();
+}
+
+void UtAdvancedMenu::update()
+{
+    update_scale_factor_item();
+    m_updateFlag = false;
+}
+
+void UtAdvancedMenu::do_current_group_changed()
+{
+    /* disconnect */
+    disconnect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(compress_ratio_changed(int)),
+            this,
+            SLOT(do_compress_ratio_changed(int)));
+
+    m_group = DplDevice::Device::get_instance()->current_group();
+
+    if (m_group.isNull()) {
+        return;
+    } else if (m_eightPercentItem->isHidden()) {
+        m_updateFlag = true;
+        connect(static_cast<DplDevice::Group *>(m_group.data()),
+                SIGNAL(compress_ratio_changed(int)),
+                this,
+                SLOT(do_compress_ratio_changed(int)));
+    } else {
+        update();
+    }
+}
+
+void UtAdvancedMenu::update_scale_factor_item()
+{
+    m_scaleFactorItem->set_text(QString::number(m_group->compress_ratio()));
 }
 
 }

@@ -83,7 +83,7 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
     }
 
     if (e->type() == QEvent::KeyRelease) {
-        QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(e);
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
         switch (keyEvent->key()) {
         case Qt::Key_Escape:
         case Qt::Key_Back:

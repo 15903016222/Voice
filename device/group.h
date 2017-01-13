@@ -9,7 +9,10 @@
 #define __DEVICE_GROUP_H__
 
 #include <QObject>
-#include "fpga/group.h"
+
+#include <fpga/group.h>
+#include <probe/probe.h>
+#include <probe/wedge.h>
 
 namespace DplDevice {
 
@@ -17,9 +20,28 @@ class GroupPrivate;
 
 class Group : public DplFpga::Group
 {
+    Q_OBJECT
 public:
     explicit Group(int index);
     ~Group();
+
+    enum Mode {
+        UT,
+        PA,
+        UT1,
+        UT2
+    };
+    /**
+     * @brief mode  获取组模式
+     * @return      组模式
+     */
+    Mode mode();
+
+    /**
+     * @brief set_mode  设置组模式
+     * @param mode      组模式
+     */
+    void set_mode(Mode mode);
 
     enum UtUnit {
         Time,
@@ -64,18 +86,6 @@ public:
      * @param value         声速大小，单位为(m/s)
      */
     void set_velocity(double value);
-
-    /**
-     * @brief wedge_delay   楔块延迟时间
-     * @return              返回楔块延迟时间，单位(ns)
-     */
-    int wedge_delay();
-
-    /**
-     * @brief set_wedge_delay   设置楔块延迟时间
-     * @param value             延迟时间，单位(ns)
-     */
-    void set_wedge_delay(int value);
 
     /**
      * @brief current_angle 获取当前入射角度
@@ -133,10 +143,24 @@ public:
      */
     double max_range();
 
+    DplProbe::ProbePointer get_probe() const;
+    DplProbe::WedgePointer get_wedge() const;
+
+signals:
+    void mode_changed(DplDevice::Group::Mode mode);
+    void start_changed(double val);
+    void range_changed(double val);
+    void velocity_changed(double val);
+    void ut_unit_changed(DplDevice::Group::UtUnit type);
+
+private slots:
+    void update_sample();
+
 private:
     GroupPrivate *d;
 
-    void update_sample();
+    DplProbe::ProbePointer m_probe; /* 探头 */
+    DplProbe::WedgePointer m_wedge; /* 楔块 */
 };
 
 inline double Group::max_start()
@@ -147,6 +171,16 @@ inline double Group::max_start()
 inline double Group::max_range()
 {
     return max_sample_time() - start();
+}
+
+inline DplProbe::ProbePointer Group::get_probe() const
+{
+    return m_probe;
+}
+
+inline DplProbe::WedgePointer Group::get_wedge() const
+{
+    return m_wedge;
 }
 
 }

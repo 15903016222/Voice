@@ -9,7 +9,8 @@
 #define __GENERAL_MENU_H__
 
 #include "base_menu.h"
-#include "device.h"
+
+#include <device/device.h>
 
 namespace DplUtSettingMenu {
 
@@ -33,7 +34,6 @@ public slots:
 
 signals:
     void gain_changed(double gain);
-    void ut_unit_changed();
 
 private:
     bool m_updateFlag;
@@ -44,6 +44,7 @@ private:
     SpinMenuItem *m_velocityItem;
     SpinMenuItem *m_wedgeDelayItem;
     ComboMenuItem *m_utUnitItem;
+
     DplDevice::GroupPointer m_group;
 
 private slots:
@@ -51,6 +52,7 @@ private slots:
     void do_startItem_changed(double value);
     void do_rangeItem_changed(double value);
     void do_velocityItem_changed(double value);
+    void do_wedgeDelayItem_changed(double value);
     void do_utUnitItem_changed(int index);
 
     void do_current_group_changed();

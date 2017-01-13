@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "device.h"
+#include <device/device.h>
 #include "vinput.h"
 #include "ut_setting/general_menu.h"
 #include "preference/preference_menu.h"
@@ -17,9 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    /* Fpga */
-    DplDevice::Device::get_instance()->add_group();
-    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->get_group(0);
+    /* Device */
+    DplDevice::Device *dev = DplDevice::Device::get_instance();
+    if (dev->groups() == 0) {
+        dev->add_group();
+    }
+    DplDevice::GroupPointer group = dev->get_group(0);
     group->init();
 
 

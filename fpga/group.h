@@ -10,13 +10,15 @@
 
 #include "fpga_global.h"
 #include <QReadWriteLock>
+#include <QObject>
 
 namespace DplFpga {
 
 class GroupPrivate;
 
-class FPGASHARED_EXPORT Group
+class FPGASHARED_EXPORT Group : public QObject
 {
+    Q_OBJECT
 public:
     explicit Group(const int index);
     ~Group();
@@ -60,10 +62,8 @@ public:
     /**
      * @brief set_compress_ratio    设置采样点压缩系数
      * @param val                   压缩系数
-     * @param reflesh               下发配置标志
-     * @return                      成功返回true，否则为false
      */
-    bool set_compress_ratio(int val, bool reflesh = false);
+    void set_compress_ratio(int val);
 
     /**
      * @brief gain  获取增益
@@ -74,10 +74,8 @@ public:
     /**
      * @brief set_gain  设置增益
      * @param gain      增益值
-     * @param reflesh   下发FPGA配置
-     * @return          成功返回true， 失败返回false
      */
-    bool set_gain(float gain, bool reflesh = false);
+    void set_gain(float gain);
 
     int thickness_factor(void);
     bool set_thickness_factor(int factor, bool reflesh = false);
@@ -106,10 +104,8 @@ public:
     /**
      * @brief set_point_qty 设置压缩后的采样点数
      * @param qty           采样点数
-     * @param reflesh       下发配置标志
-     * @return              成功返回true，否则false
      */
-    bool set_point_qty(int qty, bool reflesh = false);
+    void set_point_qty(int qty);
 
     int tcg_point_qty(void);
     bool set_tcg_point_qty(int qty, bool reflesh = false);
@@ -191,6 +187,11 @@ protected:
      * @return              成功返回true，失败返回false
      */
     bool set_rx_time(int val, bool reflesh = false);
+
+signals:
+    void gain_changed(float val);
+    void point_qty_changed(int val);
+    void compress_ratio_changed(int val);
 
 private:
     GroupPrivate *d;

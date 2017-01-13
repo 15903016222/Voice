@@ -9,6 +9,7 @@
 #define __PROBE_SELECTION_MENU_H__
 
 #include "base_menu.h"
+#include <device/device.h>
 
 namespace DplProbeMenu {
 
@@ -25,14 +26,21 @@ public:
 private slots:
     void do_probeItem_clicked();
     void do_wedgeItem_clicked();
+    void do_groupModeItem_changed(int index);
+    void do_current_group_changed();
 
 private:
+    bool m_updateFlag;
+
     ComboMenuItem *m_groupItem;
-    ComboMenuItem *m_groupModeItem;
-    MenuItem *m_probeItem;
+    ComboMenuItem *m_modeItem;
+    LabelMenuItem *m_probeItem;
     MenuItem *m_wedgeItem;
-    ComboMenuItem *m_defineItem;
     ComboMenuItem *m_autoDetectItem;
+
+    DplDevice::GroupPointer m_group;
+
+    void update();
 };
 
 }

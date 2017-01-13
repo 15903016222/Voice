@@ -11,6 +11,8 @@
 
 #include "base_menu.h"
 
+#include <device/device.h>
+
 namespace DplUtSettingMenu {
 
 class UtAdvancedMenu : public BaseMenu
@@ -24,11 +26,22 @@ public:
     void hide();
 
 private:
+    bool m_updateFlag;
+
     MenuItem *m_eightPercentItem;
     ComboMenuItem *m_dbRefItem;
     ComboMenuItem *m_pointQtyItem;
-    MenuItem *m_scaleFactorItem;
+    LabelMenuItem *m_scaleFactorItem;
     SpinMenuItem *m_sumGainItem;
+
+    DplDevice::GroupPointer m_group;
+
+    void update();
+
+private slots:
+    void do_current_group_changed();
+    void update_scale_factor_item();
+
 };
 
 }

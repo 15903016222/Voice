@@ -61,4 +61,6 @@ include(mcu/mcu.pri)
 
 include(fpga/fpga.pri)
 
+include(probe/probe.pri)
+
 include(source/source.pri)

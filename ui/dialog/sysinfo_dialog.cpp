@@ -1,5 +1,6 @@
 #include "sysinfo_dialog.h"
-#include "device.h"
+
+#include <device/device.h>
 
 #include <QDialogButtonBox>
 #include <QLabel>

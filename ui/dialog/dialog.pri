@@ -3,8 +3,6 @@ INCLUDEPATH += $$PWD
 
 SOURCES += \
     $$PWD/timesetdialog.cpp \
-    $$PWD/probedialog.cpp \
-    $$PWD/wedgedialog.cpp \
     $$PWD/inputpanelcontext.cpp \
     $$PWD/virtualkeyboard.cpp \
     $$PWD/resetconfigdialog.cpp \
@@ -18,8 +16,6 @@ SOURCES += \
 
 HEADERS += \
     $$PWD/timesetdialog.h \
-    $$PWD/probedialog.h \
-    $$PWD/wedgedialog.h \
     $$PWD/inputpanelcontext.h \
     $$PWD/virtualkeyboard.h \
     $$PWD/resetconfigdialog.h \
@@ -32,8 +28,6 @@ HEADERS += \
 
 FORMS += \
     $$PWD/timesetdialog.ui \
-    $$PWD/probedialog.ui \
-    $$PWD/wedgedialog.ui \
     $$PWD/inputpanelcontext.ui \
     $$PWD/virtualkeyboard.ui \
     $$PWD/resetconfigdialog.ui \

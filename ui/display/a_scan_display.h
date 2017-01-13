@@ -1,8 +1,11 @@
-#ifndef A_SCAN_DISPLAY_H
-#define A_SCAN_DISPLAY_H
+#ifndef __A_SCAN_DISPLAY_H__
+#define __A_SCAN_DISPLAY_H__
+
+#include <device/device.h>
+
+#include <source/beam.h>
 
 #include <QWidget>
-#include "beam_source.h"
 
 namespace Ui {
 class AscanDisplay;
@@ -13,13 +16,18 @@ class AscanDisplay : public QWidget
     Q_OBJECT
 
 public:
-    explicit AscanDisplay(QWidget *parent = 0);
+    explicit AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent = 0);
     ~AscanDisplay();
 
-    void show(DplSource::BeamSource &beam);
+    void show(DplSource::Beam &beam);
 
 private:
     Ui::AscanDisplay *ui;
+
+    DplDevice::GroupPointer m_group;
+
+private slots:
+    void update_bottom_ruler();
 };
 
-#endif // A_SCAN_DISPLAY_H
+#endif // __A_SCAN_DISPLAY_H__

@@ -7,8 +7,10 @@
  */
 
 #include "group.h"
-#include "fpga/fpga.h"
 #include "device.h"
+
+#include <fpga/fpga.h>
+#include <source/source.h>
 
 #include <QReadWriteLock>
 #include <qmath.h>
@@ -28,10 +30,10 @@ public:
     int max_beam_delay();
 
     /* variables */
+    Group::Mode m_mode;         /* 组模式 */
     float m_precision;          /* 采样精度， 单位(ns) */
     double m_start;             /* 声程轴起始点,单位(ns) */
     double m_range;             /* 范围值, 单位(ns) */
-    double m_wedgeDelay;        /* 楔块延迟时间，单位(ns) */
     Group::UtUnit m_utUnit;     /* Ut Unit */
 
     double m_velocity;          /* 声速， 单位(m/s) */
@@ -46,9 +48,10 @@ GroupPrivate::GroupPrivate()
 {
     m_precision = DplFpga::Fpga::get_instance()->sample_precision();
 
+    m_mode = Group::UT1;
+
     m_start = 0;
     m_range = 5702 * m_precision;
-    m_wedgeDelay = 0;
     m_utUnit = Group::SoundPath;
     m_velocity = 3240;
     m_currentAngle = M_PI/6;
@@ -65,14 +68,37 @@ int GroupPrivate::max_beam_delay()
 /* Group */
 Group::Group(int index) :
     DplFpga::Group(index),
-    d(new GroupPrivate())
+    d(new GroupPrivate()),
+    m_probe(new DplProbe::Probe()),
+    m_wedge(new DplProbe::Wedge())
 {
-
+    connect(static_cast<DplProbe::Wedge *>(m_wedge.data()),
+            SIGNAL(delay_changed(int)),
+            this,
+            SLOT(update_sample()));
 }
 
 Group::~Group()
 {
     delete d;
+}
+
+Group::Mode Group::mode()
+{
+    QReadLocker l(&d->m_rwlock);
+    return d->m_mode;
+}
+
+void Group::set_mode(Group::Mode mode)
+{
+    {
+        QWriteLocker l(&d->m_rwlock);
+        if (d->m_mode == mode) {
+            return;
+        }
+        d->m_mode = mode;
+    }
+    emit mode_changed(mode);
 }
 
 Group::UtUnit Group::ut_unit()
@@ -83,8 +109,14 @@ Group::UtUnit Group::ut_unit()
 
 void Group::set_ut_unit(Group::UtUnit type)
 {
-    QWriteLocker l(&d->m_rwlock);
-    d->m_utUnit = type;
+    {
+        QWriteLocker l(&d->m_rwlock);
+        if (d->m_utUnit == type) {
+            return;
+        }
+        d->m_utUnit = type;
+    }
+    emit ut_unit_changed(type);
 }
 
 double Group::start()
@@ -95,13 +127,16 @@ double Group::start()
 
 void Group::set_start(double value)
 {
-    QWriteLocker l(&d->m_rwlock);
-    if (value == d->m_start) {
-        return;
-    }
-    d->m_start = value;
+    {
+        QWriteLocker l(&d->m_rwlock);
+        if (value == d->m_start) {
+            return;
+        }
+        d->m_start = value;
 
-    update_sample();
+        update_sample();
+    }
+    emit start_changed(value);
 }
 
 double Group::range()
@@ -112,42 +147,46 @@ double Group::range()
 
 void Group::set_range(double value)
 {
-    QWriteLocker l(&d->m_rwlock);
+    {
+        QWriteLocker l(&d->m_rwlock);
 
-    int maxPointQty = value / d->m_precision;
-    int curPointQty = point_qty();
-    int widthPointQty = 640;
+        int maxPointQty = value / d->m_precision;
+        int curPointQty = point_qty();
+        int widthPointQty = 640;
 
-    if (PointQtyAuto == d->m_pointQtyMode) {
-        if (maxPointQty <= widthPointQty) {
-            curPointQty = maxPointQty;
-        } else {
-            int compressRate = maxPointQty / widthPointQty;
-            if (maxPointQty%widthPointQty) {
-                ++compressRate;
+        if (PointQtyAuto == d->m_pointQtyMode) {
+            if (maxPointQty <= widthPointQty) {
+                curPointQty = maxPointQty;
+            } else {
+                int compressRate = maxPointQty / widthPointQty;
+                if (maxPointQty%widthPointQty) {
+                    ++compressRate;
+                }
+                curPointQty = maxPointQty / compressRate;
             }
-            curPointQty = maxPointQty / compressRate;
         }
+
+        if (maxPointQty%curPointQty) {
+            /* 类似四舍五入 */
+            maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
+        }
+
+        //    if (d->m_range == maxPointQty * d->m_precision) {
+        //        return false;
+        //    }
+
+        d->m_range = maxPointQty * d->m_precision;
+
+        set_point_qty(curPointQty);
+
+        if (maxPointQty/curPointQty) {
+            set_compress_ratio(maxPointQty/curPointQty);
+        } else {
+            set_compress_ratio(1);
+        }
+        update_sample();
     }
-
-    if (maxPointQty%curPointQty) {
-        /* 类似四舍五入 */
-        maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
-    }
-
-//    if (d->m_range == maxPointQty * d->m_precision) {
-//        return false;
-//    }
-
-    d->m_range = maxPointQty * d->m_precision;
-
-    set_point_qty(curPointQty);
-    if (maxPointQty/curPointQty) {
-        set_compress_ratio(maxPointQty/curPointQty, true);
-    } else {
-        set_compress_ratio(1, true);
-    }
-    update_sample();
+    emit range_changed(d->m_range);
 }
 
 double Group::velocity()
@@ -158,24 +197,14 @@ double Group::velocity()
 
 void Group::set_velocity(double value)
 {
-    QWriteLocker l(&d->m_rwlock);
-    d->m_velocity = value;
-}
-
-int Group::wedge_delay()
-{
-    QReadLocker l(&d->m_rwlock);
-    return d->m_wedgeDelay;
-}
-
-void Group::set_wedge_delay(int value)
-{
-    QWriteLocker l(&d->m_rwlock);
-    if (d->m_wedgeDelay == value) {
-        return;
+    {
+        QWriteLocker l(&d->m_rwlock);
+        if (d->m_velocity == value) {
+            return;
+        }
+        d->m_velocity = value;
     }
-    d->m_wedgeDelay = value;
-    update_sample();
+    emit velocity_changed(value);
 }
 
 double Group::current_angle()
@@ -220,7 +249,7 @@ double Group::max_sample_time()
     double max = beamCycle
             - fpga->loading_time() * d->m_precision
             - d->max_beam_delay()
-            - d->m_wedgeDelay
+            - m_wedge->delay()
             - 50;
     if(max > 1000*1000) {
         max = 1000*1000;
@@ -230,9 +259,9 @@ double Group::max_sample_time()
 
 void Group::update_sample()
 {
-    set_sample_start((d->m_wedgeDelay + d->m_start)/d->m_precision, true);
-    set_sample_range((d->m_wedgeDelay + d->m_start + d->m_range)/d->m_precision, true);
-    set_rx_time((d->max_beam_delay() + d->m_wedgeDelay + d->m_start + d->m_range + 50)/d->m_precision, true);
+    set_sample_start((m_wedge->delay() + d->m_start)/d->m_precision, true);
+    set_sample_range((m_wedge->delay() + d->m_start + d->m_range)/d->m_precision, true);
+    set_rx_time((d->max_beam_delay() + m_wedge->delay() + d->m_start + d->m_range + 50)/d->m_precision, true);
 }
 
 }

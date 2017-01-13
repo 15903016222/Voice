@@ -37,11 +37,12 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     connect(m_rangeItem, SIGNAL(value_changed(double)), this, SLOT(do_rangeItem_changed(double)));
 
     m_velocityItem = new SpinMenuItem();
-    m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1);
+    m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1, 0.1);
     connect(m_velocityItem, SIGNAL(value_changed(double)), this, SLOT(do_velocityItem_changed(double)));
 
     m_wedgeDelayItem = new SpinMenuItem();
     m_wedgeDelayItem->set(tr("Wedge Delay"), "&micro;s", 0, 1000, 2);
+    connect(m_wedgeDelayItem, SIGNAL(value_changed(double)), this, SLOT(do_wedgeDelayItem_changed(double)));
 
     m_utUnitItem = new ComboMenuItem();
     m_utUnitItem->set(tr("UT Unit"), utUnitList);
@@ -100,13 +101,19 @@ void GeneralMenu::update()
     update_gain_item();
     update_start_item();
     update_range_item();
+
+    m_velocityItem->set_value(m_group->velocity());
+
+    m_wedgeDelayItem->set_value(m_group->get_wedge()->delay() / 1000.0);
+
     m_utUnitItem->set_current_index(m_group->ut_unit());
+
     m_updateFlag = false;
 }
 
 void GeneralMenu::do_gainItem_changed(double gain)
 {
-    m_group->set_gain(gain, true);
+    m_group->set_gain(gain);
 }
 
 void GeneralMenu::do_startItem_changed(double value)
@@ -145,12 +152,17 @@ void GeneralMenu::do_velocityItem_changed(double value)
     m_group->set_velocity(value);
 }
 
+void GeneralMenu::do_wedgeDelayItem_changed(double value)
+{
+    DplProbe::WedgePointer wedge = m_group->get_wedge();
+    wedge->set_delay(value*1000);
+}
+
 void GeneralMenu::do_utUnitItem_changed(int index)
 {
     m_group->set_ut_unit((DplDevice::Group::UtUnit)index);
     update_start_item();
     update_range_item();
-    emit ut_unit_changed();
 }
 
 void GeneralMenu::do_current_group_changed()
@@ -195,9 +207,8 @@ void GeneralMenu::update_start_item()
         }
     }
 
-    m_startItem->set(tr("Start"), unit, 0, max, 2);
+    m_startItem->set(tr("Start"), unit, 0, max, 2, step);
     m_startItem->set_value(value);
-    m_startItem->set_step(step);
 }
 
 void GeneralMenu::update_range_item()
@@ -229,6 +240,7 @@ void GeneralMenu::update_range_item()
         } else {
             min = (m_group->point_qty() * precision) * m_group->velocity() / (2*1000*1000);
         }
+        max *= m_group->velocity() / (2*1000);
         value = m_group->range() * m_group->velocity() / (2*1000*1000);
         step = precision * m_group->velocity() / (2*1000*1000);
 
@@ -240,9 +252,8 @@ void GeneralMenu::update_range_item()
         }
     }
 
-    m_rangeItem->set(tr("Range"), unit, min, max, 2);
+    m_rangeItem->set(tr("Range"), unit, min, max, 2, step);
     m_rangeItem->set_value(value);
-    m_rangeItem->set_step(step);
 }
 
 }
