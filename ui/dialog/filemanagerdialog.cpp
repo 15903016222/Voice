@@ -1,18 +1,9 @@
 #include "filemanagerdialog.h"
 #include "ui_filemanagerdialog.h"
+#include "inputpanelcontext.h"
 
+#include <QFile>
 #include <QDebug>
-
-#define FILE_TYPE_NUMBER 6
-static const char* FILE_TYPE_STRING[FILE_TYPE_NUMBER] =
-{
-    QT_TRANSLATE_NOOP("FileManagerDialog", "Setup"),
-    QT_TRANSLATE_NOOP("FileManagerDialog", "Data"),
-    QT_TRANSLATE_NOOP("FileManagerDialog", "Report"),
-    QT_TRANSLATE_NOOP("FileManagerDialog", "Image"),
-    QT_TRANSLATE_NOOP("FileManagerDialog", "CAD"),
-    QT_TRANSLATE_NOOP("FileManagerDialog", "ALL")
-};
 
 #define FILE_PATH_NUMBER 6
 static const char* FILE_PATH_STRING[FILE_PATH_NUMBER] =
@@ -31,17 +22,49 @@ FileManagerDialog::FileManagerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    for(int i = 0; i < FILE_TYPE_NUMBER; i ++) {
-        fileTypeList.append(tr(FILE_TYPE_STRING[i]));
-        filePathList.append(tr(FILE_PATH_STRING[i]));
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+
+    for(int i = 0; i < FILE_PATH_NUMBER; i ++) {
+        m_filePathList.append(tr(FILE_PATH_STRING[i]));
     }
 
-    init_type();
+    m_listSetup.append(".conf");
+
+    m_listData.append(".dat");
+
+    m_listReport.append(".html");
+
+    m_listImage.append(".jpg");
+    m_listImage.append(".jepg");
+    m_listImage.append(".png");
+    m_listImage.append(".bmp");
+
+    m_listCAD.append(".dwg");
+    m_listCAD.append(".dxf");
+    m_listCAD.append(".dws");
+    m_listCAD.append(".dwt");
+    
+    m_listAll.append(m_listSetup);
+    m_listAll.append(m_listData);
+    m_listAll.append(m_listReport);
+    m_listAll.append(m_listImage);
+    m_listAll.append(m_listCAD);
+
+    QListWidgetItem *item = ui->listWidget->item(0);
+    ui->listWidget->setCurrentItem(item);
+
     init_path();
     init_source_path_tableView();
     init_target_path_tableView();
 
- //   connect(ui->tableView_2->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onHeaderClicked(int)));
+    connect(ui->tableView_1->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(do_header1_clicked(int)));
+    connect(ui->tableView_2->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(do_header2_clicked(int)));
+
+    m_clickedTableView1 = false;
+    m_clickedTableView2 = false;
+
+//    m_dirModel = new QFileSystemModel;
+//    m_dirModel->setRootPath(QDir::currentPath());
 
 }
 
@@ -55,100 +78,68 @@ void FileManagerDialog::on_pushButton_close_clicked()
     close();
 }
 
-void FileManagerDialog::init_type()
-{
-    ui->listView->setStyleSheet("QListView{font: 14pt 'Times New Roman'}");
-    modelType = new QStandardItemModel(this);
-
-    QStringList list;
-    for(int i = 0; i < fileTypeList.count(); i++) {
-        list.append(fileTypeList.at(i));
-        QString string = static_cast<QString>(list.at(i));
-
-        QStandardItem *item = new QStandardItem(string);
-        modelType->appendRow(item);
-        item->setForeground(QBrush(Qt::white, Qt::SolidPattern));
-    }
-
-    QModelIndex initModelIndex = modelType->index(0, 0);
-    QStandardItem *initItem = modelType->itemFromIndex(initModelIndex);
-    initItem->setForeground(QBrush(Qt::red));
-    ui->listView->setCurrentIndex(initModelIndex);
-    ui->listView->setModel(modelType);
-
-    ui->listView->setSpacing(8);
-    ui->listView->setEditTriggers(QAbstractItemView::EditKeyPressed);
-
-}
-
 void FileManagerDialog::init_path()
 {
     for(int i = 0; i < FILE_PATH_NUMBER; i ++) {
         ui->comboBox_1->addItem(tr(FILE_PATH_STRING[i]));
         ui->comboBox_2->addItem(tr(FILE_PATH_STRING[i]));
     }
+
     ui->comboBox_1->setStyleSheet("QComboBox{"
-        "font: 12pt 'Times New Roman';"
+        "font: 12pt 'Arial';"
         "color: black;"
         "selection-background-color: rgba(0, 130, 195, 0);"
         "selection-color: black;}"
         "QComboBox QAbstractItemView{selection-color:white;}");
 
     ui->comboBox_2->setStyleSheet("QComboBox{"
-        "font: 12pt 'Times New Roman';"
+        "font: 12pt 'Arial';"
         "color: black;"
         "selection-background-color: rgba(0, 130, 195, 0);"
         "selection-color: black;}"
         "QComboBox QAbstractItemView{selection-color:white;}");
 
-
 }
 void FileManagerDialog::init_source_path_tableView()
 {
-    modelSourcePath = new QStandardItemModel(1, 6, this);
-    ui->tableView_1->setModel(modelSourcePath);
+    m_modelSource = new QFileSystemModel;
+//    m_modelSource->setRootPath(QDir::currentPath());
+    ui->tableView_1->setModel(m_modelSource);
 
 #if QT_VERSION >= 0x050000
     ui->tableView_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Custom);
 #endif
 
 #if QT_VERSION < 0x050000
-    ui->tableView_1->horizontalHeader()->setResizeMode(QHeaderView::Custom);
+    ui->tableView_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Custom);
 #endif
 
-    int width = this->geometry().width() / 6 * 5;
-    ui->tableView_1->horizontalHeader()->resizeSection(0, width / 8);
-    ui->tableView_1->horizontalHeader()->resizeSection(1, width / 4);
-    ui->tableView_1->horizontalHeader()->resizeSection(2, width / 4);
-    ui->tableView_1->horizontalHeader()->resizeSection(3, width / 8 );
-    ui->tableView_1->horizontalHeader()->resizeSection(4, width / 8);
-    ui->tableView_1->horizontalHeader()->resizeSection(5, width / 8);
-    ui->tableView_1->verticalHeader()->hide();
+    int width = qRound(((qreal)this->geometry().width()) * 5 / 6);
+    ui->tableView_1->horizontalHeader()->resizeSection(0, qRound(((qreal)width) / 4));
+    ui->tableView_1->horizontalHeader()->resizeSection(1, qRound(((qreal)width) / 4));
+    ui->tableView_1->horizontalHeader()->resizeSection(2, qRound(((qreal)width) / 4));
+    ui->tableView_1->horizontalHeader()->resizeSection(3, qRound(((qreal)width) / 4));
+
     ui->tableView_1->horizontalHeader()->setFixedHeight(60);
     ui->tableView_1->verticalHeader()->setDefaultSectionSize(30);
 
-    QStandardItem *item = new QStandardItem(fileTypeList.at(0));
-    modelSourcePath->setItem(0, 0, item);
-    modelSourcePath->item(0, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-    modelSourcePath->item(0, 0)->setForeground(Qt::black);
-    modelSourcePath->item(0, 0)->setFont(QFont("Times New Roman", 14));
-
-    set_tableView_header_data(modelSourcePath);
-
+    ui->tableView_1->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     ui->tableView_1->horizontalHeader()->setStyleSheet("QHeaderView::section"
-        "{font: 13pt 'Times New Roman';"
+        "{font: 14pt 'Arial';"
         "background-color: rgba(255, 255, 255, 255);"
-        "color: rgba(0, 0, 0, 255);"//rgba(235, 235, 235, 255)
-        "border: 0px solid black;}");
-
+        "color: rgba(0, 0, 0, 255);"
+        "border: 0px solid black;"
+        "border-top: 1px solid gray;"
+        "border-bottom: 1px solid gray;}");
 
     ui->tableView_1->show();
 }
 
 void FileManagerDialog::init_target_path_tableView()
 {
-    modelTargetPath = new QStandardItemModel(1, 6, this);
-    ui->tableView_2->setModel(modelTargetPath);
+    m_modelTarget = new QFileSystemModel;
+//    m_modelTarget->setRootPath(QDir::currentPath());
+    ui->tableView_2->setModel(m_modelTarget);
 
 #if QT_VERSION >= 0x050000
     ui->tableView_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Custom);
@@ -158,78 +149,175 @@ void FileManagerDialog::init_target_path_tableView()
     ui->tableView_2->horizontalHeader()->setResizeMode(QHeaderView::Custom);
 #endif
 
-    int width = this->geometry().width() / 6 * 5;
-    ui->tableView_2->horizontalHeader()->resizeSection(0, width / 8);
-    ui->tableView_2->horizontalHeader()->resizeSection(1, width / 4);
-    ui->tableView_2->horizontalHeader()->resizeSection(2, width / 4);
-    ui->tableView_2->horizontalHeader()->resizeSection(3, width / 8 );
-    ui->tableView_2->horizontalHeader()->resizeSection(4, width / 8);
-    ui->tableView_2->horizontalHeader()->resizeSection(5, width / 8);
-    ui->tableView_2->verticalHeader()->hide();
+    int width = qRound(((qreal)this->geometry().width()) * 5 / 6);
+    ui->tableView_2->horizontalHeader()->resizeSection(0, qRound(((qreal)width) / 4));
+    ui->tableView_2->horizontalHeader()->resizeSection(1, qRound(((qreal)width) / 4));
+    ui->tableView_2->horizontalHeader()->resizeSection(2, qRound(((qreal)width) / 4));
+    ui->tableView_2->horizontalHeader()->resizeSection(3, qRound(((qreal)width) / 4));
+
     ui->tableView_2->horizontalHeader()->setFixedHeight(60);
     ui->tableView_2->verticalHeader()->setDefaultSectionSize(30);
 
-    QStandardItem *item = new QStandardItem(fileTypeList.at(0));
-    modelTargetPath->setItem(0, 0, item);
-    modelTargetPath->item(0, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-    modelTargetPath->item(0, 0)->setForeground(Qt::black);
-    modelTargetPath->item(0, 0)->setFont(QFont("Times New Roman", 14));
-
-    set_tableView_header_data(modelTargetPath);
-
+    ui->tableView_2->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     ui->tableView_2->horizontalHeader()->setStyleSheet("QHeaderView::section"
-        "{font: 13pt 'Times New Roman';"
+        "{font: 14pt 'Arial';"
         "background-color: rgba(255, 255, 255, 255);"
         "color: rgba(0, 0, 0, 255);"
-        "border: 0px solid black;}");
-
+        "border: 0px solid black;"
+        "border-top: 1px solid gray;"
+        "border-bottom: 1px solid gray;}");
 
     ui->tableView_2->show();
 }
 
-void FileManagerDialog::set_tableView_header_data(QStandardItemModel *model)
+void FileManagerDialog::set_tableView_header_data(QFileSystemModel *model)
 {
-    model->setHeaderData(0, Qt::Horizontal, tr("Number"));
-    model->setHeaderData(1, Qt::Horizontal, tr("File Name"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Modification Time"));
-    model->setHeaderData(3, Qt::Horizontal, tr("Copy"));
-    model->setHeaderData(4, Qt::Horizontal, tr("Move"));
-    model->setHeaderData(5, Qt::Horizontal, tr("Delete"));
+//    model->setHeaderData(1, Qt::Horizontal, tr("File Name"));
+//    model->setHeaderData(0, Qt::Horizontal, tr("Type"));
+//    model->setHeaderData(2, Qt::Horizontal, tr("Modification Time"));
+//    model->setHeaderData(3, Qt::Horizontal, tr("Copy"));
+//    model->setHeaderData(4, Qt::Horizontal, tr("Move"));
+//    model->setHeaderData(5, Qt::Horizontal, tr("Delete"));
 }
 
-//void FileManagerDialog::on_tableView_1_clicked(const QModelIndex &index)
-//{
-////    ui->tableView_1->edit(index);
-//}
+void FileManagerDialog::do_header1_clicked(int index)
+{
+    ui->tableView_1->sortByColumn(index);
+}
 
-//void FileManagerDialog::onHeaderClicked(int index)
-//{
-////    ComboBoxDelegate *comboBox = static_cast<ComboBoxDelegate*>(ui->tableView_1->itemDelegate());
-////    if(!comboBox->editFlag) {
-////        QModelIndex modelIndex = model->item(0, index)->index();
-////        ui->tableView_1->edit(modelIndex);
-////    }
-//}
+void FileManagerDialog::do_header2_clicked(int index)
+{
+    ui->tableView_2->sortByColumn(index);
+}
 
-void FileManagerDialog::on_listView_clicked(const QModelIndex &index)
+void FileManagerDialog::on_listWidget_clicked(const QModelIndex &index)
 {
     int row = index.row();
     ui->comboBox_1->setCurrentIndex(row);
     ui->comboBox_2->setCurrentIndex(row);
+    ui->listWidget->setCurrentIndex(index);
+}
 
-    for(int i = 0; i < FILE_TYPE_NUMBER; i++) {
-        QModelIndex modelIndex = modelType->index(i, 0);
-        QStandardItem *item = modelType->itemFromIndex(modelIndex);
-        if(modelIndex == index) {
-            item->setForeground(QBrush(Qt::red, Qt::SolidPattern));
-            ui->listView->setCurrentIndex(modelIndex);
-        } else {
-            item->setForeground(QBrush(Qt::white, Qt::SolidPattern));
-        }
+void FileManagerDialog::on_tableView_1_pressed(const QModelIndex &index)
+{
+//    QString fromDir = ui->comboBox_1->currentText() + "/"/* + ui->tableView_1->item(index.row(), 0)->text()*/;
+//    QString toDir = ui->comboBox_2->currentText() + "/";
+//    if(index.column() == 3) {
+//        copy_file_to_path(fromDir, toDir);
+//    } else if(index.column() == 4) {
+//        cut_file_to_path(fromDir, toDir);
+//    } else if(index.column() == 5) {
+//        delete_file(fromDir);
+//    }
+//    m_clickedTableView1 = true;
+//    m_clickedTableView2 = false;
+//    m_clickedIndex1 = index;
+}
+
+void FileManagerDialog::on_tableView_2_pressed(const QModelIndex &index)
+{
+//    QString fromDir = ui->comboBox_2->currentText() + "/" /*+ ui->tableView_2->item(index.row(), 0)->text()*/;
+//    QString toDir = ui->comboBox_1->currentText() + "/";
+//    if(index.column() == 3) {
+//        copy_file_to_path(fromDir, toDir);
+//    } else if(index.column() == 4) {
+//        cut_file_to_path(fromDir, toDir);
+//    } else if(index.column() == 5) {
+//        delete_file(fromDir);
+//    }
+//    m_clickedTableView1 = false;
+//    m_clickedTableView2 = true;
+//    m_clickedIndex2 = index;
+}
+
+void FileManagerDialog::copy_file_to_path(QString fromDir, QString toDir)
+{
+    if(fromDir == toDir) {
+        return;
+    }
+    if(!QFile::exists(fromDir)) {
+        return;
+    }
+    if(!QFile::copy(fromDir, toDir)) {
+        return;
     }
 }
 
-//void FileManagerDialog::on_tableView_2_clicked(const QModelIndex &index)
-//{
+void FileManagerDialog::cut_file_to_path(QString fromDir, QString toDir)
+{
+    copy_file_to_path(fromDir, toDir);
+    delete_file(fromDir);
+}
 
-//}
+void FileManagerDialog::delete_file(QString fileName)
+{
+    QFile::remove(fileName);
+}
+
+void FileManagerDialog::on_pushButton_select_clicked()
+{
+//    if(m_clickedTableView1) {
+//        ui->tableView_1->setSelectionBehavior(QAbstractItemView::SelectRows);
+////        emit ui->tableView_1->pressed(m_clickedIndex1);
+//    } else {
+//        ui->tableView_2->setSelectionBehavior(QAbstractItemView::SelectRows);
+////        emit ui->tableView_2->pressed(m_clickedIndex2);
+//    }
+}
+
+void FileManagerDialog::on_pushButton_selectAll_clicked()
+{
+
+}
+
+void FileManagerDialog::on_pushButton_rename_clicked()
+{
+    InputPanelContext *dialog = new InputPanelContext;
+    dialog->exec();
+    delete dialog;
+}
+
+void FileManagerDialog::on_comboBox_1_currentIndexChanged(const QString &arg1)
+{
+
+//    do_file_filters(ui->tableView_1, m_modelSource, arg1);
+}
+
+void FileManagerDialog::on_comboBox_2_currentIndexChanged(const QString &arg1)
+{
+//    do_file_filters(ui->tableView_2, m_modelTarget, arg1);
+}
+
+void FileManagerDialog::do_file_filters(QTableView *view, QFileSystemModel *model, const QString &str)
+{
+
+    if(str == tr("Setup")) {
+        model->setNameFilters(m_listSetup);
+    } else if(str == tr("Data")) {
+        model->setNameFilters(m_listData);
+    } else if(str == tr("Report")) {
+        model->setNameFilters(m_listReport);
+    } else if(str == tr("Image")) {
+        model->setNameFilters(m_listImage);
+    } else if(str == tr("CAD")) {
+        model->setNameFilters(m_listCAD);
+    }
+    model->setNameFilterDisables(false);
+    view->setModel(model);
+    view->setRootIndex(model->index(QDir::currentPath()));
+}
+
+void FileManagerDialog::on_pushButton_copy_clicked()
+{
+
+}
+
+void FileManagerDialog::on_pushButton_move_clicked()
+{
+
+}
+
+void FileManagerDialog::on_pushButton_delete_clicked()
+{
+
+}
