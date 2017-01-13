@@ -13,7 +13,6 @@
 #include "sysinfo_dialog.h"
 
 #include <QDate>
-#include <QDebug>
 
 namespace DplPreferenceMenu {
 
@@ -99,10 +98,12 @@ void SystemMenu::show_time_dialog()
 {
     DateTimeSetDialog *timeDialog = new DateTimeSetDialog;
     QMap<QString, QString> map;
-    map.insert("Time Set", m_timeItem->get_title());
-    timeDialog->set_dialog_title(map);
+    map.insert("Time Set", m_timeItem->get_title());   
     QString str = m_timeItem->get_text();
+
+    timeDialog->set_dialog_title(map);
     timeDialog->set_time_value(str);
+
     if (timeDialog->exec() == DateTimeSetDialog::Accepted) {
         m_timeItem->set_text(timeDialog->get_time());
     } else {
@@ -117,8 +118,10 @@ void SystemMenu::show_date_dialog()
     QMap<QString, QString> map;
     map.insert("Date Set", m_dateItem->get_title());
     QString str = m_dateItem->get_text();
+
     dateDialog->set_dialog_title(map);
     dateDialog->set_date_value(str);
+
     if (dateDialog->exec() == DateTimeSetDialog::Accepted) {
         m_dateItem->set_text(dateDialog->get_date());
     } else {
@@ -129,14 +132,16 @@ void SystemMenu::show_date_dialog()
 
 void SystemMenu::show_resetconfig_dialog()
 {
-    ResetConfigDialog resetConfigDialog;
-    resetConfigDialog.exec();
+    ResetConfigDialog *resetConfigDialog = new ResetConfigDialog;
+    resetConfigDialog->exec();
+    delete resetConfigDialog;
 }
 
 void SystemMenu::show_info_dialog()
 {
-    Ui::Dialog::SysInfoDialog infoDialog;
-    infoDialog.exec();
+    Ui::Dialog::SysInfoDialog *infoDialog = new Ui::Dialog::SysInfoDialog;
+    infoDialog->exec();
+    delete infoDialog;
 }
 
 }

@@ -58,6 +58,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_menu(MainMenu::Type)));
 
+    pVirtualKeyboard = new VirtualKeyboard;
+    pVirtualKeyboard->hide();
+    connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
+
 }
 
 MainWindow::~MainWindow()
@@ -158,18 +162,12 @@ void MainWindow::show_hidden_Menu()
 
 void MainWindow::do_keyboard_event()
 {
-    m_hiddenKeyboardFlag = !m_hiddenKeyboardFlag;
-    if(m_hiddenKeyboardFlag) {
+    if(pVirtualKeyboard->isHidden()) {
         pVirtualKeyboard->show();
         pVirtualKeyboard->move((this->width() - pVirtualKeyboard->width()) / 2, (this->height() - pVirtualKeyboard->height()) / 2);       
     } else {
         pVirtualKeyboard->hide();
     }
-}
-
-void MainWindow::slot_keyboard_close_clicked()
-{
-    m_hiddenKeyboardFlag = false;
 }
 
 void MainWindow::slot_setMenuOpacity(double value)

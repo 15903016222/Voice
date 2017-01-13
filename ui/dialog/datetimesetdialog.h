@@ -22,9 +22,13 @@ public:
     void set_dialog_title(QMap<QString, QString> &map);
     void set_time_value(QString &string);
     void set_date_value(QString &string);
+    void set_datetime_string(QString &str);
 
     QString get_date();
     QString get_time();
+
+protected:
+    void keyPressEvent(QKeyEvent *e);
 
 private:
     Ui::DateTimeSetDialog *ui;
@@ -38,8 +42,11 @@ private:
     QList<int> get_value_list(QString &text, QString &str);
 
 private slots:
-    void on_buttonBox_accepted();
     void check_date_valid(int number);
+    void set_prefix(int value);
+
+    void on_pushButton_ok_clicked();
+    void on_pushButton_cancel_clicked();
 };
 
 #endif // DATETIMESETDIALOG_H

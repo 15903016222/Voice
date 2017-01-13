@@ -1,6 +1,8 @@
 #include "networkdialog.h"
 #include "ui_networkdialog.h"
 
+#include <QKeyEvent>
+
 NetworkDialog::NetworkDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NetworkDialog)
@@ -20,54 +22,70 @@ void NetworkDialog::retranslate_dialog_ui()
     ui->retranslateUi(this);
 }
 
-void NetworkDialog::on_buttonBox_accepted()
+void NetworkDialog::set_dialog_title(QString &string)
 {
-    int value_1 = ui->spinBox_1->value();
-    int value_2 = ui->spinBox_2->value();
-    int value_3 = ui->spinBox_3->value();
-    int value_4 = ui->spinBox_4->value();
-
-    if(titleMap.keys().at(0) == "IP Address") {
-        str_ip.clear();
-        str_ip.append(QString::number((double)value_1, 'f', 0));
-        str_ip.append(".");
-        str_ip.append(QString::number((double)value_2, 'f', 0));
-        str_ip.append(".");
-        str_ip.append(QString::number((double)value_3, 'f', 0));
-        str_ip.append(".");
-        str_ip.append(QString::number((double)value_4, 'f', 0));
-    }else{
-        str_subNet.clear();
-        str_subNet.append(QString::number((double)value_1, 'f', 0));
-        str_subNet.append(".");
-        str_subNet.append(QString::number((double)value_2, 'f', 0));
-        str_subNet.append(".");
-        str_subNet.append(QString::number((double)value_3, 'f', 0));
-        str_subNet.append(".");
-        str_subNet.append(QString::number((double)value_4, 'f', 0));
-    }
+    ui->label->setText(string);
 }
 
-void NetworkDialog::set_dialog_title(QMap<QString, QString> map)
+void NetworkDialog::set_spinbox_value(QString &string)
 {
-    ui->label->setText(map.values().at(0));
-    titleMap = map;
-}
-
-void NetworkDialog::set_spinbox_value(QList<int> valueList)
-{
+    QString str = ".";
+    QList<int> valueList = get_value_list(string, str);
     ui->spinBox_1->setValue(valueList.at(0));
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
     ui->spinBox_4->setValue(valueList.at(3));
 }
 
-QString NetworkDialog::get_ip()
+QString NetworkDialog::get_text()
 {
-    return str_ip;
+    return m_str;
 }
 
-QString NetworkDialog::get_subnet()
+QList<int> NetworkDialog::get_value_list(QString &text, QString &str)
 {
-    return str_subNet;
+    QList<int> valueList;
+    QString tmpString = text;
+    int tmpIndex = 0;
+    for(int i = 0; i < text.length() - 1; i ++) {
+        if(QString(text.at(i)) == str) {
+            valueList.append(tmpString.left(i - tmpIndex).toInt());
+            tmpString = tmpString.right(text.count() - i - 1);
+            tmpIndex = i + 1;
+        }
+    }
+    valueList.append(tmpString.toInt());
+    return valueList;
+}
+
+void NetworkDialog::on_pushButton_ok_clicked()
+{
+    m_str.clear();
+    m_str.append(QString::number(ui->spinBox_1->value()));
+    m_str.append(".");
+    m_str.append(QString::number(ui->spinBox_2->value()));
+    m_str.append(".");
+    m_str.append(QString::number(ui->spinBox_3->value()));
+    m_str.append(".");
+    m_str.append(QString::number(ui->spinBox_4->value()));
+    accept();
+}
+
+void NetworkDialog::on_pushButton_cancel_clicked()
+{
+    reject();
+}
+
+void NetworkDialog::keyPressEvent(QKeyEvent *e)
+{
+    switch ((int)e->key()) {
+    case Qt::Key_Escape:
+        reject();
+        break;
+    case Qt::Key_Return:
+        on_pushButton_ok_clicked();
+        break;
+    default:
+        break;
+    }
 }

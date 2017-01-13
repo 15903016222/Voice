@@ -14,6 +14,7 @@ namespace DplPreferenceMenu {
 
 class NetworkMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     explicit NetworkMenu(Ui::BaseMenu *ui, QObject *parent);
     ~NetworkMenu();
@@ -22,8 +23,12 @@ public:
     void hide();
 
 private:
-    MenuItem *m_ipItem;
-    MenuItem *m_maskItem;
+    LabelMenuItem *m_ipItem;
+    LabelMenuItem *m_maskItem;
+
+private slots:
+    void show_ip_address_dialog();
+    void show_subnet_mask_dialog();
 };
 
 }

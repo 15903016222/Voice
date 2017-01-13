@@ -19,44 +19,31 @@ InputPanelContext::InputPanelContext(QWidget *parent) :
     for(int i = 0; i < 10; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-        pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
     for(int i = 1; i <= 28; i ++) {
         QPushButton *pushButton = findChild<QPushButton*>("symbol_" + QString::number(i));
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-        pushButton->setFocusPolicy(Qt::NoFocus);
-    }
-
-    for(int i = 1; i < 3; i ++ ) {
-        QFrame *frame = findChild<QFrame*>("frame_" + QString::number(i));
-        frame->setStyleSheet("QWidget QPushButton{font: bold 12pt 'Times New Roman';}");
     }
 
     for(int i = 65; i <= 90; i ++) {
         QString string = (QChar)i;
         QPushButton *pushButton = findChild<QPushButton*>("pushButton_" + string);
         connect(pushButton, SIGNAL(clicked()), this, SLOT(edit_text()));
-        pushButton->setFocusPolicy(Qt::NoFocus);
     }
 
-    ui->pushButton_alt->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_arrow_down->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_arrow_left->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_arrow_right->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_arrow_up->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_BackSpace->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_capsLock->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_Enter->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_Shift->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_Space->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_Tab->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_ctrl->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_cancel->setFocusPolicy(Qt::NoFocus);
-    ui->pushButton_ok->setFocusPolicy(Qt::NoFocus);
-
-    ui->textEdit->setStyleSheet("QTextEdit{font:12pt 'Times New Roman';}");
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(show_cursor()));
+
+    ui->widget_2->show();
+    ui->widget_3->show();
+    ui->widget_4->show();
+    ui->widget_6->hide();
+    ui->widget_7->hide();
+    ui->widget_8->hide();
+    ui->widget_1->resize(450, 85);
+    ui->widget_00->resize(450, 250);
+    ui->widget_10->resize(450, 45);
+    resize(450, 380);
 }
 
 InputPanelContext::~InputPanelContext()
@@ -88,13 +75,13 @@ void InputPanelContext::on_pushButton_capsLock_clicked()
     m_capsLock = !m_capsLock;
 }
 
-void InputPanelContext::on_pushButton_Space_clicked()
+void InputPanelContext::on_pushButton_space_clicked()
 {
     QTextCursor cursor = ui->textEdit->textCursor();
     cursor.insertText(" ");
 }
 
-void InputPanelContext::on_pushButton_BackSpace_clicked()
+void InputPanelContext::on_pushButton_backSpace_clicked()
 {
     QString text = ui->textEdit->toPlainText();
     if(text != NULL) {
@@ -115,7 +102,7 @@ void InputPanelContext::on_pushButton_ok_clicked()
 {
     m_text.clear();
     m_text = ui->textEdit->toPlainText();
-    close();
+    accept();
 }
 
 void InputPanelContext::set_item_current_text(QString string)
@@ -145,25 +132,26 @@ void InputPanelContext::on_pushButton_arrow_right_clicked()
         ui->textEdit->setTextCursor(cursor);
     }
 }
-void InputPanelContext::on_pushButton_arrow_up_clicked()
-{
-    ui->textEdit->setFocus();
-    if(ui->textEdit->document()->lineCount() > 0) {
-        QTextCursor cursor = ui->textEdit->textCursor();
-        cursor.movePosition(QTextCursor::Up);
-        ui->textEdit->setTextCursor(cursor);
-    }
-}
 
-void InputPanelContext::on_pushButton_arrow_down_clicked()
-{
-    ui->textEdit->setFocus();
-    if(ui->textEdit->document()->lineCount() > 0) {
-        QTextCursor cursor = ui->textEdit->textCursor();
-        cursor.movePosition(QTextCursor::Down);
-        ui->textEdit->setTextCursor(cursor);
-    }
-}
+//void InputPanelContext::on_pushButton_arrow_up_clicked()
+//{
+//    ui->textEdit->setFocus();
+//    if(ui->textEdit->document()->lineCount() > 0) {
+//        QTextCursor cursor = ui->textEdit->textCursor();
+//        cursor.movePosition(QTextCursor::Up);
+//        ui->textEdit->setTextCursor(cursor);
+//    }
+//}
+
+//void InputPanelContext::on_pushButton_arrow_down_clicked()
+//{
+//    ui->textEdit->setFocus();
+//    if(ui->textEdit->document()->lineCount() > 0) {
+//        QTextCursor cursor = ui->textEdit->textCursor();
+//        cursor.movePosition(QTextCursor::Down);
+//        ui->textEdit->setTextCursor(cursor);
+//    }
+//}
 
 void InputPanelContext::show_cursor()
 {
@@ -173,4 +161,37 @@ void InputPanelContext::show_cursor()
 QString InputPanelContext::get_text()
 {
     return m_text;
+}
+
+void InputPanelContext::on_pushButton_cancel_clicked()
+{
+    reject();
+}
+
+void InputPanelContext::on_pushButton_symbol_clicked()
+{
+    if(ui->pushButton_symbol->text() == "Symbol") {
+        ui->widget_2->hide();
+        ui->widget_3->hide();
+        ui->widget_4->hide();
+        ui->widget_5->hide();
+        ui->widget_6->show();
+        ui->widget_7->show();
+        ui->widget_8->show();
+        ui->pushButton_symbol->setText("Eng");
+    } else {
+        ui->widget_2->show();
+        ui->widget_3->show();
+        ui->widget_4->show();
+        ui->widget_5->show();
+        ui->widget_6->hide();
+        ui->widget_7->hide();
+        ui->widget_8->hide();
+        ui->pushButton_symbol->setText("Symbol");
+    }
+}
+
+void InputPanelContext::on_pushButton_backSpace2_clicked()
+{
+    on_pushButton_backSpace_clicked();
 }

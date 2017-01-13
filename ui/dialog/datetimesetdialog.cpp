@@ -1,6 +1,8 @@
 #include "datetimesetdialog.h"
 #include "ui_datetimesetdialog.h"
 
+#include <QKeyEvent>
+
 DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DateTimeSetDialog)
@@ -8,9 +10,14 @@ DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+
     ui->spinBox_1->setSingleStep(1);
     ui->spinBox_2->setSingleStep(1);
     ui->spinBox_3->setSingleStep(1);
+
+    connect(ui->spinBox_1, SIGNAL(valueChanged(int)), this, SLOT(set_prefix(int)));
+    connect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(set_prefix(int)));
+    connect(ui->spinBox_3, SIGNAL(valueChanged(int)), this, SLOT(set_prefix(int)));
 }
 
 DateTimeSetDialog::~DateTimeSetDialog()
@@ -23,48 +30,14 @@ void DateTimeSetDialog::retranslate_dialog_ui()
     ui->retranslateUi(this);
 }
 
-void DateTimeSetDialog::on_buttonBox_accepted()
-{    
-    int valueOne = ui->spinBox_1->value();
-    int valueTwo = ui->spinBox_2->value();
-    int valueThree = ui->spinBox_3->value();
-
-    if(m_titleMap.keys().at(0) == "Date Set") {
-        m_strDate.clear();
-        m_strDate.append(QString::number(valueOne));
-        m_strDate.append("-");
-        if(valueTwo < 10){
-            m_strDate.append("0" + QString::number(valueTwo));
-        }else{
-            m_strDate.append(QString::number(valueTwo));
-        }
-        m_strDate.append("-");
-        if(valueThree < 10){
-            m_strDate.append("0" + QString::number(valueThree));
-        }else{
-            m_strDate.append(QString::number(valueThree));
-        }
-
-    } else {
-        m_strTime.clear();
-        if(valueOne < 10){
-            m_strTime.append("0" + QString::number(valueOne));
-        }else{
-            m_strTime.append(QString::number(valueOne));
-        }
-        m_strTime.append(":");
-        if(valueTwo < 10){
-            m_strTime.append("0" + QString::number(valueTwo));
-        }else{
-            m_strTime.append(QString::number(valueTwo));
-        }
-        m_strTime.append(":");
-        if(valueThree < 10){
-            m_strTime.append("0" + QString::number(valueThree));
-        }else{
-            m_strTime.append(QString::number(valueThree));
-        }
-    }
+void DateTimeSetDialog::set_datetime_string(QString &str)
+{
+    str.clear();
+    str.append(ui->spinBox_1->prefix() + QString::number(ui->spinBox_1->value()));
+    str.append(ui->label_2->text());
+    str.append(ui->spinBox_2->prefix() + QString::number(ui->spinBox_2->value()));
+    str.append(ui->label_3->text());
+    str.append(ui->spinBox_3->prefix() + QString::number(ui->spinBox_3->value()));
 }
 
 void DateTimeSetDialog::check_date_valid(int number)
@@ -105,10 +78,6 @@ void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> &map)
         ui->spinBox_1->setMaximum(23);
         ui->spinBox_2->setMaximum(59);
         ui->spinBox_3->setMaximum(59);
-
-        disconnect(ui->spinBox_1, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
-        disconnect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
-        disconnect(ui->spinBox_3, SIGNAL(valueChanged(int)), this, SLOT(check_date_valid(int)));
     }
 }
 
@@ -119,6 +88,8 @@ void DateTimeSetDialog::set_time_value(QString &string)
     ui->spinBox_1->setValue(valueList.at(0));
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
+    ui->label_2->setText(str);
+    ui->label_3->setText(str);
 }
 
 void DateTimeSetDialog::set_date_value(QString &string)
@@ -128,6 +99,8 @@ void DateTimeSetDialog::set_date_value(QString &string)
     ui->spinBox_1->setValue(valueList.at(0));
     ui->spinBox_2->setValue(valueList.at(1));
     ui->spinBox_3->setValue(valueList.at(2));
+    ui->label_2->setText(str);
+    ui->label_3->setText(str);
 }
 
 QString DateTimeSetDialog::get_date()
@@ -154,4 +127,43 @@ QList<int> DateTimeSetDialog::get_value_list(QString &text, QString &str)
     }
     valueList.append(tmpString.toInt());
     return valueList;
+}
+
+void DateTimeSetDialog::set_prefix(int value)
+{
+    QSpinBox *spinBox = qobject_cast<QSpinBox*>(sender());
+    if(value >= 10) {
+        spinBox->setPrefix("");
+    } else {
+        spinBox->setPrefix("0");
+    }
+}
+
+void DateTimeSetDialog::on_pushButton_ok_clicked()
+{
+    if(m_titleMap.keys().at(0) == "Date Set") {
+        set_datetime_string(m_strDate);
+    } else {
+        set_datetime_string(m_strTime);
+    }
+    accept();
+}
+
+void DateTimeSetDialog::on_pushButton_cancel_clicked()
+{
+    reject();
+}
+
+void DateTimeSetDialog::keyPressEvent(QKeyEvent *e)
+{
+    switch ((int)e->key()) {
+    case Qt::Key_Escape:
+        reject();
+        break;
+    case Qt::Key_Return:
+        on_pushButton_ok_clicked();
+        break;
+    default:
+        break;
+    }
 }

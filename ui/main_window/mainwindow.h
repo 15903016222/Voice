@@ -34,7 +34,6 @@ protected slots:
 
     void update_translator(QString string);
     void do_keyboard_event();
-    void slot_keyboard_close_clicked();
     void slot_setMenuOpacity(double value);
 
     void do_rotary_event(Mcu::RotaryType type);
@@ -50,11 +49,7 @@ private:
     MainMenu *mainMenu;
     SubMenu *subMenu;
 
-    bool m_hiddenFirstSecondMenuFlag;
-    bool m_hiddenThirdMenuFlag;
     bool m_hiddenCommonMenuFlag;
-    bool m_hiddenArrowFlag;
-    bool m_hiddenKeyboardFlag;
     void show_hidden_Menu();
     void resizeEvent(QResizeEvent *event);
 

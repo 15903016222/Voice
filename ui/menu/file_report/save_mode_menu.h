@@ -7,6 +7,7 @@ namespace DplFileReportMenu {
 
 class SaveModeMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     explicit SaveModeMenu(Ui::BaseMenu *ui, QObject *parent);
     ~SaveModeMenu();
@@ -18,7 +19,11 @@ private:
     ComboMenuItem *m_storageItem;
     ComboMenuItem *m_saveModeItem;
     MenuItem *m_saveDataItem;
-    MenuItem *m_fileName;
+    LabelMenuItem *m_fileName;
+
+private slots:
+    void show_input_dialog();
+
 };
 
 }

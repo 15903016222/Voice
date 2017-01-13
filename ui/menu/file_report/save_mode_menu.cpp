@@ -1,6 +1,7 @@
 #include "save_mode_menu.h"
 #include "combo_menu_item.h"
 #include "label_menu_item.h"
+#include "inputpanelcontext.h"
 
 namespace DplFileReportMenu {
 
@@ -31,7 +32,7 @@ SaveModeMenu::SaveModeMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* File Name menu item */
     m_fileName = new LabelMenuItem;
     m_fileName->set(tr("File Name"), "");
-    //    connect(m_fileName, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+    connect(m_fileName, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 }
 
 SaveModeMenu::~SaveModeMenu()
@@ -64,6 +65,21 @@ void SaveModeMenu::hide()
     m_saveModeItem->hide();
     m_saveDataItem->hide();
     m_fileName->hide();
+}
+
+void SaveModeMenu::show_input_dialog()
+{
+    InputPanelContext *inputPanel = new InputPanelContext;
+    LabelMenuItem *menu = qobject_cast<LabelMenuItem*>(sender());
+    QString text = menu->get_text();
+
+    inputPanel->set_item_current_text(text);
+    if (inputPanel->exec() == InputPanelContext::Accepted) {
+        menu->set_text(inputPanel->get_text());
+    } else {
+        menu->set_text(text);
+    }
+    delete inputPanel;
 }
 
 }

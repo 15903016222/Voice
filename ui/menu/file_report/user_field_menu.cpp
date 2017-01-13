@@ -1,6 +1,7 @@
 #include "user_field_menu.h"
 #include "combo_menu_item.h"
 #include "label_menu_item.h"
+#include "inputpanelcontext.h"
 
 namespace DplFileReportMenu {
 
@@ -29,17 +30,17 @@ UserFieldMenu::UserFieldMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* Label menu item */
     m_labelItem = new LabelMenuItem;
     m_labelItem->set(tr("Label"), "");
-//    connect(m_labelItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+    connect(m_labelItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
     /* Content Menu Item */
     m_contentItem = new LabelMenuItem;
     m_contentItem->set(tr("Content"), "");
-//    connect(m_contentItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+    connect(m_contentItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
     /* Edit Note Number item */
     m_editNoteItem = new LabelMenuItem;
     m_editNoteItem->set(tr("Edit Note"), "");
-//    connect(m_editNoteItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
+    connect(m_editNoteItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
 
     /* Print menu item */
     m_printItem = new LabelMenuItem;
@@ -86,6 +87,21 @@ void UserFieldMenu::hide()
     m_contentItem->hide();
     m_editNoteItem->hide();
     m_printItem->hide();
+}
+
+void UserFieldMenu::show_input_dialog()
+{
+    InputPanelContext *inputPanel = new InputPanelContext;
+    LabelMenuItem *menu = qobject_cast<LabelMenuItem*>(sender());
+    QString text = menu->get_text();
+
+    inputPanel->set_item_current_text(text);
+    if (inputPanel->exec() == InputPanelContext::Accepted) {
+        menu->set_text(inputPanel->get_text());
+    } else {
+        menu->set_text(text);
+    }
+    delete inputPanel;
 }
 
 }

@@ -31,14 +31,17 @@ signals:
 private slots:
     void edit_text();
     void on_pushButton_capsLock_clicked();
-    void on_pushButton_Space_clicked();
-    void on_pushButton_BackSpace_clicked();
+    void on_pushButton_space_clicked();
+    void on_pushButton_backSpace_clicked();
     void on_pushButton_ok_clicked();
     void on_pushButton_arrow_left_clicked();
     void show_cursor();
     void on_pushButton_arrow_right_clicked();
-    void on_pushButton_arrow_up_clicked();
-    void on_pushButton_arrow_down_clicked();
+//    void on_pushButton_arrow_up_clicked();
+//    void on_pushButton_arrow_down_clicked();
+    void on_pushButton_cancel_clicked();
+    void on_pushButton_symbol_clicked();
+    void on_pushButton_backSpace2_clicked();
 };
 
 #endif // INPUTPANELCONTEXT_H
