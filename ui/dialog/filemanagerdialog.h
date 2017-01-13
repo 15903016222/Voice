@@ -27,8 +27,6 @@ private:
     void init_target_path_tableView();
     void set_tableView_header_data(QFileSystemModel *model);
     void copy_file_to_path(QString fromDir, QString toDir);
-    void cut_file_to_path(QString fromDir, QString toDir);
-    void delete_file(QString fileName);
     void do_file_filters(QTableView *view, QFileSystemModel *model, const QString &str);
 
     QStringList m_filePathList;

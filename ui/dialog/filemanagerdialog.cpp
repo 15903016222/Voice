@@ -3,6 +3,7 @@
 #include "inputpanelcontext.h"
 
 #include <QFile>
+#include <QMessageBox>
 #include <QDebug>
 
 #define FILE_PATH_NUMBER 6
@@ -103,7 +104,7 @@ void FileManagerDialog::init_path()
 void FileManagerDialog::init_source_path_tableView()
 {
     m_modelSource = new QFileSystemModel;
-//    m_modelSource->setRootPath(QDir::currentPath());
+    m_modelSource->setRootPath(QDir::rootPath());
     ui->tableView_1->setModel(m_modelSource);
 
 #if QT_VERSION >= 0x050000
@@ -138,7 +139,7 @@ void FileManagerDialog::init_source_path_tableView()
 void FileManagerDialog::init_target_path_tableView()
 {
     m_modelTarget = new QFileSystemModel;
-//    m_modelTarget->setRootPath(QDir::currentPath());
+    m_modelTarget->setRootPath(QDir::currentPath());
     ui->tableView_2->setModel(m_modelTarget);
 
 #if QT_VERSION >= 0x050000
@@ -209,9 +210,9 @@ void FileManagerDialog::on_tableView_1_pressed(const QModelIndex &index)
 //    } else if(index.column() == 5) {
 //        delete_file(fromDir);
 //    }
-//    m_clickedTableView1 = true;
-//    m_clickedTableView2 = false;
-//    m_clickedIndex1 = index;
+    m_clickedTableView1 = true;
+    m_clickedTableView2 = false;
+    m_clickedIndex1 = index;
 }
 
 void FileManagerDialog::on_tableView_2_pressed(const QModelIndex &index)
@@ -225,9 +226,9 @@ void FileManagerDialog::on_tableView_2_pressed(const QModelIndex &index)
 //    } else if(index.column() == 5) {
 //        delete_file(fromDir);
 //    }
-//    m_clickedTableView1 = false;
-//    m_clickedTableView2 = true;
-//    m_clickedIndex2 = index;
+    m_clickedTableView1 = false;
+    m_clickedTableView2 = true;
+    m_clickedIndex2 = index;
 }
 
 void FileManagerDialog::copy_file_to_path(QString fromDir, QString toDir)
@@ -241,17 +242,6 @@ void FileManagerDialog::copy_file_to_path(QString fromDir, QString toDir)
     if(!QFile::copy(fromDir, toDir)) {
         return;
     }
-}
-
-void FileManagerDialog::cut_file_to_path(QString fromDir, QString toDir)
-{
-    copy_file_to_path(fromDir, toDir);
-    delete_file(fromDir);
-}
-
-void FileManagerDialog::delete_file(QString fileName)
-{
-    QFile::remove(fileName);
 }
 
 void FileManagerDialog::on_pushButton_select_clicked()
@@ -279,7 +269,6 @@ void FileManagerDialog::on_pushButton_rename_clicked()
 
 void FileManagerDialog::on_comboBox_1_currentIndexChanged(const QString &arg1)
 {
-
 //    do_file_filters(ui->tableView_1, m_modelSource, arg1);
 }
 
@@ -290,7 +279,6 @@ void FileManagerDialog::on_comboBox_2_currentIndexChanged(const QString &arg1)
 
 void FileManagerDialog::do_file_filters(QTableView *view, QFileSystemModel *model, const QString &str)
 {
-
     if(str == tr("Setup")) {
         model->setNameFilters(m_listSetup);
     } else if(str == tr("Data")) {
@@ -309,15 +297,33 @@ void FileManagerDialog::do_file_filters(QTableView *view, QFileSystemModel *mode
 
 void FileManagerDialog::on_pushButton_copy_clicked()
 {
-
+    if(m_clickedTableView1) {
+        copy_file_to_path(m_modelSource->filePath(m_clickedIndex1), m_modelTarget->rootPath());
+    } else if(m_clickedTableView2) {
+        copy_file_to_path(m_modelTarget->filePath(m_clickedIndex2), m_modelSource->rootPath());
+    }
 }
 
 void FileManagerDialog::on_pushButton_move_clicked()
 {
-
+    on_pushButton_copy_clicked();
+    on_pushButton_delete_clicked();
 }
 
 void FileManagerDialog::on_pushButton_delete_clicked()
 {
-
+    bool ok;
+    if(!m_clickedTableView1 && !m_clickedTableView2) {
+        return;
+    } else if(m_clickedTableView1  && !m_clickedTableView2) {
+        ok = m_modelSource->remove(m_clickedIndex1);
+        if(!ok) {
+            QMessageBox::information(this, tr("Remove"), tr("It's failed to remove the file %1.").arg(m_modelSource->fileName(m_clickedIndex1)));
+        }
+    } else if(!m_clickedTableView1 && m_clickedTableView1) {
+        ok = m_modelTarget->remove(m_clickedIndex2);
+        if(!ok) {
+            QMessageBox::information(this, tr("Remove"), tr("It's failed to remove the file %1.").arg(m_modelTarget->fileName(m_clickedIndex2)));
+        }
+    }
 }
