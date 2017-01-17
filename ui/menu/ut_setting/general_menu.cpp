@@ -9,6 +9,8 @@
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"
 
+#include <global.h>
+
 #include <qmath.h>
 #include <QDebug>
 
@@ -104,7 +106,8 @@ void GeneralMenu::update()
 
     m_velocityItem->set_value(m_group->velocity());
 
-    m_wedgeDelayItem->set_value(m_group->get_wedge()->delay() / 1000.0);
+    double delay = m_group->get_wedge()->delay();
+    m_wedgeDelayItem->set_value(Dpl::ns_to_us(delay));
 
     m_utUnitItem->set_current_index(m_group->ut_unit());
 
@@ -121,9 +124,11 @@ void GeneralMenu::do_startItem_changed(double value)
     double start;
 
     if (m_group->ut_unit() == DplDevice::Group::Time) {
-        start = value * 1000;
+        start = Dpl::us_to_ns(value);
     } else {
-        start = value * 2 * 1000 * 1000 / m_group->velocity();
+        value = Dpl::mm_to_m(value);
+        start = value * 2 / m_group->velocity();
+        start = Dpl::s_to_ns(start);
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             start /= qCos(m_group->current_angle());
         }
@@ -136,9 +141,11 @@ void GeneralMenu::do_rangeItem_changed(double value)
 {
     double range;
     if (m_group->ut_unit() == DplDevice::Group::Time) {
-        range = value * 1000.0;
+        range = Dpl::us_to_ns(value);
     } else {
-        range = value * 2* 1000* 1000 / m_group->velocity();
+        value = Dpl::mm_to_m(value);
+        range = value * 2 / m_group->velocity();
+        range = Dpl::s_to_ns(range);
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             range /= qCos(m_group->current_angle());
         }
@@ -155,7 +162,7 @@ void GeneralMenu::do_velocityItem_changed(double value)
 void GeneralMenu::do_wedgeDelayItem_changed(double value)
 {
     DplProbe::WedgePointer wedge = m_group->get_wedge();
-    wedge->set_delay(value*1000);
+    wedge->set_delay(Dpl::us_to_ns(value));
 }
 
 void GeneralMenu::do_utUnitItem_changed(int index)
@@ -191,15 +198,16 @@ void GeneralMenu::update_start_item()
 
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         /* 时间显示全声程 */
-        max = m_group->max_start() / 1000;
-        value = m_group->start() / 1000.0;
+        max = Dpl::ns_to_us(m_group->max_start());
+        value = Dpl::ns_to_us(m_group->start());
         unit = "&micro;s";
-        step = precision / 1000;
+        step = Dpl::ns_to_us(precision);
     } else {
         /* mm显示半声程 */
-        max = m_group->max_start() * m_group->velocity() / (2*1000*1000);
-        value = m_group->start() * m_group->velocity() / (2*1000*1000);
-        step = precision * m_group->velocity() / (2*1000*1000);
+        max = Dpl::ns_to_s(m_group->max_start()) * m_group->velocity() / 2;
+        max = Dpl::m_to_mm(max);
+        step = Dpl::ns_to_s(precision) * m_group->velocity() / 2;
+        step = Dpl::m_to_mm(step);
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             max *= qCos(m_group->current_angle());
             value *= qCos(m_group->current_angle());
@@ -221,28 +229,40 @@ void GeneralMenu::update_range_item()
     QString unit = "mm";
 
     max = m_group->point_qty() * 2;
-    if (max > m_group->max_range()/1000.0) {
-        max = m_group->max_range()/1000.0;
+    if (max > Dpl::ns_to_us(m_group->max_range())) {
+        max = Dpl::ns_to_us(m_group->max_range());
     }
 
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         if (m_group->point_qty_mode() == DplDevice::Group::PointQtyAuto) {
-            min = (32 * precision)/1000.0;
+            min = 32 * Dpl::ns_to_us(precision);
         } else {
-            min = m_group->point_qty() * precision / 1000.0;
+            min = m_group->point_qty() * Dpl::ns_to_us(precision);
         }
-        value = m_group->range() / 1000;
-        step = precision / 1000;
+        value = Dpl::ns_to_us(m_group->range());
+        step = Dpl::ns_to_us(precision);
         unit = "&micro;s";
     } else {
         if (m_group->point_qty_mode() == DplDevice::Group::PointQtyAuto) {
-            min = (32 * precision) * m_group->velocity() / (2*1000*1000);
+            min = 32 * Dpl::ns_to_s(static_cast<double>(precision))
+                    * m_group->velocity()
+                    / 2;
+            min = Dpl::m_to_mm(min);
         } else {
-            min = (m_group->point_qty() * precision) * m_group->velocity() / (2*1000*1000);
+            min = m_group->point_qty()
+                    * Dpl::ns_to_s(static_cast<double>(precision))
+                    * m_group->velocity()
+                    / 2;
+            min = Dpl::m_to_mm(min);
         }
-        max *= m_group->velocity() / (2*1000);
-        value = m_group->range() * m_group->velocity() / (2*1000*1000);
-        step = precision * m_group->velocity() / (2*1000*1000);
+        max = Dpl::us_to_s(max) * m_group->velocity() / 2;
+        max = Dpl::m_to_mm(max);
+
+        value = Dpl::us_to_s(m_group->range()) * m_group->velocity() / 2;
+        value = Dpl::m_to_mm(value);
+
+        step = Dpl::ns_to_s(static_cast<double>(precision)) * m_group->velocity() / 2;
+        step = Dpl::m_to_mm(step);
 
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             min *= qCos(m_group->current_angle());
