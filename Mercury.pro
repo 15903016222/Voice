@@ -53,6 +53,8 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
+INCLUDEPATH += include
+
 include(device/device.pri)
 
 include(ui/ui.pri)
