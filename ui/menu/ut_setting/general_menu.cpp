@@ -258,7 +258,7 @@ void GeneralMenu::update_range_item()
         max = Dpl::us_to_s(max) * m_group->velocity() / 2;
         max = Dpl::m_to_mm(max);
 
-        value = Dpl::us_to_s(m_group->range()) * m_group->velocity() / 2;
+        value = Dpl::ns_to_s(m_group->range()) * m_group->velocity() / 2;
         value = Dpl::m_to_mm(value);
 
         step = Dpl::ns_to_s(static_cast<double>(precision)) * m_group->velocity() / 2;
