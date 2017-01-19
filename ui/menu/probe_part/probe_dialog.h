@@ -30,7 +30,7 @@ private:
 
     QString get_dir();
 
-    void init_system_tab();
+    void init_select_tab();
     void init_define_tab();
 
 private slots:

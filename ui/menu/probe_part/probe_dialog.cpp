@@ -15,7 +15,7 @@ ProbeDialog::ProbeDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 
-    init_system_tab();
+    init_select_tab();
     init_define_tab();
 
     ui->dirListWidget->installEventFilter(this);
@@ -63,7 +63,7 @@ QString ProbeDialog::get_dir()
     return path;
 }
 
-void ProbeDialog::init_system_tab()
+void ProbeDialog::init_select_tab()
 {
     QDir dir(get_dir());
 
