@@ -8,6 +8,7 @@ namespace Dpl {
 #define S_TO_NS     (1000000000)
 
 #define M_TO_MM     (1000)
+#define MM_TO_UM    (1000)
 
 template <typename T>
 /**
@@ -74,6 +75,21 @@ template <typename T>
  */
 static inline T m_to_mm(T val) { return val * M_TO_MM; }
 
+template <typename T>
+/**
+ * @brief um_to_mm  微米换算成毫米
+ * @param val       微米值
+ * @return          毫米值
+ */
+static inline T um_to_mm(T val) { return val / MM_TO_UM; }
+
+template <typename T>
+/**
+ * @brief mm_to_um  毫米换算成微米
+ * @param val       毫米值
+ * @return          微米值
+ */
+static inline T mm_to_um(T val) { return val * MM_TO_UM; }
 }
 
 #endif /* end of __GLOBAL_H__ */
