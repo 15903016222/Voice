@@ -35,7 +35,7 @@ private:
     ComboMenuItem *m_groupItem;
     ComboMenuItem *m_modeItem;
     LabelMenuItem *m_probeItem;
-    MenuItem *m_wedgeItem;
+    LabelMenuItem *m_wedgeItem;
     ComboMenuItem *m_autoDetectItem;
 
     DplDevice::GroupPointer m_group;

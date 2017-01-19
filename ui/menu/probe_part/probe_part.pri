@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/part_menu.h \
     $$PWD/advanced_menu.h \
     $$PWD/selection_menu.h \
-    $$PWD/probe_dialog.h
+    $$PWD/probe_dialog.h \
+    $$PWD/wedge_dialog.h
 
 SOURCES += \
     $$PWD/position_menu.cpp \
@@ -12,7 +13,9 @@ SOURCES += \
     $$PWD/part_menu.cpp \
     $$PWD/advanced_menu.cpp \
     $$PWD/selection_menu.cpp \
-    $$PWD/probe_dialog.cpp
+    $$PWD/probe_dialog.cpp \
+    $$PWD/wedge_dialog.cpp
 
 FORMS += \
-    $$PWD/probe_dialog.ui
+    $$PWD/probe_dialog.ui \
+    $$PWD/wedge_dialog.ui

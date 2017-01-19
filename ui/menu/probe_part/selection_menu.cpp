@@ -7,6 +7,7 @@
  */
 #include "selection_menu.h"
 #include "probe_dialog.h"
+#include "wedge_dialog.h"
 #include <QDebug>
 
 namespace DplProbeMenu {
@@ -114,11 +115,15 @@ void SelectionMenu::do_probeItem_clicked()
 
 void SelectionMenu::do_wedgeItem_clicked()
 {
-//    WedgeDialog wedgeDialog;
-//    wedgeDialog.exec();
-//    QString string = wedgeDialog.get_current_item_text();
-//    if(!string.isEmpty()){
-    //    }
+    WedgeDialog wedgeDialog;
+    if (QDialog::Rejected == wedgeDialog.exec()) {
+        return;
+    }
+
+    DplProbe::WedgePointer wedgePointer = m_group->get_wedge();
+    if (wedgePointer->load(wedgeDialog.get_path())) {
+        m_wedgeItem->set_text(wedgePointer->model());
+    }
 }
 
 void SelectionMenu::do_groupModeItem_changed(int index)
