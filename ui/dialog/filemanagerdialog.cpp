@@ -112,7 +112,8 @@ void FileManagerDialog::init_source_path_tableView()
 #endif
 
 #if QT_VERSION < 0x050000
-    ui->tableView_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Custom);
+//    ui->tableView_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Custom);
+    ui->tableView_1->horizontalHeader()->resizeSections(QHeaderView::Custom);
 #endif
 
     int width = qRound(((qreal)this->geometry().width()) * 5 / 6);
