@@ -1,6 +1,8 @@
 #ifndef __PROBE_DIALOG_H__
 #define __PROBE_DIALOG_H__
 
+#include <probe/probe.h>
+
 #include <QDialog>
 #include <QListWidgetItem>
 
@@ -26,12 +28,16 @@ protected:
 
 private:
     Ui::ProbeDialog *ui;
+    DplProbe::ProbePointer m_probePtr;
     QString m_probePath;
 
     QString get_dir();
 
     void init_select_tab();
     void init_define_tab();
+
+    void show_pa() const;
+    void show_ut() const;
 
 private slots:
     void on_dirListWidget_currentTextChanged(const QString &currentText);

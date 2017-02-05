@@ -10,7 +10,8 @@
 
 ProbeDialog::ProbeDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ProbeDialog)
+    ui(new Ui::ProbeDialog),
+    m_probePtr(new DplProbe::Probe())
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -93,6 +94,138 @@ void ProbeDialog::init_define_tab()
     }
 }
 
+void ProbeDialog::show_pa() const
+{
+    QString msg;
+
+    msg += "<html><head><title>Wedge Information</title>"
+           "<style>"
+           "table, th, td {"
+           "padding:5px;"
+           "border: 1px solid black;"
+           "border-collapse: collapse;"
+           "}"
+           "table {"
+           "margin:0px;"
+           "}"
+           "th {"
+           "text-align:left;"
+           "background:#CCCCFF;"
+           "}"
+           "td {"
+           "text-align:left;"
+           "}"
+           "</style>"
+           "</head>"
+           "<body>"
+           "<table border=1 cellspacing=1 cellpadding=0>";
+
+    msg += "<tr><th>";
+    msg += tr("Serial") + "</th><td>"
+            + m_probePtr->serial() + "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Model") + "</th><td>"
+            + m_probePtr->model() + "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Type") + "</th><td>";
+    switch (m_probePtr->type()) {
+    case DplProbe::Probe::CUSTOM:
+        msg += "Custom";
+        break;
+    case DplProbe::Probe::ANGLE_BEAM:
+        msg += "Angle Beam";
+        break;
+    case DplProbe::Probe::CONTACT:
+        msg += "Contact";
+        break;
+    case DplProbe::Probe::IMMERSION:
+        msg += "Immersion";
+        break;
+    default:
+        msg += "Unkown";
+        break;
+    }
+    msg += "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Element Qty") + "</th><td>"
+            + QString::number(m_probePtr->element_qty())
+            + "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Freq") + "</th><td>"
+            + QString::number(m_probePtr->freq()/1000.0, 'f', 2)
+            + " MHz</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Pitch") + "</th><td>"
+            + QString::number(m_probePtr->pitch()/1000.0, 'f', 2)
+            + " mm</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Ref Point") + "</th><td>"
+            + QString::number(m_probePtr->refpoint()/1000.0, 'f', 2)
+            + " mm</td></tr>";
+
+    msg += "</table>"
+           "</body>"
+           "</html>";
+
+    ui->label->setText(msg);
+}
+
+void ProbeDialog::show_ut() const
+{
+    QString msg;
+
+    msg += "<html><head><title>Wedge Information</title>"
+           "<style>"
+           "table, th, td {"
+           "padding:5px;"
+           "border: 1px solid black;"
+           "border-collapse: collapse;"
+           "}"
+           "table {"
+           "margin:0px;"
+           "}"
+           "th {"
+           "text-align:left;"
+           "background:#CCCCFF;"
+           "}"
+           "td {"
+           "text-align:left;"
+           "}"
+           "</style>"
+           "</head>"
+           "<body>"
+           "<table border=1 cellspacing=1 cellpadding=0>";
+
+    msg += "<tr><th>";
+    msg += tr("Serial") + "</th><td>"
+            + m_probePtr->serial() + "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Model") + "</th><td>"
+            + m_probePtr->model() + "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Freq") + "</th><td>"
+            + QString::number(m_probePtr->freq()/1000.0, 'f', 2)
+            + " MHz</td></tr>";
+
+    msg += tr("Element Size") + "</th><td>"
+            + QString::number(m_probePtr->element_size(), 'f', 2)
+            + " mm</td></tr>";
+
+    msg += "</table>"
+           "</body>"
+           "</html>";
+
+    ui->label->setText(msg);
+}
+
 void ProbeDialog::on_dirListWidget_currentTextChanged(const QString &currentText)
 {
     QString path = get_dir() + currentText;
@@ -110,12 +243,17 @@ void ProbeDialog::on_fileListWidget_currentTextChanged(const QString &currentTex
     m_probePath += ui->dirListWidget->currentItem()->text() + "/";
     m_probePath += currentText;
 
-    DplProbe::Probe probe;
-    if (probe.load(m_probePath)) {
-        ui->label->setText(probe.show());
-    } else {
+    if (!m_probePtr->load(m_probePath)) {
         m_probePath.clear();
         ui->label->setText(tr("Ultrasonic phased array probe family."));
+    }
+
+    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    if (group->mode() == DplDevice::Group::UT1
+            || group->mode() == DplDevice::Group::UT2) {
+        show_ut();
+    } else {
+        show_pa();
     }
 }
 
