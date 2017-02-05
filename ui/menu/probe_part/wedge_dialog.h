@@ -17,8 +17,7 @@ class WedgeDialog : public QDialog
 public:
     explicit WedgeDialog(QWidget *parent = 0);
     ~WedgeDialog();
-
-    const QString &get_path() const;
+    const QString get_path() const;
 
 signals:
     void wedge_changed(QString);
@@ -28,14 +27,16 @@ protected:
 
 private:
     Ui::WedgeDialog *ui;
-    QString m_wedgePath;
+    DplProbe::WedgePointer m_wedgePtr;
+    QString m_path;
 
     QString get_dir();
 
     void init_select_tab();
     void init_define_tab();
 
-    const QString show(const DplProbe::Wedge &wedge);
+    void show_pa() const;
+    void show_ut() const;
 
 private slots:
     void on_dirListWidget_currentTextChanged(const QString &currentText);
@@ -48,9 +49,9 @@ private slots:
     void on_delPushButton_clicked();
 };
 
-inline const QString &WedgeDialog::get_path() const
+inline const QString WedgeDialog::get_path() const
 {
-    return m_wedgePath;
+    return m_path;
 }
 
 #endif // __WEDGE_DIALOG_H__

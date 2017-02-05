@@ -48,7 +48,7 @@ GroupPrivate::GroupPrivate()
 {
     m_precision = DplFpga::Fpga::get_instance()->sample_precision();
 
-    m_mode = Group::UT1;
+    m_mode = Group::PA;
 
     m_start = 0;
     m_range = 5702 * m_precision;
@@ -69,10 +69,10 @@ int GroupPrivate::max_beam_delay()
 Group::Group(int index) :
     DplFpga::Group(index),
     d(new GroupPrivate()),
-    m_probe(new DplProbe::Probe()),
-    m_wedge(new DplProbe::Wedge())
+    m_probePtr(new DplProbe::Probe()),
+    m_wedgePtr(new DplProbe::Wedge())
 {
-    connect(static_cast<DplProbe::Wedge *>(m_wedge.data()),
+    connect(static_cast<DplProbe::Wedge *>(m_wedgePtr.data()),
             SIGNAL(delay_changed(int)),
             this,
             SLOT(update_sample()));
@@ -249,7 +249,7 @@ double Group::max_sample_time()
     double max = beamCycle
             - fpga->loading_time() * d->m_precision
             - d->max_beam_delay()
-            - m_wedge->delay()
+            - m_wedgePtr->delay()
             - 50;
     if(max > 1000*1000) {
         max = 1000*1000;
@@ -259,9 +259,9 @@ double Group::max_sample_time()
 
 void Group::update_sample()
 {
-    set_sample_start((m_wedge->delay() + d->m_start)/d->m_precision, true);
-    set_sample_range((m_wedge->delay() + d->m_start + d->m_range)/d->m_precision, true);
-    set_rx_time((d->max_beam_delay() + m_wedge->delay() + d->m_start + d->m_range + 50)/d->m_precision, true);
+    set_sample_start((m_wedgePtr->delay() + d->m_start)/d->m_precision, true);
+    set_sample_range((m_wedgePtr->delay() + d->m_start + d->m_range)/d->m_precision, true);
+    set_rx_time((d->max_beam_delay() + m_wedgePtr->delay() + d->m_start + d->m_range + 50)/d->m_precision, true);
 }
 
 }

@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     DplDevice::GroupPointer group = dev->get_group(0);
     group->init();
 
-
     /* gain menu item */
     ui->gainMenuItem->set(tr("Gain"), "dB", 0, 90, 1);
     ui->gainMenuItem->set_suffix("(0.0)");
@@ -61,7 +60,6 @@ MainWindow::MainWindow(QWidget *parent) :
     pVirtualKeyboard = new VirtualKeyboard;
     pVirtualKeyboard->hide();
     connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
-
 }
 
 MainWindow::~MainWindow()

@@ -159,8 +159,8 @@ private slots:
 private:
     GroupPrivate *d;
 
-    DplProbe::ProbePointer m_probe; /* 探头 */
-    DplProbe::WedgePointer m_wedge; /* 楔块 */
+    DplProbe::ProbePointer m_probePtr; /* 探头 */
+    DplProbe::WedgePointer m_wedgePtr; /* 楔块 */
 };
 
 inline double Group::max_start()
@@ -175,12 +175,12 @@ inline double Group::max_range()
 
 inline DplProbe::ProbePointer Group::get_probe() const
 {
-    return m_probe;
+    return m_probePtr;
 }
 
 inline DplProbe::WedgePointer Group::get_wedge() const
 {
-    return m_wedge;
+    return m_wedgePtr;
 }
 
 }
