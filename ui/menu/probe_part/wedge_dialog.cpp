@@ -10,7 +10,8 @@
 
 WedgeDialog::WedgeDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::WedgeDialog)
+    ui(new Ui::WedgeDialog),
+    m_wedgePtr(new DplProbe::Wedge())
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -83,10 +84,29 @@ void WedgeDialog::init_define_tab()
     DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
     if (group->mode() == DplDevice::Group::UT1
             || group->mode() == DplDevice::Group::UT2) {
+        ui->orientationComboBox->hide();
+        ui->OrientationLabel->hide();
+        ui->velocityDoubleSpinBox->hide();
+        ui->velocityLabel->hide();
+        ui->primaryOffsetDoubleSpinBox->hide();
+        ui->primaryOffsetLabel->hide();
+        ui->sndOffsetDoubleSpinBox->hide();
+        ui->sndOffsetLabel->hide();
+        ui->heightDoubleSpinBox->hide();
+        ui->HeightLabel->hide();
+        ui->lengthDoubleSpinBox->hide();
+        ui->LengthLabel->hide();
+    } else {
+        ui->waveTypeComboBox->hide();
+        ui->waveTypeLabel->hide();
+        ui->refPointLlabel->hide();
+        ui->refPointDoubleSpinBox->hide();
+        ui->delayLabel->hide();
+        ui->delaySpinBox->hide();
     }
 }
 
-const QString WedgeDialog::show(const DplProbe::Wedge &wedge)
+void WedgeDialog::show_pa() const
 {
     QString msg;
 
@@ -114,36 +134,20 @@ const QString WedgeDialog::show(const DplProbe::Wedge &wedge)
 
     msg += "<tr><th>";
     msg += tr("Serial") + "</th><td>"
-            + wedge.serial() + "</td></tr>";
+            + m_wedgePtr->serial() + "</td></tr>";
 
     msg += "<tr><th>";
     msg += tr("Model") + "</th><td>"
-            + wedge.model() + "</td></tr>";
-
-    msg += "<tr><th>";
-    msg += tr("Wave Type") + "</th><td>";
-    if (wedge.wave_type() == DplProbe::Wedge::Longitudinal) {
-        msg += tr("Longitudinal");
-    } else if (wedge.wave_type() == DplProbe::Wedge::Transverse) {
-        msg += tr("Transverse");
-    } else {
-        msg += tr("Unkown");
-    }
-    msg += "</td></tr>";
+            + m_wedgePtr->model() + "</td></tr>";
 
     msg += "<tr><th>";
     msg += tr("Angle") + "</th><td>"
-            + QString::number(wedge.angel(), 'f', 1)
-            + "</td></tr>";
-
-    msg += "<tr><th>";
-    msg += tr("Delay") + "</th><td>"
-            + QString::number(wedge.delay()/1000.0, 'f', 2)
-            + "</td></tr>";
+            + QString::number(m_wedgePtr->angle(), 'f', 1)
+            + " &#176;</td></tr>";
 
     msg += "<tr><th>";
     msg += tr("Orientation") + "</th><td>";
-    if (wedge.orientation() == DplProbe::Wedge::Normal) {
+    if (m_wedgePtr->orientation() == DplProbe::Wedge::Normal) {
         msg += tr("Normal");
     } else {
         msg += tr("Reversal");
@@ -152,39 +156,101 @@ const QString WedgeDialog::show(const DplProbe::Wedge &wedge)
 
     msg += "<tr><th>";
     msg += tr("Velocity") + "</th><td>"
-            + QString::number(wedge.velocity())
+            + QString::number(m_wedgePtr->velocity())
             + " m/s</td></tr>";
 
     msg += "<tr><th>";
     msg += tr("Primary Offset") + "</th><td>"
-            + QString::number(wedge.primary_offset(), 'f', 2)
+            + QString::number(m_wedgePtr->primary_offset(), 'f', 2)
             + " mm</td></tr>";
 
     msg += "<tr><th>";
     msg += tr("Secondary Offset") + "</th><td>"
-            + QString::number(wedge.secondary_offset(), 'f', 2)
+            + QString::number(m_wedgePtr->secondary_offset(), 'f', 2)
             + " mm</td></tr>";
 
     msg += "<tr><th>";
     msg += tr("Height") + "</th><td>"
-            + QString::number(wedge.height(), 'f', 2)
+            + QString::number(m_wedgePtr->height(), 'f', 2)
             + " mm</td></tr>";
 
     msg += "<tr><th>";
     msg += tr("Length") + "</th><td>"
-            + QString::number(wedge.length(), 'f', 2)
-            + " mm</td></tr>";
-
-    msg += "<tr><th>";
-    msg += tr("Ref Point") + "</th><td>"
-            + QString::number(wedge.ref_point(), 'f', 2)
+            + QString::number(m_wedgePtr->length(), 'f', 2)
             + " mm</td></tr>";
 
     msg += "</table>"
            "</body>"
            "</html>";
 
-    return msg;
+    ui->label->setText(msg);
+}
+
+void WedgeDialog::show_ut() const
+{
+    QString msg;
+
+    msg += "<html><head><title>Wedge Information</title>"
+           "<style>"
+           "table, th, td {"
+           "padding:5px;"
+           "border: 1px solid black;"
+           "border-collapse: collapse;"
+           "}"
+           "table {"
+           "margin:5px;"
+           "}"
+           "th {"
+           "text-align:left;"
+           "background:#CCCCFF;"
+           "}"
+           "td {"
+           "text-align:left;"
+           "}"
+           "</style>"
+           "</head>"
+           "<body>"
+           "<table border=1 cellspacing=1 cellpadding=0>";
+
+    msg += "<tr><th>";
+    msg += tr("Serial") + "</th><td>"
+            + m_wedgePtr->serial() + "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Model") + "</th><td>"
+            + m_wedgePtr->model() + "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Wave Type") + "</th><td>";
+    if (m_wedgePtr->wave_type() == DplProbe::Wedge::Longitudinal) {
+        msg += tr("Longitudinal");
+    } else if (m_wedgePtr->wave_type() == DplProbe::Wedge::Transverse) {
+        msg += tr("Transverse");
+    } else {
+        msg += tr("Unkown");
+    }
+    msg += "</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Angle") + "</th><td>"
+            + QString::number(m_wedgePtr->angle(), 'f', 1)
+            + " &#176;</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Delay") + "</th><td>"
+            + QString::number(m_wedgePtr->delay()/1000.0, 'f', 3)
+            + " ms</td></tr>";
+
+    msg += "<tr><th>";
+    msg += tr("Ref Point") + "</th><td>"
+            + QString::number(m_wedgePtr->ref_point(), 'f', 2)
+            + " mm</td></tr>";
+
+    msg += "</table>"
+           "</body>"
+           "</html>";
+
+    ui->label->setText(msg);
 }
 
 void WedgeDialog::on_dirListWidget_currentTextChanged(const QString &currentText)
@@ -200,16 +266,22 @@ void WedgeDialog::on_dirListWidget_currentTextChanged(const QString &currentText
 
 void WedgeDialog::on_fileListWidget_currentTextChanged(const QString &currentText)
 {
-    m_wedgePath = get_dir();
-    m_wedgePath += ui->dirListWidget->currentItem()->text() + "/";
-    m_wedgePath += currentText;
+    m_path = get_dir();
+    m_path += ui->dirListWidget->currentItem()->text() + "/";
+    m_path += currentText;
 
-    DplProbe::Wedge wedge;
-    if (wedge.load(m_wedgePath)) {
-        ui->label->setText(show(wedge));
-    } else {
-        m_wedgePath.clear();
+    if (! m_wedgePtr->load(m_path)) {
+        m_path.clear();
         ui->label->setText(tr("Ultrasonic phased array wedge family."));
+        return;
+    }
+
+    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    if (group->mode() == DplDevice::Group::UT1
+            || group->mode() == DplDevice::Group::UT2) {
+        show_ut();
+    } else {
+        show_pa();
     }
 }
 
@@ -235,36 +307,45 @@ void WedgeDialog::on_savePushButton_clicked()
         return;
     }
 
-    return ;
-
     DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
-    DplProbe::Wedge wedge;
     QString path = get_dir();
 
     path += "user/";
     path += ui->modelLineEdit->text();
 
+    m_wedgePtr->set_serial(ui->serialLineEdit->text());
+    m_wedgePtr->set_model(ui->modelLineEdit->text());
+    m_wedgePtr->set_angle(ui->angleDoubleSpinBox->value());
+
     if (group->mode() == DplDevice::Group::UT1
             || group->mode() == DplDevice::Group::UT2) {
-        path += ".oup";
+        path += ".ouw";
+        m_wedgePtr->set_delay(ui->delaySpinBox->value());
+        m_wedgePtr->set_wave_type(static_cast<DplProbe::Wedge::WaveType>(ui->waveTypeComboBox->currentIndex()));
+        m_wedgePtr->set_ref_point(ui->refPointDoubleSpinBox->value());
     } else {
-        path += ".opp";
+        path += ".opw";
+        m_wedgePtr->set_orientation(static_cast<DplProbe::Wedge::Orientation>(ui->orientationComboBox->currentIndex()));
+        m_wedgePtr->set_velocity(ui->velocityDoubleSpinBox->value());
+        m_wedgePtr->set_primary_offset(ui->primaryOffsetDoubleSpinBox->value());
+        m_wedgePtr->set_secondary_offset(ui->sndOffsetDoubleSpinBox->value());
+        m_wedgePtr->set_height(ui->heightDoubleSpinBox->value());
+        m_wedgePtr->set_length(ui->lengthDoubleSpinBox->value());
     }
 
-    if (wedge.save(path)) {
+    if (m_wedgePtr->save(path)) {
         init_define_tab();
-        m_wedgePath = path;
     }
 }
 
 void WedgeDialog::on_saveApplyPushButton_clicked()
 {
-    on_savePushButton_clicked();
-
     if (ui->modelLineEdit->text().isEmpty()
             || ui->serialLineEdit->text().isEmpty()) {
         return;
     }
+
+    on_savePushButton_clicked();
 
     this->accept();
 }

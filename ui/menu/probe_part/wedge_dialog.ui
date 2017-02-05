@@ -138,7 +138,7 @@ background-color: rgba(255, 255, 255, 0);
               <enum>Qt::AutoText</enum>
              </property>
              <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              <set>Qt::AlignHCenter|Qt::AlignTop</set>
              </property>
             </widget>
            </item>
@@ -195,9 +195,9 @@ background-color: rgba(255, 255, 255, 0);
       <attribute name="title">
        <string>Define</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="4,5">
+      <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,1,0">
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,1">
          <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
@@ -209,302 +209,29 @@ background-color: rgba(255, 255, 255, 0);
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="defineListWidget"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="delPushButton">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>35</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Delete</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6" stretch="1,0,0">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QLabel" name="modelLabel">
-               <property name="text">
-                <string>Model</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="serialLabel">
-               <property name="text">
-                <string>Serial</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="typeLabel">
-               <property name="text">
-                <string>Wave Type</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="angleLabel">
-               <property name="text">
-                <string>Angle</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="delayLabel">
-               <property name="text">
-                <string>Delay</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="OrientationLabel">
-               <property name="text">
-                <string>Orientation</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>Velocity</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="primaryOffsetLabel">
-               <property name="text">
-                <string>Primary Offset</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="sndOffsetLabel">
-               <property name="text">
-                <string>Secondary Offset</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="HeightLabel">
-               <property name="text">
-                <string>Height</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="LengthLabel">
-               <property name="text">
-                <string>Length</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="refPointLlabel">
-               <property name="text">
-                <string>Ref Point</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <widget class="QLineEdit" name="modelLineEdit">
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="serialLineEdit">
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="typeComboBox">
-               <item>
-                <property name="text">
-                 <string>L</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>S</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="angleDoubleSpinBox">
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="suffix">
-                <string> °</string>
-               </property>
-               <property name="minimum">
-                <double>0.500000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>20.000000000000000</double>
-               </property>
-               <property name="value">
-                <double>1.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="delaySpinBox">
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="suffix">
-                <string> us</string>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>1024</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="orientationComboBox">
-               <item>
-                <property name="text">
-                 <string>Normal</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Revesal</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="velocityDoubleSpinBox">
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="suffix">
-                <string> mm</string>
-               </property>
-               <property name="value">
-                <double>0.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="primaryOffsetDoubleSpinBox">
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="suffix">
-                <string> mm</string>
-               </property>
-               <property name="value">
-                <double>1.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="sndOffsetDoubleSpinBox">
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="suffix">
-                <string> mm</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="heightDoubleSpinBox">
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="suffix">
-                <string> mm</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="lengthDoubleSpinBox">
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="prefix">
-                <string/>
-               </property>
-               <property name="suffix">
-                <string> mm</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="refPointDoubleSpinBox">
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="prefix">
-                <string/>
-               </property>
-               <property name="suffix">
-                <string> mm</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
+          <spacer name="horizontalSpacer_2">
            <property name="orientation">
-            <enum>Qt::Vertical</enum>
+            <enum>Qt::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>20</width>
-             <height>40</height>
+             <width>40</width>
+             <height>20</height>
             </size>
            </property>
           </spacer>
          </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QPushButton" name="saveApplyPushButton">
+            <widget class="QListWidget" name="defineListWidget"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="delPushButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -518,47 +245,341 @@ background-color: rgba(255, 255, 255, 0);
               </size>
              </property>
              <property name="text">
-              <string>Save &amp;&amp; Apply</string>
+              <string>Delete</string>
              </property>
             </widget>
            </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QPushButton" name="savePushButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>35</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Save</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QLabel" name="modelLabel">
+                 <property name="text">
+                  <string>Model</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="serialLabel">
+                 <property name="text">
+                  <string>Serial</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="waveTypeLabel">
+                 <property name="text">
+                  <string>Wave Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="angleLabel">
+                 <property name="text">
+                  <string>Angle</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="delayLabel">
+                 <property name="text">
+                  <string>Delay</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="OrientationLabel">
+                 <property name="text">
+                  <string>Orientation</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="velocityLabel">
+                 <property name="text">
+                  <string>Velocity</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="primaryOffsetLabel">
+                 <property name="text">
+                  <string>Primary Offset</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="sndOffsetLabel">
+                 <property name="text">
+                  <string>Secondary Offset</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="HeightLabel">
+                 <property name="text">
+                  <string>Height</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="LengthLabel">
+                 <property name="text">
+                  <string>Length</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="refPointLlabel">
+                 <property name="text">
+                  <string>Ref Point</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QLineEdit" name="modelLineEdit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="serialLineEdit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="waveTypeComboBox">
+                 <item>
+                  <property name="text">
+                   <string>L</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>S</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="angleDoubleSpinBox">
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
+                 </property>
+                 <property name="suffix">
+                  <string> °</string>
+                 </property>
+                 <property name="minimum">
+                  <double>0.500000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>20.000000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="delaySpinBox">
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
+                 </property>
+                 <property name="suffix">
+                  <string> us</string>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1024</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="orientationComboBox">
+                 <item>
+                  <property name="text">
+                   <string>Normal</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Revesal</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="velocityDoubleSpinBox">
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
+                 </property>
+                 <property name="suffix">
+                  <string> mm</string>
+                 </property>
+                 <property name="value">
+                  <double>0.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="primaryOffsetDoubleSpinBox">
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
+                 </property>
+                 <property name="suffix">
+                  <string> mm</string>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="sndOffsetDoubleSpinBox">
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
+                 </property>
+                 <property name="suffix">
+                  <string> mm</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="heightDoubleSpinBox">
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
+                 </property>
+                 <property name="suffix">
+                  <string> mm</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="lengthDoubleSpinBox">
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
+                 </property>
+                 <property name="prefix">
+                  <string/>
+                 </property>
+                 <property name="suffix">
+                  <string> mm</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="refPointDoubleSpinBox">
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
+                 </property>
+                 <property name="prefix">
+                  <string/>
+                 </property>
+                 <property name="suffix">
+                  <string> mm</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
            </item>
            <item>
-            <widget class="QPushButton" name="cancelDefinePushButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
              </property>
-             <property name="minimumSize">
+             <property name="sizeHint" stdset="0">
               <size>
-               <width>0</width>
-               <height>35</height>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
-             <property name="text">
-              <string>Cancel</string>
-             </property>
-            </widget>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QPushButton" name="saveApplyPushButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Save &amp;&amp; Apply</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="savePushButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Save</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="cancelDefinePushButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>

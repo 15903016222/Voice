@@ -121,6 +121,7 @@ void SelectionMenu::do_wedgeItem_clicked()
     }
 
     DplProbe::WedgePointer wedgePointer = m_group->get_wedge();
+
     if (wedgePointer->load(wedgeDialog.get_path())) {
         m_wedgeItem->set_text(wedgePointer->model());
     }

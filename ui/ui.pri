@@ -19,8 +19,3 @@ include(vinput/vinput.pri)
 include(scan_layout/scan_layout.pri)
 
 include(display/display.pri)
-
-HEADERS += \
-    $$PWD/ui_info.h
-
-SOURCES +=

@@ -16,7 +16,6 @@ class Wedge : public QObject
     Q_OBJECT
 public:
     explicit Wedge(QObject *parent=0);
-    ~Wedge();
 
     /**
      * @brief serial    获取系列号
@@ -42,6 +41,43 @@ public:
      */
     void set_model(const QString &val);
 
+    /**
+     * @brief angel 获取角度
+     * @return      角度值，单位(度)
+     */
+    float angle() const;
+
+    /**
+     * @brief set_angel 设置角度
+     * @param val       角度值，单位(度)
+     */
+    void set_angle(float val);
+
+    /**
+     * @brief delay 楔块延迟时间
+     * @return      返回楔块延迟时间，单位(ns)
+     */
+    int delay() const;
+
+    /**
+     * @brief set_delay 设置楔块延迟时间
+     * @param value     延迟时间，单位(ns)
+     */
+    void set_delay(int value);
+    /**
+     * @brief load      加载楔块文件
+     * @param fileName  文件名
+     * @return          成功返回true,失败返回false
+     */
+    bool load(const QString &fileName);
+
+    /**
+     * @brief save      保存楔块文件
+     * @param fileName  文件名
+     * @return          成功返回true，失败返回false
+     */
+    bool save(const QString &fileName) const;
+
     enum WaveType {
         Longitudinal,
         Transverse
@@ -60,33 +96,22 @@ public:
     void set_wave_type(WaveType type);
 
     /**
-     * @brief angel 获取角度
-     * @return      角度值，单位(度)
+     * @brief ref_point 获取参考点
+     * @return          参考点值，单位(mm)
      */
-    float angel() const;
+    float ref_point() const;
 
     /**
-     * @brief set_angel 设置角度
-     * @param val       角度值，单位(度)
+     * @brief set_ref_point 设置参考点
+     * @param val           参考点值，单位(mm)
      */
-    void set_angel(float val);
-
-    /**
-     * @brief delay 楔块延迟时间
-     * @return      返回楔块延迟时间，单位(ns)
-     */
-    int delay() const;
-
-    /**
-     * @brief set_delay 设置楔块延迟时间
-     * @param value     延迟时间，单位(ns)
-     */
-    void set_delay(int value);
+    void set_ref_point(float val);
 
     enum Orientation {
         Normal,
         Reversal
     };
+
     /**
      * @brief orientation   获取探头方向
      * @return              方向
@@ -157,33 +182,7 @@ public:
      * @brief set_lenght    设置长度
      * @param val           长度值，单位(mm)
      */
-    void set_lenght(float val);
-
-    /**
-     * @brief ref_point 获取参考点
-     * @return          参考点值，单位(mm)
-     */
-    float ref_point() const;
-
-    /**
-     * @brief set_ref_point 设置参考点
-     * @param val           参考点值，单位(mm)
-     */
-    void set_ref_point(float val);
-
-    /**
-     * @brief load      加载楔块文件
-     * @param fileName  文件名
-     * @return          成功返回true,失败返回false
-     */
-    bool load(const QString &fileName);
-
-    /**
-     * @brief save      保存楔块文件
-     * @param fileName  文件名
-     * @return          成功返回true，失败返回false
-     */
-    bool save(const QString &fileName);
+    void set_length(float val);
 
 signals:
     void delay_changed(int value);
@@ -191,9 +190,9 @@ signals:
 private:
     QString m_serial;           /* 系列 */
     QString m_model;            /* 型号 */
-    WaveType m_waveType;        /* 波类型 */
     float m_angle;              /* 角度，单位(度) */
     int m_delay;                /* 延迟时间，单位(ns) */
+    WaveType m_waveType;        /* 波类型 */
     Orientation m_orientation;  /* 方向 */
     int m_velocity;             /* 声速,(m/s) */
     float m_primaryOffset;      /* 主轴偏置,(mm) */
@@ -202,6 +201,19 @@ private:
     float m_length;             /* 长度，(mm) */
     float m_refPoint;           /* 参考点，(mm) */
 };
+
+inline int Wedge::delay() const
+{
+    return m_delay;
+}
+
+inline void Wedge::set_delay(int value)
+{
+    if (m_delay != value) {
+        m_delay = value;
+        emit delay_changed(value);
+    }
+}
 
 inline const QString &Wedge::serial() const
 {
@@ -223,6 +235,16 @@ inline void Wedge::set_model(const QString &val)
     m_model = val;
 }
 
+inline float Wedge::angle() const
+{
+    return m_angle;
+}
+
+inline void Wedge::set_angle(float val)
+{
+    m_angle = val;
+}
+
 inline Wedge::WaveType Wedge::wave_type() const
 {
     return m_waveType;
@@ -233,27 +255,14 @@ inline void Wedge::set_wave_type(Wedge::WaveType type)
     m_waveType = type;
 }
 
-inline float Wedge::angel() const
+inline float Wedge::ref_point() const
 {
-    return m_angle;
+    return m_refPoint;
 }
 
-inline void Wedge::set_angel(float val)
+inline void Wedge::set_ref_point(float val)
 {
-    m_angle = val;
-}
-
-inline int Wedge::delay() const
-{
-    return m_delay;
-}
-
-inline void Wedge::set_delay(int value)
-{
-    if (m_delay != value) {
-        m_delay = value;
-        emit delay_changed(value);
-    }
+    m_refPoint = val;
 }
 
 inline Wedge::Orientation Wedge::orientation() const
@@ -311,22 +320,10 @@ inline float Wedge::length() const
     return m_length;
 }
 
-inline void Wedge::set_lenght(float val)
+inline void Wedge::set_length(float val)
 {
     m_length = val;
 }
-
-inline float Wedge::ref_point() const
-{
-    return m_refPoint;
-}
-
-inline void Wedge::set_ref_point(float val)
-{
-    m_refPoint = val;
-}
-
-
 
 }
 
