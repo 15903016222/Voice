@@ -22,6 +22,8 @@ ComboMenuItem::ComboMenuItem(QWidget *parent) :
     ui->comboBox->hide();
     ui->label->show();
     ui->comboBox->setView(new QListView());
+//    ui->comboBox->setMinimumWidth(ui->comboBox->width());
+//    ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(value_changed(int)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)), ui->label, SLOT(setText(QString)));
