@@ -138,19 +138,25 @@ void ProbeDialog::show_info() const
     msg += tr("Type") + "</th><td>";
     switch (m_probePtr->type()) {
     case DplProbe::Probe::ANGLE_BEAM:
-        msg += "Angle Beam";
+        msg += tr("Angle Beam");
         break;
     case DplProbe::Probe::CONTACT:
-        msg += "Contact";
+        msg += tr("Contact");
         break;
     case DplProbe::Probe::IMMERSION:
-        msg += "Immersion";
+        msg += tr("Immersion");
         break;
     case DplProbe::Probe::DELAY:
-        msg += "Delay";
+        msg += tr("Delay");
+        break;
+    case DplProbe::Probe::DUAL:
+        msg += tr("Dual");
+        break;
+    case DplProbe::Probe::TOFD:
+        msg += "TOFD";
         break;
     default:
-        msg += "Unkown";
+        msg += tr("Unkown");
         break;
     }
     msg += "</td></tr>";
@@ -162,6 +168,30 @@ void ProbeDialog::show_info() const
 
     if (m_probePtr->is_pa_probe()) {
         DplProbe::PaProbePointer paProbePtr = m_probePtr.staticCast<DplProbe::PaProbe>();
+
+        msg += "<tr><th>";
+        msg += tr("Array Type") + "</th><td>";
+        switch (paProbePtr->array_type()) {
+        case DplProbe::PaProbe::LINEAR:
+            msg += tr("Linear");
+            break;
+        case DplProbe::PaProbe::CURVED:
+            msg += tr("Curved");
+            break;
+        case DplProbe::PaProbe::MATRIX:
+            msg += tr("Matrix");
+            break;
+        case DplProbe::PaProbe::DUAL_LINEAR:
+            msg += tr("Dual Linear");
+            break;
+        case DplProbe::PaProbe::DUAL_MATRIX:
+            msg += tr("Dual Matrix");
+            break;
+        default:
+            msg += tr("Unkown");
+            break;
+        }
+        msg += "</td></tr>";
 
         msg += "<tr><th>";
         msg += tr("Pri Element Qty") + "</th><td>"
@@ -183,13 +213,14 @@ void ProbeDialog::show_info() const
                 + QString::number(paProbePtr->secondary_axis_pitch(), 'f', 2)
                 + " mm</td></tr>";
     } else {
+        msg += "<tr><th>";
         msg += tr("Element Size") + "</th><td>"
                 + QString::number(m_probePtr->element_elevation(), 'f', 2)
                 + " mm</td></tr>";
 
         msg += "<tr><th>";
         msg += tr("Ref Point") + "</th><td>"
-                + QString::number(m_probePtr->refpoint()/1000.0, 'f', 2)
+                + QString::number(m_probePtr->refpoint(), 'f', 2)
                 + " mm</td></tr>";
     }
 

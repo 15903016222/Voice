@@ -41,9 +41,6 @@ public:
 
     Group::PointQtyMode m_pointQtyMode; /* 采样点模式 */
 
-    DplProbe::ProbePointer m_probePtr; /* 探头 */
-    DplProbe::WedgePointer m_wedgePtr; /* 楔块 */
-
     QReadWriteLock m_rwlock;
 };
 
@@ -257,27 +254,6 @@ double Group::max_sample_time()
         max = 1000*1000;
     }
     return max ;
-}
-
-DplProbe::ProbePointer Group::get_probe() const
-{
-    QReadLocker l(&d->m_rwlock);
-    return d->m_probePtr;
-}
-
-void Group::set_probe(DplProbe::ProbePointer probePtr)
-{
-    {
-        QWriteLocker l(&d->m_rwlock);
-        d->m_probePtr = probePtr;
-    }
-    emit probe_changed(probePtr);
-}
-
-DplProbe::WedgePointer Group::get_wedge() const
-{
-    QReadLocker l(&d->m_rwlock);
-    return m_wedgePtr;
 }
 
 void Group::update_sample()

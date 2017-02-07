@@ -4,6 +4,8 @@
 #include <QFileInfo>
 #include <QSettings>
 
+#include <QDebug>
+
 namespace DplProbe {
 
 PaProbe::PaProbe(QObject *parent) :
@@ -30,11 +32,24 @@ bool PaProbe::load(const QString &fileName)
         return false;
     }
 
-    m_arrayType     = static_cast<ArrayType>(s.value("Array_Type").toInt());
+    QVariant value = s.value("Array_Type");
+    if (!value.isNull()) {
+        m_arrayType = static_cast<ArrayType>(value.toInt());
+    }
+
     m_priElemQty    = s.value("Principal_Axis_Element_Qty").toInt();
-    m_secElemQty    = s.value("Secondary_Axis_Element_Qty").toInt();
+
+    value = s.value("Secondary_Axis_Element_Qty");
+    if (! value.isNull()) {
+        m_secElemQty = value.toInt();
+    }
+
     m_priPitch      = Dpl::um_to_mm(s.value("Principal_Axis_Pitch").toDouble());
-    m_secPitch      = Dpl::um_to_mm(s.value("Secondary_Axis_Pitch").toDouble());
+
+    value = s.value("Secondary_Axis_Pitch");
+    if (! value.isNull()) {
+         m_secPitch      = Dpl::um_to_mm(value.toDouble());
+    }
 
     return true;
 }

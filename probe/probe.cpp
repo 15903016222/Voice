@@ -24,9 +24,16 @@ bool Probe::load(const QString &fileName)
         return false;
     }
 
+    QVariant value;
+
     m_serial    = s.value("Serial").toString();
     m_model     = s.value("Model").toString();
-    m_type      = static_cast<Type>(s.value("Type").toInt());
+
+    value = s.value("Type");
+    if (!value.isNull()) {
+        m_type  = static_cast<Type>(value.toInt());
+    }
+
     m_freq      = s.value("Freq").toInt()/1000.0;
     m_elemElevation = Dpl::um_to_mm(s.value("Element_Elevation").toDouble());
 

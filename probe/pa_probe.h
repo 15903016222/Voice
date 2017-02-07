@@ -56,7 +56,6 @@ public:
      */
     int principal_axis_element_qty() const;
 
-
     /**
      * @brief set_principal_axis_element_qty    设置主轴阵元数
      * @param val                               阵元数
@@ -85,7 +84,7 @@ public:
      * @brief principal_axis_pitch  获取主轴阵元间距
      * @return                      间距值(mm)
      */
-    int principal_axis_pitch() const;
+    double principal_axis_pitch() const;
 
     /**
      * @brief set_principa_axis_pitch   设置主轴阵元间距
@@ -97,7 +96,7 @@ public:
      * @brief secondary_axis_pitch  获取副轴阵元间距
      * @return                      间距值(mm)
      */
-    int secondary_axis_pitch() const;
+    double secondary_axis_pitch() const;
 
     /**
      * @brief set_secondary_axis_pitch  设置副轴阵元间距
@@ -179,7 +178,7 @@ inline int PaProbe::element_qty() const
     return m_priElemQty * m_secElemQty;
 }
 
-inline int PaProbe::principal_axis_pitch() const
+inline double PaProbe::principal_axis_pitch() const
 {
     return m_priPitch;
 }
@@ -189,7 +188,7 @@ inline void PaProbe::set_principa_axis_pitch(double val)
     m_priPitch = val;
 }
 
-inline int PaProbe::secondary_axis_pitch() const
+inline double PaProbe::secondary_axis_pitch() const
 {
     return m_secPitch;
 }
