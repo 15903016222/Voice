@@ -107,9 +107,13 @@ void SelectionMenu::do_probeItem_clicked()
     if (QDialog::Rejected == probeDialog.exec()) {
         return;
     }
-    DplProbe::ProbePointer probePointer = m_group->get_probe();
-    if (probePointer->load(probeDialog.get_path()) ) {
-        m_probeItem->set_text(probePointer->model());
+
+    DplProbe::ProbePointer probePtr = probeDialog.get_probe();
+    m_group->set_probe(probePtr);
+    if (probePtr.isNull()) {
+        m_probeItem->set_text("");
+    } else {
+        m_probeItem->set_text(probePtr->model());
     }
 }
 

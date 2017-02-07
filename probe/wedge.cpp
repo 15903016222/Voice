@@ -22,10 +22,6 @@ Wedge::Wedge(QObject *parent) :
 
 bool Wedge::load(const QString &fileName)
 {
-    if (fileName.isEmpty()) {
-        return false;
-    }
-
     QSettings s(fileName, QSettings::IniFormat);
     if (s.status() != QSettings::NoError) {
         return false;

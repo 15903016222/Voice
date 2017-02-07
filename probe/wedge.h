@@ -64,6 +64,7 @@ public:
      * @param value     延迟时间，单位(ns)
      */
     void set_delay(int value);
+
     /**
      * @brief load      加载楔块文件
      * @param fileName  文件名

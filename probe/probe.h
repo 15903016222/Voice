@@ -13,18 +13,36 @@ typedef QSharedPointer<Probe> ProbePointer;
 class Probe : public QObject
 {
     Q_OBJECT
-public:
+public:   
+    explicit Probe(QObject *parent = 0);
+    virtual ~Probe();
+
+    /**
+     * @brief load  加载探头文件
+     * @param file  探头文件
+     * @return      成功返回true， 否则false
+     */
+    virtual bool load(const QString &fileName);
+
+    /**
+     * @brief save  保存探头数据
+     * @param file  保存文件
+     * @return      成功返回true，否则false
+     */
+    virtual bool save(const QString &fileName);
+
     enum Type {
-        UNKNOWN     = 0,
-        CUSTOM      = 1,    /* 自定义 */
-        ANGLE_BEAM  = 3,    /* 角度声速类型 */
-        CONTACT     = 5,    /* 直接接触式类型 */
-        IMMERSION   = 6,    /* 水浸式 */
-        CONVENTION  = 7     /* 常规 */
+        CONTACT,    /* 直接接触式类型 */
+        DELAY,      /* 延迟块式 */
+        IMMERSION,  /* 水浸式 */
+        ANGLE_BEAM  /* 角度声速类型 */
     };
 
-    explicit Probe(QObject *parent = 0);
-    ~Probe();
+    /**
+     * @brief is_pa_probe   判断是否为PA探头
+     * @return              PA探头返回true，否则为false
+     */
+    virtual bool is_pa_probe() const { return false; }
 
     /**
      * @brief type  获取探头类型
@@ -63,112 +81,49 @@ public:
     void set_serial(const QString &serial);
 
     /**
-     * @brief element_qty   获取阵元数
-     * @return              阵元数
-     */
-    int element_qty() const;
-
-    /**
-     * @brief set_element_qty   设置阵元数
-     * @param qty               阵元数
-     */
-    void set_element_qty(int qty);
-
-    /**
-     * @brief pitch 获取阵元间距
-     * @return      间距, 单位(um)
-     */
-    int pitch() const;
-
-    /**
-     * @brief set_pitch 设置阵元间距
-     * @param val       间距，单位(um)
-     */
-    void set_pitch(int val);
-
-    /**
-     * @brief element_size  获取阵元尺寸
-     * @return              阵元尺寸，单位(um)
-     */
-    int element_size() const;
-
-    /**
-     * @brief set_element_size  设置阵元尺寸
-     * @param val               尺寸，单位(um)
-     */
-    void set_element_size(int val);
-
-    /**
      * @brief freq  获取频率
-     * @return      频率(kHz)
+     * @return      频率(MHz)
      */
-    int freq() const;
+    double freq() const;
 
     /**
      * @brief set_freq  设置频率
-     * @param val       频率(kHz)
+     * @param val       频率(MHz)
      */
-    void set_freq(int val);
+    void set_freq(double val);
+
+    /**
+     * @brief element_elevation 获取阵元高度
+     * @return                  阵元高度(mm)
+     */
+    double element_elevation() const;
+
+    /**
+     * @brief set_element_elevation 设置阵元高度
+     * @param val                   高度(mm)
+     */
+    void set_element_elevation(double val);
 
     /**
      * @brief refpoint  获取参考点
-     * @return          参考点，单位(um)
+     * @return          参考点，单位(mm)
      */
-    int refpoint() const;
+    double refpoint() const;
 
     /**
      * @brief set_refpoint  设置参考点
-     * @param val           参考点，单位(um)
+     * @param val           参考点，单位(mm)
      */
-    void set_refpoint(int val);
-
-    /**
-     * @brief load  加载探头文件
-     * @param file  探头文件
-     * @return      成功返回true， 否则false
-     */
-    bool load(const QString &fileName);
-
-    /**
-     * @brief save  保存探头数据
-     * @param file  保存文件
-     * @return      成功返回true，否则false
-     */
-    bool save(const QString &fileName);
-
-    /**
-     * @brief show  显示探头信息
-     * @return      探头信息
-     */
-    const QString show() const;
-
-signals:
-
-public slots:
+    void set_refpoint(double val);
 
 private:
-    Probe::Type m_type;
     QString m_model;
     QString m_serial;
-    int m_elemQty;
-    int m_freq;
-    int m_pitch;
-    int m_elemSize;
-    int m_refPoint;
-
-    void update_pa(const QByteArray &bytes);
-    void update_ut(const QByteArray &bytes);
+    Type m_type;
+    double m_freq;          /* 频率(MHz) */
+    double m_elemElevation; /* 阵元高度(mm) */
+    double m_refPoint;      /* 参考点(mm) */
 };
-
-inline Probe::Type Probe::type() const
-{
-    return m_type;
-}
-
-inline void Probe::set_type(Probe::Type type)
-{
-    m_type = type;
-}
 
 inline const QString &Probe::model() const
 {
@@ -190,52 +145,42 @@ inline void Probe::set_serial(const QString &serial)
     m_serial = serial;
 }
 
-inline int Probe::element_qty() const
+inline Probe::Type Probe::type() const
 {
-    return m_elemQty;
+    return m_type;
 }
 
-inline void Probe::set_element_qty(int qty)
+inline void Probe::set_type(Probe::Type type)
 {
-    m_elemQty = qty;
+    m_type = type;
 }
 
-inline int Probe::pitch() const
+inline double Probe::element_elevation() const
 {
-    return m_pitch;
+    return m_elemElevation;
 }
 
-inline void Probe::set_pitch(int val)
+inline void Probe::set_element_elevation(double val)
 {
-    m_pitch = val;
+    m_elemElevation = val;
 }
 
-inline int Probe::element_size() const
-{
-    return m_elemSize;
-}
-
-inline void Probe::set_element_size(int val)
-{
-    m_elemSize = val;
-}
-
-inline int Probe::freq() const
+inline double Probe::freq() const
 {
     return m_freq;
 }
 
-inline void Probe::set_freq(int val)
+inline void Probe::set_freq(double val)
 {
     m_freq = val;
 }
 
-inline int Probe::refpoint() const
+inline double Probe::refpoint() const
 {
     return m_refPoint;
 }
 
-inline void Probe::set_refpoint(int val)
+inline void Probe::set_refpoint(double val)
 {
     m_refPoint = val;
 }

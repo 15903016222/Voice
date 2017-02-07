@@ -41,6 +41,8 @@ public:
 
     Group::PointQtyMode m_pointQtyMode; /* 采样点模式 */
 
+    DplProbe::ProbePointer m_probePtr; /* 探头 */
+
     QReadWriteLock m_rwlock;
 };
 
@@ -69,7 +71,6 @@ int GroupPrivate::max_beam_delay()
 Group::Group(int index) :
     DplFpga::Group(index),
     d(new GroupPrivate()),
-    m_probePtr(new DplProbe::Probe()),
     m_wedgePtr(new DplProbe::Wedge())
 {
     connect(static_cast<DplProbe::Wedge *>(m_wedgePtr.data()),
@@ -255,6 +256,21 @@ double Group::max_sample_time()
         max = 1000*1000;
     }
     return max ;
+}
+
+DplProbe::ProbePointer Group::get_probe() const
+{
+    QReadLocker l(&d->m_rwlock);
+    return d->m_probePtr;
+}
+
+void Group::set_probe(DplProbe::ProbePointer probePtr)
+{
+    {
+        QWriteLocker l(&d->m_rwlock);
+        d->m_probePtr = probePtr;
+    }
+    emit probe_changed(probePtr);
 }
 
 void Group::update_sample()

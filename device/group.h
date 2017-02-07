@@ -144,6 +144,8 @@ public:
     double max_range();
 
     DplProbe::ProbePointer get_probe() const;
+    void set_probe(DplProbe::ProbePointer probePtr);
+
     DplProbe::WedgePointer get_wedge() const;
 
 signals:
@@ -152,6 +154,7 @@ signals:
     void range_changed(double val);
     void velocity_changed(double val);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
+    void probe_changed(DplProbe::ProbePointer probePtr);
 
 private slots:
     void update_sample();
@@ -159,7 +162,6 @@ private slots:
 private:
     GroupPrivate *d;
 
-    DplProbe::ProbePointer m_probePtr; /* 探头 */
     DplProbe::WedgePointer m_wedgePtr; /* 楔块 */
 };
 
@@ -171,11 +173,6 @@ inline double Group::max_start()
 inline double Group::max_range()
 {
     return max_sample_time() - start();
-}
-
-inline DplProbe::ProbePointer Group::get_probe() const
-{
-    return m_probePtr;
 }
 
 inline DplProbe::WedgePointer Group::get_wedge() const

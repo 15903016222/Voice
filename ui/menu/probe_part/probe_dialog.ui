@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>564</width>
-    <height>348</height>
+    <height>384</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@ background-color: rgba(255, 255, 255, 0);
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="selectTab">
       <attribute name="title">
@@ -230,7 +230,7 @@ background-color: rgba(255, 255, 255, 0);
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6" stretch="1,0,0">
+        <layout class="QVBoxLayout" name="verticalLayout_6" stretch="1,0">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
@@ -264,9 +264,16 @@ background-color: rgba(255, 255, 255, 0);
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="elemQtyLabel">
+              <widget class="QLabel" name="priElemQtyLabel">
                <property name="text">
-                <string>Element Qty</string>
+                <string>Pri Element Qty</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="secElemQtyLabel">
+               <property name="text">
+                <string>Sec Element Qty</string>
                </property>
               </widget>
              </item>
@@ -278,9 +285,16 @@ background-color: rgba(255, 255, 255, 0);
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="pitchLabel">
+              <widget class="QLabel" name="priPitchLabel">
                <property name="text">
-                <string>Pitch</string>
+                <string>Pri Pitch</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="secPitchLabel">
+               <property name="text">
+                <string>Sec Pitch</string>
                </property>
               </widget>
              </item>
@@ -304,16 +318,9 @@ background-color: rgba(255, 255, 255, 0);
              </item>
              <item>
               <widget class="QComboBox" name="typeComboBox">
-               <item>
-                <property name="text">
-                 <string>Custom</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Angle Beam</string>
-                </property>
-               </item>
+               <property name="currentIndex">
+                <number>3</number>
+               </property>
                <item>
                 <property name="text">
                  <string>Contact</string>
@@ -321,7 +328,17 @@ background-color: rgba(255, 255, 255, 0);
                </item>
                <item>
                 <property name="text">
+                 <string>Delay</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>Immersion</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Angle Beam</string>
                 </property>
                </item>
               </widget>
@@ -349,7 +366,17 @@ background-color: rgba(255, 255, 255, 0);
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="elemQtySpinBox">
+              <widget class="QSpinBox" name="priElemQtySpinBox">
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="secElemQtySpinBox">
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                </property>
@@ -381,7 +408,7 @@ background-color: rgba(255, 255, 255, 0);
               </widget>
              </item>
              <item>
-              <widget class="QDoubleSpinBox" name="pitchDoubleSpinBox">
+              <widget class="QDoubleSpinBox" name="priPitchDoubleSpinBox">
                <property name="buttonSymbols">
                 <enum>QAbstractSpinBox::NoButtons</enum>
                </property>
@@ -393,22 +420,19 @@ background-color: rgba(255, 255, 255, 0);
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="secPitchDoubleSpinBox">
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="suffix">
+                <string> mm</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
