@@ -32,7 +32,7 @@ public:
 
     enum ArrayType {
         CURVED,         /* 曲型 */
-        DUAL,           /* 双线性，一发一收 */
+        DUAL_LINEAR,    /* 双线性，一发一收 */
         DUAL_MATRIX,    /* 双矩阵，一发一收 */
         LINEAR,         /* 线性，自发自收 */
         MATRIX          /* 矩阵，自发自收 */

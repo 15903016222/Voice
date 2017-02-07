@@ -161,8 +161,6 @@ private slots:
 
 private:
     GroupPrivate *d;
-
-    DplProbe::WedgePointer m_wedgePtr; /* 楔块 */
 };
 
 inline double Group::max_start()
@@ -173,11 +171,6 @@ inline double Group::max_start()
 inline double Group::max_range()
 {
     return max_sample_time() - start();
-}
-
-inline DplProbe::WedgePointer Group::get_wedge() const
-{
-    return m_wedgePtr;
 }
 
 }

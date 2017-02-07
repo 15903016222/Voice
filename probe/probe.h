@@ -35,7 +35,9 @@ public:
         CONTACT,    /* 直接接触式类型 */
         DELAY,      /* 延迟块式 */
         IMMERSION,  /* 水浸式 */
-        ANGLE_BEAM  /* 角度声速类型 */
+        ANGLE_BEAM, /* 角度声速类型 */
+        DUAL,       /* 双晶探头，UT专有 */
+        TOFD        /* Tofd探头，UT专有 */
     };
 
     /**
