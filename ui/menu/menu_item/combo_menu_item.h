@@ -31,12 +31,18 @@ public:
 
     void set_current_index(int index);
     int get_current_index() const;
+    void check_text_abbr(const QString &title, const QStringList &texts);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
 
 private:
     Ui::ComboMenuItem *ui;
+
+    int m_typeLabelText;
+
+private slots:
+    void set_label_text(QString text);
 };
 
 #endif // __COMBO_MENU_ITEM_H__

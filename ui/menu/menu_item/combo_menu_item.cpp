@@ -22,11 +22,11 @@ ComboMenuItem::ComboMenuItem(QWidget *parent) :
     ui->comboBox->hide();
     ui->label->show();
     ui->comboBox->setView(new QListView());
-//    ui->comboBox->setMinimumWidth(ui->comboBox->width());
-//    ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    ui->comboBox->setMinimumWidth(ui->comboBox->width());
+    ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(value_changed(int)));
-    connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)), ui->label, SLOT(setText(QString)));
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_label_text(QString)));
 }
 
 ComboMenuItem::~ComboMenuItem()
@@ -66,6 +66,7 @@ bool ComboMenuItem::eventFilter(QObject *obj, QEvent *e)
 void ComboMenuItem::set(const QString &title, const QStringList &texts)
 {
     set_title(title);
+    check_text_abbr(title, texts);
 
     ui->comboBox->clear();
     ui->comboBox->addItems(texts);
@@ -79,4 +80,32 @@ void ComboMenuItem::set_current_index(int index)
 int ComboMenuItem::get_current_index() const
 {
     return ui->comboBox->currentIndex();
+}
+
+void ComboMenuItem::set_label_text(QString text)
+{
+    switch (m_typeLabelText) {
+    case 0:
+        ui->label->setText(text);
+        break;
+    case 1:
+        ui->label->setText(text.left(text.indexOf(" ")));
+        break;
+    case 2:
+        ui->label->setText(text.right(text.length() - text.indexOf(" ") - 1));
+        break;
+    default:
+        break;
+    }
+}
+
+void ComboMenuItem::check_text_abbr(const QString &title, const QStringList &texts)
+{
+    if(title == tr("Display") || title == tr("Mode") || title == tr("Sound")) {
+        m_typeLabelText = 1;
+    } else if(title == tr("Select") && texts.at(0).contains("TOFD")){
+        m_typeLabelText = 2;
+    } else {
+        m_typeLabelText = 0;
+    }
 }
