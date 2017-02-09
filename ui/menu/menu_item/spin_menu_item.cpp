@@ -52,13 +52,7 @@ void SpinMenuItem::set_decimals(int prec)
 
     m_step = m_baseStep;
 
-    QString msg="[0-9]";
-    if (prec > 0) {
-        msg += "[.][0-9]";
-        msg += QString::number(prec);
-    }
-    QRegExp rx(msg);
-    QValidator *validator = new QRegExpValidator(rx, this);
+    QDoubleValidator *validator = new QDoubleValidator(m_min, m_max, prec, this);
     ui->lineEdit->setValidator(validator);
 
     update_value();
