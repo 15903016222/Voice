@@ -27,6 +27,8 @@ SpinMenuItem::SpinMenuItem(QWidget *parent) :
     m_step = 1;
     m_decimals = 0;
     update_value();
+
+    connect(ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(check_number_validity(QString)));
 }
 
 SpinMenuItem::~SpinMenuItem()
@@ -83,7 +85,12 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         case Qt::Key_Back:
         case Qt::Key_Cancel:
         case Qt::Key_Enter:
+            update_value();
+            set_focus_out();
+            return true;
+            break;
         case Qt::Key_Return:
+            update_value();
             set_focus_out();
             return true;
             break;
@@ -220,4 +227,15 @@ void SpinMenuItem::set(const QString &title, const QString &unit, double min, do
     set_decimals(decimals);
 
     update_title();
+}
+
+void SpinMenuItem::check_number_validity(const QString &text)
+{
+    if(text.toDouble() > m_max || text.toDouble() < m_min) {
+        ui->lineEdit->backspace();
+        QString value = ui->lineEdit->text();
+        m_value = value.toDouble();
+    } else {
+        m_value = text.toDouble();
+    }
 }

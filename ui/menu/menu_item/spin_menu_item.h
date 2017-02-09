@@ -36,6 +36,7 @@ public:
 
 public slots:
     void set_value(double value);
+    void check_number_validity(const QString &text);
 
 signals:
     void value_changed(double value);
