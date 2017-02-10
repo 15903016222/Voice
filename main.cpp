@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include <device/device.h>
 
 #include <QApplication>
 #include <QTextCodec>
@@ -12,6 +13,10 @@ static const char *FONT_FILE = "/etc/mercury/font/SONGTI.TTC";
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    DplDevice::Device *dev = DplDevice::Device::get_instance();
+    dev->get_group(0)->init();
+
     MainWindow w;
 
 #if (PHASCAN | PHASCAN_II)
