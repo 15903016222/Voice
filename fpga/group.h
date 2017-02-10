@@ -20,7 +20,7 @@ class FPGASHARED_EXPORT Group : public QObject
 {
     Q_OBJECT
 public:
-    explicit Group(const int index);
+    explicit Group(const int index, QObject *parent = 0);
     ~Group();
 
     /**
