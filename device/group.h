@@ -13,6 +13,8 @@
 #include <fpga/group.h>
 #include <probe/probe.h>
 #include <probe/wedge.h>
+#include <source/beam_group.h>
+#include <focallaw/focallaw.h>
 
 namespace DplDevice {
 
@@ -22,7 +24,7 @@ class Group : public DplFpga::Group
 {
     Q_OBJECT
 public:
-    explicit Group(int index);
+    explicit Group(int index, QObject *parent = 0);
     ~Group();
 
     enum Mode {
@@ -120,12 +122,6 @@ public:
     bool set_point_qty_mode(PointQtyMode mode);
 
     /**
-     * @brief beam_qty  获取组包含的beam数
-     * @return          返回beam数
-     */
-    int beam_qty();
-
-    /**
      * @brief max_sample_time   获取最大Start+Range时间
      * @return              返回最大Start+Range时间，单位(ns)
      */
@@ -148,6 +144,10 @@ public:
 
     DplProbe::WedgePointer get_wedge() const;
 
+    const DplSource::BeamGroupPointer &get_beam_group() const;
+
+    DplFocallaw::FocallawPointer &get_focallaw();
+
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void start_changed(double val);
@@ -161,8 +161,10 @@ private slots:
 
 private:
     GroupPrivate *d;
-    DplProbe::ProbePointer m_probePtr; /* 探头 */
-    DplProbe::WedgePointer m_wedgePtr; /* 楔块 */
+    DplProbe::ProbePointer m_probePtr;  /* 探头 */
+    DplProbe::WedgePointer m_wedgePtr;  /* 楔块 */
+    DplSource::BeamGroupPointer m_beamGroupPtr; /* Beam数据组 */
+    DplFocallaw::FocallawPointer m_focallawPtr; /* 聚焦法则 */
 };
 
 inline double Group::max_start()
@@ -189,6 +191,16 @@ inline void Group::set_probe(DplProbe::ProbePointer probePtr)
 inline DplProbe::WedgePointer Group::get_wedge() const
 {
     return m_wedgePtr;
+}
+
+inline const DplSource::BeamGroupPointer &Group::get_beam_group() const
+{
+    return m_beamGroupPtr;
+}
+
+inline DplFocallaw::FocallawPointer &Group::get_focallaw()
+{
+    return m_focallawPtr;
 }
 
 }

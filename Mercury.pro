@@ -66,3 +66,5 @@ include(fpga/fpga.pri)
 include(probe/probe.pri)
 
 include(source/source.pri)
+
+include(focallaw/focallaw.pri)

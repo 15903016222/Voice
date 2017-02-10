@@ -124,7 +124,7 @@ public:
      * @brief beam_qty  获取beam的总数
      * @return          返回beam的总数
      */
-    int beam_qty();
+    int total_beam_qty();
 
 signals:
     void current_group_changed();

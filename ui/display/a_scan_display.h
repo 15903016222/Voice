@@ -3,8 +3,6 @@
 
 #include <device/device.h>
 
-#include <source/beam.h>
-
 #include <QWidget>
 
 namespace Ui {
@@ -19,7 +17,8 @@ public:
     explicit AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent = 0);
     ~AscanDisplay();
 
-    void show(DplSource::Beam &beam);
+protected slots:
+    void update();
 
 private:
     Ui::AscanDisplay *ui;

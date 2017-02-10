@@ -13,6 +13,8 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
     ui->setupUi(this);
 
     m_group = group;
+
+    /* ruler setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
             this,
@@ -32,6 +34,14 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
     ui->leftRulerWidget->set_unit("(%)");
     ui->leftRulerWidget->set_backgroup_color(QColor("#ffff7f"));
     ui->leftRulerWidget->update();
+
+    /* source setting */
+    DplSource::BeamGroupPointer beamGroup = m_group->get_beam_group();
+    qDebug()<<__func__<<__LINE__<<"beam qty"<<beamGroup->beam_qty()<<"point qty"<<beamGroup->point_qty();
+    connect(static_cast<DplSource::BeamGroup *>(beamGroup.data()),
+            SIGNAL(data_event()),
+            this,
+            SLOT(update()));
 }
 
 AscanDisplay::~AscanDisplay()
@@ -39,10 +49,11 @@ AscanDisplay::~AscanDisplay()
     delete ui;
 }
 
-void AscanDisplay::show(DplSource::Beam &beam)
+void AscanDisplay::update()
 {
+    DplSource::BeamGroupPointer beamGroup = m_group->get_beam_group();
     QByteArray wave;
-    beam.get_wave(wave);
+    beamGroup->get(0)->get_wave(wave);
     ui->ascanWidget->show(wave);
 }
 

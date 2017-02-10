@@ -8,42 +8,62 @@
 
 namespace DplDisplay {
 
-Display::Display(QWidget *parent) : QWidget(parent)
+Display::Display(QWidget *parent) :
+    QWidget(parent),
+    m_type(A_SCAN),
+    m_showAllFlag(false)
 {
-    DplSource::Source *source = DplSource::Source::get_instance();
-    connect(source, SIGNAL(data_event()), this, SLOT(do_source_data_event()));
+    init_show_map();
 
-    DplDevice::Device *dev = DplDevice::Device::get_instance();
-    if (dev->groups() == 0) {
-        dev->add_group();
-    }
-    m_scanDisplay = new AscanDisplay(dev->get_group(0), this);
+    DplSource::Source *source = DplSource::Source::get_instance();
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->addWidget(m_scanDisplay);
+
+    show();
 
     source->start();
 }
 
-bool Display::set_type(Display::Type type)
+void Display::set_type(Display::Type type)
 {
     m_type = type;
-    return true;
+    show();
 }
 
 void Display::set_show_all(bool flag)
 {
-    m_showAll = flag;
+    m_showAllFlag = flag;
+    show();
 }
 
-void Display::do_source_data_event()
+void Display::show()
 {
-    DplSource::Source *source = DplSource::Source::get_instance();
-    DplSource::Beam beam;
-    source->get_group(0)->get_beam(0, beam);
-
-    ((AscanDisplay *)m_scanDisplay)->show(beam);
+    ShowFun fun = m_showMap[m_type];
+    if (NULL == fun) {
+        return;
+    }
+    (this->*fun)();
 }
+
+void Display::show_a_scan()
+{
+    if (m_showAllFlag) {
+
+    } else {
+        DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+        AscanDisplay *aScan = new AscanDisplay(group, this);
+
+        QVBoxLayout *mainLayout = dynamic_cast<QVBoxLayout *>(this->layout());
+        mainLayout->addWidget(aScan);
+    }
+}
+
+void Display::init_show_map()
+{
+    ::memset(m_showMap, 0, sizeof(m_showMap));
+    m_showMap[A_SCAN] = &Display::show_a_scan;
+}
+
 
 }

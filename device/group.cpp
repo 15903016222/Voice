@@ -10,7 +10,6 @@
 #include "device.h"
 
 #include <fpga/fpga.h>
-#include <source/source.h>
 
 #include <QReadWriteLock>
 #include <qmath.h>
@@ -66,15 +65,27 @@ int GroupPrivate::max_beam_delay()
 }
 
 /* Group */
-Group::Group(int index) :
-    DplFpga::Group(index),
+Group::Group(int index, QObject *parent) :
+    DplFpga::Group(index, parent),
     d(new GroupPrivate()),
-    m_wedgePtr(new DplProbe::Wedge())
+    m_wedgePtr(new DplProbe::Wedge()),
+    m_beamGroupPtr(new DplSource::BeamGroup),
+    m_focallawPtr(new DplFocallaw::Focallaw)
 {
     connect(static_cast<DplProbe::Wedge *>(m_wedgePtr.data()),
             SIGNAL(delay_changed(int)),
             this,
             SLOT(update_sample()));
+
+    m_beamGroupPtr->set_beam_qty(m_focallawPtr->beam_qty());
+    connect(this, SIGNAL(point_qty_changed(int)),
+            static_cast<DplSource::BeamGroup *>(m_beamGroupPtr.data()),
+            SLOT(set_point_qty(int)));
+
+    connect(static_cast<DplFocallaw::Focallaw *>(m_focallawPtr.data()),
+            SIGNAL(beam_qty_changed(int)),
+            static_cast<DplSource::BeamGroup *>(m_beamGroupPtr.data()),
+            SLOT(set_beam_qty(int)));
 }
 
 Group::~Group()
@@ -231,16 +242,10 @@ bool Group::set_point_qty_mode(Group::PointQtyMode mode)
     return true;
 }
 
-int Group::beam_qty()
-{
-    qDebug()<<__FILE__<<__func__<<"unimplement";
-    return 1;
-}
-
 double Group::max_sample_time()
 {
     DplFpga::Fpga *fpga = DplFpga::Fpga::get_instance();
-    int beamQty = Device::get_instance()->beam_qty();
+    int beamQty = Device::get_instance()->total_beam_qty();
     // prf为1即(1s)时，rx_time时间为最大
     // 1_000_000_000 / 4    idle_time + rx_time >= 4 * rx_time
     // one beam cycle = loading time +  beam delay + wedge delay + sample start + sample range + 50 /* 单位 ns */

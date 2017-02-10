@@ -130,7 +130,7 @@
      </widget>
     </item>
     <item>
-     <widget class="DplDisplay::Display" name="widget" native="true">
+     <widget class="DplDisplay::Display" name="display" native="true">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(0, 0, 0);</string>
       </property>

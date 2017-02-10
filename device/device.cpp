@@ -197,19 +197,6 @@ bool Device::add_group()
     }
     d->m_groups.append(GroupPointer(new Group(d->m_groups.size())));
     d->m_curGroup = d->m_groups.last();
-    d->m_source->add_group(d->m_curGroup->beam_qty(), d->m_curGroup->point_qty());
-
-    DplSource::GroupPointer groupSource = d->m_source->get_group(d->m_curGroup->index());
-
-    /* connect */
-    connect(static_cast<DplDevice::Group *>(d->m_curGroup.data()),
-            SIGNAL(point_qty_changed(int)),
-            static_cast<DplSource::Group *>(groupSource.data()),
-            SLOT(set_point_qty(int)));
-    connect(static_cast<DplDevice::Group *>(d->m_curGroup.data()),
-            SIGNAL(point_qty_changed(int)),
-            d->m_source,
-            SLOT(restart()));
 
     emit current_group_changed();
     return true;
@@ -223,18 +210,7 @@ bool Device::remove_group(int id)
         return false;
     }
 
-    /* disconnect */
-    disconnect(static_cast<DplDevice::Group *>(d->m_groups.at(id).data()),
-               SIGNAL(point_qty_changed(int)),
-               static_cast<DplSource::Group *>(d->m_source->get_group(id).data()),
-               SLOT(set_point_qty(int)));
-    disconnect(static_cast<DplDevice::Group *>(d->m_groups.at(id).data()),
-               SIGNAL(point_qty_changed(int)),
-               d->m_source,
-               SLOT(restart()));
-
     d->m_groups.removeAt(id);
-    d->m_source->remove_group(id);
     if (d->m_curGroup->index() == id) {
         d->m_curGroup = d->m_groups.last();
         emit current_group_changed();
@@ -266,12 +242,12 @@ GroupPointer &Device::current_group()
     return d->m_curGroup;
 }
 
-int Device::beam_qty()
+int Device::total_beam_qty()
 {
     QReadLocker l(&d->m_groupsRWLock);
     int qty = 0;
     for (int i = 0; i < d->m_groups.size(); ++i) {
-        qty += d->m_groups[i]->beam_qty();
+        qty += d->m_groups[i]->get_focallaw()->beam_qty();
     }
     return qty;
 }
@@ -280,7 +256,7 @@ Device::Device(QObject *parent) :
     QObject(parent),
     d(new DevicePrivate())
 {
-
+    add_group();
 }
 
 Device::~Device()
