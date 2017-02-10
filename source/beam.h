@@ -3,10 +3,15 @@
 
 #include "source_global.h"
 #include <QObject>
+#include <QSharedPointer>
 
 namespace DplSource {
 
+class Beam;
 class BeamSourcePrivate;
+
+typedef QSharedPointer<Beam> BeamPointer;
+
 class SOURCESHARED_EXPORT Beam
 {
 public:
@@ -24,7 +29,11 @@ public:
      * @brief has_data  判断是否有数据
      * @return          有数据则返回true，否则返回false
      */
-    bool has_data();
+    bool has_data() const;
+
+    /**
+     * @brief clean 清除数据
+     */
     void clean();
 
     /**
@@ -32,7 +41,7 @@ public:
      * @param wave      波形数据
      * @return          成功返回true，失败返回false
      */
-    bool get_wave(QByteArray &wave);
+    bool get_wave(QByteArray &wave) const;
 
     /**
      * @brief point_qty 获取波形点数
@@ -54,7 +63,7 @@ public:
 
     /**
      * @brief gate_a_position   获取闸门A内波形峰值对应的位置
-     * @return                  位置
+     * @return                  位置(ns)
      */
     int gate_a_position() const;
 
@@ -66,7 +75,7 @@ public:
 
     /**
      * @brief gate_B_position   获取闸门B内波形峰值对应的位置
-     * @return                  位置
+     * @return                  位置(ns)
      */
     int gate_b_position() const;
 
@@ -101,6 +110,7 @@ public:
 //    int analog_output0();
 //    int analog_output1();
 
+    static const int MEASURE_SIZE;
 private:
     BeamSourcePrivate *d;
 };
