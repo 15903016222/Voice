@@ -54,7 +54,7 @@ VInputPrivate::VInputPrivate()
     ::ioctl(fd, UI_SET_KEYBIT, KEY_MINUS);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_BACKSPACE);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_ENTER);
-    ::ioctl(fd, UI_SET_KEYBIT, KEY_DOT);
+    ::ioctl(fd, UI_SET_KEYBIT, KEY_KPDOT);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_UP);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_LEFT);
     ::ioctl(fd, UI_SET_KEYBIT, KEY_RIGHT);
