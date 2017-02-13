@@ -37,7 +37,6 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
 
     /* source setting */
     DplSource::BeamGroupPointer beamGroup = m_group->get_beam_group();
-    qDebug()<<__func__<<__LINE__<<"beam qty"<<beamGroup->beam_qty()<<"point qty"<<beamGroup->point_qty();
     connect(static_cast<DplSource::BeamGroup *>(beamGroup.data()),
             SIGNAL(data_event()),
             this,
@@ -46,6 +45,7 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
 
 AscanDisplay::~AscanDisplay()
 {
+    qDebug()<<__func__<<__LINE__;
     delete ui;
 }
 
