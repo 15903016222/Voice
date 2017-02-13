@@ -14,6 +14,7 @@ TofdMenu::TofdMenu(Ui::BaseMenu *ui, QObject *parent) :
     selectList.append(tr("TOFD Settings"));
     selectList.append(tr("TOFD Analysis"));
     m_selectItem->set(tr("Select"), selectList);
+    m_selectItem->set_dispay_mode(ComboMenuItem::SUFFIX);
     connect(m_selectItem, SIGNAL(value_changed(int)), this, SLOT(do_select_changed(int)));
 
     /* Wedge Sep. menu item */

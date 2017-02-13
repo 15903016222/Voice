@@ -43,7 +43,10 @@ OutputMenu::OutputMenu(Ui::BaseMenu *ui, QObject *parent)
     m_dataItem = new ComboMenuItem;
 
     m_outputItem->set(tr("Output"), outputList);
+
     m_soundItem->set(tr("Sound"), soundList);
+    m_soundItem->set_dispay_mode(ComboMenuItem::PREFIX);
+
     m_delayItem->set(tr("Delay"), "mm", 0, 5000, 2);
     m_holdTimeItem->set(tr("Hold Time"), "%", 0, 5000, 2);
     m_groupItem->set(tr("Group"), "");

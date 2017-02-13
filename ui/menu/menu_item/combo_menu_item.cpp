@@ -13,7 +13,8 @@
 
 ComboMenuItem::ComboMenuItem(QWidget *parent) :
     MenuItem(parent),
-    ui(new Ui::ComboMenuItem)
+    ui(new Ui::ComboMenuItem),
+    m_displayMode(ALL)
 {
     ui->setupUi(this);
 
@@ -66,7 +67,6 @@ bool ComboMenuItem::eventFilter(QObject *obj, QEvent *e)
 void ComboMenuItem::set(const QString &title, const QStringList &texts)
 {
     set_title(title);
-    check_text_abbr(title, texts);
 
     ui->comboBox->clear();
     ui->comboBox->addItems(texts);
@@ -82,30 +82,25 @@ int ComboMenuItem::get_current_index() const
     return ui->comboBox->currentIndex();
 }
 
+void ComboMenuItem::set_dispay_mode(ComboMenuItem::DisplayMode mode)
+{
+    m_displayMode = mode;
+    set_label_text(ui->comboBox->currentText());
+}
+
 void ComboMenuItem::set_label_text(QString text)
 {
-    switch (m_typeLabelText) {
-    case 0:
+    switch (m_displayMode) {
+    case ALL:
         ui->label->setText(text);
         break;
-    case 1:
+    case PREFIX:
         ui->label->setText(text.left(text.indexOf(" ")));
         break;
-    case 2:
+    case SUFFIX:
         ui->label->setText(text.right(text.length() - text.indexOf(" ") - 1));
         break;
     default:
         break;
-    }
-}
-
-void ComboMenuItem::check_text_abbr(const QString &title, const QStringList &texts)
-{
-    if(title == tr("Display") || title == tr("Mode") || title == tr("Sound")) {
-        m_typeLabelText = 1;
-    } else if(title == tr("Select") && texts.at(0).contains("TOFD")){
-        m_typeLabelText = 2;
-    } else {
-        m_typeLabelText = 0;
     }
 }

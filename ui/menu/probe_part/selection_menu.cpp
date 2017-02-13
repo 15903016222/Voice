@@ -47,6 +47,7 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_groupItem->set(tr("Group"), groupList);
 
     m_modeItem->set(tr("Mode"), modeList);
+    m_modeItem->set_dispay_mode(ComboMenuItem::PREFIX);
     connect(m_modeItem, SIGNAL(value_changed(int)),
             this, SLOT(do_groupModeItem_changed(int)));
 

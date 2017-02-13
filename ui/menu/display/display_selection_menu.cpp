@@ -50,6 +50,7 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
 
     /* Display menu item */
     m_displayItem->set(tr("Display"), displayList);
+    m_displayItem->set_dispay_mode(ComboMenuItem::PREFIX);
 
     /* C-Scan Source menu item */
     m_cSourceitem->set(tr("C-Scan<br>Source"), cScanSourceList);

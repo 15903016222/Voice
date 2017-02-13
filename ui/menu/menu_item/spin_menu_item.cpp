@@ -85,10 +85,6 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         case Qt::Key_Back:
         case Qt::Key_Cancel:
         case Qt::Key_Enter:
-            update_value();
-            set_focus_out();
-            return true;
-            break;
         case Qt::Key_Return:
             update_value();
             set_focus_out();

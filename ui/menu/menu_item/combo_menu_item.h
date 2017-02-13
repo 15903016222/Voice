@@ -31,7 +31,13 @@ public:
 
     void set_current_index(int index);
     int get_current_index() const;
-    void check_text_abbr(const QString &title, const QStringList &texts);
+
+    enum DisplayMode {
+        ALL,
+        PREFIX,
+        SUFFIX
+    };
+    void set_dispay_mode(DisplayMode mode);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
@@ -39,7 +45,7 @@ protected:
 private:
     Ui::ComboMenuItem *ui;
 
-    int m_typeLabelText;
+    int m_displayMode;
 
 private slots:
     void set_label_text(QString text);
