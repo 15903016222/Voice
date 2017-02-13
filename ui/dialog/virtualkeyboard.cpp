@@ -46,6 +46,7 @@ void VirtualKeyboard::on_panelButton_0_clicked()
 
 void VirtualKeyboard::on_pushButton_1_clicked()
 {
+    qDebug() << ".";
     VInput::get_vinput()->send(VInput::Key_Dot);
 }
 
@@ -67,6 +68,18 @@ void VirtualKeyboard::on_pushButton_4_clicked()
 void VirtualKeyboard::on_pushButton_5_clicked()
 {
     VInput::get_vinput()->send(VInput::Key_Enter);
+//    hide();
+//    emit close_keyboard();
+}
+
+void VirtualKeyboard::on_pushButton_6_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_Minus);
+}
+
+void VirtualKeyboard::on_pushButton_7_clicked()
+{
+    VInput::get_vinput()->send(VInput::Key_Esc);
     hide();
     emit close_keyboard();
 }
