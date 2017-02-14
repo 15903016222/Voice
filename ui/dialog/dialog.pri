@@ -10,8 +10,7 @@ SOURCES += \
     $$PWD/datetimesetdialog.cpp \
     $$PWD/filemanagerdialog.cpp \
     $$PWD/about_dialog.cpp \
-    $$PWD/sysinfo_dialog.cpp \
-    $$PWD/spinbox.cpp
+    $$PWD/sysinfo_dialog.cpp
 
 
 HEADERS += \
@@ -23,8 +22,7 @@ HEADERS += \
     $$PWD/datetimesetdialog.h \
     $$PWD/filemanagerdialog.h \
     $$PWD/about_dialog.h \
-    $$PWD/sysinfo_dialog.h \
-    $$PWD/spinbox.h
+    $$PWD/sysinfo_dialog.h
 
 FORMS += \
     $$PWD/timesetdialog.ui \
