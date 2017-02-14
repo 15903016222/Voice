@@ -8,6 +8,9 @@
 
 namespace DplDisplay {
 
+Display * Display::s_display = NULL;
+QMutex Display::s_mutex;
+
 Display::Display(QWidget *parent) :
     QWidget(parent),
     m_type(A_SCAN),
@@ -25,6 +28,15 @@ Display::Display(QWidget *parent) :
     show();
 
     source->start();
+}
+
+Display *Display::get_instance()
+{
+    QMutexLocker l(&s_mutex);
+    if (s_display == NULL) {
+        s_display = new Display();
+    }
+    return s_display;
 }
 
 void Display::set_mode(Display::Mode mode)
@@ -114,7 +126,16 @@ void Display::show_single_scan()
 void Display::show_ab_scan()
 {
     DplDevice::Device *dev = DplDevice::Device::get_instance();
+    int num = dev->groups();
 
+    if (m_showAllFlag) {
+
+    } else {
+        AscanDisplay *a = new AscanDisplay(dev->current_group(), m_widget);
+        AscanDisplay *b = new AscanDisplay(dev->current_group(), m_widget);
+        m_vboxLayout->addWidget(a);
+        m_vboxLayout->addWidget(b);
+    }
 }
 
 }

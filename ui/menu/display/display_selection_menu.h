@@ -9,6 +9,7 @@
 #define __DISPLAY_SELECTION_MENU_H__
 
 #include "base_menu.h"
+#include <ui/display/display.h>
 
 namespace DplDisplayMenu {
 
@@ -29,6 +30,8 @@ private:
     SpinMenuItem *m_minThicknessItem;
     SpinMenuItem *m_maxThicknessItem;
     ComboMenuItem *m_dataCompressionItem;
+
+    DplDisplay::Display *m_display;
 };
 
 }

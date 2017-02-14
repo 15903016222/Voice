@@ -5,6 +5,7 @@
 #include "vinput.h"
 #include "ut_setting/general_menu.h"
 #include "preference/preference_menu.h"
+#include <display/display.h>
 
 #include <QDebug>
 #include <QResizeEvent>
@@ -55,6 +56,11 @@ MainWindow::MainWindow(QWidget *parent) :
     pVirtualKeyboard = new VirtualKeyboard;
     pVirtualKeyboard->hide();
     connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
+
+    QVBoxLayout *vboxLayout = new QVBoxLayout(ui->display);
+    vboxLayout->setContentsMargins(0, 0, 0, 0);
+    vboxLayout->setSpacing(0);
+    vboxLayout->addWidget(DplDisplay::Display::get_instance());
 }
 
 MainWindow::~MainWindow()

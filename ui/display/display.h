@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QMutex>
 #include <QMap>
 
 namespace DplDisplay {
@@ -26,8 +27,7 @@ public:
         ASC_SCAN,
     };
 
-    explicit Display(QWidget *parent = 0);
-
+    static Display *get_instance();
 
 signals:
 
@@ -37,8 +37,13 @@ public slots:
     void reflesh() { show(); }
 
 protected:
+    explicit Display(QWidget *parent = 0);
+
     void show();
 
+    /**
+     * @brief show_single_scan  显示一个模式Scan
+     */
     template <typename T>
     void show_single_scan();
 
@@ -50,15 +55,15 @@ protected:
     void show_as_scan();
     void show_asc_scan();
 
-
-private slots:
-
 private:
+    static Display *s_display;
+    static QMutex s_mutex;
+
     Mode m_type;
     bool m_showAllFlag;
+
     typedef void (Display::*ShowFun)();
     ShowFun m_showMap[ASC_SCAN];
-//    QMap<Type, ShowFun> m_showMap;
 
     QWidget *m_widget;
     QVBoxLayout *m_vboxLayout;
