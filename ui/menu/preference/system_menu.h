@@ -26,9 +26,9 @@ private:
     LabelMenuItem *m_dateItem;
     LabelMenuItem *m_timeItem;
     ComboMenuItem *m_certItem;
-    MenuItem *m_updateItem;
-    MenuItem *m_resetCfgItem;
-    MenuItem *m_infoItem;
+    LabelMenuItem *m_updateItem;
+    LabelMenuItem *m_resetCfgItem;
+    LabelMenuItem *m_infoItem;
 
 private slots:
     void show_time_dialog();

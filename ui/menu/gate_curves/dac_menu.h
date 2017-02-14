@@ -35,8 +35,8 @@ private:
     /* Edit */
     ComboMenuItem *m_pointItem;
     SpinMenuItem *m_positionItem;
-    MenuItem *m_addPointItem;
-    MenuItem *m_deletePointItem;
+    LabelMenuItem *m_addPointItem;
+    LabelMenuItem *m_deletePointItem;
 
     void show_setting();
     void hide_setting();

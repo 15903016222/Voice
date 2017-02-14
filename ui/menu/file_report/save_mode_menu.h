@@ -18,7 +18,7 @@ public:
 private:
     ComboMenuItem *m_storageItem;
     ComboMenuItem *m_saveModeItem;
-    MenuItem *m_saveDataItem;
+    LabelMenuItem *m_saveDataItem;
     LabelMenuItem *m_fileName;
 
 private slots:

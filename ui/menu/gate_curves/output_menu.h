@@ -27,7 +27,7 @@ private:
     ComboMenuItem *m_soundItem;
     SpinMenuItem *m_delayItem;
     SpinMenuItem *m_holdTimeItem;
-    MenuItem *m_groupItem;
+    LabelMenuItem *m_groupItem;
     ComboMenuItem *m_dataItem;
 };
 

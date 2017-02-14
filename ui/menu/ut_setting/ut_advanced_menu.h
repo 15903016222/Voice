@@ -28,7 +28,7 @@ public:
 private:
     bool m_updateFlag;
 
-    MenuItem *m_eightPercentItem;
+    LabelMenuItem *m_eightPercentItem;
     ComboMenuItem *m_dbRefItem;
     ComboMenuItem *m_pointQtyItem;
     LabelMenuItem *m_scaleFactorItem;

@@ -23,7 +23,7 @@ public:
     void hide();
 
 private:
-    MenuItem *m_receiverItem;
+    LabelMenuItem *m_receiverItem;
     ComboMenuItem *m_filterItem;
     ComboMenuItem *m_rectifierItem;
     ComboMenuItem *m_videoFilterItem;

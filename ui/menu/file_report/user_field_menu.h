@@ -25,7 +25,7 @@ private:
     LabelMenuItem *m_labelItem;
     LabelMenuItem *m_contentItem;
     LabelMenuItem *m_editNoteItem;
-    MenuItem *m_printItem;
+    LabelMenuItem *m_printItem;
 
 private slots:
     void show_input_dialog();

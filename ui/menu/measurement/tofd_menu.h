@@ -19,8 +19,8 @@ private:
     ComboMenuItem *m_selectItem;
 
     SpinMenuItem *m_wedgeItem;
-    MenuItem *m_layerDepthItem;
-    MenuItem *m_tofdCalItem;
+    LabelMenuItem *m_layerDepthItem;
+    LabelMenuItem *m_tofdCalItem;
     SpinMenuItem *m_startItem;
     SpinMenuItem *m_rangeItem;
 

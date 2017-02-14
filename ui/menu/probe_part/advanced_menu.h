@@ -16,8 +16,8 @@ public:
     void hide();
 
 private:
-    MenuItem *m_loadPartItem;
-    MenuItem *m_clearPartItem;
+    LabelMenuItem *m_loadPartItem;
+    LabelMenuItem *m_clearPartItem;
 };
 
 }

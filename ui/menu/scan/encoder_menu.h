@@ -20,7 +20,7 @@ private:
     SpinMenuItem *m_resolutionItem;
     ComboMenuItem *m_polarityItem;
     SpinMenuItem *m_originItem;
-    MenuItem *m_presetItem;
+    LabelMenuItem *m_presetItem;
 };
 
 }

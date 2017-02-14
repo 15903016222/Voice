@@ -39,6 +39,9 @@ public:
     };
     void set_dispay_mode(DisplayMode mode);
 
+signals:
+    void value_changed(int index);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
 

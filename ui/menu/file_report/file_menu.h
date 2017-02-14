@@ -16,9 +16,9 @@ public:
     void hide();
 
 private:
-    MenuItem *m_saveSetupItem;
-    MenuItem *m_openItem;
-    MenuItem *m_fileManagerItem;
+    LabelMenuItem *m_saveSetupItem;
+    LabelMenuItem *m_openItem;
+    LabelMenuItem *m_fileManagerItem;
 
 private slots:
     void do_fileManagerItem_clicked();

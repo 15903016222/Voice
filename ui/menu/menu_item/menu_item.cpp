@@ -10,9 +10,3 @@
 MenuItem::MenuItem(QWidget *parent) : QWidget(parent)
 {
 }
-
-void MenuItem::set(const QString &title, const QString &text)
-{
-    Q_UNUSED(title);
-    Q_UNUSED(text);
-}

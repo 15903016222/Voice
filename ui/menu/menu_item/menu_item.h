@@ -15,12 +15,6 @@ class MenuItem : public QWidget
     Q_OBJECT
 public:
     explicit MenuItem(QWidget *parent = 0);
-
-    virtual void set(const QString &title, const QString &text);
-
-signals:
-    void value_changed(int index);
-    void clicked();
 };
 
 #endif // __MENU_ITEM_H__
