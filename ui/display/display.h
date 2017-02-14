@@ -13,7 +13,6 @@ class Display : public QWidget
     Q_OBJECT
 public:
     enum Mode {
-        NONE_SCAN,
         A_SCAN,
         B_SCAN,
         C_SCAN,

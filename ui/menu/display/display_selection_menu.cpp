@@ -18,8 +18,10 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     QStringList displayList;
     QStringList cScanSourceList;
 
-    groupList.append(tr("All"));
+    m_display = DplDisplay::Display::get_instance();
+
     groupList.append(tr("Current"));
+    groupList.append(tr("All"));
 
     displayList.append(tr("A A-Scan"));
     displayList.append(tr("B B-Scan"));
@@ -51,7 +53,8 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     /* Display menu item */
     m_displayItem->set(tr("Display"), displayList);
     m_displayItem->set_dispay_mode(ComboMenuItem::PREFIX);
-//    connect(m_displayItem, SIGNAL(value_changed(int)),
+    connect(m_displayItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_displayItem_changed(int)));
 
     /* C-Scan Source menu item */
     m_cSourceitem->set(tr("C-Scan<br>Source"), cScanSourceList);
@@ -106,6 +109,15 @@ void SelectionMenu::hide()
     m_minThicknessItem->hide();
     m_maxThicknessItem->hide();
     m_dataCompressionItem->hide();
+}
+
+void SelectionMenu::do_displayItem_changed(int mode)
+{
+    if (mode != DplDisplay::Display::A_SCAN) {
+        m_display->set_mode(DplDisplay::Display::AB_SCAN);
+    } else {
+        m_display->set_mode(DplDisplay::Display::A_SCAN);
+    }
 }
 
 }

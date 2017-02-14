@@ -9,7 +9,7 @@
 #define __DISPLAY_SELECTION_MENU_H__
 
 #include "base_menu.h"
-#include <ui/display/display.h>
+#include <display/display.h>
 
 namespace DplDisplayMenu {
 
@@ -22,6 +22,9 @@ public:
 
     void show();
     void hide();
+
+protected slots:
+    void do_displayItem_changed(int mode);
 
 private:
     ComboMenuItem *m_groupItem;
