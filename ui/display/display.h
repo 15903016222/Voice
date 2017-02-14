@@ -2,6 +2,7 @@
 #define __DISPLAY_H__
 
 #include <QWidget>
+#include <QVBoxLayout>
 #include <QMap>
 
 namespace DplDisplay {
@@ -10,7 +11,7 @@ class Display : public QWidget
 {
     Q_OBJECT
 public:
-    enum Type {
+    enum Mode {
         NONE_SCAN,
         A_SCAN,
         B_SCAN,
@@ -27,19 +28,20 @@ public:
 
     explicit Display(QWidget *parent = 0);
 
-    void set_type(Type type);
-    void set_show_all(bool flag);
 
 signals:
 
 public slots:
+    void set_mode(Mode mode);
+    void set_show_all(bool flag);
+    void reflesh() { show(); }
 
 protected:
     void show();
-    void show_a_scan();
-    void show_b_scan();
-    void show_c_scan();
-    void show_s_scan();
+
+    template <typename T>
+    void show_single_scan();
+
     void show_ab_scan();
     void show_abc_scan();
     void show_abs_scan();
@@ -48,14 +50,18 @@ protected:
     void show_as_scan();
     void show_asc_scan();
 
+
 private slots:
 
 private:
-    Type m_type;
+    Mode m_type;
     bool m_showAllFlag;
     typedef void (Display::*ShowFun)();
     ShowFun m_showMap[ASC_SCAN];
 //    QMap<Type, ShowFun> m_showMap;
+
+    QWidget *m_widget;
+    QVBoxLayout *m_vboxLayout;
 
     void init_show_map();
 };
