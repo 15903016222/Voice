@@ -24,11 +24,10 @@ public:
     void hide();
 
 protected slots:
-    void do_displayItem_changed(int mode);
+    void do_displayItem_clicked();
 
 private:
-    ComboMenuItem *m_groupItem;
-    ComboMenuItem *m_displayItem;
+    LabelMenuItem *m_displayItem;
     ComboMenuItem *m_cSourceitem;
     SpinMenuItem *m_minThicknessItem;
     SpinMenuItem *m_maxThicknessItem;
