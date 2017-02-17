@@ -38,5 +38,14 @@
         <file>resources/battery/bc10.png</file>
         <file>resources/triangle_down.png</file>
         <file>resources/triangle_up.png</file>
+        <file>resources/display_mode/2.png</file>
+        <file>resources/display_mode/0.png</file>
+        <file>resources/display_mode/1.png</file>
+        <file>resources/display_mode/3.png</file>
+        <file>resources/display_mode/4.png</file>
+        <file>resources/display_mode/5.png</file>
+        <file>resources/display_mode/6.png</file>
+        <file>resources/display_mode/7.png</file>
+        <file>resources/display_mode/8.png</file>
     </qresource>
 </RCC>
