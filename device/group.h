@@ -139,6 +139,22 @@ public:
      */
     double max_range();
 
+    enum ScanMode {
+        NONE_SCAN,
+        A_SCAN,
+        B_SCAN,
+        C_SCAN,
+        S_SCAN,
+        AB_SCAN,
+        AC_SCAN,
+        AS_SCAN,
+        SC_SCAN,
+        ASB_SCAN,
+        ASC_SCAN,
+    };
+    ScanMode get_scan_mode();
+    void set_scan_mode(ScanMode mode);
+
     DplProbe::ProbePointer get_probe() const;
     void set_probe(DplProbe::ProbePointer probePtr);
 
