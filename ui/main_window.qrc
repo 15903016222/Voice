@@ -47,5 +47,15 @@
         <file>resources/display_mode/6.png</file>
         <file>resources/display_mode/7.png</file>
         <file>resources/display_mode/8.png</file>
+        <file>resources/display_mode/9.png</file>
+        <file>resources/display_mode/10.png</file>
+        <file>resources/display_mode/11.png</file>
+        <file>resources/display_mode/12.png</file>
+        <file>resources/display_mode/13.png</file>
+        <file>resources/display_mode/14.png</file>
+        <file>resources/display_mode/15.png</file>
+        <file>resources/display_mode/16.png</file>
+        <file>resources/display_mode/17.png</file>
+        <file>resources/display_mode/18.png</file>
     </qresource>
 </RCC>

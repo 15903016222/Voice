@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>654</width>
-    <height>555</height>
+    <width>622</width>
+    <height>456</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,18 +24,21 @@
     <number>3</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>2</number>
    </property>
    <property name="rightMargin">
     <number>3</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>3</number>
    </property>
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Group Select</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -43,9 +46,24 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>All</string>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -53,9 +71,18 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>G1</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -63,9 +90,18 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>G2</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -73,9 +109,18 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>G3</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -83,9 +128,18 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>G4</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -93,9 +147,18 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>G5</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -103,9 +166,18 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>G6</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -113,9 +185,18 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>G7</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -123,12 +204,21 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::Indicator {
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="text">
          <string>G8</string>
         </property>
         <property name="autoExclusive">
          <bool>false</bool>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -151,6 +241,9 @@
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>Mode Select</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2"/>
     </widget>
@@ -198,4 +291,11 @@
  <slots>
   <slot>do_checkBox_clicked(bool)</slot>
  </slots>
+ <buttongroups>
+  <buttongroup name="buttonGroup">
+   <property name="exclusive">
+    <bool>false</bool>
+   </property>
+  </buttongroup>
+ </buttongroups>
 </ui>

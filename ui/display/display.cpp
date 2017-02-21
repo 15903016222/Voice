@@ -13,19 +13,13 @@ QMutex Display::s_mutex;
 
 Display::Display(QWidget *parent) :
     QWidget(parent),
-    m_type(A_SCAN),
-    m_showAllFlag(false),
     m_widget(NULL)
 {
-    init_show_map();
-
     DplSource::Source *source = DplSource::Source::get_instance();
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     topLayout->setContentsMargins(0, 0, 0, 0);
     topLayout->setSpacing(0);
-
-    show();
 
     source->start();
 }
@@ -39,102 +33,59 @@ Display *Display::get_instance()
     return s_display;
 }
 
-void Display::set_mode(Display::Mode mode)
+void Display::set_layout(QWidget *w)
 {
-    if (m_type == mode) {
-        return;
-    }
-    m_type = mode;
-    show();
-}
-
-void Display::set_show_all(bool flag)
-{
-    if (flag == m_showAllFlag) {
+    if (NULL == w) {
         return;
     }
 
-    m_showAllFlag = flag;
-    show();
-}
-
-void Display::show()
-{
-    if (NULL != m_widget) {
+    if (m_widget != NULL) {
         delete m_widget;
-        m_widget = NULL;
     }
+    m_widget = w;
 
-    QVBoxLayout *topLayout = static_cast<QVBoxLayout *>(layout());
-    m_widget = new QWidget(this);
-    m_vboxLayout = new QVBoxLayout(m_widget);
-    m_vboxLayout->setContentsMargins(0, 0, 0, 0);
-    m_vboxLayout->setSpacing(0);
-    topLayout->addWidget(m_widget);
+    m_widget->setParent(this);
+    layout()->addWidget(m_widget);
 
-    ShowFun fun = m_showMap[m_type];
-    (this->*fun)();
-}
-
-void Display::init_show_map()
-{
-    ::memset(m_showMap, 0, sizeof(m_showMap));
-    m_showMap[A_SCAN]   = &Display::show_single_scan<AscanDisplay>;
-//    m_showMap[B_SCAN]   = &Display::show_single_scan<BscanDisplay>;
-//    m_showMap[C_SCAN]   = &Display::show_single_scan<CscanDisplay>;
-//    m_showMap[S_SCAN]   = &Display::show_single_scan<SscanDisplay>;
-    m_showMap[AB_SCAN]  = &Display::show_ab_scan;
-}
-
-template <typename T>
-void Display::show_single_scan()
-{
     DplDevice::Device *dev = DplDevice::Device::get_instance();
-    int num = dev->groups();
+    int grpQty = dev->groups();
 
-    if (m_showAllFlag
-            && num != 1) {
+    QLayout *l = NULL;
+    DplDevice::GroupPointer groupPtr;
+    AscanDisplay *ascan = NULL;
+    for (int i = 0; i < grpQty; ++i) {
+        groupPtr = dev->get_group(i);
 
-        QHBoxLayout *hboxLayout1 = new QHBoxLayout();
-        QHBoxLayout *hboxLayout2 = new QHBoxLayout();
-
-        hboxLayout1->setContentsMargins(0, 0, 0, 0);
-        hboxLayout1->setSpacing(0);
-        hboxLayout2->setContentsMargins(0, 0, 0, 0);
-        hboxLayout2->setSpacing(0);
-
-        for (int i = 0; i < num/2; ++i) {
-            AscanDisplay *a = new AscanDisplay(dev->get_group(i), m_widget);
-            AscanDisplay *b = new AscanDisplay(dev->get_group(i+num/2+num%2), m_widget);
-            hboxLayout1->addWidget(a);
-            hboxLayout2->addWidget(b);
+        /* A-SCAN */
+        l = m_widget->findChild<QLayout *>(QString("A%1").arg(i+1));
+        if (l != NULL) {
+            ascan = new AscanDisplay(groupPtr, m_widget);
+            l->addWidget(ascan);
         }
 
-        if (num%2) {
-            AscanDisplay *a = new AscanDisplay(dev->get_group(num/2), m_widget);
-            hboxLayout1->addWidget(a);
+        /* B-SCAN */
+        l = m_widget->findChild<QLayout *>(QString("B%1").arg(i+1));
+        if (l != NULL) {
+            qDebug()<<__func__<<__LINE__<<"umimplement";
+//            bscan = new BscanDisplay(groupPtr, m_widget);
+//            l->addWidget(bscan);
         }
 
-        m_vboxLayout->addLayout(hboxLayout1);
-        m_vboxLayout->addLayout(hboxLayout2);
-    } else {
-        AscanDisplay *ascan = new AscanDisplay(dev->current_group(), m_widget);
-        m_vboxLayout->addWidget(ascan);
-    }
-}
+        /* C-Scan */
+        l = m_widget->findChild<QLayout *>(QString("C%1").arg((i+1)));
+        if (l != NULL) {
+            qDebug()<<__func__<<__LINE__<<"umimplement";
+//            cscan = new CscanDisplay(groupPtr, m_widget);
+//            l->addWidget(cscan);
+        }
 
-void Display::show_ab_scan()
-{
-    DplDevice::Device *dev = DplDevice::Device::get_instance();
-    int num = dev->groups();
-
-    if (m_showAllFlag) {
-
-    } else {
-        AscanDisplay *a = new AscanDisplay(dev->current_group(), m_widget);
-        AscanDisplay *b = new AscanDisplay(dev->current_group(), m_widget);
-        m_vboxLayout->addWidget(a);
-        m_vboxLayout->addWidget(b);
+        /* S-Scan */
+        l = m_widget->findChild<QLayout *>(QString("S%1").arg((i+1)));
+        if (l != NULL) {
+            qDebug()<<__func__<<__LINE__<<"umimplement";
+//            sscan = new SscanDisplay(groupPtr, m_widget);
+//            l->addWidget(sscan);
+        }
     }
 }
 

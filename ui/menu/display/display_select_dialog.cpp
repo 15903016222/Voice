@@ -1,17 +1,15 @@
 #include "display_select_dialog.h"
 #include "ui_display_select_dialog.h"
-#include "mode_list_widget_item.h"
+#include "mode_radio_button.h"
 
 #include <device/device.h>
-
-#include <QCheckBox>
-#include <QSpacerItem>
-#include <QPushButton>
+#include <display/display.h>
 
 DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DisplaySelectDialog),
-    m_listWidget(NULL)
+    m_widget(NULL),
+    m_radioBtnGrp(new QButtonGroup)
 {
     ui->setupUi(this);
 
@@ -19,7 +17,17 @@ DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
 
     DplDevice::Device *dev = DplDevice::Device::get_instance();
     int grpQty = dev->groups();
-    grpQty = 8;
+
+    /* set id */
+    ui->buttonGroup->setId(ui->checkBox, 0);
+    ui->buttonGroup->setId(ui->checkBox_1, 1);
+    ui->buttonGroup->setId(ui->checkBox_2, 2);
+    ui->buttonGroup->setId(ui->checkBox_3, 3);
+    ui->buttonGroup->setId(ui->checkBox_4, 4);
+    ui->buttonGroup->setId(ui->checkBox_5, 5);
+    ui->buttonGroup->setId(ui->checkBox_6, 6);
+    ui->buttonGroup->setId(ui->checkBox_7, 7);
+    ui->buttonGroup->setId(ui->checkBox_8, 8);
 
     for (int i = grpQty+1; i <= 8; ++i) {
         QCheckBox *checkBox = findChild<QCheckBox *>("checkBox_"+QString::number(i));
@@ -28,15 +36,7 @@ DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
         }
     }
 
-    connect(ui->checkBox, SIGNAL(clicked()), this, SLOT(update_list_widget()));
-    connect(ui->checkBox_1, SIGNAL(clicked()), this, SLOT(update_list_widget()));
-    connect(ui->checkBox_2, SIGNAL(clicked()), this, SLOT(update_list_widget()));
-    connect(ui->checkBox_3, SIGNAL(clicked()), this, SLOT(update_list_widget()));
-    connect(ui->checkBox_4, SIGNAL(clicked()), this, SLOT(update_list_widget()));
-    connect(ui->checkBox_5, SIGNAL(clicked()), this, SLOT(update_list_widget()));
-    connect(ui->checkBox_6, SIGNAL(clicked()), this, SLOT(update_list_widget()));
-    connect(ui->checkBox_7, SIGNAL(clicked()), this, SLOT(update_list_widget()));
-    connect(ui->checkBox_8, SIGNAL(clicked()), this, SLOT(update_list_widget()));
+    connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(update_widget()));
 }
 
 DisplaySelectDialog::~DisplaySelectDialog()
@@ -44,7 +44,7 @@ DisplaySelectDialog::~DisplaySelectDialog()
     delete ui;
 }
 
-void DisplaySelectDialog::update_list_widget()
+void DisplaySelectDialog::update_widget()
 {
     bool allGrp = ui->checkBox->isChecked();
     int grpQty = 0;
@@ -71,121 +71,98 @@ void DisplaySelectDialog::update_list_widget()
                 + ui->checkBox_8->isChecked();
     }
 
-    if (m_listWidget != NULL) {
-        delete m_listWidget;
+    if (m_widget != NULL) {
+        delete m_widget;
     }
-    m_listWidget = new QListWidget(this);
-    m_listWidget->setIconSize(QSize(ModeListWidgetItem::W_SIZE, ModeListWidgetItem::H_SIZE));
-    m_listWidget->setResizeMode(QListView::Adjust);
-    m_listWidget->setViewMode(QListView::IconMode);
-    m_listWidget->setMovement(QListView::Static);
-    m_listWidget->setSpacing(20);
+    m_widget = new QWidget(this);
 
     switch (grpQty) {
     case 1:
-        update1();
+        update(A, ASC);
         break;
     case 2:
-        update2();
+        update(A2, ASB2);
         break;
-    case 3:
-        update3();
-        break;
-    case 4:
-        update4();
-        break;
-    case 5:
-        update5();
-        break;
-    case 6:
-        update6();
-        break;
-    case 7:
-        update7();
-        break;
-    case 8:
-        update8();
-        break;
+//    case 3:
+//        update3();
+//        break;
+//    case 4:
+//        update4();
+//        break;
+//    case 5:
+//        update5();
+//        break;
+//    case 6:
+//        update6();
+//        break;
+//    case 7:
+//        update7();
+//        break;
+//    case 8:
+//        update8();
+//        break;
     };
 
-    ui->groupBox_2->layout()->addWidget(m_listWidget);
+    ui->groupBox_2->layout()->addWidget(m_widget);
+    ui->groupBox_2->layout()->setAlignment(m_widget, Qt::AlignHCenter | Qt::AlignTop);
 }
 
 void DisplaySelectDialog::on_buttonBox_accepted()
 {
-    qDebug()<<__func__<<__LINE__;
-
-    if (m_listWidget == NULL) {
+    if (m_widget == NULL) {
         accept();
         return;
     }
 
-    ModeListWidgetItem *item = static_cast<ModeListWidgetItem *>(m_listWidget->currentItem());
-    if (item == NULL) {
-        accept();
-        return;
-    }
+    ModeRadioButton *radioBtn = static_cast<ModeRadioButton *>(m_radioBtnGrp->checkedButton());
     DplDisplay::Display *display = DplDisplay::Display::get_instance();
-    if (display == NULL) {
+    if (radioBtn == NULL || display == NULL) {
         accept();
         return;
     }
-    display->set_mode(item->get_mode());
+
+    QWidget *w = NULL;
+    switch (radioBtn->get_mode()) {
+    case A:
+        w = a_layout();
+        break;
+    default:
+        break;
+    }
+
+    display->set_layout(w);
 
     accept();
 }
 
-void DisplaySelectDialog::update1()
+QWidget *DisplaySelectDialog::a_layout()
 {
-    ModeListWidgetItem *item = new ModeListWidgetItem(DplDisplay::Display::AB_SCAN);
-    m_listWidget->addItem(item);
-
+    QWidget *w = new QWidget();
+    QVBoxLayout *l = new QVBoxLayout(w);
+    l->setContentsMargins(0, 0, 0, 0);
+    l->setSpacing(0);
+    l->setObjectName(QString("A%1").arg(ui->buttonGroup->checkedId()));
+    return w;
 }
 
-void DisplaySelectDialog::update2()
+
+void DisplaySelectDialog::update(int startMode, int endMode)
 {
-    ModeListWidgetItem *item = new ModeListWidgetItem(DplDisplay::Display::A_SCAN);
-    m_listWidget->addItem(item);
+    QGridLayout *layout = new QGridLayout(m_widget);
+    ModeRadioButton *btn = NULL;
 
-}
+    layout->setSpacing(10);
 
-void DisplaySelectDialog::update3()
-{
-    ModeListWidgetItem *item = new ModeListWidgetItem(DplDisplay::Display::A_SCAN);
-    m_listWidget->addItem(item);
-
-}
-
-void DisplaySelectDialog::update4()
-{
-    ModeListWidgetItem *item = new ModeListWidgetItem(DplDisplay::Display::A_SCAN);
-    m_listWidget->addItem(item);
-
-}
-
-void DisplaySelectDialog::update5()
-{
-    ModeListWidgetItem *item = new ModeListWidgetItem(DplDisplay::Display::A_SCAN);
-    m_listWidget->addItem(item);
-
-}
-
-void DisplaySelectDialog::update6()
-{
-    ModeListWidgetItem *item = new ModeListWidgetItem(DplDisplay::Display::A_SCAN);
-    m_listWidget->addItem(item);
-
-}
-
-void DisplaySelectDialog::update7()
-{
-    ModeListWidgetItem *item = new ModeListWidgetItem(DplDisplay::Display::A_SCAN);
-    m_listWidget->addItem(item);
-
-}
-
-void DisplaySelectDialog::update8()
-{
-    ModeListWidgetItem *item = new ModeListWidgetItem(DplDisplay::Display::A_SCAN);
-    m_listWidget->addItem(item);
+    for (int mode=startMode;
+         mode<= endMode;
+         ++mode) {
+        btn = new ModeRadioButton(mode, m_widget);
+        layout->addWidget(btn,
+                          (mode-startMode)/4,
+                          (mode-startMode)%4);
+        m_radioBtnGrp->addButton(btn);
+        if (mode == startMode) {
+            btn->setChecked(true);
+        }
+    }
 }

@@ -2,8 +2,8 @@
 #define DISPLAY_SELECT_DIALOG_H
 
 #include <QDialog>
-#include <QAbstractButton>
-#include <QListWidget>
+#include <QButtonGroup>
+#include <QSharedPointer>
 
 namespace Ui {
 class DisplaySelectDialog;
@@ -17,23 +17,52 @@ public:
     explicit DisplaySelectDialog(QWidget *parent = 0);
     ~DisplaySelectDialog();
 
+    enum LayoutMode {
+        /* One Group */
+        A,
+        S,
+        C,
+        AS,
+        SC,
+        AB,
+        ABC,
+        ASB,
+        ASC,
+        /* Two Group */
+        A2,
+        S2,
+        C2,
+        AS2,
+        ASC2,
+        SC_AB,
+        AB2,
+        SC2,
+        ABC2,
+        ASB2,
+        /* Three Group */
+        A3,
+        S3,
+        C3,
+
+        ASC3,
+        AS3,
+        MAX_MODE
+    };
+
 private slots:
-    void update_list_widget();
+    void update_widget();
 
     void on_buttonBox_accepted();
 
+protected:
+    QWidget *a_layout();
+
 private:
     Ui::DisplaySelectDialog *ui;
-    QListWidget *m_listWidget;
+    QWidget *m_widget;
+    QButtonGroup *m_radioBtnGrp;
 
-    void update1();
-    void update2();
-    void update3();
-    void update4();
-    void update5();
-    void update6();
-    void update7();
-    void update8();
+    void update(int startMode, int endMode);
 };
 
 #endif // DISPLAY_SELECT_DIALOG_H
