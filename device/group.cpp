@@ -30,7 +30,6 @@ public:
 
     /* variables */
     Group::Mode m_mode;         /* 组模式 */
-    Group::ScanMode m_scanMode; /* 扫查显示模式 */
     float m_precision;          /* 采样精度， 单位(ns) */
     double m_start;             /* 声程轴起始点,单位(ns) */
     double m_range;             /* 范围值, 单位(ns) */
@@ -260,18 +259,6 @@ double Group::max_sample_time()
         max = 1000*1000;
     }
     return max ;
-}
-
-Group::ScanMode Group::get_scan_mode()
-{
-    QReadLocker l(&d->m_rwlock);
-    return d->m_scanMode;
-}
-
-void Group::set_scan_mode(Group::ScanMode mode)
-{
-    QWriteLocker l(&d->m_rwlock);
-    d->m_scanMode = mode;
 }
 
 void Group::update_sample()
