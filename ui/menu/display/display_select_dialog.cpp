@@ -130,7 +130,8 @@ void DisplaySelectDialog::update(int startMode, int endMode)
         btn = new ModeRadioButton(mode, ui->groupBox_2);
         layout->addWidget(btn,
                           (mode-startMode)/4,
-                          (mode-startMode)%4);
+                          (mode-startMode)%4,
+                          Qt::AlignHCenter|Qt::AlignTop);
         m_radioBtnGrp->addButton(btn);
         if (mode == startMode) {
             btn->setChecked(true);
