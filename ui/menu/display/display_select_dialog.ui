@@ -237,7 +237,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string>Mode Select</string>
+      <string>Layout Select</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

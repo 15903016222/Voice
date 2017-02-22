@@ -96,8 +96,6 @@ void DisplaySelectDialog::update_widget()
         update(ScanLayout::A8, ScanLayout::A8);
         break;
     };
-
-//    ui->groupBox_2->layout()->setAlignment(m_widget, Qt::AlignHCenter | Qt::AlignTop);
 }
 
 void DisplaySelectDialog::on_buttonBox_accepted()
