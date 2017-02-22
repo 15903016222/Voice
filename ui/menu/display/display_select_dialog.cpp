@@ -80,9 +80,9 @@ void DisplaySelectDialog::update_widget()
     case 3:
         update(ScanLayout::A3, ScanLayout::ABC3);
         break;
-//    case 4:
-//        update();
-//        break;
+    case 4:
+        update(ScanLayout::A4, ScanLayout::S2_B2);
+        break;
 //    case 5:
 //        update();
 //        break;

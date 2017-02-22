@@ -44,6 +44,15 @@ public:
         ASC3,
         ABS3,
         ABC3,
+        /* Four Group */
+        A4      = 400,
+        S4,
+        C4,
+        AS4,
+        SC4,
+        SC3_AB,
+        SC_AB2_SC,
+        S2_B2,
 
         MAX_MODE
     };

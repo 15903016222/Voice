@@ -69,5 +69,13 @@
         <file>resources/display_mode/309.png</file>
         <file>resources/display_mode/310.png</file>
         <file>resources/display_mode/311.png</file>
+        <file>resources/display_mode/400.png</file>
+        <file>resources/display_mode/401.png</file>
+        <file>resources/display_mode/402.png</file>
+        <file>resources/display_mode/403.png</file>
+        <file>resources/display_mode/404.png</file>
+        <file>resources/display_mode/405.png</file>
+        <file>resources/display_mode/406.png</file>
+        <file>resources/display_mode/407.png</file>
     </qresource>
 </RCC>
