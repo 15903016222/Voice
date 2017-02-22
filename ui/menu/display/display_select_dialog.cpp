@@ -16,7 +16,7 @@ DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
 
     DplDevice::Device *dev = DplDevice::Device::get_instance();
     int grpQty = dev->groups();
-
+    grpQty = 8;
     for (int i = grpQty; i < 8; ++i) {
         QCheckBox *checkBox = findChild<QCheckBox *>("checkBox_"+QString::number(i+1));
         if (checkBox) {
@@ -48,7 +48,6 @@ void DisplaySelectDialog::on_checkBox_all_clicked(bool checked)
 
 void DisplaySelectDialog::update_widget()
 {
-    int grpQty = 0;
     DplDevice::Device *dev = DplDevice::Device::get_instance();
 
     m_grpIds.clear();
