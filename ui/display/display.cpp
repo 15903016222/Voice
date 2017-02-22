@@ -23,7 +23,7 @@ Display::Display(QWidget *parent) :
 
     ScanLayout *l = new ScanLayout;
     QList<int> grpId;
-    grpId.append(1);
+    grpId.append(0);
     l->set_mode(ScanLayout::A, grpId);
     set_layout(l);
 
@@ -54,23 +54,23 @@ void Display::set_layout(ScanLayout *scanlayout)
     layout()->addWidget(m_scanLayout);
 
     DplDevice::Device *dev = DplDevice::Device::get_instance();
-    int grpQty = dev->groups();
 
     QLayout *l = NULL;
     DplDevice::GroupPointer groupPtr;
     AscanDisplay *ascan = NULL;
-    for (int i = 0; i < grpQty; ++i) {
-        groupPtr = dev->get_group(i);
+    QList<int> grpIds = scanlayout->get_groups_id();
 
+    for (int i = 0; i < grpIds.size(); ++i) {
+        groupPtr = dev->get_group(grpIds[i]);
         /* A-SCAN */
-        l = m_scanLayout->findChild<QLayout *>(QString("A%1").arg(i+1));
+        l = m_scanLayout->findChild<QLayout *>(QString("A%1").arg(grpIds[i]));
         if (l != NULL) {
             ascan = new AscanDisplay(groupPtr, m_scanLayout);
             l->addWidget(ascan);
         }
 
         /* B-SCAN */
-        l = m_scanLayout->findChild<QLayout *>(QString("B%1").arg(i+1));
+        l = m_scanLayout->findChild<QLayout *>(QString("B%1").arg(grpIds[i]));
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
 //            bscan = new BscanDisplay(groupPtr, m_scanLayout);
@@ -78,7 +78,7 @@ void Display::set_layout(ScanLayout *scanlayout)
         }
 
         /* C-Scan */
-        l = m_scanLayout->findChild<QLayout *>(QString("C%1").arg((i+1)));
+        l = m_scanLayout->findChild<QLayout *>(QString("C%1").arg(grpIds[i]));
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
 //            cscan = new CscanDisplay(groupPtr, m_scanLayout);
@@ -86,7 +86,7 @@ void Display::set_layout(ScanLayout *scanlayout)
         }
 
         /* S-Scan */
-        l = m_scanLayout->findChild<QLayout *>(QString("S%1").arg((i+1)));
+        l = m_scanLayout->findChild<QLayout *>(QString("S%1").arg(grpIds[i]));
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
 //            sscan = new SscanDisplay(groupPtr, m_scanLayout);

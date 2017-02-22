@@ -17,19 +17,8 @@ DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     DplDevice::Device *dev = DplDevice::Device::get_instance();
     int grpQty = dev->groups();
 
-    /* set id */
-    ui->buttonGroup->setId(ui->checkBox_all, 0);
-    ui->buttonGroup->setId(ui->checkBox_1, 1);
-    ui->buttonGroup->setId(ui->checkBox_2, 2);
-    ui->buttonGroup->setId(ui->checkBox_3, 3);
-    ui->buttonGroup->setId(ui->checkBox_4, 4);
-    ui->buttonGroup->setId(ui->checkBox_5, 5);
-    ui->buttonGroup->setId(ui->checkBox_6, 6);
-    ui->buttonGroup->setId(ui->checkBox_7, 7);
-    ui->buttonGroup->setId(ui->checkBox_8, 8);
-
-    for (int i = grpQty+1; i <= 8; ++i) {
-        QCheckBox *checkBox = findChild<QCheckBox *>("checkBox_"+QString::number(i));
+    for (int i = grpQty; i < 8; ++i) {
+        QCheckBox *checkBox = findChild<QCheckBox *>("checkBox_"+QString::number(i+1));
         if (checkBox) {
             checkBox->hide();
         }
@@ -43,31 +32,38 @@ DisplaySelectDialog::~DisplaySelectDialog()
     delete ui;
 }
 
+void DisplaySelectDialog::on_checkBox_all_clicked(bool checked)
+{
+    ui->checkBox_1->setDisabled(checked);
+    ui->checkBox_2->setDisabled(checked);
+    ui->checkBox_3->setDisabled(checked);
+    ui->checkBox_4->setDisabled(checked);
+    ui->checkBox_5->setDisabled(checked);
+    ui->checkBox_6->setDisabled(checked);
+    ui->checkBox_7->setDisabled(checked);
+    ui->checkBox_8->setDisabled(checked);
+
+    update_widget();
+}
+
 void DisplaySelectDialog::update_widget()
 {
-    bool allGrp = ui->checkBox_all->isChecked();
     int grpQty = 0;
+    DplDevice::Device *dev = DplDevice::Device::get_instance();
 
-    ui->checkBox_1->setDisabled(allGrp);
-    ui->checkBox_2->setDisabled(allGrp);
-    ui->checkBox_3->setDisabled(allGrp);
-    ui->checkBox_4->setDisabled(allGrp);
-    ui->checkBox_5->setDisabled(allGrp);
-    ui->checkBox_6->setDisabled(allGrp);
-    ui->checkBox_7->setDisabled(allGrp);
-    ui->checkBox_8->setDisabled(allGrp);
+    m_grpIds.clear();
 
-    if (allGrp) {
-        grpQty = DplDevice::Device::get_instance()->groups();
+    if (ui->checkBox_all->isChecked()) {
+        for (int i = 0; i < dev->groups(); ++i) {
+            m_grpIds.append(i);
+        }
     } else {
-        grpQty = ui->checkBox_1->isChecked()
-                + ui->checkBox_2->isChecked()
-                + ui->checkBox_3->isChecked()
-                + ui->checkBox_4->isChecked()
-                + ui->checkBox_5->isChecked()
-                + ui->checkBox_6->isChecked()
-                + ui->checkBox_7->isChecked()
-                + ui->checkBox_8->isChecked();
+        QList<QAbstractButton *> btns = ui->buttonGroup->buttons();
+        for (int i = 0; i < btns.size(); ++i) {
+            if (btns[i]->isChecked()) {
+                m_grpIds.append(i);
+            }
+        }
     }
 
     QObjectList objs = ui->groupBox_2->children();
@@ -75,7 +71,7 @@ void DisplaySelectDialog::update_widget()
         delete objs.takeFirst();
     }
 
-    switch (grpQty) {
+    switch (m_grpIds.size()) {
     case 1:
         update(ScanLayout::A, ScanLayout::ASC);
         break;
@@ -115,24 +111,8 @@ void DisplaySelectDialog::on_buttonBox_accepted()
     }
 
     ScanLayout *l = new ScanLayout;
-    QList<int> grpIds;
-    DplDevice::Device *dev = DplDevice::Device::get_instance();
-
-    if (ui->checkBox_all->isChecked()) {
-        for (int i = 0; i < dev->groups(); ++i) {
-            grpIds.append(i+1);
-        }
-    } else {
-        QList<QAbstractButton *> btns = ui->buttonGroup->buttons();
-        for (int i = 1; i < btns.size(); ++i) {
-            if (btns[i]->isChecked()) {
-                grpIds.append(i);
-            }
-        }
-    }
-
     l->set_mode(static_cast<ScanLayout::Mode>(radioBtn->get_mode()),
-                grpIds);
+                m_grpIds);
 
     display->set_layout(l);
 

@@ -18,13 +18,17 @@ public:
     ~DisplaySelectDialog();
 
 private slots:
+    void on_checkBox_all_clicked(bool checked);
+
     void update_widget();
 
     void on_buttonBox_accepted();
 
+
 private:
     Ui::DisplaySelectDialog *ui;
     QButtonGroup *m_radioBtnGrp;
+    QList<int> m_grpIds;
 
     void update(int startMode, int endMode);
 };

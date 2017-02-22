@@ -61,9 +61,6 @@
           <height>16</height>
          </size>
         </property>
-        <attribute name="buttonGroup">
-         <string notr="true">buttonGroup</string>
-        </attribute>
        </widget>
       </item>
       <item>
@@ -292,10 +289,6 @@
   <slot>do_checkBox_clicked(bool)</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup">
-   <property name="exclusive">
-    <bool>false</bool>
-   </property>
-  </buttongroup>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
