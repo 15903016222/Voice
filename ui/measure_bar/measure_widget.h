@@ -28,6 +28,9 @@ protected:
 private:
     Ui::MeasureWidget *ui;
     MeasureDialog::MeasureType m_type;
+
+signals:
+    void type_changed(MeasureDialog::MeasureType);
 };
 
 #endif // __MEASURE_WIDGET_H__

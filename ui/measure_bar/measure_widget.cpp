@@ -1,6 +1,8 @@
 #include "measure_widget.h"
 #include "ui_measure_widget.h"
 
+#include <QDebug>
+
 MeasureWidget::MeasureWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MeasureWidget)
@@ -21,13 +23,17 @@ QString MeasureWidget::name() const
 
 void MeasureWidget::set_type(MeasureDialog::MeasureType type)
 {
-    MeasureDialog dlg(this, type);
-    m_type = type;
-    ui->nameLabel->setText(dlg.get_type_string());
+    if(type != m_type) {
+        MeasureDialog dlg(this, type);
+        m_type = type;
+        ui->nameLabel->setText(dlg.get_type_string());
+        emit type_changed(type);
+    }
 }
 
 void MeasureWidget::set_value(const QString &value)
 {
+    qDebug() << value;
     ui->valueLabel->setText(value);
 }
 
