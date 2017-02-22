@@ -42,7 +42,7 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
             this,
             SLOT(update()));
 
-    ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()));
+    ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
 
 AscanDisplay::~AscanDisplay()
