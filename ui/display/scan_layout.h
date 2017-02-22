@@ -53,8 +53,17 @@ public:
         SC3_AB,
         SC_AB2_SC,
         S2_B2,
-
-        MAX_MODE
+        /* Five Group */
+        A5      = 500,
+        S4_B,
+        S3_B2,
+        /* Six Group */
+        A6      = 600,
+        S4_B2,
+        /* Seven Group */
+        A7      = 700,
+        /* Eight */
+        A8      = 800,
     };
 
     /**

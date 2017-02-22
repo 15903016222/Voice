@@ -83,18 +83,18 @@ void DisplaySelectDialog::update_widget()
     case 4:
         update(ScanLayout::A4, ScanLayout::S2_B2);
         break;
-//    case 5:
-//        update();
-//        break;
-//    case 6:
-//        update();
-//        break;
-//    case 7:
-//        update();
-//        break;
-//    case 8:
-//        update();
-//        break;
+    case 5:
+        update(ScanLayout::A5, ScanLayout::S3_B2);
+        break;
+    case 6:
+        update(ScanLayout::A6, ScanLayout::S4_B2);
+        break;
+    case 7:
+        update(ScanLayout::A7, ScanLayout::A7);
+        break;
+    case 8:
+        update(ScanLayout::A8, ScanLayout::A8);
+        break;
     };
 
 //    ui->groupBox_2->layout()->setAlignment(m_widget, Qt::AlignHCenter | Qt::AlignTop);
