@@ -8,6 +8,8 @@
 #include <QMutex>
 #include <QMap>
 
+#include "scan_layout.h"
+
 namespace DplDisplay {
 
 class Display : public QWidget
@@ -17,7 +19,7 @@ public:
     static Display *get_instance();
 
 public slots:
-    void set_layout(QWidget *w);
+    void set_layout(ScanLayout *scanlayout);
 
 protected:
     explicit Display(QWidget *parent = 0);
@@ -32,7 +34,7 @@ private:
     static Display *s_display;
     static QMutex s_mutex;
 
-    QWidget *m_widget;
+    ScanLayout *m_scanLayout;
     QVBoxLayout *m_vboxLayout;
 };
 

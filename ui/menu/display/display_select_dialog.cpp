@@ -8,7 +8,6 @@
 DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DisplaySelectDialog),
-    m_widget(NULL),
     m_radioBtnGrp(new QButtonGroup)
 {
     ui->setupUi(this);
@@ -19,7 +18,7 @@ DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     int grpQty = dev->groups();
 
     /* set id */
-    ui->buttonGroup->setId(ui->checkBox, 0);
+    ui->buttonGroup->setId(ui->checkBox_all, 0);
     ui->buttonGroup->setId(ui->checkBox_1, 1);
     ui->buttonGroup->setId(ui->checkBox_2, 2);
     ui->buttonGroup->setId(ui->checkBox_3, 3);
@@ -46,7 +45,7 @@ DisplaySelectDialog::~DisplaySelectDialog()
 
 void DisplaySelectDialog::update_widget()
 {
-    bool allGrp = ui->checkBox->isChecked();
+    bool allGrp = ui->checkBox_all->isChecked();
     int grpQty = 0;
 
     ui->checkBox_1->setDisabled(allGrp);
@@ -71,17 +70,17 @@ void DisplaySelectDialog::update_widget()
                 + ui->checkBox_8->isChecked();
     }
 
-    if (m_widget != NULL) {
-        delete m_widget;
+    QObjectList objs = ui->groupBox_2->children();
+    while (!objs.isEmpty()) {
+        delete objs.takeFirst();
     }
-    m_widget = new QWidget(this);
 
     switch (grpQty) {
     case 1:
-        update(A, ASC);
+        update(ScanLayout::A, ScanLayout::ASC);
         break;
     case 2:
-        update(A2, ASB2);
+        update(ScanLayout::A2, ScanLayout::ASB2);
         break;
 //    case 3:
 //        update3();
@@ -103,17 +102,11 @@ void DisplaySelectDialog::update_widget()
 //        break;
     };
 
-    ui->groupBox_2->layout()->addWidget(m_widget);
-    ui->groupBox_2->layout()->setAlignment(m_widget, Qt::AlignHCenter | Qt::AlignTop);
+//    ui->groupBox_2->layout()->setAlignment(m_widget, Qt::AlignHCenter | Qt::AlignTop);
 }
 
 void DisplaySelectDialog::on_buttonBox_accepted()
 {
-    if (m_widget == NULL) {
-        accept();
-        return;
-    }
-
     ModeRadioButton *radioBtn = static_cast<ModeRadioButton *>(m_radioBtnGrp->checkedButton());
     DplDisplay::Display *display = DplDisplay::Display::get_instance();
     if (radioBtn == NULL || display == NULL) {
@@ -121,34 +114,35 @@ void DisplaySelectDialog::on_buttonBox_accepted()
         return;
     }
 
-    QWidget *w = NULL;
-    switch (radioBtn->get_mode()) {
-    case A:
-        w = a_layout();
-        break;
-    default:
-        break;
+    ScanLayout *l = new ScanLayout;
+    QList<int> grpIds;
+    DplDevice::Device *dev = DplDevice::Device::get_instance();
+
+    if (ui->checkBox_all->isChecked()) {
+        for (int i = 0; i < dev->groups(); ++i) {
+            grpIds.append(i+1);
+        }
+    } else {
+        QList<QAbstractButton *> btns = ui->buttonGroup->buttons();
+        for (int i = 1; i < btns.size(); ++i) {
+            if (btns[i]->isChecked()) {
+                grpIds.append(i);
+            }
+        }
     }
 
-    display->set_layout(w);
+    l->set_mode(static_cast<ScanLayout::Mode>(radioBtn->get_mode()),
+                grpIds);
+
+    display->set_layout(l);
 
     accept();
-}
-
-QWidget *DisplaySelectDialog::a_layout()
-{
-    QWidget *w = new QWidget();
-    QVBoxLayout *l = new QVBoxLayout(w);
-    l->setContentsMargins(0, 0, 0, 0);
-    l->setSpacing(0);
-    l->setObjectName(QString("A%1").arg(ui->buttonGroup->checkedId()));
-    return w;
 }
 
 
 void DisplaySelectDialog::update(int startMode, int endMode)
 {
-    QGridLayout *layout = new QGridLayout(m_widget);
+    QGridLayout *layout = new QGridLayout(ui->groupBox_2);
     ModeRadioButton *btn = NULL;
 
     layout->setSpacing(10);
@@ -156,7 +150,7 @@ void DisplaySelectDialog::update(int startMode, int endMode)
     for (int mode=startMode;
          mode<= endMode;
          ++mode) {
-        btn = new ModeRadioButton(mode, m_widget);
+        btn = new ModeRadioButton(mode, ui->groupBox_2);
         layout->addWidget(btn,
                           (mode-startMode)/4,
                           (mode-startMode)%4);
