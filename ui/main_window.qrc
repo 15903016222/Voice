@@ -38,24 +38,36 @@
         <file>resources/battery/bc10.png</file>
         <file>resources/triangle_down.png</file>
         <file>resources/triangle_up.png</file>
-        <file>resources/display_mode/2.png</file>
-        <file>resources/display_mode/0.png</file>
-        <file>resources/display_mode/1.png</file>
-        <file>resources/display_mode/3.png</file>
-        <file>resources/display_mode/4.png</file>
-        <file>resources/display_mode/5.png</file>
-        <file>resources/display_mode/6.png</file>
-        <file>resources/display_mode/7.png</file>
-        <file>resources/display_mode/8.png</file>
-        <file>resources/display_mode/9.png</file>
-        <file>resources/display_mode/10.png</file>
-        <file>resources/display_mode/11.png</file>
-        <file>resources/display_mode/12.png</file>
-        <file>resources/display_mode/13.png</file>
-        <file>resources/display_mode/14.png</file>
-        <file>resources/display_mode/15.png</file>
-        <file>resources/display_mode/16.png</file>
-        <file>resources/display_mode/17.png</file>
-        <file>resources/display_mode/18.png</file>
+        <file>resources/display_mode/100.png</file>
+        <file>resources/display_mode/101.png</file>
+        <file>resources/display_mode/102.png</file>
+        <file>resources/display_mode/103.png</file>
+        <file>resources/display_mode/104.png</file>
+        <file>resources/display_mode/105.png</file>
+        <file>resources/display_mode/106.png</file>
+        <file>resources/display_mode/107.png</file>
+        <file>resources/display_mode/108.png</file>
+        <file>resources/display_mode/200.png</file>
+        <file>resources/display_mode/201.png</file>
+        <file>resources/display_mode/202.png</file>
+        <file>resources/display_mode/203.png</file>
+        <file>resources/display_mode/204.png</file>
+        <file>resources/display_mode/205.png</file>
+        <file>resources/display_mode/206.png</file>
+        <file>resources/display_mode/207.png</file>
+        <file>resources/display_mode/208.png</file>
+        <file>resources/display_mode/209.png</file>
+        <file>resources/display_mode/300.png</file>
+        <file>resources/display_mode/301.png</file>
+        <file>resources/display_mode/302.png</file>
+        <file>resources/display_mode/303.png</file>
+        <file>resources/display_mode/304.png</file>
+        <file>resources/display_mode/305.png</file>
+        <file>resources/display_mode/306.png</file>
+        <file>resources/display_mode/307.png</file>
+        <file>resources/display_mode/308.png</file>
+        <file>resources/display_mode/309.png</file>
+        <file>resources/display_mode/310.png</file>
+        <file>resources/display_mode/311.png</file>
     </qresource>
 </RCC>

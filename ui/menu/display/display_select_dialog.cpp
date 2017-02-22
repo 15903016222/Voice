@@ -77,23 +77,23 @@ void DisplaySelectDialog::update_widget()
     case 2:
         update(ScanLayout::A2, ScanLayout::ASB2);
         break;
-//    case 3:
-//        update3();
-//        break;
+    case 3:
+        update(ScanLayout::A3, ScanLayout::ABC3);
+        break;
 //    case 4:
-//        update4();
+//        update();
 //        break;
 //    case 5:
-//        update5();
+//        update();
 //        break;
 //    case 6:
-//        update6();
+//        update();
 //        break;
 //    case 7:
-//        update7();
+//        update();
 //        break;
 //    case 8:
-//        update8();
+//        update();
 //        break;
     };
 

@@ -11,7 +11,7 @@ public:
 
     enum Mode {
         /* One Group */
-        A,
+        A       = 100,
         S,
         C,
         AS,
@@ -21,7 +21,7 @@ public:
         ASB,
         ASC,
         /* Two Group */
-        A2,
+        A2      = 200,
         S2,
         C2,
         AS2,
@@ -32,12 +32,19 @@ public:
         ABC2,
         ASB2,
         /* Three Group */
-        A3,
+        A3      = 300,
         S3,
         C3,
-
-        ASC3,
+        S_B_B,
         AS3,
+        SC3,
+        SC_AB2,
+        S_S_B,
+        SC2_AB,
+        ASC3,
+        ABS3,
+        ABC3,
+
         MAX_MODE
     };
 
