@@ -2,6 +2,8 @@
 #define __SCAN_LAYOUT_H__
 
 #include <QWidget>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 class ScanLayout : public QWidget
 {
@@ -83,7 +85,45 @@ private:
     Mode m_mode;
     QList<int> m_grpIds;
 
-    void a_layout();
+    template <typename T>
+    T *new_layout(char mode = 'N', int id = -1);
+
+    /* One Group */
+    QLayout *a_layout(int id);
+    QLayout *b_layout(int id);
+    QLayout *s_layout(int id);
+    QLayout *c_layout(int id);
+    QLayout *as_layout(int id);
+    QLayout *sc_layout(int id);
+    QLayout *ab_layout(int id);
+    QLayout *abc_layout(int id);
+    QLayout *asb_layout(int id);
+    QLayout *asc_layout(int id);
+    /* Two Group */
+    void a2_layout();
+    void s2_layout();
+    void c2_layout();
+    void as2_layout();
 };
+
+inline QLayout *ScanLayout::a_layout(int id)
+{
+    return new_layout<QVBoxLayout>('A', id);
+}
+
+inline QLayout *ScanLayout::b_layout(int id)
+{
+    return new_layout<QVBoxLayout>('B', id);
+}
+
+inline QLayout *ScanLayout::s_layout(int id)
+{
+    return new_layout<QVBoxLayout>('S', id);
+}
+
+inline QLayout *ScanLayout::c_layout(int id)
+{
+    return new_layout<QVBoxLayout>('C', id);
+}
 
 #endif // __SCAN_LAYOUT_H__
