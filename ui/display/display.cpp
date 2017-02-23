@@ -3,7 +3,6 @@
 
 #include <source/source.h>
 
-#include <QLayout>
 #include <QDebug>
 
 namespace DplDisplay {

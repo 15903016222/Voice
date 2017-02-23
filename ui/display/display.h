@@ -2,13 +2,10 @@
 #define __DISPLAY_H__
 
 #include <device/group.h>
+#include "scan_layout.h"
 
-#include <QWidget>
-#include <QVBoxLayout>
 #include <QMutex>
 #include <QMap>
-
-#include "scan_layout.h"
 
 namespace DplDisplay {
 
@@ -35,7 +32,6 @@ private:
     static QMutex s_mutex;
 
     ScanLayout *m_scanLayout;
-    QVBoxLayout *m_vboxLayout;
 };
 
 }
