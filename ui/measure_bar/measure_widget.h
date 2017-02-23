@@ -28,6 +28,11 @@ protected:
 private:
     Ui::MeasureWidget *ui;
     MeasureDialog::MeasureType m_type;
+    QString m_unit;
+    QString m_title;
+
+    void update_title();
+    void set_unit(const QString &value);
 
 signals:
     void type_changed(MeasureDialog::MeasureType);

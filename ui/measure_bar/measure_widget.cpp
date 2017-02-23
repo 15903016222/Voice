@@ -26,14 +26,16 @@ void MeasureWidget::set_type(MeasureDialog::MeasureType type)
     if(type != m_type) {
         MeasureDialog dlg(this, type);
         m_type = type;
-        ui->nameLabel->setText(dlg.get_type_string());
+//        ui->nameLabel->setText(dlg.get_type_string());
+        m_title = dlg.get_type_string();
+        set_unit(dlg.get_unit());
+        update_title();
         emit type_changed(type);
     }
 }
 
 void MeasureWidget::set_value(const QString &value)
 {
-    qDebug() << value;
     ui->valueLabel->setText(value);
 }
 
@@ -51,3 +53,22 @@ bool MeasureWidget::eventFilter(QObject *object, QEvent *event)
     }
 }
 
+void MeasureWidget::set_unit(const QString &value)
+{
+    m_unit = value;
+}
+
+void MeasureWidget::update_title()
+{
+    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
+    msg += m_title;
+    msg += "</font>";
+
+    if (!m_unit.isEmpty()){
+        msg += "<br/><font style='font-size:12pt' face='Arial' color=white>(";
+        msg += m_unit;
+        msg += ")</font>";
+    }
+
+    ui->nameLabel->setText(msg);
+}
