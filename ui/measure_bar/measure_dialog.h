@@ -2,6 +2,7 @@
 #define __MEASURE_DIALOG_H__
 
 #include <QDialog>
+#include <QMap>
 
 namespace Ui {
 class MeasureDialog;
@@ -74,6 +75,7 @@ public:
 
     MeasureType get_type() const;
     QString get_type_string();
+    QString get_unit() const;
     void set_type(MeasureType type);
 
 protected:

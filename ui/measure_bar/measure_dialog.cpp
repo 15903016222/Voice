@@ -14,6 +14,7 @@ MeasureDialog::MeasureDialog(QWidget *parent, MeasureDialog::MeasureType type) :
     setWindowFlags( (windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::FramelessWindowHint);
 
     ui->tableWidget->setCurrentCell(type, 0);
+    ui->tableWidget->setColumnHidden(1, true);
 }
 
 MeasureDialog::~MeasureDialog()
@@ -44,4 +45,9 @@ void MeasureDialog::keyPressEvent(QKeyEvent *e)
        return;
     }
     QDialog::keyPressEvent(e);
+}
+
+QString MeasureDialog::get_unit() const
+{
+    return ui->tableWidget->item(ui->tableWidget->currentRow(), 1)->text();
 }

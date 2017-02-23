@@ -103,6 +103,9 @@
          <property name="cornerButtonEnabled">
           <bool>true</bool>
          </property>
+         <property name="columnCount">
+          <number>2</number>
+         </property>
          <attribute name="horizontalHeaderVisible">
           <bool>false</bool>
          </attribute>
@@ -365,7 +368,7 @@
          </row>
          <row>
           <property name="text">
-           <string>AWS-D</string>
+           <string>AWS-DCL</string>
           </property>
          </row>
          <row>
@@ -393,9 +396,15 @@
            <string>Measurement</string>
           </property>
          </column>
+         <column/>
          <item row="0" column="0">
           <property name="text">
            <string>Peak amplitude in gate A</string>
+          </property>
+         </item>
+         <item row="0" column="1">
+          <property name="text">
+           <string>%</string>
           </property>
          </item>
          <item row="1" column="0">
@@ -403,9 +412,19 @@
            <string>Signal in gate minus gate level for gate A</string>
           </property>
          </item>
+         <item row="1" column="1">
+          <property name="text">
+           <string>dB</string>
+          </property>
+         </item>
          <item row="2" column="0">
           <property name="text">
            <string>Difference between signal and reference in gate A</string>
+          </property>
+         </item>
+         <item row="2" column="1">
+          <property name="text">
+           <string>dB</string>
           </property>
          </item>
          <item row="3" column="0">
@@ -413,9 +432,19 @@
            <string>Peak amplitude in gate B</string>
           </property>
          </item>
+         <item row="3" column="1">
+          <property name="text">
+           <string>%</string>
+          </property>
+         </item>
          <item row="4" column="0">
           <property name="text">
            <string>Signal in gate minus gate level for gate B</string>
+          </property>
+         </item>
+         <item row="4" column="1">
+          <property name="text">
+           <string>dB</string>
           </property>
          </item>
          <item row="5" column="0">
@@ -423,9 +452,19 @@
            <string>Difference between signal and reference in gate B</string>
           </property>
          </item>
+         <item row="5" column="1">
+          <property name="text">
+           <string>dB</string>
+          </property>
+         </item>
          <item row="6" column="0">
           <property name="text">
            <string>Position in gate A</string>
+          </property>
+         </item>
+         <item row="6" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="7" column="0">
@@ -433,9 +472,19 @@
            <string>Position in gate B</string>
           </property>
          </item>
+         <item row="7" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="8" column="0">
           <property name="text">
            <string>Position in gate I</string>
+          </property>
+         </item>
+         <item row="8" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="9" column="0">
@@ -443,9 +492,19 @@
            <string>Position in gate I in water</string>
           </property>
          </item>
+         <item row="9" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="10" column="0">
           <property name="text">
            <string>Thickness</string>
+          </property>
+         </item>
+         <item row="10" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="11" column="0">
@@ -453,9 +512,19 @@
            <string>Percentage of Material loss</string>
           </property>
          </item>
+         <item row="11" column="1">
+          <property name="text">
+           <string>%</string>
+          </property>
+         </item>
          <item row="12" column="0">
           <property name="text">
            <string>Amplitude value for reference cursor</string>
+          </property>
+         </item>
+         <item row="12" column="1">
+          <property name="text">
+           <string>%</string>
           </property>
          </item>
          <item row="13" column="0">
@@ -463,9 +532,19 @@
            <string>Amplitude value of the measurement cursor</string>
           </property>
          </item>
+         <item row="13" column="1">
+          <property name="text">
+           <string>%</string>
+          </property>
+         </item>
          <item row="14" column="0">
           <property name="text">
            <string>Amplitude (measurement cursor - reference cursor)</string>
+          </property>
+         </item>
+         <item row="14" column="1">
+          <property name="text">
+           <string>%</string>
           </property>
          </item>
          <item row="15" column="0">
@@ -473,9 +552,19 @@
            <string>Ultrasonic position of the reference cursor</string>
           </property>
          </item>
+         <item row="15" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="16" column="0">
           <property name="text">
            <string>Ultrasonic position of the measurement cursor</string>
+          </property>
+         </item>
+         <item row="16" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="17" column="0">
@@ -483,9 +572,19 @@
            <string>Ultrasonic axix(measurement cursor - reference cursor)</string>
           </property>
          </item>
+         <item row="17" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="18" column="0">
           <property name="text">
            <string>Probe position of the reference cursor</string>
+          </property>
+         </item>
+         <item row="18" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="19" column="0">
@@ -493,9 +592,19 @@
            <string>Probe position of the measurement cursor</string>
           </property>
          </item>
+         <item row="19" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="20" column="0">
           <property name="text">
            <string>Probe (measurement cursor - reference cursor)</string>
+          </property>
+         </item>
+         <item row="20" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="21" column="0">
@@ -503,9 +612,19 @@
            <string>Scan position of the reference cursor</string>
           </property>
          </item>
+         <item row="21" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="22" column="0">
           <property name="text">
            <string>Scan position of the measurment cursor</string>
+          </property>
+         </item>
+         <item row="22" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="23" column="0">
@@ -513,9 +632,19 @@
            <string>Scan (measurement cursor - reference cursor)</string>
           </property>
          </item>
+         <item row="23" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="24" column="0">
           <property name="text">
            <string>Index position of the reference cursor</string>
+          </property>
+         </item>
+         <item row="24" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="25" column="0">
@@ -523,9 +652,19 @@
            <string>Index position of the measurement cursor</string>
           </property>
          </item>
+         <item row="25" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="26" column="0">
           <property name="text">
            <string>Index axis(measurement cursor - reference cursor)</string>
+          </property>
+         </item>
+         <item row="26" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="27" column="0">
@@ -533,9 +672,19 @@
            <string>Reference point to the indication in gate A</string>
           </property>
          </item>
+         <item row="27" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="28" column="0">
           <property name="text">
            <string>Reference point to the indication in gate B</string>
+          </property>
+         </item>
+         <item row="28" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="29" column="0">
@@ -543,9 +692,19 @@
            <string>Probe front face to the indication in gate A</string>
           </property>
          </item>
+         <item row="29" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="30" column="0">
           <property name="text">
            <string>Probe front face to the indication in gate B</string>
+          </property>
+         </item>
+         <item row="30" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="31" column="0">
@@ -553,9 +712,19 @@
            <string>Depth of the indication in gate A</string>
           </property>
          </item>
+         <item row="31" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="32" column="0">
           <property name="text">
            <string>Depth of the indication in gate B</string>
+          </property>
+         </item>
+         <item row="32" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="33" column="0">
@@ -563,9 +732,19 @@
            <string>Sound path of the indication in gate A</string>
           </property>
          </item>
+         <item row="33" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="34" column="0">
           <property name="text">
            <string>Sound path of the indication in gate B</string>
+          </property>
+         </item>
+         <item row="34" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="35" column="0">
@@ -573,9 +752,19 @@
            <string>Volumetric position in gate A on the index axis</string>
           </property>
          </item>
+         <item row="35" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="36" column="0">
           <property name="text">
            <string>Volumetric position in gate B on the index axis</string>
+          </property>
+         </item>
+         <item row="36" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="37" column="0">
@@ -583,9 +772,19 @@
            <string>Volumetric position in gate A on the scan axis</string>
           </property>
          </item>
+         <item row="37" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="38" column="0">
           <property name="text">
            <string>Volumetric position in gate B on the scan axis</string>
+          </property>
+         </item>
+         <item row="38" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="39" column="0">
@@ -593,9 +792,19 @@
            <string>Leg(skip)of the indication in gate A</string>
           </property>
          </item>
+         <item row="39" column="1">
+          <property name="text">
+           <string/>
+          </property>
+         </item>
          <item row="40" column="0">
           <property name="text">
            <string>Leg(skip)of the indication in gate B</string>
+          </property>
+         </item>
+         <item row="40" column="1">
+          <property name="text">
+           <string/>
           </property>
          </item>
          <item row="41" column="0">
@@ -603,9 +812,19 @@
            <string>Peak amplitude of the envelop in gate A</string>
           </property>
          </item>
+         <item row="41" column="1">
+          <property name="text">
+           <string>%</string>
+          </property>
+         </item>
          <item row="42" column="0">
           <property name="text">
            <string>Indication level for AWS-D1.5A</string>
+          </property>
+         </item>
+         <item row="42" column="1">
+          <property name="text">
+           <string/>
           </property>
          </item>
          <item row="43" column="0">
@@ -613,9 +832,19 @@
            <string>Zero reference  level for AWS-D1.5B</string>
           </property>
          </item>
+         <item row="43" column="1">
+          <property name="text">
+           <string/>
+          </property>
+         </item>
          <item row="44" column="0">
           <property name="text">
            <string>Attenuation factor for AWS-D1.5 C</string>
+          </property>
+         </item>
+         <item row="44" column="1">
+          <property name="text">
+           <string/>
           </property>
          </item>
          <item row="45" column="0">
@@ -623,9 +852,19 @@
            <string>Indication rating for AWS-D1.5D</string>
           </property>
          </item>
+         <item row="45" column="1">
+          <property name="text">
+           <string/>
+          </property>
+         </item>
          <item row="46" column="0">
           <property name="text">
            <string>Discontinuity severity class for AWS-D1.5 45</string>
+          </property>
+         </item>
+         <item row="46" column="1">
+          <property name="text">
+           <string/>
           </property>
          </item>
          <item row="47" column="0">
@@ -633,14 +872,29 @@
            <string>Discontinuity severity class for AWS-D1.5 60</string>
           </property>
          </item>
+         <item row="47" column="1">
+          <property name="text">
+           <string/>
+          </property>
+         </item>
          <item row="48" column="0">
           <property name="text">
            <string>Discontinuity severity class for AWS-D1.5 70</string>
           </property>
          </item>
+         <item row="48" column="1">
+          <property name="text">
+           <string/>
+          </property>
+         </item>
          <item row="49" column="0">
           <property name="text">
-           <string>CL Discontinuity severity class for AWS-D1.5</string>
+           <string>Discontinuity severity class for AWS-D1.5</string>
+          </property>
+         </item>
+         <item row="49" column="1">
+          <property name="text">
+           <string/>
           </property>
          </item>
          <item row="50" column="0">
@@ -648,9 +902,19 @@
            <string>TOFD Ultrasonic Axis Reference Cursor Depth</string>
           </property>
          </item>
+         <item row="50" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="51" column="0">
           <property name="text">
            <string>TOFD Ultrasonic Axis Measure Cursor Depth</string>
+          </property>
+         </item>
+         <item row="51" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
          <item row="52" column="0">
@@ -658,9 +922,19 @@
            <string>TOFD Scan Axis Cursor Space</string>
           </property>
          </item>
+         <item row="52" column="1">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </item>
          <item row="53" column="0">
           <property name="text">
            <string>TOFD Ultrasonic Axis Cursor Height</string>
+          </property>
+         </item>
+         <item row="53" column="1">
+          <property name="text">
+           <string>mm</string>
           </property>
          </item>
         </widget>
