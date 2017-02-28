@@ -32,7 +32,6 @@ private:
     QString m_title;
 
     void update_title();
-    void set_unit(const QString &value);
 
 signals:
     void type_changed(MeasureDialog::MeasureType);

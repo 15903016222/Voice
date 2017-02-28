@@ -2,6 +2,7 @@
 #include "ui_measure_widget.h"
 
 #include <QDebug>
+#include <QTime>
 
 MeasureWidget::MeasureWidget(QWidget *parent) :
     QWidget(parent),
@@ -26,9 +27,9 @@ void MeasureWidget::set_type(MeasureDialog::MeasureType type)
     if(type != m_type) {
         MeasureDialog dlg(this, type);
         m_type = type;
-//        ui->nameLabel->setText(dlg.get_type_string());
         m_title = dlg.get_type_string();
-        set_unit(dlg.get_unit());
+        m_unit = dlg.get_unit();
+
         update_title();
         emit type_changed(type);
     }
@@ -51,11 +52,6 @@ bool MeasureWidget::eventFilter(QObject *object, QEvent *event)
     } else {
         return QWidget::eventFilter(object, event);
     }
-}
-
-void MeasureWidget::set_unit(const QString &value)
-{
-    m_unit = value;
 }
 
 void MeasureWidget::update_title()

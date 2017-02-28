@@ -41,8 +41,8 @@ void MeasureDialog::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Enter
             || e->key() == Qt::Key_Return) {
-       accept();
-       return;
+        accept();
+        return;
     }
     QDialog::keyPressEvent(e);
 }
