@@ -2,6 +2,7 @@
 #define __MEASURE_BAR_H__
 
 #include "measure_calculation.h"
+#include "measure_dialog.h"
 
 #include <device/device.h>
 #include <source/source.h>
@@ -22,12 +23,10 @@ public:
 
 private:
     Ui::MeasureBar *ui;
-//    MeasureCalculation *measureCalculation;
     QMap<MeasureDialog::MeasureType, MeasureCalculation::Function> m_map;
     DplDevice::GroupPointer m_group;
     DplSource::BeamGroupPointer m_beamGroup;
     int m_beamIndex;
-    int m_beamNo;
 
     void init_map();
     void set();

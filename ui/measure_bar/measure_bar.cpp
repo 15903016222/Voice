@@ -64,7 +64,11 @@ QString MeasureBar::calculate_value(MeasureDialog::MeasureType type)
     MeasureCalculation::Function pFun = m_map.value(type);
     if(pFun) {
         double value = (MeasureCalculation::get_calculation()->*pFun)(m_group, m_beamIndex);
-        return QString::number(value, 'f', 1);
+        if(value == MEASURE_DATA_ND) {
+            return QString("ND");
+        } else {
+            return QString::number(value, 'f', 1);
+        }
     }
 }
 
