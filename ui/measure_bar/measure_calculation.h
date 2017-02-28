@@ -1,13 +1,13 @@
-#ifndef MEASURECALCULATION_H
-#define MEASURECALCULATION_H
-
-#include "measure_dialog.h"
+#ifndef __MEASURE_CALCULATION_H
+#define __MEASURE_CALCULATION_H
 
 #include <device/group.h>
 #include <device/device.h>
 
 #include <QObject>
 #include <QMutex>
+
+#define MEASURE_DATA_ND    987654321.123
 
 class MeasureCalculationPrivate;
 class MeasureCalculation : public QObject
@@ -83,4 +83,4 @@ private:
     MeasureCalculationPrivate *d;
 };
 
-#endif // MEASURECALCULATION_H
+#endif // __MEASURE_CALCULATION_H

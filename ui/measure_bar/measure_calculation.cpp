@@ -12,8 +12,6 @@
 #include <math.h>
 #include <QDebug>
 
-#define MEASURE_DATA_ND    987654321.123
-
 class MeasureCalculationPrivate
 {
 public:
@@ -81,7 +79,7 @@ double MeasureCalculation::get_gate_adBa_value(DplDevice::GroupPointer group, in
     DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
     DplSource::BeamPointer beam = beamGroup->get(beamIndex);
     int _nData = beam->gate_a_height();
-    int _nGateAHeight = group->gate_a_height();
+    int _nGateAHeight = group->gate_a_height() / 20.47;
 
     if(group->rectifier()){
         _nMeasureData = _nData / 20.47;//满屏时200% 4095
@@ -131,7 +129,7 @@ double MeasureCalculation::get_gate_bdBb_value(DplDevice::GroupPointer group, in
     DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
     DplSource::BeamPointer beam = beamGroup->get(beamIndex);
     int _nData = beam->gate_b_height();
-    int _nGateBHeight = group->gate_b_height();
+    int _nGateBHeight = group->gate_b_height() / 20.47;
 
     if(group->rectifier()){
         _nMeasureData = _nData / 20.47;//满屏时200% 4095
@@ -160,7 +158,9 @@ double MeasureCalculation::get_gate_a_position_value(DplDevice::GroupPointer gro
 
     DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
     DplSource::BeamPointer beam = beamGroup->get(beamIndex);
-    int _nData = beam->gate_a_position();
+    int _nData = beam->gate_a_height();
+    int _nDataPos = beam->gate_a_position();
+    int _nGateAHeight = group->gate_a_height() / 20.47;
 
     if(group->rectifier()){
         _nMeasureData = _nData / 20.47;//满屏时200% 4095
@@ -168,7 +168,19 @@ double MeasureCalculation::get_gate_a_position_value(DplDevice::GroupPointer gro
         _nMeasureData = _nData / (10.24 * 16);
     }
 
-    qDebug() << _nData << _nMeasureData;
+    if(_nGateAHeight > fabs(_nMeasureData)) {
+        _nMeasureData = MEASURE_DATA_ND;
+    } else {
+        if(group->ut_unit() == DplDevice::Group::Time) {
+            _nMeasureData = _nDataPos / 100;
+        } else {
+            double _nVelocity = group->velocity();
+            _nMeasureData = _nDataPos * _nVelocity / 2000000;
+            qDebug() << _nVelocity;
+        }
+    }
+
+    qDebug() << _nDataPos << _nMeasureData;
     return _nMeasureData;
 }
 
@@ -179,12 +191,25 @@ double MeasureCalculation::get_gate_b_position_value(DplDevice::GroupPointer gro
 
     DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
     DplSource::BeamPointer beam = beamGroup->get(beamIndex);
-    int _nData = beam->gate_b_position();
+    int _nData = beam->gate_b_height();
+    int _nDataPos = beam->gate_b_position();
+    int _nGateBHeight = group->gate_b_height() / 20.47;
 
     if(group->rectifier()){
         _nMeasureData = _nData / 20.47;//满屏时200% 4095
     } else {
         _nMeasureData = _nData / (10.24 * 16);
+    }
+
+    if(_nGateBHeight > fabs(_nMeasureData)) {
+        _nMeasureData = MEASURE_DATA_ND;
+    } else {
+        if(group->ut_unit() == DplDevice::Group::Time) {
+            _nMeasureData = _nDataPos / 1000;
+        } else {
+            double _nVelocity = group->velocity();
+            _nMeasureData = _nDataPos * _nVelocity / 2000000;
+        }
     }
 
     return _nMeasureData;
@@ -198,7 +223,8 @@ double MeasureCalculation::get_gate_i_position_value(DplDevice::GroupPointer gro
     DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
     DplSource::BeamPointer beam = beamGroup->get(beamIndex);
     int _nData = beam->gate_i_height();
-    int _nGateIHeight = group->gate_i_height();
+    int _nDataPos = beam->gate_i_position();
+    int _nGateIHeight = group->gate_i_height() / 20.47;
 
     if(group->rectifier()){
         _nMeasureData = _nData / 20.47;//满屏时200% 4095
@@ -210,11 +236,10 @@ double MeasureCalculation::get_gate_i_position_value(DplDevice::GroupPointer gro
         _nMeasureData = MEASURE_DATA_ND;
     } else {
         double _nVelocity = group->velocity();
-        _nMeasureData = (double)(_nData & 0xfffff);
         if(group->ut_unit() == DplDevice::Group::Time) {
-            _nMeasureData = _nMeasureData / 100;
+            _nMeasureData = _nDataPos / 1000;
         } else {
-            _nMeasureData = _nMeasureData * _nVelocity / 200000;
+            _nMeasureData = _nDataPos * _nVelocity / 2000000;
         }
     }
     return _nMeasureData;
@@ -228,7 +253,8 @@ double MeasureCalculation::get_gate_i_water_position_value(DplDevice::GroupPoint
     DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
     DplSource::BeamPointer beam = beamGroup->get(beamIndex);
     int _nData = beam->gate_i_height();
-    int _nGateIHeight = group->gate_i_height();
+    int _nDataPos = beam->gate_i_position();
+    int _nGateIHeight = group->gate_i_height() / 20.47;
 
     if(group->rectifier()){
         _nMeasureData = _nData / 20.47;//满屏时200% 4095
@@ -240,11 +266,10 @@ double MeasureCalculation::get_gate_i_water_position_value(DplDevice::GroupPoint
         _nMeasureData = MEASURE_DATA_ND;
     } else {
         double _nVelocity = 1480;
-        _nMeasureData = (double)(_nData & 0xfffff);
         if(group->ut_unit() == DplDevice::Group::Time) {
-            _nMeasureData = _nMeasureData / 100;
+            _nMeasureData = _nDataPos / 1000;
         } else {
-            _nMeasureData = _nMeasureData * _nVelocity / 200000;
+            _nMeasureData = _nDataPos * _nVelocity / 2000000;
         }
     }
     return _nMeasureData;
@@ -260,7 +285,7 @@ double MeasureCalculation::get_thickness_value(DplDevice::GroupPointer group, in
 ////    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
 ////    int _nData = beam->gate_a_height();
 //    int _nData = group->get_beam_group()->get(beamIndex)->gate_a_height();
-//    int _nGateAHeight = group->gate_a_height();
+//    int _nGateAHeight = group->gate_a_height() / 20.47;
 
 //    if(group->rectifier()){
 //        _nMeasureData = ((_nData >> 20) & 0x00000fff) / 20.47;//满屏时200% 4095
@@ -280,7 +305,7 @@ double MeasureCalculation::get_thickness_value(DplDevice::GroupPointer group, in
 
 //        double _nVelocity = group->velocity();
 //        _nMeasureData = (double)(_nData & 0xfffff)   - _nWedgeDelay   ;
-//        _nMeasureData = _nMeasureData * _nVelocity * cos(_nAngle) / 200000    ;
+//        _nMeasureData = _nMeasureData * _nVelocity * cos(_nAngle) / 2000000    ;
 
 //    }
 
