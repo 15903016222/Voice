@@ -38,6 +38,7 @@ public slots:
     void do_current_group_changed();
 //    void do_beam_qty_changed(int qty);
     void do_beamgroup_data_event();
+    void do_ut_unit_changed(DplDevice::Group::UtUnit unit);
 
 };
 

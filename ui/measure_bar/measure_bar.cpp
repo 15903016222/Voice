@@ -16,11 +16,20 @@ MeasureBar :: MeasureBar(QWidget *parent) :
     DplDevice::Device *device = DplDevice::Device::get_instance();
     connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
     m_group = device->current_group();
+
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
+            this,
+            SLOT(do_ut_unit_changed(DplDevice::Group::UtUnit)));
+
 //    m_beamNo = 0;
     m_beamIndex = 0;
 
     m_beamGroup = m_group->get_beam_group();
-    connect(static_cast<DplSource::BeamGroup *>(m_beamGroup.data()), SIGNAL(data_event()), this, SLOT(do_beamgroup_data_event()));
+    connect(static_cast<DplSource::BeamGroup *>(m_beamGroup.data()),
+            SIGNAL(data_event()),
+            this,
+            SLOT(do_beamgroup_data_event()));
 
     connect(ui->measureWidget1, SIGNAL(type_changed(MeasureDialog::MeasureType)), this, SLOT(do_type_changed(MeasureDialog::MeasureType)));
     connect(ui->measureWidget2, SIGNAL(type_changed(MeasureDialog::MeasureType)), this, SLOT(do_type_changed(MeasureDialog::MeasureType)));
@@ -67,7 +76,11 @@ QString MeasureBar::calculate_value(MeasureDialog::MeasureType type)
         if(value == MEASURE_DATA_ND) {
             return QString("ND");
         } else {
-            return QString::number(value, 'f', 1);
+            if(type == MeasureDialog::LA || type == MeasureDialog::LB) {
+                return QString::number(value, 'f', 0);
+            } else {
+                return QString::number(value, 'f', 1);
+            }
         }
     }
 }
@@ -88,6 +101,18 @@ void MeasureBar::do_current_group_changed()
 void MeasureBar::do_beamgroup_data_event()
 {
     set();
+}
+
+void MeasureBar::do_ut_unit_changed(DplDevice::Group::UtUnit unit)
+{
+    ui->measureWidget1->set_type(ui->measureWidget1->type());
+    ui->measureWidget2->set_type(ui->measureWidget2->type());
+    ui->measureWidget3->set_type(ui->measureWidget3->type());
+    ui->measureWidget4->set_type(ui->measureWidget4->type());
+    ui->measureWidget5->set_type(ui->measureWidget5->type());
+    ui->measureWidget6->set_type(ui->measureWidget6->type());
+    ui->measureWidget7->set_type(ui->measureWidget7->type());
+    ui->measureWidget8->set_type(ui->measureWidget8->type());
 }
 
 void MeasureBar::set()

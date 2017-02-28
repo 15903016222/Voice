@@ -24,15 +24,13 @@ QString MeasureWidget::name() const
 
 void MeasureWidget::set_type(MeasureDialog::MeasureType type)
 {
-    if(type != m_type) {
-        MeasureDialog dlg(this, type);
-        m_type = type;
-        m_title = dlg.get_type_string();
-        m_unit = dlg.get_unit();
+    MeasureDialog dlg(this, type);
+    m_type = type;
+    m_title = dlg.get_type_string();
+    m_unit = dlg.get_unit();
 
-        update_title();
-        emit type_changed(type);
-    }
+    update_title();
+    emit type_changed(type);
 }
 
 void MeasureWidget::set_value(const QString &value)
@@ -46,7 +44,10 @@ bool MeasureWidget::eventFilter(QObject *object, QEvent *event)
             && event->type() == QEvent::MouseButtonPress) {
         MeasureDialog dialog(this, m_type);
         if (dialog.exec() == MeasureDialog::Accepted) {
-            set_type(dialog.get_type());
+            MeasureDialog::MeasureType type = dialog.get_type();
+            if(type != m_type) {
+                set_type(type);
+            }
         }
         return true;
     } else {
