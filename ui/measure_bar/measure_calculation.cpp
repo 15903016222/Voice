@@ -61,9 +61,9 @@ double MeasureCalculation::get_gate_a_peak_value(DplDevice::GroupPointer group, 
     int _nData = beam->gate_a_height();
 
     if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;//满屏时200% 4095
+        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 A%
     } else {
-        _nMeasureData = _nData / (10.24 * 16);
+        _nMeasureData = _nData / (10.24 * 16);// A%
     }
 
     qDebug() << _nMeasureData;
@@ -82,9 +82,9 @@ double MeasureCalculation::get_gate_adBa_value(DplDevice::GroupPointer group, in
     int _nGateAHeight = group->gate_a_height() / 20.47;
 
     if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;//满屏时200% 4095
+        _nMeasureData = _nData / 20.47;//满屏时200% 4095 A%
     } else {
-        _nMeasureData = fabs(_nData / (10.24 * 16));
+        _nMeasureData = fabs(_nData / (10.24 * 16));// A%
     }
 
     if(_nGateAHeight < 1) _nGateAHeight = 1;
@@ -112,9 +112,9 @@ double MeasureCalculation::get_gate_b_peak_value(DplDevice::GroupPointer group, 
     int _nData = beam->gate_b_height();
 
     if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;//满屏时200% 4095
+        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 B%
     } else {
-        _nMeasureData = _nData / (10.24 * 16);
+        _nMeasureData = _nData / (10.24 * 16);// B%
     }
 
     qDebug() << "b%" << _nMeasureData;
@@ -132,9 +132,9 @@ double MeasureCalculation::get_gate_bdBb_value(DplDevice::GroupPointer group, in
     int _nGateBHeight = group->gate_b_height() / 20.47;
 
     if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;//满屏时200% 4095
+        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 B%
     } else {
-        _nMeasureData = fabs(_nData / (10.24 * 16)) ;
+        _nMeasureData = fabs(_nData / (10.24 * 16)) ;// B%
     }
 
     if(_nGateBHeight < 1) _nGateBHeight = 1  ;
@@ -163,19 +163,19 @@ double MeasureCalculation::get_gate_a_position_value(DplDevice::GroupPointer gro
     int _nGateAHeight = group->gate_a_height() / 20.47;
 
     if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;//满屏时200% 4095
+        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 A%
     } else {
-        _nMeasureData = _nData / (10.24 * 16);
+        _nMeasureData = _nData / (10.24 * 16);// A%
     }
 
     if(_nGateAHeight > fabs(_nMeasureData)) {
         _nMeasureData = MEASURE_DATA_ND;
     } else {
         if(group->ut_unit() == DplDevice::Group::Time) {
-            _nMeasureData = _nDataPos / 100;
+            _nMeasureData = _nDataPos / 1000;
         } else {
             double _nVelocity = group->velocity();
-            _nMeasureData = _nDataPos * _nVelocity / 2000000;
+            _nMeasureData = _nDataPos * _nVelocity / 200000;
             qDebug() << _nVelocity;
         }
     }
@@ -192,13 +192,13 @@ double MeasureCalculation::get_gate_b_position_value(DplDevice::GroupPointer gro
     DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
     DplSource::BeamPointer beam = beamGroup->get(beamIndex);
     int _nData = beam->gate_b_height();
-    int _nDataPos = beam->gate_b_position();
+    int _nDataPos = beam->gate_b_position();// 单位: ns
     int _nGateBHeight = group->gate_b_height() / 20.47;
 
     if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;//满屏时200% 4095
+        _nMeasureData = _nData / 20.47;//满屏时200% 4095 B%
     } else {
-        _nMeasureData = _nData / (10.24 * 16);
+        _nMeasureData = _nData / (10.24 * 16);// B%
     }
 
     if(_nGateBHeight > fabs(_nMeasureData)) {
@@ -208,7 +208,7 @@ double MeasureCalculation::get_gate_b_position_value(DplDevice::GroupPointer gro
             _nMeasureData = _nDataPos / 1000;
         } else {
             double _nVelocity = group->velocity();
-            _nMeasureData = _nDataPos * _nVelocity / 2000000;
+            _nMeasureData = _nDataPos * _nVelocity / 200000;
         }
     }
 
@@ -218,80 +218,83 @@ double MeasureCalculation::get_gate_b_position_value(DplDevice::GroupPointer gro
 /*  I/: 闸门 I 内信号的前沿位置  */
 double MeasureCalculation::get_gate_i_position_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    double _nMeasureData;
+    qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少闸门I内波形前沿的位置
+    return 0;
+//    double _nMeasureData;
 
-    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
-    int _nData = beam->gate_i_height();
-    int _nDataPos = beam->gate_i_position();
-    int _nGateIHeight = group->gate_i_height() / 20.47;
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_i_height();
+//    int _nDataPos = beam->gate_i_position();// 单位: ns
+//    int _nGateIHeight = group->gate_i_height() / 20.47;
 
-    if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;//满屏时200% 4095
-    } else {
-        _nMeasureData = _nData / (10.24 * 16);
-    }
+//    if(group->rectifier()){
+//        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 I%
+//    } else {
+//        _nMeasureData = _nData / (10.24 * 16);// I%
+//    }
 
-    if(_nGateIHeight > fabs(_nMeasureData)) {
-        _nMeasureData = MEASURE_DATA_ND;
-    } else {
-        double _nVelocity = group->velocity();
-        if(group->ut_unit() == DplDevice::Group::Time) {
-            _nMeasureData = _nDataPos / 1000;
-        } else {
-            _nMeasureData = _nDataPos * _nVelocity / 2000000;
-        }
-    }
-    return _nMeasureData;
+//    if(_nGateIHeight > fabs(_nMeasureData)) {
+//        _nMeasureData = MEASURE_DATA_ND;
+//    } else {
+//        double _nVelocity = group->velocity();// 单位: m/s
+//        if(group->ut_unit() == DplDevice::Group::Time) {
+//            _nMeasureData = _nDataPos / 1000;// 单位: 微秒
+//        } else {
+//            _nMeasureData = _nDataPos * _nVelocity / 200000;// 单位: mm
+//        }
+//    }
+//    return _nMeasureData;
 }
 
 /*  I(w)/: 闸门 I 内信号的前沿位置(水) */
 double MeasureCalculation::get_gate_i_water_position_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    double _nMeasureData;
+    qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少闸门I内波形前沿的位置
+    return 0;
+//    double _nMeasureData;
 
-    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
-    int _nData = beam->gate_i_height();
-    int _nDataPos = beam->gate_i_position();
-    int _nGateIHeight = group->gate_i_height() / 20.47;
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_i_height();
+//    int _nDataPos = beam->gate_i_position();// 单位: ns
+//    int _nGateIHeight = group->gate_i_height() / 20.47;
 
-    if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;//满屏时200% 4095
-    } else {
-        _nMeasureData = _nData / (10.24 * 16);
-    }
+//    if(group->rectifier()){
+//        _nMeasureData = _nData / 20.47;//满屏时200% 4095 I%
+//    } else {
+//        _nMeasureData = _nData / (10.24 * 16);// I%
+//    }
 
-    if(_nGateIHeight > fabs(_nMeasureData)) {
-        _nMeasureData = MEASURE_DATA_ND;
-    } else {
-        double _nVelocity = 1480;
-        if(group->ut_unit() == DplDevice::Group::Time) {
-            _nMeasureData = _nDataPos / 1000;
-        } else {
-            _nMeasureData = _nDataPos * _nVelocity / 2000000;
-        }
-    }
-    return _nMeasureData;
+//    if(_nGateIHeight > fabs(_nMeasureData)) {
+//        _nMeasureData = MEASURE_DATA_ND;
+//    } else {
+//        if(group->ut_unit() == DplDevice::Group::Time) {
+//            _nMeasureData = _nDataPos / 1000;
+//        } else {
+//            double _nVelocity = 1480;// 单位: m/s
+//            _nMeasureData = _nDataPos * _nVelocity / 200000;
+//        }
+//    }
+//    return _nMeasureData;
 }
 
 /*  T(A^): 厚度  */
 double MeasureCalculation::get_thickness_value(DplDevice::GroupPointer group, int beamIndex)
 {
-////    int _nBeamNo;
+    qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少PulserWidth(脉宽)和BeamDelay
 //    double _nMeasureData;
 
-////    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-////    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
-////    int _nData = beam->gate_a_height();
-//    int _nData = group->get_beam_group()->get(beamIndex)->gate_a_height();
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_a_height();
+//    int _nDataPos = beam->gate_a_position();// 单位: ns
 //    int _nGateAHeight = group->gate_a_height() / 20.47;
 
 //    if(group->rectifier()){
-//        _nMeasureData = ((_nData >> 20) & 0x00000fff) / 20.47;//满屏时200% 4095
+//        _nMeasureData = _nData / 20.47;//满屏时200% 4095 A%
 //    } else {
-//        _nMeasureData = (signed short)(_nData >> 16) ;
-//        _nMeasureData = _nMeasureData / (10.24 * 16);
+//        _nMeasureData = _nData / (10.24 * 16);
 //    }
 
 //    if(_nGateAHeight > fabs(_nMeasureData)) {
@@ -303,10 +306,9 @@ double MeasureCalculation::get_thickness_value(DplDevice::GroupPointer group, in
 ////        int _nBeamDelay = beam->
 //        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
 
-//        double _nVelocity = group->velocity();
-//        _nMeasureData = (double)(_nData & 0xfffff)   - _nWedgeDelay   ;
-//        _nMeasureData = _nMeasureData * _nVelocity * cos(_nAngle) / 2000000    ;
-
+//        double _nVelocity = group->velocity();// 单位: m/s
+//        _nMeasureData = _nDataPos - _nWedgeDelay;
+//        _nMeasureData = _nMeasureData * _nVelocity * cos(_nAngle) / 200000;
 //    }
 
 //    return _nMeasureData;
@@ -315,7 +317,39 @@ double MeasureCalculation::get_thickness_value(DplDevice::GroupPointer group, in
 /*  ML: 材料损失百分比  */
 double MeasureCalculation::get_ml_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+    qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽),BeamDelay,工件厚度
+//    double _nMeasureData;
+
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_a_height();
+//    int _nDataPos = beam->gate_a_position();// 单位: ns
+//    int _nGateAHeight = group->gate_a_height() / 20.47;
+
+//    if(group->rectifier()){
+//        _nMeasureData = _nData / 20.47;//满屏时200% 4095 A%
+//    } else {
+//        _nMeasureData = _nData / (10.24 * 16);
+//    }
+
+//    if(_nGateAHeight > fabs(_nMeasureData)) {
+//        _nMeasureData = MEASURE_DATA_ND;
+//    } else {
+//        double _nAngle = group->current_angle();
+////        double _nThickness = part->
+////        if(_nThickness < 0.1) _nThickness = 0.1;
+////        _nPulserWidth = group->
+//        int _nWedgeDelay = group->get_wedge()->delay() / 10;
+////        int _nBeamDelay = beam->
+//        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
+
+//        double _nVelocity = group->velocity();// 单位: m/s
+//        _nMeasureData = _nDataPos - _nWedgeDelay;
+//        _nMeasureData = _nMeasureData * _nVelocity * cos(_nAngle) / 200000; // T(A^)
+////        _nMeasureData = (_nThickness - _nMeasureData) / _nThickness * 100;
+//    }
+
+//    return _nMeasureData;
     return 0;
 }
 
@@ -427,14 +461,71 @@ double MeasureCalculation::get_measurement_reference_index_position_value(DplDev
 /*  RA^: 声束出射点与闸门A内检测到的缺陷之间的距离  */
 double MeasureCalculation::get_ra_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+    qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少PulserWidth(脉宽)和BeamDelay
+//    double _nMeasureData;
+
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_a_height();
+//    int _nDataPos = beam->gate_a_position();// 单位: ns
+//    int _nGateAHeight = group->gate_a_height() / 20.47;
+
+//    if(group->rectifier()){
+//        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 A%
+//    } else {
+//        _nMeasureData = _nData / (10.24 * 16);// A%
+//    }
+
+//    if(_nGateAHeight > fabs(_nMeasureData)) {
+//        _nMeasureData = MEASURE_DATA_ND;
+//    } else {
+//        double _nAngle = group->current_angle();
+////        _nPulserWidth = group->
+//        int _nWedgeDelay = group->get_wedge()->delay() / 10;
+////        int _nBeamDelay = beam->
+//        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
+
+//        double _nVelocity = group->velocity();// 单位: m/s
+//        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity * sin(_nAngle) / 200000; // 单位: mm
+//    }
+
+//    return _nMeasureData;
     return 0;
+
 }
 
 /*  RB^: 声束出射点与闸门B内检测到的缺陷之间的距离  */
 double MeasureCalculation::get_rb_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+    qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)和BeamDelay
+//    double _nMeasureData;
+
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_b_height();
+//    int _nDataPos = beam->gate_b_position();// 单位: ns
+//    int _nGateBHeight = group->gate_b_height() / 20.47;
+
+//    if(group->rectifier()){
+//        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 B%
+//    } else {
+//        _nMeasureData = _nData / (10.24 * 16);// B%
+//    }
+
+//    if(_nGateBHeight > fabs(_nMeasureData)) {
+//        _nMeasureData = MEASURE_DATA_ND;
+//    } else {
+//        double _nAngle = group->current_angle();
+////        _nPulserWidth = group->
+//        int _nWedgeDelay = group->get_wedge()->delay() / 10;
+////        int _nBeamDelay = beam->
+//        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
+
+//        double _nVelocity = group->velocity();// 单位: m/s
+//        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity * sin(_nAngle) / 200000; // 单位: mm
+//    }
+
+//    return _nMeasureData;
     return 0;
 }
 
@@ -469,14 +560,71 @@ double MeasureCalculation::get_db_value(DplDevice::GroupPointer group, int beamI
 /*  SA^: 声束出射点与闸门A内检测到的缺陷之间的声程  */
 double MeasureCalculation::get_sa_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+    qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少PulserWidth(脉宽)和BeamDelay
+
+//    double _nMeasureData;
+
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_a_height();
+//    int _nDataPos = beam->gate_a_position();// 单位: ns
+//    int _nGateAHeight = group->gate_a_height() / 20.47;
+
+//    if(group->rectifier()){
+//        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 A%
+//    } else {
+//        _nMeasureData = _nData / (10.24 * 16);// A%
+//    }
+
+//    if(_nGateAHeight > fabs(_nMeasureData)) {
+//        _nMeasureData = MEASURE_DATA_ND;
+//    } else {
+////        _nPulserWidth = group->
+//        int _nWedgeDelay = group->get_wedge()->delay() / 10;
+////        int _nBeamDelay = beam->
+//        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
+
+//        double _nVelocity = group->velocity();// 单位: m/s
+//        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity / 200000; // 单位: mm
+//    }
+
+//    return _nMeasureData;
+
     return 10.3;
 }
 
 /*  SB^: 声束出射点与闸门B内检测到的缺陷之间的声程  */
 double MeasureCalculation::get_sb_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+    qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)和BeamDelay
+//    double _nMeasureData;
+
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_b_height();
+//    int _nDataPos = beam->gate_b_position();// 单位: ns
+//    int _nGateBHeight = group->gate_b_height() / 20.47;
+
+//    if(group->rectifier()){
+//        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 B%
+//    } else {
+//        _nMeasureData = _nData / (10.24 * 16);// B%
+//    }
+
+//    if(_nGateBHeight > fabs(_nMeasureData)) {
+//        _nMeasureData = MEASURE_DATA_ND;
+//    } else {
+////        _nPulserWidth = group->
+//        int _nWedgeDelay = group->get_wedge()->delay() / 10;
+////        int _nBeamDelay = beam->
+//        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
+
+//        double _nVelocity = group->velocity();// 单位: m/s
+//        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity / 200000; // 单位: mm
+//    }
+
+//    return _nMeasureData;
+
     return 0;
 }
 
@@ -511,14 +659,44 @@ double MeasureCalculation::get_vsb_value(DplDevice::GroupPointer group, int beam
 /*  LA^: 从声束入射点到闸门A中测得的信号指示之间声波反射的次数  */
 double MeasureCalculation::get_la_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+    qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)，BeamDelay，工件厚度
+//    double _nMeasureData;
+
+//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
+//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    int _nData = beam->gate_a_height();
+//    int _nDataPos = beam->gate_a_position();// 单位: ns
+//    int _nGateAHeight = group->gate_a_height() / 20.47;
+
+//    if(group->rectifier()){
+//        _nMeasureData = _nData / 20.47;//满屏时200% 4095 A%
+//    } else {
+//        _nMeasureData = _nData / (10.24 * 16);
+//    }
+
+//    if(_nGateAHeight > fabs(_nMeasureData)) {
+//        _nMeasureData = MEASURE_DATA_ND;
+//    } else {
+//        double _nAngle = group->current_angle();
+////        double _nThickness = part->  / 1000;
+////        _nPulserWidth = group->
+//        int _nWedgeDelay = group->get_wedge()->delay() / 10;
+////        int _nBeamDelay = beam->
+//        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
+
+//        double _nVelocity = group->velocity();// 单位: m/s
+//        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity * cos(_nAngle) / 200000; // T(A^)
+////        _nMeasureData = (_nThickness - _nMeasureData) / _nThickness * 100;
+//    }
+
+//    return _nMeasureData;
     return 0;
 }
 
 /*  LB^: 从声束入射点到闸门B中测得的信号指示之间声波反射的次数  */
 double MeasureCalculation::get_lb_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+    qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)，BeamDelay，工件厚度
     return 0;
 }
 
