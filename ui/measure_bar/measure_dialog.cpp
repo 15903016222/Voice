@@ -1,6 +1,9 @@
 #include "measure_dialog.h"
 #include "ui_measure_dialog.h"
 
+#include <device/device.h>
+#include <device/group.h>
+
 #include <QKeyEvent>
 
 #include <QDebug>
@@ -48,6 +51,12 @@ void MeasureDialog::keyPressEvent(QKeyEvent *e)
 }
 
 QString MeasureDialog::get_unit() const
-{
-    return ui->tableWidget->item(ui->tableWidget->currentRow(), 1)->text();
+{    
+    int row = ui->tableWidget->currentRow();
+    if(DplDevice::Device::get_instance()->current_group()->ut_unit() == DplDevice::Group::Time && row >= 6 && row <= 9) {
+        return QString("&micro;s");
+    } else {
+        return ui->tableWidget->item(row, 1)->text();
+    }
+
 }
