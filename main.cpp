@@ -6,8 +6,15 @@
 #include <QFontDatabase>
 #include <QDebug>
 
+//#if (PHASCAN | PHASCAN_II)
+//static const char *FONT_FILE = "/etc/mercury/font/SONGTI.TTC";
+//#endif
+
 #if (PHASCAN | PHASCAN_II)
-static const char *FONT_FILE = "/etc/mercury/font/SONGTI.TTC";
+static const char *FONT_FILE = "/etc/mercury/font/arial.ttf";
+#endif
+#if (PC_UNIX | PC_WIN)
+static const char *FONT_FILE = "arial.ttf";
 #endif
 
 int main(int argc, char *argv[])
@@ -19,9 +26,9 @@ int main(int argc, char *argv[])
 
     MainWindow w;
 
-#if (PHASCAN | PHASCAN_II)
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
+//#if (PHASCAN | PHASCAN_II)
+//    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+//    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 
     int fontId = QFontDatabase::addApplicationFont(FONT_FILE);
     QStringList list = QFontDatabase::applicationFontFamilies(fontId);
@@ -32,6 +39,7 @@ int main(int argc, char *argv[])
         qDebug()<<"font="<<list.at(0);
         w.setFont(font);
     }
+#if (PHASCAN | PHASCAN_II)
 
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 #endif
