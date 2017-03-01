@@ -13,15 +13,6 @@ ShowInfoWidget::ShowInfoWidget(QWidget *parent) :
     m_showDlg = false;
 
     init_show_time();
-
-    QString string1 = "border-right:1px solid qlineargradient(spread:reflect, x1:0, y1:0, x2:0, y2:0.5, stop:0.2 rgba(210, 150, 0, 255), stop:0.5 rgba(0, 0, 0, 255));" ;
-    QString string2 = "border-left:1px solid qlineargradient(spread:reflect, x1:0, y1:0,x2:0, y2:0.5, stop:0.2 rgba(210, 150, 0, 255), stop:0.5 rgba(255, 255, 255, 255));";
-    ui->label_1->setStyleSheet("QLabel{" + string1 + "}");
-    ui->label_6->setStyleSheet("QLabel{" + string2 + "}");
-    ui->label_2->setStyleSheet("QLabel{" + string1 + string2 + "}");
-    ui->label_3->setStyleSheet("QLabel{" + string1 + string2 + "}");
-    ui->label_4->setStyleSheet("QLabel{" + string1 + string2 + "}");
-    ui->label_5_showDateTime->setStyleSheet("QLabel{" + string1 + string2 + "}");
 }
 
 ShowInfoWidget::~ShowInfoWidget()
