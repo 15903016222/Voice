@@ -24,9 +24,6 @@ void AscanWidget::paintEvent(QPaintEvent *e)
 
     QPainter painter(this);
 
-    painter.setBrush(Qt::black);
-    painter.drawRect(this->rect());
-
     painter.setPen(m_color);
 
     painter.translate(0, height());
