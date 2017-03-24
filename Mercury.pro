@@ -13,21 +13,21 @@
 #-------------------------------------------------------------
 
 win32 {
-DEVICE = PC_WIN
+DEVICE = Pc_Win
 }
 
 linux-oe-g++ {
-DEVICE = PHASCAN_II
+DEVICE = Phascan_II
 LIBS += -lX11 -lXtst
 }
 
 linux-arm-g++ {
-DEVICE = PHASCAN
+DEVICE = Phascan
 LIBS += -lX11 -lXtst
 }
 
 linux-g++ {
-DEVICE = PC_UNIX
+DEVICE = Pc_Unix
 LIBS += -lX11 -lXtst
 }
 
@@ -42,7 +42,7 @@ equals(QT_MAJOR_VERSION, 4) {
     QMAKE_CXXFLAGS += -Wno-psabi
 }
 
-DEFINES += $$DEVICE
+DEFINES += $$upper($$DEVICE)
 
 TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
@@ -62,8 +62,6 @@ include(ui/ui.pri)
 include(mcu/mcu.pri)
 
 include(fpga/fpga.pri)
-
-include(probe/probe.pri)
 
 include(source/source.pri)
 
