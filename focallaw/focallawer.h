@@ -10,7 +10,7 @@
 
 #include "beam.h"
 
-#include <QObject>
+#include <QSharedPointer>
 
 namespace DplFocallaw {
 
@@ -114,6 +114,8 @@ public slots:
 private:
     FocallawerPrivate *d_ptr;
 };
+
+typedef QSharedPointer<Focallawer> FocallawerPointer;
 
 }
 
