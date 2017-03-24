@@ -1,6 +1,6 @@
 
 HEADERS += \
-    $$PWD/focallaw.h
+    $$PWD/focallaw.h \
+    $$PWD/point.h
 
-SOURCES += \
-#    $$PWD/focallaw.cpp
+SOURCES +=
