@@ -3,7 +3,7 @@
 
 #include "probe.h"
 
-namespace Dpl {
+namespace DplFocallaw {
 
 class PaProbePrivate;
 class PaProbe : public Probe

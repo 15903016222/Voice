@@ -3,7 +3,7 @@
 
 #include "focallaw_global.h"
 
-namespace Dpl {
+namespace DplFocallaw {
 
 class WedgePrivate;
 

@@ -4,7 +4,7 @@
 #include "focallaw_global.h"
 #include <QSharedPointer>
 
-namespace Dpl {
+namespace DplFocallaw {
 
 class BeamData;
 class FOCALLAWSHARED_EXPORT Beam

@@ -9,7 +9,7 @@
 
 #include "probe.h"
 
-namespace Dpl {
+namespace DplFocallaw {
 
 class UtProbePrivate;
 class FOCALLAWSHARED_EXPORT UtProbe : public Probe

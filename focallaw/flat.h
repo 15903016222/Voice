@@ -9,7 +9,7 @@
 
 #include "specimen.h"
 
-namespace Dpl {
+namespace DplFocallaw {
 
 class FlatPrivate;
 class FOCALLAWSHARED_EXPORT Flat : public Specimen

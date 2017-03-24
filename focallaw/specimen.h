@@ -10,7 +10,7 @@
 #include "focallaw_global.h"
 #include <QSharedPointer>
 
-namespace Dpl {
+namespace DplFocallaw {
 
 class SpecimenPrivate;
 class FOCALLAWSHARED_EXPORT Specimen

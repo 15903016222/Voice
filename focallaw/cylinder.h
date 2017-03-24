@@ -3,7 +3,7 @@
 
 #include "specimen.h"
 
-namespace Dpl {
+namespace DplFocallaw {
 
 class CylinderPrivate;
 class FOCALLAWSHARED_EXPORT Cylinder : public Specimen
