@@ -139,6 +139,18 @@ public:
      */
     double max_range();
 
+    double gate_a_start();
+
+    void set_gate_a_start(double val);
+
+    double gate_b_start();
+
+    void set_gate_b_start(double val);
+
+    double gate_i_start();
+
+    void set_gate_i_start(double val);
+
     DplProbe::ProbePointer get_probe() const;
     void set_probe(DplProbe::ProbePointer probePtr);
 
