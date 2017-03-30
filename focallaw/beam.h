@@ -1,5 +1,5 @@
-#ifndef __BEAM_H__
-#define __BEAM_H__
+#ifndef __FOCALLAW_BEAM_H__
+#define __FOCALLAW_BEAM_H__
 
 #include "focallaw_global.h"
 #include <QSharedPointer>
@@ -41,4 +41,4 @@ typedef QSharedPointer<Beam> BeamPointer;
 
 }
 
-#endif // __BEAM_H__
+#endif // __FOCALLAW_BEAM_H__

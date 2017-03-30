@@ -1,0 +1,70 @@
+#ifndef __FOCALLAW_LINEAR_SCAN_CNF_H__
+#define __FOCALLAW_LINEAR_SCAN_CNF_H__
+
+#include "scan_cnf.h"
+
+namespace DplFocallaw {
+
+class LinearScanCnfPrivate;
+class FOCALLAWSHARED_EXPORT LinearScanCnf : public ScanCnf
+{
+    Q_DECLARE_PRIVATE(LinearScanCnf)
+    Q_OBJECT
+public:
+    explicit LinearScanCnf(QObject *parent=0);
+    ~LinearScanCnf();
+
+    /**
+     * @brief mode  获取扫描模式
+     * @return      扫描模式
+     */
+    Mode mode() const;
+
+    /**
+     * @brief last_element  获取结束阵元号
+     * @return              阵元号
+     */
+    uint last_element() const;
+
+    /**
+     * @brief set_last_element  设置结束阵元号
+     * @param pos               阵元号
+     * @return                  成功返回true，失败返回false
+     */
+    bool set_last_element(uint pos);
+
+    /**
+     * @brief element_step  获取阵元步进
+     * @return              步进
+     */
+    uint element_step();
+
+    /**
+     * @brief set_element_step  设置阵元步进
+     * @param step              步进
+     * @return                  成功返回true，否则false
+     */
+    bool set_element_step(uint step);
+
+    /**
+     * @brief angle 获取光束角度
+     * @return      角度(°)
+     */
+    float angle() const;
+
+    /**
+     * @brief set_angle 设置光束角度
+     * @param angle     角度(°)
+     * @return          成功返回true，否则false
+     */
+    bool set_angle(float angle);
+
+private:
+    LinearScanCnfPrivate *d_ptr;
+};
+
+typedef QSharedPointer<LinearScanCnf> LinearScanCnfPointer;
+
+}
+
+#endif // __FOCALLAW_LINEAR_SCAN_CNF_H__

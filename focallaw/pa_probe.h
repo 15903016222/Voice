@@ -77,6 +77,12 @@ public:
     void set_secondary_element_qty(uint qty);
 
     /**
+     * @brief element_qty   获取总阵元数
+     * @return              数量
+     */
+    uint element_qty() const;
+
+    /**
      * @brief primary_pitch 获取主轴pitch
      * @return              pitch值
      */

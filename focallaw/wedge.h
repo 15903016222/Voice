@@ -56,39 +56,27 @@ public:
 
     /**
      * @brief angel 获取角度
-     * @return      角度值(度)
+     * @return      角度值(°)
      */
     float angle() const;
 
     /**
-     * @brief angle_pi  获取角度
-     * @return          角度值(PI)
-     */
-    float angle_pi() const;
-
-    /**
      * @brief set_angel 设置角度
-     * @param val       角度值(度)
+     * @param val       角度值(°)
      */
     void set_angle(float val);
 
     /**
-     * @brief roof_angel    获取roof角度，即次轴与步进轴的夹角
-     * @return              角度值(度)
+     * @brief roof_angle    获取roof角度，即次轴与步进轴的夹角
+     * @return              角度值(°)
      */
-    float roof_angel() const;
+    float roof_angle() const;
 
     /**
-     * @brief roof_angle_pi 获取roof角度
-     * @return              角度值(PI)
+     * @brief set_root_angle    设置root angle值
+     * @param val               角度值(°)
      */
-    float roof_angle_pi() const;
-
-    /**
-     * @brief set_root_angel    设置root angle值
-     * @param val               角度值(度)
-     */
-    void set_root_angel(float val);
+    void set_root_angle(float val);
 
     /**
      * @brief The WaveType enum 波类型
@@ -203,6 +191,18 @@ public:
      * @param val               方向
      */
     void set_orientation(Orientation val);
+
+    /**
+     * @brief delay 获取锲块延迟时间
+     * @return      时间(ns)
+     */
+    int delay() const;
+
+    /**
+     * @brief set_delay 设置锲块延迟时间
+     * @param val       时间(ns)
+     */
+    void set_delay(int val);
 
     Wedge &operator=(const Wedge &w);
 
