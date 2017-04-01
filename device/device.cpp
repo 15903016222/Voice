@@ -247,7 +247,11 @@ int Device::total_beam_qty()
     QReadLocker l(&d->m_groupsRWLock);
     int qty = 0;
     for (int i = 0; i < d->m_groups.size(); ++i) {
-        qty += d->m_groups[i]->get_focallaw()->beam_qty();
+        if (d->m_groups[i]->mode() == Group::PA) {
+            qty += d->m_groups[i]->get_focallaw()->beam_qty();
+        } else {
+            qty += 1;
+        }
     }
     return qty;
 }
