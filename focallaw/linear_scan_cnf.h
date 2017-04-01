@@ -1,3 +1,9 @@
+/**
+ * @file linear_scan_cnf.h
+ * @brief 线性扫查类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __FOCALLAW_LINEAR_SCAN_CNF_H__
 #define __FOCALLAW_LINEAR_SCAN_CNF_H__
 

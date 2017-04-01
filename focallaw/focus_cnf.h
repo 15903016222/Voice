@@ -1,3 +1,9 @@
+/**
+ * @file focus_cnf.h
+ * @brief 聚焦点配置类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __FOCUS_CNF_H__
 #define __FOCUS_CNF_H__
 

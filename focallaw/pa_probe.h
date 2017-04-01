@@ -1,3 +1,9 @@
+/**
+ * @file pa_probe.h
+ * @brief PA探头
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __PA_PROBE_H__
 #define __PA_PROBE_H__
 

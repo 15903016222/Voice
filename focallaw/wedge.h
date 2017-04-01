@@ -1,18 +1,27 @@
+/**
+ * @file wedge.h
+ * @brief 锲块
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __WEDGE_H__
 #define __WEDGE_H__
 
 #include "focallaw_global.h"
+#include <QObject>
+#include <QSharedPointer>
 
 namespace DplFocallaw {
 
 class WedgePrivate;
 
-class FOCALLAWSHARED_EXPORT Wedge
+class FOCALLAWSHARED_EXPORT Wedge : public QObject
 {
     Q_DECLARE_PRIVATE(Wedge)
+    Q_OBJECT
 public:
-    explicit Wedge();
-    explicit Wedge(const Wedge &w);
+    explicit Wedge(QObject *parent=0);
+    explicit Wedge(const Wedge &w, QObject *parent=0);
 
     ~Wedge();
 
@@ -206,9 +215,14 @@ public:
 
     Wedge &operator=(const Wedge &w);
 
+signals:
+    void delay_changed(int val);
+
 private:
     WedgePrivate *d_ptr;
 };
+
+typedef QSharedPointer<Wedge> WedgePointer;
 
 }
 

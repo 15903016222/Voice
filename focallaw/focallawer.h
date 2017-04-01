@@ -1,3 +1,10 @@
+/**
+ * @file focallawer.h
+ * @brief 聚焦法则计算器
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
+
 #ifndef __FOCALLAWER_H__
 #define __FOCALLAWER_H__
 
@@ -32,13 +39,14 @@ public:
      * @brief wedge 获取锲块
      * @return      锲块对象
      */
-    const Wedge &wedge() const;
+    const WedgePointer &wedge() const;
 
     /**
      * @brief set_wedge 设置锲块
      * @param w         锲块对象
+     * @return          成功返回true，否则false
      */
-    void set_wedge(const Wedge &w);
+    bool set_wedge(const WedgePointer &w);
 
     /**
      * @brief specimen  获取工件

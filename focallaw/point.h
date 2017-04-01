@@ -1,3 +1,9 @@
+/**
+ * @file point.h
+ * @brief 点
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __POINT_H__
 #define __POINT_H__
 

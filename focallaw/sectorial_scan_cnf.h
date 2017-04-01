@@ -1,3 +1,9 @@
+/**
+ * @file sectorial_scan_cnf.h
+ * @brief 扇扫配置类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __SECTORIAL_SCAN_CNF_H__
 #define __SECTORIAL_SCAN_CNF_H__
 

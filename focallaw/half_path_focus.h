@@ -1,3 +1,9 @@
+/**
+ * @file half_path_focus.h
+ * @brief 半声程聚焦点类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __HALF_PATH_FOCUS_H__
 #define __HALF_PATH_FOCUS_H__
 

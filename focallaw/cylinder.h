@@ -1,3 +1,9 @@
+/**
+ * @file cylinder.h
+ * @brief 曲面工件
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __CYLINDRER_H__
 #define __CYLINDRER_H__
 

@@ -1,3 +1,9 @@
+/**
+ * @file beam.h
+ * @brief 光束
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __FOCALLAW_BEAM_H__
 #define __FOCALLAW_BEAM_H__
 

@@ -1,3 +1,9 @@
+/**
+ * @file probe.h
+ * @brief 探头基类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __PROBE_H__
 #define __PROBE_H__
 

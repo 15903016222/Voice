@@ -1,3 +1,9 @@
+/**
+ * @file true_depth_focus.h
+ * @brief 真实深度聚焦点
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-03-30
+ */
 #ifndef __TRUE_DEPTH_FOCUS_H__
 #define __TRUE_DEPTH_FOCUS_H__
 
