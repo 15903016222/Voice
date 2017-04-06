@@ -1,5 +1,5 @@
 /**
- * @file vinput.cpp
+ * @file vinput_phascan.cpp
  * @brief Virtual Key Input
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @version 0.1
