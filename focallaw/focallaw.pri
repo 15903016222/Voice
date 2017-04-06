@@ -1,7 +1,8 @@
 
-LIBFOCALLAW = Focallaw_$$DEVICE
+LIBFOCALLAW = focallaw-$$DEVICE
+
 CONFIG(debug, debug|release) {
-    LIBFOCALLAW = $$join(LIBFOCALLAW,,,_debug)
+    LIBFOCALLAW = $$join(LIBFOCALLAW,,,"-debug")
 }
 
 LIBS += -L$$PWD/lib -l$$LIBFOCALLAW
