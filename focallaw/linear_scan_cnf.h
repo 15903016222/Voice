@@ -17,7 +17,7 @@ class FOCALLAWSHARED_EXPORT LinearScanCnf : public ScanCnf
     Q_DECLARE_PRIVATE(LinearScanCnf)
     Q_OBJECT
 public:
-    explicit LinearScanCnf(QObject *parent=0);
+    explicit LinearScanCnf(uint elemQty, QObject *parent=0);
     ~LinearScanCnf();
 
     /**
@@ -25,6 +25,20 @@ public:
      * @return      扫描模式
      */
     Mode mode() const;
+
+    /**
+     * @brief set_aperture  设置孔径
+     * @param val           孔径
+     * @return              设置成功返回true，失败返回false
+     */
+    bool set_aperture(uint val);
+
+    /**
+     * @brief set_first_element 设置起始阵元
+     * @param pos               阵元号,从0算起
+     * @return                  成功返回true，失败返回false
+     */
+    bool set_first_element(uint pos);
 
     /**
      * @brief last_element  获取结束阵元号
@@ -64,6 +78,12 @@ public:
      * @return          成功返回true，否则false
      */
     bool set_angle(float angle);
+
+    /**
+     * @brief set_element_qty   设置阵元总数
+     * @param qty               数量
+     */
+    virtual void set_element_qty(uint qty);
 
 private:
     LinearScanCnfPrivate *d_ptr;

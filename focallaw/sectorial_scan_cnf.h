@@ -17,7 +17,7 @@ class FOCALLAWSHARED_EXPORT SectorialScanCnf : public ScanCnf
     Q_DECLARE_PRIVATE(SectorialScanCnf)
     Q_OBJECT
 public:
-    explicit SectorialScanCnf(QObject *parent=0);
+    explicit SectorialScanCnf(uint elemQty, QObject *parent=0);
     ~SectorialScanCnf();
 
     /**

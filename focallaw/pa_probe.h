@@ -8,6 +8,8 @@
 #define __PA_PROBE_H__
 
 #include "probe.h"
+#include "linear_scan_cnf.h"
+#include "sectorial_scan_cnf.h"
 
 namespace DplFocallaw {
 
@@ -15,14 +17,12 @@ class PaProbePrivate;
 class PaProbe : public Probe
 {
     Q_DECLARE_PRIVATE(PaProbe)
+    Q_OBJECT
 public:
-    explicit PaProbe();
-    explicit PaProbe(const PaProbe &p);
+    explicit PaProbe(QObject *parent = 0);
     ~PaProbe();
 
     bool is_pa() const { return true; }
-
-    PaProbe &operator=(const PaProbe &p);
 
     /**
      * @brief load  加载探头文件
@@ -112,6 +112,18 @@ public:
      * @param pitch                 pitch值
      */
     void set_secondary_pitch(float pitch);
+
+    /**
+     * @brief scan_configure    获取扫查配置对象
+     * @return                  扫查配置对象指针
+     */
+    const ScanCnfPointer &scan_configure() const;
+
+    /**
+     * @brief set_scan_configure    设置扫查配置对象
+     * @param cnf                   扫查配置对象指针
+     */
+    void set_scan_configure(const ScanCnfPointer &cnf);
 
 private:
     PaProbePrivate *d_ptr;

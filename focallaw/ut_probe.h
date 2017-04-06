@@ -16,14 +16,10 @@ class FOCALLAWSHARED_EXPORT UtProbe : public Probe
 {
     Q_DECLARE_PRIVATE(UtProbe)
 public:
-    explicit UtProbe();
-    explicit UtProbe(const UtProbe &p);
-
+    explicit UtProbe(QObject *parent = 0);
     ~UtProbe();
 
     bool is_pa() const { return false; }
-
-    UtProbe &operator=(const UtProbe &p);
 
     /**
      * @brief load  加载探头文件

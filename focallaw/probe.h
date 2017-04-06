@@ -13,18 +13,15 @@
 namespace DplFocallaw {
 
 class ProbePrivate;
-class FOCALLAWSHARED_EXPORT Probe
+class FOCALLAWSHARED_EXPORT Probe : public QObject
 {
     Q_DECLARE_PRIVATE(Probe)
+    Q_OBJECT
 public:   
-    explicit Probe();
-    explicit Probe(const Probe &p);
-
+    explicit Probe(QObject *parent = 0);
     ~Probe();
 
     virtual bool is_pa() const = 0;
-
-    Probe &operator=(const Probe &p);
 
     /**
      * @brief load  加载探头文件

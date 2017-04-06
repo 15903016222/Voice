@@ -9,10 +9,11 @@
 #define __FOCALLAWER_H__
 
 #include "point.h"
-#include "wedge.h"
 
-#include "linear_scan_cnf.h"
-#include "sectorial_scan_cnf.h"
+#include "pa_probe.h"
+#include "ut_probe.h"
+
+#include "wedge.h"
 
 #include "true_depth_focus.h"
 #include "half_path_focus.h"
@@ -21,8 +22,6 @@
 #include "cylinder.h"
 
 #include "beam.h"
-
-#include <QSharedPointer>
 
 namespace DplFocallaw {
 
@@ -34,6 +33,10 @@ class FOCALLAWSHARED_EXPORT Focallawer : public QObject
 public:
     explicit Focallawer(QObject *parent = 0);
     ~Focallawer();
+
+    const ProbePointer &probe() const;
+
+    void set_probe(const ProbePointer &probe);
 
     /**
      * @brief wedge 获取锲块
@@ -61,18 +64,6 @@ public:
     void set_specimen(const SpecimenPointer &s);
 
     /**
-     * @brief scan_configure    获取扫查配置对象
-     * @return                  扫查配置对象指针
-     */
-    const ScanCnfPointer &scan_configure() const;
-
-    /**
-     * @brief set_scan_configure    设置扫查配置对象
-     * @param cnf                   扫查配置对象指针
-     */
-    void set_scan_configure(const ScanCnfPointer &cnf);
-
-    /**
      * @brief focus_configure   获取焦点配置对象
      * @return                  焦点配置对象
      */
@@ -96,12 +87,11 @@ public:
      */
     uint beam_qty() const;
 
-    void update();
-
 signals:
     void beam_qty_changed(int);
 
 public slots:
+    void update();
 
 private:
     FocallawerPrivate *d_ptr;
