@@ -244,7 +244,7 @@ bool Group::set_point_qty_mode(Group::PointQtyMode mode)
 double Group::max_sample_time()
 {
     DplFpga::Fpga *fpga = DplFpga::Fpga::get_instance();
-    int beamQty = Device::get_instance()->total_beam_qty();
+    int beamQty = Device::instance()->total_beam_qty();
     // prf为1即(1s)时，rx_time时间为最大
     // 1_000_000_000 / 4    idle_time + rx_time >= 4 * rx_time
     // one beam cycle = loading time +  beam delay + wedge delay + sample start + sample range + 50 /* 单位 ns */

@@ -70,7 +70,7 @@ QByteArray DevicePrivate::get_version()
 }
 
 /* Device */
-Device *Device::get_instance()
+Device *Device::instance()
 {
     static Device *s_device = new Device();
     return s_device;

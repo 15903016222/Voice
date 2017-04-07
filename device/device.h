@@ -35,10 +35,10 @@ public:
     };
 
     /**
-     * @brief get_device    获取Device类型的对象
-     * @return              返回Device类型的对象
+     * @brief instance  获取Device的单例对象
+     * @return          返回Device的单例对象
      */
-    static Device *get_instance();
+    static Device *instance();
 
     /**
      * @brief version  获取设备版本号
