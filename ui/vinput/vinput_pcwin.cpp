@@ -9,7 +9,7 @@ public:
 QMutex VInput::m_mutex;
 VInput *VInput::s_vinput = NULL;
 
-VInput *VInput::get_vinput()
+VInput *VInput::instance()
 {
     QMutexLocker l(&m_mutex);
     if (s_vinput == NULL) {
@@ -26,11 +26,11 @@ void VInput::send(VInput::Key key, bool press, bool sync)
 }
 
 VInput::VInput()
-    : d(new VInputPrivate())
+    : d_ptr(new VInputPrivate())
 {
 }
 
 VInput::~VInput()
 {
-    delete d;
+    delete d_ptr;
 }

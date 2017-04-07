@@ -91,21 +91,15 @@ void VInputPrivate::inject_event(quint16 type, quint16 code, qint32 value)
     ::write(fd, &e, sizeof(e));
 }
 
-QMutex VInput::m_mutex;
-VInput *VInput::s_vinput = NULL;
-
-VInput *VInput::get_vinput()
+VInput *VInput::instance()
 {
-    QMutexLocker l(&m_mutex);
-    if (s_vinput == NULL) {
-        s_vinput = new VInput();
-    }
-    return s_vinput;
+    static VInput *vinput = new VInput();
+    return vinput;
 }
 
 void VInput::send(VInput::Key key, bool press, bool sync)
 {
-    QMutexLocker l(&m_mutex);
+    Q_D(VInput);
     if (d->fd < 0) {
         return;
     }
@@ -116,11 +110,11 @@ void VInput::send(VInput::Key key, bool press, bool sync)
 }
 
 VInput::VInput()
-    : d(new VInputPrivate())
+    : d_ptr(new VInputPrivate())
 {
 }
 
 VInput::~VInput()
 {
-    delete d;
+    delete d_ptr;
 }

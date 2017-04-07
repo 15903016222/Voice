@@ -12,10 +12,10 @@
 #include <QObject>
 #include <QMutex>
 
-
 class VInputPrivate;
 class VInput
 {
+    Q_DECLARE_PRIVATE(VInput)
 public:
     enum Key {
         Key_Esc         = 1,
@@ -40,7 +40,7 @@ public:
         Key_Delete      = 111,
     };
 
-    static VInput *get_vinput();
+    static VInput *instance();
     void send(Key key, bool press, bool sync = true);
     void send_press(Key key) { send(key, true); }
     void send_release(Key key) { send(key, false); }
@@ -51,9 +51,8 @@ protected:
     ~VInput();
 
 private:
-    static VInput *s_vinput;
-    static QMutex m_mutex;
-    VInputPrivate *d;
+    VInputPrivate *d_ptr;
+    Q_DISABLE_COPY(VInput)
 };
 
 #endif // __VINPUT_H__
