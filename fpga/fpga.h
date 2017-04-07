@@ -103,7 +103,7 @@ class FPGASHARED_EXPORT Fpga
     friend class AlarmAnalog;
 
 public:
-    static Fpga* get_instance(void);
+    static Fpga* instance(void);
 
     bool reset();
 
@@ -111,20 +111,42 @@ public:
      * @brief sample_precision  采样精度
      * @return                  返回采样精度, 单位(ns)
      */
-    float sample_precision();
+    float sample_precision() const;
 
     /**
      * @brief loading_time  获取FPGA每条Beam设置寄存器的时间
      * @return              时间, 单位(采样精度)
      */
-    int loading_time();
+    int loading_time() const;
 
 
-    /* Global */
-    int pa_law_qty();                     /* PA聚焦法则数 */
+    /****** Global ******/
+    /**
+     * @brief pa_law_qty    PA聚焦法则数
+     * @return              数量
+     */
+    int pa_law_qty() const;
+
+    /**
+     * @brief set_pa_law_qty    设置PA聚焦法则数
+     * @param qty               数量
+     * @param reflesh           是否下发参数
+     * @return                  成功返回true，否则false
+     */
     bool set_pa_law_qty(int qty, bool reflesh = false);
 
-    int ut_law_qty();                     /* UT(虚拟)聚焦法则数 */
+    /**
+     * @brief ut_law_qty    获取UT(虚拟)聚焦法则数
+     * @return              数量
+     */
+    int ut_law_qty() const;
+
+    /**
+     * @brief set_ut_law_qty    设置UT(虚拟)聚焦法则数
+     * @param qty               数量
+     * @param reflesh           标志是否下发参数
+     * @return                  成功返回true，否则false
+     */
     bool set_ut_law_qty(int qty, bool reflesh = false);
 
     /* 编码器 */
@@ -139,19 +161,19 @@ public:
         QUAD    = 0b011,
         PAUSE   = 0b100
     };
-    EncoderPolarity encoder_x_polarity(); /* 编码器X极性 */
-    EncoderPolarity encoder_y_polarity(); /* 编码器Y极性 */
+    EncoderPolarity encoder_x_polarity() const; /* 编码器X极性 */
+    EncoderPolarity encoder_y_polarity() const; /* 编码器Y极性 */
     bool set_encoder_x_polarity(Fpga::EncoderPolarity polarity, bool reflesh = false);
     bool set_encoder_y_polarity(Fpga::EncoderPolarity polarity, bool reflesh = false);
-    EncoderMode encoder_x_mode();         /* 编码器X模式 */
-    EncoderMode encoder_y_mode();         /* 编码器Y模式 */
+    EncoderMode encoder_x_mode() const;         /* 编码器X模式 */
+    EncoderMode encoder_y_mode() const;         /* 编码器Y模式 */
     bool set_encoder_x_mode(EncoderMode type, bool reflesh = false);
     bool set_encoder_y_mode(EncoderMode type, bool reflesh = false);
 
     /* UT双晶状态 */
-    bool ut1_twin();
+    bool ut1_twin() const;
     bool set_ut1_twin(bool enable, bool reflesh = false);
-    bool ut2_twin();
+    bool ut2_twin() const;
     bool set_ut2_twin(bool enable, bool reflesh = false);
 
     /* UT发射接收阻尼 */
@@ -161,13 +183,13 @@ public:
         R200 = 0b10,
         R500 = 0b11
     };
-    DampingType ut1_tx_damping();
+    DampingType ut1_tx_damping() const;
     bool set_ut1_tx_damping(DampingType type, bool reflesh = false);
-    DampingType ut2_tx_damping();
+    DampingType ut2_tx_damping() const;
     bool set_ut2_tx_damping(DampingType type, bool reflesh = false);
-    DampingType ut1_rx_damping();
+    DampingType ut1_rx_damping() const;
     bool set_ut1_rx_damping(DampingType type, bool reflesh = false);
-    DampingType ut2_rx_damping();
+    DampingType ut2_rx_damping() const;
     bool set_ut2_rx_damping(DampingType type, bool reflesh = false);
 
     /* PA/UT发射电压 */
@@ -176,20 +198,20 @@ public:
         VOLTAGE_MIDDLE  = 0b01,
         VOLTAGE_HIGHT   = 0b10
     };
-    VoltageType ut_voltage();
+    VoltageType ut_voltage() const;
     bool set_ut_voltage(VoltageType type, bool reflesh = false);
-    VoltageType pa_voltage();
+    VoltageType pa_voltage() const;
     bool set_pa_voltage(VoltageType type, bool reflesh = false);
 
     /* 控制省电 */
     enum PowerMode {
         NONE_POWER_MODE
     };
-    PowerMode power();
+    PowerMode power() const;
     bool set_power(Fpga::PowerMode mode, bool reflesh = false);
 
     /* 接收通道使能组 */
-    quint32 rx_channels();
+    quint32 rx_channels() const;
     bool set_rx_channels(quint32 channels, bool reflesh = false);
 
     /* 冻结 */
@@ -204,14 +226,14 @@ public:
         SOUND_1000HZ= 0b011,
         SOUND_5000HZ= 0b100,
     };
-    SoundMode sound();
+    SoundMode sound() const;
     bool set_sound(SoundMode mode, bool reflesh = false);
 
     AlarmOutput *alarm_output(int index);
     AlarmAnalog *alarm_analog(int index);
 
     /* 回波数 */
-    int factor_echo();
+    int factor_echo() const;
     bool set_factor_echo(int val, bool reflesh = false);
 
     static const int MAX_GROUPS_NUM;
@@ -219,25 +241,22 @@ public:
     static const int MAX_TCGS_NUM;
 
     /** Beam **/
-    int beams();
+    int beams() const;
     bool create_beam();
     bool remove_beam();
-    BeamPointer &get_beam(int index);
+    const BeamPointer &get_beam(int index) const;
 
     /** Tcg **/
-    int tcgs();
+    int tcgs() const;
     bool create_tcg();
     bool remove_tcg();
-    TcgPointer &get_tcg(int index);
+    const TcgPointer &get_tcg(int index) const;
 
 protected:
     Fpga();
     ~Fpga();
 
 private:
-    static QMutex s_mutex;
-    static Fpga *s_fpga;
-
     GlobalData *m_global;
 
     AlarmOutput m_alarmOutput0;
@@ -246,17 +265,13 @@ private:
     AlarmAnalog m_alarmAnalog0;
     AlarmAnalog m_alarmAnalog1;
 
-    QReadWriteLock m_lock;
-
-    QList<GroupPointer> m_groups;
-    GroupPointer m_curGroup;
-    QReadWriteLock m_groupsLock;
+    mutable QReadWriteLock m_lock;
 
     QList<BeamPointer> m_beams;
-    QReadWriteLock m_beamsLock;
+    mutable QReadWriteLock m_beamsLock;
 
     QList<TcgPointer> m_tcgs;
-    QReadWriteLock m_tcgsLock;
+    mutable QReadWriteLock m_tcgsLock;
 };
 
 }

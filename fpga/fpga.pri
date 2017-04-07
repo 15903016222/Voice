@@ -1,8 +1,9 @@
 
-LIBFPGA = Fpga_$$DEVICE
+LIBFPGA = fpga-$$DEVICE
 CONFIG(debug, debug|release) {
-    LIBFPGA = $$join(LIBFPGA,,,_debug)
+    LIBFPGA = $$join(LIBFPGA,,,"-debug")
 }
+
 LIBS += -L$$PWD/lib -l$$LIBFPGA
 
 HEADERS += \
