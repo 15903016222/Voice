@@ -28,7 +28,7 @@ public:
      */
     int max_beam_delay();
 
-    /* variables */
+    /* Attribution */
     Group::Mode m_mode;         /* 组模式 */
     float m_precision;          /* 采样精度， 单位(ns) */
     double m_start;             /* 声程轴起始点,单位(ns) */
@@ -68,24 +68,23 @@ int GroupPrivate::max_beam_delay()
 Group::Group(int index, QObject *parent) :
     DplFpga::Group(index, parent),
     d(new GroupPrivate()),
-    m_wedgePtr(new DplProbe::Wedge()),
     m_beamGroupPtr(new DplSource::BeamGroup),
-    m_focallawPtr(new DplFocallaw::Focallaw)
+    m_focallawerPtr(new DplFocallaw::Focallawer)
 {
-    connect(static_cast<DplProbe::Wedge *>(m_wedgePtr.data()),
+    m_beamGroupPtr->set_beam_qty(m_focallawerPtr->beam_qty());
+
+    connect(static_cast<DplFocallaw::Wedge *>(m_focallawerPtr->wedge().data()),
             SIGNAL(delay_changed(int)),
-            this,
-            SLOT(update_sample()));
+            this, SLOT(update_sample()));
 
-    m_beamGroupPtr->set_beam_qty(m_focallawPtr->beam_qty());
-    connect(this, SIGNAL(point_qty_changed(int)),
-            static_cast<DplSource::BeamGroup *>(m_beamGroupPtr.data()),
-            SLOT(set_point_qty(int)));
-
-    connect(static_cast<DplFocallaw::Focallaw *>(m_focallawPtr.data()),
+    connect(static_cast<DplFocallaw::Focallawer *>(m_focallawerPtr.data()),
             SIGNAL(beam_qty_changed(int)),
             static_cast<DplSource::BeamGroup *>(m_beamGroupPtr.data()),
             SLOT(set_beam_qty(int)));
+
+    connect(this, SIGNAL(point_qty_changed(int)),
+            static_cast<DplSource::BeamGroup *>(m_beamGroupPtr.data()),
+            SLOT(set_point_qty(int)));
 }
 
 Group::~Group()
@@ -253,7 +252,7 @@ double Group::max_sample_time()
     double max = beamCycle
             - fpga->loading_time() * d->m_precision
             - d->max_beam_delay()
-            - m_wedgePtr->delay()
+            - m_focallawerPtr->wedge()->delay()
             - 50;
     if(max > 1000*1000) {
         max = 1000*1000;
@@ -263,9 +262,9 @@ double Group::max_sample_time()
 
 void Group::update_sample()
 {
-    set_sample_start((m_wedgePtr->delay() + d->m_start)/d->m_precision, true);
-    set_sample_range((m_wedgePtr->delay() + d->m_start + d->m_range)/d->m_precision, true);
-    set_rx_time((d->max_beam_delay() + m_wedgePtr->delay() + d->m_start + d->m_range + 50)/d->m_precision, true);
+    set_sample_start((m_focallawerPtr->wedge()->delay() + d->m_start)/d->m_precision, true);
+    set_sample_range((m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range)/d->m_precision, true);
+    set_rx_time((d->max_beam_delay() + m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range + 50)/d->m_precision, true);
 }
 
 }

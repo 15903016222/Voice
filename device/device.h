@@ -24,6 +24,7 @@ class DevicePrivate;
 
 class Device : public QObject
 {
+    Q_DECLARE_PRIVATE(Device)
     Q_OBJECT
 public:
     enum Type {
@@ -59,6 +60,11 @@ public:
      * @return              成功返回true，否则返回false
      */
     bool import_cert(const QString &certFile);
+
+    /**
+     * @brief get_cert  获取证书
+     * @return          证书对象
+     */
     const Cert &get_cert() const;
 
     /**
@@ -72,13 +78,13 @@ public:
      * @brief serial_number 获取设备序列号
      * @return              返回设备序列号
      */
-    virtual const QString &serial_number() const = 0;
+    const QString &serial_number() const;
 
     /**
      * @brief is_valid  判断设备是否有效
      * @return          true为有效，false为无效
      */
-    virtual bool is_valid() const = 0;
+    bool is_valid() const;
 
     /* Group */
     /**
@@ -105,7 +111,7 @@ public:
      * @param index     指定组号
      * @return          成功返回指定组，失败返回空组
      */
-    GroupPointer &get_group(int index);
+    const GroupPointer &get_group(int index) const;
 
     /**
      * @brief set_current_group 指定当前组
@@ -118,13 +124,13 @@ public:
      * @brief current_group 获取当前组
      * @return              返回当前组
      */
-    GroupPointer &current_group();
+    const GroupPointer &current_group() const;
 
     /**
      * @brief beam_qty  获取beam的总数
      * @return          返回beam的总数
      */
-    int total_beam_qty();
+    int total_beam_qty() const;
 
 signals:
     void current_group_changed();
@@ -134,9 +140,7 @@ protected:
     ~Device();
 
 private:
-    static Device *s_device;
-    static QMutex s_mutex;
-    DevicePrivate *d;
+    DevicePrivate *d_ptr;
 };
 
 }

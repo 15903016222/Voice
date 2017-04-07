@@ -13,23 +13,23 @@
 #-------------------------------------------------------------
 
 win32 {
-DEVICE = win
+    DEVICE = pcwin
+}
+unix {
+    DEVICE = pcunix
+    LIBS += -lX11 -lXtst
+
+    linux-arm-g++ {
+    DEVICE = phascan
+    }
+
+    linux-oe-g++ {
+    DEVICE = phascan_ii
+    }
 }
 
-linux-oe-g++ {
-DEVICE = phascan_ii
-LIBS += -lX11 -lXtst
-}
-
-linux-arm-g++ {
-DEVICE = phascan
-LIBS += -lX11 -lXtst
-}
-
-linux-g++ {
-DEVICE = unix
-LIBS += -lX11 -lXtst
-}
+CONFIG += $$DEVICE
+DEFINES += $$upper($$DEVICE)
 
 target.path = /home/root
 INSTALLS += target
@@ -42,7 +42,6 @@ equals(QT_MAJOR_VERSION, 4) {
     QMAKE_CXXFLAGS += -Wno-psabi
 }
 
-DEFINES += $$upper($$DEVICE)
 
 TRANSLATIONS += \
     ui/translator/phascanII_UI_Chinese.ts \
