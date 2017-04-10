@@ -34,8 +34,16 @@ public:
     explicit Focallawer(QObject *parent = 0);
     ~Focallawer();
 
+    /**
+     * @brief probe 获取探头
+     * @return      探头对象
+     */
     const ProbePointer &probe() const;
 
+    /**
+     * @brief set_probe 设置探头
+     * @param probe     探头对象
+     */
     void set_probe(const ProbePointer &probe);
 
     /**
