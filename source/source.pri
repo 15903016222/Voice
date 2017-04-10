@@ -6,9 +6,3 @@ CONFIG(debug, debug|release) {
 }
 
 LIBS += -L$$PWD/lib -l$$LIBSOURCE
-
-HEADERS += \
-    $$PWD/beam_group.h \
-    $$PWD/beam.h \
-    $$PWD/source.h \
-    $$PWD/source_global.h
