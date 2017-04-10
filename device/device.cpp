@@ -41,9 +41,6 @@ DevicePrivate::DevicePrivate()
     m_version = get_version();
     m_time = get_time();
     m_cert.load(CERT_FILE, PUB_PEM_FILE);
-
-    m_fpga = DplFpga::Fpga::get_instance();
-    m_source = DplSource::Source::get_instance();
 }
 
 time_t DevicePrivate::get_time()

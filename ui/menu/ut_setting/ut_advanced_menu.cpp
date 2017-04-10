@@ -14,8 +14,8 @@ namespace DplUtSettingMenu {
 UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
-    DplDevice::Device *device = DplDevice::Device::get_instance();
-    m_group = DplDevice::Device::get_instance()->current_group();
+    DplDevice::Device *device = DplDevice::Device::instance();
+    m_group = DplDevice::Device::instance()->current_group();
     connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
 
     QStringList pointQtyList;
@@ -102,7 +102,7 @@ void UtAdvancedMenu::do_current_group_changed()
             this,
             SLOT(do_compress_ratio_changed(int)));
 
-    m_group = DplDevice::Device::get_instance()->current_group();
+    m_group = DplDevice::Device::instance()->current_group();
 
     if (m_group.isNull()) {
         return;

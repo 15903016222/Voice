@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     /* Device */
-    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->get_group(0);
+    DplDevice::GroupPointer group = DplDevice::Device::instance()->get_group(0);
 
     /* gain menu item */
     ui->gainMenuItem->set(tr("Gain"), "dB", 0, 90, 1);
@@ -75,10 +75,10 @@ void MainWindow::do_key_event(Mcu::KeyType type)
         show_hidden_Menu();
         break;
     case Mcu::KEY_SURE:
-        VInput::get_vinput()->send(VInput::Key_Enter);
+        VInput::instance()->send(VInput::Key_Enter);
         break;
     case Mcu::KEY_BACK:
-        VInput::get_vinput()->send(VInput::Key_Esc);
+        VInput::instance()->send(VInput::Key_Esc);
         break;
     default:
         break;
@@ -183,9 +183,9 @@ void MainWindow::slot_setMenuOpacity(double value)
 void MainWindow::do_rotary_event(Mcu::RotaryType type)
 {
     if (Mcu::ROTARY_UP == type) {
-        VInput::get_vinput()->send(VInput::Key_Up);
+        VInput::instance()->send(VInput::Key_Up);
     } else {
-        VInput::get_vinput()->send(VInput::Key_Down);
+        VInput::instance()->send(VInput::Key_Down);
     }
 }
 

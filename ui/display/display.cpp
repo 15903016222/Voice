@@ -52,7 +52,7 @@ void Display::set_layout(ScanLayout *scanlayout)
     m_scanLayout->setParent(this);
     layout()->addWidget(m_scanLayout);
 
-    DplDevice::Device *dev = DplDevice::Device::get_instance();
+    DplDevice::Device *dev = DplDevice::Device::instance();
 
     QLayout *l = NULL;
     DplDevice::GroupPointer groupPtr;

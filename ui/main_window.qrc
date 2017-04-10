@@ -10,8 +10,6 @@
         <file>resources/clock.png</file>
         <file>resources/tip.jpg</file>
         <file>resources/logo.png</file>
-        <file>json/menuconf.json</file>
-        <file>json/menutr_CHN.json</file>
         <file>resources/gear.png</file>
         <file>resources/battery/b3.png</file>
         <file>resources/battery/b_error.png</file>

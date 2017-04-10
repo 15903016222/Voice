@@ -45,7 +45,7 @@ public:
 
 GroupPrivate::GroupPrivate()
 {
-    m_precision = DplFpga::Fpga::get_instance()->sample_precision();
+    m_precision = DplFpga::Fpga::instance()->sample_precision();
 
     m_mode = Group::PA;
 
@@ -243,7 +243,7 @@ bool Group::set_point_qty_mode(Group::PointQtyMode mode)
 
 double Group::max_sample_time()
 {
-    DplFpga::Fpga *fpga = DplFpga::Fpga::get_instance();
+    DplFpga::Fpga *fpga = DplFpga::Fpga::instance();
     int beamQty = Device::instance()->total_beam_qty();
     // prf为1即(1s)时，rx_time时间为最大
     // 1_000_000_000 / 4    idle_time + rx_time >= 4 * rx_time

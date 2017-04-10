@@ -8,8 +8,6 @@
 #ifndef __DEVICE_GROUP_H__
 #define __DEVICE_GROUP_H__
 
-#include <QObject>
-
 #include <fpga/group.h>
 #include <source/beam_group.h>
 #include <focallaw/focallawer.h>

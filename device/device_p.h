@@ -18,9 +18,6 @@ class DevicePrivate
 public:
     DevicePrivate();
 
-    DplFpga::Fpga *m_fpga;
-    DplSource::Source *m_source;
-
     mutable QReadWriteLock m_rwlock;
 
     QString m_serialNo;         // 序列号

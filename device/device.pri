@@ -12,12 +12,10 @@ SOURCES += \
 
 pcwin {
     SOURCES += $$PWD/device_pcwin.cpp
-    HEADERS +=
 }
 
 pcunix {
     SOURCES += $$PWD/device_pcunix.cpp
-    HEADERS +=
 }
 
 phascan {
