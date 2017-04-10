@@ -14,12 +14,12 @@ equals(QT_MAJOR_VERSION, 4) {
     CONFIG  += serialport
 }
 
-equals(DEVICE, "PC_UNIX") {
+pcunix {
     HEADERS += \
         $$PWD/mcu_pc.h
 }
 
-equals(DEVICE, "PHASCAN") {
+phascan {
     HEADERS += \
         $$PWD/mcu_omap.h
 
@@ -27,7 +27,7 @@ equals(DEVICE, "PHASCAN") {
         $$PWD/mcu_omap.cpp
 }
 
-equals(DEVICE, "PHASCAN_II") {
+phascan_ii {
     HEADERS += \
         $$PWD/mcu_imx.h
 
