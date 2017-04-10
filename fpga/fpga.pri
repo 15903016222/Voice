@@ -6,9 +6,3 @@ CONFIG(debug, debug|release) {
 
 LIBS += -L$$PWD/lib -l$$LIBFPGA
 
-HEADERS += \
-    $$PWD/beam.h \
-    $$PWD/fpga_global.h \
-    $$PWD/fpga.h \
-    $$PWD/group.h \
-    $$PWD/tcg.h
