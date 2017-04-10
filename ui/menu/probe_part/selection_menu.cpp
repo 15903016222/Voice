@@ -15,7 +15,7 @@ namespace DplProbeMenu {
 SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
-    DplDevice::Device *dev = DplDevice::Device::get_instance();
+    DplDevice::Device *dev = DplDevice::Device::instance();
     connect(dev, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
     m_group = dev->current_group();
 
@@ -109,12 +109,12 @@ void SelectionMenu::do_probeItem_clicked()
         return;
     }
 
-    DplProbe::ProbePointer probePtr = probeDialog.get_probe();
-    m_group->set_probe(probePtr);
+    DplFocallaw::ProbePointer probePtr = probeDialog.get_probe();
     if (probePtr.isNull()) {
         m_probeItem->set_text("");
     } else {
         m_probeItem->set_text(probePtr->model());
+        m_group->focallawer()->set_probe(probePtr);
     }
 }
 
@@ -125,7 +125,7 @@ void SelectionMenu::do_wedgeItem_clicked()
         return;
     }
 
-    DplProbe::WedgePointer wedgePointer = m_group->get_wedge();
+    DplFocallaw::WedgePointer wedgePointer = m_group->focallawer()->wedge();
 
     if (wedgePointer->load(wedgeDialog.get_path())) {
         m_wedgeItem->set_text(wedgePointer->model());
@@ -139,7 +139,7 @@ void SelectionMenu::do_groupModeItem_changed(int index)
 
 void SelectionMenu::do_current_group_changed()
 {
-    m_group = DplDevice::Device::get_instance()->current_group();
+    m_group = DplDevice::Device::instance()->current_group();
     if (m_probeItem->isHidden()) {
         m_updateFlag = true;
     } else {

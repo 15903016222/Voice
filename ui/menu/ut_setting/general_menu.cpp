@@ -19,7 +19,7 @@ namespace DplUtSettingMenu {
 GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
-    DplDevice::Device *device = DplDevice::Device::get_instance();
+    DplDevice::Device *device = DplDevice::Device::instance();
     connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
     m_group = device->current_group();
 
@@ -106,7 +106,7 @@ void GeneralMenu::update()
 
     m_velocityItem->set_value(m_group->velocity());
 
-    double delay = m_group->get_wedge()->delay();
+    double delay = m_group->focallawer()->wedge()->delay();
     m_wedgeDelayItem->set_value(Dpl::ns_to_us(delay));
 
     m_utUnitItem->set_current_index(m_group->ut_unit());
@@ -161,8 +161,7 @@ void GeneralMenu::do_velocityItem_changed(double value)
 
 void GeneralMenu::do_wedgeDelayItem_changed(double value)
 {
-    DplProbe::WedgePointer wedge = m_group->get_wedge();
-    wedge->set_delay(Dpl::us_to_ns(value));
+    m_group->focallawer()->wedge()->set_delay(Dpl::us_to_ns(value));
 }
 
 void GeneralMenu::do_utUnitItem_changed(int index)
@@ -174,7 +173,7 @@ void GeneralMenu::do_utUnitItem_changed(int index)
 
 void GeneralMenu::do_current_group_changed()
 {
-    m_group = DplDevice::Device::get_instance()->current_group();
+    m_group = DplDevice::Device::instance()->current_group();
     if (m_gainItem->isHidden()) {
         m_updateFlag = true;
     } else {
@@ -193,7 +192,7 @@ void GeneralMenu::update_start_item()
     double max = 0.0;
     double value = 0.0;
     double step = 0.0;
-    float precision = DplFpga::Fpga::get_instance()->sample_precision();
+    float precision = DplFpga::Fpga::instance()->sample_precision();
     QString unit = "mm";
 
     if (m_group->ut_unit() == DplDevice::Group::Time) {
@@ -225,7 +224,7 @@ void GeneralMenu::update_range_item()
     double max = 0.0;
     double value = 0.0;
     double step = 0.0;
-    float precision = DplFpga::Fpga::get_instance()->sample_precision();
+    float precision = DplFpga::Fpga::instance()->sample_precision();
     QString unit = "mm";
 
     max = m_group->point_qty() * 2;

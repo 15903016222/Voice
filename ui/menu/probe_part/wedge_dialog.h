@@ -1,7 +1,7 @@
 #ifndef __WEDGE_DIALOG_H__
 #define __WEDGE_DIALOG_H__
 
-#include <probe/wedge.h>
+#include <focallaw/wedge.h>
 
 #include <QDialog>
 #include <QListWidgetItem>
@@ -27,7 +27,7 @@ protected:
 
 private:
     Ui::WedgeDialog *ui;
-    DplProbe::WedgePointer m_wedgePtr;
+    DplFocallaw::WedgePointer m_wedgePtr;
     QString m_path;
 
     QString get_dir();

@@ -11,7 +11,7 @@
 WedgeDialog::WedgeDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WedgeDialog),
-    m_wedgePtr(new DplProbe::Wedge())
+    m_wedgePtr(new DplFocallaw::Wedge())
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -52,7 +52,7 @@ bool WedgeDialog::eventFilter(QObject *obj, QEvent *e)
 QString WedgeDialog::get_dir()
 {
     QString path = "/opt/mercury/wedge/";
-    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    DplDevice::GroupPointer group = DplDevice::Device::instance()->current_group();
 
     if (group->mode() == DplDevice::Group::PA
             || group->mode() == DplDevice::Group::UT) {
@@ -81,7 +81,7 @@ void WedgeDialog::init_define_tab()
     ui->defineListWidget->clear();
     ui->defineListWidget->insertItems(0, filesStringList);
 
-    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    DplDevice::GroupPointer group = DplDevice::Device::instance()->current_group();
     if (group->mode() == DplDevice::Group::UT1
             || group->mode() == DplDevice::Group::UT2) {
         ui->orientationComboBox->hide();
@@ -147,7 +147,7 @@ void WedgeDialog::show_pa() const
 
     msg += "<tr><th>";
     msg += tr("Orientation") + "</th><td>";
-    if (m_wedgePtr->orientation() == DplProbe::Wedge::Normal) {
+    if (m_wedgePtr->orientation() == DplFocallaw::Wedge::Normal) {
         msg += tr("Normal");
     } else {
         msg += tr("Reversal");
@@ -156,7 +156,7 @@ void WedgeDialog::show_pa() const
 
     msg += "<tr><th>";
     msg += tr("Velocity") + "</th><td>"
-            + QString::number(m_wedgePtr->velocity())
+            + QString::number(m_wedgePtr->velocity(DplFocallaw::Wedge::Longitudinal))
             + " m/s</td></tr>";
 
     msg += "<tr><th>";
@@ -221,17 +221,6 @@ void WedgeDialog::show_ut() const
             + m_wedgePtr->model() + "</td></tr>";
 
     msg += "<tr><th>";
-    msg += tr("Wave Type") + "</th><td>";
-    if (m_wedgePtr->wave_type() == DplProbe::Wedge::Longitudinal) {
-        msg += tr("Longitudinal");
-    } else if (m_wedgePtr->wave_type() == DplProbe::Wedge::Transverse) {
-        msg += tr("Transverse");
-    } else {
-        msg += tr("Unkown");
-    }
-    msg += "</td></tr>";
-
-    msg += "<tr><th>";
     msg += tr("Angle") + "</th><td>"
             + QString::number(m_wedgePtr->angle(), 'f', 1)
             + " &#176;</td></tr>";
@@ -240,11 +229,6 @@ void WedgeDialog::show_ut() const
     msg += tr("Delay") + "</th><td>"
             + QString::number(m_wedgePtr->delay()/1000.0, 'f', 3)
             + " ms</td></tr>";
-
-    msg += "<tr><th>";
-    msg += tr("Ref Point") + "</th><td>"
-            + QString::number(m_wedgePtr->ref_point(), 'f', 2)
-            + " mm</td></tr>";
 
     msg += "</table>"
            "</body>"
@@ -276,7 +260,7 @@ void WedgeDialog::on_fileListWidget_currentTextChanged(const QString &currentTex
         return;
     }
 
-    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    DplDevice::GroupPointer group = DplDevice::Device::instance()->current_group();
     if (group->mode() == DplDevice::Group::UT1
             || group->mode() == DplDevice::Group::UT2) {
         show_ut();
@@ -307,7 +291,7 @@ void WedgeDialog::on_savePushButton_clicked()
         return;
     }
 
-    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    DplDevice::GroupPointer group = DplDevice::Device::instance()->current_group();
     QString path = get_dir();
 
     path += "user/";
@@ -321,12 +305,12 @@ void WedgeDialog::on_savePushButton_clicked()
             || group->mode() == DplDevice::Group::UT2) {
         path += ".ouw";
         m_wedgePtr->set_delay(ui->delaySpinBox->value());
-        m_wedgePtr->set_wave_type(static_cast<DplProbe::Wedge::WaveType>(ui->waveTypeComboBox->currentIndex()));
-        m_wedgePtr->set_ref_point(ui->refPointDoubleSpinBox->value());
+//        m_wedgePtr->set_wave_type(static_cast<DplFocallaw::Wedge::WaveType>(ui->waveTypeComboBox->currentIndex()));
+//        m_wedgePtr->set_ref_point(ui->refPointDoubleSpinBox->value());
     } else {
         path += ".opw";
-        m_wedgePtr->set_orientation(static_cast<DplProbe::Wedge::Orientation>(ui->orientationComboBox->currentIndex()));
-        m_wedgePtr->set_velocity(ui->velocityDoubleSpinBox->value());
+        m_wedgePtr->set_orientation(static_cast<DplFocallaw::Wedge::Orientation>(ui->orientationComboBox->currentIndex()));
+//        m_wedgePtr->set_velocity(ui->velocityDoubleSpinBox->value());
         m_wedgePtr->set_primary_offset(ui->primaryOffsetDoubleSpinBox->value());
         m_wedgePtr->set_secondary_offset(ui->sndOffsetDoubleSpinBox->value());
         m_wedgePtr->set_height(ui->heightDoubleSpinBox->value());
