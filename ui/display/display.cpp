@@ -14,7 +14,7 @@ Display::Display(QWidget *parent) :
     QWidget(parent),
     m_scanLayout(NULL)
 {
-    DplSource::Source *source = DplSource::Source::get_instance();
+    DplSource::Source *source = DplSource::Source::instance();
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     topLayout->setContentsMargins(0, 0, 0, 0);
