@@ -46,10 +46,14 @@ void AscanWidget::paintEvent(QPaintEvent *e)
         xaxis2 = m_beam.size()/1.0/width();
     }
 
+    QVector<QLineF> lines;
+    QLineF line;
     for (int i = 0; i < num-1; ++i) {
-        painter.drawLine(i*xaxis1,
+        line.setLine(i*xaxis1,
                          (int)((quint8)(m_beam.at((int)(i*xaxis2)))*yaxis) + 1,
                          (i+1)*xaxis1,
                          (int)((quint8)(m_beam.at((int)((i+1)*xaxis2)))*yaxis)+1);
+        lines.append(line);
     }
+    painter.drawLines(lines);
 }
