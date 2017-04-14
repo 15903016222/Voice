@@ -40,22 +40,16 @@ public:
     void set_delay(quint32 delay);
 
     quint32 gate_a_start(void) const;
-    void set_gate_a_start(quint32 val);
-
-    quint32 gate_a_end(void) const;
-    void set_gate_a_end(quint32 val);
+    quint32 gate_a_width(void) const;
+    void set_gate_a(quint32 start, quint32 width);
 
     quint32 gate_b_start(void) const;
-    void set_gate_b_start(quint32 val);
-
-    quint32 gate_b_end(void) const;
-    void set_gate_b_end(quint32 val);
+    quint32 gate_b_width(void) const;
+    void set_gate_b(quint32 start, quint32 width);
 
     quint32 gate_i_start(void) const;
-    void set_gate_i_start(quint32 val);
-
-    quint32 gate_i_end(void) const;
-    void set_gate_i_end(quint32 val);
+    quint32 gate_i_width(void) const;
+    void set_gate_i(quint32 start, quint32 width);
 
     quint32 tx_channel(void) const;
     void set_tx_channel(quint32 val);
@@ -69,10 +63,34 @@ public:
     quint8 tx_channel_select(void) const;
     bool set_tx_channel_select(quint8 n);
 
+    /**
+     * @brief tx_delay  获取指定通道的发送延迟
+     * @param channel   通道号
+     * @return          延迟时间(ns)
+     */
     quint32 tx_delay(quint32 channel) const;
+
+    /**
+     * @brief set_tx_delay  设置指定通道的发送延迟
+     * @param channel       通道号
+     * @param val           延迟时间(ns)
+     * @return              成功返回true，失败返回false
+     */
     bool set_tx_delay(quint32 channel, quint32 val);
 
+    /**
+     * @brief rx_delay  获取指定通道的接收延迟时间
+     * @param channel   通道号
+     * @return          延迟时间(ns)
+     */
     quint32 rx_delay(quint32 channel) const;
+
+    /**
+     * @brief set_rx_delay  设置指定通道的接收延迟时间
+     * @param channel       通道号
+     * @param val           延迟时间(ns)
+     * @return              成功返回true，否则为false
+     */
     bool set_rx_delay(quint32 channel, quint32 val);
 
     bool refresh(void);
