@@ -1,5 +1,12 @@
-#ifndef __SOURCE_H__
-#define __SOURCE_H__
+/**
+ * @file source.h
+ * @brief 数据源类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-04-18
+ */
+
+#ifndef __DPLSOURCE_SOURCE_H__
+#define __DPLSOURCE_SOURCE_H__
 
 #include "source_global.h"
 
@@ -81,7 +88,7 @@ signals:
     void data_event(const char *data);
 
     /**
-     * @brief type_changed  源类型改变信号
+     * @brief type_changed  源类型改变
      * @param type          源类型
      */
     void type_changed(Source::Type type);
@@ -99,4 +106,4 @@ private:
 
 }
 
-#endif // __SOURCE_H__
+#endif // __DPLSOURCE_SOURCE_H__
