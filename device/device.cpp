@@ -255,6 +255,51 @@ int Device::total_beam_qty() const
     return qty;
 }
 
+//void Device::download_beams()
+//{
+//    Q_D(Device);
+//    uint qty = total_beam_qty();
+//    DplFpga::Beam beam;
+
+//    DplFocallaw::FocallawerPointer focallawer;
+//    QList<DplFocallaw::BeamPointer> focallawerBeams;
+
+//    DplFpga::Fpga::set_pa_law_qty(qty);
+//    DplFpga::Fpga::set_ut_law_qty(qty);
+
+//    beam.set_total_beam_qty(qty);
+
+//    int index = 0;
+//    int i,j;
+//    for (i = 0; i < d->m_groups.size(); ++i) {
+//        focallawer = d->m_groups[i]->focallawer();
+//        focallawerBeams = focallawer->beams();
+//        beam.set_group_id(i);
+//        beam.set_gain_compensation(0);
+//        beam.set_total_beam_qty(qty);
+
+//        for (j = 0; j < focallawer->beam_qty(); ++j) {
+//            beam.set_index(index);
+//            beam.set_delay(focallawerBeams[j]->delay()/DplFpga::Fpga::SAMPLE_PRECISION);
+//            beam.set_gate_a(0, 30);
+//            beam.set_gate_b(0, 30);
+//            beam.set_gate_i(0, 30);
+
+//            beam.set_tx_channel_select(focallawerBeams[j]->start_element());
+//            beam.set_rx_channel_select(focallawerBeams[j]->start_element());
+
+//            beam.set_tx_channel();
+
+//            beam.set_rx_delay();
+//            beam.set_tx_delay();
+
+//            beam.refresh();
+
+//            ++index;
+//        }
+//    }
+//}
+
 Device::Device(QObject *parent) :
     QObject(parent),
     d_ptr(new DevicePrivate())

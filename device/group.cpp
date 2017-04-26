@@ -30,7 +30,6 @@ public:
 
     /* Attribution */
     Group::Mode m_mode;         /* 组模式 */
-    float m_precision;          /* 采样精度， 单位(ns) */
     double m_start;             /* 声程轴起始点,单位(ns) */
     double m_range;             /* 范围值, 单位(ns) */
     Group::UtUnit m_utUnit;     /* Ut Unit */
@@ -45,12 +44,10 @@ public:
 
 GroupPrivate::GroupPrivate()
 {
-    m_precision = DplFpga::Fpga::instance()->sample_precision();
-
     m_mode = Group::PA;
 
     m_start = 0;
-    m_range = 5702 * m_precision;
+    m_range = 5702 * DplFpga::Fpga::SAMPLE_PRECISION;
     m_utUnit = Group::SoundPath;
     m_velocity = 3240;
     m_currentAngle = M_PI/6;
@@ -159,7 +156,7 @@ void Group::set_range(double value)
     {
         QWriteLocker l(&d->m_rwlock);
 
-        int maxPointQty = value / d->m_precision;
+        int maxPointQty = value / DplFpga::Fpga::SAMPLE_PRECISION;
         int curPointQty = point_qty();
         int widthPointQty = 640;
 
@@ -184,7 +181,7 @@ void Group::set_range(double value)
         //        return false;
         //    }
 
-        d->m_range = maxPointQty * d->m_precision;
+        d->m_range = maxPointQty * DplFpga::Fpga::SAMPLE_PRECISION;
 
         set_point_qty(curPointQty);
 
@@ -250,7 +247,7 @@ double Group::max_sample_time()
     // one beam cycle = loading time +  beam delay + wedge delay + sample start + sample range + 50 /* 单位 ns */
     int beamCycle =  (250*1000*1000) / beamQty;
     double max = beamCycle
-            - fpga->loading_time() * d->m_precision
+            - DplFpga::Fpga::LOADING_TIME * DplFpga::Fpga::SAMPLE_PRECISION
             - d->max_beam_delay()
             - m_focallawerPtr->wedge()->delay()
             - 50;
@@ -262,9 +259,9 @@ double Group::max_sample_time()
 
 void Group::update_sample()
 {
-    set_sample_start((m_focallawerPtr->wedge()->delay() + d->m_start)/d->m_precision, true);
-    set_sample_range((m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range)/d->m_precision, true);
-    set_rx_time((d->max_beam_delay() + m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range + 50)/d->m_precision, true);
+    set_sample_start((m_focallawerPtr->wedge()->delay() + d->m_start)/DplFpga::Fpga::SAMPLE_PRECISION, true);
+    set_sample_range((m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range)/DplFpga::Fpga::SAMPLE_PRECISION, true);
+    set_rx_time((d->max_beam_delay() + m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range + 50)/DplFpga::Fpga::SAMPLE_PRECISION, true);
 }
 
 }

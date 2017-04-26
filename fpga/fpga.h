@@ -93,7 +93,6 @@ private:
     int m_index;
 };
 
-typedef QSharedPointer<Group> GroupPointer;
 typedef QSharedPointer<Beam> BeamPointer;
 typedef QSharedPointer<Tcg> TcgPointer;
 
@@ -103,22 +102,19 @@ class FPGASHARED_EXPORT Fpga
     friend class AlarmAnalog;
 
 public:
+    /**
+     * @brief SAMPLE_PRECISION  采样精度(ns), 如10ns即采样频率为100MHz
+     */
+    static const float SAMPLE_PRECISION;
+
+    /**
+     * @brief LOADING_TIME  FPGA在每次聚焦时的寄存器设置时间(单位，采样精度)
+     */
+    static const int LOADING_TIME;
+
     static Fpga* instance(void);
 
     bool reset();
-
-    /**
-     * @brief sample_precision  采样精度
-     * @return                  返回采样精度, 单位(ns)
-     */
-    float sample_precision() const;
-
-    /**
-     * @brief loading_time  获取FPGA每条Beam设置寄存器的时间
-     * @return              时间, 单位(采样精度)
-     */
-    int loading_time() const;
-
 
     /****** Global ******/
     /**
