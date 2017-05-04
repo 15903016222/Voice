@@ -18,6 +18,7 @@ class GroupPrivate;
 
 class FPGASHARED_EXPORT Group : public QObject
 {
+    Q_DECLARE_PRIVATE(Group)
     Q_OBJECT
 public:
     explicit Group(const int index, QObject *parent = 0);
@@ -80,14 +81,27 @@ public:
     int thickness_factor(void) const;
     bool set_thickness_factor(int factor, bool reflesh = false);
 
-    bool ut1(void) const;
-    bool enable_ut1(bool flag, bool reflesh = false);
+    /**
+     * @brief The Mode enum 组工作模式
+     */
+    enum Mode {
+        UT1 = 0b001,
+        UT2 = 0b010,
+        PA  = 0b100
+    };
 
-    bool ut2(void) const;
-    bool enable_ut2(bool flag, bool reflesh = false);
+    /**
+     * @brief mode  获取组工作模式
+     * @return      组工作模式
+     */
+    Mode mode() const;
 
-    bool pa(void) const;
-    bool enable_pa(bool flag, bool reflesh = false);
+    /**
+     * @brief set_mode  设置组工作模式
+     * @param m         组工作模式
+     * @return          成功返回true，否则false
+     */
+    bool set_mode(Mode m);
 
     int sum_gain(void) const;
     bool set_sum_gain(int gain, bool reflesh = false);
@@ -156,8 +170,21 @@ public:
     int tx_start(void) const;
     bool set_tx_start(int val, bool reflesh = false);
 
+    /**
+     * @brief init  初始化配置
+     */
     void init();
+
+    /**
+     * @brief reflesh   更新配置
+     * @return
+     */
     bool reflesh(void);
+
+    /**
+     * @brief show_info 显示信息
+     */
+    void show_info();
 
 protected:
     /**
@@ -188,13 +215,14 @@ protected:
      */
     bool set_rx_time(int val, bool reflesh = false);
 
+
 signals:
     void gain_changed(float val);
     void point_qty_changed(int val);
     void compress_ratio_changed(int val);
 
 private:
-    GroupPrivate *d;
+    GroupPrivate *d_ptr;
 };
 
 }

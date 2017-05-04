@@ -16,11 +16,13 @@ LawConfigMenu::LawConfigMenu(Ui::BaseMenu *ui, QObject *parent) :
 
     /* Pulse Connection menu item */
     m_pulseConnectionItem = new SpinMenuItem;
-    m_pulseConnectionItem->set(tr("Pulse Connection"), "mm", 1, 113, 0);
+    m_pulseConnectionItem->set(tr("Pulse Connection"), "1-113", 1, 113, 0);
+    m_pulseConnectionItem->set_value(1);
 
     /* Receiver Connection menu item */
     m_receiverConnectionItem = new SpinMenuItem;
-    m_receiverConnectionItem->set(tr("Receiver Connection"), "mm", 1, 113, 0);
+    m_receiverConnectionItem->set(tr("Receiver Connection"), "1-113", 1, 113, 0);
+    m_receiverConnectionItem->set_value(1);
 
     /* Wave Type Menu Item */
     m_waveTypeItem = new ComboMenuItem;

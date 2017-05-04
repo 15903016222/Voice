@@ -94,6 +94,30 @@ public:
      */
     void set_freq(double val);
 
+    /**
+     * @brief pulser_index  获取发射通道索引号
+     * @return              索引号，从０开始
+     */
+    uint pulser_index() const;
+
+    /**
+     * @brief set_pulser_index  设置发射通道索引号
+     * @param index             索引号，从０开始
+     */
+    void set_pulser_index(uint index);
+
+    /**
+     * @brief receiver_index    获取接收通道索引号
+     * @return                  索引号，从０开始
+     */
+    uint receiver_index() const;
+
+    /**
+     * @brief set_receiver_index    设置接收通道索引号
+     * @param index                 索引号，从０开始
+     */
+    void set_receiver_index(uint index);
+
 private:
     ProbePrivate *d_ptr;
 };

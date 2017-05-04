@@ -17,6 +17,7 @@ class FOCALLAWSHARED_EXPORT FocusCnf
 {
 public:
     explicit FocusCnf() {}
+    virtual ~FocusCnf() {}
 
     enum Mode {
         HALF_PATH,  /* 半声程 */

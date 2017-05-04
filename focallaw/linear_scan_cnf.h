@@ -42,13 +42,13 @@ public:
 
     /**
      * @brief last_element  获取结束阵元号
-     * @return              阵元号
+     * @return              阵元号,从0算起
      */
     uint last_element() const;
 
     /**
      * @brief set_last_element  设置结束阵元号
-     * @param pos               阵元号
+     * @param pos               阵元号，从0算起
      * @return                  成功返回true，失败返回false
      */
     bool set_last_element(uint pos);

@@ -12,18 +12,25 @@
 
 namespace DplFocallaw {
 
-class BeamData;
+class BeamPrivate;
 class FOCALLAWSHARED_EXPORT Beam
 {
+    Q_DECLARE_PRIVATE(Beam)
 public:
     explicit Beam();
     ~Beam();
 
     /**
-     * @brief elements_delay    获取各阵元延迟时间
-     * @return                  延迟时间链表
+     * @brief txdelay   获取各阵元的发送延迟时间(ns)
+     * @return          延迟时间链表
      */
-    const QList<double> &elements_delay() const;
+    const QList<float> &txdelay() const;
+
+    /**
+     * @brief rxdelay   获取各阵元的接收延迟时间(ns)
+     * @return          延迟时间链表
+     */
+    const QList<float> &rxdelay() const;
 
     /**
      * @brief clear 清除阵元延迟时间
@@ -32,14 +39,28 @@ public:
 
     /**
      * @brief delay BeamDelay
-     * @return      BeamDelay
+     * @return      时间(ns)
      */
-    double delay() const;
+    float delay() const;
 
-    BeamData *data() { return d_ptr; }
+    /**
+     * @brief first_tx_element  获取开始发射的阵元号
+     * @return                  阵元号，从０开始
+     */
+    uint first_tx_element() const;
+
+    /**
+     * @brief first_rx_element  获取开始接收的阵元号
+     * @return                  阵元号，从０开始
+     */
+    uint first_rx_element() const;
+
+protected:
+    friend class FocallawerPrivate;
+    BeamPrivate *data() { return d_ptr; }
 
 private:
-    BeamData *d_ptr;
+    BeamPrivate *d_ptr;
 
 };
 

@@ -14,27 +14,37 @@
 
 namespace DplFpga {
 
-struct BeamData;
+struct BeamRegs;
 
+class BeamPrivate;
 class FPGASHARED_EXPORT Beam
 {
+    Q_DECLARE_PRIVATE(Beam)
 public:
-    static const quint32 MAX_CHANNELS;
+    /**
+     * @brief MAX_CHANNELS  通道总数
+     */
+    static const uint MAX_CHANNELS;
 
-    explicit Beam(const int index=0);
+    /**
+     * @brief MAX_ELEMENTS  一次激发的最大阵元数
+     */
+    static const uint MAX_ELEMENTS;
+
+    explicit Beam(int index=0);
     ~Beam();
 
     /**
      * @brief index 获取序号
      * @return      序号
      */
-    int index(void) const { return m_index; }
+    int index() const;
 
     /**
      * @brief set_index 设置序号
      * @param index     序号
      */
-    void set_index(const int index) { m_index = index; }
+    void set_index(int index);
 
     /**
      * @brief gain_compensation     获取增益补偿
@@ -72,7 +82,16 @@ public:
      */
     void set_total_beam_qty(quint32 qty);
 
+    /**
+     * @brief delay 获取声速延迟时间
+     * @return      时间(采样精度)
+     */
     quint32 delay(void) const;
+
+    /**
+     * @brief set_delay 设置声速延迟时间
+     * @param delay     时间(采样精度)
+     */
     void set_delay(quint32 delay);
 
     /**
@@ -132,53 +151,63 @@ public:
      */
     void set_gate_i(quint32 start, quint32 width);
 
-    quint32 tx_channel(void) const;
-    void set_tx_channel(quint32 val);
-
-    quint32 rx_channel(void) const;
-    void set_rx_channel(quint32 val);
-
-    quint8 rx_channel_select(void) const;
-    bool set_rx_channel_select(quint8 n);
-
-    quint8 tx_channel_select(void) const;
-    bool set_tx_channel_select(quint8 n);
+    /**
+     * @brief rx_channel_select 获取起始接收通道索引号
+     * @return                  索引号(0 ~ MAX_CHANNELS-MAX_ELEMENETS)
+     */
+    uint rx_channel_select(void) const;
 
     /**
-     * @brief tx_delay  获取指定通道的发送延迟
-     * @param channel   通道号
-     * @return          延迟时间(ns)
+     * @brief set_rx_channel        设置接收通道选择
+     * @param start                 起始通道索引号(0 ~ MAX_CHANNELS-MAX_ELEMENETS)
+     * @param num                   激活的通道数
+     * @return                      设置成功返回true，否则返回false
      */
-    quint32 tx_delay(quint32 channel) const;
+    bool set_rx_channel(uint start, uint num);
+
+    /**
+     * @brief tx_channel_select 获取起始发射通道索引号
+     * @return                  索引号(0 ~ MAX_CHANNELS-MAX_ELEMENETS)
+     */
+    uint tx_channel_select(void) const;
+
+    /**
+     * @brief set_tx_channel        设置起始发射通道索引号
+     * @param start                 索引号(0 ~ MAX_CHANNELS-MAX_ELEMENETS)
+     * @param num                   激活的通道数
+     * @return                      设置成功返回true，否则返回false
+     */
+    bool set_tx_channel(uint start, uint num);
 
     /**
      * @brief set_tx_delay  设置指定通道的发送延迟
-     * @param channel       通道号
+     * @param channel       通道号(0 ~ MAX_CHANNELS)
      * @param val           延迟时间(ns)
      * @return              成功返回true，失败返回false
      */
-    bool set_tx_delay(quint32 channel, quint32 val);
-
-    /**
-     * @brief rx_delay  获取指定通道的接收延迟时间
-     * @param channel   通道号
-     * @return          延迟时间(ns)
-     */
-    quint32 rx_delay(quint32 channel) const;
+    bool set_tx_delay(uint channel, quint32 val);
 
     /**
      * @brief set_rx_delay  设置指定通道的接收延迟时间
-     * @param channel       通道号
+     * @param channel       通道号(0 ~ MAX_CHANNELS)
      * @param val           延迟时间(ns)
      * @return              成功返回true，否则为false
      */
-    bool set_rx_delay(quint32 channel, quint32 val);
+    bool set_rx_delay(uint channel, quint32 val);
 
+    /**
+     * @brief refresh   下发配置
+     * @return          成功返回true，否则false
+     */
     bool refresh(void);
 
+    /**
+     * @brief show_info 显示信息
+     */
+    void show_info() const;
+
 private:
-    int m_index;
-    BeamData *d;
+    BeamPrivate *d_ptr;
 };
 
 }

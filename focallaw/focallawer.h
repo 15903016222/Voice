@@ -97,6 +97,7 @@ public:
 
 signals:
     void beam_qty_changed(int);
+    void beams_changed(const QList<BeamPointer> &list);
 
 public slots:
     void update();
