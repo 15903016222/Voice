@@ -68,7 +68,11 @@ Group::Group(int index, QObject *parent) :
     m_beamGroupPtr(new DplSource::BeamGroup),
     m_focallawerPtr(new DplFocallaw::Focallawer)
 {
+    init();
+    show_info();
+
     m_beamGroupPtr->set_beam_qty(m_focallawerPtr->beam_qty());
+    m_beamGroupPtr->set_point_qty(point_qty());
 
     connect(static_cast<DplFocallaw::Wedge *>(m_focallawerPtr->wedge().data()),
             SIGNAL(delay_changed(int)),
@@ -240,7 +244,6 @@ bool Group::set_point_qty_mode(Group::PointQtyMode mode)
 
 double Group::max_sample_time()
 {
-    DplFpga::Fpga *fpga = DplFpga::Fpga::instance();
     int beamQty = Device::instance()->total_beam_qty();
     // prf为1即(1s)时，rx_time时间为最大
     // 1_000_000_000 / 4    idle_time + rx_time >= 4 * rx_time
@@ -262,6 +265,8 @@ void Group::update_sample()
     set_sample_start((m_focallawerPtr->wedge()->delay() + d->m_start)/DplFpga::Fpga::SAMPLE_PRECISION, true);
     set_sample_range((m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range)/DplFpga::Fpga::SAMPLE_PRECISION, true);
     set_rx_time((d->max_beam_delay() + m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range + 50)/DplFpga::Fpga::SAMPLE_PRECISION, true);
+    qDebug("%s[%d]: ",__func__, __LINE__);
+    show_info();
 }
 
 }

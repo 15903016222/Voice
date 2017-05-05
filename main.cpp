@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     DplDevice::Device *dev = DplDevice::Device::instance();
-    dev->get_group(0)->init();
 
     MainWindow w;
 

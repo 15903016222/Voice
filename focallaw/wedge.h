@@ -88,26 +88,16 @@ public:
     void set_root_angle(float val);
 
     /**
-     * @brief The WaveType enum 波类型
-     */
-    enum WaveType {
-        Longitudinal,
-        Transverse
-    };
-
-    /**
-     * @brief velocity  获取声速
-     * @param type      波类型
+     * @brief velocity  获取纵波声速
      * @return          声速值(m/s)
      */
-    quint32 velocity(WaveType type) const;
+    quint32 velocity() const;
 
     /**
-     * @brief set_velocity  设置声速
-     * @param type          波类型
+     * @brief set_velocity  设置纵波声速
      * @param val           声速值(m/s)
      */
-    void set_velocity(WaveType type, quint32 val);
+    void set_velocity(quint32 val);
 
     /**
      * @brief primary_offset    主轴偏置

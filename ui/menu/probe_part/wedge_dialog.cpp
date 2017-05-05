@@ -156,7 +156,7 @@ void WedgeDialog::show_pa() const
 
     msg += "<tr><th>";
     msg += tr("Velocity") + "</th><td>"
-            + QString::number(m_wedgePtr->velocity(DplFocallaw::Wedge::Longitudinal))
+            + QString::number(m_wedgePtr->velocity())
             + " m/s</td></tr>";
 
     msg += "<tr><th>";

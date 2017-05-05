@@ -98,9 +98,10 @@ public:
 signals:
     void beam_qty_changed(int);
     void beams_changed(const QList<BeamPointer> &list);
+    void focallawed();
 
 public slots:
-    void update();
+    void focallaw();
 
 private:
     FocallawerPrivate *d_ptr;

@@ -184,6 +184,12 @@ bool Device::add_group()
         d->m_groups.append(GroupPointer(new Group(d_ptr->m_groups.size())));
         d->m_curGroup = d_ptr->m_groups.last();
     }
+    connect(static_cast<DplFocallaw::Focallawer *>(d->m_curGroup->focallawer().data()),
+            SIGNAL(focallawed()),
+            this,
+            SLOT(refresh_beams()));
+
+    refresh_beams();
 
     emit current_group_changed();
     return true;
@@ -255,55 +261,72 @@ int Device::total_beam_qty() const
     return qty;
 }
 
-//void Device::download_beams()
-//{
-//    Q_D(Device);
-//    uint qty = total_beam_qty();
-//    DplFpga::Beam beam;
+void Device::refresh_beams()
+{
+    Q_D(Device);
+    uint qty = total_beam_qty();
+    DplFpga::Beam fpgaBeam;
 
-//    DplFocallaw::FocallawerPointer focallawer;
-//    QList<DplFocallaw::BeamPointer> focallawerBeams;
+    DplFocallaw::FocallawerPointer focallawer;
+    QList<DplFocallaw::BeamPointer> focallawerBeams;
 
-//    DplFpga::Fpga::set_pa_law_qty(qty);
-//    DplFpga::Fpga::set_ut_law_qty(qty);
+    DplFpga::Fpga::instance()->set_pa_law_qty(qty);
+    DplFpga::Fpga::instance()->set_ut_law_qty(qty);
 
-//    beam.set_total_beam_qty(qty);
+    fpgaBeam.set_total_beam_qty(qty);
 
-//    int index = 0;
-//    int i,j;
-//    for (i = 0; i < d->m_groups.size(); ++i) {
-//        focallawer = d->m_groups[i]->focallawer();
-//        focallawerBeams = focallawer->beams();
-//        beam.set_group_id(i);
-//        beam.set_gain_compensation(0);
-//        beam.set_total_beam_qty(qty);
+    int index = 0;
+    int i,j,k;
+    int aperture;
+    int startRxChannel;
+    int startTxChannel;
 
-//        for (j = 0; j < focallawer->beam_qty(); ++j) {
-//            beam.set_index(index);
-//            beam.set_delay(focallawerBeams[j]->delay()/DplFpga::Fpga::SAMPLE_PRECISION);
-//            beam.set_gate_a(0, 30);
-//            beam.set_gate_b(0, 30);
-//            beam.set_gate_i(0, 30);
+    for (i = 0; i < d->m_groups.size(); ++i) {
+        focallawer = d->m_groups[i]->focallawer();
+        focallawerBeams = focallawer->beams();
+        fpgaBeam.set_group_id(i);
+        fpgaBeam.set_gain_compensation(0);
+        fpgaBeam.set_total_beam_qty(qty);
 
-//            beam.set_tx_channel_select(focallawerBeams[j]->start_element());
-//            beam.set_rx_channel_select(focallawerBeams[j]->start_element());
+        d->m_groups[i]->show_info();
 
-//            beam.set_tx_channel();
+        for (j = 0; j < focallawer->beam_qty(); ++j) {
+//            qDebug("%s[%d]: beamQty(%d) pointQty(%d)",__func__, __LINE__, focallawer->beam_qty(), d->m_groups[i]->point_qty());
+            fpgaBeam.set_index(index);
+//            fpgaBeam.set_delay(focallawerBeams[j]->delay()/DplFpga::Fpga::SAMPLE_PRECISION);
+            fpgaBeam.set_delay(0);
+            fpgaBeam.set_gate_a(0, 30);
+            fpgaBeam.set_gate_b(0, 30);
+            fpgaBeam.set_gate_i(0, 30);
 
-//            beam.set_rx_delay();
-//            beam.set_tx_delay();
+            startRxChannel = focallawer->probe()->pulser_index() + focallawerBeams[j]->first_rx_element();
+            startTxChannel = focallawer->probe()->receiver_index() + focallawerBeams[j]->first_tx_element();
 
-//            beam.refresh();
+            aperture = focallawerBeams[j]->aperture();
 
-//            ++index;
-//        }
-//    }
-//}
+            fpgaBeam.set_tx_channel(startRxChannel, aperture);
+            fpgaBeam.set_rx_channel(startTxChannel, aperture);
+
+            for (k = 0; k < aperture; ++k) {
+                fpgaBeam.set_rx_delay(startRxChannel+k, focallawerBeams[j]->rxdelay().at(k));
+                fpgaBeam.set_tx_delay(startTxChannel+k, focallawerBeams[j]->txdelay().at(k));
+//                fpgaBeam.set_rx_delay(startRxChannel+k, 0);
+//                fpgaBeam.set_tx_delay(startTxChannel+k, 0);
+                qDebug("%s[%d]: enablet(0x%x) rx(%f) tx(%f)",__func__, __LINE__, (startRxChannel+i)&0x1f, focallawerBeams[j]->rxdelay().at(k), focallawerBeams[j]->txdelay().at(k));
+            }
+
+            fpgaBeam.refresh();
+
+            ++index;
+        }
+    }
+}
 
 Device::Device(QObject *parent) :
     QObject(parent),
     d_ptr(new DevicePrivate())
 {
+    DplFpga::Fpga::instance()->show_info();
     add_group();
 }
 

@@ -61,6 +61,9 @@ public:
      */
     void set_model(const QString &model);
 
+    /**
+     * @brief The Type enum 探头类型
+     */
     enum Type {
         CONTACT,    /* 直接接触式类型 */
         DELAY,      /* 延迟块式 */

@@ -21,7 +21,7 @@ public:
     ~Beam();
 
     /**
-     * @brief txdelay   获取各阵元的发送延迟时间(ns)
+     * @brief txdelay   获取各阵元的发射延迟时间(ns)
      * @return          延迟时间链表
      */
     const QList<float> &txdelay() const;
@@ -31,6 +31,20 @@ public:
      * @return          延迟时间链表
      */
     const QList<float> &rxdelay() const;
+
+    /**
+     * @brief txdelay   获取指定阵元的发射延迟时间
+     * @param elem      指定阵元号，从0开始
+     * @return          时间(ns)
+     */
+    float txdelay(uint elem) const;
+
+    /**
+     * @brief rxdelay   获取指定阵元的接收延迟时间
+     * @param elem      指定阵元号，从0开始
+     * @return          时间(ns)
+     */
+    float rxdelay(uint elem) const;
 
     /**
      * @brief clear 清除阵元延迟时间
@@ -54,6 +68,12 @@ public:
      * @return                  阵元号，从０开始
      */
     uint first_rx_element() const;
+
+    /**
+     * @brief aperture  孔径
+     * @return          孔径大小
+     */
+    int aperture() const;
 
 protected:
     friend class FocallawerPrivate;

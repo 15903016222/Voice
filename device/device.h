@@ -135,6 +135,9 @@ public:
 signals:
     void current_group_changed();
 
+public slots:
+    void refresh_beams();
+
 protected:
     explicit Device(QObject *parent = 0);
     ~Device();
