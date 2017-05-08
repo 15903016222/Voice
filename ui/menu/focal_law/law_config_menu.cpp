@@ -8,10 +8,7 @@ namespace DplFocalLawMenu {
 
 LawConfigMenu::LawConfigMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent),
-    m_updateFlga(false),
-    m_pulseConnectionItem(new SpinMenuItem),
-    m_receiverConnectionItem(new SpinMenuItem),
-    m_waveTypeItem(new ComboMenuItem)
+    m_updateFlga(false)
 {
     /* Law Type Menu Item */
     QStringList lawTypes;
@@ -22,16 +19,20 @@ LawConfigMenu::LawConfigMenu(Ui::BaseMenu *ui, QObject *parent) :
             this, SLOT(do_lawTypeItem_changed(int)));
 
     /* Pulse Connection menu item */
-    m_pulseConnectionItem->set(tr("Pulse Connection"), "1-113", 1, 113, 0);
+    m_pulseItem.set(tr("Pulse Connection"), "1-113", 1, 113, 0);
+    connect(&m_pulseItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_pulseItem_changed(double)));
 
     /* Receiver Connection menu item */
-    m_receiverConnectionItem->set(tr("Receiver Connection"), "1-113", 1, 113, 0);
+    m_receiverItem.set(tr("Receiver Connection"), "1-113", 1, 113, 0);
+    connect(&m_receiverItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_receiverItem_changed(double)));
 
     /* Wave Type Menu Item */
     QStringList waveTypes;
     waveTypes.append(tr("LW"));
     waveTypes.append(tr("SW"));
-    m_waveTypeItem->set(tr("Wave Type"), waveTypes);
+    m_waveTypeItem.set(tr("Wave Type"), waveTypes);
 
     connect(DplDevice::Device::instance(), SIGNAL(current_group_changed()),
             this, SLOT(do_current_group_changed()));
@@ -40,9 +41,6 @@ LawConfigMenu::LawConfigMenu(Ui::BaseMenu *ui, QObject *parent) :
 
 LawConfigMenu::~LawConfigMenu()
 {
-    delete m_pulseConnectionItem;
-    delete m_receiverConnectionItem;
-    delete m_waveTypeItem;
 }
 
 void LawConfigMenu::show()
@@ -52,32 +50,32 @@ void LawConfigMenu::show()
     }
 
     ui->menuItem0->layout()->addWidget(&m_lawTypeItem);
-    ui->menuItem1->layout()->addWidget(m_pulseConnectionItem);
-    ui->menuItem2->layout()->addWidget(m_receiverConnectionItem);
-    ui->menuItem3->layout()->addWidget(m_waveTypeItem);
+    ui->menuItem1->layout()->addWidget(&m_pulseItem);
+    ui->menuItem2->layout()->addWidget(&m_receiverItem);
+    ui->menuItem3->layout()->addWidget(&m_waveTypeItem);
     m_lawTypeItem.show();
-    m_pulseConnectionItem->show();
-    m_receiverConnectionItem->show();
-    m_waveTypeItem->show();
+    m_pulseItem.show();
+    m_receiverItem.show();
+    m_waveTypeItem.show();
 }
 
 void LawConfigMenu::hide()
 {
     ui->menuItem0->layout()->removeWidget(&m_lawTypeItem);
-    ui->menuItem1->layout()->removeWidget(m_pulseConnectionItem);
-    ui->menuItem2->layout()->removeWidget(m_receiverConnectionItem);
-    ui->menuItem3->layout()->removeWidget(m_waveTypeItem);
+    ui->menuItem1->layout()->removeWidget(&m_pulseItem);
+    ui->menuItem2->layout()->removeWidget(&m_receiverItem);
+    ui->menuItem3->layout()->removeWidget(&m_waveTypeItem);
     m_lawTypeItem.hide();
-    m_pulseConnectionItem->hide();
-    m_receiverConnectionItem->hide();
-    m_waveTypeItem->hide();
+    m_pulseItem.hide();
+    m_receiverItem.hide();
+    m_waveTypeItem.hide();
 }
 
 void LawConfigMenu::update()
 {
     m_lawTypeItem.set_current_index(m_scanScnPtr->mode());
-    m_pulseConnectionItem->set_value(m_probePtr->pulser_index()+1);
-    m_receiverConnectionItem->set_value(m_probePtr->receiver_index()+1);
+    m_pulseItem.set_value(m_probePtr->pulser_index()+1);
+    m_receiverItem.set_value(m_probePtr->receiver_index()+1);
 }
 
 void LawConfigMenu::do_lawTypeItem_changed(int index)
@@ -92,6 +90,16 @@ void LawConfigMenu::do_lawTypeItem_changed(int index)
         DplFocallaw::SectorialScanCnfPointer scanCnfPtr(new DplFocallaw::SectorialScanCnf(m_probePtr->element_qty()));
         m_probePtr->set_scan_configure(scanCnfPtr.staticCast<DplFocallaw::ScanCnf>());
     }
+}
+
+void LawConfigMenu::do_pulseItem_changed(double val)
+{
+    m_probePtr->set_pulser_index(val-1);
+}
+
+void LawConfigMenu::do_receiverItem_changed(double val)
+{
+    m_probePtr->set_receiver_index(val-1);
 }
 
 void LawConfigMenu::do_current_group_changed()

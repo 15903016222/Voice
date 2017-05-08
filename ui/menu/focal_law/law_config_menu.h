@@ -20,9 +20,9 @@ private:
     bool m_updateFlga;
 
     ComboMenuItem m_lawTypeItem;
-    SpinMenuItem *m_pulseConnectionItem;
-    SpinMenuItem *m_receiverConnectionItem;
-    ComboMenuItem *m_waveTypeItem;
+    SpinMenuItem m_pulseItem;
+    SpinMenuItem m_receiverItem;
+    ComboMenuItem m_waveTypeItem;
 
     DplFocallaw::PaProbePointer m_probePtr;
     DplFocallaw::ScanCnfPointer m_scanScnPtr;
@@ -31,6 +31,8 @@ private:
 
 private slots:
     void do_lawTypeItem_changed(int index);
+    void do_pulseItem_changed(double val);
+    void do_receiverItem_changed(double val);
 
     void do_current_group_changed();
 };
