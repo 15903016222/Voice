@@ -19,10 +19,6 @@ namespace DplUtSettingMenu {
 GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     : BaseMenu(ui, parent)
 {
-    DplDevice::Device *device = DplDevice::Device::instance();
-    connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
-    m_group = device->current_group();
-
     QStringList utUnitList;
     utUnitList.append(tr("Time"));
     utUnitList.append(tr("Sound Path"));
@@ -50,7 +46,10 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
     m_utUnitItem->set(tr("UT Unit"), utUnitList);
     connect(m_utUnitItem, SIGNAL(value_changed(int)), this, SLOT(do_utUnitItem_changed(int)));
 
-    m_updateFlag = true;
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed()),
+            this, SLOT(do_current_group_changed()));
+    do_current_group_changed();
 }
 
 GeneralMenu::~GeneralMenu()

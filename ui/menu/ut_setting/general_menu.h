@@ -27,10 +27,6 @@ public:
 public slots:
     void set_gain(double gain) { m_gainItem->set_value(gain); }
 
-    /**
-     * @brief update    更新菜单数据
-     */
-    void update();
 
 signals:
     void gain_changed(double gain);
@@ -46,6 +42,11 @@ private:
     ComboMenuItem *m_utUnitItem;
 
     DplDevice::GroupPointer m_group;
+
+    /**
+     * @brief update    更新菜单数据
+     */
+    void update();
 
 private slots:
     void do_gainItem_changed(double gain);
