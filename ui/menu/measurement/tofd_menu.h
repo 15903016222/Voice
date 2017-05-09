@@ -16,18 +16,18 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_selectItem;
+    ComboMenuItem m_selectItem;
 
-    SpinMenuItem *m_wedgeItem;
-    LabelMenuItem *m_layerDepthItem;
-    LabelMenuItem *m_tofdCalItem;
-    SpinMenuItem *m_startItem;
-    SpinMenuItem *m_rangeItem;
+    SpinMenuItem m_wedgeItem;
+    LabelMenuItem m_layerDepthItem;
+    LabelMenuItem m_tofdCalItem;
+    SpinMenuItem m_startItem;
+    SpinMenuItem m_rangeItem;
 
-    ComboMenuItem *m_straighteningItem;
-    ComboMenuItem *m_removeLateralItem;
-    SpinMenuItem *m_refPositionItem;
-    ComboMenuItem *m_depthCalibrationItem;
+    ComboMenuItem m_straighteningItem;
+    ComboMenuItem m_removeLateralItem;
+    SpinMenuItem m_refPositionItem;
+    ComboMenuItem m_depthCalibrationItem;
 
     void show_setting();
     void hide_setting();

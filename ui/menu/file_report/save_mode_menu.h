@@ -16,10 +16,10 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_storageItem;
-    ComboMenuItem *m_saveModeItem;
-    LabelMenuItem *m_saveDataItem;
-    LabelMenuItem *m_fileName;
+    ComboMenuItem m_storageItem;
+    ComboMenuItem m_saveModeItem;
+    LabelMenuItem m_saveDataItem;
+    LabelMenuItem m_fileNameItem;
 
 private slots:
     void show_input_dialog();

@@ -23,9 +23,9 @@ public:
     void hide();
 
 private:
-    SpinMenuItem *m_scanOffsetItem;
-    SpinMenuItem *m_indexOffsetItem;
-    ComboMenuItem *m_skewItem;
+    SpinMenuItem m_scanOffsetItem;
+    SpinMenuItem m_indexOffsetItem;
+    ComboMenuItem m_skewItem;
 };
 
 }

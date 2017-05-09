@@ -13,6 +13,8 @@ static const char *FONT_FILE = "/etc/mercury/font/SONGTI.TTC";
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QTime time;
+    time.restart();
 
     DplDevice::Device *dev = DplDevice::Device::instance();
 
@@ -35,6 +37,8 @@ int main(int argc, char *argv[])
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 #endif
     w.show();
+
+    qDebug("%s[%d]: Take Time%d(ms)",__func__, __LINE__, time.elapsed());
 
     return a.exec();
 }

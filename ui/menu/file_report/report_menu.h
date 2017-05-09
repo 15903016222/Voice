@@ -16,12 +16,12 @@ public:
     void hide();
 
 private:
-    LabelMenuItem *m_templateItem;
-    LabelMenuItem *m_reportNameItem;
-    LabelMenuItem *m_customerItem;
-    LabelMenuItem *m_partNameItem;
-    LabelMenuItem *m_partNumberItem;
-    LabelMenuItem *m_createItem;
+    LabelMenuItem m_templateItem;
+    LabelMenuItem m_reportNameItem;
+    LabelMenuItem m_customerItem;
+    LabelMenuItem m_partNameItem;
+    LabelMenuItem m_partNumberItem;
+    LabelMenuItem m_createItem;
 
 private slots:
     void show_input_dialog();

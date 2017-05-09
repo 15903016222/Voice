@@ -15,12 +15,12 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_probeWedgeItem;
-    ComboMenuItem *m_inspectionInfoItem;
-    ComboMenuItem *m_scanInfoItem;
-    ComboMenuItem *m_encoderInfoItem;
-    ComboMenuItem *m_dacTcgInfoItem;
-    ComboMenuItem *m_flawRecordTableItem;
+    ComboMenuItem m_probeWedgeItem;
+    ComboMenuItem m_inspectionInfoItem;
+    ComboMenuItem m_scanInfoItem;
+    ComboMenuItem m_encoderInfoItem;
+    ComboMenuItem m_dacTcgInfoItem;
+    ComboMenuItem m_flawRecordTableItem;
 
 };
 

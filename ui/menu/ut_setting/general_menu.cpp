@@ -16,35 +16,34 @@
 
 namespace DplUtSettingMenu {
 
-GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
-    : BaseMenu(ui, parent)
+GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent) :
+    BaseMenu(ui, parent)
 {
+    /* Gain Item */
+    connect(&m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
+    connect(&m_gainItem, SIGNAL(value_changed(double)), this, SIGNAL(gain_changed(double)));
+
+    /* Start Item */
+    connect(&m_startItem, SIGNAL(value_changed(double)), this, SLOT(do_startItem_changed(double)));
+
+    /* Range Item */
+    connect(&m_rangeItem, SIGNAL(value_changed(double)), this, SLOT(do_rangeItem_changed(double)));
+
+    /* Velocity Item */
+    m_velocityItem.set(tr("Velocity"), "m/s", 635, 12540, 1, 0.1);
+    connect(&m_velocityItem, SIGNAL(value_changed(double)), this, SLOT(do_velocityItem_changed(double)));
+
+    /* Wedge Delay Item */
+    m_wedgeDelayItem.set(tr("Wedge Delay"), "&micro;s", 0, 1000, 2);
+    connect(&m_wedgeDelayItem, SIGNAL(value_changed(double)), this, SLOT(do_wedgeDelayItem_changed(double)));
+
+    /* Ut Unit Item */
     QStringList utUnitList;
     utUnitList.append(tr("Time"));
     utUnitList.append(tr("Sound Path"));
     utUnitList.append(tr("True Path"));
-
-    m_gainItem = new SpinMenuItem();
-    connect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
-    connect(m_gainItem, SIGNAL(value_changed(double)), this, SIGNAL(gain_changed(double)));
-
-    m_startItem = new SpinMenuItem();
-    connect(m_startItem, SIGNAL(value_changed(double)), this, SLOT(do_startItem_changed(double)));
-
-    m_rangeItem = new SpinMenuItem();
-    connect(m_rangeItem, SIGNAL(value_changed(double)), this, SLOT(do_rangeItem_changed(double)));
-
-    m_velocityItem = new SpinMenuItem();
-    m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1, 0.1);
-    connect(m_velocityItem, SIGNAL(value_changed(double)), this, SLOT(do_velocityItem_changed(double)));
-
-    m_wedgeDelayItem = new SpinMenuItem();
-    m_wedgeDelayItem->set(tr("Wedge Delay"), "&micro;s", 0, 1000, 2);
-    connect(m_wedgeDelayItem, SIGNAL(value_changed(double)), this, SLOT(do_wedgeDelayItem_changed(double)));
-
-    m_utUnitItem = new ComboMenuItem();
-    m_utUnitItem->set(tr("UT Unit"), utUnitList);
-    connect(m_utUnitItem, SIGNAL(value_changed(int)), this, SLOT(do_utUnitItem_changed(int)));
+    m_utUnitItem.set(tr("UT Unit"), utUnitList);
+    connect(&m_utUnitItem, SIGNAL(value_changed(int)), this, SLOT(do_utUnitItem_changed(int)));
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed()),
@@ -54,12 +53,6 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent)
 
 GeneralMenu::~GeneralMenu()
 {
-    delete m_gainItem;
-    delete m_startItem;
-    delete m_rangeItem;
-    delete m_velocityItem;
-    delete m_wedgeDelayItem;
-    delete m_utUnitItem;
 }
 
 void GeneralMenu::show()
@@ -67,34 +60,34 @@ void GeneralMenu::show()
     if (m_updateFlag) {
         update();
     }
-    ui->menuItem0->layout()->addWidget(m_gainItem);
-    ui->menuItem1->layout()->addWidget(m_startItem);
-    ui->menuItem2->layout()->addWidget(m_rangeItem);
-    ui->menuItem3->layout()->addWidget(m_velocityItem);
-    ui->menuItem4->layout()->addWidget(m_wedgeDelayItem);
-    ui->menuItem5->layout()->addWidget(m_utUnitItem);
-    m_gainItem->show();
-    m_startItem->show();
-    m_rangeItem->show();
-    m_velocityItem->show();
-    m_wedgeDelayItem->show();
-    m_utUnitItem->show();
+    ui->menuItem0->layout()->addWidget(&m_gainItem);
+    ui->menuItem1->layout()->addWidget(&m_startItem);
+    ui->menuItem2->layout()->addWidget(&m_rangeItem);
+    ui->menuItem3->layout()->addWidget(&m_velocityItem);
+    ui->menuItem4->layout()->addWidget(&m_wedgeDelayItem);
+    ui->menuItem5->layout()->addWidget(&m_utUnitItem);
+    m_gainItem.show();
+    m_startItem.show();
+    m_rangeItem.show();
+    m_velocityItem.show();
+    m_wedgeDelayItem.show();
+    m_utUnitItem.show();
 }
 
 void GeneralMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(m_gainItem);
-    ui->menuItem1->layout()->removeWidget(m_startItem);
-    ui->menuItem2->layout()->removeWidget(m_rangeItem);
-    ui->menuItem3->layout()->removeWidget(m_velocityItem);
-    ui->menuItem4->layout()->removeWidget(m_wedgeDelayItem);
-    ui->menuItem5->layout()->removeWidget(m_utUnitItem);
-    m_gainItem->hide();
-    m_startItem->hide();
-    m_rangeItem->hide();
-    m_velocityItem->hide();
-    m_wedgeDelayItem->hide();
-    m_utUnitItem->hide();
+    ui->menuItem0->layout()->removeWidget(&m_gainItem);
+    ui->menuItem1->layout()->removeWidget(&m_startItem);
+    ui->menuItem2->layout()->removeWidget(&m_rangeItem);
+    ui->menuItem3->layout()->removeWidget(&m_velocityItem);
+    ui->menuItem4->layout()->removeWidget(&m_wedgeDelayItem);
+    ui->menuItem5->layout()->removeWidget(&m_utUnitItem);
+    m_gainItem.hide();
+    m_startItem.hide();
+    m_rangeItem.hide();
+    m_velocityItem.hide();
+    m_wedgeDelayItem.hide();
+    m_utUnitItem.hide();
 }
 
 void GeneralMenu::update()
@@ -103,12 +96,12 @@ void GeneralMenu::update()
     update_start_item();
     update_range_item();
 
-    m_velocityItem->set_value(m_group->velocity());
+    m_velocityItem.set_value(m_group->velocity());
 
     double delay = m_group->focallawer()->wedge()->delay();
-    m_wedgeDelayItem->set_value(Dpl::ns_to_us(delay));
+    m_wedgeDelayItem.set_value(Dpl::ns_to_us(delay));
 
-    m_utUnitItem->set_current_index(m_group->ut_unit());
+    m_utUnitItem.set_current_index(m_group->ut_unit());
 
     m_updateFlag = false;
 }
@@ -173,7 +166,7 @@ void GeneralMenu::do_utUnitItem_changed(int index)
 void GeneralMenu::do_current_group_changed()
 {
     m_group = DplDevice::Device::instance()->current_group();
-    if (m_gainItem->isHidden()) {
+    if (m_gainItem.isHidden()) {
         m_updateFlag = true;
     } else {
         update();
@@ -182,8 +175,8 @@ void GeneralMenu::do_current_group_changed()
 
 void GeneralMenu::update_gain_item()
 {
-    m_gainItem->set(tr("Gain"), "dB", 0, 90, 1);
-    m_gainItem->set_value(m_group->gain());
+    m_gainItem.set(tr("Gain"), "dB", 0, 90, 1);
+    m_gainItem.set_value(m_group->gain());
 }
 
 void GeneralMenu::update_start_item()
@@ -212,8 +205,8 @@ void GeneralMenu::update_start_item()
         }
     }
 
-    m_startItem->set(tr("Start"), unit, 0, max, 2, step);
-    m_startItem->set_value(value);
+    m_startItem.set(tr("Start"), unit, 0, max, 2, step);
+    m_startItem.set_value(value);
 }
 
 void GeneralMenu::update_range_item()
@@ -268,8 +261,8 @@ void GeneralMenu::update_range_item()
         }
     }
 
-    m_rangeItem->set(tr("Range"), unit, min, max, 2, step);
-    m_rangeItem->set_value(value);
+    m_rangeItem.set(tr("Range"), unit, min, max, 2, step);
+    m_rangeItem.set_value(value);
 }
 
 }

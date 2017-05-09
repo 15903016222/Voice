@@ -19,11 +19,11 @@ private slots:
     void do_comment_clicked();
 
 private:
-    LabelMenuItem *m_addDeleteItem;
-    ComboMenuItem *m_flawImageItem;
-    LabelMenuItem *m_commentItem;
-    ComboMenuItem *m_displayTableItem;
-    LabelMenuItem *m_exportRecordItem;
+    LabelMenuItem m_addDeleteItem;
+    ComboMenuItem m_flawImageItem;
+    LabelMenuItem m_commentItem;
+    ComboMenuItem m_displayTableItem;
+    LabelMenuItem m_exportRecordItem;
 };
 
 }

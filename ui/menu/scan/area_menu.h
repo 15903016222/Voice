@@ -15,12 +15,12 @@ public:
     void hide();
 
 private:
-    SpinMenuItem *m_scanStartItem;
-    SpinMenuItem *m_scanEndItem;
-    SpinMenuItem *m_scanResolutionItem;
-    SpinMenuItem *m_indexStartItem;
-    SpinMenuItem *m_indexEndItem;
-    SpinMenuItem *m_indexResolutionItem;
+    SpinMenuItem m_scanStartItem;
+    SpinMenuItem m_scanEndItem;
+    SpinMenuItem m_scanResolutionItem;
+    SpinMenuItem m_indexStartItem;
+    SpinMenuItem m_indexEndItem;
+    SpinMenuItem m_indexResolutionItem;
 };
 
 }

@@ -18,68 +18,58 @@ PreferenceMenu::PreferenceMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_mcu = Mcu::get_mcu();
 
     /* Bright menu item */
-    m_brightItem = new SpinMenuItem;
-    m_brightItem->set(tr("Bright"), "%", 1, 100, 0);
-    connect(m_brightItem, SIGNAL(value_changed(double)), this, SLOT(set_brightness(double)));
-    m_brightItem->set_value(100);
+    m_brightItem.set(tr("Bright"), "%", 1, 100, 0);
+    connect(&m_brightItem, SIGNAL(value_changed(double)), this, SLOT(set_brightness(double)));
+    m_brightItem.set_value(100);
 
     /* Opacity menu item */
-    m_opacityItem = new SpinMenuItem;
-    m_opacityItem->set(tr("Opacity"), "%", 20, 100, 0);
-    m_opacityItem->set_value(80);
-    connect(m_opacityItem, SIGNAL(value_changed(double)), this, SIGNAL(opacity_changed(double)));
+    m_opacityItem.set(tr("Opacity"), "%", 20, 100, 0);
+    m_opacityItem.set_value(80);
+    connect(&m_opacityItem, SIGNAL(value_changed(double)), this, SIGNAL(opacity_changed(double)));
 
     /* Language menu item */
-    m_languageItem = new ComboMenuItem;
     QStringList languageList;
     languageList.append("English");
     languageList.append("Chinese");
-    m_languageItem->set(tr("Language"), languageList);
+    m_languageItem.set(tr("Language"), languageList);
 
     /* Starting Page Menu Item */
-    m_startingPageItem = new ComboMenuItem;
-    m_startingPageItem->set(tr("Starting Page"), s_onOff);
+    m_startingPageItem.set(tr("Starting Page"), s_onOff);
 
     /* Gate Mode */
-    m_gatemodeItem = new ComboMenuItem;
-    m_gatemodeItem->set(tr("Gate Mode"), s_onOff);
+    m_gatemodeItem.set(tr("Gate Mode"), s_onOff);
 }
 
 PreferenceMenu::~PreferenceMenu()
 {
-    delete m_brightItem;
-    delete m_opacityItem;
-    delete m_languageItem;
-    delete m_startingPageItem;
-    delete m_gatemodeItem;
 }
 
 void PreferenceMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(m_brightItem);
-    ui->menuItem1->layout()->addWidget(m_opacityItem);
-    ui->menuItem2->layout()->addWidget(m_languageItem);
-    ui->menuItem3->layout()->addWidget(m_startingPageItem);
-    ui->menuItem4->layout()->addWidget(m_gatemodeItem);
-    m_brightItem->show();
-    m_opacityItem->show();
-    m_languageItem->show();
-    m_startingPageItem->show();
-    m_gatemodeItem->show();
+    ui->menuItem0->layout()->addWidget(&m_brightItem);
+    ui->menuItem1->layout()->addWidget(&m_opacityItem);
+    ui->menuItem2->layout()->addWidget(&m_languageItem);
+    ui->menuItem3->layout()->addWidget(&m_startingPageItem);
+    ui->menuItem4->layout()->addWidget(&m_gatemodeItem);
+    m_brightItem.show();
+    m_opacityItem.show();
+    m_languageItem.show();
+    m_startingPageItem.show();
+    m_gatemodeItem.show();
 }
 
 void PreferenceMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(m_brightItem);
-    ui->menuItem1->layout()->removeWidget(m_opacityItem);
-    ui->menuItem2->layout()->removeWidget(m_languageItem);
-    ui->menuItem3->layout()->removeWidget(m_startingPageItem);
-    ui->menuItem4->layout()->removeWidget(m_gatemodeItem);
-    m_brightItem->hide();
-    m_opacityItem->hide();
-    m_languageItem->hide();
-    m_startingPageItem->hide();
-    m_gatemodeItem->hide();
+    ui->menuItem0->layout()->removeWidget(&m_brightItem);
+    ui->menuItem1->layout()->removeWidget(&m_opacityItem);
+    ui->menuItem2->layout()->removeWidget(&m_languageItem);
+    ui->menuItem3->layout()->removeWidget(&m_startingPageItem);
+    ui->menuItem4->layout()->removeWidget(&m_gatemodeItem);
+    m_brightItem.hide();
+    m_opacityItem.hide();
+    m_languageItem.hide();
+    m_startingPageItem.hide();
+    m_gatemodeItem.hide();
 }
 
 void PreferenceMenu::set_brightness(double value)

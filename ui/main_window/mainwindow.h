@@ -46,8 +46,8 @@ private:
 
     VirtualKeyboard *pVirtualKeyboard;
 
-    MainMenu *mainMenu;
-    SubMenu *subMenu;
+    MainMenu *m_mainMenu;
+    SubMenu *m_subMenu;
 
     bool m_hiddenCommonMenuFlag;
     void show_hidden_Menu();

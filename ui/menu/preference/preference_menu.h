@@ -24,11 +24,11 @@ public:
     void hide();
 
 private:
-    SpinMenuItem *m_brightItem;
-    SpinMenuItem *m_opacityItem;
-    ComboMenuItem *m_languageItem;
-    ComboMenuItem *m_startingPageItem;
-    ComboMenuItem *m_gatemodeItem;
+    SpinMenuItem m_brightItem;
+    SpinMenuItem m_opacityItem;
+    ComboMenuItem m_languageItem;
+    ComboMenuItem m_startingPageItem;
+    ComboMenuItem m_gatemodeItem;
 
     Mcu *m_mcu;
 

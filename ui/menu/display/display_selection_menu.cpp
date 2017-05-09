@@ -36,65 +36,54 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     cScanSourceList.append(tr("Thickness"));
     cScanSourceList.append(tr("I/"));
 
-    m_displayItem = new LabelMenuItem;
-    m_cSourceitem = new ComboMenuItem;
-    m_minThicknessItem = new SpinMenuItem;
-    m_maxThicknessItem = new SpinMenuItem;
-    m_dataCompressionItem = new ComboMenuItem;
-
     /* Display menu item */
-    m_displayItem->set(tr("Display"), "A");
-    connect(m_displayItem, SIGNAL(clicked()),
+    m_displayItem.set(tr("Display"), "A");
+    connect(&m_displayItem, SIGNAL(clicked()),
             this, SLOT(do_displayItem_clicked()));
 
     /* C-Scan Source menu item */
-    m_cSourceitem->set(tr("C-Scan<br>Source"), cScanSourceList);
+    m_cSourceItem.set(tr("C-Scan<br>Source"), cScanSourceList);
 
     /* Min.Thickness menu item */
-    m_minThicknessItem->set(tr("Min.Thickness"), "mm", 0.05, 20000, 2);
+    m_minThicknessItem.set(tr("Min.Thickness"), "mm", 0.05, 20000, 2);
 
     /* Max.Thickness menu item */
-    m_maxThicknessItem->set(tr("Max.Thickness"), "mm", 0.06, 20000, 2);
+    m_maxThicknessItem.set(tr("Max.Thickness"), "mm", 0.06, 20000, 2);
 
     /* Data compression */
-    m_dataCompressionItem->set(tr("Data<br>Compression"), s_onOff);
+    m_dataCompressionItem.set(tr("Data<br>Compression"), s_onOff);
 }
 
 SelectionMenu::~SelectionMenu()
 {
-    delete m_displayItem;
-    delete m_cSourceitem;
-    delete m_minThicknessItem;
-    delete m_maxThicknessItem;
-    delete m_dataCompressionItem;
 }
 
 void SelectionMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(m_displayItem);
-    ui->menuItem1->layout()->addWidget(m_cSourceitem);
-    ui->menuItem2->layout()->addWidget(m_minThicknessItem);
-    ui->menuItem3->layout()->addWidget(m_maxThicknessItem);
-    ui->menuItem4->layout()->addWidget(m_dataCompressionItem);
-    m_displayItem->show();
-    m_cSourceitem->show();
-    m_minThicknessItem->show();
-    m_maxThicknessItem->show();
-    m_dataCompressionItem->show();
+    ui->menuItem0->layout()->addWidget(&m_displayItem);
+    ui->menuItem1->layout()->addWidget(&m_cSourceItem);
+    ui->menuItem2->layout()->addWidget(&m_minThicknessItem);
+    ui->menuItem3->layout()->addWidget(&m_maxThicknessItem);
+    ui->menuItem4->layout()->addWidget(&m_dataCompressionItem);
+    m_displayItem.show();
+    m_cSourceItem.show();
+    m_minThicknessItem.show();
+    m_maxThicknessItem.show();
+    m_dataCompressionItem.show();
 }
 
 void SelectionMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(m_displayItem);
-    ui->menuItem1->layout()->removeWidget(m_cSourceitem);
-    ui->menuItem2->layout()->removeWidget(m_minThicknessItem);
-    ui->menuItem3->layout()->removeWidget(m_maxThicknessItem);
-    ui->menuItem4->layout()->removeWidget(m_dataCompressionItem);
-    m_displayItem->hide();
-    m_cSourceitem->hide();
-    m_minThicknessItem->hide();
-    m_maxThicknessItem->hide();
-    m_dataCompressionItem->hide();
+    ui->menuItem0->layout()->removeWidget(&m_displayItem);
+    ui->menuItem1->layout()->removeWidget(&m_cSourceItem);
+    ui->menuItem2->layout()->removeWidget(&m_minThicknessItem);
+    ui->menuItem3->layout()->removeWidget(&m_maxThicknessItem);
+    ui->menuItem4->layout()->removeWidget(&m_dataCompressionItem);
+    m_displayItem.hide();
+    m_cSourceItem.hide();
+    m_minThicknessItem.hide();
+    m_maxThicknessItem.hide();
+    m_dataCompressionItem.hide();
 }
 
 void SelectionMenu::do_displayItem_clicked()

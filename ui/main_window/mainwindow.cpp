@@ -35,23 +35,23 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
     /* Main Menu */
-    mainMenu = new MainMenu(this);
-    mainMenu->hide();
-    mainMenu->move(0, 176);
+    m_mainMenu = new MainMenu(this);
+    m_mainMenu->hide();
+    m_mainMenu->move(0, 176);
 
     /* Sub Menu */
-    subMenu = new SubMenu(this);
-    subMenu->hide();;
-    subMenu->move(179, 530);
-    DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(subMenu->get_menu(MainMenu::UTSettings_General));
+    m_subMenu = new SubMenu(this);
+    m_subMenu->hide();;
+    m_subMenu->move(179, 530);
+    DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(m_subMenu->get_menu(MainMenu::UTSettings_General));
     connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
 
-    DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(subMenu->get_menu(MainMenu::Preference_Preference));
-    connect(preferenceMenu, SIGNAL(opacity_changed(double)), mainMenu, SLOT(set_opacity_main_menu(double)));
-    connect(preferenceMenu, SIGNAL(opacity_changed(double)), subMenu, SLOT(set_opacity_main_menu(double)));
+    DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
+    connect(preferenceMenu, SIGNAL(opacity_changed(double)), m_mainMenu, SLOT(set_opacity_main_menu(double)));
+    connect(preferenceMenu, SIGNAL(opacity_changed(double)), m_subMenu, SLOT(set_opacity_main_menu(double)));
 
-    connect(mainMenu, SIGNAL(click(MainMenu::Type)), subMenu, SLOT(set_menu(MainMenu::Type)));
+    connect(m_mainMenu, SIGNAL(click(MainMenu::Type)), m_subMenu, SLOT(set_menu(MainMenu::Type)));
 
     pVirtualKeyboard = new VirtualKeyboard;
     pVirtualKeyboard->hide();
@@ -150,12 +150,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::show_hidden_Menu()
 {
-    if(subMenu->isHidden()) {
-        subMenu->show();
-        mainMenu->show();
+    if(m_subMenu->isHidden()) {
+        m_subMenu->show();
+        m_mainMenu->show();
     } else {
-        mainMenu->hide();
-        subMenu->hide();
+        m_mainMenu->hide();
+        m_subMenu->hide();
     }
 }
 
@@ -195,19 +195,19 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     int height = event->size().height();
     int oldWidth = event->oldSize().width();
     int oldHeight = event->oldSize().height();
-    int mainMenuWidth = mainMenu->geometry().width();
-    int mainMenuHeight = mainMenu->geometry().height();
-    int subMenuWidth = subMenu->geometry().width();
-    int subMenuHeight = subMenu->geometry().height();
+    int mainMenuWidth = m_mainMenu->geometry().width();
+    int mainMenuHeight = m_mainMenu->geometry().height();
+    int subMenuWidth = m_subMenu->geometry().width();
+    int subMenuHeight = m_subMenu->geometry().height();
 
     if(oldWidth > 0 && oldHeight > 0) {
-        mainMenu->resize(qRound((qreal)mainMenuWidth * width / oldWidth), qRound((qreal)mainMenuHeight * height / oldHeight));
-        subMenu->resize(qRound((qreal)subMenuWidth * width / oldWidth), qRound((qreal)subMenuHeight * height / oldHeight));
-        mainMenu->move(0, height - mainMenu->geometry().height() + 1);
-        subMenu->move(mainMenu->geometry().width(), height - subMenu->geometry().height());
+        m_mainMenu->resize(qRound((qreal)mainMenuWidth * width / oldWidth), qRound((qreal)mainMenuHeight * height / oldHeight));
+        m_subMenu->resize(qRound((qreal)subMenuWidth * width / oldWidth), qRound((qreal)subMenuHeight * height / oldHeight));
+        m_mainMenu->move(0, height - m_mainMenu->geometry().height() + 1);
+        m_subMenu->move(m_mainMenu->geometry().width(), height - m_subMenu->geometry().height());
     } else {
-        mainMenu->resize(mainMenuWidth, mainMenuHeight);
-        subMenu->resize(subMenuWidth, subMenuHeight);
+        m_mainMenu->resize(mainMenuWidth, mainMenuHeight);
+        m_subMenu->resize(subMenuWidth, subMenuHeight);
     }
-    mainMenu->do_change_arrow();
+    m_mainMenu->do_change_arrow();
 }

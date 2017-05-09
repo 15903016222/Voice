@@ -27,11 +27,11 @@ protected slots:
     void do_displayItem_clicked();
 
 private:
-    LabelMenuItem *m_displayItem;
-    ComboMenuItem *m_cSourceitem;
-    SpinMenuItem *m_minThicknessItem;
-    SpinMenuItem *m_maxThicknessItem;
-    ComboMenuItem *m_dataCompressionItem;
+    LabelMenuItem m_displayItem;
+    ComboMenuItem m_cSourceItem;
+    SpinMenuItem m_minThicknessItem;
+    SpinMenuItem m_maxThicknessItem;
+    ComboMenuItem m_dataCompressionItem;
 
     DplDisplay::Display *m_display;
 };

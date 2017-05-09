@@ -16,11 +16,11 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_geometryItem;
-    SpinMenuItem *m_thicknessItem;
-    SpinMenuItem *m_diameterItem;
-    ComboMenuItem *m_materialItem;
-    ComboMenuItem *m_overlayItem;
+    ComboMenuItem m_geometryItem;
+    SpinMenuItem m_thicknessItem;
+    SpinMenuItem m_diameterItem;
+    ComboMenuItem m_materialItem;
+    ComboMenuItem m_overlayItem;
 };
 
 }
