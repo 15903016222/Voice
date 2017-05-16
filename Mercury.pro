@@ -40,6 +40,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 equals(QT_MAJOR_VERSION, 4) {
     QMAKE_CXXFLAGS += -Wno-psabi
+    QMAKE_CXXFLAGS += -std=c++0x
 }
 
 

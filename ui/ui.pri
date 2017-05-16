@@ -17,3 +17,5 @@ include(menu/menu.pri)
 include(vinput/vinput.pri)
 
 include(display/display.pri)
+
+include(display/dxf/dxf.pri)
