@@ -121,6 +121,10 @@ public:
      */
     void set_receiver_index(uint index);
 
+signals:
+    void pulser_index_changed(uint index);
+    void receiver_index_changed(uint index);
+
 private:
     ProbePrivate *d_ptr;
 };
