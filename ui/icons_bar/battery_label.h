@@ -2,7 +2,7 @@
 #define __BATTERY_LABEL_H__
 
 #include <QLabel>
-#include "mcu.h"
+#include "mcu/mcu.h"
 
 class BatteryLabel : public QLabel
 {

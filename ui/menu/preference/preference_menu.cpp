@@ -15,7 +15,7 @@ namespace DplPreferenceMenu {
 PreferenceMenu::PreferenceMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
-    m_mcu = Mcu::get_mcu();
+    m_mcu = Mcu::instance();
 
     /* Bright menu item */
     m_brightItem.set(tr("Bright"), "%", 1, 100, 0);

@@ -8,6 +8,8 @@ class Mcu : public QObject
 {
     Q_OBJECT
 public:
+    static Mcu* instance();
+
     enum RotaryType {
         ROTARY_UP,
         ROTARY_DOWN
@@ -75,8 +77,6 @@ public:
     virtual void query_second_battery_status()  = 0;
     virtual void query_brightness()             = 0;
     virtual void query_probe()                  = 0;
-
-    static Mcu* get_mcu();
 
 public slots:
     virtual void notify_started()   = 0;

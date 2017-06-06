@@ -9,7 +9,7 @@
 #define __PREFERENCE_MENU_H__
 
 #include "base_menu.h"
-#include "mcu.h"
+#include "mcu/mcu.h"
 
 namespace DplPreferenceMenu {
 

@@ -19,12 +19,12 @@ LawConfigMenu::LawConfigMenu(Ui::BaseMenu *ui, QObject *parent) :
             this, SLOT(do_lawTypeItem_changed(int)));
 
     /* Pulse Connection menu item */
-    m_pulseItem.set(tr("Pulse Connection"), "1-113", 1, 113, 0);
+    m_pulseItem.set(tr("Pulse"), "1-113", 1, 113, 0);
     connect(&m_pulseItem, SIGNAL(value_changed(double)),
             this, SLOT(do_pulseItem_changed(double)));
 
     /* Receiver Connection menu item */
-    m_receiverItem.set(tr("Receiver Connection"), "1-113", 1, 113, 0);
+    m_receiverItem.set(tr("Receiver"), "1-113", 1, 113, 0);
     connect(&m_receiverItem, SIGNAL(value_changed(double)),
             this, SLOT(do_receiverItem_changed(double)));
 

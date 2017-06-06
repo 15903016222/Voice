@@ -188,7 +188,14 @@ bool Device::add_group()
             SIGNAL(focallawed()),
             this,
             SLOT(refresh_beams()));
-
+    connect(static_cast<DplFocallaw::Probe *>(d->m_curGroup->focallawer()->probe().data()),
+            SIGNAL(pulser_index_changed(uint)),
+            this,
+            SLOT(refresh_beams()));
+    connect(static_cast<DplFocallaw::Probe *>(d->m_curGroup->focallawer()->probe().data()),
+            SIGNAL(receiver_index_changed(uint)),
+            this,
+            SLOT(refresh_beams()));
     refresh_beams();
 
     emit current_group_changed();
@@ -286,11 +293,10 @@ void Device::refresh_beams()
         focallawerBeams = focallawer->beams();
         fpgaBeam.set_group_id(i);
         fpgaBeam.set_gain_compensation(0);
-        fpgaBeam.set_total_beam_qty(qty);
 
         d->m_groups[i]->show_info();
 
-        for (j = 0; j < focallawer->beam_qty(); ++j) {
+        for (j = 0; j < focallawerBeams.size(); ++j) {
 //            qDebug("%s[%d]: beamQty(%d) pointQty(%d)",__func__, __LINE__, focallawer->beam_qty(), d->m_groups[i]->point_qty());
             fpgaBeam.set_index(index);
 //            fpgaBeam.set_delay(focallawerBeams[j]->delay()/DplFpga::Fpga::SAMPLE_PRECISION);
@@ -304,8 +310,8 @@ void Device::refresh_beams()
 
             aperture = focallawerBeams[j]->aperture();
 
-            fpgaBeam.set_tx_channel(startRxChannel, aperture);
-            fpgaBeam.set_rx_channel(startTxChannel, aperture);
+            fpgaBeam.set_tx_channel(startTxChannel, aperture);
+            fpgaBeam.set_rx_channel(startRxChannel, aperture);
 
             for (k = 0; k < aperture; ++k) {
                 fpgaBeam.set_rx_delay(startRxChannel+k, focallawerBeams[j]->rxdelay().at(k));

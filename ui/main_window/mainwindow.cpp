@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->angleMenuItem->set(tr("Angle"), "&#176;", 0, 180, 1);
 
     /* Mcu */
-    Mcu *mcu = Mcu::get_mcu();
+    Mcu *mcu = Mcu::instance();
     connect(mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
     connect(mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
