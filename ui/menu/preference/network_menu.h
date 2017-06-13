@@ -23,8 +23,8 @@ public:
     void hide();
 
 private:
-    LabelMenuItem *m_ipItem;
-    LabelMenuItem *m_maskItem;
+    LabelMenuItem m_ipItem;
+    LabelMenuItem m_maskItem;
 
 private slots:
     void show_ip_address_dialog();

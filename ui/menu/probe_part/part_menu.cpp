@@ -7,25 +7,18 @@ namespace DplProbeMenu {
 PartMenu::PartMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
-
-    m_geometryItem = new ComboMenuItem;
-    m_thicknessItem = new SpinMenuItem;
-    m_diameterItem = new SpinMenuItem;
-    m_materialItem = new ComboMenuItem;
-    m_overlayItem = new ComboMenuItem;
-
     /* Geometry menu item */
     QStringList geometrys;
     geometrys.append(tr("Plate"));
     geometrys.append(tr("ID"));
     geometrys.append(tr("OD"));
-    m_geometryItem->set(tr("Geometry"), geometrys);
+    m_geometryItem.set(tr("Geometry"), geometrys);
 
     /* Thickness menu item */
-    m_thicknessItem->set(tr("Thickness"), "mm", 0.05, 1000, 2);
+    m_thicknessItem.set(tr("Thickness"), "mm", 0.05, 1000, 2);
 
     /* Diameter menu item */
-    m_diameterItem->set(tr("Diameter"), "mm", 0.05, 525, 2);
+    m_diameterItem.set(tr("Diameter"), "mm", 0.05, 525, 2);
 
     /* Material menu item */
     QStringList materials;
@@ -53,47 +46,42 @@ PartMenu::PartMenu(Ui::BaseMenu *ui, QObject *parent) :
     materials.append(tr("Rubber Vulcanized"));
     materials.append(tr("Teflon"));
     materials.append(tr("Water"));
-    m_materialItem->set(tr("Material"), materials);
+    m_materialItem.set(tr("Material"), materials);
 
     /* Overlay menu item */
-    m_overlayItem->set(tr("Overlay"), s_onOff);
+    m_overlayItem.set(tr("Overlay"), s_onOff);
 }
 
 PartMenu::~PartMenu()
 {
-    delete m_geometryItem;
-    delete m_thicknessItem;
-    delete m_diameterItem;
-    delete m_materialItem;
-    delete m_overlayItem;
 }
 
 void PartMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(m_geometryItem);
-    ui->menuItem1->layout()->addWidget(m_thicknessItem);
-    ui->menuItem2->layout()->addWidget(m_diameterItem);
-    ui->menuItem3->layout()->addWidget(m_materialItem);
-    ui->menuItem4->layout()->addWidget(m_overlayItem);
-    m_geometryItem->show();
-    m_thicknessItem->show();
-    m_diameterItem->show();
-    m_materialItem->show();
-    m_overlayItem->show();
+    ui->menuItem0->layout()->addWidget(&m_geometryItem);
+    ui->menuItem1->layout()->addWidget(&m_thicknessItem);
+    ui->menuItem2->layout()->addWidget(&m_diameterItem);
+    ui->menuItem3->layout()->addWidget(&m_materialItem);
+    ui->menuItem4->layout()->addWidget(&m_overlayItem);
+    m_geometryItem.show();
+    m_thicknessItem.show();
+    m_diameterItem.show();
+    m_materialItem.show();
+    m_overlayItem.show();
 }
 
 void PartMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(m_geometryItem);
-    ui->menuItem1->layout()->removeWidget(m_thicknessItem);
-    ui->menuItem2->layout()->removeWidget(m_diameterItem);
-    ui->menuItem3->layout()->removeWidget(m_materialItem);
-    ui->menuItem4->layout()->removeWidget(m_overlayItem);
-    m_geometryItem->hide();
-    m_thicknessItem->hide();
-    m_diameterItem->hide();
-    m_materialItem->hide();
-    m_overlayItem->hide();
+    ui->menuItem0->layout()->removeWidget(&m_geometryItem);
+    ui->menuItem1->layout()->removeWidget(&m_thicknessItem);
+    ui->menuItem2->layout()->removeWidget(&m_diameterItem);
+    ui->menuItem3->layout()->removeWidget(&m_materialItem);
+    ui->menuItem4->layout()->removeWidget(&m_overlayItem);
+    m_geometryItem.hide();
+    m_thicknessItem.hide();
+    m_diameterItem.hide();
+    m_materialItem.hide();
+    m_overlayItem.hide();
 }
 
 }

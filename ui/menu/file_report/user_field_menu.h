@@ -20,12 +20,12 @@ signals:
 public slots:
 
 private:
-    ComboMenuItem *m_selectItem;
-    ComboMenuItem *m_enableItem;
-    LabelMenuItem *m_labelItem;
-    LabelMenuItem *m_contentItem;
-    LabelMenuItem *m_editNoteItem;
-    LabelMenuItem *m_printItem;
+    ComboMenuItem m_selectItem;
+    ComboMenuItem m_enableItem;
+    LabelMenuItem m_labelItem;
+    LabelMenuItem m_contentItem;
+    LabelMenuItem m_editNoteItem;
+    LabelMenuItem m_printItem;
 
 private slots:
     void show_input_dialog();

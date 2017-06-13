@@ -8,6 +8,8 @@ class Mcu : public QObject
 {
     Q_OBJECT
 public:
+    static Mcu* instance();
+
     enum RotaryType {
         ROTARY_UP,
         ROTARY_DOWN
@@ -76,9 +78,6 @@ public:
     virtual void query_brightness()             = 0;
     virtual void query_probe()                  = 0;
 
-    static Mcu* get_mcu();
-    static void destroyed();
-
 public slots:
     virtual void notify_started()   = 0;
     virtual void set_poweroff()     = 0;
@@ -98,10 +97,6 @@ Q_SIGNALS:
 protected:
     explicit Mcu() {}
     virtual ~Mcu() {}
-
-private:
-    static QMutex m_mutex;
-    static Mcu* m_mcu;
 };
 
 #endif

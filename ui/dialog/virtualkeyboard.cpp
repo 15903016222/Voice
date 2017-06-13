@@ -36,50 +36,50 @@ void VirtualKeyboard::do_click_button()
     QPushButton *pushButton = qobject_cast<QPushButton*>(this->sender());
     int value = pushButton->text().toInt();
     VInput::Key key = VInput::Key_1;
-    VInput::get_vinput()->send((VInput::Key)(key + value - 1));
+    VInput::instance()->send((VInput::Key)(key + value - 1));
 }
 
 void VirtualKeyboard::on_panelButton_0_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_0);
+    VInput::instance()->send(VInput::Key_0);
 }
 
 void VirtualKeyboard::on_pushButton_1_clicked()
 {
     qDebug() << ".";
-    VInput::get_vinput()->send(VInput::Key_Dot);
+    VInput::instance()->send(VInput::Key_Dot);
 }
 
 void VirtualKeyboard::on_pushButton_2_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_Backspace);
+    VInput::instance()->send(VInput::Key_Backspace);
 }
 
 void VirtualKeyboard::on_pushButton_3_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_Left);
+    VInput::instance()->send(VInput::Key_Left);
 }
 
 void VirtualKeyboard::on_pushButton_4_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_Right);
+    VInput::instance()->send(VInput::Key_Right);
 }
 
 void VirtualKeyboard::on_pushButton_5_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_Enter);
+    VInput::instance()->send(VInput::Key_Enter);
 //    hide();
 //    emit close_keyboard();
 }
 
 void VirtualKeyboard::on_pushButton_6_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_Minus);
+    VInput::instance()->send(VInput::Key_Minus);
 }
 
 void VirtualKeyboard::on_pushButton_7_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_Esc);
+    VInput::instance()->send(VInput::Key_Esc);
     hide();
     emit close_keyboard();
 }

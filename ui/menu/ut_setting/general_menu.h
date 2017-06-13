@@ -25,12 +25,8 @@ public:
     void hide();
 
 public slots:
-    void set_gain(double gain) { m_gainItem->set_value(gain); }
+    void set_gain(double gain) { m_gainItem.set_value(gain); }
 
-    /**
-     * @brief update    更新菜单数据
-     */
-    void update();
 
 signals:
     void gain_changed(double gain);
@@ -38,14 +34,19 @@ signals:
 private:
     bool m_updateFlag;
 
-    SpinMenuItem *m_gainItem;
-    SpinMenuItem *m_startItem;
-    SpinMenuItem *m_rangeItem;
-    SpinMenuItem *m_velocityItem;
-    SpinMenuItem *m_wedgeDelayItem;
-    ComboMenuItem *m_utUnitItem;
+    SpinMenuItem m_gainItem;
+    SpinMenuItem m_startItem;
+    SpinMenuItem m_rangeItem;
+    SpinMenuItem m_velocityItem;
+    SpinMenuItem m_wedgeDelayItem;
+    ComboMenuItem m_utUnitItem;
 
     DplDevice::GroupPointer m_group;
+
+    /**
+     * @brief update    更新菜单数据
+     */
+    void update();
 
 private slots:
     void do_gainItem_changed(double gain);

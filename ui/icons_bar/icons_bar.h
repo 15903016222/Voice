@@ -1,7 +1,7 @@
 #ifndef __ICONS_BAR_H__
 #define __ICONS_BAR_H__
 
-#include "mcu.h"
+#include "mcu/mcu.h"
 
 #include <QWidget>
 

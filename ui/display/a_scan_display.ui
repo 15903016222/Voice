@@ -60,6 +60,9 @@ color: rgb(255, 255, 255);</string>
      </item>
      <item>
       <widget class="AscanWidget" name="ascanWidget" native="true">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(0, 0, 0);</string>
        </property>

@@ -7,7 +7,7 @@ IconsBar::IconsBar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::IconsBar)
 {
-    Mcu *mcu = Mcu::get_mcu();
+    Mcu *mcu = Mcu::instance();
     ui->setupUi(this);
 
     connect(ui->keyboardPushButton, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));

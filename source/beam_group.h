@@ -1,18 +1,23 @@
-#ifndef __BEAM_GROUP_H__
-#define __BEAM_GROUP_H__
+/**
+ * @file beam_group.h
+ * @brief Beam组类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-04-18
+ */
+
+#ifndef __DPLSOURCE_BEAM_GROUP_H__
+#define __DPLSOURCE_BEAM_GROUP_H__
 
 #include <QObject>
 #include <QSharedPointer>
 #include "beam.h"
 
+#include "source_global.h"
+
 namespace DplSource {
 
-class BeamGroup;
 class BeamGroupPrivate;
-
-typedef QSharedPointer<BeamGroup> BeamGroupPointer;
-
-class BeamGroup : public QObject
+class SOURCESHARED_EXPORT BeamGroup : public QObject
 {
     Q_OBJECT
 public:
@@ -26,29 +31,32 @@ public:
      */
     const BeamPointer get(int index);
 
-    /**
-     * @brief set_raw_data  设置原始数据
-     * @param data          原始数据
-     */
-    void set_raw_data(const char *data);
 
     /**
      * @brief beam_qty  获取Beam数量
      * @return          数量值
      */
-    int beam_qty();
+    int beam_qty() const;
 
     /**
      * @brief point_qty 获取一条Beam的点数量
      * @return          点数量值
      */
-    int point_qty();
+    int point_qty() const;
 
     /**
      * @brief size  获取数据大小
      * @return      大小(Bytes)
      */
-    int size();
+    int size() const;
+
+//protected:
+//    friend class Alloter;
+    /**
+     * @brief set_raw_data  设置原始数据
+     * @param data          原始数据
+     */
+    void set_raw_data(const char *data);
 
 public slots:
     /**
@@ -72,5 +80,8 @@ private:
     BeamGroupPrivate *d;
 };
 
+typedef QSharedPointer<BeamGroup> BeamGroupPointer;
+
 }
-#endif // __BEAM_GROUP_H__
+
+#endif // __DPLSOURCE_BEAM_GROUP_H__

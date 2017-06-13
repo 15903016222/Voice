@@ -1,29 +1,26 @@
-#ifndef __BEAM_SOURCE_H__
-#define __BEAM_SOURCE_H__
+/**
+ * @file beam.h
+ * @brief beam类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-04-18
+ */
+
+#ifndef __DPLSOURCE_BEAM_H__
+#define __DPLSOURCE_BEAM_H__
 
 #include "source_global.h"
+
 #include <QObject>
 #include <QSharedPointer>
 
 namespace DplSource {
 
-class Beam;
-class BeamSourcePrivate;
-
-typedef QSharedPointer<Beam> BeamPointer;
-
+class BeamPrivate;
 class SOURCESHARED_EXPORT Beam
 {
 public:
-    Beam();
+    explicit Beam();
     ~Beam();
-
-    /**
-     * @brief set_raw_data  设置Beam原始数据
-     * @param data          指向Beam原始数据,调用者要维护这个地址,不能删除
-     * @param pointNum      波形点数
-     */
-    void set_raw_data(const char *data, int pointNum);
 
     /**
      * @brief has_data  判断是否有数据
@@ -41,7 +38,7 @@ public:
      * @param wave      波形数据
      * @return          成功返回true，失败返回false
      */
-    bool get_wave(QByteArray &wave) const;
+    QByteArray get_wave() const;
 
     /**
      * @brief point_qty 获取波形点数
@@ -110,11 +107,23 @@ public:
 //    int analog_output0();
 //    int analog_output1();
 
-    static const int MEASURE_SIZE;
+    static const uint MEASURE_SIZE;
+
+protected:
+    friend class BeamGroup;
+    /**
+     * @brief set_raw_data  设置Beam原始数据
+     * @param data          指向Beam原始数据,调用者要维护这个地址,不能删除
+     * @param pointNum      波形点数
+     */
+    void set_raw_data(const char *data, int pointNum);
+
 private:
-    BeamSourcePrivate *d;
+    BeamPrivate *d;
 };
+
+typedef QSharedPointer<Beam> BeamPointer;
 
 }
 
-#endif // __BEAM_SOURCE_H__
+#endif // __DPLSOURCE_BEAM_H__

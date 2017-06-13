@@ -1,7 +1,7 @@
 #ifndef __PROBE_DIALOG_H__
 #define __PROBE_DIALOG_H__
 
-#include <probe/probe.h>
+#include <focallaw/probe.h>
 
 #include <QDialog>
 #include <QListWidgetItem>
@@ -18,14 +18,14 @@ public:
     explicit ProbeDialog(QWidget *parent = 0);
     ~ProbeDialog();
 
-    DplProbe::ProbePointer get_probe() const;
+    DplFocallaw::ProbePointer get_probe() const;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
 
 private:
     Ui::ProbeDialog *ui;
-    DplProbe::ProbePointer m_probePtr;
+    DplFocallaw::ProbePointer m_probePtr;
     QString m_probePath;
 
     QString get_dir();
@@ -50,12 +50,11 @@ private slots:
     void on_freqDoubleSpinBox_valueChanged(double arg1);
     void on_priElemQtySpinBox_valueChanged(int arg1);
     void on_secElemQtySpinBox_valueChanged(int arg1);
-    void on_refPointDoubleSpinBox_valueChanged(double arg1);
     void on_priPitchDoubleSpinBox_valueChanged(double arg1);
     void on_secPitchDoubleSpinBox_valueChanged(double arg1);
 };
 
-inline DplProbe::ProbePointer ProbeDialog::get_probe() const
+inline DplFocallaw::ProbePointer ProbeDialog::get_probe() const
 {
     return m_probePtr;
 }

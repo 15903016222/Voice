@@ -16,10 +16,10 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_scanItem;
-    ComboMenuItem *m_typeItem;
-    SpinMenuItem *m_maxScanSpeedItem;
-    SpinMenuItem *m_maxScanSpeedRPMItem;
+    ComboMenuItem m_scanItem;
+    ComboMenuItem m_typeItem;
+    SpinMenuItem m_maxScanSpeedItem;
+    SpinMenuItem m_maxScanSpeedRPMItem;
 };
 
 }

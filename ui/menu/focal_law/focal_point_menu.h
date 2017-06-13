@@ -16,11 +16,11 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_typeItem;
-    SpinMenuItem *m_positionStartItem;
-    SpinMenuItem *m_positionEndItem;
-    SpinMenuItem *m_offsetStartItem;
-    SpinMenuItem *m_offsetEndItem;
+    ComboMenuItem m_typeItem;
+    SpinMenuItem m_positionStartItem;
+    SpinMenuItem m_positionEndItem;
+    SpinMenuItem m_offsetStartItem;
+    SpinMenuItem m_offsetEndItem;
 };
 
 }

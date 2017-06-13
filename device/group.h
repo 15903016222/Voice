@@ -8,13 +8,9 @@
 #ifndef __DEVICE_GROUP_H__
 #define __DEVICE_GROUP_H__
 
-#include <QObject>
-
 #include <fpga/group.h>
-#include <probe/probe.h>
-#include <probe/wedge.h>
 #include <source/beam_group.h>
-#include <focallaw/focallaw.h>
+#include <focallaw/focallawer.h>
 
 namespace DplDevice {
 
@@ -139,14 +135,29 @@ public:
      */
     double max_range();
 
-    DplProbe::ProbePointer get_probe() const;
-    void set_probe(DplProbe::ProbePointer probePtr);
+    double gate_a_start();
 
-    DplProbe::WedgePointer get_wedge() const;
+    void set_gate_a_start(double val);
 
+    double gate_b_start();
+
+    void set_gate_b_start(double val);
+
+    double gate_i_start();
+
+    void set_gate_i_start(double val);
+
+    /**
+     * @brief get_beam_group    获取数据源Beam组
+     * @return                  返回数据源Beam组
+     */
     const DplSource::BeamGroupPointer &get_beam_group() const;
 
-    DplFocallaw::FocallawPointer &get_focallaw();
+    /**
+     * @brief get_focallawer    获取聚焦法则计算器
+     * @return                  聚焦法则计算器
+     */
+    DplFocallaw::FocallawerPointer &focallawer();
 
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
@@ -154,17 +165,15 @@ signals:
     void range_changed(double val);
     void velocity_changed(double val);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
-    void probe_changed(DplProbe::ProbePointer probePtr);
+    void probe_changed(DplFocallaw::ProbePointer probePtr);
 
 private slots:
     void update_sample();
 
 private:
     GroupPrivate *d;
-    DplProbe::ProbePointer m_probePtr;  /* 探头 */
-    DplProbe::WedgePointer m_wedgePtr;  /* 楔块 */
-    DplSource::BeamGroupPointer m_beamGroupPtr; /* Beam数据组 */
-    DplFocallaw::FocallawPointer m_focallawPtr; /* 聚焦法则 */
+    DplSource::BeamGroupPointer m_beamGroupPtr;     // Beam数据组
+    DplFocallaw::FocallawerPointer m_focallawerPtr; // 聚焦法则计算器
 };
 
 inline double Group::max_start()
@@ -177,30 +186,15 @@ inline double Group::max_range()
     return max_sample_time() - start();
 }
 
-inline DplProbe::ProbePointer Group::get_probe() const
-{
-    return m_probePtr;
-}
-
-inline void Group::set_probe(DplProbe::ProbePointer probePtr)
-{
-    m_probePtr = probePtr;
-    emit probe_changed(probePtr);
-}
-
-inline DplProbe::WedgePointer Group::get_wedge() const
-{
-    return m_wedgePtr;
-}
 
 inline const DplSource::BeamGroupPointer &Group::get_beam_group() const
 {
     return m_beamGroupPtr;
 }
 
-inline DplFocallaw::FocallawPointer &Group::get_focallaw()
+inline DplFocallaw::FocallawerPointer &Group::focallawer()
 {
-    return m_focallawPtr;
+    return m_focallawerPtr;
 }
 
 }

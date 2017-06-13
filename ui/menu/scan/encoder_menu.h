@@ -15,12 +15,12 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_encoderItem;
-    ComboMenuItem *m_encoderTypeItem;
-    SpinMenuItem *m_resolutionItem;
-    ComboMenuItem *m_polarityItem;
-    SpinMenuItem *m_originItem;
-    LabelMenuItem *m_presetItem;
+    ComboMenuItem m_encoderItem;
+    ComboMenuItem m_encoderTypeItem;
+    SpinMenuItem m_resolutionItem;
+    ComboMenuItem m_polarityItem;
+    SpinMenuItem m_originItem;
+    LabelMenuItem m_presetItem;
 };
 
 }

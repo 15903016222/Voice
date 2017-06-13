@@ -2,12 +2,10 @@
  * @file device_phascan.cpp
  * @brief Device for Phascan
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
- * @version 0.1
  * @date 2016-11-07
  */
-#include "device_phascan.h"
+#include "device_p.h"
 
-/* unix */
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -19,31 +17,7 @@
 
 namespace DplDevice {
 
-DevicePhascan::DevicePhascan() :
-    Device()
-{
-    m_serialNo = get_serial_number();
-}
-
-bool DevicePhascan::is_valid() const
-{
-    bool flag = false;
-    if (get_cert().get_serial_number() == m_serialNo) {
-        switch (get_cert().get_auth_mode()) {
-        case Cert::ALWAYS_VALID:
-            flag = true;
-            break;
-        case Cert::VALID_DATE:
-            flag = (get_cert().get_expire() > ::time(NULL));
-            break;
-        default:
-            break;
-        }
-    }
-    return flag;
-}
-
-QString DevicePhascan::get_serial_number()
+QString DevicePrivate::get_serial_number()
 {
     QString serialNo;
     int fd = ::open("/dev/mem", O_RDWR | O_NDELAY);

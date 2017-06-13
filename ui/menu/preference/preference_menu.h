@@ -9,7 +9,7 @@
 #define __PREFERENCE_MENU_H__
 
 #include "base_menu.h"
-#include "mcu.h"
+#include "mcu/mcu.h"
 
 namespace DplPreferenceMenu {
 
@@ -24,11 +24,11 @@ public:
     void hide();
 
 private:
-    SpinMenuItem *m_brightItem;
-    SpinMenuItem *m_opacityItem;
-    ComboMenuItem *m_languageItem;
-    ComboMenuItem *m_startingPageItem;
-    ComboMenuItem *m_gatemodeItem;
+    SpinMenuItem m_brightItem;
+    SpinMenuItem m_opacityItem;
+    ComboMenuItem m_languageItem;
+    ComboMenuItem m_startingPageItem;
+    ComboMenuItem m_gatemodeItem;
 
     Mcu *m_mcu;
 

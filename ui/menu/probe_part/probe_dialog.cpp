@@ -6,7 +6,8 @@
 #include <QDebug>
 
 #include <device/device.h>
-#include <probe/pa_probe.h>
+#include <focallaw/ut_probe.h>
+#include <focallaw/pa_probe.h>
 
 ProbeDialog::ProbeDialog(QWidget *parent) :
     QDialog(parent),
@@ -15,12 +16,12 @@ ProbeDialog::ProbeDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 
-    DplDevice::GroupPointer group = DplDevice::Device::get_instance()->current_group();
+    DplDevice::GroupPointer group = DplDevice::Device::instance()->current_group();
     if (group->mode() == DplDevice::Group::UT1
             || group->mode() == DplDevice::Group::UT2) {
-        m_probePtr = DplProbe::ProbePointer(new DplProbe::Probe);
+        m_probePtr = DplFocallaw::UtProbePointer(new DplFocallaw::UtProbe);
     } else {
-        m_probePtr = DplProbe::PaProbePointer(new DplProbe::PaProbe);
+        m_probePtr = DplFocallaw::PaProbePointer(new DplFocallaw::PaProbe);
     }
 
     init_select_tab();
@@ -60,7 +61,7 @@ QString ProbeDialog::get_dir()
 {
     QString path = "/opt/mercury/probe/";
 
-    if (m_probePtr->is_pa_probe()) {
+    if (m_probePtr->is_pa()) {
         path += "PA/";
     } else {
         path += "UT/";
@@ -86,7 +87,7 @@ void ProbeDialog::init_define_tab()
     ui->defineListWidget->clear();
     ui->defineListWidget->insertItems(0, filesStringList);
 
-    if (! m_probePtr->is_pa_probe()) {
+    if (! m_probePtr->is_pa()) {
         ui->priElemQtyLabel->hide();
         ui->secElemQtyLabel->hide();
         ui->priElemQtySpinBox->hide();
@@ -137,22 +138,22 @@ void ProbeDialog::show_info() const
     msg += "<tr><th>";
     msg += tr("Type") + "</th><td>";
     switch (m_probePtr->type()) {
-    case DplProbe::Probe::ANGLE_BEAM:
+    case DplFocallaw::Probe::ANGLE_BEAM:
         msg += tr("Angle Beam");
         break;
-    case DplProbe::Probe::CONTACT:
+    case DplFocallaw::Probe::CONTACT:
         msg += tr("Contact");
         break;
-    case DplProbe::Probe::IMMERSION:
+    case DplFocallaw::Probe::IMMERSION:
         msg += tr("Immersion");
         break;
-    case DplProbe::Probe::DELAY:
+    case DplFocallaw::Probe::DELAY:
         msg += tr("Delay");
         break;
-    case DplProbe::Probe::DUAL:
+    case DplFocallaw::Probe::DUAL:
         msg += tr("Dual");
         break;
-    case DplProbe::Probe::TOFD:
+    case DplFocallaw::Probe::TOFD:
         msg += "TOFD";
         break;
     default:
@@ -166,25 +167,25 @@ void ProbeDialog::show_info() const
             + QString::number(m_probePtr->freq(), 'f', 2)
             + " MHz</td></tr>";
 
-    if (m_probePtr->is_pa_probe()) {
-        DplProbe::PaProbePointer paProbePtr = m_probePtr.staticCast<DplProbe::PaProbe>();
+    if (m_probePtr->is_pa()) {
+        DplFocallaw::PaProbePointer paProbePtr = m_probePtr.staticCast<DplFocallaw::PaProbe>();
 
         msg += "<tr><th>";
         msg += tr("Array Type") + "</th><td>";
-        switch (paProbePtr->array_type()) {
-        case DplProbe::PaProbe::LINEAR:
+        switch (paProbePtr->array_mode()) {
+        case DplFocallaw::PaProbe::LINEAR:
             msg += tr("Linear");
             break;
-        case DplProbe::PaProbe::CURVED:
+        case DplFocallaw::PaProbe::CURVED:
             msg += tr("Curved");
             break;
-        case DplProbe::PaProbe::MATRIX:
+        case DplFocallaw::PaProbe::MATRIX:
             msg += tr("Matrix");
             break;
-        case DplProbe::PaProbe::DUAL_LINEAR:
+        case DplFocallaw::PaProbe::DUAL_LINEAR:
             msg += tr("Dual Linear");
             break;
-        case DplProbe::PaProbe::DUAL_MATRIX:
+        case DplFocallaw::PaProbe::DUAL_MATRIX:
             msg += tr("Dual Matrix");
             break;
         default:
@@ -195,33 +196,26 @@ void ProbeDialog::show_info() const
 
         msg += "<tr><th>";
         msg += tr("Pri Element Qty") + "</th><td>"
-                + QString::number(paProbePtr->principal_axis_element_qty())
+                + QString::number(paProbePtr->primary_element_qty())
                 + "</td></tr>";
 
         msg += "<tr><th>";
         msg += tr("Sec Element Qty") + "</th><td>"
-                + QString::number(paProbePtr->secondary_axis_element_qty())
+                + QString::number(paProbePtr->secondary_element_qty())
                 + "</td></tr>";
 
         msg += "<tr><th>";
         msg += tr("Pri Pitch") + "</th><td>"
-                + QString::number(paProbePtr->principal_axis_pitch(), 'f', 2)
+                + QString::number(paProbePtr->primary_pitch(), 'f', 2)
                 + " mm</td></tr>";
 
         msg += "<tr><th>";
         msg += tr("Sec Pitch") + "</th><td>"
-                + QString::number(paProbePtr->secondary_axis_pitch(), 'f', 2)
+                + QString::number(paProbePtr->secondary_pitch(), 'f', 2)
                 + " mm</td></tr>";
     } else {
-        msg += "<tr><th>";
-        msg += tr("Element Size") + "</th><td>"
-                + QString::number(m_probePtr->element_elevation(), 'f', 2)
-                + " mm</td></tr>";
+        /* Ut Probe */
 
-        msg += "<tr><th>";
-        msg += tr("Ref Point") + "</th><td>"
-                + QString::number(m_probePtr->refpoint(), 'f', 2)
-                + " mm</td></tr>";
     }
 
     msg += "</table>"
@@ -282,7 +276,7 @@ void ProbeDialog::on_savePushButton_clicked()
     m_probePath += "user/";
     m_probePath += ui->modelLineEdit->text();
 
-    if (m_probePtr->is_pa_probe()) {
+    if (m_probePtr->is_pa()) {
         m_probePath += ".opp";
     } else {
         m_probePath += ".oup";
@@ -333,7 +327,7 @@ void ProbeDialog::on_serialLineEdit_textEdited(const QString &arg1)
 
 void ProbeDialog::on_typeComboBox_currentIndexChanged(int index)
 {
-    m_probePtr->set_type(static_cast<DplProbe::Probe::Type>(index));
+    m_probePtr->set_type(static_cast<DplFocallaw::Probe::Type>(index));
 }
 
 void ProbeDialog::on_freqDoubleSpinBox_valueChanged(double arg1)
@@ -343,37 +337,32 @@ void ProbeDialog::on_freqDoubleSpinBox_valueChanged(double arg1)
 
 void ProbeDialog::on_priElemQtySpinBox_valueChanged(int arg1)
 {
-    if (m_probePtr->is_pa_probe()) {
-        DplProbe::PaProbePointer paProbePtr = m_probePtr.staticCast<DplProbe::PaProbe>();
-        paProbePtr->set_principal_axis_element_qty(arg1);
+    if (m_probePtr->is_pa()) {
+        DplFocallaw::PaProbePointer paProbePtr = m_probePtr.staticCast<DplFocallaw::PaProbe>();
+        paProbePtr->set_primary_element_qty(arg1);
     }
 }
 
 void ProbeDialog::on_secElemQtySpinBox_valueChanged(int arg1)
 {
-    if (m_probePtr->is_pa_probe()) {
-        DplProbe::PaProbePointer paProbePtr = m_probePtr.staticCast<DplProbe::PaProbe>();
-        paProbePtr->set_secondary_axis_element_qty(arg1);
+    if (m_probePtr->is_pa()) {
+        DplFocallaw::PaProbePointer paProbePtr = m_probePtr.staticCast<DplFocallaw::PaProbe>();
+        paProbePtr->set_secondary_element_qty(arg1);
     }
-}
-
-void ProbeDialog::on_refPointDoubleSpinBox_valueChanged(double arg1)
-{
-    m_probePtr->set_refpoint(arg1);
 }
 
 void ProbeDialog::on_priPitchDoubleSpinBox_valueChanged(double arg1)
 {
-    if (m_probePtr->is_pa_probe()) {
-        DplProbe::PaProbePointer paProbePtr = m_probePtr.staticCast<DplProbe::PaProbe>();
-        paProbePtr->set_principa_axis_pitch(arg1);
+    if (m_probePtr->is_pa()) {
+        DplFocallaw::PaProbePointer paProbePtr = m_probePtr.staticCast<DplFocallaw::PaProbe>();
+        paProbePtr->set_primary_pitch(arg1);
     }
 }
 
 void ProbeDialog::on_secPitchDoubleSpinBox_valueChanged(double arg1)
 {
-    if (m_probePtr->is_pa_probe()) {
-        DplProbe::PaProbePointer paProbePtr = m_probePtr.staticCast<DplProbe::PaProbe>();
-        paProbePtr->set_secondary_axis_pitch(arg1);
+    if (m_probePtr->is_pa()) {
+        DplFocallaw::PaProbePointer paProbePtr = m_probePtr.staticCast<DplFocallaw::PaProbe>();
+        paProbePtr->set_secondary_pitch(arg1);
     }
 }

@@ -42,7 +42,7 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
             this,
             SLOT(update()));
 
-    ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()));
+    ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
 
 AscanDisplay::~AscanDisplay()
@@ -53,10 +53,7 @@ AscanDisplay::~AscanDisplay()
 
 void AscanDisplay::update()
 {
-    DplSource::BeamGroupPointer beamGroup = m_group->get_beam_group();
-    QByteArray wave;
-    beamGroup->get(0)->get_wave(wave);
-    ui->ascanWidget->show(wave);
+    ui->ascanWidget->show(m_group->get_beam_group()->get(0)->get_wave());
 }
 
 void AscanDisplay::update_bottom_ruler()

@@ -1,7 +1,7 @@
 #ifndef __MAIN_WINDOW_H__
 #define __MAIN_WINDOW_H__
 
-#include "mcu.h"
+#include "mcu/mcu.h"
 #include "virtualkeyboard.h"
 #include "main_menu.h"
 #include "sub_menu.h"
@@ -46,8 +46,8 @@ private:
 
     VirtualKeyboard *pVirtualKeyboard;
 
-    MainMenu *mainMenu;
-    SubMenu *subMenu;
+    MainMenu *m_mainMenu;
+    SubMenu *m_subMenu;
 
     bool m_hiddenCommonMenuFlag;
     void show_hidden_Menu();

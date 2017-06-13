@@ -1,34 +1,37 @@
-HEADERS += \
+
+PUBLIC_HEADERS += \
     $$PWD/device.h \
     $$PWD/group.h
+
+PRIVATE_HEADERS += \
+    $$PWD/device_p.h
 
 SOURCES += \
     $$PWD/device.cpp \
     $$PWD/group.cpp
 
-equals(DEVICE, "PC_UNIX") {
-    SOURCES += \
-        $$PWD/device_pc.cpp
+pcwin {
+    SOURCES += $$PWD/device_pcwin.cpp
 }
 
-equals(DEVICE, "PC_WIN") {
-    SOURCES += \
-        $$PWD/device_pc.cpp
+pcunix {
+    SOURCES += $$PWD/device_pcunix.cpp
 }
 
-equals(DEVICE, "PHASCAN"){
-    HEADERS += \
-        $$PWD/cert.h \
-        $$PWD/device_phascan.h
+phascan {
     SOURCES += \
-        $$PWD/cert.cpp \
-        $$PWD/device_phascan.cpp
-}
-
-equals(DEVICE, "PHASCAN_II") {
+        $$PWD/device_phascan.cpp \
+        $$PWD/cert.cpp
     HEADERS += \
         $$PWD/cert.h
-    SOURCES += \
-        $$PWD/cert.cpp \
-        $$PWD/device_phascan_ii.cpp
 }
+
+phascan_ii {
+    SOURCES += \
+        $$PWD/device_phascan_ii.cpp \
+        $$PWD/cert.cpp
+    HEADERS += \
+        $$PWD/cert.h
+}
+
+HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS

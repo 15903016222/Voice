@@ -1,6 +1,8 @@
 
-HEADERS += \
-    $$PWD/focallaw.h
+LIBFOCALLAW = focallaw-$$DEVICE
 
-SOURCES += \
-#    $$PWD/focallaw.cpp
+CONFIG(debug, debug|release) {
+    LIBFOCALLAW = $$join(LIBFOCALLAW,,,"-debug")
+}
+
+LIBS += -L$$PWD/lib -l$$LIBFOCALLAW

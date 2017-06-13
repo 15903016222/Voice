@@ -32,11 +32,11 @@ private slots:
 private:
     bool m_updateFlag;
 
-    ComboMenuItem *m_groupItem;
-    ComboMenuItem *m_modeItem;
-    LabelMenuItem *m_probeItem;
-    LabelMenuItem *m_wedgeItem;
-    ComboMenuItem *m_autoDetectItem;
+    ComboMenuItem m_groupItem;
+    ComboMenuItem m_modeItem;
+    LabelMenuItem m_probeItem;
+    LabelMenuItem m_wedgeItem;
+    ComboMenuItem m_autoDetectItem;
 
     DplDevice::GroupPointer m_group;
 

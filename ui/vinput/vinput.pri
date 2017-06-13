@@ -4,22 +4,22 @@ INCLUDEPATH += $$PWD
 HEADERS += \
     $$PWD/vinput.h
 
-equals(DEVICE, "PC_WIN") {
+pcwin {
     SOURCES += \
-        $$PWD/vinput_pc.cpp
+        $$PWD/vinput_pcwin.cpp
 }
 
-equals(DEVICE, "PC_UNIX") {
+pcunix {
     SOURCES += \
-        $$PWD/vinput_pc.cpp
+        $$PWD/vinput_pcunix.cpp
 }
 
-equals(DEVICE, "PHASCAN") {
+phascan {
     SOURCES += \
-        $$PWD/vinput.cpp
+        $$PWD/vinput_phascan.cpp
 }
 
-equals(DEVICE, "PHASCAN_II") {
+phascan_ii {
     SOURCES += \
-        $$PWD/vinput.cpp
+        $$PWD/vinput_phascan_ii.cpp
 }

@@ -19,12 +19,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_APushButton_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_A);
+//    VInput::get_vinput()->send(VInput::Key_A);
 }
 
 void MainWindow::on_ZPushButton_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_Z);
+//    VInput::get_vinput()->send(VInput::Key_Z);
 }
 
 
@@ -40,10 +40,10 @@ void MainWindow::on_twoPushButton_clicked()
 
 void MainWindow::on_capsPushButton_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_Capslock);
+//    VInput::get_vinput()->send(VInput::Key_Capslock);
 }
 
 void MainWindow::on_leftShiftPushButton_clicked()
 {
-    VInput::get_vinput()->send(VInput::Key_LeftShift);
+//    VInput::get_vinput()->send(VInput::Key_LeftShift);
 }

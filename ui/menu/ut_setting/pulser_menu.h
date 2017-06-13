@@ -23,11 +23,11 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_txrxModeItem;
-    SpinMenuItem *m_pulserItem;
-    ComboMenuItem *m_voltageItem;
-    SpinMenuItem *m_pwItem;
-    ComboMenuItem *m_prfItem;
+    ComboMenuItem m_txrxModeItem;
+    SpinMenuItem m_pulserItem;
+    ComboMenuItem m_voltageItem;
+    SpinMenuItem m_pwItem;
+    ComboMenuItem m_prfItem;
 };
 
 }

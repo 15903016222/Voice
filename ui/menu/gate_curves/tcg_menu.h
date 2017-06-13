@@ -23,20 +23,20 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_modeItem;
+    ComboMenuItem m_modeItem;
 
     /* Setting */
-    SpinMenuItem *m_curveNoItem;
-    ComboMenuItem *m_curveXItem;
-    SpinMenuItem *m_dbOffsetItem;
-    ComboMenuItem *m_switchItem;
+    SpinMenuItem m_curveNoItem;
+    ComboMenuItem m_curveXItem;
+    SpinMenuItem m_dbOffsetItem;
+    ComboMenuItem m_switchItem;
 
     /* Edit */
-    ComboMenuItem *m_pointItem;
-    SpinMenuItem *m_positionItem;
-    SpinMenuItem *m_gainItem;
-    LabelMenuItem *m_addPointItem;
-    LabelMenuItem *m_deletePointItem;
+    ComboMenuItem m_pointItem;
+    SpinMenuItem m_positionItem;
+    SpinMenuItem m_gainItem;
+    LabelMenuItem m_addPointItem;
+    LabelMenuItem m_deletePointItem;
 
     void show_setting();
     void hide_setting();

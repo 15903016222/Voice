@@ -23,12 +23,12 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_gateItem;
-    SpinMenuItem *m_startItem;
-    SpinMenuItem *m_widthItem;
-    SpinMenuItem *m_thresholdItem;
-    ComboMenuItem *m_synchroItem;
-    ComboMenuItem *m_measureModeItem;
+    ComboMenuItem m_gateItem;
+    SpinMenuItem m_startItem;
+    SpinMenuItem m_widthItem;
+    SpinMenuItem m_thresholdItem;
+    ComboMenuItem m_synchroItem;
+    ComboMenuItem m_measureModeItem;
 };
 
 }

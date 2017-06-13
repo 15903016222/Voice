@@ -23,12 +23,12 @@ public:
     void hide();
 
 private:
-    ComboMenuItem *m_outputItem;
-    ComboMenuItem *m_soundItem;
-    SpinMenuItem *m_delayItem;
-    SpinMenuItem *m_holdTimeItem;
-    LabelMenuItem *m_groupItem;
-    ComboMenuItem *m_dataItem;
+    ComboMenuItem m_outputItem;
+    ComboMenuItem m_soundItem;
+    SpinMenuItem m_delayItem;
+    SpinMenuItem m_holdTimeItem;
+    LabelMenuItem m_groupItem;
+    ComboMenuItem m_dataItem;
 };
 
 }
