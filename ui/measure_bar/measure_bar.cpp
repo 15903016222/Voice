@@ -13,7 +13,7 @@ MeasureBar :: MeasureBar(QWidget *parent) :
 
     init_map();
 
-    DplDevice::Device *device = DplDevice::Device::get_instance();
+    DplDevice::Device *device = DplDevice::Device::instance();
     connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
     m_group = device->current_group();
 
@@ -87,7 +87,7 @@ QString MeasureBar::calculate_value(MeasureDialog::MeasureType type)
 
 void MeasureBar::do_current_group_changed()
 {
-    m_group = DplDevice::Device::get_instance()->current_group();
+    m_group = DplDevice::Device::instance()->current_group();
     m_beamGroup = m_group->get_beam_group();
 }
 

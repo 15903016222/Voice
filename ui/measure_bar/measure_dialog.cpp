@@ -53,7 +53,7 @@ void MeasureDialog::keyPressEvent(QKeyEvent *e)
 QString MeasureDialog::get_unit() const
 {    
     int row = ui->tableWidget->currentRow();
-    if(DplDevice::Device::get_instance()->current_group()->ut_unit() == DplDevice::Group::Time && row >= 6 && row <= 9) {
+    if(DplDevice::Device::instance()->current_group()->ut_unit() == DplDevice::Group::Time && row >= 6 && row <= 9) {
         return QString("&micro;s");
     } else {
         return ui->tableWidget->item(row, 1)->text();
