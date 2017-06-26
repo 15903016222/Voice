@@ -65,14 +65,14 @@ int GroupPrivate::max_beam_delay()
 Group::Group(int index, QObject *parent) :
     DplFpga::Group(index, parent),
     d(new GroupPrivate()),
-    m_beamGroupPtr(new DplSource::BeamGroup),
+    m_beamsPtr(new DplSource::Beams),
     m_focallawerPtr(new DplFocallaw::Focallawer)
 {
     init();
     show_info();
 
-    m_beamGroupPtr->set_beam_qty(m_focallawerPtr->beam_qty());
-    m_beamGroupPtr->set_point_qty(point_qty());
+    m_beamsPtr->set_beam_qty(m_focallawerPtr->beam_qty());
+    m_beamsPtr->set_point_qty(point_qty());
 
     connect(static_cast<DplFocallaw::Wedge *>(m_focallawerPtr->wedge().data()),
             SIGNAL(delay_changed(int)),
@@ -80,11 +80,11 @@ Group::Group(int index, QObject *parent) :
 
     connect(static_cast<DplFocallaw::Focallawer *>(m_focallawerPtr.data()),
             SIGNAL(beam_qty_changed(int)),
-            static_cast<DplSource::BeamGroup *>(m_beamGroupPtr.data()),
+            static_cast<DplSource::Beams *>(m_beamsPtr.data()),
             SLOT(set_beam_qty(int)));
 
     connect(this, SIGNAL(point_qty_changed(int)),
-            static_cast<DplSource::BeamGroup *>(m_beamGroupPtr.data()),
+            static_cast<DplSource::Beams *>(m_beamsPtr.data()),
             SLOT(set_point_qty(int)));
 }
 

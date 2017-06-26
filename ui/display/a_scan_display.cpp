@@ -36,8 +36,8 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
     ui->leftRulerWidget->update();
 
     /* source setting */
-    DplSource::BeamGroupPointer beamGroup = m_group->get_beam_group();
-    connect(static_cast<DplSource::BeamGroup *>(beamGroup.data()),
+    DplSource::BeamsPointer beams = m_group->beams();
+    connect(static_cast<DplSource::Beams *>(beams.data()),
             SIGNAL(data_event()),
             this,
             SLOT(update()));
@@ -53,7 +53,7 @@ AscanDisplay::~AscanDisplay()
 
 void AscanDisplay::update()
 {
-    ui->ascanWidget->show(m_group->get_beam_group()->get(0)->get_wave());
+    ui->ascanWidget->show(m_group->beams()->get(0)->get_wave());
 }
 
 void AscanDisplay::update_bottom_ruler()

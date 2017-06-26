@@ -1,7 +1,7 @@
 #include "measure_bar.h"
 #include "ui_measure_bar.h"
 
-#include <source/beam_group.h>
+#include "source/beams.h"
 
 #include <QDebug>
 
@@ -25,8 +25,8 @@ MeasureBar :: MeasureBar(QWidget *parent) :
 //    m_beamNo = 0;
     m_beamIndex = 0;
 
-    m_beamGroup = m_group->get_beam_group();
-    connect(static_cast<DplSource::BeamGroup *>(m_beamGroup.data()),
+    m_beamGroup = m_group->beams();
+    connect(static_cast<DplSource::Beams *>(m_beamGroup.data()),
             SIGNAL(data_event()),
             this,
             SLOT(do_beamgroup_data_event()));
@@ -88,7 +88,7 @@ QString MeasureBar::calculate_value(MeasureDialog::MeasureType type)
 void MeasureBar::do_current_group_changed()
 {
     m_group = DplDevice::Device::instance()->current_group();
-    m_beamGroup = m_group->get_beam_group();
+    m_beamGroup = m_group->beams();
 }
 
 //void MeasureBar::do_beam_qty_changed(int qty)

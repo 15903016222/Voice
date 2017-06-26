@@ -1,7 +1,7 @@
 #include "measure_calculation.h"
 
 #include <device/device.h>
-#include <source/beam_group.h>
+#include <source/beams.h>
 #include <source/beam.h>
 #include <source/source.h>
 
@@ -54,20 +54,9 @@ MeasureCalculation::~MeasureCalculation()
 /*  A%: 闸门 A 中测得的信号的峰值波幅  */
 double MeasureCalculation::get_gate_a_peak_value(DplDevice::GroupPointer group, int beamIndex)
 {
-    double _nMeasureData;
-
-    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
-    int _nData = beam->gate_a_height();
-
-    if(group->rectifier()){
-        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 A%
-    } else {
-        _nMeasureData = _nData / (10.24 * 16);// A%
-    }
-
-    qDebug() << _nMeasureData;
-    return _nMeasureData;
+    DplSource::BeamsPointer beams = group->beams();
+    DplSource::BeamPointer beam = beams->get(beamIndex);
+    return beam->gate_peak(DplSource::Beam::GATE_A, !group->rectifier());
 }
 
 
@@ -76,8 +65,8 @@ double MeasureCalculation::get_gate_adBa_value(DplDevice::GroupPointer group, in
 {
     double _nMeasureData;
 
-    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+    DplSource::BeamsPointer beams = group->beams();
+    DplSource::BeamPointer beam = beams->get(beamIndex);
     int _nData = beam->gate_a_height();
     int _nGateAHeight = group->gate_a_height() / 20.47;
 
@@ -107,8 +96,8 @@ double MeasureCalculation::get_gate_b_peak_value(DplDevice::GroupPointer group, 
 {
     double _nMeasureData;
 
-    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+    DplSource::BeamsPointer beams = group->beams();
+    DplSource::BeamPointer beam = beams->get(beamIndex);
     int _nData = beam->gate_b_height();
 
     if(group->rectifier()){
@@ -126,8 +115,8 @@ double MeasureCalculation::get_gate_bdBb_value(DplDevice::GroupPointer group, in
 {
     double _nMeasureData;
 
-    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+    DplSource::BeamsPointer beams = group->beams();
+    DplSource::BeamPointer beam = beams->get(beamIndex);
     int _nData = beam->gate_b_height();
     int _nGateBHeight = group->gate_b_height() / 20.47;
 
@@ -156,8 +145,8 @@ double MeasureCalculation::get_gate_a_position_value(DplDevice::GroupPointer gro
 {
     double _nMeasureData;
 
-    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+    DplSource::BeamsPointer beams = group->beams();
+    DplSource::BeamPointer beam = beams->get(beamIndex);
     int _nData = beam->gate_a_height();
     int _nDataPos = beam->gate_a_position();
     int _nGateAHeight = group->gate_a_height() / 20.47;
@@ -189,8 +178,8 @@ double MeasureCalculation::get_gate_b_position_value(DplDevice::GroupPointer gro
 {
     double _nMeasureData;
 
-    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+    DplSource::BeamsPointer beams = group->beams();
+    DplSource::BeamPointer beam = beams->get(beamIndex);
     int _nData = beam->gate_b_height();
     int _nDataPos = beam->gate_b_position();// 单位: ns
     int _nGateBHeight = group->gate_b_height() / 20.47;
@@ -222,8 +211,8 @@ double MeasureCalculation::get_gate_i_position_value(DplDevice::GroupPointer gro
     return 0;
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_i_height();
 //    int _nDataPos = beam->gate_i_position();// 单位: ns
 //    int _nGateIHeight = group->gate_i_height() / 20.47;
@@ -254,8 +243,8 @@ double MeasureCalculation::get_gate_i_water_position_value(DplDevice::GroupPoint
     return 0;
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_i_height();
 //    int _nDataPos = beam->gate_i_position();// 单位: ns
 //    int _nGateIHeight = group->gate_i_height() / 20.47;
@@ -285,8 +274,8 @@ double MeasureCalculation::get_thickness_value(DplDevice::GroupPointer group, in
     qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少PulserWidth(脉宽)和BeamDelay
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_a_height();
 //    int _nDataPos = beam->gate_a_position();// 单位: ns
 //    int _nGateAHeight = group->gate_a_height() / 20.47;
@@ -320,8 +309,8 @@ double MeasureCalculation::get_ml_value(DplDevice::GroupPointer group, int beamI
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽),BeamDelay,工件厚度
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_a_height();
 //    int _nDataPos = beam->gate_a_position();// 单位: ns
 //    int _nGateAHeight = group->gate_a_height() / 20.47;
@@ -355,7 +344,7 @@ double MeasureCalculation::get_ml_value(DplDevice::GroupPointer group, int beamI
 
 /*  %(r): 参考光标位置的幅度值  */
 double MeasureCalculation::get_reference_cursor_amplitude_value(DplDevice::GroupPointer group, int beamIndex)
-{   
+{
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
@@ -464,8 +453,8 @@ double MeasureCalculation::get_ra_value(DplDevice::GroupPointer group, int beamI
     qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少PulserWidth(脉宽)和BeamDelay
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_a_height();
 //    int _nDataPos = beam->gate_a_position();// 单位: ns
 //    int _nGateAHeight = group->gate_a_height() / 20.47;
@@ -500,8 +489,8 @@ double MeasureCalculation::get_rb_value(DplDevice::GroupPointer group, int beamI
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)和BeamDelay
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_b_height();
 //    int _nDataPos = beam->gate_b_position();// 单位: ns
 //    int _nGateBHeight = group->gate_b_height() / 20.47;
@@ -564,8 +553,8 @@ double MeasureCalculation::get_sa_value(DplDevice::GroupPointer group, int beamI
 
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_a_height();
 //    int _nDataPos = beam->gate_a_position();// 单位: ns
 //    int _nGateAHeight = group->gate_a_height() / 20.47;
@@ -599,8 +588,8 @@ double MeasureCalculation::get_sb_value(DplDevice::GroupPointer group, int beamI
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)和BeamDelay
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_b_height();
 //    int _nDataPos = beam->gate_b_position();// 单位: ns
 //    int _nGateBHeight = group->gate_b_height() / 20.47;
@@ -662,8 +651,8 @@ double MeasureCalculation::get_la_value(DplDevice::GroupPointer group, int beamI
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)，BeamDelay，工件厚度
 //    double _nMeasureData;
 
-//    DplSource::BeamGroupPointer beamGroup = group->get_beam_group();
-//    DplSource::BeamPointer beam = beamGroup->get(beamIndex);
+//    DplSource::BeamGroupPointer beams = group->get_beam_group();
+//    DplSource::BeamPointer beam = beams->get(beamIndex);
 //    int _nData = beam->gate_a_height();
 //    int _nDataPos = beam->gate_a_position();// 单位: ns
 //    int _nGateAHeight = group->gate_a_height() / 20.47;

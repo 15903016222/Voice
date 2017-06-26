@@ -9,7 +9,7 @@
 #define __DEVICE_GROUP_H__
 
 #include <fpga/group.h>
-#include <source/beam_group.h>
+#include <source/beams.h>
 #include <focallaw/focallawer.h>
 
 namespace DplDevice {
@@ -148,10 +148,10 @@ public:
     void set_gate_i_start(double val);
 
     /**
-     * @brief get_beam_group    获取数据源Beam组
-     * @return                  返回数据源Beam组
+     * @brief beams 获取数据源Beam组
+     * @return      返回数据源Beam组
      */
-    const DplSource::BeamGroupPointer &get_beam_group() const;
+    const DplSource::BeamsPointer &beams() const;
 
     /**
      * @brief get_focallawer    获取聚焦法则计算器
@@ -172,7 +172,7 @@ private slots:
 
 private:
     GroupPrivate *d;
-    DplSource::BeamGroupPointer m_beamGroupPtr;     // Beam数据组
+    DplSource::BeamsPointer m_beamsPtr;
     DplFocallaw::FocallawerPointer m_focallawerPtr; // 聚焦法则计算器
 };
 
@@ -187,9 +187,9 @@ inline double Group::max_range()
 }
 
 
-inline const DplSource::BeamGroupPointer &Group::get_beam_group() const
+inline const DplSource::BeamsPointer &Group::beams() const
 {
-    return m_beamGroupPtr;
+    return m_beamsPtr;
 }
 
 inline DplFocallaw::FocallawerPointer &Group::focallawer()

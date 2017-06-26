@@ -25,7 +25,7 @@ private:
     Ui::MeasureBar *ui;
     QMap<MeasureDialog::MeasureType, MeasureCalculation::Function> m_map;
     DplDevice::GroupPointer m_group;
-    DplSource::BeamGroupPointer m_beamGroup;
+    DplSource::BeamsPointer m_beamGroup;
     int m_beamIndex;
 
     void init_map();
