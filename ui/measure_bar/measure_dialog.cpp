@@ -8,7 +8,7 @@
 
 #include <QDebug>
 
-MeasureDialog::MeasureDialog(QWidget *parent, MeasureDialog::MeasureType type) :
+MeasureDialog::MeasureDialog(QWidget *parent, Measure::Type type) :
     QDialog(parent),
     ui(new Ui::MeasureDialog)
 {
@@ -25,9 +25,9 @@ MeasureDialog::~MeasureDialog()
     delete ui;
 }
 
-MeasureDialog::MeasureType MeasureDialog::get_type() const
+Measure::Type MeasureDialog::get_type() const
 {
-    return (MeasureDialog::MeasureType)ui->tableWidget->currentRow();
+    return static_cast<Measure::Type>(ui->tableWidget->currentRow());
 }
 
 QString MeasureDialog::get_type_string()
@@ -35,7 +35,7 @@ QString MeasureDialog::get_type_string()
     return ui->tableWidget->verticalHeaderItem(ui->tableWidget->currentRow())->text();
 }
 
-void MeasureDialog::set_type(MeasureDialog::MeasureType type)
+void MeasureDialog::set_type(Measure::Type type)
 {
     ui->tableWidget->setCurrentCell(type, 0);
 }
@@ -53,10 +53,5 @@ void MeasureDialog::keyPressEvent(QKeyEvent *e)
 QString MeasureDialog::get_unit() const
 {    
     int row = ui->tableWidget->currentRow();
-    if(DplDevice::Device::instance()->current_group()->ut_unit() == DplDevice::Group::Time && row >= 6 && row <= 9) {
-        return QString("&micro;s");
-    } else {
-        return ui->tableWidget->item(row, 1)->text();
-    }
-
+    return ui->tableWidget->item(row, 1)->text();
 }

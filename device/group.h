@@ -176,6 +176,8 @@ private:
     DplFocallaw::FocallawerPointer m_focallawerPtr; // 聚焦法则计算器
 };
 
+typedef QSharedPointer<Group> GroupPointer;
+
 inline double Group::max_start()
 {
     return max_sample_time() - range();

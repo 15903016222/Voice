@@ -18,8 +18,6 @@
 
 namespace DplDevice {
 
-typedef QSharedPointer<Group> GroupPointer;
-
 class DevicePrivate;
 
 class Device : public QObject

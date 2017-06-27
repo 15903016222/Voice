@@ -63,6 +63,5 @@ include(mcu/mcu.pri)
 include(fpga/fpga.pri)
 
 include(source/source.pri)
-#include(Source/src/source-lib.pri)
 
 include(focallaw/focallaw.pri)
