@@ -174,6 +174,7 @@ private:
     GroupPrivate *d;
     DplSource::BeamsPointer m_beamsPtr;
     DplFocallaw::FocallawerPointer m_focallawerPtr; // 聚焦法则计算器
+//    DplFpga::Group
 };
 
 typedef QSharedPointer<Group> GroupPointer;

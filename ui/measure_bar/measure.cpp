@@ -97,7 +97,7 @@ float Measure::gate_a_peak(DplDevice::GroupPointer &group)
 /*  AdBA: 闸门 A 内峰值幅度与闸门阈值幅度之差(dB)  */
 float Measure::gate_adBa(DplDevice::GroupPointer &group)
 {
-    return group->beams()->current_beam()->gate_minus(DplSource::Beam::GATE_A, group->gate_a_height());
+    return group->beams()->current_beam()->gate_minus(DplSource::Beam::GATE_A, group->gate_height(DplFpga::Group::GATE_A));
 }
 
 /*  AdBr: 闸门 A 内峰值幅度与参考信号幅度之差(dB)  */
@@ -116,7 +116,7 @@ float Measure::gate_b_peak(DplDevice::GroupPointer &group)
 /*  BdBB: 闸门 B 内峰值幅度与闸门阈值幅度之差(dB)  */
 float Measure::gate_bdBb(DplDevice::GroupPointer &group)
 {
-    return group->beams()->current_beam()->gate_minus(DplSource::Beam::GATE_B, group->gate_b_height());
+    return group->beams()->current_beam()->gate_minus(DplSource::Beam::GATE_B, group->gate_height(DplFpga::Group::GATE_B));
 }
 
 /*  BdBr: 闸门 B 内峰值幅度与参考信号幅度之差(dB)  */
@@ -129,7 +129,7 @@ float Measure::gate_bdBr(DplDevice::GroupPointer &group)
 /*  A^: 闸门 A 内的信号峰值位置  */
 float Measure::gate_a_position(DplDevice::GroupPointer &group)
 {
-    if (group->gate_a_height()/20.47 > fabs(group->beams()->current_beam()->gate_peak(DplSource::Beam::GATE_A))) {
+    if (group->gate_height(DplFpga::Group::GATE_A) > fabs(group->beams()->current_beam()->gate_peak(DplSource::Beam::GATE_A))) {
         return MEASURE_DATA_ND;
     }
 
@@ -143,7 +143,7 @@ float Measure::gate_a_position(DplDevice::GroupPointer &group)
 /*  B^: 闸门 B 内的信号峰值位置  */
 float Measure::gate_b_position(DplDevice::GroupPointer &group)
 {
-    if (group->gate_b_height()/20.47 > fabs(group->beams()->current_beam()->gate_peak(DplSource::Beam::GATE_B))) {
+    if (group->gate_height(DplFpga::Group::GATE_B) > fabs(group->beams()->current_beam()->gate_peak(DplSource::Beam::GATE_B))) {
         return MEASURE_DATA_ND;
     }
 
