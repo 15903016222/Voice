@@ -9,7 +9,6 @@
 #define __GROUP_H__
 
 #include "fpga_global.h"
-#include <QReadWriteLock>
 #include <QObject>
 
 namespace DplFpga {
@@ -18,7 +17,6 @@ class GroupPrivate;
 
 class FPGASHARED_EXPORT Group : public QObject
 {
-    Q_DECLARE_PRIVATE(Group)
     Q_OBJECT
 public:
     explicit Group(const int index, QObject *parent = 0);
@@ -130,20 +128,35 @@ public:
     int idel_time(void) const;
     bool set_idel_time(int val, bool reflesh = false);
 
-    int gate_a_height(void) const;
-    bool set_gate_a_height(int val, bool reflesh = false);
+    /**
+     * @brief The GateType enum 闸门枚举类型
+     */
+    enum GateType {
+        GATE_A,
+        GATE_B,
+        GATE_I
+    };
+
+    /**
+     * @brief gate_height   闸门高度
+     * @param type          闸门类型
+     * @return              高度(%)
+     */
+    int gate_height(GateType type) const;
+
+    /**
+     * @brief set_gate_height   设置闸门高度
+     * @param type              闸门类型
+     * @param height            高度(%)
+     */
+    void set_gate_height(GateType type, int height);
 
     int gate_a_logic(void) const;
     bool set_gate_a_logic(int val, bool reflesh = false);
 
-    int gate_b_height(void) const;
-    bool set_gate_b_height(int val, bool reflesh = false);
 
     int gate_b_logic(void) const;
     bool set_gate_b_logic(int val, bool reflesh = false);
-
-    int gate_i_height(void) const;
-    bool set_gate_i_height(int val, bool reflesh = false);
 
     int gate_i_logic(void) const;
     bool set_gate_i_logic(int val, bool reflesh = false);
@@ -222,7 +235,7 @@ signals:
     void compress_ratio_changed(int val);
 
 private:
-    GroupPrivate *d_ptr;
+    GroupPrivate *d;
 };
 
 }

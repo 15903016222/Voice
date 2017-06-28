@@ -36,13 +36,13 @@ public:
 
     /**
      * @brief index 获取序号
-     * @return      序号
+     * @return      序号,从0开始
      */
     int index() const;
 
     /**
      * @brief set_index 设置序号
-     * @param index     序号
+     * @param index     序号，从0开始
      */
     void set_index(int index);
 
