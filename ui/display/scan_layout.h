@@ -86,10 +86,11 @@ private:
     QList<int> m_grpIds;
 
     template <typename T>
-    T *new_layout(char mode = 'N', int id = -1);
+    T *new_layout(const QString &name);
 
     /* One Group */
-    QLayout *a_layout(int id);
+    QLayout *a_hlayout(int id);
+    QLayout *a_vlayout(int id);
     QLayout *b_layout(int id);
     QLayout *s_layout(int id);
     QLayout *c_layout(int id);
@@ -99,6 +100,7 @@ private:
     QLayout *abc_layout(int id);
     QLayout *asb_layout(int id);
     QLayout *asc_layout(int id);
+
     /* Two Group */
     void a2_layout();
     void s2_layout();
@@ -106,24 +108,29 @@ private:
     void as2_layout();
 };
 
-inline QLayout *ScanLayout::a_layout(int id)
+inline QLayout *ScanLayout::a_hlayout(int id)
 {
-    return new_layout<QVBoxLayout>('A', id);
+    return new_layout<QVBoxLayout>(QString("AH%1").arg(id));
+}
+
+inline QLayout *ScanLayout::a_vlayout(int id)
+{
+    return new_layout<QVBoxLayout>(QString("AV%1").arg(id));
 }
 
 inline QLayout *ScanLayout::b_layout(int id)
 {
-    return new_layout<QVBoxLayout>('B', id);
+    return new_layout<QVBoxLayout>(QString("B").arg(id));
 }
 
 inline QLayout *ScanLayout::s_layout(int id)
 {
-    return new_layout<QVBoxLayout>('S', id);
+    return new_layout<QVBoxLayout>(QString("S").arg(id));
 }
 
 inline QLayout *ScanLayout::c_layout(int id)
 {
-    return new_layout<QVBoxLayout>('C', id);
+    return new_layout<QVBoxLayout>(QString("C").arg(id));
 }
 
 #endif // __SCAN_LAYOUT_H__

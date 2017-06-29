@@ -1,5 +1,6 @@
 #include "display.h"
-#include "a_scan_display.h"
+#include "a_scan_vdisplay.h"
+#include "a_scan_hdisplay.h"
 
 #include <source/source.h>
 
@@ -55,17 +56,23 @@ void Display::set_layout(ScanLayout *scanlayout)
     DplDevice::Device *dev = DplDevice::Device::instance();
 
     QLayout *l = NULL;
-    DplDevice::GroupPointer groupPtr;
-    AscanDisplay *ascan = NULL;
+    DplDevice::GroupPointer group;
     QList<int> grpIds = scanlayout->get_groups_id();
 
     for (int i = 0; i < grpIds.size(); ++i) {
-        groupPtr = dev->get_group(grpIds[i]);
-        /* A-SCAN */
-        l = m_scanLayout->findChild<QLayout *>(QString("A%1").arg(grpIds[i]));
-        if (l != NULL) {
-            ascan = new AscanDisplay(groupPtr, m_scanLayout);
-            l->addWidget(ascan);
+        group = dev->get_group(grpIds[i]);
+        /* A-HSCAN */
+        l = m_scanLayout->findChild<QLayout *>(QString("AH%1").arg(grpIds[i]));
+        if (l) {
+            AscanHDisplay *scan = new AscanHDisplay(group, m_scanLayout);
+            l->addWidget(scan);
+        }
+
+        /* A-VSCAN */
+        l = m_scanLayout->findChild<QLayout *>(QString("AV%1").arg(grpIds[i]));
+        if (l) {
+            AscanVDisplay *scan = new AscanVDisplay(group, m_scanLayout);
+            l->addWidget(scan);
         }
 
         /* B-SCAN */
@@ -73,17 +80,17 @@ void Display::set_layout(ScanLayout *scanlayout)
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
 //            bscan = new BscanDisplay(groupPtr, m_scanLayout);
-            AscanDisplay *bscan = new AscanDisplay(groupPtr, m_scanLayout);
-            l->addWidget(bscan);
+//            AscanDisplay *bscan = new AscanDisplay(group, m_scanLayout);
+//            l->addWidget(bscan);
         }
 
         /* C-Scan */
         l = m_scanLayout->findChild<QLayout *>(QString("C%1").arg(grpIds[i]));
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
-            AscanDisplay *cscan = new AscanDisplay(groupPtr, m_scanLayout);
+//            AscanDisplay *cscan = new AscanDisplay(group, m_scanLayout);
 //            cscan = new CscanDisplay(groupPtr, m_scanLayout);
-            l->addWidget(cscan);
+//            l->addWidget(cscan);
         }
 
         /* S-Scan */
@@ -91,8 +98,8 @@ void Display::set_layout(ScanLayout *scanlayout)
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
 //            sscan = new SscanDisplay(groupPtr, m_scanLayout);
-            AscanDisplay *sscan = new AscanDisplay(groupPtr, m_scanLayout);
-            l->addWidget(sscan);
+//            AscanDisplay *sscan = new AscanDisplay(group, m_scanLayout);
+//            l->addWidget(sscan);
         }
     }
 }

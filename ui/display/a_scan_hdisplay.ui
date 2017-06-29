@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AscanDisplay</class>
- <widget class="QWidget" name="AscanDisplay">
+ <class>AscanHDisplay</class>
+ <widget class="QWidget" name="AscanHDisplay">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -59,9 +59,9 @@ color: rgb(255, 255, 255);</string>
       </widget>
      </item>
      <item>
-      <widget class="AscanWidget" name="ascanWidget" native="true">
+      <widget class="AscanHWidget" name="ascanWidget" native="true">
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(0, 0, 0);</string>
@@ -107,15 +107,15 @@ color: rgb(255, 255, 255);</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AscanWidget</class>
-   <extends>QWidget</extends>
-   <header>a_scan_widget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>RulerWidget</class>
    <extends>QWidget</extends>
    <header>ruler_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AscanHWidget</class>
+   <extends>QWidget</extends>
+   <header>a_scan_hwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

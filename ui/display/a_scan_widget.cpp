@@ -1,12 +1,18 @@
+/**
+ * @file a_scan_widget.cpp
+ * @brief 画A扫
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-06-28
+ */
 #include "a_scan_widget.h"
 
 #include <QPainter>
 #include <QDebug>
 
-AscanWidget::AscanWidget(QWidget *parent)
-    : QWidget(parent)
+AscanWidget::AscanWidget(QWidget *parent):
+    QWidget(parent),
+    m_color("#ffff7f")
 {
-    m_color = QColor("#ffff7f");
 }
 
 void AscanWidget::show(const QByteArray &b)
@@ -18,42 +24,32 @@ void AscanWidget::show(const QByteArray &b)
     update();
 }
 
-void AscanWidget::paintEvent(QPaintEvent *e)
+QPainterPath AscanWidget::paint_wave()
 {
-    Q_UNUSED(e);
+    QPainterPath path;
 
-    QPainter painter(this);
+    float xRatio1 = 1.0;
+    float xRatio2 = 1.0;
+    float yRatio = y_axis_length() / 255.0;
 
-    painter.setPen(m_color);
-
-    painter.translate(0, height());
-
-    QTransform form;
-    form = painter.transform();
-    form.rotate(180, Qt::XAxis);
-    painter.setTransform(form);
-
-    double yaxis = height()/255.0;
-
-    double xaxis2 = 1;
-    double xaxis1 = 1;
-    int num = 0;
-    if (m_beam.size() < width()) {
-        num = m_beam.size();
-        xaxis1 = width()/1.0/m_beam.size();
+    int drawPoints = 0;
+    if ( m_beam.size() < x_axis_length()) {
+        xRatio1 = x_axis_length() / 1.0 / m_beam.size();
+        drawPoints = m_beam.size();
     } else {
-        num = width();
-        xaxis2 = m_beam.size()/1.0/width();
+        xRatio2 = m_beam.size() / 1.0 / x_axis_length();
+        drawPoints = x_axis_length();
     }
 
-    QVector<QLineF> lines;
-    QLineF line;
-    for (int i = 0; i < num-1; ++i) {
-        line.setLine(i*xaxis1,
-                         (int)((quint8)(m_beam.at((int)(i*xaxis2)))*yaxis) + 1,
-                         (i+1)*xaxis1,
-                         (int)((quint8)(m_beam.at((int)((i+1)*xaxis2)))*yaxis)+1);
-        lines.append(line);
+    for (int i = 0; i < drawPoints; ++i) {
+        path.lineTo( i*xRatio1,
+                     ((quint8)(m_beam.at((int)(i*xRatio2)))) * yRatio + 0.5);
     }
-    painter.drawLines(lines);
+
+    return path;
+}
+
+QPainterPath AscanWidget::paint_gate()
+{
+
 }

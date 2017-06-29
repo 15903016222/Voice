@@ -1,14 +1,20 @@
-#include "a_scan_display.h"
-#include "ui_a_scan_display.h"
-#include "a_scan_widget.h"
+/**
+ * @file a_scan_hdisplay.cpp
+ * @brief A扫横向显示
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-06-28
+ */
+#include "a_scan_hdisplay.h"
+#include "ui_a_scan_hdisplay.h"
+#include "a_scan_hwidget.h"
 
 #include <qmath.h>
 
 #include <QDebug>
 
-AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
+AscanHDisplay::AscanHDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AscanDisplay)
+    ui(new Ui::AscanHDisplay)
 {  
     ui->setupUi(this);
 
@@ -45,18 +51,18 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
     ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
 
-AscanDisplay::~AscanDisplay()
+AscanHDisplay::~AscanHDisplay()
 {
     qDebug()<<__func__<<__LINE__;
     delete ui;
 }
 
-void AscanDisplay::update()
+void AscanHDisplay::update()
 {
     ui->ascanWidget->show(m_group->beams()->get(0)->get_wave());
 }
 
-void AscanDisplay::update_bottom_ruler()
+void AscanHDisplay::update_bottom_ruler()
 {
     double start = m_group->start() / 1000;         /*单位(us)*/
     double end = (start + m_group->range()) / 1000; /*单位(us)*/
@@ -65,7 +71,7 @@ void AscanDisplay::update_bottom_ruler()
     if (DplDevice::Group::Time == unit) {
         ui->bottomRulerWidget->set_unit("(us)");
         ui->bottomRulerWidget->set_backgroup_color(QColor("#F9CCE2"));
-    } else{
+    } else {
         ui->bottomRulerWidget->set_unit("(mm)");
         start *= m_group->velocity() / (2 * 1000);
         end   *= m_group->velocity() / (2 * 1000);

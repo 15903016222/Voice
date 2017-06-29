@@ -15,6 +15,8 @@ void ScanLayout::set_mode(ScanLayout::Mode mode, const QList<int> &grpIds)
         return;
     }
 
+    qDebug("%s[%d]: mode(%d)",__func__, __LINE__, mode);
+
     m_mode = mode;
     m_grpIds = grpIds;
 
@@ -25,7 +27,7 @@ void ScanLayout::set_mode(ScanLayout::Mode mode, const QList<int> &grpIds)
 
     switch (mode) {
     case A:
-        a_layout(m_grpIds.first());
+        a_hlayout(m_grpIds.first());
         break;
     case S:
         s_layout(m_grpIds.first());
@@ -57,7 +59,7 @@ void ScanLayout::set_mode(ScanLayout::Mode mode, const QList<int> &grpIds)
 }
 
 template <typename T>
-T *ScanLayout::new_layout(char mode, int id)
+T *ScanLayout::new_layout(const QString &name)
 {
     T *l = NULL;
     if (layout()) {
@@ -67,21 +69,22 @@ T *ScanLayout::new_layout(char mode, int id)
     }
     l->setContentsMargins(0, 0, 0, 0);
     l->setSpacing(0);
-    l->setObjectName(QString("%1%2").arg(mode).arg(id));
+    l->setObjectName(name);
     return l;
 }
 
 QLayout *ScanLayout::as_layout(int id)
 {
-    QHBoxLayout *l = new_layout<QHBoxLayout>();
-    l->addLayout(a_layout(id), 1);
+    QHBoxLayout *l = new_layout<QHBoxLayout>("");
+    l->addLayout(a_vlayout(id), 1);
     l->addLayout(s_layout(id), 2);
+//    l->addLayout(a_hlayout(id), 2);
     return l;
 }
 
 QLayout *ScanLayout::sc_layout(int id)
 {
-    QHBoxLayout *l = new_layout<QHBoxLayout>();
+    QHBoxLayout *l = new_layout<QHBoxLayout>("");
     l->addLayout(s_layout(id), 1);
     l->addLayout(c_layout(id), 2);
     return l;
@@ -89,16 +92,16 @@ QLayout *ScanLayout::sc_layout(int id)
 
 QLayout *ScanLayout::ab_layout(int id)
 {
-    QHBoxLayout *l = new_layout<QHBoxLayout>();
-    l->addLayout(a_layout(id), 1);
+    QHBoxLayout *l = new_layout<QHBoxLayout>("");
+    l->addLayout(a_hlayout(id), 1);
     l->addLayout(b_layout(id), 2);
     return l;
 }
 
 QLayout *ScanLayout::abc_layout(int id)
 {
-    QVBoxLayout *l = new_layout<QVBoxLayout>();
-    l->addLayout(a_layout(id));
+    QVBoxLayout *l = new_layout<QVBoxLayout>("");
+    l->addLayout(a_hlayout(id));
     l->addLayout(b_layout(id));
     l->addLayout(c_layout(id));
     return l;
@@ -106,7 +109,7 @@ QLayout *ScanLayout::abc_layout(int id)
 
 QLayout *ScanLayout::asb_layout(int id)
 {
-    QVBoxLayout *l = new_layout<QVBoxLayout>();
+    QVBoxLayout *l = new_layout<QVBoxLayout>("");
 
     l->addLayout(as_layout(id));
     l->addLayout(b_layout(id));
@@ -116,7 +119,7 @@ QLayout *ScanLayout::asb_layout(int id)
 
 QLayout *ScanLayout::asc_layout(int id)
 {
-    QVBoxLayout *l = new_layout<QVBoxLayout>();
+    QVBoxLayout *l = new_layout<QVBoxLayout>("");
 
     l->addLayout(as_layout(id));
     l->addLayout(c_layout(id));
