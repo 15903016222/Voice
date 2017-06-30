@@ -151,10 +151,9 @@ protected:
     /**
      * @brief set_raw_data  设置Beam原始数据
      * @param data          指向Beam原始数据,调用者要维护这个地址,不能删除
-     * @param rf            射频标志
      * @param pointNum      波形点数
      */
-    void set_raw_data(const char *data, int pointNum, bool rf = false);
+    void set_raw_data(const char *data, int pointNum);
 
 private:
     BeamPrivate *d;

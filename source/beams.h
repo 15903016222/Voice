@@ -61,18 +61,6 @@ public:
      */
     int size() const;
 
-    /**
-     * @brief rf    获取是否为射频模式
-     * @return      如果是射频，则返回true
-     */
-    bool rf() const;
-
-    /**
-     * @brief set_rf    设置射频
-     * @param flag      true为射频
-     */
-    void set_rf(bool flag);
-
 protected:
     friend class Alloter;
     /**
