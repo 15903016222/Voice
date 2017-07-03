@@ -1,15 +1,19 @@
 #include "ruler_widget.h"
 #include <QPainter>
 #include <QDebug>
+#include <QScrollBar>
 
-RulerWidget::RulerWidget(QWidget *parent) : QWidget(parent)
+RulerWidget::RulerWidget(QWidget *parent) :
+    QWidget(parent),
+    m_bgColor("#ff88ff"),
+    m_start(0),
+    m_end(100),
+    m_unitName("(mm)"),
+    m_type(BOTTOM),
+    m_direction(Up)
 {
-    m_bgColor = QColor("#ff88ff");
-    m_start = 0;
-    m_end = 100;
-    m_unitName = "(mm)";
-    m_type = BOTTOM;
-    m_direction = Up;
+//    QScrollBar bar;
+//    bar.setOrientation(Qt::Orientation);
 }
 
 bool RulerWidget::set_range(double start, double end)
@@ -30,26 +34,12 @@ void RulerWidget::paintEvent(QPaintEvent *e)
 
     QPainter painter(this);
 
-    double interval = 0.0;          /* 单位/刻度 */
-    double m_pixelPerUnit = 0.0;    /* 像素/单位 */
-    int markQty = 0;                /* 刻度数 */
-    int length = 0;                 /* 标尺像素长度 */
-
+    double interval = 0.0;                              // 单位/刻度
+    int markQty = 0;                                    // 刻度数
+    int length = y_axis_length();                       // 标尺像素长度
+    float m_pixelPerUnit = length/(m_end - m_start);    // 像素/单位
 
     /* 设置背景 */
-    painter.setBrush(m_bgColor);
-    painter.drawRect(this->rect());
-
-    painter.setPen(QColor(Qt::black));
-
-    if (RulerWidget::BOTTOM == m_type) {
-        m_pixelPerUnit = width() / (m_end - m_start);
-        length = width();
-    } else {
-        m_pixelPerUnit = height() / (m_end - m_start);
-        length = height();
-    }
-
     if (length >= 400) {
         markQty = 100;
     } else if ( length > 300 && length < 400 ) {
@@ -89,6 +79,9 @@ void RulerWidget::paintEvent(QPaintEvent *e)
     font.setPointSize(10);
     painter.setFont(font);
 
+    painter.setBrush(m_bgColor);
+    painter.drawRect(this->rect());
+
     if (RulerWidget::LEFT == m_type) {
         painter.rotate(90);
         painter.translate(0, -20);
@@ -99,38 +92,35 @@ void RulerWidget::paintEvent(QPaintEvent *e)
         painter.setTransform(form);
     }
 
-    QLine line[markQty];
+    painter.setPen(QColor(Qt::black));
 
     painter.drawText(length/2, 19, m_unitName);
 
     if (RulerWidget::Down == m_direction) {
-
         for(int i = 0; i < markQty; ++i) {
-            line[i].setLine( length - (int)(i * interval * m_pixelPerUnit), 0, length - (int)(i * interval * m_pixelPerUnit), 3);
+            painter.drawLine( length - (int)(i * interval * m_pixelPerUnit+0.5), 0, length - (int)(i * interval * m_pixelPerUnit+0.5), 3);
         }
 
         for(int i = 5; i < markQty; i += 10) {
-            line[i].setLine( length - (int)(i * interval * m_pixelPerUnit), 0, length - (int)(i * interval * m_pixelPerUnit), 7);
+            painter.drawLine( length - (int)(i * interval * m_pixelPerUnit+0.5), 0, length - (int)(i * interval * m_pixelPerUnit+0.5), 7);
         }
 
         for(int i = 0; i < markQty; i += 10) {
-            line[i].setLine( length - (int)(i * interval * m_pixelPerUnit), 0, length - (int)(i * interval * m_pixelPerUnit), 13);
-            painter.drawText( length - (int)(i * interval * m_pixelPerUnit) - 15, 12, QString::number(i*interval+m_start));
+            painter.drawLine( length - (int)(i * interval * m_pixelPerUnit+0.5), 0, length - (int)(i * interval * m_pixelPerUnit+0.5), 13);
+            painter.drawText( length - (int)(i * interval * m_pixelPerUnit+0.5) - 15, 12, QString::number(i*interval+m_start));
         }
-        painter.drawLines(line, markQty+1);
     } else {
         for(int i = 0; i < markQty; ++i) {
-            line[i].setLine((int)(i * interval * m_pixelPerUnit), 0, (int)(i * interval * m_pixelPerUnit), 3);
+            painter.drawLine((int)(i * interval * m_pixelPerUnit+0.5), 0, (int)(i * interval * m_pixelPerUnit+0.5), 3);
         }
 
         for(int i = 5; i < markQty; i += 10) {
-            line[i].setLine((int)(i * interval * m_pixelPerUnit), 0, (int)(i * interval * m_pixelPerUnit), 7);
+            painter.drawLine((int)(i * interval * m_pixelPerUnit+0.5), 0, (int)(i * interval * m_pixelPerUnit+0.5), 7);
         }
 
         for(int i = 0; i < markQty; i += 10) {
-            line[i].setLine((int)(i * interval * m_pixelPerUnit), 0, (int)(i * interval * m_pixelPerUnit), 13);
-            painter.drawText((int)(i * interval * m_pixelPerUnit)+2, 12, QString::number(i*interval+m_start));
+            painter.drawLine((int)(i * interval * m_pixelPerUnit+0.5), 0, (int)(i * interval * m_pixelPerUnit+0.5), 13);
+            painter.drawText((int)(i * interval * m_pixelPerUnit+0.5)+2, 12, QString::number(i*interval+m_start));
         }
-        painter.drawLines(line, markQty+1);
     }
 }

@@ -26,6 +26,8 @@ public:
     void set_direction(RulerWidget::Direction direction) { m_direction = direction; }
 
 protected:
+    int y_axis_length() const;
+
     void paintEvent(QPaintEvent *e);
 
 private:
@@ -39,4 +41,12 @@ private:
     Direction m_direction;
 };
 
+inline int RulerWidget::y_axis_length() const
+{
+    if (RulerWidget::BOTTOM == m_type) {
+        return width();
+    } else {
+        return height();
+    }
+}
 #endif // __RULER_WIDGET_H__

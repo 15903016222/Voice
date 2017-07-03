@@ -77,8 +77,8 @@ QLayout *ScanLayout::as_layout(int id)
 {
     QHBoxLayout *l = new_layout<QHBoxLayout>("");
     l->addLayout(a_vlayout(id), 1);
-    l->addLayout(s_layout(id), 2);
 //    l->addLayout(a_hlayout(id), 2);
+        l->addLayout(s_layout(id), 2);
     return l;
 }
 

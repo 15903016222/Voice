@@ -11,7 +11,7 @@
 
 AscanWidget::AscanWidget(QWidget *parent):
     QWidget(parent),
-    m_color("#ffff7f")
+    m_color("#ffff77")
 {
 }
 

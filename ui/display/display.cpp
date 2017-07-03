@@ -24,7 +24,7 @@ Display::Display(QWidget *parent) :
     ScanLayout *l = new ScanLayout;
     QList<int> grpId;
     grpId.append(0);
-    l->set_mode(ScanLayout::A, grpId);
+    l->set_mode(ScanLayout::AS, grpId);
     set_layout(l);
 
     source->start();
