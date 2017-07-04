@@ -33,6 +33,35 @@ public:
      */
     void show(const QByteArray &b);
 
+    enum GateType {
+        GATE_A,
+        GATE_B,
+        GATE_I
+    };
+
+public slots:
+    /**
+     * @brief set_sample    设置采样信息
+     * @param start         采样起点(ns)
+     * @param range         采样范围(ns)
+     */
+    void set_sample(float start, float range);
+
+    /**
+     * @brief set_gate  设置闸门信息
+     * @param type      闸门类型
+     * @param start     闸门起点(ns)
+     * @param width     闸门宽度(ns)
+     */
+    void set_gate(AscanWidget::GateType type, float start, float width);
+
+    /**
+     * @brief set_gate_visible  设置闸门是否显示
+     * @param type              闸门类型
+     * @param visible           显示标志
+     */
+    void set_gate_visible(bool visible);
+
 protected:
     /**
      * @brief x_axis_length     获取X轴长度
@@ -45,6 +74,7 @@ protected:
      * @return                  长度(Pixel)
      */
     virtual int y_axis_length() const = 0;
+
 
     /**
      * @brief paint_wave    画波形
@@ -60,11 +90,14 @@ protected:
 
 signals:
 
-public slots:
-
 private:
     QByteArray m_beam;
     QColor m_color;
+    float m_sampleStart;
+    float m_sampleRange;
+    float m_gateStart[3];
+    float m_gateWidth[3];
+    bool m_gateVisible[3];
 };
 
 inline const QColor &AscanWidget::wave_color() const
@@ -76,5 +109,25 @@ inline void AscanWidget::set_wave_color(const QColor &color)
 {
     m_color = color;
 }
+
+inline void AscanWidget::set_sample(float start, float range)
+{
+    m_sampleStart = start;
+    m_sampleRange = range;
+}
+
+inline void AscanWidget::set_gate(AscanWidget::GateType type, float start, float width)
+{
+    Q_ASSERT( type >= GATE_A && type <= GATE_I );
+    m_gateStart[type] = start;
+    m_gateWidth[type] = width;
+}
+
+inline void AscanWidget::set_gate_visible(bool visible)
+{
+//    Q_ASSERT( type >= GATE_A && type <= GATE_I );
+//    m_gateVisible[type] = visible;
+}
+
 
 #endif // __A_SCAN_WIDGET_H__

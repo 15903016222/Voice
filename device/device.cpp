@@ -294,7 +294,7 @@ void Device::refresh_beams()
         fpgaBeam.set_group_id(grpPtr->index());
         fpgaBeam.set_gain_compensation(0);
 
-        grpPtr->show_info();
+        grpPtr->fpga()->show_info();
 
         foreach (DplFocallaw::BeamPointer focallawerBeamPtr, focallawerBeams) {
 //            qDebug("%s[%d]: beamQty(%d) pointQty(%d)",__func__, __LINE__, focallawer->beam_qty(), d->m_groups[i]->point_qty());

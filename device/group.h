@@ -12,16 +12,21 @@
 #include <source/beams.h>
 #include <focallaw/focallawer.h>
 
+#include "sample.h"
+#include "gate.h"
+
 namespace DplDevice {
 
 class GroupPrivate;
 
-class Group : public DplFpga::Group
+class Group : public QObject
 {
     Q_OBJECT
 public:
     explicit Group(int index, QObject *parent = 0);
     ~Group();
+
+    int index() const;
 
     enum Mode {
         UT,
@@ -48,42 +53,6 @@ public:
     };
     UtUnit ut_unit();
     void set_ut_unit(UtUnit type);
-
-    /**
-     * @brief start 获取声程轴上的起始值
-     * @return      起始值,单位(ns)
-     */
-    double start();
-
-    /**
-     * @brief set_start 设置声程轴的起始值
-     * @param value     起始值，单位(ns)
-     */
-    void set_start(double value);
-
-    /**
-     * @brief range 获取声程轴的范围值
-     * @return      返回范围值，单位(ns)
-     */
-    double range();
-
-    /**
-     * @brief set_range 设置声程轴的范围值
-     * @param value     范围值，单位(ns)
-     */
-    void set_range(double value);
-
-    /**
-     * @brief velocity  获取声速
-     * @return          返回声速大小，单位为(m/s)
-     */
-    double velocity();
-
-    /**
-     * @brief set_velocity  设置声速
-     * @param value         声速大小，单位为(m/s)
-     */
-    void set_velocity(double value);
 
     /**
      * @brief current_angle 获取当前入射角度
@@ -135,17 +104,18 @@ public:
      */
     double max_range();
 
-    double gate_a_start();
+    /**
+     * @brief sample    获取采样对象指针
+     * @return          对象指针
+     */
+    const SamplePointer &sample() const;
 
-    void set_gate_a_start(double val);
-
-    double gate_b_start();
-
-    void set_gate_b_start(double val);
-
-    double gate_i_start();
-
-    void set_gate_i_start(double val);
+    /**
+     * @brief gate  获取闸门对象指针
+     * @param type  闸门类型
+     * @return      闸门对象指针
+     */
+    const GatePointer &gate(Gate::Type type) const;
 
     /**
      * @brief beams 获取数据源Beam组
@@ -157,12 +127,16 @@ public:
      * @brief get_focallawer    获取聚焦法则计算器
      * @return                  聚焦法则计算器
      */
-    DplFocallaw::FocallawerPointer &focallawer();
+    const DplFocallaw::FocallawerPointer &focallawer() const;
+
+    /**
+     * @brief fpga  获取FPGA组对象指针
+     * @return      对象指针
+     */
+    const DplFpga::GroupPointer &fpga() const;
 
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
-    void start_changed(double val);
-    void range_changed(double val);
     void velocity_changed(double val);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
     void probe_changed(DplFocallaw::ProbePointer probePtr);
@@ -172,32 +146,61 @@ private slots:
 
 private:
     GroupPrivate *d;
-    DplSource::BeamsPointer m_beamsPtr;
-    DplFocallaw::FocallawerPointer m_focallawerPtr; // 聚焦法则计算器
-//    DplFpga::Group
+    SamplePointer m_sample;
+    GatePointer m_gateA;
+    GatePointer m_gateB;
+    GatePointer m_gateI;
+    DplSource::BeamsPointer m_beams;
+    DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
+    DplFpga::GroupPointer m_fpgaGroup;
 };
 
 typedef QSharedPointer<Group> GroupPointer;
 
+inline int Group::index() const
+{
+    return m_fpgaGroup->index();
+}
+
 inline double Group::max_start()
 {
-    return max_sample_time() - range();
+    return max_sample_time() - m_sample->range();
 }
 
 inline double Group::max_range()
 {
-    return max_sample_time() - start();
+    return max_sample_time() - m_sample->start();
 }
 
+inline const SamplePointer &Group::sample() const
+{
+    return m_sample;
+}
+
+inline const GatePointer &Group::gate(Gate::Type type) const
+{
+    if (type == Gate::A) {
+        return m_gateA;
+    } else if (type == Gate::B) {
+        return m_gateB;
+    } else {
+        return m_gateI;
+    }
+}
 
 inline const DplSource::BeamsPointer &Group::beams() const
 {
-    return m_beamsPtr;
+    return m_beams;
 }
 
-inline DplFocallaw::FocallawerPointer &Group::focallawer()
+inline const DplFocallaw::FocallawerPointer &Group::focallawer() const
 {
-    return m_focallawerPtr;
+    return m_focallawer;
+}
+
+inline const DplFpga::GroupPointer &Group::fpga() const
+{
+    return m_fpgaGroup;
 }
 
 }

@@ -96,7 +96,7 @@ void GeneralMenu::update()
     update_start_item();
     update_range_item();
 
-    m_velocityItem.set_value(m_group->velocity());
+    m_velocityItem.set_value(m_group->sample()->velocity());
 
     double delay = m_group->focallawer()->wedge()->delay();
     m_wedgeDelayItem.set_value(Dpl::ns_to_us(delay));
@@ -108,7 +108,7 @@ void GeneralMenu::update()
 
 void GeneralMenu::do_gainItem_changed(double gain)
 {
-    m_group->set_gain(gain);
+    m_group->sample()->set_gain(gain);
 }
 
 void GeneralMenu::do_startItem_changed(double value)
@@ -119,14 +119,14 @@ void GeneralMenu::do_startItem_changed(double value)
         start = Dpl::us_to_ns(value);
     } else {
         value = Dpl::mm_to_m(value);
-        start = value * 2 / m_group->velocity();
+        start = value * 2 / m_group->sample()->velocity();
         start = Dpl::s_to_ns(start);
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             start /= qCos(m_group->current_angle());
         }
     }
 
-    m_group->set_start(start);
+    m_group->sample()->set_start(start);
 }
 
 void GeneralMenu::do_rangeItem_changed(double value)
@@ -136,19 +136,19 @@ void GeneralMenu::do_rangeItem_changed(double value)
         range = Dpl::us_to_ns(value);
     } else {
         value = Dpl::mm_to_m(value);
-        range = value * 2 / m_group->velocity();
+        range = value * 2 / m_group->sample()->velocity();
         range = Dpl::s_to_ns(range);
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             range /= qCos(m_group->current_angle());
         }
     }
 
-    m_group->set_range(range);
+    m_group->sample()->set_range(range);
 }
 
 void GeneralMenu::do_velocityItem_changed(double value)
 {
-    m_group->set_velocity(value);
+    m_group->sample()->set_velocity(value);
 }
 
 void GeneralMenu::do_wedgeDelayItem_changed(double value)
@@ -176,7 +176,7 @@ void GeneralMenu::do_current_group_changed()
 void GeneralMenu::update_gain_item()
 {
     m_gainItem.set(tr("Gain"), "dB", 0, 90, 1);
-    m_gainItem.set_value(m_group->gain());
+    m_gainItem.set_value(m_group->sample()->gain());
 }
 
 void GeneralMenu::update_start_item()
@@ -189,14 +189,14 @@ void GeneralMenu::update_start_item()
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         /* 时间显示全声程 */
         max = Dpl::ns_to_us(m_group->max_start());
-        value = Dpl::ns_to_us(m_group->start());
+        value = Dpl::ns_to_us(m_group->sample()->start());
         unit = "&micro;s";
         step = Dpl::ns_to_us(DplFpga::Fpga::SAMPLE_PRECISION);
     } else {
         /* mm显示半声程 */
-        max = Dpl::ns_to_s(m_group->max_start()) * m_group->velocity() / 2;
+        max = Dpl::ns_to_s(m_group->max_start()) * m_group->sample()->velocity() / 2;
         max = Dpl::m_to_mm(max);
-        step = Dpl::ns_to_s(DplFpga::Fpga::SAMPLE_PRECISION) * m_group->velocity() / 2;
+        step = Dpl::ns_to_s(DplFpga::Fpga::SAMPLE_PRECISION) * m_group->sample()->velocity() / 2;
         step = Dpl::m_to_mm(step);
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {
             max *= qCos(m_group->current_angle());
@@ -217,40 +217,34 @@ void GeneralMenu::update_range_item()
     double step = 0.0;
     QString unit = "mm";
 
-    max = m_group->point_qty() * 2;
-    if (max > Dpl::ns_to_us(m_group->max_range())) {
-        max = Dpl::ns_to_us(m_group->max_range());
+    max = m_group->sample()->point_qty() * m_group->sample()->precision() * DplDevice::Sample::MAX_SCALE_FACTOR;
+    if (max > m_group->max_range()) {
+        max = m_group->max_range();
+    }
+
+    if (m_group->point_qty_mode() == DplDevice::Group::PointQtyAuto) {
+        min = 32 * m_group->sample()->precision() * 1;
+    } else {
+        min = m_group->sample()->point_qty() * m_group->sample()->precision() * 1;
     }
 
     if (m_group->ut_unit() == DplDevice::Group::Time) {
-        if (m_group->point_qty_mode() == DplDevice::Group::PointQtyAuto) {
-            min = 32 * Dpl::ns_to_us(DplFpga::Fpga::SAMPLE_PRECISION);
-        } else {
-            min = m_group->point_qty() * Dpl::ns_to_us(DplFpga::Fpga::SAMPLE_PRECISION);
-        }
-        value = Dpl::ns_to_us(m_group->range());
-        step = Dpl::ns_to_us(DplFpga::Fpga::SAMPLE_PRECISION);
+        /* 时间轴 */
+        max = Dpl::ns_to_us(max);
+        min = Dpl::ns_to_us(min);
+        value = Dpl::ns_to_us(m_group->sample()->range());
+        step = Dpl::ns_to_us(m_group->sample()->precision());
         unit = "&micro;s";
     } else {
-        if (m_group->point_qty_mode() == DplDevice::Group::PointQtyAuto) {
-            min = 32 * Dpl::ns_to_s(static_cast<double>(DplFpga::Fpga::SAMPLE_PRECISION))
-                    * m_group->velocity()
-                    / 2;
-            min = Dpl::m_to_mm(min);
-        } else {
-            min = m_group->point_qty()
-                    * Dpl::ns_to_s(static_cast<double>(DplFpga::Fpga::SAMPLE_PRECISION))
-                    * m_group->velocity()
-                    / 2;
-            min = Dpl::m_to_mm(min);
-        }
-        max = Dpl::us_to_s(max) * m_group->velocity() / 2;
+        min = Dpl::ns_to_s(min) * m_group->sample()->velocity() / 2;
+        min = Dpl::m_to_mm(min);
+        max = Dpl::ns_to_s(max) * m_group->sample()->velocity() / 2;
         max = Dpl::m_to_mm(max);
 
-        value = Dpl::ns_to_s(m_group->range()) * m_group->velocity() / 2;
+        value = Dpl::ns_to_s(m_group->sample()->range()) * m_group->sample()->velocity() / 2;
         value = Dpl::m_to_mm(value);
 
-        step = Dpl::ns_to_s(static_cast<double>(DplFpga::Fpga::SAMPLE_PRECISION)) * m_group->velocity() / 2;
+        step = Dpl::ns_to_s(m_group->sample()->precision()) * m_group->sample()->velocity() / 2;
         step = Dpl::m_to_mm(step);
 
         if (m_group->ut_unit() == DplDevice::Group::TruePath) {

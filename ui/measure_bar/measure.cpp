@@ -97,7 +97,8 @@ float Measure::gate_a_peak(DplDevice::GroupPointer &group)
 /*  AdBA: 闸门 A 内峰值幅度与闸门阈值幅度之差(dB)  */
 float Measure::gate_adBa(DplDevice::GroupPointer &group)
 {
-    return group->beams()->current_beam()->gate_minus(DplSource::Beam::GATE_A, group->gate_height(DplFpga::Group::GATE_A));
+    return group->beams()->current_beam()->gate_minus(DplSource::Beam::GATE_A,
+                                                      group->gate(DplDevice::Gate::A)->height());
 }
 
 /*  AdBr: 闸门 A 内峰值幅度与参考信号幅度之差(dB)  */
@@ -116,7 +117,8 @@ float Measure::gate_b_peak(DplDevice::GroupPointer &group)
 /*  BdBB: 闸门 B 内峰值幅度与闸门阈值幅度之差(dB)  */
 float Measure::gate_bdBb(DplDevice::GroupPointer &group)
 {
-    return group->beams()->current_beam()->gate_minus(DplSource::Beam::GATE_B, group->gate_height(DplFpga::Group::GATE_B));
+    return group->beams()->current_beam()->gate_minus(DplSource::Beam::GATE_B,
+                                                      group->gate(DplDevice::Gate::B)->height());
 }
 
 /*  BdBr: 闸门 B 内峰值幅度与参考信号幅度之差(dB)  */
@@ -129,28 +131,28 @@ float Measure::gate_bdBr(DplDevice::GroupPointer &group)
 /*  A^: 闸门 A 内的信号峰值位置  */
 float Measure::gate_a_position(DplDevice::GroupPointer &group)
 {
-    if (group->gate_height(DplFpga::Group::GATE_A) > fabs(group->beams()->current_beam()->gate_peak(DplSource::Beam::GATE_A))) {
+    if (group->gate(DplDevice::Gate::A)->height() > fabs(group->beams()->current_beam()->gate_peak(DplSource::Beam::GATE_A))) {
         return MEASURE_DATA_ND;
     }
 
     if (group->ut_unit() == DplDevice::Group::Time) {
         return group->beams()->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) / 1000;
     } else {
-        return group->beams()->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) * group->velocity() / 200000;
+        return group->beams()->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) * group->sample()->velocity() / 200000;
     }
 }
 
 /*  B^: 闸门 B 内的信号峰值位置  */
 float Measure::gate_b_position(DplDevice::GroupPointer &group)
 {
-    if (group->gate_height(DplFpga::Group::GATE_B) > fabs(group->beams()->current_beam()->gate_peak(DplSource::Beam::GATE_B))) {
+    if (group->gate(DplDevice::Gate::B)->height() > fabs(group->beams()->current_beam()->gate_peak(DplSource::Beam::GATE_B))) {
         return MEASURE_DATA_ND;
     }
 
     if (group->ut_unit() == DplDevice::Group::Time) {
         return group->beams()->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) / 1000;
     } else {
-        return group->beams()->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) * group->velocity() / 200000;
+        return group->beams()->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) * group->sample()->velocity() / 200000;
     }
 }
 

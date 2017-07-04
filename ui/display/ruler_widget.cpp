@@ -39,7 +39,6 @@ void RulerWidget::paintEvent(QPaintEvent *e)
     int length = y_axis_length();                       // 标尺像素长度
     float m_pixelPerUnit = length/(m_end - m_start);    // 像素/单位
 
-    /* 设置背景 */
     if (length >= 400) {
         markQty = 100;
     } else if ( length > 300 && length < 400 ) {
@@ -73,7 +72,7 @@ void RulerWidget::paintEvent(QPaintEvent *e)
     } else if (interval > 200) {
         interval = 100 * (1 + (int)(interval / 100));
     }
-    markQty = (int)((m_end - m_start) / interval);
+    markQty = (int)((m_end - m_start) / interval + 0.5);
 
     QFont font = painter.font();
     font.setPointSize(10);

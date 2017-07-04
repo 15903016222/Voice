@@ -1,3 +1,4 @@
+#include "global.h"
 #include "a_scan_vdisplay.h"
 #include "ui_a_scan_vdisplay.h"
 #include "a_scan_vwidget.h"
@@ -19,12 +20,12 @@ AscanVDisplay::AscanVDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
             this,
             SLOT(update_left_ruler()));
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
-            SIGNAL(start_changed(double)),
+    connect(static_cast<DplDevice::Sample *>(m_group->sample().data()),
+            SIGNAL(start_changed(float)),
             this,
             SLOT(update_left_ruler()));
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
-            SIGNAL(range_changed(double)),
+    connect(static_cast<DplDevice::Sample *>(m_group->sample().data()),
+            SIGNAL(range_changed()),
             this,
             SLOT(update_left_ruler()));
 
@@ -58,8 +59,12 @@ void AscanVDisplay::update()
 
 void AscanVDisplay::update_left_ruler()
 {
-    double start = m_group->start() / 1000;         /*单位(us)*/
-    double end = (start + m_group->range()) / 1000; /*单位(us)*/
+    double start = m_group->sample()->start();
+    double end = (start + m_group->sample()->range());
+
+    start = Dpl::ns_to_us(start);
+    end = Dpl::ns_to_us(end);
+
     DplDevice::Group::UtUnit unit = m_group->ut_unit();
 
     if (DplDevice::Group::Time == unit) {
@@ -67,8 +72,10 @@ void AscanVDisplay::update_left_ruler()
         ui->leftRulerWidget->set_backgroup_color(QColor("#F9CCE2"));
     } else{
         ui->leftRulerWidget->set_unit("(mm)");
-        start *= m_group->velocity() / (2 * 1000);
-        end   *= m_group->velocity() / (2 * 1000);
+        start *= m_group->sample()->velocity() * Dpl::m_to_mm(1) / Dpl::s_to_us(1);
+        start /= 2;
+        end   *= m_group->sample()->velocity() * Dpl::m_to_mm(1) / Dpl::s_to_us(1);
+        end /= 2;
         ui->leftRulerWidget->set_backgroup_color(QColor("#f29cb1"));
         if (DplDevice::Group::TruePath == unit) {
             start *= qCos(m_group->current_angle());

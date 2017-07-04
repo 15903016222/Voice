@@ -30,11 +30,8 @@ public:
 
     /* Attribution */
     Group::Mode m_mode;         /* 组模式 */
-    double m_start;             /* 声程轴起始点,单位(ns) */
-    double m_range;             /* 范围值, 单位(ns) */
     Group::UtUnit m_utUnit;     /* Ut Unit */
 
-    double m_velocity;          /* 声速， 单位(m/s) */
     double m_currentAngle;      /* 声速入射角度, 单位(度) */
 
     Group::PointQtyMode m_pointQtyMode; /* 采样点模式 */
@@ -46,10 +43,7 @@ GroupPrivate::GroupPrivate()
 {
     m_mode = Group::PA;
 
-    m_start = 0;
-    m_range = 5702 * DplFpga::Fpga::SAMPLE_PRECISION;
     m_utUnit = Group::SoundPath;
-    m_velocity = 3240;
     m_currentAngle = M_PI/6;
 
     m_pointQtyMode = Group::PointQtyAuto;
@@ -62,30 +56,60 @@ int GroupPrivate::max_beam_delay()
 }
 
 /* Group */
-Group::Group(int index, QObject *parent) :
-    DplFpga::Group(index, parent),
+Group::Group(int index, QObject *parent):
+    QObject(parent),
     d(new GroupPrivate()),
-    m_beamsPtr(new DplSource::Beams),
-    m_focallawerPtr(new DplFocallaw::Focallawer)
+    m_sample(new Sample(DplFpga::Fpga::SAMPLE_PRECISION, parent)),
+    m_gateA(new Gate(Gate::A, parent)),
+    m_gateB(new Gate(Gate::B, parent)),
+    m_gateI(new Gate(Gate::I, parent)),
+    m_beams(new DplSource::Beams),
+    m_focallawer(new DplFocallaw::Focallawer),
+    m_fpgaGroup(new DplFpga::Group(index, parent))
 {
-    init();
-    show_info();
+    DplFpga::Group *fpgaGroup = static_cast<DplFpga::Group *>(m_fpgaGroup.data());
+    m_fpgaGroup->show_info();
 
-    m_beamsPtr->set_beam_qty(m_focallawerPtr->beam_qty());
-    m_beamsPtr->set_point_qty(point_qty());
+    /* 关联闸门 */
+    connect(static_cast<Gate *>(m_gateA.data()),
+            SIGNAL(height_changed(int)),
+            fpgaGroup, SLOT(set_gate_a_height(int)));
+    connect(static_cast<Gate *>(m_gateB.data()),
+            SIGNAL(height_changed(int)),
+            fpgaGroup, SLOT(set_gate_b_height(int)));
+    connect(static_cast<Gate *>(m_gateI.data()),
+            SIGNAL(height_changed(int)),
+            fpgaGroup, SLOT(set_gate_i_height(int)));
 
-    connect(static_cast<DplFocallaw::Wedge *>(m_focallawerPtr->wedge().data()),
+    /* 关联采样 */
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(gain_changed(float)),
+            fpgaGroup, SLOT(set_gain(float)));
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(scale_factor_changed(int)),
+            fpgaGroup, SLOT(set_scale_factor(int)));
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(start_changed(float)),
+            this, SLOT(update_sample()));
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(range_changed()),
+            this, SLOT(update_sample()));
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(point_qty_changed(int)),
+            static_cast<DplSource::Beams *>(m_beams.data()),
+            SLOT(set_point_qty(int)));
+
+    m_beams->set_beam_qty(m_focallawer->beam_qty());
+    m_beams->set_point_qty(m_sample->point_qty());
+
+    connect(static_cast<DplFocallaw::Wedge *>(m_focallawer->wedge().data()),
             SIGNAL(delay_changed(int)),
             this, SLOT(update_sample()));
 
-    connect(static_cast<DplFocallaw::Focallawer *>(m_focallawerPtr.data()),
+    connect(static_cast<DplFocallaw::Focallawer *>(m_focallawer.data()),
             SIGNAL(beam_qty_changed(int)),
-            static_cast<DplSource::Beams *>(m_beamsPtr.data()),
+            static_cast<DplSource::Beams *>(m_beams.data()),
             SLOT(set_beam_qty(int)));
-
-    connect(this, SIGNAL(point_qty_changed(int)),
-            static_cast<DplSource::Beams *>(m_beamsPtr.data()),
-            SLOT(set_point_qty(int)));
 }
 
 Group::~Group()
@@ -129,93 +153,49 @@ void Group::set_ut_unit(Group::UtUnit type)
     emit ut_unit_changed(type);
 }
 
-double Group::start()
-{
-    QReadLocker l(&d->m_rwlock);
-    return d->m_start;
-}
+//void Group::set_range(double value)
+//{
+//    {
+//        QWriteLocker l(&d->m_rwlock);
 
-void Group::set_start(double value)
-{
-    {
-        QWriteLocker l(&d->m_rwlock);
-        if (value == d->m_start) {
-            return;
-        }
-        d->m_start = value;
+//        int maxPointQty = value / DplFpga::Fpga::SAMPLE_PRECISION;
+//        int curPointQty = m_fpgaGroup->point_qty();
+//        int widthPointQty = 640;
 
-        update_sample();
-    }
-    emit start_changed(value);
-}
+//        if (PointQtyAuto == d->m_pointQtyMode) {
+//            if (maxPointQty <= widthPointQty) {
+//                curPointQty = maxPointQty;
+//            } else {
+//                int compressRate = maxPointQty / widthPointQty;
+//                if (maxPointQty%widthPointQty) {
+//                    ++compressRate;
+//                }
+//                curPointQty = maxPointQty / compressRate;
+//            }
+//        }
 
-double Group::range()
-{
-    QReadLocker l(&d->m_rwlock);
-    return d->m_range;
-}
+//        if (maxPointQty%curPointQty) {
+//            /* 类似四舍五入 */
+//            maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
+//        }
 
-void Group::set_range(double value)
-{
-    {
-        QWriteLocker l(&d->m_rwlock);
+//        //    if (d->m_range == maxPointQty * d->m_precision) {
+//        //        return false;
+//        //    }
 
-        int maxPointQty = value / DplFpga::Fpga::SAMPLE_PRECISION;
-        int curPointQty = point_qty();
-        int widthPointQty = 640;
+//        d->m_range = maxPointQty * DplFpga::Fpga::SAMPLE_PRECISION;
 
-        if (PointQtyAuto == d->m_pointQtyMode) {
-            if (maxPointQty <= widthPointQty) {
-                curPointQty = maxPointQty;
-            } else {
-                int compressRate = maxPointQty / widthPointQty;
-                if (maxPointQty%widthPointQty) {
-                    ++compressRate;
-                }
-                curPointQty = maxPointQty / compressRate;
-            }
-        }
+//        m_fpgaGroup->set_point_qty(curPointQty);
 
-        if (maxPointQty%curPointQty) {
-            /* 类似四舍五入 */
-            maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
-        }
-
-        //    if (d->m_range == maxPointQty * d->m_precision) {
-        //        return false;
-        //    }
-
-        d->m_range = maxPointQty * DplFpga::Fpga::SAMPLE_PRECISION;
-
-        set_point_qty(curPointQty);
-
-        if (maxPointQty/curPointQty) {
-            set_compress_ratio(maxPointQty/curPointQty);
-        } else {
-            set_compress_ratio(1);
-        }
-        update_sample();
-    }
-    emit range_changed(d->m_range);
-}
-
-double Group::velocity()
-{
-    QReadLocker l(&d->m_rwlock);
-    return d->m_velocity;
-}
-
-void Group::set_velocity(double value)
-{
-    {
-        QWriteLocker l(&d->m_rwlock);
-        if (d->m_velocity == value) {
-            return;
-        }
-        d->m_velocity = value;
-    }
-    emit velocity_changed(value);
-}
+//        if (maxPointQty/curPointQty) {
+//            m_fpgaGroup->set_scale_factor(maxPointQty/curPointQty);
+//        } else {
+//            m_fpgaGroup->set_scale_factor(1);
+//        }
+//        update_sample();
+//    }
+//    emit range_changed(d->m_range);
+//}
 
 double Group::current_angle()
 {
@@ -252,7 +232,7 @@ double Group::max_sample_time()
     double max = beamCycle
             - DplFpga::Fpga::LOADING_TIME * DplFpga::Fpga::SAMPLE_PRECISION
             - d->max_beam_delay()
-            - m_focallawerPtr->wedge()->delay()
+            - m_focallawer->wedge()->delay()
             - 50;
     if(max > 1000*1000) {
         max = 1000*1000;
@@ -262,11 +242,13 @@ double Group::max_sample_time()
 
 void Group::update_sample()
 {
-    set_sample_start((m_focallawerPtr->wedge()->delay() + d->m_start)/DplFpga::Fpga::SAMPLE_PRECISION, true);
-    set_sample_range((m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range)/DplFpga::Fpga::SAMPLE_PRECISION, true);
-    set_rx_time((d->max_beam_delay() + m_focallawerPtr->wedge()->delay() + d->m_start + d->m_range + 50)/DplFpga::Fpga::SAMPLE_PRECISION, true);
+    m_fpgaGroup->set_sample_start((m_focallawer->wedge()->delay() + m_sample->start())/DplFpga::Fpga::SAMPLE_PRECISION, true);
+    m_fpgaGroup->set_sample_range((m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range())/DplFpga::Fpga::SAMPLE_PRECISION, true);
+    m_fpgaGroup->set_rx_time((d->max_beam_delay() + m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range() + 50)/DplFpga::Fpga::SAMPLE_PRECISION, true);
+
     qDebug("%s[%d]: ",__func__, __LINE__);
-    show_info();
+
+    m_fpgaGroup->show_info();
 }
 
 }

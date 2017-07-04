@@ -9,6 +9,7 @@
 #define __GROUP_H__
 
 #include "fpga_global.h"
+#include <QSharedPointer>
 #include <QObject>
 
 namespace DplFpga {
@@ -53,28 +54,16 @@ public:
     bool set_rectifier(Group::RectifierType type, bool reflesh = false);
 
     /**
-     * @brief compress_ratio 获取采样点压缩系数
-     * @return               压缩系数
+     * @brief scale_factor  获取采样点压缩系数
+     * @return              压缩系数
      */
-    int compress_ratio(void) const;
-
-    /**
-     * @brief set_compress_ratio    设置采样点压缩系数
-     * @param val                   压缩系数
-     */
-    void set_compress_ratio(int val);
+    int scale_factor(void) const;
 
     /**
      * @brief gain  获取增益
      * @return      返回增益值， 单位(dB)
      */
     float gain(void) const;
-
-    /**
-     * @brief set_gain  设置增益
-     * @param gain      增益值
-     */
-    void set_gain(float gain);
 
     int thickness_factor(void) const;
     bool set_thickness_factor(int factor, bool reflesh = false);
@@ -129,27 +118,22 @@ public:
     bool set_idel_time(int val, bool reflesh = false);
 
     /**
-     * @brief The GateType enum 闸门枚举类型
-     */
-    enum GateType {
-        GATE_A,
-        GATE_B,
-        GATE_I
-    };
-
-    /**
-     * @brief gate_height   闸门高度
-     * @param type          闸门类型
+     * @brief gate_a_height 闸门A高度
      * @return              高度(%)
      */
-    int gate_height(GateType type) const;
+    int gate_a_height() const;
 
     /**
-     * @brief set_gate_height   设置闸门高度
-     * @param type              闸门类型
-     * @param height            高度(%)
+     * @brief gate_b_height 闸门B高度
+     * @return              高度(%)
      */
-    void set_gate_height(GateType type, int height);
+    int gate_b_height() const;
+
+    /**
+     * @brief gate_i_height 闸门I高度
+     * @return              高度(%)
+     */
+    int gate_i_height() const;
 
     int gate_a_logic(void) const;
     bool set_gate_a_logic(int val, bool reflesh = false);
@@ -197,14 +181,38 @@ public:
     /**
      * @brief show_info 显示信息
      */
-    void show_info();
+    void show_info() const;
 
-protected:
     /**
      * @brief sample_start  获取采样起点
      * @return              返回采样起点值，单位(采样精度)
      */
     int sample_start(void) const;
+
+public slots:
+    /**
+     * @brief set_gain  设置增益
+     * @param gain      增益值
+     */
+    void set_gain(float gain);
+
+    /**
+     * @brief set_gate_a_height 设置闸门A高度
+     * @param height            高度(%)
+     */
+    void set_gate_a_height(int height);
+
+    /**
+     * @brief set_gate_b_height 设置闸门B高度
+     * @param height            高度(%)
+     */
+    void set_gate_b_height(int height);
+
+    /**
+     * @brief set_gate_i_height 设置闸门I高度
+     * @param height            高度(%)
+     */
+    void set_gate_i_height(int height);
 
     /**
      * @brief set_sample_start  设置采样起点
@@ -213,6 +221,12 @@ protected:
      * @return                  成功返回true，否则返回false
      */
     bool set_sample_start(int val, bool reflesh = false);
+
+    /**
+     * @brief set_scale_factor      设置采样点压缩系数
+     * @param val                   压缩系数
+     */
+    void set_scale_factor(int val);
 
     /**
      * @brief rx_time   获取接收工作时间
@@ -228,15 +242,11 @@ protected:
      */
     bool set_rx_time(int val, bool reflesh = false);
 
-
-signals:
-    void gain_changed(float val);
-    void point_qty_changed(int val);
-    void compress_ratio_changed(int val);
-
 private:
     GroupPrivate *d;
 };
+
+typedef QSharedPointer<Group> GroupPointer;
 
 }
 #endif // __GROUP_H__

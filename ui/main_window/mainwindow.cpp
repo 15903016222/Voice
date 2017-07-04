@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /* gain menu item */
     ui->gainMenuItem->set(tr("Gain"), "dB", 0, 90, 1);
     ui->gainMenuItem->set_suffix("(0.0)");
-    ui->gainMenuItem->set_value(group->gain());
+    ui->gainMenuItem->set_value(group->sample()->gain());
 
     /* angle menu item */
     ui->angleMenuItem->set(tr("Angle"), "&#176;", 0, 180, 1);

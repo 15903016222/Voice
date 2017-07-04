@@ -15,8 +15,11 @@ UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
     DplDevice::Device *device = DplDevice::Device::instance();
-    m_group = DplDevice::Device::instance()->current_group();
+
     connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
+
+    m_sample = DplDevice::Device::instance()->current_group()->sample();
+
 
     QStringList pointQtyList;
 
@@ -33,8 +36,8 @@ UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_pointQtyItem.set(tr("Point Qty."), pointQtyList);
 
     m_scaleFactorItem.set(tr("Scale Factor"), "");
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
-            SIGNAL(compress_ratio_changed(int)),
+    connect(static_cast<DplDevice::Sample *>(m_sample.data()),
+            SIGNAL(scale_factor_changed(int)),
             this,
             SLOT(update_scale_factor_item()));
 
@@ -87,21 +90,18 @@ void UtAdvancedMenu::update()
 void UtAdvancedMenu::do_current_group_changed()
 {
     /* disconnect */
-    disconnect(static_cast<DplDevice::Group *>(m_group.data()),
-            SIGNAL(compress_ratio_changed(int)),
-            this,
-            SLOT(do_compress_ratio_changed(int)));
+    disconnect(static_cast<DplDevice::Sample *>(m_sample.data()),
+               SIGNAL(scale_factor_changed(int)),
+               this,
+               SLOT(update_scale_factor_item()));
 
-    m_group = DplDevice::Device::instance()->current_group();
+    m_sample = DplDevice::Device::instance()->current_group()->sample();
+    connect(static_cast<DplDevice::Sample *>(m_sample.data()),
+            SIGNAL(scale_factor_changed(int)),
+            this, SLOT(update_scale_factor_item()));
 
-    if (m_group.isNull()) {
-        return;
-    } else if (m_eightPercentItem.isHidden()) {
+    if (m_eightPercentItem.isHidden()) {
         m_updateFlag = true;
-        connect(static_cast<DplDevice::Group *>(m_group.data()),
-                SIGNAL(compress_ratio_changed(int)),
-                this,
-                SLOT(do_compress_ratio_changed(int)));
     } else {
         update();
     }
@@ -109,7 +109,7 @@ void UtAdvancedMenu::do_current_group_changed()
 
 void UtAdvancedMenu::update_scale_factor_item()
 {
-    m_scaleFactorItem.set_text(QString::number(m_group->compress_ratio()));
+    m_scaleFactorItem.set_text(QString::number(m_sample->scale_factor()));
 }
 
 }

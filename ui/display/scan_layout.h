@@ -120,17 +120,17 @@ inline QLayout *ScanLayout::a_vlayout(int id)
 
 inline QLayout *ScanLayout::b_layout(int id)
 {
-    return new_layout<QVBoxLayout>(QString("B").arg(id));
+    return new_layout<QVBoxLayout>(QString("B%1").arg(id));
 }
 
 inline QLayout *ScanLayout::s_layout(int id)
 {
-    return new_layout<QVBoxLayout>(QString("S").arg(id));
+    return new_layout<QVBoxLayout>(QString("S%1").arg(id));
 }
 
 inline QLayout *ScanLayout::c_layout(int id)
 {
-    return new_layout<QVBoxLayout>(QString("C").arg(id));
+    return new_layout<QVBoxLayout>(QString("C%1").arg(id));
 }
 
 #endif // __SCAN_LAYOUT_H__
