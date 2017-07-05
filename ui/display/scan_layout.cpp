@@ -15,8 +15,6 @@ void ScanLayout::set_mode(ScanLayout::Mode mode, const QList<int> &grpIds)
         return;
     }
 
-    qDebug("%s[%d]: mode(%d)",__func__, __LINE__, mode);
-
     m_mode = mode;
     m_grpIds = grpIds;
 

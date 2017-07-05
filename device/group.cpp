@@ -68,7 +68,7 @@ Group::Group(int index, QObject *parent):
     m_fpgaGroup(new DplFpga::Group(index, parent))
 {
     DplFpga::Group *fpgaGroup = static_cast<DplFpga::Group *>(m_fpgaGroup.data());
-    m_fpgaGroup->show_info();
+//    m_fpgaGroup->show_info();
 
     /* 关联闸门 */
     connect(static_cast<Gate *>(m_gateA.data()),
@@ -81,23 +81,7 @@ Group::Group(int index, QObject *parent):
             SIGNAL(height_changed(int)),
             fpgaGroup, SLOT(set_gate_i_height(int)));
 
-    /* 关联采样 */
-    connect(static_cast<Sample *>(m_sample.data()),
-            SIGNAL(gain_changed(float)),
-            fpgaGroup, SLOT(set_gain(float)));
-    connect(static_cast<Sample *>(m_sample.data()),
-            SIGNAL(scale_factor_changed(int)),
-            fpgaGroup, SLOT(set_scale_factor(int)));
-    connect(static_cast<Sample *>(m_sample.data()),
-            SIGNAL(start_changed(float)),
-            this, SLOT(update_sample()));
-    connect(static_cast<Sample *>(m_sample.data()),
-            SIGNAL(range_changed()),
-            this, SLOT(update_sample()));
-    connect(static_cast<Sample *>(m_sample.data()),
-            SIGNAL(point_qty_changed(int)),
-            static_cast<DplSource::Beams *>(m_beams.data()),
-            SLOT(set_point_qty(int)));
+    init_sample();
 
     m_beams->set_beam_qty(m_focallawer->beam_qty());
     m_beams->set_point_qty(m_sample->point_qty());
@@ -110,6 +94,8 @@ Group::Group(int index, QObject *parent):
             SIGNAL(beam_qty_changed(int)),
             static_cast<DplSource::Beams *>(m_beams.data()),
             SLOT(set_beam_qty(int)));
+
+    update_sample();
 }
 
 Group::~Group()
@@ -242,13 +228,51 @@ double Group::max_sample_time()
 
 void Group::update_sample()
 {
-    m_fpgaGroup->set_sample_start((m_focallawer->wedge()->delay() + m_sample->start())/DplFpga::Fpga::SAMPLE_PRECISION, true);
-    m_fpgaGroup->set_sample_range((m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range())/DplFpga::Fpga::SAMPLE_PRECISION, true);
-    m_fpgaGroup->set_rx_time((d->max_beam_delay() + m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range() + 50)/DplFpga::Fpga::SAMPLE_PRECISION, true);
+    m_fpgaGroup->set_sample_start((m_focallawer->wedge()->delay() + m_sample->start())/DplFpga::Fpga::SAMPLE_PRECISION);
+    m_fpgaGroup->set_sample_range((m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range())/DplFpga::Fpga::SAMPLE_PRECISION);
+    m_fpgaGroup->set_rx_time((d->max_beam_delay() + m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
 
-    qDebug("%s[%d]: ",__func__, __LINE__);
+    //    m_fpgaGroup->show_info();
+}
 
-    m_fpgaGroup->show_info();
+void Group::init_sample()
+{
+    /* 关联FPGA */
+    m_fpgaGroup->set_gain(m_sample->gain());
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(gain_changed(float)),
+            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
+            SLOT(set_gain(float)));
+
+    m_fpgaGroup->set_scale_factor(m_sample->scale_factor());
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(scale_factor_changed(int)),
+            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
+            SLOT(set_scale_factor(int)));
+
+    m_fpgaGroup->set_point_qty(m_sample->point_qty());
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(point_qty_changed(int)),
+            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
+            SLOT(set_point_qty(int)));
+
+    /* 关联自己 */
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(start_changed(float)),
+            this,
+            SLOT(update_sample()));
+
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(range_changed()),
+            this,
+            SLOT(update_sample()));
+
+    /* 关联Beams */
+    m_beams->set_point_qty(m_sample->point_qty());
+    connect(static_cast<Sample *>(m_sample.data()),
+            SIGNAL(point_qty_changed(int)),
+            static_cast<DplSource::Beams *>(m_beams.data()),
+            SLOT(set_point_qty(int)));
 }
 
 }

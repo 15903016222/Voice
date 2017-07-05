@@ -7,6 +7,7 @@ const int Sample::MAX_SCALE_FACTOR;
 Sample::Sample(float precision, QObject *parent) :
     QObject(parent),
     m_precision(precision),
+    m_gain(20.0),
     m_start(0),
     m_velocity(3240),
     m_scaleFactor(9),

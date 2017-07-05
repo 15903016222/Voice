@@ -20,6 +20,8 @@ int AscanVWidget::y_axis_length() const
 
 void AscanVWidget::paintEvent(QPaintEvent *e)
 {
+    Q_UNUSED(e);
+
     QPainter painter(this);
 
     QTransform form = painter.transform();
@@ -29,6 +31,5 @@ void AscanVWidget::paintEvent(QPaintEvent *e)
 
     painter.setPen( wave_color() );
 
-    qDebug("%s[%d]: Pen Width(%d)",__func__, __LINE__, painter.pen().width());
     painter.drawPath( paint_wave() );
 }

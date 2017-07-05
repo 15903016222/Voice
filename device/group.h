@@ -129,12 +129,6 @@ public:
      */
     const DplFocallaw::FocallawerPointer &focallawer() const;
 
-    /**
-     * @brief fpga  获取FPGA组对象指针
-     * @return      对象指针
-     */
-    const DplFpga::GroupPointer &fpga() const;
-
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void velocity_changed(double val);
@@ -153,6 +147,8 @@ private:
     DplSource::BeamsPointer m_beams;
     DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplFpga::GroupPointer m_fpgaGroup;
+
+    void init_sample();
 };
 
 typedef QSharedPointer<Group> GroupPointer;
@@ -196,11 +192,6 @@ inline const DplSource::BeamsPointer &Group::beams() const
 inline const DplFocallaw::FocallawerPointer &Group::focallawer() const
 {
     return m_focallawer;
-}
-
-inline const DplFpga::GroupPointer &Group::fpga() const
-{
-    return m_fpgaGroup;
 }
 
 }

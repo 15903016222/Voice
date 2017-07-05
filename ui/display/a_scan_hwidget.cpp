@@ -26,8 +26,6 @@ int AscanHWidget::y_axis_length() const
 
 void AscanHWidget::paintEvent(QPaintEvent *e)
 {
-    qDebug("%s[%d]: ",__func__, __LINE__);
-
     QPainter painter(this);
     painter.translate(0, height());
 

@@ -94,9 +94,6 @@ public:
      */
     void set_velocity(float velocity);
 
-    static int getMAX_SCALE_FACTOR();
-    static void setMAX_SCALE_FACTOR(int value);
-
 signals:
     void gain_changed(float gain);
     void start_changed(float start);

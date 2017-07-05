@@ -326,7 +326,7 @@ float Measure::reference_cursor_ut_position(DplDevice::GroupPointer &group)
 /*  U(m): 测量光标在超声轴上的位置  */
 float Measure::measurement_cursor_ut_position(DplDevice::GroupPointer &group)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+//    qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
@@ -368,7 +368,7 @@ float Measure::reference_cursor_scan_position(DplDevice::GroupPointer &group)
 /*  S(m): 扫查轴上测量光标的位置  */
 float Measure::measurement_cursor_scan_position(DplDevice::GroupPointer &group)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+//    qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
@@ -389,7 +389,7 @@ float Measure::reference_cursor_index_position(DplDevice::GroupPointer &group)
 /*  I(m): 步进轴上的测量光标位置  */
 float Measure::measurement_cursor_index_position(DplDevice::GroupPointer &group)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented";
+//    qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 

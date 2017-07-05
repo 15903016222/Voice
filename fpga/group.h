@@ -15,10 +15,11 @@ namespace DplFpga {
 
 class GroupPrivate;
 
-class FPGASHARED_EXPORT Group
+class FPGASHARED_EXPORT Group : public QObject
 {
+    Q_OBJECT
 public:
-    explicit Group(const int index);
+    explicit Group(const int index, QObject *parent = 0);
     ~Group();
 
     /**
@@ -58,22 +59,10 @@ public:
     int scale_factor(void) const;
 
     /**
-     * @brief set_scale_factor      设置采样点压缩系数
-     * @param val                   压缩系数
-     */
-    void set_scale_factor(int val);
-
-    /**
      * @brief gain  获取增益
      * @return      返回增益值， 单位(dB)
      */
     float gain(void) const;
-
-    /**
-     * @brief set_gain  设置增益
-     * @param gain      增益值
-     */
-    void set_gain(float gain);
 
     int thickness_factor(void) const;
     bool set_thickness_factor(int factor, bool reflesh = false);
@@ -104,7 +93,7 @@ public:
     bool set_sum_gain(int gain, bool reflesh = false);
 
     int sample_range(void) const;
-    bool set_sample_range(int range, bool reflesh = false);
+    bool set_sample_range(int range);
 
     /**
      * @brief point_qty 获取压缩后的采样点数
@@ -112,11 +101,6 @@ public:
      */
     int point_qty(void) const;
 
-    /**
-     * @brief set_point_qty 设置压缩后的采样点数
-     * @param qty           采样点数
-     */
-    void set_point_qty(int qty);
 
     int tcg_point_qty(void) const;
     bool set_tcg_point_qty(int qty, bool reflesh = false);
@@ -133,10 +117,9 @@ public:
     /**
      * @brief set_rx_time   设置接收工作时间
      * @param val           时间，单位(采样精度)
-     * @param reflesh       下发配置标志
      * @return              成功返回true，失败返回false
      */
-    bool set_rx_time(int val, bool reflesh = false);
+    bool set_rx_time(int val);
 
     int idel_time(void) const;
     bool set_idel_time(int val, bool reflesh = false);
@@ -147,11 +130,6 @@ public:
      */
     int gate_a_height() const;
 
-    /**
-     * @brief set_gate_a_height 设置闸门A高度
-     * @param height            高度(%)
-     */
-    void set_gate_a_height(int height);
 
     /**
      * @brief gate_b_height 闸门B高度
@@ -159,11 +137,6 @@ public:
      */
     int gate_b_height() const;
 
-    /**
-     * @brief set_gate_b_height 设置闸门B高度
-     * @param height            高度(%)
-     */
-    void set_gate_b_height(int height);
 
     /**
      * @brief gate_i_height 闸门I高度
@@ -171,11 +144,6 @@ public:
      */
     int gate_i_height() const;
 
-    /**
-     * @brief set_gate_i_height 设置闸门I高度
-     * @param height            高度(%)
-     */
-    void set_gate_i_height(int height);
 
     int gate_a_logic(void) const;
     bool set_gate_a_logic(int val, bool reflesh = false);
@@ -202,10 +170,9 @@ public:
     /**
      * @brief set_sample_start  设置采样起点
      * @param val               采样起点值，单位(采样精度)
-     * @param reflesh           下发配置标志
      * @return                  成功返回true，否则返回false
      */
-    bool set_sample_start(int val, bool reflesh = false);
+    bool set_sample_start(int val);
 
     int average(void) const;
     bool set_average(int val, bool reflesh = false);
@@ -237,6 +204,43 @@ public:
      * @brief show_info 显示信息
      */
     void show_info() const;
+
+public slots:
+    /**
+     * @brief set_gain  设置增益
+     * @param gain      增益值
+     */
+    void set_gain(float gain);
+
+    /**
+     * @brief set_scale_factor      设置采样点压缩系数
+     * @param val                   压缩系数
+     */
+    void set_scale_factor(int val);
+
+    /**
+     * @brief set_point_qty 设置压缩后的采样点数
+     * @param qty           采样点数
+     */
+    void set_point_qty(int qty);
+
+    /**
+     * @brief set_gate_a_height 设置闸门A高度
+     * @param height            高度(%)
+     */
+    void set_gate_a_height(int height);
+
+    /**
+     * @brief set_gate_b_height 设置闸门B高度
+     * @param height            高度(%)
+     */
+    void set_gate_b_height(int height);
+
+    /**
+     * @brief set_gate_i_height 设置闸门I高度
+     * @param height            高度(%)
+     */
+    void set_gate_i_height(int height);
 
 private:
     GroupPrivate *d;

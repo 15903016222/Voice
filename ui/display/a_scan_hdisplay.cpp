@@ -27,11 +27,11 @@ AscanHDisplay::AscanHDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
             this,
             SLOT(update_bottom_ruler()));
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
+    connect(static_cast<DplDevice::Sample *>(m_group->sample().data()),
             SIGNAL(start_changed(float)),
             this,
             SLOT(update_bottom_ruler()));
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
+    connect(static_cast<DplDevice::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed()),
             this,
             SLOT(update_bottom_ruler()));
@@ -71,6 +71,8 @@ void AscanHDisplay::update_bottom_ruler()
 
     start = Dpl::ns_to_us(start);
     end = Dpl::ns_to_us(end);
+
+    qDebug("%s[%d]: pos(%f, %f)",__func__, __LINE__, start, end);
 
     DplDevice::Group::UtUnit unit = m_group->ut_unit();
 
