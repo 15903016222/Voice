@@ -102,12 +102,6 @@ public:
      */
     int point_qty(void) const;
 
-    /**
-     * @brief set_point_qty 设置压缩后的采样点数
-     * @param qty           采样点数
-     */
-    void set_point_qty(int qty);
-
     int tcg_point_qty(void) const;
     bool set_tcg_point_qty(int qty, bool reflesh = false);
 
@@ -227,6 +221,12 @@ public slots:
      * @param val                   压缩系数
      */
     void set_scale_factor(int val);
+
+    /**
+     * @brief set_point_qty 设置压缩后的采样点数
+     * @param qty           采样点数
+     */
+    void set_point_qty(int qty);
 
     /**
      * @brief rx_time   获取接收工作时间
