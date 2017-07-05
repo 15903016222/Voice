@@ -65,12 +65,6 @@ public:
     int scale_factor() const;
 
     /**
-     * @brief set_scale_factor  设置压缩系数
-     * @param factor            系数
-     */
-    void set_scale_factor(int factor);
-
-    /**
      * @brief point_qty 采样点数
      * @return          点数
      */
@@ -97,7 +91,7 @@ public:
 signals:
     void gain_changed(float gain);
     void start_changed(float start);
-    void range_changed();
+    void range_changed(float range);
     void scale_factor_changed(int ratio);
     void point_qty_changed(int qty);
     void velocity_changed(float velocity);
@@ -108,8 +102,8 @@ private:
     float m_precision;      // 采样精度(ns)
     float m_gain;           // 增益(dB)
     float m_start;          // 采样起点(ns)
+    float m_range;          // 采样范围(ns)
     float m_velocity;       // 声速(m/s)
-    int m_scaleFactor;      // 压缩系数
     int m_pointQty;         // 采样点数
 };
 
@@ -148,25 +142,22 @@ inline void Sample::set_start(float start)
 
 inline float Sample::range() const
 {
-    return m_pointQty * scale_factor() * precision();
+    return m_range;
 }
 
 inline void Sample::set_range(float range)
 {
-    set_scale_factor(range/point_qty());
+    qDebug("%s[%d]: range(%f)",__func__, __LINE__, range);
+    if ( !qFuzzyCompare(range, m_range) && (range > point_qty()*precision())) {
+        m_range = range;
+        emit range_changed(range);
+        emit scale_factor_changed(scale_factor());
+    }
 }
 
 inline int Sample::scale_factor() const
 {
-    return m_scaleFactor;
-}
-
-inline void Sample::set_scale_factor(int factor)
-{
-    if (m_scaleFactor != factor) {
-        m_scaleFactor = factor;
-        emit scale_factor_changed(factor);
-    }
+    return range()/precision()/point_qty();
 }
 
 inline int Sample::point_qty() const
@@ -179,6 +170,7 @@ inline void Sample::set_point_qty(int qty)
     if (m_pointQty != qty) {
         m_pointQty = qty;
         emit point_qty_changed(qty);
+        emit scale_factor_changed(scale_factor());
     }
 }
 

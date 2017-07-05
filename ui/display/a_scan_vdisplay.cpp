@@ -25,9 +25,10 @@ AscanVDisplay::AscanVDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
             this,
             SLOT(update_left_ruler()));
     connect(static_cast<DplDevice::Sample *>(m_group->sample().data()),
-            SIGNAL(range_changed()),
+            SIGNAL(range_changed(float)),
             this,
             SLOT(update_left_ruler()));
+    update_left_ruler();
 
     ui->bottomRulerWidget->set_range(0, 100);
     ui->bottomRulerWidget->set_unit("(%)");
@@ -61,6 +62,8 @@ void AscanVDisplay::update_left_ruler()
 {
     double start = m_group->sample()->start();
     double end = (start + m_group->sample()->range());
+
+    qDebug("%s[%d]: start(%f) end(%f) precision(%f)",__func__, __LINE__, start, end, m_group->sample()->precision());
 
     start = Dpl::ns_to_us(start);
     end = Dpl::ns_to_us(end);

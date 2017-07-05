@@ -263,7 +263,7 @@ void Group::init_sample()
             SLOT(update_sample()));
 
     connect(static_cast<Sample *>(m_sample.data()),
-            SIGNAL(range_changed()),
+            SIGNAL(range_changed(float)),
             this,
             SLOT(update_sample()));
 
