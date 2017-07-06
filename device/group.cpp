@@ -20,7 +20,11 @@ namespace DplDevice {
 class GroupPrivate
 {
 public:
-    GroupPrivate();
+    GroupPrivate() :
+        m_mode(Group::PA),
+        m_utUnit(Group::SoundPath),
+        m_currentAngle(M_PI/6)
+    {}
 
     /**
      * @brief max_beam_delay    获取最大的BeamDelay
@@ -34,20 +38,8 @@ public:
 
     double m_currentAngle;      /* 声速入射角度, 单位(度) */
 
-    Group::PointQtyMode m_pointQtyMode; /* 采样点模式 */
-
     QReadWriteLock m_rwlock;
 };
-
-GroupPrivate::GroupPrivate()
-{
-    m_mode = Group::PA;
-
-    m_utUnit = Group::SoundPath;
-    m_currentAngle = M_PI/6;
-
-    m_pointQtyMode = Group::PointQtyAuto;
-}
 
 int GroupPrivate::max_beam_delay()
 {
@@ -139,50 +131,6 @@ void Group::set_ut_unit(Group::UtUnit type)
     emit ut_unit_changed(type);
 }
 
-//void Group::set_range(double value)
-//{
-//    {
-//        QWriteLocker l(&d->m_rwlock);
-
-//        int maxPointQty = value / DplFpga::Fpga::SAMPLE_PRECISION;
-//        int curPointQty = m_fpgaGroup->point_qty();
-//        int widthPointQty = 640;
-
-//        if (PointQtyAuto == d->m_pointQtyMode) {
-//            if (maxPointQty <= widthPointQty) {
-//                curPointQty = maxPointQty;
-//            } else {
-//                int compressRate = maxPointQty / widthPointQty;
-//                if (maxPointQty%widthPointQty) {
-//                    ++compressRate;
-//                }
-//                curPointQty = maxPointQty / compressRate;
-//            }
-//        }
-
-//        if (maxPointQty%curPointQty) {
-//            /* 类似四舍五入 */
-//            maxPointQty = ((maxPointQty + curPointQty/2)/curPointQty)*curPointQty;
-//        }
-
-//        //    if (d->m_range == maxPointQty * d->m_precision) {
-//        //        return false;
-//        //    }
-
-//        d->m_range = maxPointQty * DplFpga::Fpga::SAMPLE_PRECISION;
-
-//        m_fpgaGroup->set_point_qty(curPointQty);
-
-//        if (maxPointQty/curPointQty) {
-//            m_fpgaGroup->set_scale_factor(maxPointQty/curPointQty);
-//        } else {
-//            m_fpgaGroup->set_scale_factor(1);
-//        }
-//        update_sample();
-//    }
-//    emit range_changed(d->m_range);
-//}
-
 double Group::current_angle()
 {
     QReadLocker l(&d->m_rwlock);
@@ -193,19 +141,6 @@ void Group::set_current_angle(double angle)
 {
     QWriteLocker l(&d->m_rwlock);
     d->m_currentAngle = angle;
-}
-
-Group::PointQtyMode Group::point_qty_mode()
-{
-    QReadLocker l(&d->m_rwlock);
-    return d->m_pointQtyMode;
-}
-
-bool Group::set_point_qty_mode(Group::PointQtyMode mode)
-{
-    QWriteLocker l(&d->m_rwlock);
-    d->m_pointQtyMode = mode;
-    return true;
 }
 
 double Group::max_sample_time()

@@ -222,7 +222,7 @@ void GeneralMenu::update_range_item()
         max = m_group->max_range();
     }
 
-    if (m_group->point_qty_mode() == DplDevice::Group::PointQtyAuto) {
+    if (m_group->sample()->is_auto_set_point_qty()) {
         min = 32 * m_group->sample()->precision() * 1;
     } else {
         min = m_group->sample()->point_qty() * m_group->sample()->precision() * 1;

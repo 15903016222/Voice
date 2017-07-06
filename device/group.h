@@ -66,26 +66,6 @@ public:
      */
     void set_current_angle(double angle);
 
-    enum PointQtyMode {
-        PointQtyAuto,
-        PointQty160,
-        PointQty320,
-        PointQty640,
-        PointQtyUserDef
-    };
-    /**
-     * @brief point_qty_mode    获取采样点模式
-     * @return                  采样点模式
-     */
-    PointQtyMode point_qty_mode();
-
-    /**
-     * @brief set_point_qty_mode    设置采样点模式
-     * @param mode                  采样点模式
-     * @return                      成功返回true，否则false
-     */
-    bool set_point_qty_mode(PointQtyMode mode);
-
     /**
      * @brief max_sample_time   获取最大Start+Range时间
      * @return              返回最大Start+Range时间，单位(ns)

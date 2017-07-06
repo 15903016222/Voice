@@ -71,10 +71,23 @@ public:
     int point_qty() const;
 
     /**
-     * @brief set_point_qty 设置采样点数
-     * @param qty           采样点数
+     * @brief is_auto_set_point_qty 获取自动设置采样点状态
+     * @return                      是自动设置采样点返回true
      */
-    void set_point_qty(int qty);
+    bool is_auto_set_point_qty() const;
+
+    /**
+     * @brief set_point_qty 设置采样点为自动设置
+     * @param autoset       true为自动设置
+     */
+    void set_point_qty(bool autoset);
+
+    /**
+     * @brief set_point_qty 设置采样点数, 如果设置了自动设置采样点状态，那么该函数会一直返回false
+     * @param qty           采样点数
+     * @return              设置成功返回true， 失败返回false
+     */
+    bool set_point_qty(int qty);
 
     /**
      * @brief velocity  获取声速
@@ -99,12 +112,13 @@ signals:
 public slots:
 
 private:
-    float m_precision;      // 采样精度(ns)
-    float m_gain;           // 增益(dB)
-    float m_start;          // 采样起点(ns)
-    float m_range;          // 采样范围(ns)
-    float m_velocity;       // 声速(m/s)
-    int m_pointQty;         // 采样点数
+    const float m_precision;    // 采样精度(ns)
+    float m_gain;               // 增益(dB)
+    float m_start;              // 采样起点(ns)
+    float m_range;              // 采样范围(ns)
+    float m_velocity;           // 声速(m/s)
+    bool m_autoSetPointQty;     // 自动设置采样点标志
+    int m_pointQty;             // 采样点数
 };
 
 typedef QSharedPointer<Sample> SamplePointer;
@@ -145,16 +159,6 @@ inline float Sample::range() const
     return m_range;
 }
 
-inline void Sample::set_range(float range)
-{
-    qDebug("%s[%d]: range(%f)",__func__, __LINE__, range);
-    if ( !qFuzzyCompare(range, m_range) && (range > point_qty()*precision())) {
-        m_range = range;
-        emit range_changed(range);
-        emit scale_factor_changed(scale_factor());
-    }
-}
-
 inline int Sample::scale_factor() const
 {
     return range()/precision()/point_qty();
@@ -165,7 +169,22 @@ inline int Sample::point_qty() const
     return m_pointQty;
 }
 
-inline void Sample::set_point_qty(int qty)
+inline bool Sample::is_auto_set_point_qty() const
+{
+    return m_autoSetPointQty;
+}
+
+inline void Sample::set_point_qty(bool autoset)
+{
+    if (m_autoSetPointQty != autoset) {
+        m_autoSetPointQty = autoset;
+        if (autoset) {
+            set_range(m_range);
+        }
+    }
+}
+
+inline bool Sample::set_point_qty(int qty)
 {
     if (m_pointQty != qty) {
         m_pointQty = qty;
