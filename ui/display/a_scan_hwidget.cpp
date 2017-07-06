@@ -11,7 +11,11 @@
 AscanHWidget::AscanHWidget(QWidget *parent) :
     AscanWidget(parent)
 {
+}
 
+AscanHWidget::~AscanHWidget()
+{
+    qDebug("%s[%d]: ",__func__, __LINE__);
 }
 
 int AscanHWidget::x_axis_length() const

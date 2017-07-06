@@ -14,6 +14,7 @@ class AscanWidget : public QWidget
     Q_OBJECT
 public:
     explicit AscanWidget(QWidget *parent = 0);
+    ~AscanWidget();
 
     /**
      * @brief wave_color    获取波型显示颜色
@@ -31,7 +32,7 @@ public:
      * @brief show  显示波形
      * @param b     波形数据
      */
-    void show(const QByteArray &b);
+    void set_wave(const QByteArray &b);
 
     enum GateType {
         GATE_A,
@@ -52,8 +53,9 @@ public slots:
      * @param type      闸门类型
      * @param start     闸门起点(ns)
      * @param width     闸门宽度(ns)
+     * @param height    闸门高度(%)
      */
-    void set_gate(AscanWidget::GateType type, float start, float width);
+    void set_gate(AscanWidget::GateType type, float start, float width, int height);
 
     /**
      * @brief set_gate_visible  设置闸门是否显示
@@ -97,7 +99,7 @@ protected:
      * @brief paint_gate    画闸门
      * @return              路径
      */
-    QPainterPath paint_gate();
+    void paint_gate(QPainter &painter);
 
 signals:
 
@@ -108,6 +110,7 @@ private:
     float m_sampleRange;
     float m_gateStart[3];
     float m_gateWidth[3];
+    int m_gateHeight[3];
     bool m_gateVisible[3];
 };
 
@@ -127,11 +130,13 @@ inline void AscanWidget::set_sample(float start, float range)
     m_sampleRange = range;
 }
 
-inline void AscanWidget::set_gate(AscanWidget::GateType type, float start, float width)
+inline void AscanWidget::set_gate(AscanWidget::GateType type, float start, float width, int height)
 {
     Q_ASSERT( type >= GATE_A && type <= GATE_I );
     m_gateStart[type] = start;
     m_gateWidth[type] = width;
+    m_gateHeight[type] = height;
+    update();
 }
 
 inline void AscanWidget::set_gate_visible(bool visible)

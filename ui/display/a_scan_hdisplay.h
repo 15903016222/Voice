@@ -7,29 +7,15 @@
 #ifndef __A_SCAN_HDISPLAY_H__
 #define __A_SCAN_HDISPLAY_H__
 
-#include <device/device.h>
+#include "a_scan_display.h"
 
-#include <QWidget>
-
-namespace Ui {
-class AscanHDisplay;
-}
-
-class AscanHDisplay : public QWidget
+class AscanHWidget;
+class AscanHDisplay : public AscanDisplay
 {
     Q_OBJECT
-
 public:
     explicit AscanHDisplay(DplDevice::GroupPointer &group, QWidget *parent = 0);
     ~AscanHDisplay();
-
-protected slots:
-    void update();
-
-private:
-    Ui::AscanHDisplay *ui;
-
-    DplDevice::GroupPointer m_group;
 
 private slots:
     void update_bottom_ruler();

@@ -12,7 +12,8 @@
 class AscanHWidget : public AscanWidget
 {
 public:
-    AscanHWidget(QWidget *parent = 0);
+    explicit AscanHWidget(QWidget *parent = 0);
+    ~AscanHWidget();
 
 protected:
     /**

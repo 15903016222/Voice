@@ -15,9 +15,13 @@ AscanWidget::AscanWidget(QWidget *parent):
 {
 }
 
-void AscanWidget::show(const QByteArray &b)
+AscanWidget::~AscanWidget()
 {
-    if (b.size() == 0) {
+}
+
+void AscanWidget::set_wave(const QByteArray &b)
+{
+    if (b.isEmpty()) {
         return;
     }
     m_beam.setRawData(b.constData(), b.size());
@@ -62,13 +66,26 @@ void AscanWidget::draw_wave(QPainter &painter)
     painter.drawPath(draw_wave());
 }
 
-QPainterPath AscanWidget::paint_gate()
+void AscanWidget::paint_gate(QPainter &painter)
 {
-    QPainterPath path;
+    painter.setPen(QColor("red"));
+//    painter.drawLine();
+//    painter.drawLine();
+//    painter.drawLine();
+
+//    painter.setPen(QColor("green"));
+//    painter.drawLine();
+//    painter.drawLine();
+//    painter.drawLine();
+
+//    painter.setPen(QColor("yellow"));
+//    painter.drawLine();
+//    painter.drawLine();
+//    painter.drawLine();
+
 
 //    /* 计算闸门x轴起点与终点 */
 //    xStartPos =
-
 
 //    /* 计算闸门y轴高度 */
 
@@ -79,7 +96,7 @@ QPainterPath AscanWidget::paint_gate()
 //    path.moveTo(xEndPos, yPos - 3);
 //    path.lineTo(xEndPos, yPos + 3);
 
-    return path;
+//    return path;
 
 //    if(GROUP_VAL_POS(grp , ut_unit)==UT_UNIT_TRUE_DEPTH)
 //        {

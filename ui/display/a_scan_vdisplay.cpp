@@ -1,6 +1,6 @@
 #include "global.h"
 #include "a_scan_vdisplay.h"
-#include "ui_a_scan_vdisplay.h"
+#include "ui_a_scan_display.h"
 #include "a_scan_vwidget.h"
 
 #include <qmath.h>
@@ -8,13 +8,8 @@
 #include <QDebug>
 
 AscanVDisplay::AscanVDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AscanVDisplay)
+    AscanDisplay(group, new AscanVWidget, parent)
 {  
-    ui->setupUi(this);
-
-    m_group = group;
-
     /* ruler setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
@@ -33,29 +28,10 @@ AscanVDisplay::AscanVDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
     ui->bottomRulerWidget->set_range(0, 100);
     ui->bottomRulerWidget->set_unit("(%)");
     ui->bottomRulerWidget->set_backgroup_color(QColor("#ffff7f"));
-
-    ui->leftRulerWidget->set_type(RulerWidget::LEFT);
-
-    /* source setting */
-    DplSource::BeamsPointer beams = m_group->beams();
-    connect(static_cast<DplSource::Beams *>(beams.data()),
-            SIGNAL(data_event()),
-            this,
-            SLOT(update()));
-
-    ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
 
 AscanVDisplay::~AscanVDisplay()
 {
-    qDebug()<<__func__<<__LINE__;
-    delete ui;
-}
-
-void AscanVDisplay::update()
-{
-    ui->ascanWidget->show(m_group->beams()->get(0)->get_wave());
-//    ui->leftRulerWidget->update();
 }
 
 void AscanVDisplay::update_left_ruler()
