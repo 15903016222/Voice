@@ -29,7 +29,5 @@ void AscanVWidget::paintEvent(QPaintEvent *e)
     form.rotate(180, Qt::XAxis);
     painter.setTransform(form);
 
-    painter.setPen( wave_color() );
-
-    painter.drawPath( paint_wave() );
+    draw(painter);
 }

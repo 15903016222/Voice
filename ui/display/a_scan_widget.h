@@ -75,12 +75,23 @@ protected:
      */
     virtual int y_axis_length() const = 0;
 
+    /**
+     * @brief draw      画图
+     * @param painter   Qpainter
+     */
+    void draw(QPainter &painter);
 
     /**
-     * @brief paint_wave    画波形
+     * @brief draw_wave     画波形
      * @return              路径
      */
-    QPainterPath paint_wave();
+    QPainterPath draw_wave();
+
+    /**
+     * @brief draw_wave 画波形
+     * @param painter   QPainter
+     */
+    void draw_wave(QPainter &painter);
 
     /**
      * @brief paint_gate    画闸门
@@ -126,7 +137,7 @@ inline void AscanWidget::set_gate(AscanWidget::GateType type, float start, float
 inline void AscanWidget::set_gate_visible(bool visible)
 {
 //    Q_ASSERT( type >= GATE_A && type <= GATE_I );
-//    m_gateVisible[type] = visible;
+    //    m_gateVisible[type] = visible;
 }
 
 

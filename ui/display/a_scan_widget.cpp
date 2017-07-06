@@ -24,7 +24,14 @@ void AscanWidget::show(const QByteArray &b)
     update();
 }
 
-QPainterPath AscanWidget::paint_wave()
+void AscanWidget::draw(QPainter &painter)
+{
+//    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+
+    draw_wave(painter);
+}
+
+QPainterPath AscanWidget::draw_wave()
 {
     QPainterPath path;
 
@@ -47,6 +54,12 @@ QPainterPath AscanWidget::paint_wave()
     }
 
     return path;
+}
+
+void AscanWidget::draw_wave(QPainter &painter)
+{
+    painter.setPen(wave_color());
+    painter.drawPath(draw_wave());
 }
 
 QPainterPath AscanWidget::paint_gate()

@@ -26,6 +26,8 @@ int AscanHWidget::y_axis_length() const
 
 void AscanHWidget::paintEvent(QPaintEvent *e)
 {
+    Q_UNUSED(e);
+
     QPainter painter(this);
     painter.translate(0, height());
 
@@ -35,6 +37,5 @@ void AscanHWidget::paintEvent(QPaintEvent *e)
 
     painter.setTransform(form);
 
-    painter.setPen( wave_color() );
-    painter.drawPath( paint_wave() );
+    draw(painter);
 }
