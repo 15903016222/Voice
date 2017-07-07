@@ -33,6 +33,8 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, AscanWidget *ascanWid
             SLOT(do_data_event()));
 
     ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
+
+//    connect(static_cast<DplDevice::Gate *>(m_group->gate()))
 }
 
 AscanDisplay::~AscanDisplay()

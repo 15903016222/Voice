@@ -11,8 +11,7 @@
 #include <fpga/group.h>
 #include <source/beams.h>
 #include <focallaw/focallawer.h>
-
-#include "sample.h"
+#include <ut/sample.h>
 #include "gate.h"
 
 namespace DplDevice {
@@ -88,7 +87,7 @@ public:
      * @brief sample    获取采样对象指针
      * @return          对象指针
      */
-    const SamplePointer &sample() const;
+    const DplUt::SamplePointer &sample() const;
 
     /**
      * @brief gate  获取闸门对象指针
@@ -120,7 +119,7 @@ private slots:
 
 private:
     GroupPrivate *d;
-    SamplePointer m_sample;
+    DplUt::SamplePointer m_sample;
     GatePointer m_gateA;
     GatePointer m_gateB;
     GatePointer m_gateI;
@@ -148,7 +147,7 @@ inline double Group::max_range()
     return max_sample_time() - m_sample->start();
 }
 
-inline const SamplePointer &Group::sample() const
+inline const DplUt::SamplePointer &Group::sample() const
 {
     return m_sample;
 }

@@ -1,6 +1,6 @@
 #include "sample.h"
 
-namespace DplDevice {
+namespace DplUt {
 
 const int Sample::MAX_SCALE_FACTOR;
 

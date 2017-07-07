@@ -56,6 +56,8 @@ INCLUDEPATH += include
 
 include(device/device.pri)
 
+include(ut/ut.pri)
+
 include(ui/ui.pri)
 
 include(mcu/mcu.pri)

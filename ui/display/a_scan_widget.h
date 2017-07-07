@@ -9,6 +9,9 @@
 
 #include <QWidget>
 
+#include "device/gate.h"
+#include "ut/sample.h"
+
 class AscanWidget : public QWidget
 {
     Q_OBJECT
@@ -62,7 +65,7 @@ public slots:
      * @param type              闸门类型
      * @param visible           显示标志
      */
-    void set_gate_visible(bool visible);
+    void set_gate_visible(GateType type, bool visible);
 
 protected:
     /**
@@ -99,7 +102,7 @@ protected:
      * @brief paint_gate    画闸门
      * @return              路径
      */
-    void paint_gate(QPainter &painter);
+    void draw_gate(QPainter &painter);
 
 signals:
 
@@ -139,7 +142,7 @@ inline void AscanWidget::set_gate(AscanWidget::GateType type, float start, float
     update();
 }
 
-inline void AscanWidget::set_gate_visible(bool visible)
+inline void AscanWidget::set_gate_visible(GateType type, bool visible)
 {
 //    Q_ASSERT( type >= GATE_A && type <= GATE_I );
     //    m_gateVisible[type] = visible;

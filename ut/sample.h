@@ -1,9 +1,9 @@
-#ifndef __SAMPLE_H__
-#define __SAMPLE_H__
+#ifndef __DPLUT_SAMPLE_H__
+#define __DPLUT_SAMPLE_H__
 
 #include <QSharedPointer>
 
-namespace DplDevice {
+namespace DplUt {
 
 class Sample : public QObject
 {
@@ -207,4 +207,4 @@ inline void Sample::set_velocity(float velocity)
 }
 
 }
-#endif // __SAMPLE_H__
+#endif // __DPLUT_SAMPLE_H__

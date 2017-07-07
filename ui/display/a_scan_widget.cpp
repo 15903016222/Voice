@@ -33,6 +33,7 @@ void AscanWidget::draw(QPainter &painter)
 //    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     draw_wave(painter);
+    draw_gate(painter);
 }
 
 QPainterPath AscanWidget::draw_wave()
@@ -66,12 +67,16 @@ void AscanWidget::draw_wave(QPainter &painter)
     painter.drawPath(draw_wave());
 }
 
-void AscanWidget::paint_gate(QPainter &painter)
+void AscanWidget::draw_gate(QPainter &painter)
 {
-    painter.setPen(QColor("red"));
-//    painter.drawLine();
-//    painter.drawLine();
-//    painter.drawLine();
+//    int xPosStart = (m_gateStart-m_sampleStart) / m_sampleRange * x_axis_length();
+//    int xPosEnd = xPosStart + m_gateWidth / m_sampleRange * x_axis_length();
+//    int yPos = y_axis_length() * m_gateHeight[0] / 100;
+
+//    painter.setPen(QColor("red"));
+//    painter.drawLine(xPosStart, yPos, xPosEnd, yPos);
+//    painter.drawLine(xPosStart, yPos-3, xPosStart, yPos+3);
+//    painter.drawLine(xPosEnd, yPos-3, xPosEnd, yPos+3);
 
 //    painter.setPen(QColor("green"));
 //    painter.drawLine();
@@ -82,66 +87,4 @@ void AscanWidget::paint_gate(QPainter &painter)
 //    painter.drawLine();
 //    painter.drawLine();
 //    painter.drawLine();
-
-
-//    /* 计算闸门x轴起点与终点 */
-//    xStartPos =
-
-//    /* 计算闸门y轴高度 */
-
-//    path.moveTo(xStartPos, yPos);
-//    path.lineTo(xEndPos, yPos);
-//    path.moveTo(xStartPos, yPos - 3);
-//    path.lineTo(xStartPos, yPos + 3);
-//    path.moveTo(xEndPos, yPos - 3);
-//    path.lineTo(xEndPos, yPos + 3);
-
-//    return path;
-
-//    if(GROUP_VAL_POS(grp , ut_unit)==UT_UNIT_TRUE_DEPTH)
-//        {
-//            sample_start *= cos(TMP(current_angle[grp]) );
-//            sample_range *= cos(TMP(current_angle[grp]) );
-//        }
-
-//        if( GROUP_VAL_POS(grp ,gate[0].synchro) == 0 )/* A闸门 pulse 时 */
-//        {
-//            draw_start  +=  (int)((gate_start - sample_start) / sample_range * w + 20 );
-//            draw_end    +=  (int)((gate_start - sample_start + gate_width )/ sample_range * w + 20);
-//        }
-//        else if( GROUP_VAL_POS(grp , gate[0].synchro) == 1 )/* A闸门 I/ 时 */
-//        {
-//            _nCurrentBeamDelay = GROUP_VAL_POS(grp , beam_delay[_nBeamNo])  + GROUP_VAL_POS(grp , wedge_delay);
-//            _nGatePosition    = (double)(((TMP(measure_data[index][3])) & 0xfffff) - _nCurrentBeamDelay / 10);
-//            _nGatePosition    = _nGatePosition * cos(TMP(current_angle[grp])) / 100 ;
-//            draw_start  += (int)((_nGatePosition + gate_start - sample_start) / sample_range * w + 20);
-//            draw_end    += (int)((_nGatePosition + gate_start - sample_start + gate_width )/ sample_range * w + 20);
-//        }
-
-//        if(GROUP_VAL_POS(grp , rectifier1))
-//        {
-//            draw_height = (1 - gate_height / 100.0)* h ;
-//        }
-//        else
-//        {
-//            draw_height = h * gate_height / 200.0 ;
-//            h /= 2.0 ;
-//            draw_height = h - draw_height ;
-//        }
-//        cairo_set_line_width(cr, 2);
-//        cairo_move_to(cr, draw_start , draw_height );
-//        cairo_line_to(cr, draw_end   , draw_height );
-//        cairo_stroke(cr);
-//        cairo_set_line_width(cr, 1);
-//        cairo_move_to(cr, draw_start , draw_height - 3 );
-//        cairo_line_to(cr, draw_start , draw_height + 3 );
-//        cairo_move_to(cr,  draw_end  , draw_height - 3 );
-//        cairo_line_to(cr,  draw_end  , draw_height + 3 );
-//        cairo_stroke(cr);
-//        prule->scanEx.gateDataA.height = draw_height;
-//        prule->scanEx.gateDataA.start = draw_start - 20;
-//        prule->scanEx.gateDataA.end = draw_end - 20;
-//        break ;
-
-
 }

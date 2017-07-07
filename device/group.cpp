@@ -51,7 +51,7 @@ int GroupPrivate::max_beam_delay()
 Group::Group(int index, QObject *parent):
     QObject(parent),
     d(new GroupPrivate()),
-    m_sample(new Sample(DplFpga::Fpga::SAMPLE_PRECISION, parent)),
+    m_sample(new DplUt::Sample(DplFpga::Fpga::SAMPLE_PRECISION, parent)),
     m_gateA(new Gate(Gate::A, parent)),
     m_gateB(new Gate(Gate::B, parent)),
     m_gateI(new Gate(Gate::I, parent)),
@@ -172,39 +172,40 @@ void Group::update_sample()
 
 void Group::init_sample()
 {
+    DplUt::Sample *sample = m_sample.data();
     /* 关联FPGA */
     m_fpgaGroup->set_gain(m_sample->gain());
-    connect(static_cast<Sample *>(m_sample.data()),
+    connect(sample,
             SIGNAL(gain_changed(float)),
             static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
             SLOT(set_gain(float)));
 
     m_fpgaGroup->set_scale_factor(m_sample->scale_factor());
-    connect(static_cast<Sample *>(m_sample.data()),
+    connect(sample,
             SIGNAL(scale_factor_changed(int)),
             static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
             SLOT(set_scale_factor(int)));
 
     m_fpgaGroup->set_point_qty(m_sample->point_qty());
-    connect(static_cast<Sample *>(m_sample.data()),
+    connect(sample,
             SIGNAL(point_qty_changed(int)),
             static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
             SLOT(set_point_qty(int)));
 
     /* 关联自己 */
-    connect(static_cast<Sample *>(m_sample.data()),
+    connect(sample,
             SIGNAL(start_changed(float)),
             this,
             SLOT(update_sample()));
 
-    connect(static_cast<Sample *>(m_sample.data()),
+    connect(sample,
             SIGNAL(range_changed(float)),
             this,
             SLOT(update_sample()));
 
     /* 关联Beams */
     m_beams->set_point_qty(m_sample->point_qty());
-    connect(static_cast<Sample *>(m_sample.data()),
+    connect(sample,
             SIGNAL(point_qty_changed(int)),
             static_cast<DplSource::Beams *>(m_beams.data()),
             SLOT(set_point_qty(int)));

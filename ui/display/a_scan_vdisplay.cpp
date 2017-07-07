@@ -15,11 +15,11 @@ AscanVDisplay::AscanVDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
             this,
             SLOT(update_left_ruler()));
-    connect(static_cast<DplDevice::Sample *>(m_group->sample().data()),
+    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(start_changed(float)),
             this,
             SLOT(update_left_ruler()));
-    connect(static_cast<DplDevice::Sample *>(m_group->sample().data()),
+    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
             this,
             SLOT(update_left_ruler()));

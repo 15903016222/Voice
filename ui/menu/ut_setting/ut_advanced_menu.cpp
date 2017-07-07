@@ -36,7 +36,7 @@ UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
     m_pointQtyItem.set(tr("Point Qty."), pointQtyList);
 
     m_scaleFactorItem.set(tr("Scale Factor"), "");
-    connect(static_cast<DplDevice::Sample *>(m_sample.data()),
+    connect(static_cast<DplUt::Sample *>(m_sample.data()),
             SIGNAL(scale_factor_changed(int)),
             this,
             SLOT(update_scale_factor_item()));
@@ -90,13 +90,13 @@ void UtAdvancedMenu::update()
 void UtAdvancedMenu::do_current_group_changed()
 {
     /* disconnect */
-    disconnect(static_cast<DplDevice::Sample *>(m_sample.data()),
+    disconnect(static_cast<DplUt::Sample *>(m_sample.data()),
                SIGNAL(scale_factor_changed(int)),
                this,
                SLOT(update_scale_factor_item()));
 
     m_sample = DplDevice::Device::instance()->current_group()->sample();
-    connect(static_cast<DplDevice::Sample *>(m_sample.data()),
+    connect(static_cast<DplUt::Sample *>(m_sample.data()),
             SIGNAL(scale_factor_changed(int)),
             this, SLOT(update_scale_factor_item()));
 

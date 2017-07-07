@@ -34,7 +34,7 @@ private:
     LabelMenuItem m_scaleFactorItem;
     SpinMenuItem m_sumGainItem;
 
-    DplDevice::SamplePointer m_sample;
+    DplUt::SamplePointer m_sample;
 
     void update();
 
