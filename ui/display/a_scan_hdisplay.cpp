@@ -8,14 +8,14 @@
 #include "global.h"
 #include "a_scan_hdisplay.h"
 #include "ui_a_scan_display.h"
-#include "a_scan_hwidget.h"
+#include "a_scan_view.h"
 
 #include <qmath.h>
 
 #include <QDebug>
 
 AscanHDisplay::AscanHDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
-    AscanDisplay(group, new AscanHWidget, parent)
+    AscanDisplay(group, new AscanView, parent)
 {
     /* ruler setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),

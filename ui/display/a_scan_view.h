@@ -47,18 +47,6 @@ public:
     void set_wave(const QByteArray &b);
 
 protected:
-    /**
-     * @brief x_axis_length     获取X轴长度
-     * @return                  长度(Pixel)
-     */
-    virtual int x_axis_length() const = 0;
-
-    /**
-     * @brief y_axis_length     获取Y轴长度
-     * @return                  长度(Pixel)
-     */
-    virtual int y_axis_length() const = 0;
-
     virtual void resizeEvent(QResizeEvent *event);
 
     QPainterPath wave_path(const QByteArray &wave, int w, int h);

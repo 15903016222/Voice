@@ -5,7 +5,7 @@
  * @date 2017-06-28
  */
 #include "a_scan_view.h"
-#include "a_scan_image.h"
+
 #include <QResizeEvent>
 #include <QDebug>
 
