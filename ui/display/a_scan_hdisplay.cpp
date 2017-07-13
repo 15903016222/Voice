@@ -15,7 +15,7 @@
 #include <QDebug>
 
 AscanHDisplay::AscanHDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
-    AscanDisplay(group, new AscanView, parent)
+    AscanDisplay(group, Qt::Horizontal, parent)
 {
     /* ruler setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),

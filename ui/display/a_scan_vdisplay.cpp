@@ -8,7 +8,7 @@
 #include <QDebug>
 
 AscanVDisplay::AscanVDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
-    AscanDisplay(group, new AscanView(Qt::Vertical), parent)
+    AscanDisplay(group, Qt::Vertical, parent)
 {  
     /* ruler setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),

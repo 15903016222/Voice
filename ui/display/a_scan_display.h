@@ -16,12 +16,13 @@ class AscanDisplay;
 }
 
 class AscanView;
+class AscanScene;
 class AscanDisplay : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AscanDisplay(DplDevice::GroupPointer &group, AscanView *ascanWidget, QWidget *parent = 0);
+    explicit AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orientation, QWidget *parent = 0);
     ~AscanDisplay();
 
 protected slots:
@@ -32,7 +33,8 @@ protected:
     DplDevice::GroupPointer m_group;
 
 private:
-    AscanView *m_ascanWidget;
+    AscanView *m_ascanView;
+    AscanScene *m_ascanScene;
 };
 
 #endif // __A_SCAN_DISPLAY_H__
