@@ -1,9 +1,9 @@
 #ifndef __A_SCAN_VWIDGET_H__
 #define __A_SCAN_VWIDGET_H__
 
-#include "a_scan_widget.h"
+#include "a_scan_view.h"
 
-class AscanVWidget : public AscanWidget
+class AscanVWidget : public AscanView
 {
 public:
     AscanVWidget(QWidget *parent = 0);
@@ -20,8 +20,6 @@ protected:
      * @return                  长度(Pixel)
      */
     virtual int y_axis_length() const;
-
-    void paintEvent(QPaintEvent *e);
 };
 
 #endif // __A_SCAN_VWIDGET_H__

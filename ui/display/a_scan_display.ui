@@ -59,7 +59,11 @@ color: rgb(255, 255, 255);</string>
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="ascanWidgetLayout"/>
+      <layout class="QVBoxLayout" name="ascanWidgetLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+      </layout>
      </item>
     </layout>
    </item>

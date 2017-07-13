@@ -7,9 +7,9 @@
 #ifndef __A_SCAN_HWIDGET_H__
 #define __A_SCAN_HWIDGET_H__
 
-#include "a_scan_widget.h"
+#include "a_scan_view.h"
 
-class AscanHWidget : public AscanWidget
+class AscanHWidget : public AscanView
 {
 public:
     explicit AscanHWidget(QWidget *parent = 0);
@@ -27,8 +27,6 @@ protected:
      * @return                  长度(Pixel)
      */
     virtual int y_axis_length() const;
-
-    void paintEvent(QPaintEvent *e);
 };
 
 #endif // __A_SCAN_HWIDGET_H__

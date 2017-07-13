@@ -9,7 +9,7 @@
 #include <QPainter>
 
 AscanHWidget::AscanHWidget(QWidget *parent) :
-    AscanWidget(parent)
+    AscanView(Qt::Horizontal, parent)
 {
 }
 
@@ -26,20 +26,4 @@ int AscanHWidget::x_axis_length() const
 int AscanHWidget::y_axis_length() const
 {
     return height();
-}
-
-void AscanHWidget::paintEvent(QPaintEvent *e)
-{
-    Q_UNUSED(e);
-
-    QPainter painter(this);
-    painter.translate(0, height());
-
-    QTransform form = painter.transform();
-
-    form.rotate(180, Qt::XAxis);
-
-    painter.setTransform(form);
-
-    draw(painter);
 }

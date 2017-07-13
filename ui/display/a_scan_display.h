@@ -15,13 +15,13 @@ namespace Ui {
 class AscanDisplay;
 }
 
-class AscanWidget;
+class AscanView;
 class AscanDisplay : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AscanDisplay(DplDevice::GroupPointer &group, AscanWidget *ascanWidget, QWidget *parent = 0);
+    explicit AscanDisplay(DplDevice::GroupPointer &group, AscanView *ascanWidget, QWidget *parent = 0);
     ~AscanDisplay();
 
 protected slots:
@@ -32,7 +32,7 @@ protected:
     DplDevice::GroupPointer m_group;
 
 private:
-    AscanWidget *m_ascanWidget;
+    AscanView *m_ascanWidget;
 };
 
 #endif // __A_SCAN_DISPLAY_H__

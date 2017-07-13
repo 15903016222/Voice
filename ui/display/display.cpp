@@ -24,7 +24,7 @@ Display::Display(QWidget *parent) :
     ScanLayout *l = new ScanLayout;
     QList<int> grpId;
     grpId.append(0);
-    l->set_mode(ScanLayout::AS, grpId);
+    l->set_mode(ScanLayout::A, grpId);
     set_layout(l);
 
     source->start();
@@ -80,17 +80,17 @@ void Display::set_layout(ScanLayout *scanlayout)
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
 //            bscan = new BscanDisplay(groupPtr, m_scanLayout);
-//            AscanDisplay *bscan = new AscanDisplay(group, m_scanLayout);
-//            l->addWidget(bscan);
+            AscanDisplay *bscan = new AscanHDisplay(group, m_scanLayout);
+            l->addWidget(bscan);
         }
 
         /* C-Scan */
         l = m_scanLayout->findChild<QLayout *>(QString("C%1").arg(grpIds[i]));
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
-//            AscanDisplay *cscan = new AscanDisplay(group, m_scanLayout);
+            AscanDisplay *cscan = new AscanHDisplay(group, m_scanLayout);
 //            cscan = new CscanDisplay(groupPtr, m_scanLayout);
-//            l->addWidget(cscan);
+            l->addWidget(cscan);
         }
 
         /* S-Scan */
@@ -98,8 +98,8 @@ void Display::set_layout(ScanLayout *scanlayout)
         if (l != NULL) {
             qDebug()<<__func__<<__LINE__<<"umimplement";
 //            sscan = new SscanDisplay(groupPtr, m_scanLayout);
-//            AscanDisplay *sscan = new AscanDisplay(group, m_scanLayout);
-//            l->addWidget(sscan);
+            AscanDisplay *sscan = new AscanHDisplay(group, m_scanLayout);
+            l->addWidget(sscan);
         }
     }
 }

@@ -8,13 +8,13 @@
 #include "global.h"
 #include "a_scan_display.h"
 #include "ui_a_scan_display.h"
-#include "a_scan_widget.h"
+#include "a_scan_view.h"
 
 #include <qmath.h>
 
 #include <QDebug>
 
-AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, AscanWidget *ascanWidget, QWidget *parent) :
+AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, AscanView *ascanWidget, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AscanDisplay),
     m_group(group),
