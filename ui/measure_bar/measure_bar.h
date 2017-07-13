@@ -23,7 +23,7 @@ public:
 public slots:
     void do_measureWidget_clicked(MeasureWidget *w);
 
-    void do_current_group_changed();
+    void do_current_group_changed(const DplDevice::GroupPointer &group);
     void do_beamgroup_data_event();
 
 private:

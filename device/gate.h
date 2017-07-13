@@ -57,10 +57,21 @@ public:
 
 signals:
     /**
+     * @brief changed   闸门改变
+     */
+    void changed();
+
+    /**
      * @brief height_changed    高度改变信号
      * @param val               高度值(%)
      */
     void height_changed(int val);
+
+    /**
+     * @brief start_changed 起点改变信号
+     * @param val           起点值
+     */
+    void start_changed(float val);
 
 public slots:
 
@@ -80,7 +91,10 @@ inline float Gate::start() const
 
 inline void Gate::set_start(float val)
 {
-    m_start = val;
+    if (!qFuzzyCompare(val, m_start)) {
+        m_start = val;
+        emit start_changed(val);
+    }
 }
 
 inline float Gate::width() const

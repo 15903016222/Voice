@@ -39,6 +39,7 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
 //    m_gateAItem->hide();
     m_gateBItem->hide();
     m_gateIItem->hide();
+    m_gateAItem->set_start(0);
 
     if (orientation == Qt::Vertical) {
         m_ascanView->rotate(90);
@@ -46,6 +47,13 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
 //    m_ascanView->scale(0.5, 0.5);
 
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
+
+    /* Gate */
+    DplDevice::Gate *gate = group->gate(DplDevice::Gate::A).data();
+    connect(gate, SIGNAL(changed()),
+            this, SLOT(do_gate_a_changed()));
+    gate = group->gate(DplDevice::Gate::B).data();
+    gate = group->gate(DplDevice::Gate::I).data();
 
     /* source setting */
     DplSource::BeamsPointer beams = m_group->beams();
@@ -67,4 +75,9 @@ AscanDisplay::~AscanDisplay()
 void AscanDisplay::do_data_event()
 {
     m_ascanScene->set_wave(m_group->beams()->get(0)->get_wave());
+}
+
+void AscanDisplay::do_gate_a_changed()
+{
+    m_gateAItem->set_start(0);
 }

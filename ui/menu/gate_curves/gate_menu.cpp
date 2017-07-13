@@ -9,6 +9,8 @@
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"
 
+#include "device/device.h"
+
 namespace DplGateCurvesMenu {
 
 GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent)
@@ -31,11 +33,20 @@ GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent)
     measureModesList.append(tr("Peak"));
 
     m_gateItem.set(tr("Gate"), gatesList);
+
     m_startItem.set(tr("Start"), "mm", 0, 16000, 2);
+    connect(&m_startItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_startItem_changed(double)));
+
     m_widthItem.set(tr("Width"), "mm", 0.05, 525, 2);
     m_thresholdItem.set(tr("Threshold"), "%", 0, 100, 0);
     m_synchroItem.set(tr("Synchro"), synchrosList);
     m_measureModeItem.set(tr("Measure Mode"), measureModesList);
+
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
+    do_current_group_changed(DplDevice::Device::instance()->current_group());
 }
 
 GateMenu::~GateMenu()
@@ -72,6 +83,16 @@ void GateMenu::hide()
     m_thresholdItem.hide();
     m_synchroItem.hide();
     m_measureModeItem.hide();
+}
+
+void GateMenu::do_startItem_changed(double val)
+{
+    m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem.current_index()))->set_start(val);
+}
+
+void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
+{
+    m_group = group;
 }
 
 }

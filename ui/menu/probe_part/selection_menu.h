@@ -27,7 +27,7 @@ private slots:
     void do_probeItem_clicked();
     void do_wedgeItem_clicked();
     void do_groupModeItem_changed(int index);
-    void do_current_group_changed();
+    void do_current_group_changed(const DplDevice::GroupPointer &group);
 
 private:
     bool m_updateFlag;

@@ -16,7 +16,8 @@ UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
 {
     DplDevice::Device *device = DplDevice::Device::instance();
 
-    connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
+    connect(device, SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
 
     m_sample = DplDevice::Device::instance()->current_group()->sample();
 
@@ -87,7 +88,7 @@ void UtAdvancedMenu::update()
     m_updateFlag = false;
 }
 
-void UtAdvancedMenu::do_current_group_changed()
+void UtAdvancedMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
     /* disconnect */
     disconnect(static_cast<DplUt::Sample *>(m_sample.data()),
@@ -95,7 +96,7 @@ void UtAdvancedMenu::do_current_group_changed()
                this,
                SLOT(update_scale_factor_item()));
 
-    m_sample = DplDevice::Device::instance()->current_group()->sample();
+    m_sample = group->sample();
     connect(static_cast<DplUt::Sample *>(m_sample.data()),
             SIGNAL(scale_factor_changed(int)),
             this, SLOT(update_scale_factor_item()));

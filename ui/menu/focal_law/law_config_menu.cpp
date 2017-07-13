@@ -34,9 +34,10 @@ LawConfigMenu::LawConfigMenu(Ui::BaseMenu *ui, QObject *parent) :
     waveTypes.append(tr("SW"));
     m_waveTypeItem.set(tr("Wave Type"), waveTypes);
 
-    connect(DplDevice::Device::instance(), SIGNAL(current_group_changed()),
-            this, SLOT(do_current_group_changed()));
-    do_current_group_changed();
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
+    do_current_group_changed(DplDevice::Device::instance()->current_group());
 }
 
 LawConfigMenu::~LawConfigMenu()
@@ -102,9 +103,9 @@ void LawConfigMenu::do_receiverItem_changed(double val)
     m_probePtr->set_receiver_index(val-1);
 }
 
-void LawConfigMenu::do_current_group_changed()
+void LawConfigMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
-    m_probePtr = DplDevice::Device::instance()->current_group()->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
+    m_probePtr = group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
     m_scanScnPtr = m_probePtr->scan_configure().staticCast<DplFocallaw::ScanCnf>();
 
     if (m_lawTypeItem.isHidden()) {

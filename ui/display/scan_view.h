@@ -17,5 +17,4 @@ public:
     ~ScanView();
 };
 
-
 #endif // __SCAN_VIEW_H__

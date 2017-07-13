@@ -131,7 +131,7 @@ public:
     int total_beam_qty() const;
 
 signals:
-    void current_group_changed();
+    void current_group_changed(const DplDevice::GroupPointer &group);
 
 public slots:
     void refresh_beams();

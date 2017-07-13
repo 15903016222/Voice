@@ -52,7 +52,7 @@ PropertiesMenu::~PropertiesMenu()
 
 void PropertiesMenu::show()
 {
-    switch (m_scanItem.get_current_index()) {
+    switch (m_scanItem.current_index()) {
     case 0:
         /* A-Scan */
         show_a_scan();

@@ -44,6 +44,7 @@ QPainterPath AscanScene::wave_path(const QByteArray &wave, int w, int h)
 
 void AscanScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
+    qDebug() << rect;
     painter->translate(rect.topLeft());
 
     painter->setPen(m_color);

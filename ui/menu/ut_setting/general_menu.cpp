@@ -46,9 +46,9 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent) :
     connect(&m_utUnitItem, SIGNAL(value_changed(int)), this, SLOT(do_utUnitItem_changed(int)));
 
     connect(DplDevice::Device::instance(),
-            SIGNAL(current_group_changed()),
-            this, SLOT(do_current_group_changed()));
-    do_current_group_changed();
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
+    do_current_group_changed(DplDevice::Device::instance()->current_group());
 }
 
 GeneralMenu::~GeneralMenu()
@@ -163,9 +163,9 @@ void GeneralMenu::do_utUnitItem_changed(int index)
     update_range_item();
 }
 
-void GeneralMenu::do_current_group_changed()
+void GeneralMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
-    m_group = DplDevice::Device::instance()->current_group();
+    m_group = group;
     if (m_gainItem.isHidden()) {
         m_updateFlag = true;
     } else {

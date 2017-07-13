@@ -30,7 +30,7 @@ public:
     void set(const QString &title, const QStringList &texts);
 
     void set_current_index(int index);
-    int get_current_index() const;
+    int current_index() const;
 
     enum DisplayMode {
         ALL,

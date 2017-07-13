@@ -77,7 +77,7 @@ void ComboMenuItem::set_current_index(int index)
     ui->comboBox->setCurrentIndex(index);
 }
 
-int ComboMenuItem::get_current_index() const
+int ComboMenuItem::current_index() const
 {
     return ui->comboBox->currentIndex();
 }

@@ -56,7 +56,7 @@ private slots:
     void do_wedgeDelayItem_changed(double value);
     void do_utUnitItem_changed(int index);
 
-    void do_current_group_changed();
+    void do_current_group_changed(const DplDevice::GroupPointer &group);
 
     void update_gain_item();
     void update_start_item();

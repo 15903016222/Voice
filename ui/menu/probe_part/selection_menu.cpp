@@ -16,7 +16,8 @@ SelectionMenu::SelectionMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
     DplDevice::Device *dev = DplDevice::Device::instance();
-    connect(dev, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
+    connect(dev, SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
     m_group = dev->current_group();
 
     QStringList groupList;
@@ -126,9 +127,9 @@ void SelectionMenu::do_groupModeItem_changed(int index)
     m_group->set_mode(static_cast<DplDevice::Group::Mode>(index));
 }
 
-void SelectionMenu::do_current_group_changed()
+void SelectionMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
-    m_group = DplDevice::Device::instance()->current_group();
+    m_group = group;
     if (m_probeItem.isHidden()) {
         m_updateFlag = true;
     } else {

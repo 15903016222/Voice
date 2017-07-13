@@ -8,6 +8,10 @@
 
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+
+#include <QDebug>
 
 static const int GATE_HEIGHT = 4;
 
@@ -26,6 +30,9 @@ QRectF GateItem::boundingRect() const
 
 void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
+
     painter->setPen(m_color);
     painter->drawLine(0, -GATE_HEIGHT/2, 0, GATE_HEIGHT/2);
     painter->drawLine(m_width, -GATE_HEIGHT/2, m_width, GATE_HEIGHT/2);
@@ -35,4 +42,24 @@ void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 void GateItem::set_geometry(const QRectF &rect)
 {
     m_width = rect.width();
+}
+
+void GateItem::set_start(qreal start)
+{
+    if (!scene()) {
+        return;
+    }
+
+    if (scene()->views().isEmpty()) {
+        return;
+    }
+    QGraphicsView *view = scene()->views().first();
+    QPointF pointF = view->mapToScene(0, 0);
+
+    setPos(pointF.x(), pointF.y() + 1);
+}
+
+void GateItem::set_height(int height)
+{
+//    setPos();
 }

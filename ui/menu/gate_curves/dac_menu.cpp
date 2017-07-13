@@ -56,7 +56,7 @@ DacMenu::~DacMenu()
 
 void DacMenu::show()
 {
-    if (m_modeItem.get_current_index() == 0) {
+    if (m_modeItem.current_index() == 0) {
         show_setting();
     } else {
         show_edit();
@@ -65,7 +65,7 @@ void DacMenu::show()
 
 void DacMenu::hide()
 {
-    if (m_modeItem.get_current_index() == 0) {
+    if (m_modeItem.current_index() == 0) {
         hide_setting();
     } else {
         hide_edit();

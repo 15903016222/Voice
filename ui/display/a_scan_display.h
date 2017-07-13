@@ -30,6 +30,8 @@ public:
 protected slots:
     void do_data_event();
 
+    void do_gate_a_changed();
+
 protected:
     Ui::AscanDisplay *ui;
     DplDevice::GroupPointer m_group;

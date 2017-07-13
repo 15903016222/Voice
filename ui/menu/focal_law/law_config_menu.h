@@ -4,6 +4,8 @@
 #include "base_menu.h"
 #include "focallaw/focallawer.h"
 
+#include <device/group.h>
+
 namespace DplFocalLawMenu {
 
 class LawConfigMenu : public BaseMenu
@@ -34,7 +36,7 @@ private slots:
     void do_pulseItem_changed(double val);
     void do_receiverItem_changed(double val);
 
-    void do_current_group_changed();
+    void do_current_group_changed(const DplDevice::GroupPointer &group);
 };
 
 }

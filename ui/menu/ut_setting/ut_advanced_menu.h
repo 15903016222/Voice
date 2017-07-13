@@ -39,7 +39,7 @@ private:
     void update();
 
 private slots:
-    void do_current_group_changed();
+    void do_current_group_changed(const DplDevice::GroupPointer &group);
     void update_scale_factor_item();
 
 };

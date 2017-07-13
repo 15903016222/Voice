@@ -16,14 +16,9 @@ MeasureBar :: MeasureBar(QWidget *parent) :
     ui->setupUi(this);
 
     DplDevice::Device *device = DplDevice::Device::instance();
-    connect(device, SIGNAL(current_group_changed()), this, SLOT(do_current_group_changed()));
-    m_group = device->current_group();
-
-    m_beams = m_group->beams();
-    connect(static_cast<DplSource::Beams *>(m_beams.data()),
-            SIGNAL(data_event()),
-            this,
-            SLOT(do_beamgroup_data_event()));
+    connect(device, SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
+    do_current_group_changed(device->current_group());
 
     connect(ui->measureWidget1, SIGNAL(clicked(MeasureWidget*)), this, SLOT(do_measureWidget_clicked(MeasureWidget*)));
     connect(ui->measureWidget2, SIGNAL(clicked(MeasureWidget*)), this, SLOT(do_measureWidget_clicked(MeasureWidget*)));
@@ -57,10 +52,20 @@ void MeasureBar::do_measureWidget_clicked(MeasureWidget *w)
     }
 }
 
-void MeasureBar::do_current_group_changed()
+void MeasureBar::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
-    m_group = DplDevice::Device::instance()->current_group();
+    disconnect(static_cast<DplSource::Beams *>(m_beams.data()),
+            SIGNAL(data_event()),
+            this,
+            SLOT(do_beamgroup_data_event()));
+
+    m_group = group;
     m_beams = m_group->beams();
+
+    connect(static_cast<DplSource::Beams *>(m_beams.data()),
+            SIGNAL(data_event()),
+            this,
+            SLOT(do_beamgroup_data_event()));
 }
 
 void MeasureBar::do_beamgroup_data_event()

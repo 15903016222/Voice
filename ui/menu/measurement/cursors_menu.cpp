@@ -52,7 +52,7 @@ void CursorsMenu::show()
 {
     ui->menuItem0->layout()->addWidget(&m_selectionItem);
     m_selectionItem.show();
-    switch (m_selectionItem.get_current_index()) {
+    switch (m_selectionItem.current_index()) {
     case 0:
         /* A-Scan */
         show_a_scan();
@@ -78,7 +78,7 @@ void CursorsMenu::hide()
 {
     ui->menuItem0->layout()->removeWidget(&m_selectionItem);
     m_selectionItem.hide();
-    switch (m_selectionItem.get_current_index()) {
+    switch (m_selectionItem.current_index()) {
     case 0:
         /* A-Scan */
         hide_a_scan();

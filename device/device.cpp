@@ -198,7 +198,7 @@ bool Device::add_group()
             SLOT(refresh_beams()));
     refresh_beams();
 
-    emit current_group_changed();
+    emit current_group_changed(d->m_curGroup);
     return true;
 }
 
@@ -219,7 +219,7 @@ bool Device::remove_group(int id)
     }
 
     d->m_curGroup = d->m_groups.last();
-    emit current_group_changed();
+    emit current_group_changed(d->m_curGroup);
 
     return true;
 }
@@ -242,7 +242,7 @@ bool Device::set_current_group(int index)
         }
         d->m_curGroup = d->m_groups[index];
     }
-    emit current_group_changed();
+    emit current_group_changed(d->m_curGroup);
     return true;
 }
 

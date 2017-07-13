@@ -44,7 +44,7 @@ TofdMenu::~TofdMenu()
 
 void TofdMenu::show()
 {
-    if (m_selectItem.get_current_index() == 0) {
+    if (m_selectItem.current_index() == 0) {
         show_setting();
     } else {
         show_analysis();
@@ -53,7 +53,7 @@ void TofdMenu::show()
 
 void TofdMenu::hide()
 {
-    if (m_selectItem.get_current_index() == 0) {
+    if (m_selectItem.current_index() == 0) {
         hide_setting();
     } else {
         hide_analysis();
