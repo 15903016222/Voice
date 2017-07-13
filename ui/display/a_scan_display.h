@@ -15,8 +15,10 @@ namespace Ui {
 class AscanDisplay;
 }
 
-class AscanView;
+class ScanView;
 class AscanScene;
+class GateItem;
+
 class AscanDisplay : public QWidget
 {
     Q_OBJECT
@@ -33,8 +35,11 @@ protected:
     DplDevice::GroupPointer m_group;
 
 private:
-    AscanView *m_ascanView;
+    ScanView *m_ascanView;
     AscanScene *m_ascanScene;
+    GateItem *m_gateAItem;
+    GateItem *m_gateBItem;
+    GateItem *m_gateIItem;
 };
 
 #endif // __A_SCAN_DISPLAY_H__

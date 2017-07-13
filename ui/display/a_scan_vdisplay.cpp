@@ -1,7 +1,7 @@
 #include "global.h"
 #include "a_scan_vdisplay.h"
 #include "ui_a_scan_display.h"
-#include "a_scan_view.h"
+#include "scan_view.h"
 
 #include <qmath.h>
 

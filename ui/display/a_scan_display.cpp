@@ -9,7 +9,7 @@
 #include "a_scan_display.h"
 #include "ui_a_scan_display.h"
 
-#include "a_scan_view.h"
+#include "scan_view.h"
 #include "a_scan_scene.h"
 #include "gate_item.h"
 
@@ -21,14 +21,29 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     QWidget(parent),
     ui(new Ui::AscanDisplay),
     m_group(group),
-    m_ascanView(new AscanView),
-    m_ascanScene(new AscanScene(orientation))
+    m_ascanView(new ScanView),
+    m_ascanScene(new AscanScene),
+    m_gateAItem(new GateItem(Qt::red)),
+    m_gateBItem(new GateItem(Qt::green)),
+    m_gateIItem(new GateItem(Qt::darkCyan))
 {  
     ui->setupUi(this);
     ui->ascanWidgetLayout->addWidget(m_ascanView);
 
     m_ascanView->setScene(m_ascanScene);
-//    m_ascanScene->addItem(new GateItem);
+
+    m_ascanScene->addItem(m_gateAItem);
+    m_ascanScene->addItem(m_gateBItem);
+    m_ascanScene->addItem(m_gateIItem);
+
+//    m_gateAItem->hide();
+    m_gateBItem->hide();
+    m_gateIItem->hide();
+
+    if (orientation == Qt::Vertical) {
+        m_ascanView->rotate(90);
+    }
+//    m_ascanView->scale(0.5, 0.5);
 
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
@@ -40,14 +55,13 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
             SLOT(do_data_event()));
 
     ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
-
-//    connect(static_cast<DplDevice::Gate *>(m_group->gate()))
 }
 
 AscanDisplay::~AscanDisplay()
 {
     delete ui;
     delete m_ascanView;
+    delete m_ascanScene;
 }
 
 void AscanDisplay::do_data_event()
