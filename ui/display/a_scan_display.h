@@ -17,6 +17,7 @@ class AscanDisplay;
 
 class ScanView;
 class AscanScene;
+class WaveItem;
 class GateItem;
 
 class AscanDisplay : public QWidget
@@ -32,6 +33,8 @@ protected slots:
 
     void do_gate_a_changed();
 
+    void do_ascanView_size_changed(const QSize &size);
+
 protected:
     Ui::AscanDisplay *ui;
     DplDevice::GroupPointer m_group;
@@ -39,6 +42,7 @@ protected:
 private:
     ScanView *m_ascanView;
     AscanScene *m_ascanScene;
+    WaveItem *m_waveItem;
     GateItem *m_gateAItem;
     GateItem *m_gateBItem;
     GateItem *m_gateIItem;

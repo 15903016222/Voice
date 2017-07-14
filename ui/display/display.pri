@@ -9,7 +9,8 @@ SOURCES += \
     $$PWD/a_scan_vdisplay.cpp \
     $$PWD/gate_item.cpp \
     $$PWD/a_scan_scene.cpp \
-    $$PWD/scan_view.cpp
+    $$PWD/scan_view.cpp \
+    $$PWD/wave_item.cpp
 
 HEADERS += \
     $$PWD/display.h \
@@ -20,7 +21,8 @@ HEADERS += \
     $$PWD/a_scan_vdisplay.h \
     $$PWD/gate_item.h \
     $$PWD/a_scan_scene.h \
-    $$PWD/scan_view.h
+    $$PWD/scan_view.h \
+    $$PWD/wave_item.h
 
 FORMS += \
     $$PWD/a_scan_display.ui

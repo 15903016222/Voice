@@ -11,6 +11,7 @@
 
 #include "scan_view.h"
 #include "a_scan_scene.h"
+#include "wave_item.h"
 #include "gate_item.h"
 
 #include <qmath.h>
@@ -23,6 +24,7 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     m_group(group),
     m_ascanView(new ScanView),
     m_ascanScene(new AscanScene),
+    m_waveItem(new WaveItem),
     m_gateAItem(new GateItem(Qt::red)),
     m_gateBItem(new GateItem(Qt::green)),
     m_gateIItem(new GateItem(Qt::darkCyan))
@@ -30,16 +32,23 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     ui->setupUi(this);
     ui->ascanWidgetLayout->addWidget(m_ascanView);
 
+    connect(m_ascanView, SIGNAL(size_changed(QSize)),
+            this, SLOT(do_ascanView_size_changed(QSize)));
+
+    qDebug() << "view Rect: " << m_ascanView->rect();
+
     m_ascanView->setScene(m_ascanScene);
+
+    m_ascanScene->addItem(m_waveItem);
 
     m_ascanScene->addItem(m_gateAItem);
     m_ascanScene->addItem(m_gateBItem);
     m_ascanScene->addItem(m_gateIItem);
 
 //    m_gateAItem->hide();
-    m_gateBItem->hide();
-    m_gateIItem->hide();
-    m_gateAItem->set_start(0);
+//    m_gateBItem->hide();
+//    m_gateIItem->hide();
+//    m_gateAItem->set_start(0);
 
     if (orientation == Qt::Vertical) {
         m_ascanView->rotate(90);
@@ -74,10 +83,17 @@ AscanDisplay::~AscanDisplay()
 
 void AscanDisplay::do_data_event()
 {
-    m_ascanScene->set_wave(m_group->beams()->get(0)->get_wave());
+    m_waveItem->set_wave(m_group->beams()->get(0)->get_wave());
 }
 
 void AscanDisplay::do_gate_a_changed()
 {
     m_gateAItem->set_start(0);
+}
+
+void AscanDisplay::do_ascanView_size_changed(const QSize &size)
+{
+    m_ascanScene->setSceneRect(-size.width()/2, -size.height()/2,
+                               size.width(), size.height());
+    m_waveItem->set_size(size);
 }

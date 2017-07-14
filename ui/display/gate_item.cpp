@@ -20,12 +20,14 @@ GateItem::GateItem(const QColor &color, QGraphicsItem *parent) :
     m_width(50),
     m_color(color)
 {
+    setFlag(QGraphicsItem::ItemIsMovable);
+    setZValue(1);
 }
 
 QRectF GateItem::boundingRect() const
 {
 //    qreal adjust = 0.5;
-    return QRectF(0, -GATE_HEIGHT/2, m_width, GATE_HEIGHT);
+    return QRectF(0, -GATE_HEIGHT/2 - 10, m_width, GATE_HEIGHT + 20);
 }
 
 void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -56,7 +58,15 @@ void GateItem::set_start(qreal start)
     QGraphicsView *view = scene()->views().first();
     QPointF pointF = view->mapToScene(0, 0);
 
-    setPos(pointF.x(), pointF.y() + 1);
+    qDebug() << "Scene Rect: " << scene()->sceneRect();
+
+    qDebug() << "Bounding Rect: " << boundingRect();
+
+    qDebug() << "gate: " << pointF;
+
+    setPos(scene()->sceneRect().left(), pos().y());
+    update();
+//    setPos(pointF.x(), pointF.y() + 1);
 }
 
 void GateItem::set_height(int height)

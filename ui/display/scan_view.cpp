@@ -5,7 +5,8 @@
  * @date 2017-06-28
  */
 #include "scan_view.h"
-
+#include <QResizeEvent>
+#include <QDebug>
 ScanView::ScanView(QWidget *parent):
     QGraphicsView(parent)
 {
@@ -18,4 +19,11 @@ ScanView::ScanView(QWidget *parent):
 
 ScanView::~ScanView()
 {
+}
+
+void ScanView::resizeEvent(QResizeEvent *event)
+{
+    emit size_changed(event->size());
+
+    QGraphicsView::resizeEvent(event);
 }

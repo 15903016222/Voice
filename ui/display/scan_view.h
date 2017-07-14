@@ -15,6 +15,12 @@ class ScanView : public QGraphicsView
 public:
     explicit ScanView(QWidget *parent = 0);
     ~ScanView();
+
+signals:
+    void size_changed(const QSize &size);
+
+protected:
+    void resizeEvent(QResizeEvent *event);
 };
 
 #endif // __SCAN_VIEW_H__
