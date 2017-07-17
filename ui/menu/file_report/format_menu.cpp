@@ -31,12 +31,12 @@ FormatMenu::~FormatMenu()
 
 void FormatMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_probeWedgeItem);
-    ui->menuItem1->layout()->addWidget(&m_inspectionInfoItem);
-    ui->menuItem2->layout()->addWidget(&m_scanInfoItem);
-    ui->menuItem3->layout()->addWidget(&m_encoderInfoItem);
-    ui->menuItem4->layout()->addWidget(&m_dacTcgInfoItem);
-    ui->menuItem5->layout()->addWidget(&m_flawRecordTableItem);
+    ui->layout0->addWidget(&m_probeWedgeItem);
+    ui->layout1->addWidget(&m_inspectionInfoItem);
+    ui->layout2->addWidget(&m_scanInfoItem);
+    ui->layout3->addWidget(&m_encoderInfoItem);
+    ui->layout4->addWidget(&m_dacTcgInfoItem);
+    ui->layout5->addWidget(&m_flawRecordTableItem);
     m_probeWedgeItem.show();
     m_inspectionInfoItem.show();
     m_scanInfoItem.show();
@@ -47,12 +47,12 @@ void FormatMenu::show()
 
 void FormatMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_probeWedgeItem);
-    ui->menuItem1->layout()->removeWidget(&m_inspectionInfoItem);
-    ui->menuItem2->layout()->removeWidget(&m_scanInfoItem);
-    ui->menuItem3->layout()->removeWidget(&m_encoderInfoItem);
-    ui->menuItem4->layout()->removeWidget(&m_dacTcgInfoItem);
-    ui->menuItem5->layout()->removeWidget(&m_flawRecordTableItem);
+    ui->layout0->removeWidget(&m_probeWedgeItem);
+    ui->layout1->removeWidget(&m_inspectionInfoItem);
+    ui->layout2->removeWidget(&m_scanInfoItem);
+    ui->layout3->removeWidget(&m_encoderInfoItem);
+    ui->layout4->removeWidget(&m_dacTcgInfoItem);
+    ui->layout5->removeWidget(&m_flawRecordTableItem);
     m_probeWedgeItem.hide();
     m_inspectionInfoItem.hide();
     m_scanInfoItem.hide();

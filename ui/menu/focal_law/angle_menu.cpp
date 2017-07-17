@@ -22,9 +22,9 @@ AngleMenu::~AngleMenu()
 
 void AngleMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_minAngleItem);
-    ui->menuItem1->layout()->addWidget(&m_maxAngleItem);
-    ui->menuItem2->layout()->addWidget(&m_angleStepItem);
+    ui->layout0->addWidget(&m_minAngleItem);
+    ui->layout1->addWidget(&m_maxAngleItem);
+    ui->layout2->addWidget(&m_angleStepItem);
     m_minAngleItem.show();
     m_maxAngleItem.show();
     m_angleStepItem.show();
@@ -32,9 +32,9 @@ void AngleMenu::show()
 
 void AngleMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_minAngleItem);
-    ui->menuItem1->layout()->removeWidget(&m_maxAngleItem);
-    ui->menuItem2->layout()->removeWidget(&m_angleStepItem);
+    ui->layout0->removeWidget(&m_minAngleItem);
+    ui->layout1->removeWidget(&m_maxAngleItem);
+    ui->layout2->removeWidget(&m_angleStepItem);
     m_minAngleItem.hide();
     m_maxAngleItem.hide();
     m_angleStepItem.hide();

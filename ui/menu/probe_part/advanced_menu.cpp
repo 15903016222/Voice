@@ -18,16 +18,16 @@ AdvancedMenu::~AdvancedMenu()
 
 void AdvancedMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_loadPartItem);
-    ui->menuItem1->layout()->addWidget(&m_clearPartItem);
+    ui->layout0->addWidget(&m_loadPartItem);
+    ui->layout1->addWidget(&m_clearPartItem);
     m_loadPartItem.show();
     m_clearPartItem.show();
 }
 
 void AdvancedMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_loadPartItem);
-    ui->menuItem1->layout()->removeWidget(&m_clearPartItem);
+    ui->layout0->removeWidget(&m_loadPartItem);
+    ui->layout1->removeWidget(&m_clearPartItem);
     m_loadPartItem.hide();
     m_clearPartItem.hide();
 }

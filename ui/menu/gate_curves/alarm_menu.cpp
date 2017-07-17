@@ -56,11 +56,11 @@ AlarmMenu::~AlarmMenu()
 
 void AlarmMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_alarmItem);
-    ui->menuItem1->layout()->addWidget(&m_switchItem);
-    ui->menuItem2->layout()->addWidget(&m_groupItem);
-    ui->menuItem3->layout()->addWidget(&m_conditionItem);
-    ui->menuItem4->layout()->addWidget(&m_operatorItem);
+    ui->layout0->addWidget(&m_alarmItem);
+    ui->layout1->addWidget(&m_switchItem);
+    ui->layout2->addWidget(&m_groupItem);
+    ui->layout3->addWidget(&m_conditionItem);
+    ui->layout4->addWidget(&m_operatorItem);
     m_alarmItem.show();
     m_switchItem.show();
     m_groupItem.show();
@@ -70,11 +70,11 @@ void AlarmMenu::show()
 
 void AlarmMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_alarmItem);
-    ui->menuItem1->layout()->removeWidget(&m_switchItem);
-    ui->menuItem2->layout()->removeWidget(&m_groupItem);
-    ui->menuItem3->layout()->removeWidget(&m_conditionItem);
-    ui->menuItem4->layout()->removeWidget(&m_operatorItem);
+    ui->layout0->removeWidget(&m_alarmItem);
+    ui->layout1->removeWidget(&m_switchItem);
+    ui->layout2->removeWidget(&m_groupItem);
+    ui->layout3->removeWidget(&m_conditionItem);
+    ui->layout4->removeWidget(&m_operatorItem);
     m_alarmItem.hide();
     m_switchItem.hide();
     m_groupItem.hide();

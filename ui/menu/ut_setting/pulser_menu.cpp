@@ -49,11 +49,11 @@ PulserMenu::~PulserMenu()
 
 void PulserMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_txrxModeItem);
-    ui->menuItem1->layout()->addWidget(&m_pulserItem);
-    ui->menuItem2->layout()->addWidget(&m_voltageItem);
-    ui->menuItem3->layout()->addWidget(&m_pwItem);
-    ui->menuItem4->layout()->addWidget(&m_prfItem);
+    ui->layout0->addWidget(&m_txrxModeItem);
+    ui->layout1->addWidget(&m_pulserItem);
+    ui->layout2->addWidget(&m_voltageItem);
+    ui->layout3->addWidget(&m_pwItem);
+    ui->layout4->addWidget(&m_prfItem);
     m_txrxModeItem.show();
     m_pulserItem.show();
     m_voltageItem.show();
@@ -63,11 +63,11 @@ void PulserMenu::show()
 
 void PulserMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_txrxModeItem);
-    ui->menuItem1->layout()->removeWidget(&m_pulserItem);
-    ui->menuItem2->layout()->removeWidget(&m_voltageItem);
-    ui->menuItem3->layout()->removeWidget(&m_pwItem);
-    ui->menuItem4->layout()->removeWidget(&m_prfItem);
+    ui->layout0->removeWidget(&m_txrxModeItem);
+    ui->layout1->removeWidget(&m_pulserItem);
+    ui->layout2->removeWidget(&m_voltageItem);
+    ui->layout3->removeWidget(&m_pwItem);
+    ui->layout4->removeWidget(&m_prfItem);
     m_txrxModeItem.hide();
     m_pulserItem.hide();
     m_voltageItem.hide();

@@ -66,11 +66,11 @@ void SelectionMenu::show()
     if (m_updateFlag) {
         update();
     }
-    ui->menuItem0->layout()->addWidget(&m_groupItem);
-    ui->menuItem1->layout()->addWidget(&m_modeItem);
-    ui->menuItem2->layout()->addWidget(&m_probeItem);
-    ui->menuItem3->layout()->addWidget(&m_wedgeItem);
-    ui->menuItem4->layout()->addWidget(&m_autoDetectItem);
+    ui->layout0->addWidget(&m_groupItem);
+    ui->layout1->addWidget(&m_modeItem);
+    ui->layout2->addWidget(&m_probeItem);
+    ui->layout3->addWidget(&m_wedgeItem);
+    ui->layout4->addWidget(&m_autoDetectItem);
     m_groupItem.show();
     m_modeItem.show();
     m_probeItem.show();
@@ -80,11 +80,11 @@ void SelectionMenu::show()
 
 void SelectionMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_groupItem);
-    ui->menuItem1->layout()->removeWidget(&m_modeItem);
-    ui->menuItem2->layout()->removeWidget(&m_probeItem);
-    ui->menuItem3->layout()->removeWidget(&m_wedgeItem);
-    ui->menuItem4->layout()->removeWidget(&m_autoDetectItem);
+    ui->layout0->removeWidget(&m_groupItem);
+    ui->layout1->removeWidget(&m_modeItem);
+    ui->layout2->removeWidget(&m_probeItem);
+    ui->layout3->removeWidget(&m_wedgeItem);
+    ui->layout4->removeWidget(&m_autoDetectItem);
     m_groupItem.hide();
     m_modeItem.hide();
     m_probeItem.hide();

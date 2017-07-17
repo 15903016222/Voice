@@ -35,9 +35,9 @@ PositionMenu::~PositionMenu()
 
 void PositionMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_scanOffsetItem);
-    ui->menuItem1->layout()->addWidget(&m_indexOffsetItem);
-    ui->menuItem2->layout()->addWidget(&m_skewItem);
+    ui->layout0->addWidget(&m_scanOffsetItem);
+    ui->layout1->addWidget(&m_indexOffsetItem);
+    ui->layout2->addWidget(&m_skewItem);
     m_scanOffsetItem.show();
     m_indexOffsetItem.show();
     m_skewItem.show();
@@ -45,9 +45,9 @@ void PositionMenu::show()
 
 void PositionMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_scanOffsetItem);
-    ui->menuItem1->layout()->removeWidget(&m_indexOffsetItem);
-    ui->menuItem2->layout()->removeWidget(&m_skewItem);
+    ui->layout0->removeWidget(&m_scanOffsetItem);
+    ui->layout1->removeWidget(&m_indexOffsetItem);
+    ui->layout2->removeWidget(&m_skewItem);
     m_scanOffsetItem.hide();
     m_indexOffsetItem.hide();
     m_skewItem.hide();

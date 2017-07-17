@@ -52,12 +52,12 @@ OutputMenu::~OutputMenu()
 
 void OutputMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_outputItem);
-    ui->menuItem1->layout()->addWidget(&m_soundItem);
-    ui->menuItem2->layout()->addWidget(&m_delayItem);
-    ui->menuItem3->layout()->addWidget(&m_holdTimeItem);
-    ui->menuItem4->layout()->addWidget(&m_groupItem);
-    ui->menuItem5->layout()->addWidget(&m_dataItem);
+    ui->layout0->addWidget(&m_outputItem);
+    ui->layout1->addWidget(&m_soundItem);
+    ui->layout2->addWidget(&m_delayItem);
+    ui->layout3->addWidget(&m_holdTimeItem);
+    ui->layout4->addWidget(&m_groupItem);
+    ui->layout5->addWidget(&m_dataItem);
     m_outputItem.show();
     m_soundItem.show();
     m_delayItem.show();
@@ -68,12 +68,12 @@ void OutputMenu::show()
 
 void OutputMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_outputItem);
-    ui->menuItem1->layout()->removeWidget(&m_soundItem);
-    ui->menuItem2->layout()->removeWidget(&m_delayItem);
-    ui->menuItem3->layout()->removeWidget(&m_holdTimeItem);
-    ui->menuItem4->layout()->removeWidget(&m_groupItem);
-    ui->menuItem5->layout()->removeWidget(&m_dataItem);
+    ui->layout0->removeWidget(&m_outputItem);
+    ui->layout1->removeWidget(&m_soundItem);
+    ui->layout2->removeWidget(&m_delayItem);
+    ui->layout3->removeWidget(&m_holdTimeItem);
+    ui->layout4->removeWidget(&m_groupItem);
+    ui->layout5->removeWidget(&m_dataItem);
     m_outputItem.hide();
     m_soundItem.hide();
     m_delayItem.hide();

@@ -36,12 +36,12 @@ ReportMenu::~ReportMenu()
 
 void ReportMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_templateItem);
-    ui->menuItem1->layout()->addWidget(&m_reportNameItem);
-    ui->menuItem2->layout()->addWidget(&m_customerItem);
-    ui->menuItem3->layout()->addWidget(&m_partNameItem);
-    ui->menuItem4->layout()->addWidget(&m_partNumberItem);
-    ui->menuItem5->layout()->addWidget(&m_createItem);
+    ui->layout0->addWidget(&m_templateItem);
+    ui->layout1->addWidget(&m_reportNameItem);
+    ui->layout2->addWidget(&m_customerItem);
+    ui->layout3->addWidget(&m_partNameItem);
+    ui->layout4->addWidget(&m_partNumberItem);
+    ui->layout5->addWidget(&m_createItem);
     m_templateItem.show();
     m_reportNameItem.show();
     m_customerItem.show();
@@ -52,12 +52,12 @@ void ReportMenu::show()
 
 void ReportMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_templateItem);
-    ui->menuItem1->layout()->removeWidget(&m_reportNameItem);
-    ui->menuItem2->layout()->removeWidget(&m_customerItem);
-    ui->menuItem3->layout()->removeWidget(&m_partNameItem);
-    ui->menuItem4->layout()->removeWidget(&m_partNumberItem);
-    ui->menuItem5->layout()->removeWidget(&m_createItem);
+    ui->layout0->removeWidget(&m_templateItem);
+    ui->layout1->removeWidget(&m_reportNameItem);
+    ui->layout2->removeWidget(&m_customerItem);
+    ui->layout3->removeWidget(&m_partNameItem);
+    ui->layout4->removeWidget(&m_partNumberItem);
+    ui->layout5->removeWidget(&m_createItem);
     m_templateItem.hide();
     m_reportNameItem.hide();
     m_customerItem.hide();

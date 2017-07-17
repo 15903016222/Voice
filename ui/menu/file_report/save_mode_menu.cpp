@@ -37,10 +37,10 @@ SaveModeMenu::~SaveModeMenu()
 
 void SaveModeMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_storageItem);
-    ui->menuItem1->layout()->addWidget(&m_saveModeItem);
-    ui->menuItem2->layout()->addWidget(&m_saveDataItem);
-    ui->menuItem3->layout()->addWidget(&m_fileNameItem);
+    ui->layout0->addWidget(&m_storageItem);
+    ui->layout1->addWidget(&m_saveModeItem);
+    ui->layout2->addWidget(&m_saveDataItem);
+    ui->layout3->addWidget(&m_fileNameItem);
     m_storageItem.show();
     m_saveModeItem.show();
     m_saveDataItem.show();
@@ -49,10 +49,10 @@ void SaveModeMenu::show()
 
 void SaveModeMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_storageItem);
-    ui->menuItem1->layout()->removeWidget(&m_saveModeItem);
-    ui->menuItem2->layout()->removeWidget(&m_saveDataItem);
-    ui->menuItem3->layout()->removeWidget(&m_fileNameItem);
+    ui->layout0->removeWidget(&m_storageItem);
+    ui->layout1->removeWidget(&m_saveModeItem);
+    ui->layout2->removeWidget(&m_saveDataItem);
+    ui->layout3->removeWidget(&m_fileNameItem);
     m_storageItem.hide();
     m_saveModeItem.hide();
     m_saveDataItem.hide();

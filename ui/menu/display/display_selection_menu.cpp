@@ -60,11 +60,11 @@ SelectionMenu::~SelectionMenu()
 
 void SelectionMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_displayItem);
-    ui->menuItem1->layout()->addWidget(&m_cSourceItem);
-    ui->menuItem2->layout()->addWidget(&m_minThicknessItem);
-    ui->menuItem3->layout()->addWidget(&m_maxThicknessItem);
-    ui->menuItem4->layout()->addWidget(&m_dataCompressionItem);
+    ui->layout0->addWidget(&m_displayItem);
+    ui->layout1->addWidget(&m_cSourceItem);
+    ui->layout2->addWidget(&m_minThicknessItem);
+    ui->layout3->addWidget(&m_maxThicknessItem);
+    ui->layout4->addWidget(&m_dataCompressionItem);
     m_displayItem.show();
     m_cSourceItem.show();
     m_minThicknessItem.show();
@@ -74,11 +74,11 @@ void SelectionMenu::show()
 
 void SelectionMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_displayItem);
-    ui->menuItem1->layout()->removeWidget(&m_cSourceItem);
-    ui->menuItem2->layout()->removeWidget(&m_minThicknessItem);
-    ui->menuItem3->layout()->removeWidget(&m_maxThicknessItem);
-    ui->menuItem4->layout()->removeWidget(&m_dataCompressionItem);
+    ui->layout0->removeWidget(&m_displayItem);
+    ui->layout1->removeWidget(&m_cSourceItem);
+    ui->layout2->removeWidget(&m_minThicknessItem);
+    ui->layout3->removeWidget(&m_maxThicknessItem);
+    ui->layout4->removeWidget(&m_dataCompressionItem);
     m_displayItem.hide();
     m_cSourceItem.hide();
     m_minThicknessItem.hide();

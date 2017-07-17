@@ -31,11 +31,11 @@ FlawRecordMenu::~FlawRecordMenu()
 
 void FlawRecordMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_addDeleteItem);
-    ui->menuItem1->layout()->addWidget(&m_flawImageItem);
-    ui->menuItem2->layout()->addWidget(&m_commentItem);
-    ui->menuItem3->layout()->addWidget(&m_displayTableItem);
-    ui->menuItem4->layout()->addWidget(&m_exportRecordItem);
+    ui->layout0->addWidget(&m_addDeleteItem);
+    ui->layout1->addWidget(&m_flawImageItem);
+    ui->layout2->addWidget(&m_commentItem);
+    ui->layout3->addWidget(&m_displayTableItem);
+    ui->layout4->addWidget(&m_exportRecordItem);
     m_addDeleteItem.show();
     m_flawImageItem.show();
     m_commentItem.show();
@@ -45,11 +45,11 @@ void FlawRecordMenu::show()
 
 void FlawRecordMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_addDeleteItem);
-    ui->menuItem1->layout()->removeWidget(&m_flawImageItem);
-    ui->menuItem2->layout()->removeWidget(&m_commentItem);
-    ui->menuItem3->layout()->removeWidget(&m_displayTableItem);
-    ui->menuItem4->layout()->removeWidget(&m_exportRecordItem);
+    ui->layout0->removeWidget(&m_addDeleteItem);
+    ui->layout1->removeWidget(&m_flawImageItem);
+    ui->layout2->removeWidget(&m_commentItem);
+    ui->layout3->removeWidget(&m_displayTableItem);
+    ui->layout4->removeWidget(&m_exportRecordItem);
     m_addDeleteItem.hide();
     m_flawImageItem.hide();
     m_commentItem.hide();

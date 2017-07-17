@@ -35,11 +35,11 @@ FocalPointMenu::~FocalPointMenu()
 
 void FocalPointMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_typeItem);
-    ui->menuItem1->layout()->addWidget(&m_positionStartItem);
-    ui->menuItem2->layout()->addWidget(&m_positionEndItem);
-    ui->menuItem3->layout()->addWidget(&m_offsetStartItem);
-    ui->menuItem4->layout()->addWidget(&m_offsetEndItem);
+    ui->layout0->addWidget(&m_typeItem);
+    ui->layout1->addWidget(&m_positionStartItem);
+    ui->layout2->addWidget(&m_positionEndItem);
+    ui->layout3->addWidget(&m_offsetStartItem);
+    ui->layout4->addWidget(&m_offsetEndItem);
     m_typeItem.show();
     m_positionStartItem.show();
     m_positionEndItem.show();
@@ -49,11 +49,11 @@ void FocalPointMenu::show()
 
 void FocalPointMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_typeItem);
-    ui->menuItem1->layout()->removeWidget(&m_positionStartItem);
-    ui->menuItem2->layout()->removeWidget(&m_positionEndItem);
-    ui->menuItem3->layout()->removeWidget(&m_offsetStartItem);
-    ui->menuItem4->layout()->removeWidget(&m_offsetEndItem);
+    ui->layout0->removeWidget(&m_typeItem);
+    ui->layout1->removeWidget(&m_positionStartItem);
+    ui->layout2->removeWidget(&m_positionEndItem);
+    ui->layout3->removeWidget(&m_offsetStartItem);
+    ui->layout4->removeWidget(&m_offsetEndItem);
     m_typeItem.hide();
     m_positionStartItem.hide();
     m_positionEndItem.hide();

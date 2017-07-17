@@ -26,10 +26,10 @@ FftMenu::~FftMenu()
 
 void FftMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_gainItem);
-    ui->menuItem1->layout()->addWidget(&m_startItem);
-    ui->menuItem2->layout()->addWidget(&m_widthItem);
-    ui->menuItem3->layout()->addWidget(&m_switchItem);
+    ui->layout0->addWidget(&m_gainItem);
+    ui->layout1->addWidget(&m_startItem);
+    ui->layout2->addWidget(&m_widthItem);
+    ui->layout3->addWidget(&m_switchItem);
     m_gainItem.show();
     m_startItem.show();
     m_widthItem.show();
@@ -38,10 +38,10 @@ void FftMenu::show()
 
 void FftMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_gainItem);
-    ui->menuItem1->layout()->removeWidget(&m_startItem);
-    ui->menuItem2->layout()->removeWidget(&m_widthItem);
-    ui->menuItem3->layout()->removeWidget(&m_switchItem);
+    ui->layout0->removeWidget(&m_gainItem);
+    ui->layout1->removeWidget(&m_startItem);
+    ui->layout2->removeWidget(&m_widthItem);
+    ui->layout3->removeWidget(&m_switchItem);
     m_gainItem.hide();
     m_startItem.hide();
     m_widthItem.hide();

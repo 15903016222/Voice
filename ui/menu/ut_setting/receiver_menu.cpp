@@ -53,11 +53,11 @@ ReceiverMenu::~ReceiverMenu()
 
 void ReceiverMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_receiverItem);
-    ui->menuItem1->layout()->addWidget(&m_filterItem);
-    ui->menuItem2->layout()->addWidget(&m_rectifierItem);
-    ui->menuItem3->layout()->addWidget(&m_videoFilterItem);
-    ui->menuItem4->layout()->addWidget(&m_averaginItem);
+    ui->layout0->addWidget(&m_receiverItem);
+    ui->layout1->addWidget(&m_filterItem);
+    ui->layout2->addWidget(&m_rectifierItem);
+    ui->layout3->addWidget(&m_videoFilterItem);
+    ui->layout4->addWidget(&m_averaginItem);
     m_receiverItem.show();
     m_filterItem.show();
     m_rectifierItem.show();
@@ -67,11 +67,11 @@ void ReceiverMenu::show()
 
 void ReceiverMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_receiverItem);
-    ui->menuItem1->layout()->removeWidget(&m_filterItem);
-    ui->menuItem2->layout()->removeWidget(&m_rectifierItem);
-    ui->menuItem3->layout()->removeWidget(&m_videoFilterItem);
-    ui->menuItem4->layout()->removeWidget(&m_averaginItem);
+    ui->layout0->removeWidget(&m_receiverItem);
+    ui->layout1->removeWidget(&m_filterItem);
+    ui->layout2->removeWidget(&m_rectifierItem);
+    ui->layout3->removeWidget(&m_videoFilterItem);
+    ui->layout4->removeWidget(&m_averaginItem);
     m_receiverItem.hide();
     m_filterItem.hide();
     m_rectifierItem.hide();

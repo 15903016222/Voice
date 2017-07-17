@@ -10,8 +10,10 @@
 
 QStringList BaseMenu::s_onOff;
 
-BaseMenu::BaseMenu(Ui::BaseMenu *ui, QObject *parent)
-    :QObject(parent)
+BaseMenu::BaseMenu(Ui::BaseMenu *ui, QObject *parent) :
+    QObject(parent),
+    m_isHidden(false),
+    m_updated(true)
 {
     this->ui = ui;
 

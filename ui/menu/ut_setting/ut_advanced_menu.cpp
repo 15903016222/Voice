@@ -56,11 +56,11 @@ void UtAdvancedMenu::show()
     if (m_updateFlag) {
         update();
     }
-    ui->menuItem0->layout()->addWidget(&m_eightPercentItem);
-    ui->menuItem1->layout()->addWidget(&m_dbRefItem);
-    ui->menuItem2->layout()->addWidget(&m_pointQtyItem);
-    ui->menuItem3->layout()->addWidget(&m_scaleFactorItem);
-    ui->menuItem4->layout()->addWidget(&m_sumGainItem);
+    ui->layout0->addWidget(&m_eightPercentItem);
+    ui->layout1->addWidget(&m_dbRefItem);
+    ui->layout2->addWidget(&m_pointQtyItem);
+    ui->layout3->addWidget(&m_scaleFactorItem);
+    ui->layout4->addWidget(&m_sumGainItem);
     m_eightPercentItem.show();
     m_dbRefItem.show();
     m_pointQtyItem.show();
@@ -70,11 +70,11 @@ void UtAdvancedMenu::show()
 
 void UtAdvancedMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_eightPercentItem);
-    ui->menuItem1->layout()->removeWidget(&m_dbRefItem);
-    ui->menuItem2->layout()->removeWidget(&m_pointQtyItem);
-    ui->menuItem3->layout()->removeWidget(&m_scaleFactorItem);
-    ui->menuItem4->layout()->removeWidget(&m_sumGainItem);
+    ui->layout0->removeWidget(&m_eightPercentItem);
+    ui->layout1->removeWidget(&m_dbRefItem);
+    ui->layout2->removeWidget(&m_pointQtyItem);
+    ui->layout3->removeWidget(&m_scaleFactorItem);
+    ui->layout4->removeWidget(&m_sumGainItem);
     m_eightPercentItem.hide();
     m_dbRefItem.hide();
     m_pointQtyItem.hide();

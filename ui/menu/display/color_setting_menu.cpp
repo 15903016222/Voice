@@ -29,9 +29,9 @@ ColorSettingMenu::~ColorSettingMenu()
 
 void ColorSettingMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_amplitudeItem);
-    ui->menuItem1->layout()->addWidget(&m_depthItem);
-    ui->menuItem2->layout()->addWidget(&m_tofdItem);
+    ui->layout0->addWidget(&m_amplitudeItem);
+    ui->layout1->addWidget(&m_depthItem);
+    ui->layout2->addWidget(&m_tofdItem);
     m_amplitudeItem.show();
     m_depthItem.show();
     m_tofdItem.show();
@@ -39,9 +39,9 @@ void ColorSettingMenu::show()
 
 void ColorSettingMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_amplitudeItem);
-    ui->menuItem1->layout()->removeWidget(&m_depthItem);
-    ui->menuItem2->layout()->removeWidget(&m_tofdItem);
+    ui->layout0->removeWidget(&m_amplitudeItem);
+    ui->layout1->removeWidget(&m_depthItem);
+    ui->layout2->removeWidget(&m_tofdItem);
     m_amplitudeItem.hide();
     m_depthItem.hide();
     m_tofdItem.hide();

@@ -43,12 +43,12 @@ EncoderMenu::~EncoderMenu()
 
 void EncoderMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_encoderItem);
-    ui->menuItem1->layout()->addWidget(&m_encoderTypeItem);
-    ui->menuItem2->layout()->addWidget(&m_resolutionItem);
-    ui->menuItem3->layout()->addWidget(&m_polarityItem);
-    ui->menuItem4->layout()->addWidget(&m_originItem);
-    ui->menuItem5->layout()->addWidget(&m_presetItem);
+    ui->layout0->addWidget(&m_encoderItem);
+    ui->layout1->addWidget(&m_encoderTypeItem);
+    ui->layout2->addWidget(&m_resolutionItem);
+    ui->layout3->addWidget(&m_polarityItem);
+    ui->layout4->addWidget(&m_originItem);
+    ui->layout5->addWidget(&m_presetItem);
     m_encoderItem.show();
     m_encoderTypeItem.show();
     m_resolutionItem.show();
@@ -59,12 +59,12 @@ void EncoderMenu::show()
 
 void EncoderMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_encoderItem);
-    ui->menuItem1->layout()->removeWidget(&m_encoderTypeItem);
-    ui->menuItem2->layout()->removeWidget(&m_resolutionItem);
-    ui->menuItem3->layout()->removeWidget(&m_polarityItem);
-    ui->menuItem4->layout()->removeWidget(&m_originItem);
-    ui->menuItem5->layout()->removeWidget(&m_presetItem);
+    ui->layout0->removeWidget(&m_encoderItem);
+    ui->layout1->removeWidget(&m_encoderTypeItem);
+    ui->layout2->removeWidget(&m_resolutionItem);
+    ui->layout3->removeWidget(&m_polarityItem);
+    ui->layout4->removeWidget(&m_originItem);
+    ui->layout5->removeWidget(&m_presetItem);
     m_encoderItem.hide();
     m_encoderTypeItem.hide();
     m_resolutionItem.hide();

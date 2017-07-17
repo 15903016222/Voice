@@ -29,16 +29,16 @@ NetworkMenu::~NetworkMenu()
 
 void NetworkMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_ipItem);
-    ui->menuItem1->layout()->addWidget(&m_maskItem);
+    ui->layout0->addWidget(&m_ipItem);
+    ui->layout1->addWidget(&m_maskItem);
     m_ipItem.show();
     m_maskItem.show();
 }
 
 void NetworkMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_ipItem);
-    ui->menuItem1->layout()->removeWidget(&m_maskItem);
+    ui->layout0->removeWidget(&m_ipItem);
+    ui->layout1->removeWidget(&m_maskItem);
     m_ipItem.hide();
     m_maskItem.hide();
 }

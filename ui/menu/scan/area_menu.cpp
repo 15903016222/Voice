@@ -31,12 +31,12 @@ AreaMenu::~AreaMenu()
 
 void AreaMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_scanStartItem);
-    ui->menuItem1->layout()->addWidget(&m_scanEndItem);
-    ui->menuItem2->layout()->addWidget(&m_scanResolutionItem);
-    ui->menuItem3->layout()->addWidget(&m_indexStartItem);
-    ui->menuItem4->layout()->addWidget(&m_indexEndItem);
-    ui->menuItem5->layout()->addWidget(&m_indexResolutionItem);
+    ui->layout0->addWidget(&m_scanStartItem);
+    ui->layout1->addWidget(&m_scanEndItem);
+    ui->layout2->addWidget(&m_scanResolutionItem);
+    ui->layout3->addWidget(&m_indexStartItem);
+    ui->layout4->addWidget(&m_indexEndItem);
+    ui->layout5->addWidget(&m_indexResolutionItem);
     m_scanStartItem.show();
     m_scanEndItem.show();
     m_scanResolutionItem.show();
@@ -47,12 +47,12 @@ void AreaMenu::show()
 
 void AreaMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_scanStartItem);
-    ui->menuItem1->layout()->removeWidget(&m_scanEndItem);
-    ui->menuItem2->layout()->removeWidget(&m_scanResolutionItem);
-    ui->menuItem3->layout()->removeWidget(&m_indexStartItem);
-    ui->menuItem4->layout()->removeWidget(&m_indexEndItem);
-    ui->menuItem5->layout()->removeWidget(&m_indexResolutionItem);
+    ui->layout0->removeWidget(&m_scanStartItem);
+    ui->layout1->removeWidget(&m_scanEndItem);
+    ui->layout2->removeWidget(&m_scanResolutionItem);
+    ui->layout3->removeWidget(&m_indexStartItem);
+    ui->layout4->removeWidget(&m_indexEndItem);
+    ui->layout5->removeWidget(&m_indexResolutionItem);
     m_scanStartItem.hide();
     m_scanEndItem.hide();
     m_scanResolutionItem.hide();

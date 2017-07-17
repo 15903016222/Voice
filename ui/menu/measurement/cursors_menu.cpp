@@ -50,7 +50,7 @@ CursorsMenu::~CursorsMenu()
 
 void CursorsMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_selectionItem);
+    ui->layout0->addWidget(&m_selectionItem);
     m_selectionItem.show();
     switch (m_selectionItem.current_index()) {
     case 0:
@@ -76,7 +76,7 @@ void CursorsMenu::show()
 
 void CursorsMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_selectionItem);
+    ui->layout0->removeWidget(&m_selectionItem);
     m_selectionItem.hide();
     switch (m_selectionItem.current_index()) {
     case 0:
@@ -102,10 +102,10 @@ void CursorsMenu::hide()
 
 void CursorsMenu::show_a_scan()
 {
-    ui->menuItem1->layout()->addWidget(&m_rItem);
-    ui->menuItem2->layout()->addWidget(&m_mItem);
-    ui->menuItem3->layout()->addWidget(&m_urItem);
-    ui->menuItem4->layout()->addWidget(&m_umItem);
+    ui->layout1->addWidget(&m_rItem);
+    ui->layout2->addWidget(&m_mItem);
+    ui->layout3->addWidget(&m_urItem);
+    ui->layout4->addWidget(&m_umItem);
     m_rItem.show();
     m_mItem.show();
     m_urItem.show();
@@ -114,10 +114,10 @@ void CursorsMenu::show_a_scan()
 
 void CursorsMenu::hide_a_scan()
 {
-    ui->menuItem1->layout()->removeWidget(&m_rItem);
-    ui->menuItem2->layout()->removeWidget(&m_mItem);
-    ui->menuItem3->layout()->removeWidget(&m_urItem);
-    ui->menuItem4->layout()->removeWidget(&m_umItem);
+    ui->layout1->removeWidget(&m_rItem);
+    ui->layout2->removeWidget(&m_mItem);
+    ui->layout3->removeWidget(&m_urItem);
+    ui->layout4->removeWidget(&m_umItem);
     m_rItem.hide();
     m_mItem.hide();
     m_urItem.hide();
@@ -126,10 +126,10 @@ void CursorsMenu::hide_a_scan()
 
 void CursorsMenu::show_b_scan()
 {
-    ui->menuItem1->layout()->addWidget(&m_srItem);
-    ui->menuItem2->layout()->addWidget(&m_smItem);
-    ui->menuItem3->layout()->addWidget(&m_urItem);
-    ui->menuItem4->layout()->addWidget(&m_umItem);
+    ui->layout1->addWidget(&m_srItem);
+    ui->layout2->addWidget(&m_smItem);
+    ui->layout3->addWidget(&m_urItem);
+    ui->layout4->addWidget(&m_umItem);
     m_srItem.show();
     m_smItem.show();
     m_urItem.show();
@@ -138,10 +138,10 @@ void CursorsMenu::show_b_scan()
 
 void CursorsMenu::hide_b_scan()
 {
-    ui->menuItem1->layout()->removeWidget(&m_srItem);
-    ui->menuItem2->layout()->removeWidget(&m_smItem);
-    ui->menuItem3->layout()->removeWidget(&m_urItem);
-    ui->menuItem4->layout()->removeWidget(&m_umItem);
+    ui->layout1->removeWidget(&m_srItem);
+    ui->layout2->removeWidget(&m_smItem);
+    ui->layout3->removeWidget(&m_urItem);
+    ui->layout4->removeWidget(&m_umItem);
     m_srItem.hide();
     m_smItem.hide();
     m_urItem.hide();
@@ -150,10 +150,10 @@ void CursorsMenu::hide_b_scan()
 
 void CursorsMenu::show_c_scan()
 {
-    ui->menuItem1->layout()->addWidget(&m_srItem);
-    ui->menuItem2->layout()->addWidget(&m_smItem);
-    ui->menuItem3->layout()->addWidget(&m_irItem);
-    ui->menuItem4->layout()->addWidget(&m_imItem);
+    ui->layout1->addWidget(&m_srItem);
+    ui->layout2->addWidget(&m_smItem);
+    ui->layout3->addWidget(&m_irItem);
+    ui->layout4->addWidget(&m_imItem);
     m_srItem.show();
     m_smItem.show();
     m_irItem.show();
@@ -162,10 +162,10 @@ void CursorsMenu::show_c_scan()
 
 void CursorsMenu::hide_c_scan()
 {
-    ui->menuItem1->layout()->removeWidget(&m_srItem);
-    ui->menuItem2->layout()->removeWidget(&m_smItem);
-    ui->menuItem3->layout()->removeWidget(&m_irItem);
-    ui->menuItem4->layout()->removeWidget(&m_imItem);
+    ui->layout1->removeWidget(&m_srItem);
+    ui->layout2->removeWidget(&m_smItem);
+    ui->layout3->removeWidget(&m_irItem);
+    ui->layout4->removeWidget(&m_imItem);
     m_srItem.hide();
     m_smItem.hide();
     m_irItem.hide();
@@ -174,11 +174,11 @@ void CursorsMenu::hide_c_scan()
 
 void CursorsMenu::show_s_scan()
 {
-    ui->menuItem1->layout()->addWidget(&m_angelItem);
-    ui->menuItem2->layout()->addWidget(&m_urItem);
-    ui->menuItem3->layout()->addWidget(&m_umItem);
-    ui->menuItem4->layout()->addWidget(&m_irItem);
-    ui->menuItem5->layout()->addWidget(&m_imItem);
+    ui->layout1->addWidget(&m_angelItem);
+    ui->layout2->addWidget(&m_urItem);
+    ui->layout3->addWidget(&m_umItem);
+    ui->layout4->addWidget(&m_irItem);
+    ui->layout5->addWidget(&m_imItem);
     m_angelItem.show();
     m_urItem.show();
     m_umItem.show();
@@ -188,11 +188,11 @@ void CursorsMenu::show_s_scan()
 
 void CursorsMenu::hide_s_scan()
 {
-    ui->menuItem1->layout()->removeWidget(&m_angelItem);
-    ui->menuItem2->layout()->removeWidget(&m_urItem);
-    ui->menuItem3->layout()->removeWidget(&m_umItem);
-    ui->menuItem4->layout()->removeWidget(&m_irItem);
-    ui->menuItem5->layout()->removeWidget(&m_imItem);
+    ui->layout1->removeWidget(&m_angelItem);
+    ui->layout2->removeWidget(&m_urItem);
+    ui->layout3->removeWidget(&m_umItem);
+    ui->layout4->removeWidget(&m_irItem);
+    ui->layout5->removeWidget(&m_imItem);
     m_angelItem.hide();
     m_urItem.hide();
     m_umItem.hide();

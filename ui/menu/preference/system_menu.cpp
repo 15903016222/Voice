@@ -52,12 +52,12 @@ SystemMenu::~SystemMenu()
 
 void SystemMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_timeItem);
-    ui->menuItem1->layout()->addWidget(&m_dateItem);
-    ui->menuItem2->layout()->addWidget(&m_certItem);
-    ui->menuItem3->layout()->addWidget(&m_updateItem);
-    ui->menuItem4->layout()->addWidget(&m_resetCfgItem);
-    ui->menuItem5->layout()->addWidget(&m_infoItem);
+    ui->layout0->addWidget(&m_timeItem);
+    ui->layout1->addWidget(&m_dateItem);
+    ui->layout2->addWidget(&m_certItem);
+    ui->layout3->addWidget(&m_updateItem);
+    ui->layout4->addWidget(&m_resetCfgItem);
+    ui->layout5->addWidget(&m_infoItem);
     m_timeItem.show();
     m_dateItem.show();
     m_certItem.show();
@@ -68,12 +68,12 @@ void SystemMenu::show()
 
 void SystemMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_timeItem);
-    ui->menuItem1->layout()->removeWidget(&m_dateItem);
-    ui->menuItem2->layout()->removeWidget(&m_certItem);
-    ui->menuItem3->layout()->removeWidget(&m_updateItem);
-    ui->menuItem4->layout()->removeWidget(&m_resetCfgItem);
-    ui->menuItem5->layout()->removeWidget(&m_infoItem);
+    ui->layout0->removeWidget(&m_timeItem);
+    ui->layout1->removeWidget(&m_dateItem);
+    ui->layout2->removeWidget(&m_certItem);
+    ui->layout3->removeWidget(&m_updateItem);
+    ui->layout4->removeWidget(&m_resetCfgItem);
+    ui->layout5->removeWidget(&m_infoItem);
     m_timeItem.hide();
     m_dateItem.hide();
     m_certItem.hide();

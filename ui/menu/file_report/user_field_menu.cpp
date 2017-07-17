@@ -47,12 +47,12 @@ UserFieldMenu::~UserFieldMenu()
 
 void UserFieldMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_selectItem);
-    ui->menuItem1->layout()->addWidget(&m_enableItem);
-    ui->menuItem2->layout()->addWidget(&m_labelItem);
-    ui->menuItem3->layout()->addWidget(&m_contentItem);
-    ui->menuItem4->layout()->addWidget(&m_editNoteItem);
-    ui->menuItem5->layout()->addWidget(&m_printItem);
+    ui->layout0->addWidget(&m_selectItem);
+    ui->layout1->addWidget(&m_enableItem);
+    ui->layout2->addWidget(&m_labelItem);
+    ui->layout3->addWidget(&m_contentItem);
+    ui->layout4->addWidget(&m_editNoteItem);
+    ui->layout5->addWidget(&m_printItem);
     m_selectItem.show();
     m_enableItem.show();
     m_labelItem.show();
@@ -63,12 +63,12 @@ void UserFieldMenu::show()
 
 void UserFieldMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_selectItem);
-    ui->menuItem1->layout()->removeWidget(&m_enableItem);
-    ui->menuItem2->layout()->removeWidget(&m_labelItem);
-    ui->menuItem3->layout()->removeWidget(&m_contentItem);
-    ui->menuItem4->layout()->removeWidget(&m_editNoteItem);
-    ui->menuItem5->layout()->removeWidget(&m_printItem);
+    ui->layout0->removeWidget(&m_selectItem);
+    ui->layout1->removeWidget(&m_enableItem);
+    ui->layout2->removeWidget(&m_labelItem);
+    ui->layout3->removeWidget(&m_contentItem);
+    ui->layout4->removeWidget(&m_editNoteItem);
+    ui->layout5->removeWidget(&m_printItem);
     m_selectItem.hide();
     m_enableItem.hide();
     m_labelItem.hide();

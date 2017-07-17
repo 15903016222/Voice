@@ -34,10 +34,10 @@ InspectionMenu::~InspectionMenu()
 
 void InspectionMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_scanItem);
-    ui->menuItem1->layout()->addWidget(&m_typeItem);
-    ui->menuItem2->layout()->addWidget(&m_maxScanSpeedItem);
-    ui->menuItem3->layout()->addWidget(&m_maxScanSpeedRPMItem);
+    ui->layout0->addWidget(&m_scanItem);
+    ui->layout1->addWidget(&m_typeItem);
+    ui->layout2->addWidget(&m_maxScanSpeedItem);
+    ui->layout3->addWidget(&m_maxScanSpeedRPMItem);
     m_scanItem.show();
     m_typeItem.show();
     m_maxScanSpeedItem.show();
@@ -46,10 +46,10 @@ void InspectionMenu::show()
 
 void InspectionMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_scanItem);
-    ui->menuItem1->layout()->removeWidget(&m_typeItem);
-    ui->menuItem2->layout()->removeWidget(&m_maxScanSpeedItem);
-    ui->menuItem3->layout()->removeWidget(&m_maxScanSpeedRPMItem);
+    ui->layout0->removeWidget(&m_scanItem);
+    ui->layout1->removeWidget(&m_typeItem);
+    ui->layout2->removeWidget(&m_maxScanSpeedItem);
+    ui->layout3->removeWidget(&m_maxScanSpeedRPMItem);
     m_scanItem.hide();
     m_typeItem.hide();
     m_maxScanSpeedItem.hide();

@@ -49,19 +49,6 @@ SubMenu::SubMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QVBoxLayout *layout1 = new QVBoxLayout(ui->menuItem0);
-    QVBoxLayout *layout2 = new QVBoxLayout(ui->menuItem1);
-    QVBoxLayout *layout3 = new QVBoxLayout(ui->menuItem2);
-    QVBoxLayout *layout4 = new QVBoxLayout(ui->menuItem3);
-    QVBoxLayout *layout5 = new QVBoxLayout(ui->menuItem4);
-    QVBoxLayout *layout6 = new QVBoxLayout(ui->menuItem5);
-    layout1->setContentsMargins(0, 0, 0, 0);
-    layout2->setContentsMargins(0, 0, 0, 0);
-    layout3->setContentsMargins(0, 0, 0, 0);
-    layout4->setContentsMargins(0, 0, 0, 0);
-    layout5->setContentsMargins(0, 0, 0, 0);
-    layout6->setContentsMargins(0, 0, 0, 0);
-
     init_map();  
 
     m_preType = MainMenu::UTSettings_Pulser;
@@ -157,5 +144,6 @@ void SubMenu::set_opacity_main_menu(double value)
 {
     qreal alpha = value / 100;
     m_opacityEffect->setOpacity(alpha);
-    ui->widget->setGraphicsEffect(m_opacityEffect);
+    this->setGraphicsEffect(m_opacityEffect);
+//    ui->widget->setGraphicsEffect(m_opacityEffect);
 }

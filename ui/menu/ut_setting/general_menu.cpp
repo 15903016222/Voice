@@ -57,31 +57,32 @@ GeneralMenu::~GeneralMenu()
 
 void GeneralMenu::show()
 {
-    if (m_updateFlag) {
-        update();
-    }
-    ui->menuItem0->layout()->addWidget(&m_gainItem);
-    ui->menuItem1->layout()->addWidget(&m_startItem);
-    ui->menuItem2->layout()->addWidget(&m_rangeItem);
-    ui->menuItem3->layout()->addWidget(&m_velocityItem);
-    ui->menuItem4->layout()->addWidget(&m_wedgeDelayItem);
-    ui->menuItem5->layout()->addWidget(&m_utUnitItem);
+    update();
+    ui->layout0->addWidget(&m_gainItem);
+    ui->layout1->addWidget(&m_startItem);
+    ui->layout2->addWidget(&m_rangeItem);
+    ui->layout3->addWidget(&m_velocityItem);
+    ui->layout4->addWidget(&m_wedgeDelayItem);
+    ui->layout5->addWidget(&m_utUnitItem);
+
     m_gainItem.show();
     m_startItem.show();
     m_rangeItem.show();
     m_velocityItem.show();
     m_wedgeDelayItem.show();
     m_utUnitItem.show();
+
+//    BaseMenu::show();
 }
 
 void GeneralMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_gainItem);
-    ui->menuItem1->layout()->removeWidget(&m_startItem);
-    ui->menuItem2->layout()->removeWidget(&m_rangeItem);
-    ui->menuItem3->layout()->removeWidget(&m_velocityItem);
-    ui->menuItem4->layout()->removeWidget(&m_wedgeDelayItem);
-    ui->menuItem5->layout()->removeWidget(&m_utUnitItem);
+//    ui->layout0->removeWidget(&m_gainItem);
+//    ui->layout1->removeWidget(&m_startItem);
+//    ui->layout2->removeWidget(&m_rangeItem);
+//    ui->layout3->removeWidget(&m_velocityItem);
+//    ui->layout4->removeWidget(&m_wedgeDelayItem);
+//    ui->layout5->removeWidget(&m_utUnitItem);
     m_gainItem.hide();
     m_startItem.hide();
     m_rangeItem.hide();

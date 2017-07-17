@@ -20,16 +20,16 @@ StartMenu::~StartMenu()
 
 void StartMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_scanItem);
-    ui->menuItem1->layout()->addWidget(&m_pauseItem);
+    ui->layout0->addWidget(&m_scanItem);
+    ui->layout1->addWidget(&m_pauseItem);
     m_scanItem.show();
     m_pauseItem.show();
 }
 
 void StartMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_scanItem);
-    ui->menuItem1->layout()->removeWidget(&m_pauseItem);
+    ui->layout0->removeWidget(&m_scanItem);
+    ui->layout1->removeWidget(&m_pauseItem);
     m_scanItem.hide();
     m_pauseItem.hide();
 }

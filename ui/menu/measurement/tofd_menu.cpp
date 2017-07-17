@@ -62,12 +62,12 @@ void TofdMenu::hide()
 
 void TofdMenu::show_setting()
 {
-    ui->menuItem0->layout()->addWidget(&m_selectItem);
-    ui->menuItem1->layout()->addWidget(&m_wedgeItem);
-    ui->menuItem2->layout()->addWidget(&m_layerDepthItem);
-    ui->menuItem3->layout()->addWidget(&m_tofdCalItem);
-    ui->menuItem4->layout()->addWidget(&m_startItem);
-    ui->menuItem5->layout()->addWidget(&m_rangeItem);
+    ui->layout0->addWidget(&m_selectItem);
+    ui->layout1->addWidget(&m_wedgeItem);
+    ui->layout2->addWidget(&m_layerDepthItem);
+    ui->layout3->addWidget(&m_tofdCalItem);
+    ui->layout4->addWidget(&m_startItem);
+    ui->layout5->addWidget(&m_rangeItem);
     m_selectItem.show();
     m_wedgeItem.show();
     m_layerDepthItem.show();
@@ -78,12 +78,12 @@ void TofdMenu::show_setting()
 
 void TofdMenu::hide_setting()
 {
-    ui->menuItem0->layout()->removeWidget(&m_selectItem);
-    ui->menuItem1->layout()->removeWidget(&m_wedgeItem);
-    ui->menuItem2->layout()->removeWidget(&m_layerDepthItem);
-    ui->menuItem3->layout()->removeWidget(&m_tofdCalItem);
-    ui->menuItem4->layout()->removeWidget(&m_startItem);
-    ui->menuItem5->layout()->removeWidget(&m_rangeItem);
+    ui->layout0->removeWidget(&m_selectItem);
+    ui->layout1->removeWidget(&m_wedgeItem);
+    ui->layout2->removeWidget(&m_layerDepthItem);
+    ui->layout3->removeWidget(&m_tofdCalItem);
+    ui->layout4->removeWidget(&m_startItem);
+    ui->layout5->removeWidget(&m_rangeItem);
     m_selectItem.hide();
     m_wedgeItem.hide();
     m_layerDepthItem.hide();
@@ -94,11 +94,11 @@ void TofdMenu::hide_setting()
 
 void TofdMenu::show_analysis()
 {
-    ui->menuItem0->layout()->addWidget(&m_selectItem);
-    ui->menuItem1->layout()->addWidget(&m_straighteningItem);
-    ui->menuItem2->layout()->addWidget(&m_removeLateralItem);
-    ui->menuItem3->layout()->addWidget(&m_refPositionItem);
-    ui->menuItem4->layout()->addWidget(&m_depthCalibrationItem);
+    ui->layout0->addWidget(&m_selectItem);
+    ui->layout1->addWidget(&m_straighteningItem);
+    ui->layout2->addWidget(&m_removeLateralItem);
+    ui->layout3->addWidget(&m_refPositionItem);
+    ui->layout4->addWidget(&m_depthCalibrationItem);
     m_selectItem.show();
     m_straighteningItem.show();
     m_removeLateralItem.show();
@@ -108,11 +108,11 @@ void TofdMenu::show_analysis()
 
 void TofdMenu::hide_analysis()
 {
-    ui->menuItem0->layout()->removeWidget(&m_selectItem);
-    ui->menuItem1->layout()->removeWidget(&m_straighteningItem);
-    ui->menuItem2->layout()->removeWidget(&m_removeLateralItem);
-    ui->menuItem3->layout()->removeWidget(&m_refPositionItem);
-    ui->menuItem4->layout()->removeWidget(&m_depthCalibrationItem);
+    ui->layout0->removeWidget(&m_selectItem);
+    ui->layout1->removeWidget(&m_straighteningItem);
+    ui->layout2->removeWidget(&m_removeLateralItem);
+    ui->layout3->removeWidget(&m_refPositionItem);
+    ui->layout4->removeWidget(&m_depthCalibrationItem);
     m_selectItem.hide();
     m_straighteningItem.hide();
     m_removeLateralItem.hide();

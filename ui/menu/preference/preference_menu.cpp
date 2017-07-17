@@ -46,11 +46,11 @@ PreferenceMenu::~PreferenceMenu()
 
 void PreferenceMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_brightItem);
-    ui->menuItem1->layout()->addWidget(&m_opacityItem);
-    ui->menuItem2->layout()->addWidget(&m_languageItem);
-    ui->menuItem3->layout()->addWidget(&m_startingPageItem);
-    ui->menuItem4->layout()->addWidget(&m_gatemodeItem);
+    ui->layout0->addWidget(&m_brightItem);
+    ui->layout1->addWidget(&m_opacityItem);
+    ui->layout2->addWidget(&m_languageItem);
+    ui->layout3->addWidget(&m_startingPageItem);
+    ui->layout4->addWidget(&m_gatemodeItem);
     m_brightItem.show();
     m_opacityItem.show();
     m_languageItem.show();
@@ -60,11 +60,11 @@ void PreferenceMenu::show()
 
 void PreferenceMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_brightItem);
-    ui->menuItem1->layout()->removeWidget(&m_opacityItem);
-    ui->menuItem2->layout()->removeWidget(&m_languageItem);
-    ui->menuItem3->layout()->removeWidget(&m_startingPageItem);
-    ui->menuItem4->layout()->removeWidget(&m_gatemodeItem);
+    ui->layout0->removeWidget(&m_brightItem);
+    ui->layout1->removeWidget(&m_opacityItem);
+    ui->layout2->removeWidget(&m_languageItem);
+    ui->layout3->removeWidget(&m_startingPageItem);
+    ui->layout4->removeWidget(&m_gatemodeItem);
     m_brightItem.hide();
     m_opacityItem.hide();
     m_languageItem.hide();

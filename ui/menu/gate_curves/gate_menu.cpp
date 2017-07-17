@@ -9,7 +9,8 @@
 #include "spin_menu_item.h"
 #include "combo_menu_item.h"
 
-#include "device/device.h"
+#include <global.h>
+#include <device/device.h>
 
 namespace DplGateCurvesMenu {
 
@@ -55,12 +56,12 @@ GateMenu::~GateMenu()
 
 void GateMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_gateItem);
-    ui->menuItem1->layout()->addWidget(&m_startItem);
-    ui->menuItem2->layout()->addWidget(&m_widthItem);
-    ui->menuItem3->layout()->addWidget(&m_thresholdItem);
-    ui->menuItem4->layout()->addWidget(&m_synchroItem);
-    ui->menuItem5->layout()->addWidget(&m_measureModeItem);
+    ui->layout0->addWidget(&m_gateItem);
+    ui->layout1->addWidget(&m_startItem);
+    ui->layout2->addWidget(&m_widthItem);
+    ui->layout3->addWidget(&m_thresholdItem);
+    ui->layout4->addWidget(&m_synchroItem);
+    ui->layout5->addWidget(&m_measureModeItem);
     m_gateItem.show();
     m_startItem.show();
     m_widthItem.show();
@@ -71,12 +72,12 @@ void GateMenu::show()
 
 void GateMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_gateItem);
-    ui->menuItem1->layout()->removeWidget(&m_startItem);
-    ui->menuItem2->layout()->removeWidget(&m_widthItem);
-    ui->menuItem3->layout()->removeWidget(&m_thresholdItem);
-    ui->menuItem4->layout()->removeWidget(&m_synchroItem);
-    ui->menuItem5->layout()->removeWidget(&m_measureModeItem);
+    ui->layout0->removeWidget(&m_gateItem);
+    ui->layout1->removeWidget(&m_startItem);
+    ui->layout2->removeWidget(&m_widthItem);
+    ui->layout3->removeWidget(&m_thresholdItem);
+    ui->layout4->removeWidget(&m_synchroItem);
+    ui->layout5->removeWidget(&m_measureModeItem);
     m_gateItem.hide();
     m_startItem.hide();
     m_widthItem.hide();
@@ -87,10 +88,17 @@ void GateMenu::hide()
 
 void GateMenu::do_startItem_changed(double val)
 {
-//    double start = m_g;
-//    if (m_group->ut_unit() != DplDevice::Group::Time) {
-//        start =
-//    }
+    if (m_group->ut_unit() != DplDevice::Group::Time) {
+        val = Dpl::us_to_ns(val);
+    } else {
+        val = Dpl::mm_to_m(val);
+        val = val * 2 / m_group->sample()->velocity();
+        val = Dpl::s_to_ns(val);
+        if (m_group->ut_unit() == DplDevice::Group::TruePath) {
+            val /= qCos(m_group->current_angle());
+        }
+    }
+
     m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem.current_index()))->set_start(val);
 }
 

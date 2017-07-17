@@ -23,9 +23,9 @@ FileMenu::~FileMenu()
 
 void FileMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_saveSetupItem);
-    ui->menuItem1->layout()->addWidget(&m_openItem);
-    ui->menuItem2->layout()->addWidget(&m_fileManagerItem);
+    ui->layout0->addWidget(&m_saveSetupItem);
+    ui->layout1->addWidget(&m_openItem);
+    ui->layout2->addWidget(&m_fileManagerItem);
     m_saveSetupItem.show();
     m_openItem.show();
     m_fileManagerItem.show();
@@ -33,9 +33,9 @@ void FileMenu::show()
 
 void FileMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_saveSetupItem);
-    ui->menuItem1->layout()->removeWidget(&m_openItem);
-    ui->menuItem2->layout()->removeWidget(&m_fileManagerItem);
+    ui->layout0->removeWidget(&m_saveSetupItem);
+    ui->layout1->removeWidget(&m_openItem);
+    ui->layout2->removeWidget(&m_fileManagerItem);
     m_saveSetupItem.hide();
     m_openItem.hide();
     m_fileManagerItem.hide();

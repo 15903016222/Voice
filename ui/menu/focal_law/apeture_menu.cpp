@@ -25,10 +25,10 @@ ApetureMenu::~ApetureMenu()
 
 void ApetureMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_apetureItem);
-    ui->menuItem1->layout()->addWidget(&m_firstElementItem);
-    ui->menuItem2->layout()->addWidget(&m_lastElementItem);
-    ui->menuItem3->layout()->addWidget(&m_elementStep);
+    ui->layout0->addWidget(&m_apetureItem);
+    ui->layout1->addWidget(&m_firstElementItem);
+    ui->layout2->addWidget(&m_lastElementItem);
+    ui->layout3->addWidget(&m_elementStep);
     m_apetureItem.show();
     m_firstElementItem.show();
     m_lastElementItem.show();
@@ -37,10 +37,10 @@ void ApetureMenu::show()
 
 void ApetureMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_apetureItem);
-    ui->menuItem1->layout()->removeWidget(&m_firstElementItem);
-    ui->menuItem2->layout()->removeWidget(&m_lastElementItem);
-    ui->menuItem3->layout()->removeWidget(&m_elementStep);
+    ui->layout0->removeWidget(&m_apetureItem);
+    ui->layout1->removeWidget(&m_firstElementItem);
+    ui->layout2->removeWidget(&m_lastElementItem);
+    ui->layout3->removeWidget(&m_elementStep);
     m_apetureItem.hide();
     m_firstElementItem.hide();
     m_lastElementItem.hide();

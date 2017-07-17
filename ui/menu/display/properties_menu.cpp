@@ -73,11 +73,11 @@ void PropertiesMenu::show()
 void PropertiesMenu::hide()
 {
     /* A-Scan */
-    ui->menuItem0->layout()->removeWidget(&m_scanItem);
-    ui->menuItem1->layout()->removeWidget(&m_colorItem);
-    ui->menuItem2->layout()->removeWidget(&m_envelopItem);
-    ui->menuItem3->layout()->removeWidget(&m_peakHoldingItem);
-    ui->menuItem4->layout()->removeWidget(&m_referenceholdingItem);
+    ui->layout0->removeWidget(&m_scanItem);
+    ui->layout1->removeWidget(&m_colorItem);
+    ui->layout2->removeWidget(&m_envelopItem);
+    ui->layout3->removeWidget(&m_peakHoldingItem);
+    ui->layout4->removeWidget(&m_referenceholdingItem);
     m_scanItem.hide();
     m_colorItem.hide();
     m_envelopItem.hide();
@@ -85,23 +85,23 @@ void PropertiesMenu::hide()
     m_referenceholdingItem.hide();
 
     /* B-Scan */
-    ui->menuItem1->layout()->removeWidget(&m_compressionItem);
+    ui->layout1->removeWidget(&m_compressionItem);
     m_compressionItem.hide();
 
     /* C-Scan */
-    ui->menuItem1->layout()->removeWidget(&m_ratioItem);
-    ui->menuItem2->layout()->removeWidget(&m_cScanModeItem);
+    ui->layout1->removeWidget(&m_ratioItem);
+    ui->layout2->removeWidget(&m_cScanModeItem);
     m_ratioItem.hide();
     m_cScanModeItem.hide();
 }
 
 void PropertiesMenu::show_a_scan()
 {
-    ui->menuItem0->layout()->addWidget(&m_scanItem);
-    ui->menuItem1->layout()->addWidget(&m_colorItem);
-    ui->menuItem2->layout()->addWidget(&m_envelopItem);
-    ui->menuItem3->layout()->addWidget(&m_peakHoldingItem);
-    ui->menuItem4->layout()->addWidget(&m_referenceholdingItem);
+    ui->layout0->addWidget(&m_scanItem);
+    ui->layout1->addWidget(&m_colorItem);
+    ui->layout2->addWidget(&m_envelopItem);
+    ui->layout3->addWidget(&m_peakHoldingItem);
+    ui->layout4->addWidget(&m_referenceholdingItem);
     m_scanItem.show();
     m_colorItem.show();
     m_envelopItem.show();
@@ -111,17 +111,17 @@ void PropertiesMenu::show_a_scan()
 
 void PropertiesMenu::show_b_scan()
 {
-    ui->menuItem0->layout()->addWidget(&m_scanItem);
-    ui->menuItem1->layout()->addWidget(&m_compressionItem);
+    ui->layout0->addWidget(&m_scanItem);
+    ui->layout1->addWidget(&m_compressionItem);
     m_scanItem.show();
     m_compressionItem.show();
 }
 
 void PropertiesMenu::show_c_scan()
 {
-    ui->menuItem0->layout()->addWidget(&m_scanItem);
-    ui->menuItem1->layout()->addWidget(&m_ratioItem);
-    ui->menuItem2->layout()->addWidget(&m_cScanModeItem);
+    ui->layout0->addWidget(&m_scanItem);
+    ui->layout1->addWidget(&m_ratioItem);
+    ui->layout2->addWidget(&m_cScanModeItem);
     m_scanItem.show();
     m_ratioItem.show();
     m_cScanModeItem.show();

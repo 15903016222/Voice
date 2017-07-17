@@ -58,11 +58,11 @@ PartMenu::~PartMenu()
 
 void PartMenu::show()
 {
-    ui->menuItem0->layout()->addWidget(&m_geometryItem);
-    ui->menuItem1->layout()->addWidget(&m_thicknessItem);
-    ui->menuItem2->layout()->addWidget(&m_diameterItem);
-    ui->menuItem3->layout()->addWidget(&m_materialItem);
-    ui->menuItem4->layout()->addWidget(&m_overlayItem);
+    ui->layout0->addWidget(&m_geometryItem);
+    ui->layout1->addWidget(&m_thicknessItem);
+    ui->layout2->addWidget(&m_diameterItem);
+    ui->layout3->addWidget(&m_materialItem);
+    ui->layout4->addWidget(&m_overlayItem);
     m_geometryItem.show();
     m_thicknessItem.show();
     m_diameterItem.show();
@@ -72,11 +72,11 @@ void PartMenu::show()
 
 void PartMenu::hide()
 {
-    ui->menuItem0->layout()->removeWidget(&m_geometryItem);
-    ui->menuItem1->layout()->removeWidget(&m_thicknessItem);
-    ui->menuItem2->layout()->removeWidget(&m_diameterItem);
-    ui->menuItem3->layout()->removeWidget(&m_materialItem);
-    ui->menuItem4->layout()->removeWidget(&m_overlayItem);
+    ui->layout0->removeWidget(&m_geometryItem);
+    ui->layout1->removeWidget(&m_thicknessItem);
+    ui->layout2->removeWidget(&m_diameterItem);
+    ui->layout3->removeWidget(&m_materialItem);
+    ui->layout4->removeWidget(&m_overlayItem);
     m_geometryItem.hide();
     m_thicknessItem.hide();
     m_diameterItem.hide();
