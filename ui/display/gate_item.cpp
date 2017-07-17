@@ -55,18 +55,8 @@ void GateItem::set_start(qreal start)
     if (scene()->views().isEmpty()) {
         return;
     }
-    QGraphicsView *view = scene()->views().first();
-    QPointF pointF = view->mapToScene(0, 0);
 
-    qDebug() << "Scene Rect: " << scene()->sceneRect();
-
-    qDebug() << "Bounding Rect: " << boundingRect();
-
-    qDebug() << "gate: " << pointF;
-
-    setPos(scene()->sceneRect().left(), pos().y());
-    update();
-//    setPos(pointF.x(), pointF.y() + 1);
+    setPos(scene()->sceneRect().left() + start, pos().y());
 }
 
 void GateItem::set_height(int height)

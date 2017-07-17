@@ -46,6 +46,7 @@ private:
     GateItem *m_gateAItem;
     GateItem *m_gateBItem;
     GateItem *m_gateIItem;
+    Qt::Orientation m_orientation;
 };
 
 #endif // __A_SCAN_DISPLAY_H__

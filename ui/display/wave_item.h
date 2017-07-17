@@ -14,6 +14,16 @@ public:
 
     void set_wave(const QByteArray &beam);
 
+    /**
+     * @brief size  获取显示大小
+     * @return      大小
+     */
+    const QSize &size() const;
+
+    /**
+     * @brief set_size  设置显示大小
+     * @param size      大小
+     */
     void set_size(const QSize &size);
 
     /**
@@ -43,6 +53,11 @@ inline void WaveItem::set_wave(const QByteArray &beam)
         m_beam.setRawData(beam.constData(), beam.size());
         update();
     }
+}
+
+inline const QSize &WaveItem::size() const
+{
+    return m_size;
 }
 
 inline void WaveItem::set_size(const QSize &size)

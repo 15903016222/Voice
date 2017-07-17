@@ -27,7 +27,8 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     m_waveItem(new WaveItem),
     m_gateAItem(new GateItem(Qt::red)),
     m_gateBItem(new GateItem(Qt::green)),
-    m_gateIItem(new GateItem(Qt::darkCyan))
+    m_gateIItem(new GateItem(Qt::darkCyan)),
+    m_orientation(orientation)
 {  
     ui->setupUi(this);
     ui->ascanWidgetLayout->addWidget(m_ascanView);
@@ -88,12 +89,25 @@ void AscanDisplay::do_data_event()
 
 void AscanDisplay::do_gate_a_changed()
 {
-    m_gateAItem->set_start(0);
+    DplDevice::GatePointer gate = m_group->gate(DplDevice::Gate::A);
+    DplUt::SamplePointer sample = m_group->sample();
+
+    qreal start = m_waveItem->size().width() / sample->range() * gate->start();
+
+    qDebug() << "Start: " << start;
+
+    m_gateAItem->set_start(start);
 }
 
 void AscanDisplay::do_ascanView_size_changed(const QSize &size)
 {
-    m_ascanScene->setSceneRect(-size.width()/2, -size.height()/2,
-                               size.width(), size.height());
-    m_waveItem->set_size(size);
+    if (m_orientation == Qt::Horizontal) {
+        m_ascanScene->setSceneRect(-size.width()/2, -size.height()/2,
+                                   size.width(), size.height());
+        m_waveItem->set_size(size);
+    } else {
+        m_ascanScene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
+                                   size.height(), size.width());
+        m_waveItem->set_size(QSize(size.height(), size.width()));
+    }
 }

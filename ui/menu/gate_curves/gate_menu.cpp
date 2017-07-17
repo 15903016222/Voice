@@ -87,6 +87,10 @@ void GateMenu::hide()
 
 void GateMenu::do_startItem_changed(double val)
 {
+//    double start = m_g;
+//    if (m_group->ut_unit() != DplDevice::Group::Time) {
+//        start =
+//    }
     m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem.current_index()))->set_start(val);
 }
 
