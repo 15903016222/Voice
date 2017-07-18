@@ -30,12 +30,12 @@ protected slots:
     void do_current_group_changed(const DplDevice::GroupPointer &group);
 
 private:
-    ComboMenuItem m_gateItem;
-    SpinMenuItem m_startItem;
-    SpinMenuItem m_widthItem;
-    SpinMenuItem m_thresholdItem;
-    ComboMenuItem m_synchroItem;
-    ComboMenuItem m_measureModeItem;
+    ComboMenuItem *m_gateItem;
+    SpinMenuItem *m_startItem;
+    SpinMenuItem *m_widthItem;
+    SpinMenuItem *m_thresholdItem;
+    ComboMenuItem *m_synchroItem;
+    ComboMenuItem *m_measureModeItem;
 
     DplDevice::GroupPointer m_group;
 };

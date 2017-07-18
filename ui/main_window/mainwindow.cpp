@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->gainMenuItem->show();
+    ui->angleMenuItem->show();
 
     /* Device */
     DplDevice::GroupPointer group = DplDevice::Device::instance()->get_group(0);

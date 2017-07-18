@@ -14,9 +14,22 @@
 
 namespace DplGateCurvesMenu {
 
-GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent)
-    : BaseMenu(ui, parent)
+GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent) :
+    BaseMenu(ui, parent),
+    m_gateItem(new ComboMenuItem),
+    m_startItem(new SpinMenuItem),
+    m_widthItem(new SpinMenuItem),
+    m_thresholdItem(new SpinMenuItem),
+    m_synchroItem(new ComboMenuItem),
+    m_measureModeItem(new ComboMenuItem)
 {
+    ui->layout0->addWidget(m_gateItem);
+    ui->layout1->addWidget(m_startItem);
+    ui->layout2->addWidget(m_widthItem);
+    ui->layout3->addWidget(m_thresholdItem);
+    ui->layout4->addWidget(m_synchroItem);
+    ui->layout5->addWidget(m_measureModeItem);
+
     QStringList gatesList;
     QStringList synchrosList;
     QStringList measureModesList;
@@ -33,16 +46,16 @@ GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent)
     measureModesList.append(tr("Edge"));
     measureModesList.append(tr("Peak"));
 
-    m_gateItem.set(tr("Gate"), gatesList);
+    m_gateItem->set(tr("Gate"), gatesList);
 
-    m_startItem.set(tr("Start"), "mm", 0, 16000, 2);
-    connect(&m_startItem, SIGNAL(value_changed(double)),
+    m_startItem->set(tr("Start"), "mm", 0, 16000, 2);
+    connect(m_startItem, SIGNAL(value_changed(double)),
             this, SLOT(do_startItem_changed(double)));
 
-    m_widthItem.set(tr("Width"), "mm", 0.05, 525, 2);
-    m_thresholdItem.set(tr("Threshold"), "%", 0, 100, 0);
-    m_synchroItem.set(tr("Synchro"), synchrosList);
-    m_measureModeItem.set(tr("Measure Mode"), measureModesList);
+    m_widthItem->set(tr("Width"), "mm", 0.05, 525, 2);
+    m_thresholdItem->set(tr("Threshold"), "%", 0, 100, 0);
+    m_synchroItem->set(tr("Synchro"), synchrosList);
+    m_measureModeItem->set(tr("Measure Mode"), measureModesList);
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
@@ -52,38 +65,32 @@ GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent)
 
 GateMenu::~GateMenu()
 {
+    delete m_gateItem;
+    delete m_startItem;
+    delete m_widthItem;
+    delete m_thresholdItem;
+    delete m_synchroItem;
+    delete m_measureModeItem;
 }
 
 void GateMenu::show()
 {
-    ui->layout0->addWidget(&m_gateItem);
-    ui->layout1->addWidget(&m_startItem);
-    ui->layout2->addWidget(&m_widthItem);
-    ui->layout3->addWidget(&m_thresholdItem);
-    ui->layout4->addWidget(&m_synchroItem);
-    ui->layout5->addWidget(&m_measureModeItem);
-    m_gateItem.show();
-    m_startItem.show();
-    m_widthItem.show();
-    m_thresholdItem.show();
-    m_synchroItem.show();
-    m_measureModeItem.show();
+    m_gateItem->show();
+    m_startItem->show();
+    m_widthItem->show();
+    m_thresholdItem->show();
+    m_synchroItem->show();
+    m_measureModeItem->show();
 }
 
 void GateMenu::hide()
 {
-    ui->layout0->removeWidget(&m_gateItem);
-    ui->layout1->removeWidget(&m_startItem);
-    ui->layout2->removeWidget(&m_widthItem);
-    ui->layout3->removeWidget(&m_thresholdItem);
-    ui->layout4->removeWidget(&m_synchroItem);
-    ui->layout5->removeWidget(&m_measureModeItem);
-    m_gateItem.hide();
-    m_startItem.hide();
-    m_widthItem.hide();
-    m_thresholdItem.hide();
-    m_synchroItem.hide();
-    m_measureModeItem.hide();
+    m_gateItem->hide();
+    m_startItem->hide();
+    m_widthItem->hide();
+    m_thresholdItem->hide();
+    m_synchroItem->hide();
+    m_measureModeItem->hide();
 }
 
 void GateMenu::do_startItem_changed(double val)
@@ -99,7 +106,7 @@ void GateMenu::do_startItem_changed(double val)
         }
     }
 
-    m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem.current_index()))->set_start(val);
+    m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem->current_index()))->set_start(val);
 }
 
 void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
