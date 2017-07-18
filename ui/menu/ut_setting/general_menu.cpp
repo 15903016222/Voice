@@ -77,12 +77,6 @@ void GeneralMenu::show()
 
 void GeneralMenu::hide()
 {
-//    ui->layout0->removeWidget(&m_gainItem);
-//    ui->layout1->removeWidget(&m_startItem);
-//    ui->layout2->removeWidget(&m_rangeItem);
-//    ui->layout3->removeWidget(&m_velocityItem);
-//    ui->layout4->removeWidget(&m_wedgeDelayItem);
-//    ui->layout5->removeWidget(&m_utUnitItem);
     m_gainItem.hide();
     m_startItem.hide();
     m_rangeItem.hide();

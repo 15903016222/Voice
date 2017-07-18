@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QTextCodec>
 #include <QFontDatabase>
+#include <QTime>
 
 #if (PHASCAN | PHASCAN_II)
 static const char *FONT_FILE = "/opt/mercury/font/Arial.ttf";
