@@ -28,11 +28,11 @@ public:
 private:
     bool m_updateFlag;
 
-    LabelMenuItem m_eightPercentItem;
-    ComboMenuItem m_dbRefItem;
-    ComboMenuItem m_pointQtyItem;
-    LabelMenuItem m_scaleFactorItem;
-    SpinMenuItem m_sumGainItem;
+    LabelMenuItem *m_eightPercentItem;
+    ComboMenuItem *m_dbRefItem;
+    ComboMenuItem *m_pointQtyItem;
+    LabelMenuItem *m_scaleFactorItem;
+    SpinMenuItem *m_sumGainItem;
 
     DplUt::SamplePointer m_sample;
 

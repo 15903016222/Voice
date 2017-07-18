@@ -12,8 +12,19 @@
 namespace DplUtSettingMenu {
 
 ReceiverMenu::ReceiverMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, parent)
+    BaseMenu(ui, parent),
+    m_receiverItem(new LabelMenuItem(tr("Receiver"))),
+    m_filterItem(new ComboMenuItem),
+    m_rectifierItem(new ComboMenuItem),
+    m_videoFilterItem(new ComboMenuItem),
+    m_averaginItem(new ComboMenuItem)
 {
+    ui->layout0->addWidget(m_receiverItem);
+    ui->layout1->addWidget(m_filterItem);
+    ui->layout2->addWidget(m_rectifierItem);
+    ui->layout3->addWidget(m_videoFilterItem);
+    ui->layout4->addWidget(m_averaginItem);
+
     QStringList filtersList;
     QStringList rectifiersList;
     QStringList averagingsList;
@@ -36,47 +47,40 @@ ReceiverMenu::ReceiverMenu(Ui::BaseMenu *ui, QObject *parent) :
     averagingsList.append(tr("8"));
     averagingsList.append(tr("16"));
 
-    m_receiverItem.set(tr("Receiver"), "");
+    m_filterItem->set(tr("Filter"), filtersList);
 
-    m_filterItem.set(tr("Filter"), filtersList);
+    m_rectifierItem->set(tr("Rectifier"), rectifiersList);
 
-    m_rectifierItem.set(tr("Rectifier"), rectifiersList);
+    m_videoFilterItem->set(tr("Video Filter"), s_onOff);
 
-    m_videoFilterItem.set(tr("Video Filter"), s_onOff);
-
-    m_averaginItem.set(tr("Averaging"), averagingsList);
+    m_averaginItem->set(tr("Averaging"), averagingsList);
 }
 
 ReceiverMenu::~ReceiverMenu()
 {
+    delete m_receiverItem;
+    delete m_filterItem;
+    delete m_rectifierItem;
+    delete m_videoFilterItem;
+    delete m_averaginItem;
 }
 
 void ReceiverMenu::show()
 {
-    ui->layout0->addWidget(&m_receiverItem);
-    ui->layout1->addWidget(&m_filterItem);
-    ui->layout2->addWidget(&m_rectifierItem);
-    ui->layout3->addWidget(&m_videoFilterItem);
-    ui->layout4->addWidget(&m_averaginItem);
-    m_receiverItem.show();
-    m_filterItem.show();
-    m_rectifierItem.show();
-    m_videoFilterItem.show();
-    m_averaginItem.show();
+    m_receiverItem->show();
+    m_filterItem->show();
+    m_rectifierItem->show();
+    m_videoFilterItem->show();
+    m_averaginItem->show();
 }
 
 void ReceiverMenu::hide()
 {
-    ui->layout0->removeWidget(&m_receiverItem);
-    ui->layout1->removeWidget(&m_filterItem);
-    ui->layout2->removeWidget(&m_rectifierItem);
-    ui->layout3->removeWidget(&m_videoFilterItem);
-    ui->layout4->removeWidget(&m_averaginItem);
-    m_receiverItem.hide();
-    m_filterItem.hide();
-    m_rectifierItem.hide();
-    m_videoFilterItem.hide();
-    m_averaginItem.hide();
+    m_receiverItem->hide();
+    m_filterItem->hide();
+    m_rectifierItem->hide();
+    m_videoFilterItem->hide();
+    m_averaginItem->hide();
 }
 
 }

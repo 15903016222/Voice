@@ -23,11 +23,11 @@ public:
     void hide();
 
 private:
-    LabelMenuItem m_receiverItem;
-    ComboMenuItem m_filterItem;
-    ComboMenuItem m_rectifierItem;
-    ComboMenuItem m_videoFilterItem;
-    ComboMenuItem m_averaginItem;
+    LabelMenuItem *m_receiverItem;
+    ComboMenuItem *m_filterItem;
+    ComboMenuItem *m_rectifierItem;
+    ComboMenuItem *m_videoFilterItem;
+    ComboMenuItem *m_averaginItem;
 };
 
 }
