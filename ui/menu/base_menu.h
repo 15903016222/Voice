@@ -23,8 +23,6 @@ public:
     explicit BaseMenu(Ui::BaseMenu *ui, QObject *parent = 0);
     virtual ~BaseMenu();
 
-    bool is_hidden() const;
-
     /**
      * @brief show  显示接口
      */
@@ -35,52 +33,10 @@ public:
      */
     virtual void hide() = 0;
 
-    /**
-     * @brief update    更新接口
-     */
-//    virtual void update();
-
 protected:
     static QStringList s_onOff;
-    bool m_isHidden;
-    bool m_updated;
     Ui::BaseMenu *ui;
-
-    void hide_item(QLayout *layout);
 };
 
-//void BaseMenu::show()
-//{
-//    if (m_updated) {
-//        update();
-//    }
-//}
-
-//inline void BaseMenu::hide()
-//{
-
-////    MenuItem *item = ui->layout0->findChild<MenuItem *>();
-////    if (item) {
-////        ui->layout0->removeItem(item);
-////        item->hide();
-////    }
-
-//    m_isHidden = true;
-//}
-
-//inline void BaseMenu::update()
-//{
-//    m_updated = true;
-//    if (is_hidden()) {
-//        return;
-//    }
-//    m_updated = false;
-//}
-
-//void BaseMenu::hide_item(QLayout *layout)
-//{
-////    MenuItem *item = layout->findChild<MenuItem *>();
-
-//}
 
 #endif // __BASE_MENU_H__

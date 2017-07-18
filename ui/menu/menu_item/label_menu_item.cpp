@@ -13,8 +13,26 @@ LabelMenuItem::LabelMenuItem(QWidget *parent) :
     ui(new Ui::LabelMenuItem)
 {
     ui->setupUi(this);
-
     ui->nameLabel->installEventFilter(this);
+}
+
+LabelMenuItem::LabelMenuItem(const QString &title, QWidget *parent) :
+    MenuItem(parent),
+    ui(new Ui::LabelMenuItem)
+{
+    ui->setupUi(this);
+    ui->nameLabel->installEventFilter(this);
+    set_title(title);
+}
+
+LabelMenuItem::LabelMenuItem(const QString &title, const QString &text, QWidget *parent) :
+    MenuItem(parent),
+    ui(new Ui::LabelMenuItem)
+{
+    ui->setupUi(this);
+    ui->nameLabel->installEventFilter(this);
+    set_title(title);
+    set_text(text);
 }
 
 LabelMenuItem::~LabelMenuItem()

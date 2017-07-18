@@ -19,6 +19,13 @@ namespace DplUtSettingMenu {
 GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent) :
     BaseMenu(ui, parent)
 {
+    ui->layout0->addWidget(&m_gainItem);
+    ui->layout1->addWidget(&m_startItem);
+    ui->layout2->addWidget(&m_rangeItem);
+    ui->layout3->addWidget(&m_velocityItem);
+    ui->layout4->addWidget(&m_wedgeDelayItem);
+    ui->layout5->addWidget(&m_utUnitItem);
+
     /* Gain Item */
     connect(&m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
     connect(&m_gainItem, SIGNAL(value_changed(double)), this, SIGNAL(gain_changed(double)));
@@ -58,12 +65,6 @@ GeneralMenu::~GeneralMenu()
 void GeneralMenu::show()
 {
     update();
-    ui->layout0->addWidget(&m_gainItem);
-    ui->layout1->addWidget(&m_startItem);
-    ui->layout2->addWidget(&m_rangeItem);
-    ui->layout3->addWidget(&m_velocityItem);
-    ui->layout4->addWidget(&m_wedgeDelayItem);
-    ui->layout5->addWidget(&m_utUnitItem);
 
     m_gainItem.show();
     m_startItem.show();
@@ -71,8 +72,6 @@ void GeneralMenu::show()
     m_velocityItem.show();
     m_wedgeDelayItem.show();
     m_utUnitItem.show();
-
-//    BaseMenu::show();
 }
 
 void GeneralMenu::hide()

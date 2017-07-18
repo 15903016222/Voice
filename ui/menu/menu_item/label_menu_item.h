@@ -20,6 +20,9 @@ class LabelMenuItem : public MenuItem
 
 public:
     explicit LabelMenuItem(QWidget *parent = 0);
+    explicit LabelMenuItem(const QString &title, QWidget *parent = 0);
+    explicit LabelMenuItem(const QString &title, const QString &text, QWidget *parent = 0);
+
     ~LabelMenuItem();
 
     void set_title(const QString &title);

@@ -11,40 +11,36 @@
 namespace DplDisplayMenu {
 
 ColorSettingMenu::ColorSettingMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, parent)
+    BaseMenu(ui, parent),
+    m_amplitudeItem(new LabelMenuItem(tr("Amplitude"))),
+    m_depthItem(new LabelMenuItem(tr("Depth"))),
+    m_tofdItem(new LabelMenuItem(tr("TOFD")))
 {
-    /* Amplitude menu item */
-    m_amplitudeItem.set(tr("Amplitude"), "");
-
-    /* Depth menu item */
-    m_depthItem.set(tr("Depth"), "");
-
-    /* TOFD menu item */
-    m_tofdItem.set(tr("TOFD"), "");
+    ui->layout0->addWidget(m_amplitudeItem);
+    ui->layout1->addWidget(m_depthItem);
+    ui->layout2->addWidget(m_tofdItem);
+    hide();
 }
 
 ColorSettingMenu::~ColorSettingMenu()
 {
+    delete m_amplitudeItem;
+    delete m_depthItem;
+    delete m_tofdItem;
 }
 
 void ColorSettingMenu::show()
 {
-    ui->layout0->addWidget(&m_amplitudeItem);
-    ui->layout1->addWidget(&m_depthItem);
-    ui->layout2->addWidget(&m_tofdItem);
-    m_amplitudeItem.show();
-    m_depthItem.show();
-    m_tofdItem.show();
+    m_amplitudeItem->show();
+    m_depthItem->show();
+    m_tofdItem->show();
 }
 
 void ColorSettingMenu::hide()
 {
-    ui->layout0->removeWidget(&m_amplitudeItem);
-    ui->layout1->removeWidget(&m_depthItem);
-    ui->layout2->removeWidget(&m_tofdItem);
-    m_amplitudeItem.hide();
-    m_depthItem.hide();
-    m_tofdItem.hide();
+    m_amplitudeItem->hide();
+    m_depthItem->hide();
+    m_tofdItem->hide();
 }
 
 }

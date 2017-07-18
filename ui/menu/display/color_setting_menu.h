@@ -23,9 +23,9 @@ public:
     void hide();
 
 private:
-    LabelMenuItem m_amplitudeItem;
-    LabelMenuItem m_depthItem;
-    LabelMenuItem m_tofdItem;
+    LabelMenuItem *m_amplitudeItem;
+    LabelMenuItem *m_depthItem;
+    LabelMenuItem *m_tofdItem;
 };
 
 }
