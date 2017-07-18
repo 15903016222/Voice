@@ -71,11 +71,13 @@ signals:
 
 private slots:
     void on_pushButton_up_clicked();
+
     void on_pushButton_down_clicked();
 
     void on_treeWidget_clicked(const QModelIndex &index);
 
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
     void set_opacity_main_menu(double value);
 
 private:
@@ -91,7 +93,6 @@ private:
     void do_keyescape_event(const QModelIndex &index);
     void do_keyreturn_event(const QModelIndex &index);
     void resizeEvent(QResizeEvent *event);
-
 };
 
 #endif // __MAIN_MENU_H__

@@ -37,16 +37,18 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Main Menu */
     m_mainMenu = new MainMenu(this);
     m_mainMenu->hide();
-    m_mainMenu->move(0, height() - m_mainMenu->height());
+    ui->mainMenuLayout->addWidget(m_mainMenu);
+//    m_mainMenu->move(0, height() - m_mainMenu->height());
 //    m_mainMenu->move(0, 176);
 
     /* Sub Menu */
     m_subMenu = new SubMenu(this);
     m_subMenu->hide();
-    m_subMenu->setGeometry(m_mainMenu->width(),
-                           height()-m_subMenu->height(),
-                           width()-m_mainMenu->width(),
-                           m_subMenu->height());
+    ui->subMenuLayout->addWidget(m_subMenu);
+//    m_subMenu->setGeometry(m_mainMenu->width(),
+//                           height()-m_subMenu->height(),
+//                           width()-m_mainMenu->width(),
+//                           m_subMenu->height());
 //    m_subMenu->move(m_mainMenu->width(), 530);
     DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(m_subMenu->get_menu(MainMenu::UTSettings_General));
     connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));

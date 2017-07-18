@@ -14,16 +14,15 @@
 
 MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MainMenu)
+    ui(new Ui::MainMenu),
+    m_opacityEffect(new QGraphicsOpacityEffect)
 {
     ui->setupUi(this);
 
     QTreeWidgetItem *item = ui->treeWidget->topLevelItem(0);
 
     ui->treeWidget->expandItem(item);
-
-    QTreeWidgetItem *initItem = item->child(0);
-    ui->treeWidget->setCurrentItem(initItem);
+    ui->treeWidget->setCurrentItem(item->child(0));
 
     ui->treeWidget->installEventFilter(this);
 
@@ -31,7 +30,6 @@ MainMenu::MainMenu(QWidget *parent) :
 
     do_change_arrow();
 
-    m_opacityEffect = new QGraphicsOpacityEffect;
     set_opacity_main_menu(80);
 }
 
@@ -134,6 +132,10 @@ void MainMenu::do_keyreturn_event(const QModelIndex &index)
 
 void MainMenu::do_change_arrow()
 {
+    ui->pushButton_down->hide();
+    ui->pushButton_up->show();
+    return;
+
     if (ui->treeWidget->verticalScrollBar()->maximum() == 0) {
         ui->pushButton_down->hide();
         ui->pushButton_up->hide();
@@ -158,16 +160,13 @@ void MainMenu::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeW
 {
     Q_UNUSED(previous);
 
-    Type type;
-
     do_change_arrow();
 
     if (current->childCount() > 0) {
         return;
     }
 
-    type = (Type)(((ui->treeWidget->indexOfTopLevelItem(current->parent()))<<4)|current->parent()->indexOfChild(current));
-
+    Type type = (Type)(((ui->treeWidget->indexOfTopLevelItem(current->parent()))<<4)|current->parent()->indexOfChild(current));
     emit click(type);
 }
 
@@ -175,7 +174,7 @@ void MainMenu::set_opacity_main_menu(double value)
 {
     qreal alpha = value / 100;
     m_opacityEffect->setOpacity(alpha);
-    ui->widget->setGraphicsEffect(m_opacityEffect);
+    this->setGraphicsEffect(m_opacityEffect);
 }
 
 void MainMenu::resizeEvent(QResizeEvent *event)
