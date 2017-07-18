@@ -19,7 +19,6 @@ ColorSettingMenu::ColorSettingMenu(Ui::BaseMenu *ui, QObject *parent) :
     ui->layout0->addWidget(m_amplitudeItem);
     ui->layout1->addWidget(m_depthItem);
     ui->layout2->addWidget(m_tofdItem);
-    hide();
 }
 
 ColorSettingMenu::~ColorSettingMenu()

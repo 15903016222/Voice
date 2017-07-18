@@ -7,6 +7,8 @@
  */
 #include "menu_item.h"
 
-MenuItem::MenuItem(QWidget *parent) : QWidget(parent)
+MenuItem::MenuItem(QWidget *parent) :
+    QWidget(parent)
 {
+    hide();
 }
