@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>170</width>
+    <width>150</width>
     <height>466</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>175</width>
+    <width>155</width>
     <height>16777215</height>
    </size>
   </property>
@@ -103,7 +103,7 @@ QTreeWidget::item:has-children{
 QTreeWidget::item:!has-children {
 	color:yellow;
 	margin: 8px;
-	margin-left: 30px;
+	margin-left: 25px;
 	background-color: rgba(37, 76, 124, 0); 
 	background-clip: margin;
 }
@@ -307,7 +307,7 @@ QTreeWidget::branch{
       </item>
       <item>
        <property name="text">
-        <string>Color Settings</string>
+        <string>Color</string>
        </property>
       </item>
       <item>
