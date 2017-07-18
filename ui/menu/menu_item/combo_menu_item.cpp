@@ -59,6 +59,9 @@ bool ComboMenuItem::eventFilter(QObject *obj, QEvent *e)
     if (e->type() == QEvent::MouseButtonRelease) {
         ui->comboBox->showPopup();
         return true;
+    } else if (e->type() == QEvent::Hide) {
+        ui->comboBox->hidePopup();
+        return true;
     }
 
     return QWidget::eventFilter(obj, e);
