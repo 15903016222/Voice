@@ -55,9 +55,21 @@ public:
      */
     void set_height(int val);
 
+    /**
+     * @brief is_visible    获取可视状态
+     * @return              可显示返回true，否则为false
+     */
+    bool is_visible() const;
+
+    /**
+     * @brief set_visible   设置可视状态
+     * @param visible       ture为可视，false为隐藏
+     */
+    void set_visible(bool visible);
+
 signals:
     /**
-     * @brief changed   闸门改变
+     * @brief changed   闸门改变信号
      */
     void changed();
 
@@ -73,13 +85,18 @@ signals:
      */
     void start_changed(float val);
 
-public slots:
+    /**
+     * @brief visible_changed   可视状态改变信号
+     * @param visible           状态
+     */
+    void visible_changed(bool visible);
 
 private:
     Gate::Type m_type;
     float m_start;      // 起点(ns)
     float m_width;      // 宽度(ns)
     int m_height;       // 高度(%)
+    bool m_visible;     // 可视标志
 };
 
 typedef QSharedPointer<Gate> GatePointer;
@@ -117,6 +134,19 @@ inline void Gate::set_height(int val)
     if (val != m_height) {
         m_height = val;
         emit height_changed(val);
+    }
+}
+
+inline bool Gate::is_visible() const
+{
+    return m_visible;
+}
+
+inline void Gate::set_visible(bool visible)
+{
+    if (visible != m_visible) {
+        m_visible = visible;
+        emit visible_changed(visible);
     }
 }
 
