@@ -27,10 +27,14 @@ public:
 protected slots:
     void do_startItem_changed(double val);
 
+    void do_paramsItem_value_changed(int index);
+
     void do_current_group_changed(const DplDevice::GroupPointer &group);
 
 private:
     ComboMenuItem *m_gateItem;
+    ComboMenuItem *m_switchItem;
+    ComboMenuItem *m_paramsItem;
     SpinMenuItem *m_startItem;
     SpinMenuItem *m_widthItem;
     SpinMenuItem *m_thresholdItem;
