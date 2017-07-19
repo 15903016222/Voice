@@ -357,7 +357,7 @@ QLabel {
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="text">
-      <string>X:174.9mm / Y:188.9mm</string>
+      <string>X:174.9mm | Y:188.9mm</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

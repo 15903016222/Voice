@@ -1,6 +1,6 @@
 /**
  * @file a_scan_display.h
- * @brief A扫横向显示
+ * @brief A扫显示布局
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @date 2017-06-28
  */

@@ -1,3 +1,9 @@
+/**
+ * @file a_scan_vdisplay.h
+ * @brief A扫纵向布局
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-07-19
+ */
 #ifndef __A_SCAN_VDISPLAY_H__
 #define __A_SCAN_VDISPLAY_H__
 

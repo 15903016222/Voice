@@ -1,7 +1,12 @@
+/**
+ * @file a_scan_vdisplay.cpp
+ * @brief A扫纵向布局
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-07-19
+ */
 #include "global.h"
 #include "a_scan_vdisplay.h"
 #include "ui_a_scan_display.h"
-#include "scan_view.h"
 
 #include <qmath.h>
 

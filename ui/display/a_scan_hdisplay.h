@@ -1,6 +1,6 @@
 /**
  * @file a_scan_hdisplay.h
- * @brief A扫横向显示
+ * @brief A扫横向布局
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @date 2017-06-28
  */
@@ -9,7 +9,6 @@
 
 #include "a_scan_display.h"
 
-class AscanHWidget;
 class AscanHDisplay : public AscanDisplay
 {
     Q_OBJECT

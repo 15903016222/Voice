@@ -1,6 +1,6 @@
 /**
  * @file a_scan_hdisplay.cpp
- * @brief A扫横向显示
+ * @brief A扫横向布局
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @date 2017-06-28
  */
@@ -8,7 +8,6 @@
 #include "global.h"
 #include "a_scan_hdisplay.h"
 #include "ui_a_scan_display.h"
-#include "scan_view.h"
 
 #include <qmath.h>
 

@@ -46,10 +46,9 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     m_ascanScene->addItem(m_gateBItem);
     m_ascanScene->addItem(m_gateIItem);
 
-//    m_gateAItem->hide();
-//    m_gateBItem->hide();
-//    m_gateIItem->hide();
-//    m_gateAItem->set_start(0);
+    m_gateAItem->hide();
+    m_gateBItem->hide();
+    m_gateIItem->hide();
 
     if (orientation == Qt::Vertical) {
         m_ascanView->rotate(90);
