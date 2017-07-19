@@ -1,3 +1,9 @@
+/**
+ * @file display.h
+ * @brief A/B/C/S显示布局管理类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-07-19
+ */
 #ifndef __DISPLAY_H__
 #define __DISPLAY_H__
 
@@ -21,16 +27,7 @@ public slots:
 protected:
     explicit Display(QWidget *parent = 0);
 
-    /**
-     * @brief show_single_scan  显示单个模式Scan
-     */
-    template <typename T>
-    void show_scan();
-
 private:
-    static Display *s_display;
-    static QMutex s_mutex;
-
     ScanLayout *m_scanLayout;
 };
 

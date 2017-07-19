@@ -1,3 +1,9 @@
+/**
+ * @file display.cpp
+ * @brief A/B/C/S显示布局管理类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-07-19
+ */
 #include "display.h"
 #include "a_scan_vdisplay.h"
 #include "a_scan_hdisplay.h"
@@ -7,9 +13,6 @@
 #include <QDebug>
 
 namespace DplDisplay {
-
-Display * Display::s_display = NULL;
-QMutex Display::s_mutex;
 
 Display::Display(QWidget *parent) :
     QWidget(parent),
@@ -32,11 +35,8 @@ Display::Display(QWidget *parent) :
 
 Display *Display::get_instance()
 {
-    QMutexLocker l(&s_mutex);
-    if (s_display == NULL) {
-        s_display = new Display();
-    }
-    return s_display;
+    static Display *ins = new Display();
+    return ins;
 }
 
 void Display::set_layout(ScanLayout *scanlayout)
