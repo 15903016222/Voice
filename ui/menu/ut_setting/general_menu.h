@@ -25,30 +25,14 @@ public:
     void hide();
 
 public slots:
-    void set_gain(double gain) { m_gainItem.set_value(gain); }
-
+    void set_gain(double gain) { m_gainItem->set_value(gain); }
 
 signals:
     void gain_changed(double gain);
 
-private:
-    bool m_updateFlag;
+protected:
 
-    SpinMenuItem m_gainItem;
-    SpinMenuItem m_startItem;
-    SpinMenuItem m_rangeItem;
-    SpinMenuItem m_velocityItem;
-    SpinMenuItem m_wedgeDelayItem;
-    ComboMenuItem m_utUnitItem;
-
-    DplDevice::GroupPointer m_group;
-
-    /**
-     * @brief update    更新菜单数据
-     */
-    void update();
-
-private slots:
+protected slots:
     void do_gainItem_changed(double gain);
     void do_startItem_changed(double value);
     void do_rangeItem_changed(double value);
@@ -56,12 +40,24 @@ private slots:
     void do_wedgeDelayItem_changed(double value);
     void do_utUnitItem_changed(int index);
 
-    void do_current_group_changed(const DplDevice::GroupPointer &group);
+    /**
+     * @brief update    更新菜单数据
+     */
+    void update(const DplDevice::GroupPointer &group);
 
     void update_gain_item();
     void update_start_item();
     void update_range_item();
 
+private:
+    SpinMenuItem *m_gainItem;
+    SpinMenuItem *m_startItem;
+    SpinMenuItem *m_rangeItem;
+    SpinMenuItem *m_velocityItem;
+    SpinMenuItem *m_wedgeDelayItem;
+    ComboMenuItem *m_utUnitItem;
+
+    DplDevice::GroupPointer m_group;
 };
 
 }
