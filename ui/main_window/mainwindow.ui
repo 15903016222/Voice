@@ -116,7 +116,7 @@
      </layout>
     </item>
     <item>
-     <widget class="ShowInfoWidget" name="statusBar" native="true">
+     <widget class="StatusBar" name="statusBar" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -128,9 +128,6 @@
         <width>0</width>
         <height>20</height>
        </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(210, 150, 0);</string>
       </property>
      </widget>
     </item>
@@ -175,12 +172,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>ShowInfoWidget</class>
-   <extends>QWidget</extends>
-   <header>showinfowidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>IconsBar</class>
    <extends>QWidget</extends>
    <header>icons_bar.h</header>
@@ -196,6 +187,12 @@
    <class>SpinMenuItem</class>
    <extends>QWidget</extends>
    <header>spin_menu_item.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StatusBar</class>
+   <extends>QWidget</extends>
+   <header>status_bar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

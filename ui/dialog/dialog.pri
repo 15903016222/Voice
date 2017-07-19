@@ -2,7 +2,6 @@
 INCLUDEPATH += $$PWD
 
 SOURCES += \
-    $$PWD/timesetdialog.cpp \
     $$PWD/inputpanelcontext.cpp \
     $$PWD/virtualkeyboard.cpp \
     $$PWD/resetconfigdialog.cpp \
@@ -14,7 +13,6 @@ SOURCES += \
 
 
 HEADERS += \
-    $$PWD/timesetdialog.h \
     $$PWD/inputpanelcontext.h \
     $$PWD/virtualkeyboard.h \
     $$PWD/resetconfigdialog.h \
@@ -25,7 +23,6 @@ HEADERS += \
     $$PWD/sysinfo_dialog.h
 
 FORMS += \
-    $$PWD/timesetdialog.ui \
     $$PWD/inputpanelcontext.ui \
     $$PWD/virtualkeyboard.ui \
     $$PWD/resetconfigdialog.ui \

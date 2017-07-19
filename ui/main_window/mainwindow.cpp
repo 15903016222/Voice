@@ -178,17 +178,6 @@ void MainWindow::do_keyboard_event()
     }
 }
 
-void MainWindow::slot_setMenuOpacity(double value)
-{
-    QString alph = QString::number((double)(value/100), 'f', 2);
-    QString bc = QString("background-color:rgba(37, 76, 124," + alph + ");");
-
-    QString style = QString("QWidget#widget{" +bc + "border-radius:8px;}"
-                            "QPushButton#pushButton_top{" + bc + "border-radius:8px;}"
-                            "QPushButton#pushButton_bottom{" + bc + "border:none;}");
-    setStyleSheet(style);
-}
-
 void MainWindow::do_rotary_event(Mcu::RotaryType type)
 {
     if (Mcu::ROTARY_UP == type) {

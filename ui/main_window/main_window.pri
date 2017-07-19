@@ -2,13 +2,10 @@
 INCLUDEPATH += $$PWD
 
 SOURCES += \
-    $$PWD/mainwindow.cpp \
-    $$PWD/showinfowidget.cpp
+    $$PWD/mainwindow.cpp
 
 HEADERS += \
-    $$PWD/mainwindow.h \
-    $$PWD/showinfowidget.h
+    $$PWD/mainwindow.h
 
 FORMS += \
-    $$PWD/mainwindow.ui \
-    $$PWD/showinfowidget.ui
+    $$PWD/mainwindow.ui

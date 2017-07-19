@@ -14,8 +14,6 @@ Sample::Sample(float precision, QObject *parent) :
     m_autoSetPointQty(true),
     m_pointQty(605)
 {
-    connect(this, SIGNAL(scale_factor_changed(int)),
-            this, SIGNAL(range_changed()));
 }
 
 static int get_auto_point_qty(int maxPointQty)
