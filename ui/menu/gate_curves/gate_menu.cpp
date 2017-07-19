@@ -37,7 +37,6 @@ GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent) :
     gatesList.append(tr("A"));
     gatesList.append(tr("B"));
     gatesList.append(tr("I"));
-    gatesList.append(tr("Off"));
 
     synchrosList.append(tr("Gate A"));
     synchrosList.append(tr("Gate I"));
