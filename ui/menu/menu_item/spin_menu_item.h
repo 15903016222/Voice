@@ -29,6 +29,7 @@ public:
     void set_decimals(int prec);
     void set_step(double step);
 
+    void set(double min, double max, int decimals);
     void set(const QString &unit, double min, double max, int decimals);
     void set(const QString &title, const QString &unit, double min, double max, int decimals, double step = 1);
 
@@ -85,6 +86,11 @@ inline void SpinMenuItem::set_suffix(const QString &text)
 {
     m_suffix = text;
     update_value();
+}
+
+inline void SpinMenuItem::set(double min, double max, int decimals)
+{
+    set(m_title, m_unit, min, max, decimals);
 }
 
 inline void SpinMenuItem::set(const QString &unit, double min, double max, int decimals)
