@@ -24,12 +24,21 @@ public:
     void show();
     void hide();
 
+protected:
+    void update_gate(const DplDevice::GatePointer &gate);
+    void update_startItem(const DplDevice::GatePointer &gate);
+
 protected slots:
+    void do_gateItem_changed(int val);
+
     void do_startItem_changed(double val);
 
-    void do_paramsItem_value_changed(int index);
+    void do_switchItem_changed(int index);
 
-    void do_current_group_changed(const DplDevice::GroupPointer &group);
+    void do_paramsItem_changed(int index);
+
+    void update(const DplDevice::GroupPointer &group);
+
 
 private:
     ComboMenuItem *m_gateItem;

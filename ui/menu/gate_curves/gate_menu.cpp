@@ -11,6 +11,7 @@
 
 #include <global.h>
 #include <device/device.h>
+#include <ui/tool/tool.h>
 
 namespace DplGateCurvesMenu {
 
@@ -50,15 +51,19 @@ GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent) :
     measureModesList.append(tr("Peak"));
 
     m_gateItem->set(tr("Gate"), gatesList);
+    connect(m_gateItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_gateItem_changed(int)));
 
     m_switchItem->set(tr("Switch"), s_onOff);
+    connect(m_switchItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_switchItem_changed(int)));
 
     QStringList modeList;
     modeList.append(tr("Position"));
     modeList.append(tr("Mode"));
     m_paramsItem->set(tr("Parameters"), modeList);
     connect(m_paramsItem, SIGNAL(value_changed(int)),
-            this, SLOT(do_paramsItem_value_changed(int)));
+            this, SLOT(do_paramsItem_changed(int)));
 
     m_startItem->set(tr("Start"), "mm", 0, 16000, 2);
     connect(m_startItem, SIGNAL(value_changed(double)),
@@ -71,8 +76,8 @@ GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent) :
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
-    do_current_group_changed(DplDevice::Device::instance()->current_group());
+            this, SLOT(update(DplDevice::GroupPointer)));
+    update(DplDevice::Device::instance()->current_group());
 }
 
 GateMenu::~GateMenu()
@@ -105,6 +110,8 @@ void GateMenu::show()
 void GateMenu::hide()
 {
     m_gateItem->hide();
+    m_switchItem->hide();
+    m_paramsItem->hide();
     m_startItem->hide();
     m_widthItem->hide();
     m_thresholdItem->hide();
@@ -112,32 +119,53 @@ void GateMenu::hide()
     m_measureModeItem->hide();
 }
 
-void GateMenu::do_startItem_changed(double val)
+void GateMenu::update_gate(const DplDevice::GatePointer &gate)
 {
-    if (m_group->ut_unit() != DplDevice::Group::Time) {
-        val = Dpl::us_to_ns(val);
-    } else {
-        val = Dpl::mm_to_m(val);
-        val = val * 2 / m_group->sample()->velocity();
-        val = Dpl::s_to_ns(val);
-        if (m_group->ut_unit() == DplDevice::Group::TruePath) {
-            val /= qCos(m_group->current_angle());
-        }
-    }
-
-    m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem->current_index()))->set_start(val);
+    m_switchItem->set_current_index(!gate->is_visible());
+    update_startItem(gate);
 }
 
-void GateMenu::do_paramsItem_value_changed(int index)
+void GateMenu::update_startItem(const DplDevice::GatePointer &gate)
+{
+    if (m_group->ut_unit() == DplDevice::Group::Time) {
+        m_startItem->set_unit(US_STR);
+    } else {
+        m_startItem->set_unit(MM_STR);
+    }
+
+    m_startItem->set(Tool::cnf_to_display(m_group, m_group->sample()->start()),
+                     Tool::cnf_to_display(m_group, m_group->sample()->start()+m_group->sample()->range()),
+                     2);
+    m_startItem->set_value(Tool::cnf_to_display(m_group, gate->start()));
+}
+
+void GateMenu::do_gateItem_changed(int val)
+{
+    update_gate(m_group->gate(static_cast<DplDevice::Gate::Type>(val)));
+}
+
+void GateMenu::do_startItem_changed(double val)
+{
+    DplDevice::GatePointer gate = m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem->current_index()));
+    gate->set_start(Tool::display_to_cnf(m_group, val));
+}
+
+void GateMenu::do_switchItem_changed(int index)
+{
+    m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem->current_index()))->set_visible(!index);
+}
+
+void GateMenu::do_paramsItem_changed(int index)
 {
     Q_UNUSED(index);
     hide();
     show();
 }
 
-void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
+void GateMenu::update(const DplDevice::GroupPointer &group)
 {
     m_group = group;
+    update_gate(group->gate(DplDevice::Gate::A));
 }
 
 }
