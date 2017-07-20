@@ -3,6 +3,9 @@
 
 namespace Dpl {
 
+#define US_STR      ("&micro;s")
+#define MM_STR      ("mm")
+
 #define US_TO_NS    (1000)
 #define S_TO_US     (1000000)
 #define S_TO_NS     (1000000000)

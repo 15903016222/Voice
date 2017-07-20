@@ -19,3 +19,5 @@ include(menu/menu.pri)
 include(vinput/vinput.pri)
 
 include(display/display.pri)
+
+include(tool/tool.pri)
