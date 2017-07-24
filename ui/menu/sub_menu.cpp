@@ -7,8 +7,6 @@
  */
 #include "sub_menu.h"
 
-#include <QVBoxLayout>
-
 /* UT Settings */
 #include "ut_setting/general_menu.h"
 #include "ut_setting/pulser_menu.h"
@@ -63,7 +61,6 @@
 #include "preference/preference_menu.h"
 #include "preference/system_menu.h"
 
-
 SubMenu::SubMenu(QWidget *parent) :
     QWidget(parent),
     m_curMenu(NULL)
@@ -72,280 +69,15 @@ SubMenu::SubMenu(QWidget *parent) :
     topLayout->setContentsMargins(0, 0, 0, 0);
     topLayout->setSpacing(0);
 
-    init_map();
+    create_menus();
 
     set_menu(MainMenu::UTSettings_General);
 
-    m_opacityEffect = new QGraphicsOpacityEffect;
     set_opacity_main_menu(80);
 }
 
-void SubMenu::init_map()
+SubMenu::~SubMenu()
 {
-    QTime time;
-    time.restart();
-    /* UT Setting */
-    m_funMap.insert(MainMenu::UTSettings_General,       &SubMenu::create_general_menu);
-    m_funMap.insert(MainMenu::UTSettings_Pulser,        &SubMenu::create_pulser_menu);
-    m_funMap.insert(MainMenu::UTSettings_Receiver,      &SubMenu::create_receiver_menu);
-    m_funMap.insert(MainMenu::UTSettings_Advanced,      &SubMenu::create_utadvanced_menu);
-    qDebug("%s[%d]: Ut Setting Times: %d(ms)",__func__, __LINE__, time.elapsed());
-    time.restart();
-
-    /* Gate/Curves */
-    m_funMap.insert(MainMenu::GateCurves_Gate,          &SubMenu::create_gate_menu);
-    m_funMap.insert(MainMenu::GateCurves_Alarm,         &SubMenu::create_alarm_menu);
-    m_funMap.insert(MainMenu::GateCurves_Output,        &SubMenu::create_output_menu);
-    m_funMap.insert(MainMenu::GateCurves_DAC,           &SubMenu::create_dac_menu);
-    m_funMap.insert(MainMenu::GateCurves_TCG,           &SubMenu::create_tcg_menu);
-    qDebug("%s[%d]: Gate/Curves: %d(ms)",__func__, __LINE__, time.elapsed());
-    time.restart();
-
-    /* Display */
-    m_funMap.insert(MainMenu::Display_Selection,        &SubMenu::create_selection_menu);
-    m_funMap.insert(MainMenu::Display_ColorSettings,    &SubMenu::create_color_menu);
-    m_funMap.insert(MainMenu::Displsy_Properties,       &SubMenu::create_properties_menu);
-    qDebug("%s[%d]: Display: %d(ms)",__func__, __LINE__, time.elapsed());
-    time.restart();
-
-    /* Probe/Part */
-    m_funMap.insert(MainMenu::ProbePart_Select,         &SubMenu::create_probe_selection_menu);
-    m_funMap.insert(MainMenu::ProbePart_Position,       &SubMenu::create_position_menu);
-    m_funMap.insert(MainMenu::ProbePart_FFT,            &SubMenu::create_fft_menu);
-    m_funMap.insert(MainMenu::ProbePart_Part,           &SubMenu::create_part_menu);
-    m_funMap.insert(MainMenu::ProbePart_Advanced,       &SubMenu::create_part_advanced_menu);
-    qDebug("%s[%d]: Probe/Part: %d(ms)",__func__, __LINE__, time.elapsed());
-    time.restart();
-
-    /* Focal Law */
-    m_funMap.insert(MainMenu::FocalLaw_LawConfig,       &SubMenu::create_law_config_menu);
-    m_funMap.insert(MainMenu::FocalLaw_Angle,           &SubMenu::create_angle_menu);
-    m_funMap.insert(MainMenu::FocalLaw_Apeture,         &SubMenu::create_apeture_menu);
-    m_funMap.insert(MainMenu::FacalLaw_FocalPoint,      &SubMenu::create_focal_point_menu);
-    qDebug("%s[%d]: Focal Law: %d(ms)",__func__, __LINE__, time.elapsed());
-    time.restart();
-
-    /* Scan */
-    m_funMap.insert(MainMenu::Scan_Inspection,          &SubMenu::create_inspection_menu);
-    m_funMap.insert(MainMenu::Scan_Encoder,             &SubMenu::create_encoder_menu);
-    m_funMap.insert(MainMenu::Scan_Area,                &SubMenu::create_area_menu);
-    m_funMap.insert(MainMenu::Scan_Start,               &SubMenu::create_start_menu);
-    qDebug("%s[%d]: Scan: %d(ms)",__func__, __LINE__, time.elapsed());
-    time.restart();
-
-    /* Measurement */
-    m_funMap.insert(MainMenu::Measurement_Cursors,      &SubMenu::create_cursors_menu);
-    m_funMap.insert(MainMenu::Measurement_TOFD,         &SubMenu::create_tofd_menu);
-    m_funMap.insert(MainMenu::Measurement_FlawRecord,   &SubMenu::create_flaw_record_menu);
-    qDebug("%s[%d]: Measurement: %d(ms)",__func__, __LINE__, time.elapsed());
-    time.restart();
-
-    /* File/Report */
-    m_funMap.insert(MainMenu::FileReport_File,          &SubMenu::create_file_menu);
-    m_funMap.insert(MainMenu::FileReport_SaveMode,      &SubMenu::create_save_mode_menu);
-    m_funMap.insert(MainMenu::FileReport_Report,        &SubMenu::create_report_menu);
-    m_funMap.insert(MainMenu::FileReport_Format,        &SubMenu::create_format_menu);
-    m_funMap.insert(MainMenu::FileReport_UserField,     &SubMenu::create_user_field_menu);
-    qDebug("%s[%d]: File/Report: %d(ms)",__func__, __LINE__, time.elapsed());
-    time.restart();
-
-    /* Preference */
-    m_funMap.insert(MainMenu::Preference_Preference,    &SubMenu::create_preference_menu);
-    m_funMap.insert(MainMenu::Preference_System,        &SubMenu::create_system_menu);
-    m_funMap.insert(MainMenu::Preference_Network,       &SubMenu::create_network_menu);
-    qDebug("%s[%d]: Preference: %d(ms)",__func__, __LINE__, time.elapsed());
-}
-
-BaseMenu *SubMenu::create_menu(MainMenu::Type type)
-{
-    SubMenu::Function pFun = m_funMap.value(type);
-    if (pFun == NULL) {
-        return NULL;
-    }
-    BaseMenu *menu = (this->*pFun)();
-    menu->setObjectName(QString::number(type));
-    layout()->addWidget(menu);
-    return menu;
-}
-
-BaseMenu *SubMenu::create_general_menu()
-{
-    return new DplUtSettingMenu::GeneralMenu(this);
-}
-
-BaseMenu *SubMenu::create_pulser_menu()
-{
-    return new DplUtSettingMenu::PulserMenu(this);
-}
-
-BaseMenu *SubMenu::create_receiver_menu()
-{
-    return new DplUtSettingMenu::ReceiverMenu(this);
-}
-
-BaseMenu *SubMenu::create_utadvanced_menu()
-{
-    return new DplUtSettingMenu::UtAdvancedMenu(this);
-}
-
-BaseMenu *SubMenu::create_gate_menu()
-{
-    return new DplGateCurvesMenu::GateMenu(this);
-}
-
-BaseMenu *SubMenu::create_alarm_menu()
-{
-    return new DplGateCurvesMenu::AlarmMenu(this);
-}
-
-BaseMenu *SubMenu::create_output_menu()
-{
-    return new DplGateCurvesMenu::OutputMenu(this);
-}
-
-BaseMenu *SubMenu::create_dac_menu()
-{
-    return new DplGateCurvesMenu::DacMenu(this);
-}
-
-BaseMenu *SubMenu::create_tcg_menu()
-{
-    return new DplGateCurvesMenu::TcgMenu(this);
-}
-
-BaseMenu *SubMenu::create_selection_menu()
-{
-    return new DplDisplayMenu::SelectionMenu(this);
-}
-
-BaseMenu *SubMenu::create_color_menu()
-{
-    return new DplDisplayMenu::ColorSettingMenu(this);
-}
-
-BaseMenu *SubMenu::create_properties_menu()
-{
-    return new DplDisplayMenu::PropertiesMenu(this);
-}
-
-BaseMenu *SubMenu::create_probe_selection_menu()
-{
-    return new DplProbeMenu::SelectionMenu(this);
-}
-
-BaseMenu *SubMenu::create_position_menu()
-{
-    return new DplProbeMenu::PositionMenu(this);
-}
-
-BaseMenu *SubMenu::create_fft_menu()
-{
-    return new DplProbeMenu::FftMenu(this);
-}
-
-BaseMenu *SubMenu::create_part_menu()
-{
-    return new DplProbeMenu::PartMenu(this);
-}
-
-BaseMenu *SubMenu::create_part_advanced_menu()
-{
-    return new DplProbeMenu::AdvancedMenu(this);
-}
-
-BaseMenu *SubMenu::create_law_config_menu()
-{
-    return new DplFocalLawMenu::LawConfigMenu(this);
-}
-
-BaseMenu *SubMenu::create_angle_menu()
-{
-    return new DplFocalLawMenu::AngleMenu(this);
-}
-
-BaseMenu *SubMenu::create_apeture_menu()
-{
-    return new DplFocalLawMenu::ApetureMenu(this);
-}
-
-BaseMenu *SubMenu::create_focal_point_menu()
-{
-    return new DplFocalLawMenu::FocalPointMenu(this);
-}
-
-BaseMenu *SubMenu::create_inspection_menu()
-{
-    return new DplScanMenu::InspectionMenu(this);
-}
-
-BaseMenu *SubMenu::create_encoder_menu()
-{
-    return new DplScanMenu::EncoderMenu(this);
-}
-
-BaseMenu *SubMenu::create_area_menu()
-{
-    return new DplScanMenu::AreaMenu(this);
-}
-
-BaseMenu *SubMenu::create_start_menu()
-{
-    return new DplScanMenu::StartMenu(this);
-}
-
-BaseMenu *SubMenu::create_cursors_menu()
-{
-    return new DplMeasurementMenu::CursorsMenu(this);
-}
-
-BaseMenu *SubMenu::create_tofd_menu()
-{
-    return new DplMeasurementMenu::TofdMenu(this);
-}
-
-BaseMenu *SubMenu::create_flaw_record_menu()
-{
-    return new DplMeasurementMenu::FlawRecordMenu(this);
-}
-
-BaseMenu *SubMenu::create_file_menu()
-{
-    return new DplFileReportMenu::FileMenu(this);
-}
-
-BaseMenu *SubMenu::create_save_mode_menu()
-{
-    return new DplFileReportMenu::SaveModeMenu(this);
-}
-
-BaseMenu *SubMenu::create_report_menu()
-{
-    return new DplFileReportMenu::ReportMenu(this);
-}
-
-BaseMenu *SubMenu::create_format_menu()
-{
-    return new DplFileReportMenu::FormatMenu(this);
-}
-
-BaseMenu *SubMenu::create_user_field_menu()
-{
-    return new DplFileReportMenu::UserFieldMenu(this);
-}
-
-BaseMenu *SubMenu::create_preference_menu()
-{
-    return new DplPreferenceMenu::PreferenceMenu(this);
-}
-
-BaseMenu *SubMenu::create_system_menu()
-{
-    return new DplPreferenceMenu::SystemMenu(this);
-}
-
-BaseMenu *SubMenu::create_network_menu()
-{
-    return new DplPreferenceMenu::NetworkMenu(this);
 }
 
 void SubMenu::set_menu(MainMenu::Type type)
@@ -357,22 +89,69 @@ void SubMenu::set_menu(MainMenu::Type type)
     m_curMenu = get_menu(type);
     if(m_curMenu) {
         m_curMenu->show();
-        return;
     }
-
-    m_curMenu = create_menu(type);
-    if (m_curMenu) {
-        m_curMenu->show();
-    }
-}
-
-SubMenu::~SubMenu()
-{
 }
 
 void SubMenu::set_opacity_main_menu(double value)
 {
-    qreal alpha = value / 100;
-    m_opacityEffect->setOpacity(alpha);
-    this->setGraphicsEffect(m_opacityEffect);
+    QGraphicsOpacityEffect opacityEffect;
+    opacityEffect.setOpacity(value / 100);
+    this->setGraphicsEffect(&opacityEffect);
+}
+
+void SubMenu::create_menus()
+{
+    /* UT Setting */
+    add_menu(MainMenu::UTSettings_General,      new DplUtSettingMenu::GeneralMenu(this));
+    add_menu(MainMenu::UTSettings_Pulser,       new DplUtSettingMenu::PulserMenu(this));
+    add_menu(MainMenu::UTSettings_Receiver,     new DplUtSettingMenu::ReceiverMenu(this));
+    add_menu(MainMenu::UTSettings_Advanced,     new DplUtSettingMenu::UtAdvancedMenu(this));
+
+    /* Gate/Curves */
+    add_menu(MainMenu::GateCurves_Gate,         new DplGateCurvesMenu::GateMenu(this));
+    add_menu(MainMenu::GateCurves_Alarm,        new DplGateCurvesMenu::AlarmMenu(this));
+    add_menu(MainMenu::GateCurves_Output,       new DplGateCurvesMenu::OutputMenu(this));
+    add_menu(MainMenu::GateCurves_DAC,          new DplGateCurvesMenu::DacMenu(this));
+    add_menu(MainMenu::GateCurves_TCG,          new DplGateCurvesMenu::TcgMenu(this));
+
+    /* Display */
+    add_menu(MainMenu::Display_Selection,       new DplDisplayMenu::SelectionMenu(this));
+    add_menu(MainMenu::Display_ColorSettings,   new DplDisplayMenu::ColorSettingMenu(this));
+    add_menu(MainMenu::Displsy_Properties,      new DplDisplayMenu::PropertiesMenu(this));
+
+    /* Probe/Part */
+    add_menu(MainMenu::ProbePart_Select,        new DplProbeMenu::SelectionMenu(this));
+    add_menu(MainMenu::ProbePart_Position,      new DplProbeMenu::PositionMenu(this));
+    add_menu(MainMenu::ProbePart_FFT,           new DplProbeMenu::FftMenu(this));
+    add_menu(MainMenu::ProbePart_Part,          new DplProbeMenu::PartMenu(this));
+    add_menu(MainMenu::ProbePart_Advanced,      new DplProbeMenu::AdvancedMenu(this));
+
+    /* Focal Law */
+    add_menu(MainMenu::FocalLaw_LawConfig,      new DplFocalLawMenu::LawConfigMenu(this));
+    add_menu(MainMenu::FocalLaw_Angle,          new DplFocalLawMenu::AngleMenu(this));
+    add_menu(MainMenu::FocalLaw_Apeture,        new DplFocalLawMenu::ApetureMenu(this));
+    add_menu(MainMenu::FacalLaw_FocalPoint,     new DplFocalLawMenu::FocalPointMenu(this));
+
+    /* Scan */
+    add_menu(MainMenu::Scan_Inspection,         new DplScanMenu::InspectionMenu(this));
+    add_menu(MainMenu::Scan_Encoder,            new DplScanMenu::EncoderMenu(this));
+    add_menu(MainMenu::Scan_Area,               new DplScanMenu::AreaMenu(this));
+    add_menu(MainMenu::Scan_Start,              new DplScanMenu::StartMenu(this));
+
+    /* Measurement */
+    add_menu(MainMenu::Measurement_Cursors,     new DplMeasurementMenu::CursorsMenu(this));
+    add_menu(MainMenu::Measurement_TOFD,        new DplMeasurementMenu::TofdMenu(this));
+    add_menu(MainMenu::Measurement_FlawRecord,  new DplMeasurementMenu::FlawRecordMenu(this));
+
+    /* File/Report */
+    add_menu(MainMenu::FileReport_File,         new DplFileReportMenu::FileMenu(this));
+    add_menu(MainMenu::FileReport_SaveMode,     new DplFileReportMenu::SaveModeMenu(this));
+    add_menu(MainMenu::FileReport_Report,       new DplFileReportMenu::ReportMenu(this));
+    add_menu(MainMenu::FileReport_Format,       new DplFileReportMenu::FormatMenu(this));
+    add_menu(MainMenu::FileReport_UserField,    new DplFileReportMenu::UserFieldMenu(this));
+
+    /* Preference */
+    add_menu(MainMenu::Preference_Preference,   new DplPreferenceMenu::PreferenceMenu(this));
+    add_menu(MainMenu::Preference_System,       new DplPreferenceMenu::SystemMenu(this));
+    add_menu(MainMenu::Preference_Network,      new DplPreferenceMenu::NetworkMenu(this));
 }
