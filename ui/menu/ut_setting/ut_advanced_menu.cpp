@@ -7,17 +7,19 @@
  */
 
 #include "ut_advanced_menu.h"
+#include "ui_base_menu.h"
+
 #include <QDebug>
 
 namespace DplUtSettingMenu {
 
-UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, parent),
-    m_eightPercentItem(new LabelMenuItem(tr("Set 80%"))),
-    m_dbRefItem(new ComboMenuItem),
-    m_pointQtyItem(new ComboMenuItem),
-    m_scaleFactorItem(new LabelMenuItem(tr("Scale Factor"))),
-    m_sumGainItem(new SpinMenuItem)
+UtAdvancedMenu::UtAdvancedMenu(QWidget *parent) :
+    BaseMenu(parent),
+    m_eightPercentItem(new LabelMenuItem(this, tr("Set 80%"))),
+    m_dbRefItem(new ComboMenuItem(this, tr("dB Ref."))),
+    m_pointQtyItem(new ComboMenuItem(this, tr("Point Qty."))),
+    m_scaleFactorItem(new LabelMenuItem(this, tr("Scale Factor"))),
+    m_sumGainItem(new SpinMenuItem(this, tr("Sum Gain"), tr("dB")))
 {
     ui->layout0->addWidget(m_eightPercentItem);
     ui->layout1->addWidget(m_dbRefItem);
@@ -28,7 +30,7 @@ UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
     DplDevice::Device *device = DplDevice::Device::instance();
 
     connect(device, SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
+            this, SLOT(update(DplDevice::GroupPointer)));
 
     m_sample = DplDevice::Device::instance()->current_group()->sample();
 
@@ -41,57 +43,23 @@ UtAdvancedMenu::UtAdvancedMenu(Ui::BaseMenu *ui, QObject *parent) :
     pointQtyList.append(tr("640"));
     pointQtyList.append(tr("UserDef"));
 
-    m_dbRefItem->set(tr("dB Ref."), s_onOff);
+    m_dbRefItem->set(s_onOff);
 
-    m_pointQtyItem->set(tr("Point Qty."), pointQtyList);
+    m_pointQtyItem->set(pointQtyList);
 
     connect(static_cast<DplUt::Sample *>(m_sample.data()),
             SIGNAL(scale_factor_changed(int)),
             this,
             SLOT(update_scale_factor_item()));
 
-    m_sumGainItem->set(tr("Sum Gain"), "dB", 0, 100, 1);
-
-    m_updateFlag = true;
+    m_sumGainItem->set(0, 100, 1);
 }
 
 UtAdvancedMenu::~UtAdvancedMenu()
 {
-    delete m_eightPercentItem;
-    delete m_dbRefItem;
-    delete m_pointQtyItem;
-    delete m_scaleFactorItem;
-    delete m_sumGainItem;
 }
 
-void UtAdvancedMenu::show()
-{
-    if (m_updateFlag) {
-        update();
-    }
-    m_eightPercentItem->show();
-    m_dbRefItem->show();
-    m_pointQtyItem->show();
-    m_scaleFactorItem->show();
-    m_sumGainItem->show();
-}
-
-void UtAdvancedMenu::hide()
-{
-    m_eightPercentItem->hide();
-    m_dbRefItem->hide();
-    m_pointQtyItem->hide();
-    m_scaleFactorItem->hide();
-    m_sumGainItem->hide();
-}
-
-void UtAdvancedMenu::update()
-{
-    update_scale_factor_item();
-    m_updateFlag = false;
-}
-
-void UtAdvancedMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
+void UtAdvancedMenu::update(const DplDevice::GroupPointer &group)
 {
     /* disconnect */
     disconnect(static_cast<DplUt::Sample *>(m_sample.data()),
@@ -100,15 +68,12 @@ void UtAdvancedMenu::do_current_group_changed(const DplDevice::GroupPointer &gro
                SLOT(update_scale_factor_item()));
 
     m_sample = group->sample();
+
     connect(static_cast<DplUt::Sample *>(m_sample.data()),
             SIGNAL(scale_factor_changed(int)),
             this, SLOT(update_scale_factor_item()));
 
-    if (m_eightPercentItem->isHidden()) {
-        m_updateFlag = true;
-    } else {
-        update();
-    }
+    update_scale_factor_item();
 }
 
 void UtAdvancedMenu::update_scale_factor_item()

@@ -12,23 +12,27 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-SpinMenuItem::SpinMenuItem(QWidget *parent) :
+SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) :
     MenuItem(parent),
-    ui(new Ui::SpinMenuItem)
+    ui(new Ui::SpinMenuItem),
+    m_title(title),
+    m_unit(unit),
+    m_value(0),
+    m_min(0),
+    m_max(100),
+    m_step(1),
+    m_decimals(0)
 {
     ui->setupUi(this);
 
     ui->nameLabel->installEventFilter(this);
     ui->lineEdit->installEventFilter(this);
 
-    m_value = 0;
-    m_min = 0;
-    m_max = 100;
-    m_step = 1;
-    m_decimals = 0;
+    update_title();
     update_value();
 
-    connect(ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(check_number_validity(QString)));
+    connect(ui->lineEdit, SIGNAL(textEdited(QString)),
+            this, SLOT(check_number_validity(QString)));
 }
 
 SpinMenuItem::~SpinMenuItem()
@@ -207,22 +211,6 @@ void SpinMenuItem::sub()
     update_value();
 
     emit value_changed(m_value);
-}
-
-void SpinMenuItem::set(const QString &title, const QString &unit, double min, double max, int decimals, double step)
-{
-    m_title = title;
-    m_unit = unit;
-
-    m_min = min;
-    m_max = max;
-
-    m_baseStep = step;
-    m_step = step;
-
-    set_decimals(decimals);
-
-    update_title();
 }
 
 void SpinMenuItem::check_number_validity(const QString &text)

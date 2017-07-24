@@ -8,7 +8,7 @@
 #ifndef __GENERAL_MENU_H__
 #define __GENERAL_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 #include <device/device.h>
 
@@ -18,7 +18,7 @@ class GeneralMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit GeneralMenu(Ui::BaseMenu *ui, QObject *parent = 0);
+    explicit GeneralMenu(QWidget *parent = 0);
     ~GeneralMenu();
 
     void show();

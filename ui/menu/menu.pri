@@ -1,5 +1,3 @@
-INCLUDEPATH += $$PWD
-
 FORMS += \
     $$PWD/main_menu.ui \
     $$PWD/base_menu.ui

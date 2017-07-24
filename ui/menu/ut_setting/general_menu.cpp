@@ -6,24 +6,23 @@
  * @date 2016-12-14
  */
 #include "general_menu.h"
-#include "spin_menu_item.h"
-#include "combo_menu_item.h"
-
 #include <global.h>
+#include <ui/tool/tool.h>
+
+#include "ui_base_menu.h"
 
 #include <qmath.h>
-#include <QDebug>
 
 namespace DplUtSettingMenu {
 
-GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, parent),
-    m_gainItem(new SpinMenuItem),
-    m_startItem(new SpinMenuItem),
-    m_rangeItem(new SpinMenuItem),
-    m_velocityItem(new SpinMenuItem),
-    m_wedgeDelayItem(new SpinMenuItem),
-    m_utUnitItem(new ComboMenuItem)
+GeneralMenu::GeneralMenu(QWidget *parent) :
+    BaseMenu(parent),
+    m_gainItem(new SpinMenuItem(this, tr("Gain"), tr("dB"))),
+    m_startItem(new SpinMenuItem(this, tr("Start"))),
+    m_rangeItem(new SpinMenuItem(this, tr("Range"))),
+    m_velocityItem(new SpinMenuItem(this, tr("Velocity"), tr("m/s"))),
+    m_wedgeDelayItem(new SpinMenuItem(this, tr("Wedge Delay"), tr("&micro;s"))),
+    m_utUnitItem(new ComboMenuItem(this, tr("UT Unit")))
 {
     ui->layout0->addWidget(m_gainItem);
     ui->layout1->addWidget(m_startItem);
@@ -43,11 +42,11 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent) :
     connect(m_rangeItem, SIGNAL(value_changed(double)), this, SLOT(do_rangeItem_changed(double)));
 
     /* Velocity Item */
-    m_velocityItem->set(tr("Velocity"), "m/s", 635, 12540, 1, 0.1);
+    m_velocityItem->set(635, 12540, 1);
     connect(m_velocityItem, SIGNAL(value_changed(double)), this, SLOT(do_velocityItem_changed(double)));
 
     /* Wedge Delay Item */
-    m_wedgeDelayItem->set(tr("Wedge Delay"), "&micro;s", 0, 1000, 2);
+    m_wedgeDelayItem->set(0, 1000, 2);
     connect(m_wedgeDelayItem, SIGNAL(value_changed(double)), this, SLOT(do_wedgeDelayItem_changed(double)));
 
     /* Ut Unit Item */
@@ -55,7 +54,7 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent) :
     utUnitList.append(tr("Time"));
     utUnitList.append(tr("Sound Path"));
     utUnitList.append(tr("True Path"));
-    m_utUnitItem->set(tr("UT Unit"), utUnitList);
+    m_utUnitItem->set(utUnitList);
     connect(m_utUnitItem, SIGNAL(value_changed(int)), this, SLOT(do_utUnitItem_changed(int)));
 
     connect(DplDevice::Device::instance(),
@@ -66,32 +65,7 @@ GeneralMenu::GeneralMenu(Ui::BaseMenu *ui, QObject *parent) :
 
 GeneralMenu::~GeneralMenu()
 {
-    delete m_gainItem;
-    delete m_startItem;
-    delete m_rangeItem;
-    delete m_velocityItem;
-    delete m_wedgeDelayItem;
     delete m_utUnitItem;
-}
-
-void GeneralMenu::show()
-{
-    m_gainItem->show();
-    m_startItem->show();
-    m_rangeItem->show();
-    m_velocityItem->show();
-    m_wedgeDelayItem->show();
-    m_utUnitItem->show();
-}
-
-void GeneralMenu::hide()
-{
-    m_gainItem->hide();
-    m_startItem->hide();
-    m_rangeItem->hide();
-    m_velocityItem->hide();
-    m_wedgeDelayItem->hide();
-    m_utUnitItem->hide();
 }
 
 void GeneralMenu::update(const DplDevice::GroupPointer &group)
@@ -117,37 +91,12 @@ void GeneralMenu::do_gainItem_changed(double gain)
 
 void GeneralMenu::do_startItem_changed(double value)
 {
-    double start;
-
-    if (m_group->ut_unit() == DplDevice::Group::Time) {
-        start = Dpl::us_to_ns(value);
-    } else {
-        value = Dpl::mm_to_m(value);
-        start = value * 2 / m_group->sample()->velocity();
-        start = Dpl::s_to_ns(start);
-        if (m_group->ut_unit() == DplDevice::Group::TruePath) {
-            start /= qCos(m_group->current_angle());
-        }
-    }
-
-    m_group->sample()->set_start(start);
+    m_group->sample()->set_start(Tool::display_to_cnf(m_group, value));
 }
 
 void GeneralMenu::do_rangeItem_changed(double value)
 {
-    double range;
-    if (m_group->ut_unit() == DplDevice::Group::Time) {
-        range = Dpl::us_to_ns(value);
-    } else {
-        value = Dpl::mm_to_m(value);
-        range = value * 2 / m_group->sample()->velocity();
-        range = Dpl::s_to_ns(range);
-        if (m_group->ut_unit() == DplDevice::Group::TruePath) {
-            range /= qCos(m_group->current_angle());
-        }
-    }
-
-    m_group->sample()->set_range(range);
+    m_group->sample()->set_range(Tool::display_to_cnf(m_group, value));
 }
 
 void GeneralMenu::do_velocityItem_changed(double value)
@@ -169,53 +118,35 @@ void GeneralMenu::do_utUnitItem_changed(int index)
 
 void GeneralMenu::update_gain_item()
 {
-    m_gainItem->set(tr("Gain"), "dB", 0, 90, 1);
+    m_gainItem->set(0, 90, 1);
     m_gainItem->set_value(m_group->sample()->gain());
 }
 
 void GeneralMenu::update_start_item()
 {
-    double max = 0.0;
-    double value = 0.0;
-    double step = 0.0;
-    QString unit = "mm";
-
     if (m_group->ut_unit() == DplDevice::Group::Time) {
-        /* 时间显示全声程 */
-        max = Dpl::ns_to_us(m_group->max_start());
-        value = Dpl::ns_to_us(m_group->sample()->start());
-        unit = "&micro;s";
-        step = Dpl::ns_to_us(DplFpga::Fpga::SAMPLE_PRECISION);
+        m_startItem->set_unit(US_STR);
     } else {
-        /* mm显示半声程 */
-        max = Dpl::ns_to_s(m_group->max_start()) * m_group->sample()->velocity() / 2;
-        max = Dpl::m_to_mm(max);
-        step = Dpl::ns_to_s(DplFpga::Fpga::SAMPLE_PRECISION) * m_group->sample()->velocity() / 2;
-        step = Dpl::m_to_mm(step);
-        if (m_group->ut_unit() == DplDevice::Group::TruePath) {
-            max *= qCos(m_group->current_angle());
-            value *= qCos(m_group->current_angle());
-            step *= qCos(m_group->current_angle());
-        }
+        m_startItem->set_unit(MM_STR);
     }
 
-    m_startItem->set(tr("Start"), unit, 0, max, 2, step);
-    m_startItem->set_value(value);
+    m_startItem->set(0,
+                     Tool::cnf_to_display(m_group, m_group->max_start()),
+                     2,
+                     Tool::cnf_to_display(m_group, m_group->sample()->precision()));
+
+    m_startItem->set_value(Tool::cnf_to_display(m_group, m_group->sample()->start()));
 }
 
 void GeneralMenu::update_range_item()
 {
-    double min = 0.0;
-    double max = 0.0;
-    double value = 0.0;
-    double step = 0.0;
-    QString unit = "mm";
 
-    max = m_group->sample()->point_qty() * m_group->sample()->precision() * DplUt::Sample::MAX_SCALE_FACTOR;
+    double max = m_group->sample()->point_qty() * m_group->sample()->precision() * DplUt::Sample::MAX_SCALE_FACTOR;
     if (max > m_group->max_range()) {
         max = m_group->max_range();
     }
 
+    double min = 0.0;
     if (m_group->sample()->is_auto_set_point_qty()) {
         min = 32 * m_group->sample()->precision() * 1;
     } else {
@@ -223,34 +154,16 @@ void GeneralMenu::update_range_item()
     }
 
     if (m_group->ut_unit() == DplDevice::Group::Time) {
-        /* 时间轴 */
-        max = Dpl::ns_to_us(max);
-        min = Dpl::ns_to_us(min);
-        value = Dpl::ns_to_us(m_group->sample()->range());
-        step = Dpl::ns_to_us(m_group->sample()->precision());
-        unit = "&micro;s";
+        m_rangeItem->set_unit(US_STR);
     } else {
-        min = Dpl::ns_to_s(min) * m_group->sample()->velocity() / 2;
-        min = Dpl::m_to_mm(min);
-        max = Dpl::ns_to_s(max) * m_group->sample()->velocity() / 2;
-        max = Dpl::m_to_mm(max);
-
-        value = Dpl::ns_to_s(m_group->sample()->range()) * m_group->sample()->velocity() / 2;
-        value = Dpl::m_to_mm(value);
-
-        step = Dpl::ns_to_s(m_group->sample()->precision()) * m_group->sample()->velocity() / 2;
-        step = Dpl::m_to_mm(step);
-
-        if (m_group->ut_unit() == DplDevice::Group::TruePath) {
-            min *= qCos(m_group->current_angle());
-            max *= qCos(m_group->current_angle());
-            value *= qCos(m_group->current_angle());
-            step *= qCos(m_group->current_angle());
-        }
+        m_rangeItem->set_unit(MM_STR);
     }
 
-    m_rangeItem->set(tr("Range"), unit, min, max, 2, step);
-    m_rangeItem->set_value(value);
+    m_rangeItem->set(Tool::cnf_to_display(m_group, min),
+                     Tool::cnf_to_display(m_group, max),
+                     2,
+                     Tool::cnf_to_display(m_group, m_group->sample()->precision()));
+    m_rangeItem->set_value(Tool::cnf_to_display(m_group, m_group->sample()->range()));
 }
 
 }

@@ -9,6 +9,4 @@
 
 MenuItem::MenuItem(QWidget *parent) :
     QWidget(parent)
-{
-    hide();
-}
+{}

@@ -1,7 +1,7 @@
 #ifndef __TOFD_MENU_H__
 #define __TOFD_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 namespace DplMeasurementMenu {
 
@@ -9,35 +9,24 @@ class TofdMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit TofdMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit TofdMenu(QWidget *parent);
     ~TofdMenu();
 
-    void show();
-    void hide();
-
 private:
-    ComboMenuItem m_selectItem;
+    ComboMenuItem *m_selectItem;
 
-    SpinMenuItem m_wedgeItem;
-    LabelMenuItem m_layerDepthItem;
-    LabelMenuItem m_tofdCalItem;
-    SpinMenuItem m_startItem;
-    SpinMenuItem m_rangeItem;
+    SpinMenuItem *m_wedgeItem;
+    LabelMenuItem *m_layerDepthItem;
+    LabelMenuItem *m_tofdCalItem;
+    SpinMenuItem *m_startItem;
+    SpinMenuItem *m_rangeItem;
 
-    ComboMenuItem m_straighteningItem;
-    ComboMenuItem m_removeLateralItem;
-    SpinMenuItem m_refPositionItem;
-    ComboMenuItem m_depthCalibrationItem;
-
-    void show_setting();
-    void hide_setting();
-
-    void show_analysis();
-    void hide_analysis();
-
-
+    ComboMenuItem *m_straighteningItem;
+    ComboMenuItem *m_removeLateralItem;
+    SpinMenuItem *m_refPositionItem;
+    ComboMenuItem *m_depthCalibrationItem;
 private slots:
-    void do_select_changed(int index);
+    void do_selectItem_changed(int index);
 };
 
 }

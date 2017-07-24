@@ -8,7 +8,7 @@
 #ifndef __POSITION_MENU_H__
 #define __POSITION_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 namespace DplProbeMenu {
 
@@ -16,16 +16,16 @@ class PositionMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit PositionMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit PositionMenu(QWidget *parent);
     ~PositionMenu();
 
     void show();
     void hide();
 
 private:
-    SpinMenuItem m_scanOffsetItem;
-    SpinMenuItem m_indexOffsetItem;
-    ComboMenuItem m_skewItem;
+    SpinMenuItem *m_scanOffsetItem;
+    SpinMenuItem *m_indexOffsetItem;
+    ComboMenuItem *m_skewItem;
 };
 
 }

@@ -6,18 +6,17 @@
  * @date 2016-12-14
  */
 #include "pulser_menu.h"
-#include "spin_menu_item.h"
-#include "combo_menu_item.h"
+#include "ui_base_menu.h"
 
 namespace DplUtSettingMenu {
 
-PulserMenu::PulserMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, parent),
-    m_txrxModeItem(new ComboMenuItem()),
-    m_pulserItem(new SpinMenuItem()),
-    m_voltageItem(new ComboMenuItem),
-    m_pwItem(new SpinMenuItem),
-    m_prfItem(new ComboMenuItem)
+PulserMenu::PulserMenu(QWidget *parent) :
+    BaseMenu(parent),
+    m_txrxModeItem(new ComboMenuItem(this, tr("Tx/Rx Mode"))),
+    m_pulserItem(new SpinMenuItem(this, tr("Pulser"))),
+    m_voltageItem(new ComboMenuItem(this, tr("Voltage"))),
+    m_pwItem(new SpinMenuItem(this, tr("PW"), "ns")),
+    m_prfItem(new ComboMenuItem(this, tr("PRF")))
 {
     ui->layout0->addWidget(m_txrxModeItem);
     ui->layout1->addWidget(m_pulserItem);
@@ -43,42 +42,19 @@ PulserMenu::PulserMenu(Ui::BaseMenu *ui, QObject *parent) :
     prfsList.append(tr("Optimum"));
     prfsList.append(tr("UserDef"));
 
-    m_txrxModeItem->set(tr("Tx/Rx Mode"), txRxModesList);
+    m_txrxModeItem->set(txRxModesList);
 
-    m_pulserItem->set(tr("Pulser"), " ", 1, 113, 0);
+    m_pulserItem->set(1, 113, 0);
 
-    m_voltageItem->set(tr("Voltage"), voltagesList);
+    m_voltageItem->set(voltagesList);
 
-    m_pwItem->set(tr("PW"), "ns", 30, 1000, 1);
+    m_pwItem->set(30, 1000, 1);
 
-    m_prfItem->set(tr("PRF"), prfsList);
+    m_prfItem->set(prfsList);
 }
 
 PulserMenu::~PulserMenu()
 {
-    delete m_txrxModeItem;
-    delete m_pulserItem;
-    delete m_voltageItem;
-    delete m_pwItem;
-    delete m_prfItem;
-}
-
-void PulserMenu::show()
-{
-    m_txrxModeItem->show();
-    m_pulserItem->show();
-    m_voltageItem->show();
-    m_pwItem->show();
-    m_prfItem->show();
-}
-
-void PulserMenu::hide()
-{
-    m_txrxModeItem->hide();
-    m_pulserItem->hide();
-    m_voltageItem->hide();
-    m_pwItem->hide();
-    m_prfItem->hide();
 }
 
 }

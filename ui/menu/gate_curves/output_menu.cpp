@@ -6,15 +6,27 @@
  * @date 2016-12-16
  */
 #include "output_menu.h"
-#include "combo_menu_item.h"
-#include "spin_menu_item.h"
-#include "label_menu_item.h"
+
+#include "ui_base_menu.h"
 
 namespace DplGateCurvesMenu {
 
-OutputMenu::OutputMenu(Ui::BaseMenu *ui, QObject *parent)
-    : BaseMenu(ui, parent)
+OutputMenu::OutputMenu(QWidget *parent) :
+    BaseMenu(parent),
+    m_outputItem(new ComboMenuItem(this, tr("Output"))),
+    m_soundItem(new ComboMenuItem(this, tr("Sound"))),
+    m_delayItem(new SpinMenuItem(this, tr("Delay"), "mm")),
+    m_holdTimeItem(new SpinMenuItem(this, tr("Hold Time"), "%")),
+    m_groupItem(new LabelMenuItem(this, tr("Group"))),
+    m_dataItem(new ComboMenuItem(this, tr("Data")))
 {
+    ui->layout0->addWidget(m_outputItem);
+    ui->layout1->addWidget(m_soundItem);
+    ui->layout2->addWidget(m_delayItem);
+    ui->layout3->addWidget(m_holdTimeItem);
+    ui->layout4->addWidget(m_groupItem);
+    ui->layout5->addWidget(m_dataItem);
+
     QStringList outputList;
     QStringList soundList;
     QStringList dataList;
@@ -35,51 +47,18 @@ OutputMenu::OutputMenu(Ui::BaseMenu *ui, QObject *parent)
     dataList.append(tr("B%"));
     dataList.append(tr("None"));
 
-    m_outputItem.set(tr("Output"), outputList);
+    m_outputItem->set(outputList);
 
-    m_soundItem.set(tr("Sound"), soundList);
-    m_soundItem.set_dispay_mode(ComboMenuItem::PREFIX);
+    m_soundItem->set(soundList);
+    m_soundItem->set_dispay_mode(ComboMenuItem::PREFIX);
 
-    m_delayItem.set(tr("Delay"), "mm", 0, 5000, 2);
-    m_holdTimeItem.set(tr("Hold Time"), "%", 0, 5000, 2);
-    m_groupItem.set(tr("Group"), "");
-    m_dataItem.set(tr("Data"), dataList);
+    m_delayItem->set(0, 5000, 2);
+    m_holdTimeItem->set(0, 5000, 2);
+    m_dataItem->set(dataList);
 }
 
 OutputMenu::~OutputMenu()
 {
-}
-
-void OutputMenu::show()
-{
-    ui->layout0->addWidget(&m_outputItem);
-    ui->layout1->addWidget(&m_soundItem);
-    ui->layout2->addWidget(&m_delayItem);
-    ui->layout3->addWidget(&m_holdTimeItem);
-    ui->layout4->addWidget(&m_groupItem);
-    ui->layout5->addWidget(&m_dataItem);
-    m_outputItem.show();
-    m_soundItem.show();
-    m_delayItem.show();
-    m_holdTimeItem.show();
-    m_groupItem.show();
-    m_dataItem.show();
-}
-
-void OutputMenu::hide()
-{
-    ui->layout0->removeWidget(&m_outputItem);
-    ui->layout1->removeWidget(&m_soundItem);
-    ui->layout2->removeWidget(&m_delayItem);
-    ui->layout3->removeWidget(&m_holdTimeItem);
-    ui->layout4->removeWidget(&m_groupItem);
-    ui->layout5->removeWidget(&m_dataItem);
-    m_outputItem.hide();
-    m_soundItem.hide();
-    m_delayItem.hide();
-    m_holdTimeItem.hide();
-    m_groupItem.hide();
-    m_dataItem.hide();
 }
 
 }

@@ -58,11 +58,15 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
     /* Gate */
-    DplDevice::Gate *gate = group->gate(DplDevice::Gate::A).data();
-    connect(gate, SIGNAL(changed()),
-            this, SLOT(do_gate_a_changed()));
-    gate = group->gate(DplDevice::Gate::B).data();
-    gate = group->gate(DplDevice::Gate::I).data();
+    connect(group->gate(DplDevice::Gate::A).data(),
+            SIGNAL(changed()),
+            this, SLOT(do_gate_changed()));
+    connect(group->gate(DplDevice::Gate::B).data(),
+            SIGNAL(changed()),
+            this, SLOT(do_gate_changed()));
+    connect(group->gate(DplDevice::Gate::I).data(),
+            SIGNAL(changed()),
+            this, SLOT(do_gate_changed()));
 
     /* source setting */
     DplSource::BeamsPointer beams = m_group->beams();
@@ -86,8 +90,12 @@ void AscanDisplay::do_data_event()
     m_waveItem->set_wave(m_group->beams()->get(0)->get_wave());
 }
 
-void AscanDisplay::do_gate_a_changed()
+void AscanDisplay::do_gate_changed()
 {
+    m_gateAItem->setVisible(m_group->gate(DplDevice::Gate::A)->is_visible());
+    m_gateBItem->setVisible(m_group->gate(DplDevice::Gate::B)->is_visible());
+    m_gateIItem->setVisible(m_group->gate(DplDevice::Gate::I)->is_visible());
+
     DplDevice::GatePointer gate = m_group->gate(DplDevice::Gate::A);
     DplUt::SamplePointer sample = m_group->sample();
 

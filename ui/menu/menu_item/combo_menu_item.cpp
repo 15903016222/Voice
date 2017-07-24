@@ -11,7 +11,7 @@
 #include <QDebug>
 #include <QListView>
 
-ComboMenuItem::ComboMenuItem(QWidget *parent) :
+ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
     MenuItem(parent),
     ui(new Ui::ComboMenuItem),
     m_displayMode(ALL)
@@ -28,6 +28,8 @@ ComboMenuItem::ComboMenuItem(QWidget *parent) :
 
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(value_changed(int)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_label_text(QString)));
+
+    set_title(title);
 }
 
 ComboMenuItem::~ComboMenuItem()
@@ -49,7 +51,7 @@ void ComboMenuItem::add_item(const QString &text)
     ui->comboBox->addItem(text);
 }
 
-void ComboMenuItem::set_items(const QStringList &texts)
+void ComboMenuItem::add_items(const QStringList &texts)
 {
     ui->comboBox->addItems(texts);
 }
@@ -71,10 +73,8 @@ bool ComboMenuItem::eventFilter(QObject *obj, QEvent *e)
     return QWidget::eventFilter(obj, e);
 }
 
-void ComboMenuItem::set(const QString &title, const QStringList &texts)
+void ComboMenuItem::set(const QStringList &texts)
 {
-    set_title(title);
-
     ui->comboBox->clear();
     ui->comboBox->addItems(texts);
 }

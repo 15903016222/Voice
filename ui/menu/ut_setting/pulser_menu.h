@@ -8,7 +8,7 @@
 #ifndef __PULSER_MENU_H__
 #define __PULSER_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 namespace DplUtSettingMenu {
 
@@ -16,7 +16,7 @@ class PulserMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit PulserMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit PulserMenu(QWidget *parent);
     ~PulserMenu();
 
     void show();

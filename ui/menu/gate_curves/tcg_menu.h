@@ -8,7 +8,7 @@
 #ifndef __TCG_MENU_H__
 #define __TCG_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 namespace DplGateCurvesMenu {
 
@@ -16,27 +16,27 @@ class TcgMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit TcgMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit TcgMenu(QWidget *parent);
     ~TcgMenu();
 
     void show();
     void hide();
 
 private:
-    ComboMenuItem m_modeItem;
+    ComboMenuItem *m_modeItem;
 
     /* Setting */
-    SpinMenuItem m_curveNoItem;
-    ComboMenuItem m_curveXItem;
-    SpinMenuItem m_dbOffsetItem;
-    ComboMenuItem m_switchItem;
+    SpinMenuItem *m_curveNoItem;
+    ComboMenuItem *m_curveXItem;
+    SpinMenuItem *m_dbOffsetItem;
+    ComboMenuItem *m_switchItem;
 
     /* Edit */
-    ComboMenuItem m_pointItem;
-    SpinMenuItem m_positionItem;
-    SpinMenuItem m_gainItem;
-    LabelMenuItem m_addPointItem;
-    LabelMenuItem m_deletePointItem;
+    ComboMenuItem *m_pointItem;
+    SpinMenuItem *m_positionItem;
+    SpinMenuItem *m_gainItem;
+    LabelMenuItem *m_addPointItem;
+    LabelMenuItem *m_deletePointItem;
 
     void show_setting();
     void hide_setting();
@@ -45,7 +45,7 @@ private:
     void hide_edit();
 
 private slots:
-    void do_mode_event(int pos);
+    void do_modeItem_changed(int pos);
 };
 
 }

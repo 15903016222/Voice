@@ -17,19 +17,44 @@ class ComboMenuItem;
 class ComboMenuItem : public MenuItem
 {
     Q_OBJECT
-
 public:
-    explicit ComboMenuItem(QWidget *parent = 0);
+    explicit ComboMenuItem(QWidget *parent, const QString &title);
     ~ComboMenuItem();
 
+    /**
+     * @brief set_title 设置标题
+     * @param title     标题
+     */
     void set_title(const QString &title);
 
+    /**
+     * @brief add_item  添加显示项字符串
+     * @param text      项字符串
+     */
     void add_item(const QString &text);
-    void set_items(const QStringList &texts);
 
-    void set(const QString &title, const QStringList &texts);
+    /**
+     * @brief add_items 添加显示项字符串列表
+     * @param texts     显示项字符串列表
+     */
+    void add_items(const QStringList &texts);
 
+    /**
+     * @brief set       设置显示项字符串列表
+     * @param texts     显示项字符串列表
+     */
+    void set(const QStringList &texts);
+
+    /**
+     * @brief set_current_index 设置当前索引
+     * @param index             索引值
+     */
     void set_current_index(int index);
+
+    /**
+     * @brief current_index 获取当前索引值
+     * @return              索引值
+     */
     int current_index() const;
 
     enum DisplayMode {
@@ -37,9 +62,14 @@ public:
         PREFIX,
         SUFFIX
     };
+
+    /**
+     * @brief set_dispay_mode   设置显示方式
+     * @param mode              显示方式
+     */
     void set_dispay_mode(DisplayMode mode);
 
-signals:
+signals:    
     void value_changed(int index);
 
 protected:

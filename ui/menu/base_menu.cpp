@@ -7,20 +7,24 @@
  */
 
 #include "base_menu.h"
+#include "ui_base_menu.h"
 
 QStringList BaseMenu::s_onOff;
 
-BaseMenu::BaseMenu(Ui::BaseMenu *ui, QObject *parent) :
-    QObject(parent)
+BaseMenu::BaseMenu(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::BaseMenu)
 {
-    this->ui = ui;
+    ui->setupUi(this);
 
     if (s_onOff.isEmpty()) {
         s_onOff.append(tr("On"));
         s_onOff.append(tr("Off"));
     }
+    hide();
 }
 
 BaseMenu::~BaseMenu()
 {
+    delete ui;
 }

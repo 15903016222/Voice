@@ -8,7 +8,7 @@
 #ifndef __GATE_MENU_H__
 #define __GATE_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 #include <device/group.h>
 
@@ -18,11 +18,8 @@ class GateMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit GateMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit GateMenu(QWidget *parent);
     ~GateMenu();
-
-    void show();
-    void hide();
 
 protected:
     void update_gate(const DplDevice::GatePointer &gate);
@@ -37,8 +34,7 @@ protected slots:
 
     void do_paramsItem_changed(int index);
 
-    void update(const DplDevice::GroupPointer &group);
-
+    void do_current_group_changed(const DplDevice::GroupPointer &group);
 
 private:
     ComboMenuItem *m_gateItem;
@@ -49,6 +45,7 @@ private:
     SpinMenuItem *m_thresholdItem;
     ComboMenuItem *m_synchroItem;
     ComboMenuItem *m_measureModeItem;
+    ComboMenuItem *m_modeItem;
 
     DplDevice::GroupPointer m_group;
 };

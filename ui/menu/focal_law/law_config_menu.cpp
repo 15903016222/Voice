@@ -1,82 +1,53 @@
 #include "law_config_menu.h"
-#include "combo_menu_item.h"
-#include "spin_menu_item.h"
+#include "ui_base_menu.h"
 
 #include "device/device.h"
 
 namespace DplFocalLawMenu {
 
-LawConfigMenu::LawConfigMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, parent),
-    m_updateFlga(false)
+LawConfigMenu::LawConfigMenu(QWidget *parent) :
+    BaseMenu(parent),
+    m_lawTypeItem(new ComboMenuItem(this, tr("Law Type"))),
+    m_pulseItem(new SpinMenuItem(this, tr("Pulse"), "1-113")),
+    m_receiverItem(new SpinMenuItem(this, tr("Receiver"), "1-113")),
+    m_waveTypeItem(new ComboMenuItem(this, tr("Wave Type")))
 {
+    ui->layout0->addWidget(m_lawTypeItem);
+    ui->layout1->addWidget(m_pulseItem);
+    ui->layout2->addWidget(m_receiverItem);
+    ui->layout3->addWidget(m_waveTypeItem);
+
     /* Law Type Menu Item */
     QStringList lawTypes;
     lawTypes.append(tr("Linear"));
     lawTypes.append(tr("Azimuthal"));
-    m_lawTypeItem.set(tr("Law Type"), lawTypes);
-    connect(&m_lawTypeItem, SIGNAL(value_changed(int)),
+    m_lawTypeItem->set(lawTypes);
+    connect(m_lawTypeItem, SIGNAL(value_changed(int)),
             this, SLOT(do_lawTypeItem_changed(int)));
 
     /* Pulse Connection menu item */
-    m_pulseItem.set(tr("Pulse"), "1-113", 1, 113, 0);
-    connect(&m_pulseItem, SIGNAL(value_changed(double)),
+    m_pulseItem->set(1, 113, 0);
+    connect(m_pulseItem, SIGNAL(value_changed(double)),
             this, SLOT(do_pulseItem_changed(double)));
 
     /* Receiver Connection menu item */
-    m_receiverItem.set(tr("Receiver"), "1-113", 1, 113, 0);
-    connect(&m_receiverItem, SIGNAL(value_changed(double)),
+    m_receiverItem->set(1, 113, 0);
+    connect(m_receiverItem, SIGNAL(value_changed(double)),
             this, SLOT(do_receiverItem_changed(double)));
 
     /* Wave Type Menu Item */
-    QStringList waveTypes;
-    waveTypes.append(tr("LW"));
-    waveTypes.append(tr("SW"));
-    m_waveTypeItem.set(tr("Wave Type"), waveTypes);
+    m_waveTypeItem->add_item(tr("LW"));
+    m_waveTypeItem->add_item(tr("SW"));
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
-    do_current_group_changed(DplDevice::Device::instance()->current_group());
+            this, SLOT(update(DplDevice::GroupPointer)));
+
+    update(DplDevice::Device::instance()->current_group());
 }
 
 LawConfigMenu::~LawConfigMenu()
 {
-}
-
-void LawConfigMenu::show()
-{
-    if (m_updateFlga) {
-        update();
-    }
-
-    ui->layout0->addWidget(&m_lawTypeItem);
-    ui->layout1->addWidget(&m_pulseItem);
-    ui->layout2->addWidget(&m_receiverItem);
-    ui->layout3->addWidget(&m_waveTypeItem);
-    m_lawTypeItem.show();
-    m_pulseItem.show();
-    m_receiverItem.show();
-    m_waveTypeItem.show();
-}
-
-void LawConfigMenu::hide()
-{
-    ui->layout0->removeWidget(&m_lawTypeItem);
-    ui->layout1->removeWidget(&m_pulseItem);
-    ui->layout2->removeWidget(&m_receiverItem);
-    ui->layout3->removeWidget(&m_waveTypeItem);
-    m_lawTypeItem.hide();
-    m_pulseItem.hide();
-    m_receiverItem.hide();
-    m_waveTypeItem.hide();
-}
-
-void LawConfigMenu::update()
-{
-    m_lawTypeItem.set_current_index(m_scanScnPtr->mode());
-    m_pulseItem.set_value(m_probePtr->pulser_index()+1);
-    m_receiverItem.set_value(m_probePtr->receiver_index()+1);
 }
 
 void LawConfigMenu::do_lawTypeItem_changed(int index)
@@ -103,16 +74,14 @@ void LawConfigMenu::do_receiverItem_changed(double val)
     m_probePtr->set_receiver_index(val-1);
 }
 
-void LawConfigMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
+void LawConfigMenu::update(const DplDevice::GroupPointer &group)
 {
     m_probePtr = group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
     m_scanScnPtr = m_probePtr->scan_configure().staticCast<DplFocallaw::ScanCnf>();
 
-    if (m_lawTypeItem.isHidden()) {
-        m_updateFlga = true;
-    } else {
-        update();
-    }
+    m_lawTypeItem->set_current_index(m_scanScnPtr->mode());
+    m_pulseItem->set_value(m_probePtr->pulser_index()+1);
+    m_receiverItem->set_value(m_probePtr->receiver_index()+1);
 }
 
 }

@@ -8,7 +8,7 @@
 #ifndef __COLOR_SETTING_MENU_H__
 #define __COLOR_SETTING_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 namespace DplDisplayMenu {
 
@@ -16,11 +16,8 @@ class ColorSettingMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit ColorSettingMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit ColorSettingMenu(QWidget *parent);
     ~ColorSettingMenu();
-
-    void show();
-    void hide();
 
 private:
     LabelMenuItem *m_amplitudeItem;

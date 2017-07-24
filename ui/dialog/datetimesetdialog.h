@@ -20,8 +20,8 @@ public:
 
     void retranslate_dialog_ui();
     void set_dialog_title(QMap<QString, QString> &map);
-    void set_time_value(QString &string);
-    void set_date_value(QString &string);
+    void set_time_value(const QString &string);
+    void set_date_value(const QString &string);
     void set_datetime_string(QString &str);
 
     QString get_date();
@@ -39,7 +39,7 @@ private:
     QString m_strTime;
     QString m_strPre;
 
-    QList<int> get_value_list(QString &text, QString &str);
+    QList<int> get_value_list(const QString &text, const QString &str);
 
 private slots:
     void check_date_valid(int number);

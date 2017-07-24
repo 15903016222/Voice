@@ -8,24 +8,7 @@
 #include "label_menu_item.h"
 #include "ui_label_menu_item.h"
 
-LabelMenuItem::LabelMenuItem(QWidget *parent) :
-    MenuItem(parent),
-    ui(new Ui::LabelMenuItem)
-{
-    ui->setupUi(this);
-    ui->nameLabel->installEventFilter(this);
-}
-
-LabelMenuItem::LabelMenuItem(const QString &title, QWidget *parent) :
-    MenuItem(parent),
-    ui(new Ui::LabelMenuItem)
-{
-    ui->setupUi(this);
-    ui->nameLabel->installEventFilter(this);
-    set_title(title);
-}
-
-LabelMenuItem::LabelMenuItem(const QString &title, const QString &text, QWidget *parent) :
+LabelMenuItem::LabelMenuItem(QWidget *parent, const QString &title, const QString &text) :
     MenuItem(parent),
     ui(new Ui::LabelMenuItem)
 {
@@ -64,10 +47,4 @@ void LabelMenuItem::set_text(const QString &text)
 {
     ui->label->setText(text);
     m_text = text;
-}
-
-void LabelMenuItem::set(const QString &title, const QString &text)
-{
-    set_title(title);
-    set_text(text);
 }

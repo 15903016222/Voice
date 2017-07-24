@@ -8,7 +8,7 @@
 #ifndef __SYSTEM_MENU_H__
 #define __SYSTEM_MENU_H__
 
-#include"base_menu.h"
+#include"../base_menu.h"
 
 namespace DplPreferenceMenu {
 
@@ -16,19 +16,19 @@ class SystemMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit SystemMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit SystemMenu(QWidget *parent);
     ~SystemMenu();
 
     void show();
     void hide();
 
 private:
-    LabelMenuItem m_dateItem;
-    LabelMenuItem m_timeItem;
-    ComboMenuItem m_certItem;
-    LabelMenuItem m_updateItem;
-    LabelMenuItem m_resetCfgItem;
-    LabelMenuItem m_infoItem;
+    LabelMenuItem *m_dateItem;
+    LabelMenuItem *m_timeItem;
+    LabelMenuItem *m_certItem;
+    LabelMenuItem *m_updateItem;
+    LabelMenuItem *m_resetCfgItem;
+    LabelMenuItem *m_infoItem;
 
 private slots:
     void show_time_dialog();

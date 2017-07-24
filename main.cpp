@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
     w.show();
 
-    qDebug("%s[%d]: Take Time%d(ms)",__func__, __LINE__, time.elapsed());
+    qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 
     return a.exec();
 }

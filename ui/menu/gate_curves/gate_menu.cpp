@@ -6,25 +6,25 @@
  * @date 2016-12-16
  */
 #include "gate_menu.h"
-#include "spin_menu_item.h"
-#include "combo_menu_item.h"
 
 #include <global.h>
 #include <device/device.h>
 #include <ui/tool/tool.h>
+#include "ui_base_menu.h"
 
 namespace DplGateCurvesMenu {
 
-GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, parent),
-    m_gateItem(new ComboMenuItem),
-    m_switchItem(new ComboMenuItem),
-    m_paramsItem(new ComboMenuItem),
-    m_startItem(new SpinMenuItem),
-    m_widthItem(new SpinMenuItem),
-    m_thresholdItem(new SpinMenuItem),
-    m_synchroItem(new ComboMenuItem),
-    m_measureModeItem(new ComboMenuItem)
+GateMenu::GateMenu(QWidget *parent) :
+    BaseMenu(parent),
+    m_gateItem(new ComboMenuItem(this, tr("Gate"))),
+    m_switchItem(new ComboMenuItem(this, tr("Switch"))),
+    m_paramsItem(new ComboMenuItem(this, tr("Parameters"))),
+    m_startItem(new SpinMenuItem(this, tr("Start"))),
+    m_widthItem(new SpinMenuItem(this, tr("Width"), "mm")),
+    m_thresholdItem(new SpinMenuItem(this, tr("Threshold"), "%")),
+    m_synchroItem(new ComboMenuItem(this, tr("Synchro"))),
+    m_measureModeItem(new ComboMenuItem(this, tr("Measure Mode"))),
+    m_modeItem(new ComboMenuItem(this, tr("Mode")))
 {
     ui->layout0->addWidget(m_gateItem);
     ui->layout1->addWidget(m_switchItem);
@@ -34,6 +34,7 @@ GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent) :
     ui->layout5->addWidget(m_thresholdItem);
     ui->layout3->addWidget(m_synchroItem);
     ui->layout4->addWidget(m_measureModeItem);
+    ui->layout5->addWidget(m_modeItem);
 
     QStringList gatesList;
     QStringList synchrosList;
@@ -50,73 +51,43 @@ GateMenu::GateMenu(Ui::BaseMenu *ui, QObject *parent) :
     measureModesList.append(tr("Edge"));
     measureModesList.append(tr("Peak"));
 
-    m_gateItem->set(tr("Gate"), gatesList);
+    m_gateItem->set(gatesList);
     connect(m_gateItem, SIGNAL(value_changed(int)),
             this, SLOT(do_gateItem_changed(int)));
 
-    m_switchItem->set(tr("Switch"), s_onOff);
+    m_switchItem->set(s_onOff);
     connect(m_switchItem, SIGNAL(value_changed(int)),
             this, SLOT(do_switchItem_changed(int)));
 
-    QStringList modeList;
-    modeList.append(tr("Position"));
-    modeList.append(tr("Mode"));
-    m_paramsItem->set(tr("Parameters"), modeList);
+    QStringList paramList;
+    paramList.append(tr("Position"));
+    paramList.append(tr("Mode"));
+    m_paramsItem->set(paramList);
     connect(m_paramsItem, SIGNAL(value_changed(int)),
             this, SLOT(do_paramsItem_changed(int)));
 
-    m_startItem->set(tr("Start"), "mm", 0, 16000, 2);
     connect(m_startItem, SIGNAL(value_changed(double)),
             this, SLOT(do_startItem_changed(double)));
 
-    m_widthItem->set(tr("Width"), "mm", 0.05, 525, 2);
-    m_thresholdItem->set(tr("Threshold"), "%", 0, 100, 0);
-    m_synchroItem->set(tr("Synchro"), synchrosList);
-    m_measureModeItem->set(tr("Measure Mode"), measureModesList);
+    m_widthItem->set(0.05, 525, 2);
+    m_thresholdItem->set(0, 100, 0);
+    m_synchroItem->set(synchrosList);
+    m_measureModeItem->set(measureModesList);
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(update(DplDevice::GroupPointer)));
-    update(DplDevice::Device::instance()->current_group());
+            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
+
+    QStringList modeList;
+    modeList.append(tr("Sound Path"));
+    modeList.append(tr("Depth"));
+    m_modeItem->set(modeList);
+
+    do_current_group_changed(DplDevice::Device::instance()->current_group());
 }
 
 GateMenu::~GateMenu()
 {
-    delete m_gateItem;
-    delete m_switchItem;
-    delete m_paramsItem;
-    delete m_startItem;
-    delete m_widthItem;
-    delete m_thresholdItem;
-    delete m_synchroItem;
-    delete m_measureModeItem;
-}
-
-void GateMenu::show()
-{
-    m_gateItem->show();
-    m_switchItem->show();
-    m_paramsItem->show();
-    if (m_paramsItem->current_index() == 0) {
-        m_startItem->show();
-        m_widthItem->show();
-        m_thresholdItem->show();
-    } else {
-        m_synchroItem->show();
-        m_measureModeItem->show();
-    }
-}
-
-void GateMenu::hide()
-{
-    m_gateItem->hide();
-    m_switchItem->hide();
-    m_paramsItem->hide();
-    m_startItem->hide();
-    m_widthItem->hide();
-    m_thresholdItem->hide();
-    m_synchroItem->hide();
-    m_measureModeItem->hide();
 }
 
 void GateMenu::update_gate(const DplDevice::GatePointer &gate)
@@ -157,15 +128,19 @@ void GateMenu::do_switchItem_changed(int index)
 
 void GateMenu::do_paramsItem_changed(int index)
 {
-    Q_UNUSED(index);
-    hide();
-    show();
+    m_startItem->setVisible(!index);
+    m_widthItem->setVisible(!index);
+    m_thresholdItem->setVisible(!index);
+    m_synchroItem->setVisible(!!index);
+    m_measureModeItem->setVisible(!!index);
+    m_modeItem->setVisible(!!index);
 }
 
-void GateMenu::update(const DplDevice::GroupPointer &group)
+void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
     m_group = group;
     update_gate(group->gate(DplDevice::Gate::A));
+    do_paramsItem_changed(m_paramsItem->current_index());
 }
 
 }

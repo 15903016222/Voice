@@ -2,15 +2,14 @@
 #include "ui_mainwindow.h"
 
 #include <device/device.h>
+#include "display/display.h"
 #include "vinput.h"
-#include "ut_setting/general_menu.h"
-#include "preference/preference_menu.h"
-#include <display/display.h>
+#include "menu/ut_setting/general_menu.h"
+#include "menu/preference/preference_menu.h"
 
 #include <QDebug>
 #include <QResizeEvent>
 #include <QFontDatabase>
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,12 +23,16 @@ MainWindow::MainWindow(QWidget *parent) :
     DplDevice::GroupPointer group = DplDevice::Device::instance()->get_group(0);
 
     /* gain menu item */
-    ui->gainMenuItem->set(tr("Gain"), "dB", 0, 90, 1);
+    ui->gainMenuItem->set_title(tr("Gain"));
+    ui->gainMenuItem->set_unit(tr("dB"));
+    ui->gainMenuItem->set(0, 90, 1);
     ui->gainMenuItem->set_suffix("(0.0)");
     ui->gainMenuItem->set_value(group->sample()->gain());
 
     /* angle menu item */
-    ui->angleMenuItem->set(tr("Angle"), "&#176;", 0, 180, 1);
+    ui->angleMenuItem->set_title(tr("Angle"));
+    ui->angleMenuItem->set_unit(tr("&#176;"));
+    ui->angleMenuItem->set(0, 180, 1);
 
     /* Mcu */
     Mcu *mcu = Mcu::instance();
@@ -57,8 +60,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
 
     DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
-    connect(preferenceMenu, SIGNAL(opacity_changed(double)), m_mainMenu, SLOT(set_opacity_main_menu(double)));
-    connect(preferenceMenu, SIGNAL(opacity_changed(double)), m_subMenu, SLOT(set_opacity_main_menu(double)));
+    connect(preferenceMenu, SIGNAL(opacity_changed(double)),
+            m_mainMenu, SLOT(set_opacity_main_menu(double)));
+    connect(preferenceMenu, SIGNAL(opacity_changed(double)),
+            m_subMenu, SLOT(set_opacity_main_menu(double)));
 
     connect(m_mainMenu, SIGNAL(click(MainMenu::Type)), m_subMenu, SLOT(set_menu(MainMenu::Type)));
 

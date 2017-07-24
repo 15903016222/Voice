@@ -1,5 +1,5 @@
-#ifndef DISPLAY_SELECT_DIALOG_H
-#define DISPLAY_SELECT_DIALOG_H
+#ifndef __DISPLAY_SELECT_DIALOG_H__
+#define __DISPLAY_SELECT_DIALOG_H__
 
 #include <QDialog>
 #include <QButtonGroup>
@@ -33,4 +33,4 @@ private:
     void update(int startMode, int endMode);
 };
 
-#endif // DISPLAY_SELECT_DIALOG_H
+#endif // __DISPLAY_SELECT_DIALOG_H__

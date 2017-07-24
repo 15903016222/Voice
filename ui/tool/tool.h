@@ -5,6 +5,7 @@
 
 class Tool
 {
+public:
     /**
      * @brief cnf_to_display    配置数据转换成显示数据
      * @param group             组信息
@@ -21,6 +22,7 @@ class Tool
      */
     static double display_to_cnf(const DplDevice::GroupPointer &group, double val);
 
-}   // end of Tool Class
+};   // end of Tool Class
 
 #endif // __TOOL_H__
+

@@ -31,7 +31,7 @@ public:
 protected slots:
     void do_data_event();
 
-    void do_gate_a_changed();
+    void do_gate_changed();
 
     void do_ascanView_size_changed(const QSize &size);
 

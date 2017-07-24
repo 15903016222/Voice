@@ -9,29 +9,20 @@
 #ifndef __BASE_MENU_H__
 #define __BASE_MENU_H__
 
-#include <QStringList>
+#include "menu_item/spin_menu_item.h"
+#include "menu_item/combo_menu_item.h"
+#include "menu_item/label_menu_item.h"
 
-#include "ui_base_menu.h"
-#include "spin_menu_item.h"
-#include "combo_menu_item.h"
-#include "label_menu_item.h"
+namespace Ui {
+class BaseMenu;
+}
 
-class BaseMenu : public QObject
+class BaseMenu : public QWidget
 {
     Q_OBJECT
 public:
-    explicit BaseMenu(Ui::BaseMenu *ui, QObject *parent = 0);
+    explicit BaseMenu(QWidget *parent = 0);
     virtual ~BaseMenu();
-
-    /**
-     * @brief show  显示接口
-     */
-    virtual void show() = 0;
-
-    /**
-     * @brief hide 隐藏接口
-     */
-    virtual void hide() = 0;
 
 protected:
     static QStringList s_onOff;

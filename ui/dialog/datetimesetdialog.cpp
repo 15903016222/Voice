@@ -81,7 +81,7 @@ void DateTimeSetDialog::set_dialog_title(QMap<QString, QString> &map)
     }
 }
 
-void DateTimeSetDialog::set_time_value(QString &string)
+void DateTimeSetDialog::set_time_value(const QString &string)
 {
     QString str = ":";
     QList<int> valueList = get_value_list(string, str);
@@ -92,7 +92,7 @@ void DateTimeSetDialog::set_time_value(QString &string)
     ui->label_3->setText(str);
 }
 
-void DateTimeSetDialog::set_date_value(QString &string)
+void DateTimeSetDialog::set_date_value(const QString &string)
 {
     QString str = "-";
     QList<int> valueList = get_value_list(string, str);
@@ -113,7 +113,7 @@ QString DateTimeSetDialog::get_time()
     return m_strTime;
 }
 
-QList<int> DateTimeSetDialog::get_value_list(QString &text, QString &str)
+QList<int> DateTimeSetDialog::get_value_list(const QString &text, const QString &str)
 {
     QList<int> valueList;
     QString tmpString = text;

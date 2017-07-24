@@ -8,7 +8,7 @@
 #ifndef __PREFERENCE_MENU_H__
 #define __PREFERENCE_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 #include "mcu/mcu.h"
 
 namespace DplPreferenceMenu {
@@ -17,18 +17,15 @@ class PreferenceMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit PreferenceMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit PreferenceMenu(QWidget *parent);
     ~PreferenceMenu();
 
-    void show();
-    void hide();
-
 private:
-    SpinMenuItem m_brightItem;
-    SpinMenuItem m_opacityItem;
-    ComboMenuItem m_languageItem;
-    ComboMenuItem m_startingPageItem;
-    ComboMenuItem m_gatemodeItem;
+    SpinMenuItem *m_brightItem;
+    SpinMenuItem *m_opacityItem;
+    ComboMenuItem *m_languageItem;
+    ComboMenuItem *m_startingPageItem;
+    ComboMenuItem *m_gatemodeItem;
 
     Mcu *m_mcu;
 

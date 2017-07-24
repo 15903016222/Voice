@@ -184,15 +184,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SpinMenuItem</class>
-   <extends>QWidget</extends>
-   <header>spin_menu_item.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>StatusBar</class>
    <extends>QWidget</extends>
    <header>status_bar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SpinMenuItem</class>
+   <extends>QWidget</extends>
+   <header>menu/menu_item/spin_menu_item.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

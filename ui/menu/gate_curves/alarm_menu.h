@@ -8,7 +8,7 @@
 #ifndef __ALARM_MENU_H__
 #define __ALARM_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 namespace DplGateCurvesMenu {
 
@@ -16,18 +16,18 @@ class AlarmMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit AlarmMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit AlarmMenu(QWidget *parent);
     ~AlarmMenu();
 
     void show();
     void hide();
 
 private:
-    ComboMenuItem m_alarmItem;
-    ComboMenuItem m_switchItem;
-    ComboMenuItem m_groupItem;
-    ComboMenuItem m_conditionItem;
-    ComboMenuItem m_operatorItem;
+    ComboMenuItem *m_alarmItem;
+    ComboMenuItem *m_switchItem;
+    ComboMenuItem *m_groupItem;
+    ComboMenuItem *m_conditionItem;
+    ComboMenuItem *m_operatorItem;
 };
 
 }

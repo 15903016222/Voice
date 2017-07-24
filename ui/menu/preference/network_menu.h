@@ -8,7 +8,7 @@
 #ifndef __NETWORK_MENU_H__
 #define __NETWORK_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 namespace DplPreferenceMenu {
 
@@ -16,15 +16,15 @@ class NetworkMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit NetworkMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit NetworkMenu(QWidget *parent);
     ~NetworkMenu();
 
     void show();
     void hide();
 
 private:
-    LabelMenuItem m_ipItem;
-    LabelMenuItem m_maskItem;
+    LabelMenuItem *m_ipItem;
+    LabelMenuItem *m_maskItem;
 
 private slots:
     void show_ip_address_dialog();

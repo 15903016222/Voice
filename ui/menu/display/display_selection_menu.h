@@ -8,8 +8,7 @@
 #ifndef __DISPLAY_SELECTION_MENU_H__
 #define __DISPLAY_SELECTION_MENU_H__
 
-#include "base_menu.h"
-#include <display/display.h>
+#include "../base_menu.h"
 
 namespace DplDisplayMenu {
 
@@ -17,7 +16,7 @@ class SelectionMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit SelectionMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit SelectionMenu(QWidget *parent = 0);
     ~SelectionMenu();
 
     void show();
@@ -27,13 +26,11 @@ protected slots:
     void do_displayItem_clicked();
 
 private:
-    LabelMenuItem m_displayItem;
-    ComboMenuItem m_cSourceItem;
-    SpinMenuItem m_minThicknessItem;
-    SpinMenuItem m_maxThicknessItem;
-    ComboMenuItem m_dataCompressionItem;
-
-    DplDisplay::Display *m_display;
+    LabelMenuItem *m_displayItem;
+    ComboMenuItem *m_cSourceItem;
+    SpinMenuItem *m_minThicknessItem;
+    SpinMenuItem *m_maxThicknessItem;
+    ComboMenuItem *m_dataCompressionItem;
 };
 
 }

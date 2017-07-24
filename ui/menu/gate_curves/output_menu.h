@@ -8,7 +8,7 @@
 #ifndef __OUTPUT_MENU_H__
 #define __OUTPUT_MENU_H__
 
-#include "base_menu.h"
+#include "../base_menu.h"
 
 namespace DplGateCurvesMenu {
 
@@ -16,19 +16,16 @@ class OutputMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit OutputMenu(Ui::BaseMenu *ui, QObject *parent);
+    explicit OutputMenu(QWidget *parent);
     ~OutputMenu();
 
-    void show();
-    void hide();
-
 private:
-    ComboMenuItem m_outputItem;
-    ComboMenuItem m_soundItem;
-    SpinMenuItem m_delayItem;
-    SpinMenuItem m_holdTimeItem;
-    LabelMenuItem m_groupItem;
-    ComboMenuItem m_dataItem;
+    ComboMenuItem *m_outputItem;
+    ComboMenuItem *m_soundItem;
+    SpinMenuItem *m_delayItem;
+    SpinMenuItem *m_holdTimeItem;
+    LabelMenuItem *m_groupItem;
+    ComboMenuItem *m_dataItem;
 };
 
 }

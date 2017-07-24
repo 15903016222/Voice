@@ -1,5 +1,5 @@
 #include "tool.h"
-
+#include <global.h>
 
 double Tool::cnf_to_display(const DplDevice::GroupPointer &group, double val)
 {

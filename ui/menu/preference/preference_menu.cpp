@@ -6,70 +6,51 @@
  * @date 2016-12-21
  */
 #include "preference_menu.h"
-#include "combo_menu_item.h"
-#include "spin_menu_item.h"
-#include "label_menu_item.h"
+#include "ui_base_menu.h"
 
 namespace DplPreferenceMenu {
 
-PreferenceMenu::PreferenceMenu(Ui::BaseMenu *ui, QObject *parent) :
-    BaseMenu(ui, parent)
+PreferenceMenu::PreferenceMenu(QWidget *parent) :
+    BaseMenu(parent),
+    m_brightItem(new SpinMenuItem(this, tr("Bright"), "%")),
+    m_opacityItem(new SpinMenuItem(this, tr("Opacity"), "%")),
+    m_languageItem(new ComboMenuItem(this, tr("Language"))),
+    m_startingPageItem(new ComboMenuItem(this, tr("Starting Page"))),
+    m_gatemodeItem(new ComboMenuItem(this, tr("Gate Mode")))
 {
+    ui->layout0->addWidget(m_brightItem);
+    ui->layout1->addWidget(m_opacityItem);
+    ui->layout2->addWidget(m_languageItem);
+    ui->layout3->addWidget(m_startingPageItem);
+    ui->layout4->addWidget(m_gatemodeItem);
+
     m_mcu = Mcu::instance();
 
     /* Bright menu item */
-    m_brightItem.set(tr("Bright"), "%", 1, 100, 0);
-    connect(&m_brightItem, SIGNAL(value_changed(double)), this, SLOT(set_brightness(double)));
-    m_brightItem.set_value(100);
+    m_brightItem->set(1, 100, 0);
+    connect(m_brightItem, SIGNAL(value_changed(double)),
+            this, SLOT(set_brightness(double)));
+    m_brightItem->set_value(100);
 
     /* Opacity menu item */
-    m_opacityItem.set(tr("Opacity"), "%", 20, 100, 0);
-    m_opacityItem.set_value(80);
-    connect(&m_opacityItem, SIGNAL(value_changed(double)), this, SIGNAL(opacity_changed(double)));
+    m_opacityItem->set(20, 100, 0);
+    m_opacityItem->set_value(80);
+    connect(m_opacityItem, SIGNAL(value_changed(double)),
+            this, SIGNAL(opacity_changed(double)));
 
     /* Language menu item */
-    QStringList languageList;
-    languageList.append("English");
-    languageList.append("Chinese");
-    m_languageItem.set(tr("Language"), languageList);
+    m_languageItem->add_item(tr("English"));
+    m_languageItem->add_item(tr("Chinese"));
 
     /* Starting Page Menu Item */
-    m_startingPageItem.set(tr("Starting Page"), s_onOff);
+    m_startingPageItem->set(s_onOff);
 
     /* Gate Mode */
-    m_gatemodeItem.set(tr("Gate Mode"), s_onOff);
+    m_gatemodeItem->set(s_onOff);
 }
 
 PreferenceMenu::~PreferenceMenu()
 {
-}
-
-void PreferenceMenu::show()
-{
-    ui->layout0->addWidget(&m_brightItem);
-    ui->layout1->addWidget(&m_opacityItem);
-    ui->layout2->addWidget(&m_languageItem);
-    ui->layout3->addWidget(&m_startingPageItem);
-    ui->layout4->addWidget(&m_gatemodeItem);
-    m_brightItem.show();
-    m_opacityItem.show();
-    m_languageItem.show();
-    m_startingPageItem.show();
-    m_gatemodeItem.show();
-}
-
-void PreferenceMenu::hide()
-{
-    ui->layout0->removeWidget(&m_brightItem);
-    ui->layout1->removeWidget(&m_opacityItem);
-    ui->layout2->removeWidget(&m_languageItem);
-    ui->layout3->removeWidget(&m_startingPageItem);
-    ui->layout4->removeWidget(&m_gatemodeItem);
-    m_brightItem.hide();
-    m_opacityItem.hide();
-    m_languageItem.hide();
-    m_startingPageItem.hide();
-    m_gatemodeItem.hide();
 }
 
 void PreferenceMenu::set_brightness(double value)
