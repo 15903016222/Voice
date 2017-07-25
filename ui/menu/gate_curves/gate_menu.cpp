@@ -36,22 +36,15 @@ GateMenu::GateMenu(QWidget *parent) :
     ui->layout4->addWidget(m_measureModeItem);
     ui->layout5->addWidget(m_modeItem);
 
-    QStringList gatesList;
     QStringList synchrosList;
-    QStringList measureModesList;
-
-    gatesList.append(tr("A"));
-    gatesList.append(tr("B"));
-    gatesList.append(tr("I"));
 
     synchrosList.append(tr("Gate A"));
     synchrosList.append(tr("Gate I"));
     synchrosList.append(tr("Pulse"));
 
-    measureModesList.append(tr("Edge"));
-    measureModesList.append(tr("Peak"));
-
-    m_gateItem->set(gatesList);
+    m_gateItem->add_item(tr("A"));
+    m_gateItem->add_item(tr("B"));
+    m_gateItem->add_item(tr("I"));
     connect(m_gateItem, SIGNAL(value_changed(int)),
             this, SLOT(do_gateItem_changed(int)));
 
@@ -59,10 +52,8 @@ GateMenu::GateMenu(QWidget *parent) :
     connect(m_switchItem, SIGNAL(value_changed(int)),
             this, SLOT(do_switchItem_changed(int)));
 
-    QStringList paramList;
-    paramList.append(tr("Position"));
-    paramList.append(tr("Mode"));
-    m_paramsItem->set(paramList);
+    m_paramsItem->add_item(tr("Position"));
+    m_paramsItem->add_item(tr("Mode"));
     connect(m_paramsItem, SIGNAL(value_changed(int)),
             this, SLOT(do_paramsItem_changed(int)));
 
@@ -72,10 +63,14 @@ GateMenu::GateMenu(QWidget *parent) :
     connect(m_widthItem, SIGNAL(value_changed(double)),
             this, SLOT(do_widthItem_changed(double)));
 
-    m_widthItem->set(0.05, 525, 2);
     m_thresholdItem->set(0, 100, 0);
+    connect(m_thresholdItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_thresholdItem_changed(double)));
+
     m_synchroItem->set(synchrosList);
-    m_measureModeItem->set(measureModesList);
+
+    m_measureModeItem->add_item(tr("Edge"));
+    m_measureModeItem->add_item(tr("Peak"));
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
@@ -99,6 +94,7 @@ void GateMenu::update_gate(const DplGate::GatePointer &gate)
     m_switchItem->set_current_index(!gate->is_visible());
     update_startItem(gate);
     update_widhtItem(gate);
+    update_thresholdItem(gate);
 }
 
 void GateMenu::update_startItem(const DplGate::GatePointer &gate)
@@ -130,6 +126,11 @@ void GateMenu::update_widhtItem(const DplGate::GatePointer &gate)
     m_widthItem->set_value(Tool::cnf_to_display(m_group, gate->width()));
 }
 
+void GateMenu::update_thresholdItem(const DplGate::GatePointer &gate)
+{
+    m_thresholdItem->set_value(gate->height());
+}
+
 void GateMenu::do_gateItem_changed(int val)
 {
     update_gate(m_group->gate(static_cast<DplGate::Gate::Type>(val)));
@@ -145,6 +146,12 @@ void GateMenu::do_widthItem_changed(double val)
 {
     DplGate::GatePointer gate = m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()));
     gate->set_width(Tool::display_to_cnf(m_group, val));
+}
+
+void GateMenu::do_thresholdItem_changed(double val)
+{
+    DplGate::GatePointer gate = m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()));
+    gate->set_height(val+0.5);
 }
 
 void GateMenu::do_switchItem_changed(int index)

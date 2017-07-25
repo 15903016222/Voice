@@ -25,6 +25,7 @@ protected:
     void update_gate(const DplGate::GatePointer &gate);
     void update_startItem(const DplGate::GatePointer &gate);
     void update_widhtItem(const DplGate::GatePointer &gate);
+    void update_thresholdItem(const DplGate::GatePointer &gate);
 
 protected slots:
     void do_gateItem_changed(int val);
@@ -32,6 +33,8 @@ protected slots:
     void do_startItem_changed(double val);
 
     void do_widthItem_changed(double val);
+
+    void do_thresholdItem_changed(double val);
 
     void do_switchItem_changed(int index);
 

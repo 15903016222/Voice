@@ -18,7 +18,9 @@ static const int GATE_HEIGHT = 4;
 GateItem::GateItem(const QColor &color, QGraphicsItem *parent) :
     QGraphicsItem(parent),
     m_ratio(1),
+    m_start(0),
     m_width(50),
+    m_height(25),
     m_color(color)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
@@ -46,6 +48,6 @@ void GateItem::update_pos()
 {
     if (scene() && !scene()->views().isEmpty()) {
         setPos(scene()->sceneRect().left() + m_start,
-               scene()->sceneRect().bottom() + scene()->sceneRect().height() * m_height / 100);
+               scene()->sceneRect().bottom() - scene()->sceneRect().height() * m_height / 100);
     }
 }

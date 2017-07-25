@@ -104,6 +104,8 @@ void AscanDisplay::update_gateItem(const DplGate::GatePointer &gate, GateItem *g
     gateItem->set_start(gate->start() - m_group->sample()->start());
 
     gateItem->set_width(gate->width());
+
+    gateItem->set_height(gate->height());
 }
 
 void AscanDisplay::do_gateA_changed()
