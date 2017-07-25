@@ -31,13 +31,16 @@ public:
 protected slots:
     void do_data_event();
 
-    void update_gate(const DplGate::GatePointer &gate, GateItem *gateItem);
-
     void do_gateA_changed();
     void do_gateB_changed();
     void do_gateI_changed();
 
+    void do_sample_changed();
+
     void do_ascanView_size_changed(const QSize &size);
+
+protected:
+    void update_gateItem(const DplGate::GatePointer &gate, GateItem *gateItem);
 
 protected:
     Ui::AscanDisplay *ui;

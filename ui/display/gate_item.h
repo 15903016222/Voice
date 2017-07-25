@@ -59,19 +59,44 @@ public:
     void set_height(int height);
 
 private:
+    void update_pos();
+
+private:
     qreal m_ratio;      // 比例系数
-    qreal m_width;      // 闸门宽度(比例系数)
+    qreal m_start;      // 闸门起点（比例系数）
+    qreal m_width;      // 闸门宽度（比例系数）
+    int m_height;       // 高度(%)
     QColor m_color;
 };
 
 inline void GateItem::set_ratio(qreal ratio)
 {
+    m_start *= (ratio/m_ratio);
+    m_width *= (ratio/m_ratio);
     m_ratio = ratio;
+    update_pos();
+}
+
+inline void GateItem::set_color(const QColor &color)
+{
+    m_color = color;
+}
+
+inline void GateItem::set_start(qreal start)
+{
+    m_start = start * m_ratio;
+    update_pos();
 }
 
 inline void GateItem::set_width(qreal width)
 {
     m_width = width * m_ratio;
+}
+
+inline void GateItem::set_height(int height)
+{
+    m_height = height;
+    update_pos();
 }
 
 #endif // __GATE_ITEM_H__

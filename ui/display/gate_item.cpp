@@ -42,20 +42,10 @@ void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->drawLine(0, 0, m_width, 0);
 }
 
-void GateItem::set_start(qreal start)
+void GateItem::update_pos()
 {
-    if (!scene()) {
-        return;
+    if (scene() && !scene()->views().isEmpty()) {
+        setPos(scene()->sceneRect().left() + m_start,
+               scene()->sceneRect().bottom() + scene()->sceneRect().height() * m_height / 100);
     }
-
-    if (scene()->views().isEmpty()) {
-        return;
-    }
-
-    setPos(scene()->sceneRect().left() + m_ratio * start,
-           pos().y());
-}
-
-void GateItem::set_height(int height)
-{
 }

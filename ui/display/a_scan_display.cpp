@@ -67,6 +67,11 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     connect(group->gate(DplGate::Gate::I).data(),
             SIGNAL(changed()),
             this, SLOT(do_gateI_changed()));
+    connect(group->sample().data(), SIGNAL(start_changed(float)),
+            this, SLOT(do_sample_changed()));
+    connect(group->sample().data(), SIGNAL(range_changed(float)),
+            this, SLOT(do_sample_changed()));
+
 
     /* source setting */
     DplSource::BeamsPointer beams = m_group->beams();
@@ -90,32 +95,37 @@ void AscanDisplay::do_data_event()
     m_waveItem->set_wave(m_group->beams()->get(0)->get_wave());
 }
 
-void AscanDisplay::update_gate(const DplGate::GatePointer &gate, GateItem *gateItem)
+void AscanDisplay::update_gateItem(const DplGate::GatePointer &gate, GateItem *gateItem)
 {
-    qDebug("%s[%d]: ",__func__, __LINE__);
-
     gateItem->setVisible(gate->is_visible());
 
     gateItem->set_ratio(m_waveItem->size().width() / m_group->sample()->range());
 
-    gateItem->set_start(gate->start());
+    gateItem->set_start(gate->start() - m_group->sample()->start());
 
     gateItem->set_width(gate->width());
 }
 
 void AscanDisplay::do_gateA_changed()
 {
-    update_gate(m_group->gate(DplGate::Gate::A), m_gateAItem);
+    update_gateItem(m_group->gate(DplGate::Gate::A), m_gateAItem);
 }
 
 void AscanDisplay::do_gateB_changed()
 {
-    update_gate(m_group->gate(DplGate::Gate::B), m_gateBItem);
+    update_gateItem(m_group->gate(DplGate::Gate::B), m_gateBItem);
 }
 
 void AscanDisplay::do_gateI_changed()
 {
-    update_gate(m_group->gate(DplGate::Gate::I), m_gateIItem);
+    update_gateItem(m_group->gate(DplGate::Gate::I), m_gateIItem);
+}
+
+void AscanDisplay::do_sample_changed()
+{
+    update_gateItem(m_group->gate(DplGate::Gate::A), m_gateAItem);
+    update_gateItem(m_group->gate(DplGate::Gate::B), m_gateBItem);
+    update_gateItem(m_group->gate(DplGate::Gate::I), m_gateIItem);
 }
 
 void AscanDisplay::do_ascanView_size_changed(const QSize &size)
