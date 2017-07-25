@@ -52,9 +52,9 @@ Group::Group(int index, QObject *parent):
     QObject(parent),
     d(new GroupPrivate()),
     m_sample(new DplUt::Sample(DplFpga::Fpga::SAMPLE_PRECISION, parent)),
-    m_gateA(new Gate(Gate::A, parent)),
-    m_gateB(new Gate(Gate::B, parent)),
-    m_gateI(new Gate(Gate::I, parent)),
+    m_gateA(new DplGate::Gate(DplGate::Gate::A, parent)),
+    m_gateB(new DplGate::Gate(DplGate::Gate::B, parent)),
+    m_gateI(new DplGate::Gate(DplGate::Gate::I, parent)),
     m_beams(new DplSource::Beams),
     m_focallawer(new DplFocallaw::Focallawer),
     m_fpgaGroup(new DplFpga::Group(index, parent))
@@ -63,13 +63,13 @@ Group::Group(int index, QObject *parent):
 //    m_fpgaGroup->show_info();
 
     /* 关联闸门 */
-    connect(static_cast<Gate *>(m_gateA.data()),
+    connect(static_cast<DplGate::Gate *>(m_gateA.data()),
             SIGNAL(height_changed(int)),
             fpgaGroup, SLOT(set_gate_a_height(int)));
-    connect(static_cast<Gate *>(m_gateB.data()),
+    connect(static_cast<DplGate::Gate *>(m_gateB.data()),
             SIGNAL(height_changed(int)),
             fpgaGroup, SLOT(set_gate_b_height(int)));
-    connect(static_cast<Gate *>(m_gateI.data()),
+    connect(static_cast<DplGate::Gate *>(m_gateI.data()),
             SIGNAL(height_changed(int)),
             fpgaGroup, SLOT(set_gate_i_height(int)));
 

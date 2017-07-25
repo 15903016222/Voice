@@ -28,7 +28,11 @@ public:
      */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    void set_geometry(const QRectF &rect);
+    /**
+     * @brief set_ratio 设置画布宽度与声程范围(ns)的比例系数
+     * @param ratio     系数
+     */
+    void set_ratio(qreal ratio);
 
     /**
      * @brief set_color 设置闸门显示颜色
@@ -38,9 +42,15 @@ public:
 
     /**
      * @brief set_start 设置显示起点
-     * @param start     起点
+     * @param start     起点(ns)
      */
     void set_start(qreal start);
+
+    /**
+     * @brief set_width 设置宽度
+     * @param width     宽度(ns)
+     */
+    void set_width(qreal width);
 
     /**
      * @brief set_height    设置显示高度
@@ -49,8 +59,19 @@ public:
     void set_height(int height);
 
 private:
-    qreal m_width;      // 闸门宽度
+    qreal m_ratio;      // 比例系数
+    qreal m_width;      // 闸门宽度(比例系数)
     QColor m_color;
 };
+
+inline void GateItem::set_ratio(qreal ratio)
+{
+    m_ratio = ratio;
+}
+
+inline void GateItem::set_width(qreal width)
+{
+    m_width = width * m_ratio;
+}
 
 #endif // __GATE_ITEM_H__

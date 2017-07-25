@@ -22,17 +22,22 @@ public:
     ~GateMenu();
 
 protected:
-    void update_gate(const DplDevice::GatePointer &gate);
-    void update_startItem(const DplDevice::GatePointer &gate);
+    void update_gate(const DplGate::GatePointer &gate);
+    void update_startItem(const DplGate::GatePointer &gate);
+    void update_widhtItem(const DplGate::GatePointer &gate);
 
 protected slots:
     void do_gateItem_changed(int val);
 
     void do_startItem_changed(double val);
 
+    void do_widthItem_changed(double val);
+
     void do_switchItem_changed(int index);
 
     void do_paramsItem_changed(int index);
+
+    void do_sample_changed(void);
 
     void do_current_group_changed(const DplDevice::GroupPointer &group);
 

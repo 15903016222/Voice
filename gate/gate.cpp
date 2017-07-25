@@ -1,6 +1,6 @@
 #include "gate.h"
 
-namespace DplDevice {
+namespace DplGate {
 
 Gate::Gate(Type type, QObject *parent) :
     QObject(parent),
@@ -13,6 +13,8 @@ Gate::Gate(Type type, QObject *parent) :
     connect(this, SIGNAL(height_changed(int)),
             this, SIGNAL(changed()));
     connect(this, SIGNAL(start_changed(float)),
+            this, SIGNAL(changed()));
+    connect(this, SIGNAL(width_changed(float)),
             this, SIGNAL(changed()));
     connect(this, SIGNAL(visible_changed(bool)),
             this, SIGNAL(changed()));

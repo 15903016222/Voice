@@ -12,7 +12,7 @@
 #include <source/beams.h>
 #include <focallaw/focallawer.h>
 #include <ut/sample.h>
-#include "gate.h"
+#include <gate/gate.h>
 
 namespace DplDevice {
 
@@ -94,7 +94,7 @@ public:
      * @param type  闸门类型
      * @return      闸门对象指针
      */
-    const GatePointer &gate(Gate::Type type) const;
+    const DplGate::GatePointer &gate(DplGate::Gate::Type type) const;
 
     /**
      * @brief beams 获取数据源Beam组
@@ -120,9 +120,9 @@ private slots:
 private:
     GroupPrivate *d;
     DplUt::SamplePointer m_sample;
-    GatePointer m_gateA;
-    GatePointer m_gateB;
-    GatePointer m_gateI;
+    DplGate::GatePointer m_gateA;
+    DplGate::GatePointer m_gateB;
+    DplGate::GatePointer m_gateI;
     DplSource::BeamsPointer m_beams;
     DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplFpga::GroupPointer m_fpgaGroup;
@@ -152,11 +152,11 @@ inline const DplUt::SamplePointer &Group::sample() const
     return m_sample;
 }
 
-inline const GatePointer &Group::gate(Gate::Type type) const
+inline const DplGate::GatePointer &Group::gate(DplGate::Gate::Type type) const
 {
-    if (type == Gate::A) {
+    if (type == DplGate::Gate::A) {
         return m_gateA;
-    } else if (type == Gate::B) {
+    } else if (type == DplGate::Gate::B) {
         return m_gateB;
     } else {
         return m_gateI;

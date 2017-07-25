@@ -17,6 +17,7 @@ static const int GATE_HEIGHT = 4;
 
 GateItem::GateItem(const QColor &color, QGraphicsItem *parent) :
     QGraphicsItem(parent),
+    m_ratio(1),
     m_width(50),
     m_color(color)
 {
@@ -41,11 +42,6 @@ void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->drawLine(0, 0, m_width, 0);
 }
 
-void GateItem::set_geometry(const QRectF &rect)
-{
-    m_width = rect.width();
-}
-
 void GateItem::set_start(qreal start)
 {
     if (!scene()) {
@@ -56,10 +52,10 @@ void GateItem::set_start(qreal start)
         return;
     }
 
-    setPos(scene()->sceneRect().left() + start, pos().y());
+    setPos(scene()->sceneRect().left() + m_ratio * start,
+           pos().y());
 }
 
 void GateItem::set_height(int height)
 {
-//    setPos();
 }

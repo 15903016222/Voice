@@ -69,6 +69,9 @@ GateMenu::GateMenu(QWidget *parent) :
     connect(m_startItem, SIGNAL(value_changed(double)),
             this, SLOT(do_startItem_changed(double)));
 
+    connect(m_widthItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_widthItem_changed(double)));
+
     m_widthItem->set(0.05, 525, 2);
     m_thresholdItem->set(0, 100, 0);
     m_synchroItem->set(synchrosList);
@@ -84,19 +87,21 @@ GateMenu::GateMenu(QWidget *parent) :
     m_modeItem->set(modeList);
 
     do_current_group_changed(DplDevice::Device::instance()->current_group());
+    do_paramsItem_changed(0);
 }
 
 GateMenu::~GateMenu()
 {
 }
 
-void GateMenu::update_gate(const DplDevice::GatePointer &gate)
+void GateMenu::update_gate(const DplGate::GatePointer &gate)
 {
     m_switchItem->set_current_index(!gate->is_visible());
     update_startItem(gate);
+    update_widhtItem(gate);
 }
 
-void GateMenu::update_startItem(const DplDevice::GatePointer &gate)
+void GateMenu::update_startItem(const DplGate::GatePointer &gate)
 {
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         m_startItem->set_unit(US_STR);
@@ -106,24 +111,45 @@ void GateMenu::update_startItem(const DplDevice::GatePointer &gate)
 
     m_startItem->set(Tool::cnf_to_display(m_group, m_group->sample()->start()),
                      Tool::cnf_to_display(m_group, m_group->sample()->start()+m_group->sample()->range()),
-                     2);
+                     2, 0.01);
     m_startItem->set_value(Tool::cnf_to_display(m_group, gate->start()));
+}
+
+void GateMenu::update_widhtItem(const DplGate::GatePointer &gate)
+{
+    if (m_group->ut_unit() == DplDevice::Group::Time) {
+        m_widthItem->set_unit(US_STR);
+    } else {
+        m_widthItem->set_unit(MM_STR);
+    }
+
+    m_widthItem->set(Tool::cnf_to_display(m_group, 0),
+                     Tool::cnf_to_display(m_group, m_group->sample()->range()),
+                     2, 0.01);
+
+    m_widthItem->set_value(Tool::cnf_to_display(m_group, gate->width()));
 }
 
 void GateMenu::do_gateItem_changed(int val)
 {
-    update_gate(m_group->gate(static_cast<DplDevice::Gate::Type>(val)));
+    update_gate(m_group->gate(static_cast<DplGate::Gate::Type>(val)));
 }
 
 void GateMenu::do_startItem_changed(double val)
 {
-    DplDevice::GatePointer gate = m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem->current_index()));
+    DplGate::GatePointer gate = m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()));
     gate->set_start(Tool::display_to_cnf(m_group, val));
+}
+
+void GateMenu::do_widthItem_changed(double val)
+{
+    DplGate::GatePointer gate = m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()));
+    gate->set_width(Tool::display_to_cnf(m_group, val));
 }
 
 void GateMenu::do_switchItem_changed(int index)
 {
-    m_group->gate(static_cast<DplDevice::Gate::Type>(m_gateItem->current_index()))->set_visible(!index);
+    m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()))->set_visible(!index);
 }
 
 void GateMenu::do_paramsItem_changed(int index)
@@ -136,11 +162,28 @@ void GateMenu::do_paramsItem_changed(int index)
     m_modeItem->setVisible(!!index);
 }
 
+void GateMenu::do_sample_changed()
+{
+    do_gateItem_changed(m_gateItem->current_index());
+}
+
 void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
+    if (!m_group.isNull()) {
+        disconnect(m_group->sample().data(), SIGNAL(start_changed(float)),
+                   this, SLOT(do_sample_changed()));
+        disconnect(m_group->sample().data(), SIGNAL(range_changed(float)),
+                   this, SLOT(do_sample_changed()));
+    }
+
     m_group = group;
-    update_gate(group->gate(DplDevice::Gate::A));
-    do_paramsItem_changed(m_paramsItem->current_index());
+
+    connect(m_group->sample().data(), SIGNAL(start_changed(float)),
+            this, SLOT(do_sample_changed()));
+    connect(m_group->sample().data(), SIGNAL(range_changed(float)),
+            this, SLOT(do_sample_changed()));
+
+    update_gate(m_group->gate(DplGate::Gate::A));
 }
 
 }

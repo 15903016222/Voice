@@ -1,10 +1,10 @@
-#ifndef __GATE_H__
-#define __GATE_H__
+#ifndef __DPLGATE_GATE_H__
+#define __DPLGATE_GATE_H__
 
 #include <QObject>
 #include <QSharedPointer>
 
-namespace DplDevice {
+namespace DplGate {
 
 class Gate : public QObject
 {
@@ -81,9 +81,15 @@ signals:
 
     /**
      * @brief start_changed 起点改变信号
-     * @param val           起点值
+     * @param val           起点值(ns)
      */
     void start_changed(float val);
+
+    /**
+     * @brief width_changed 宽度改变信号
+     * @param val           宽度值(ns)
+     */
+    void width_changed(float val);
 
     /**
      * @brief visible_changed   可视状态改变信号
@@ -121,7 +127,10 @@ inline float Gate::width() const
 
 inline void Gate::set_width(float val)
 {
-    m_width = val;
+    if (!qFuzzyCompare(val, m_width)) {
+        m_width = val;
+        emit width_changed(val);
+    }
 }
 
 inline int Gate::height() const
@@ -151,4 +160,4 @@ inline void Gate::set_visible(bool visible)
 }
 
 }
-#endif // __GATE_H__
+#endif // __DPLGATE_GATE_H__

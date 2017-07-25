@@ -58,6 +58,8 @@ include(device/device.pri)
 
 include(ut/ut.pri)
 
+include(gate/gate.pri)
+
 include(ui/ui.pri)
 
 include(mcu/mcu.pri)

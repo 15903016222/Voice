@@ -58,15 +58,15 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
     /* Gate */
-    connect(group->gate(DplDevice::Gate::A).data(),
+    connect(group->gate(DplGate::Gate::A).data(),
             SIGNAL(changed()),
-            this, SLOT(do_gate_changed()));
-    connect(group->gate(DplDevice::Gate::B).data(),
+            this, SLOT(do_gateA_changed()));
+    connect(group->gate(DplGate::Gate::B).data(),
             SIGNAL(changed()),
-            this, SLOT(do_gate_changed()));
-    connect(group->gate(DplDevice::Gate::I).data(),
+            this, SLOT(do_gateB_changed()));
+    connect(group->gate(DplGate::Gate::I).data(),
             SIGNAL(changed()),
-            this, SLOT(do_gate_changed()));
+            this, SLOT(do_gateI_changed()));
 
     /* source setting */
     DplSource::BeamsPointer beams = m_group->beams();
@@ -90,20 +90,32 @@ void AscanDisplay::do_data_event()
     m_waveItem->set_wave(m_group->beams()->get(0)->get_wave());
 }
 
-void AscanDisplay::do_gate_changed()
+void AscanDisplay::update_gate(const DplGate::GatePointer &gate, GateItem *gateItem)
 {
-    m_gateAItem->setVisible(m_group->gate(DplDevice::Gate::A)->is_visible());
-    m_gateBItem->setVisible(m_group->gate(DplDevice::Gate::B)->is_visible());
-    m_gateIItem->setVisible(m_group->gate(DplDevice::Gate::I)->is_visible());
+    qDebug("%s[%d]: ",__func__, __LINE__);
 
-    DplDevice::GatePointer gate = m_group->gate(DplDevice::Gate::A);
-    DplUt::SamplePointer sample = m_group->sample();
+    gateItem->setVisible(gate->is_visible());
 
-    qreal start = m_waveItem->size().width() / sample->range() * gate->start();
+    gateItem->set_ratio(m_waveItem->size().width() / m_group->sample()->range());
 
-    qDebug() << "Start: " << start;
+    gateItem->set_start(gate->start());
 
-    m_gateAItem->set_start(start);
+    gateItem->set_width(gate->width());
+}
+
+void AscanDisplay::do_gateA_changed()
+{
+    update_gate(m_group->gate(DplGate::Gate::A), m_gateAItem);
+}
+
+void AscanDisplay::do_gateB_changed()
+{
+    update_gate(m_group->gate(DplGate::Gate::B), m_gateBItem);
+}
+
+void AscanDisplay::do_gateI_changed()
+{
+    update_gate(m_group->gate(DplGate::Gate::I), m_gateIItem);
 }
 
 void AscanDisplay::do_ascanView_size_changed(const QSize &size)
@@ -117,4 +129,7 @@ void AscanDisplay::do_ascanView_size_changed(const QSize &size)
                                    size.height(), size.width());
         m_waveItem->set_size(QSize(size.height(), size.width()));
     }
+    do_gateA_changed();
+    do_gateB_changed();
+    do_gateI_changed();
 }
