@@ -71,6 +71,23 @@ void SpinMenuItem::set_step(double step)
     update_title();
 }
 
+void SpinMenuItem::set_value(double value)
+{
+    if (qFuzzyCompare(m_value, value)) {
+        return;
+    }
+
+    if (value > m_max) {
+        m_value = m_max;
+    } else if (value < m_min) {
+        m_value = m_min;
+    } else {
+        m_value = value;
+    }
+    update_value();
+    emit value_changed(m_value);
+}
+
 bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::MouseButtonRelease) {

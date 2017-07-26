@@ -148,13 +148,4 @@ inline double SpinMenuItem::get_value() const
     return m_value;
 }
 
-inline void SpinMenuItem::set_value(double value)
-{
-    if (m_value != value) {
-        m_value = value;
-        update_value();
-        emit value_changed(m_value);
-    }
-}
-
 #endif // __MENU_ITEM_H__
