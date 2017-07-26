@@ -6,12 +6,9 @@
  */
 #include "a_scan_scene.h"
 
-#include <QPainter>
-
 #include <QDebug>
 
 AscanScene::AscanScene(QObject *parent) :
     QGraphicsScene(parent)
 {
-
 }

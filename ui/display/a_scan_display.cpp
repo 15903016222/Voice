@@ -50,6 +50,13 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     m_gateBItem->hide();
     m_gateIItem->hide();
 
+    connect(m_gateAItem, SIGNAL(pos_changed()),
+            this, SLOT(do_gateAItem_pos_changed()));
+    connect(m_gateBItem, SIGNAL(pos_changed()),
+            this, SLOT(do_gateBItem_pos_changed()));
+    connect(m_gateIItem, SIGNAL(pos_changed()),
+            this, SLOT(do_gateIItem_pos_changed()));
+
     if (orientation == Qt::Vertical) {
         m_ascanView->rotate(90);
     }
@@ -97,6 +104,10 @@ void AscanDisplay::do_data_event()
 
 void AscanDisplay::update_gateItem(const DplGate::GatePointer &gate, GateItem *gateItem)
 {
+    if (gateItem->is_moving()) {
+        return;
+    }
+
     gateItem->setVisible(gate->is_visible());
 
     gateItem->set_ratio(m_waveItem->size().width() / m_group->sample()->range());
@@ -123,6 +134,27 @@ void AscanDisplay::do_gateI_changed()
     update_gateItem(m_group->gate(DplGate::Gate::I), m_gateIItem);
 }
 
+void AscanDisplay::update_gate(const DplGate::GatePointer &gate, GateItem *gateItem)
+{
+    gate->set_start(gateItem->start());
+    gate->set_height(gateItem->height());
+}
+
+void AscanDisplay::do_gateAItem_pos_changed()
+{
+    update_gate(m_group->gate(DplGate::Gate::A), m_gateAItem);
+}
+
+void AscanDisplay::do_gateBItem_pos_changed()
+{
+    update_gate(m_group->gate(DplGate::Gate::B), m_gateBItem);
+}
+
+void AscanDisplay::do_gateIItem_pos_changed()
+{
+    update_gate(m_group->gate(DplGate::Gate::I), m_gateIItem);
+}
+
 void AscanDisplay::do_sample_changed()
 {
     update_gateItem(m_group->gate(DplGate::Gate::A), m_gateAItem);
@@ -145,3 +177,4 @@ void AscanDisplay::do_ascanView_size_changed(const QSize &size)
     do_gateB_changed();
     do_gateI_changed();
 }
+

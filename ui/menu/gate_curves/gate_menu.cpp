@@ -36,12 +36,6 @@ GateMenu::GateMenu(QWidget *parent) :
     ui->layout4->addWidget(m_measureModeItem);
     ui->layout5->addWidget(m_modeItem);
 
-    QStringList synchrosList;
-
-    synchrosList.append(tr("Gate A"));
-    synchrosList.append(tr("Gate I"));
-    synchrosList.append(tr("Pulse"));
-
     m_gateItem->add_item(tr("A"));
     m_gateItem->add_item(tr("B"));
     m_gateItem->add_item(tr("I"));
@@ -67,7 +61,9 @@ GateMenu::GateMenu(QWidget *parent) :
     connect(m_thresholdItem, SIGNAL(value_changed(double)),
             this, SLOT(do_thresholdItem_changed(double)));
 
-    m_synchroItem->set(synchrosList);
+    m_synchroItem->add_item(tr("Gate A"));
+    m_synchroItem->add_item(tr("Gate I"));
+    m_synchroItem->add_item(tr("Pulse"));
 
     m_measureModeItem->add_item(tr("Edge"));
     m_measureModeItem->add_item(tr("Peak"));
@@ -76,10 +72,8 @@ GateMenu::GateMenu(QWidget *parent) :
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
             this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
 
-    QStringList modeList;
-    modeList.append(tr("Sound Path"));
-    modeList.append(tr("Depth"));
-    m_modeItem->set(modeList);
+    m_modeItem->add_item(tr("Sound Path"));
+    m_modeItem->add_item(tr("Depth"));
 
     do_current_group_changed(DplDevice::Device::instance()->current_group());
     do_paramsItem_changed(0);
@@ -89,15 +83,15 @@ GateMenu::~GateMenu()
 {
 }
 
-void GateMenu::update_gate(const DplGate::GatePointer &gate)
+void GateMenu::update_items()
 {
-    m_switchItem->set_current_index(!gate->is_visible());
-    update_startItem(gate);
-    update_widhtItem(gate);
-    update_thresholdItem(gate);
+    m_switchItem->set_current_index(!m_gate->is_visible());
+    update_startItem();
+    update_widhtItem();
+    update_thresholdItem();
 }
 
-void GateMenu::update_startItem(const DplGate::GatePointer &gate)
+void GateMenu::update_startItem()
 {
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         m_startItem->set_unit(US_STR);
@@ -108,10 +102,10 @@ void GateMenu::update_startItem(const DplGate::GatePointer &gate)
     m_startItem->set(Tool::cnf_to_display(m_group, m_group->sample()->start()),
                      Tool::cnf_to_display(m_group, m_group->sample()->start()+m_group->sample()->range()),
                      2, 0.01);
-    m_startItem->set_value(Tool::cnf_to_display(m_group, gate->start()));
+    m_startItem->set_value(Tool::cnf_to_display(m_group, m_gate->start()));
 }
 
-void GateMenu::update_widhtItem(const DplGate::GatePointer &gate)
+void GateMenu::update_widhtItem()
 {
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         m_widthItem->set_unit(US_STR);
@@ -123,17 +117,34 @@ void GateMenu::update_widhtItem(const DplGate::GatePointer &gate)
                      Tool::cnf_to_display(m_group, m_group->sample()->range()),
                      2, 0.01);
 
-    m_widthItem->set_value(Tool::cnf_to_display(m_group, gate->width()));
+    m_widthItem->set_value(Tool::cnf_to_display(m_group, m_gate->width()));
 }
 
-void GateMenu::update_thresholdItem(const DplGate::GatePointer &gate)
+void GateMenu::update_thresholdItem()
 {
-    m_thresholdItem->set_value(gate->height());
+    m_thresholdItem->set_value(m_gate->height());
 }
 
 void GateMenu::do_gateItem_changed(int val)
 {
-    update_gate(m_group->gate(static_cast<DplGate::Gate::Type>(val)));
+    if (! m_gate.isNull()) {
+        disconnect(static_cast<DplGate::Gate *>(m_gate.data()),
+                   SIGNAL(start_changed(float)),
+                   this, SLOT(update_startItem()));
+        disconnect(static_cast<DplGate::Gate *>(m_gate.data()),
+                   SIGNAL(height_changed(int)),
+                   this, SLOT(update_thresholdItem()));
+    }
+
+    m_gate = m_group->gate(static_cast<DplGate::Gate::Type>(val));
+
+    connect(static_cast<DplGate::Gate *>(m_gate.data()),
+               SIGNAL(start_changed(float)),
+               this, SLOT(update_startItem()));
+    connect(static_cast<DplGate::Gate *>(m_gate.data()),
+               SIGNAL(height_changed(int)),
+               this, SLOT(update_thresholdItem()));
+    update_items();
 }
 
 void GateMenu::do_startItem_changed(double val)
@@ -190,7 +201,7 @@ void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
     connect(m_group->sample().data(), SIGNAL(range_changed(float)),
             this, SLOT(do_sample_changed()));
 
-    update_gate(m_group->gate(DplGate::Gate::A));
+    do_gateItem_changed(DplGate::Gate::A);
 }
 
 }

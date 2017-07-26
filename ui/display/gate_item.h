@@ -9,8 +9,9 @@
 
 #include <QGraphicsItem>
 
-class GateItem : public QGraphicsItem
+class GateItem :public QGraphicsObject
 {
+    Q_OBJECT
 public:
     GateItem(const QColor &color = Qt::red, QGraphicsItem *parent = 0);
 
@@ -41,6 +42,12 @@ public:
     void set_color(const QColor &color);
 
     /**
+     * @brief start 获取显示起点
+     * @return      起点值(ns)
+     */
+    qreal start() const;
+
+    /**
      * @brief set_start 设置显示起点
      * @param start     起点(ns)
      */
@@ -53,10 +60,33 @@ public:
     void set_width(qreal width);
 
     /**
+     * @brief height    获取显示高度
+     * @return          高度值(%)
+     */
+    int height() const;
+
+    /**
      * @brief set_height    设置显示高度
      * @param height        高度(%)
      */
     void set_height(int height);
+
+    /**
+     * @brief is_moving 获取移动状态
+     * @return          存于移动状态时返回true，否则为false
+     */
+    bool is_moving() const;
+
+signals:
+    void pos_changed();
+
+protected:
+    void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 private:
     void update_pos();
@@ -67,6 +97,7 @@ private:
     qreal m_width;      // 闸门宽度（比例系数）
     int m_height;       // 高度(%)
     QColor m_color;
+    bool m_movingFlag;
 };
 
 inline void GateItem::set_ratio(qreal ratio)
@@ -82,6 +113,11 @@ inline void GateItem::set_color(const QColor &color)
     m_color = color;
 }
 
+inline qreal GateItem::start() const
+{
+    return m_start / m_ratio;
+}
+
 inline void GateItem::set_start(qreal start)
 {
     m_start = start * m_ratio;
@@ -93,10 +129,20 @@ inline void GateItem::set_width(qreal width)
     m_width = width * m_ratio;
 }
 
+inline int GateItem::height() const
+{
+    return m_height;
+}
+
 inline void GateItem::set_height(int height)
 {
     m_height = height;
     update_pos();
+}
+
+inline bool GateItem::is_moving() const
+{
+    return m_movingFlag;
 }
 
 #endif // __GATE_ITEM_H__

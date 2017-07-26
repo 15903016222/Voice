@@ -22,10 +22,9 @@ public:
     ~GateMenu();
 
 protected:
-    void update_gate(const DplGate::GatePointer &gate);
-    void update_startItem(const DplGate::GatePointer &gate);
-    void update_widhtItem(const DplGate::GatePointer &gate);
-    void update_thresholdItem(const DplGate::GatePointer &gate);
+    void update_items();
+    void update_gateItem();
+    void update_widhtItem();
 
 protected slots:
     void do_gateItem_changed(int val);
@@ -44,6 +43,10 @@ protected slots:
 
     void do_current_group_changed(const DplDevice::GroupPointer &group);
 
+    void update_startItem();
+
+    void update_thresholdItem();
+
 private:
     ComboMenuItem *m_gateItem;
     ComboMenuItem *m_switchItem;
@@ -56,6 +59,7 @@ private:
     ComboMenuItem *m_modeItem;
 
     DplDevice::GroupPointer m_group;
+    DplGate::GatePointer m_gate;
 };
 
 }
