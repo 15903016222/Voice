@@ -46,11 +46,21 @@ public:
     void set_mode(Mode mode);
 
     enum UtUnit {
-        Time,
-        SoundPath,
-        TruePath
+        Time,           // 时间
+        SoundPath,      // 声程
+        TruePath        // 真实深度
     };
+
+    /**
+     * @brief ut_unit   获取显示类型
+     * @return          显示类型
+     */
     UtUnit ut_unit();
+
+    /**
+     * @brief set_ut_unit   设置显示类型
+     * @param type          显示类型
+     */
     void set_ut_unit(UtUnit type);
 
     /**
@@ -114,6 +124,12 @@ signals:
     void ut_unit_changed(DplDevice::Group::UtUnit type);
     void probe_changed(DplFocallaw::ProbePointer probePtr);
 
+public slots:
+    /**
+     * @brief deploy_beams  下发组Beams的配置信息
+     */
+    void deploy_beams() const;
+
 private slots:
     void update_sample();
 
@@ -127,6 +143,9 @@ private:
     DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplFpga::GroupPointer m_fpgaGroup;
 
+private:
+    void init_gate(DplGate::Gate *gate);
+    void init_gates();
     void init_sample();
 };
 

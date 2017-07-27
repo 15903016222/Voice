@@ -59,19 +59,9 @@ Group::Group(int index, QObject *parent):
     m_focallawer(new DplFocallaw::Focallawer),
     m_fpgaGroup(new DplFpga::Group(index, parent))
 {
-    DplFpga::Group *fpgaGroup = static_cast<DplFpga::Group *>(m_fpgaGroup.data());
 //    m_fpgaGroup->show_info();
 
-    /* 关联闸门 */
-    connect(static_cast<DplGate::Gate *>(m_gateA.data()),
-            SIGNAL(height_changed(int)),
-            fpgaGroup, SLOT(set_gate_a_height(int)));
-    connect(static_cast<DplGate::Gate *>(m_gateB.data()),
-            SIGNAL(height_changed(int)),
-            fpgaGroup, SLOT(set_gate_b_height(int)));
-    connect(static_cast<DplGate::Gate *>(m_gateI.data()),
-            SIGNAL(height_changed(int)),
-            fpgaGroup, SLOT(set_gate_i_height(int)));
+    init_gates();
 
     init_sample();
 
@@ -161,6 +151,49 @@ double Group::max_sample_time()
     return max ;
 }
 
+void Group::deploy_beams() const
+{
+    DplFpga::Beam fpgaBeam;
+    int startRxChannel = 0;
+    int startTxChannel = 0;
+    int aperture = 0;
+    int beamIndex = Device::instance()->first_beam_index(this);
+
+    fpgaBeam.set_total_beam_qty( Device::instance()->total_beam_qty() );
+    fpgaBeam.set_group_id(index());
+    fpgaBeam.set_gain_compensation(0);
+
+    foreach (DplFocallaw::BeamPointer focallawerBeam, m_focallawer->beams()) {
+        fpgaBeam.set_index(beamIndex++);
+//            fpgaBeam.set_delay(focallawerBeams[j]->delay()/DplFpga::Fpga::SAMPLE_PRECISION);
+        fpgaBeam.set_delay(0);
+        fpgaBeam.set_gate_a(m_gateA->start() / DplFpga::Fpga::SAMPLE_PRECISION,
+                            m_gateA->width() / DplFpga::Fpga::SAMPLE_PRECISION);
+        fpgaBeam.set_gate_b(m_gateB->start() / DplFpga::Fpga::SAMPLE_PRECISION,
+                            m_gateB->width() / DplFpga::Fpga::SAMPLE_PRECISION);
+        fpgaBeam.set_gate_i(m_gateI->start() / DplFpga::Fpga::SAMPLE_PRECISION,
+                            m_gateI->width() / DplFpga::Fpga::SAMPLE_PRECISION);
+
+        startRxChannel = m_focallawer->probe()->pulser_index() + focallawerBeam->first_rx_element();
+        startTxChannel = m_focallawer->probe()->receiver_index() + focallawerBeam->first_tx_element();
+
+        aperture = focallawerBeam->aperture();
+
+        fpgaBeam.set_tx_channel(startTxChannel, aperture);
+        fpgaBeam.set_rx_channel(startRxChannel, aperture);
+
+        for (int i = 0; i < aperture; ++i) {
+            fpgaBeam.set_rx_delay(startRxChannel+i, focallawerBeam->rxdelay().at(i));
+            fpgaBeam.set_tx_delay(startTxChannel+i, focallawerBeam->txdelay().at(i));
+//                fpgaBeam.set_rx_delay(startRxChannel+k, 0);
+//                fpgaBeam.set_tx_delay(startTxChannel+k, 0);
+//                qDebug("%s[%d]: enablet(0x%x) rx(%f) tx(%f)",__func__, __LINE__, (startRxChannel+i)&0x1f, focallawerBeamPtr->rxdelay().at(k), focallawerBeamPtr->txdelay().at(k));
+        }
+
+        fpgaBeam.refresh();
+    }
+}
+
 void Group::update_sample()
 {
     m_fpgaGroup->set_sample_start((m_focallawer->wedge()->delay() + m_sample->start())/DplFpga::Fpga::SAMPLE_PRECISION);
@@ -168,6 +201,35 @@ void Group::update_sample()
     m_fpgaGroup->set_rx_time((d->max_beam_delay() + m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
 
     //    m_fpgaGroup->show_info();
+}
+
+void Group::init_gate(DplGate::Gate *gate)
+{
+    connect(gate, SIGNAL(start_changed(float)),
+            this, SLOT(deploy_beams()));
+    connect(gate, SIGNAL(width_changed(float)),
+            this, SLOT(deploy_beams()));
+}
+
+void Group::init_gates()
+{
+    /* 关联闸门 */
+    connect(static_cast<DplGate::Gate *>(m_gateA.data()),
+            SIGNAL(height_changed(int)),
+            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
+            SLOT(set_gate_a_height(int)));
+    connect(static_cast<DplGate::Gate *>(m_gateB.data()),
+            SIGNAL(height_changed(int)),
+            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
+            SLOT(set_gate_b_height(int)));
+    connect(static_cast<DplGate::Gate *>(m_gateI.data()),
+            SIGNAL(height_changed(int)),
+            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
+            SLOT(set_gate_i_height(int)));
+
+    init_gate(m_gateA.data());
+    init_gate(m_gateB.data());
+    init_gate(m_gateI.data());
 }
 
 void Group::init_sample()
@@ -192,7 +254,7 @@ void Group::init_sample()
             static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
             SLOT(set_point_qty(int)));
 
-    /* 关联自己 */
+    /* 关联Group */
     connect(sample,
             SIGNAL(start_changed(float)),
             this,

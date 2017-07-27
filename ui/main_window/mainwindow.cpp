@@ -20,7 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->angleMenuItem->show();
 
     /* Device */
+    qDebug("%s[%d]: ",__func__, __LINE__);
     DplDevice::GroupPointer group = DplDevice::Device::instance()->get_group(0);
+qDebug("%s[%d]: ",__func__, __LINE__);
+
 
     /* gain menu item */
     ui->gainMenuItem->set_title(tr("Gain"));

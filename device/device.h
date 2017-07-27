@@ -49,8 +49,20 @@ public:
      * @return          返回time_t类型时间
      */
     uint date_time() const;
+
+    /**
+     * @brief set_date_time 设置设备时间
+     * @param t             时间
+     * @return              成功返回true，否则为false
+     */
     bool set_date_time(uint t);
-    bool set_date_time(const QDateTime &t) { return set_date_time(t.toTime_t()); }
+
+    /**
+     * @brief set_date_time 设置设备时间
+     * @param t             时间
+     * @return              成功返回true，否则为false
+     */
+    bool set_date_time(const QDateTime &t);
 
     /**
      * @brief import_cert   导入证书
@@ -70,7 +82,12 @@ public:
      * @return          返回设备类型
      */
     Device::Type type() const;
-    const QString &type_string();
+
+    /**
+     * @brief type_string   获取设备类型字符串
+     * @return              返回设备类型字符串
+     */
+    const QString &type_string() const;
 
     /**
      * @brief serial_number 获取设备序列号
@@ -125,6 +142,13 @@ public:
     const GroupPointer &current_group() const;
 
     /**
+     * @brief first_beam_index  获取指定组中的第一条Beam在所有Beam中的序号
+     * @param grp               组
+     * @return                  序号
+     */
+    int first_beam_index(const Group *grp) const;
+
+    /**
      * @brief beam_qty  获取beam的总数
      * @return          返回beam的总数
      */
@@ -134,7 +158,10 @@ signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
 
 public slots:
-    void refresh_beams();
+    /**
+     * @brief deploy_beams  下发所有Beams的配置信息
+     */
+    void deploy_beams();
 
 protected:
     explicit Device(QObject *parent = 0);
@@ -143,6 +170,11 @@ protected:
 private:
     DevicePrivate *d_ptr;
 };
+
+inline bool Device::set_date_time(const QDateTime &t)
+{
+    return set_date_time(t.toTime_t());
+}
 
 }
 #endif // __DEVICE_H__

@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-
+#include <device/device.h>
 #include <QApplication>
 #include <QTextCodec>
 #include <QFontDatabase>
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
     QTime time;
     time.restart();
-
+    DplDevice::Device::instance()->add_group();
     qDebug("Mercury Starting");
 
     MainWindow w;

@@ -28,13 +28,23 @@ public:
     Device::Type m_type;
 
     /* Group */
-    QList<GroupPointer> m_groups;
+    QVector<GroupPointer> m_groups;
     GroupPointer m_curGroup;
     mutable QReadWriteLock m_groupsRWLock;
 
 private:
+    /**
+     * @brief get_version   获取版本号
+     * @return              版本号
+     */
     QByteArray get_version();
+
     time_t get_time();
+
+    /**
+     * @brief get_serial_number 获取序列号
+     * @return                  序列号
+     */
     QString get_serial_number();
 };
 
