@@ -51,6 +51,8 @@ GateMenu::GateMenu(QWidget *parent) :
     connect(m_paramsItem, SIGNAL(value_changed(int)),
             this, SLOT(do_paramsItem_changed(int)));
 
+    m_startItem->set_decimals(2);
+    m_startItem->set_step(0.01);
     connect(m_startItem, SIGNAL(value_changed(double)),
             this, SLOT(do_startItem_changed(double)));
 
@@ -99,9 +101,8 @@ void GateMenu::update_startItem()
         m_startItem->set_unit(MM_STR);
     }
 
-    m_startItem->set(Tool::cnf_to_display(m_group, m_group->sample()->start()),
-                     Tool::cnf_to_display(m_group, m_group->sample()->start()+m_group->sample()->range()),
-                     2, 0.01);
+    m_startItem->set_range(Tool::cnf_to_display(m_group, m_group->sample()->start()),
+                           Tool::cnf_to_display(m_group, m_group->sample()->start()+m_group->sample()->range()));
     m_startItem->set_value(Tool::cnf_to_display(m_group, m_gate->start()));
 }
 
