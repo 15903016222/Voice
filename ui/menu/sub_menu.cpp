@@ -103,55 +103,55 @@ void SubMenu::create_menus()
 {
     /* UT Setting */
     add_menu(MainMenu::UTSettings_General,      new DplUtSettingMenu::GeneralMenu(this));
-//    add_menu(MainMenu::UTSettings_Pulser,       new DplUtSettingMenu::PulserMenu(this));
-//    add_menu(MainMenu::UTSettings_Receiver,     new DplUtSettingMenu::ReceiverMenu(this));
-//    add_menu(MainMenu::UTSettings_Advanced,     new DplUtSettingMenu::UtAdvancedMenu(this));
+    add_menu(MainMenu::UTSettings_Pulser,       new DplUtSettingMenu::PulserMenu(this));
+    add_menu(MainMenu::UTSettings_Receiver,     new DplUtSettingMenu::ReceiverMenu(this));
+    add_menu(MainMenu::UTSettings_Advanced,     new DplUtSettingMenu::UtAdvancedMenu(this));
 
     /* Gate/Curves */
     add_menu(MainMenu::GateCurves_Gate,         new DplGateCurvesMenu::GateMenu(this));
-//    add_menu(MainMenu::GateCurves_Alarm,        new DplGateCurvesMenu::AlarmMenu(this));
-//    add_menu(MainMenu::GateCurves_Output,       new DplGateCurvesMenu::OutputMenu(this));
-//    add_menu(MainMenu::GateCurves_DAC,          new DplGateCurvesMenu::DacMenu(this));
-//    add_menu(MainMenu::GateCurves_TCG,          new DplGateCurvesMenu::TcgMenu(this));
+    add_menu(MainMenu::GateCurves_Alarm,        new DplGateCurvesMenu::AlarmMenu(this));
+    add_menu(MainMenu::GateCurves_Output,       new DplGateCurvesMenu::OutputMenu(this));
+    add_menu(MainMenu::GateCurves_DAC,          new DplGateCurvesMenu::DacMenu(this));
+    add_menu(MainMenu::GateCurves_TCG,          new DplGateCurvesMenu::TcgMenu(this));
 
     /* Display */
-//    add_menu(MainMenu::Display_Selection,       new DplDisplayMenu::SelectionMenu(this));
-//    add_menu(MainMenu::Display_ColorSettings,   new DplDisplayMenu::ColorSettingMenu(this));
-//    add_menu(MainMenu::Displsy_Properties,      new DplDisplayMenu::PropertiesMenu(this));
+    add_menu(MainMenu::Display_Selection,       new DplDisplayMenu::SelectionMenu(this));
+    add_menu(MainMenu::Display_ColorSettings,   new DplDisplayMenu::ColorSettingMenu(this));
+    add_menu(MainMenu::Displsy_Properties,      new DplDisplayMenu::PropertiesMenu(this));
 
-//    /* Probe/Part */
-//    add_menu(MainMenu::ProbePart_Select,        new DplProbeMenu::SelectionMenu(this));
-//    add_menu(MainMenu::ProbePart_Position,      new DplProbeMenu::PositionMenu(this));
-//    add_menu(MainMenu::ProbePart_FFT,           new DplProbeMenu::FftMenu(this));
-//    add_menu(MainMenu::ProbePart_Part,          new DplProbeMenu::PartMenu(this));
-//    add_menu(MainMenu::ProbePart_Advanced,      new DplProbeMenu::AdvancedMenu(this));
+    /* Probe/Part */
+    add_menu(MainMenu::ProbePart_Select,        new DplProbeMenu::SelectionMenu(this));
+    add_menu(MainMenu::ProbePart_Position,      new DplProbeMenu::PositionMenu(this));
+    add_menu(MainMenu::ProbePart_FFT,           new DplProbeMenu::FftMenu(this));
+    add_menu(MainMenu::ProbePart_Part,          new DplProbeMenu::PartMenu(this));
+    add_menu(MainMenu::ProbePart_Advanced,      new DplProbeMenu::AdvancedMenu(this));
 
-//    /* Focal Law */
-//    add_menu(MainMenu::FocalLaw_LawConfig,      new DplFocalLawMenu::LawConfigMenu(this));
-//    add_menu(MainMenu::FocalLaw_Angle,          new DplFocalLawMenu::AngleMenu(this));
-//    add_menu(MainMenu::FocalLaw_Apeture,        new DplFocalLawMenu::ApetureMenu(this));
-//    add_menu(MainMenu::FacalLaw_FocalPoint,     new DplFocalLawMenu::FocalPointMenu(this));
+    /* Focal Law */
+    add_menu(MainMenu::FocalLaw_LawConfig,      new DplFocalLawMenu::LawConfigMenu(this));
+    add_menu(MainMenu::FocalLaw_Angle,          new DplFocalLawMenu::AngleMenu(this));
+    add_menu(MainMenu::FocalLaw_Apeture,        new DplFocalLawMenu::ApetureMenu(this));
+    add_menu(MainMenu::FacalLaw_FocalPoint,     new DplFocalLawMenu::FocalPointMenu(this));
 
-//    /* Scan */
-//    add_menu(MainMenu::Scan_Inspection,         new DplScanMenu::InspectionMenu(this));
-//    add_menu(MainMenu::Scan_Encoder,            new DplScanMenu::EncoderMenu(this));
-//    add_menu(MainMenu::Scan_Area,               new DplScanMenu::AreaMenu(this));
-//    add_menu(MainMenu::Scan_Start,              new DplScanMenu::StartMenu(this));
+    /* Scan */
+    add_menu(MainMenu::Scan_Inspection,         new DplScanMenu::InspectionMenu(this));
+    add_menu(MainMenu::Scan_Encoder,            new DplScanMenu::EncoderMenu(this));
+    add_menu(MainMenu::Scan_Area,               new DplScanMenu::AreaMenu(this));
+    add_menu(MainMenu::Scan_Start,              new DplScanMenu::StartMenu(this));
 
-//    /* Measurement */
-//    add_menu(MainMenu::Measurement_Cursors,     new DplMeasurementMenu::CursorsMenu(this));
-//    add_menu(MainMenu::Measurement_TOFD,        new DplMeasurementMenu::TofdMenu(this));
-//    add_menu(MainMenu::Measurement_FlawRecord,  new DplMeasurementMenu::FlawRecordMenu(this));
+    /* Measurement */
+    add_menu(MainMenu::Measurement_Cursors,     new DplMeasurementMenu::CursorsMenu(this));
+    add_menu(MainMenu::Measurement_TOFD,        new DplMeasurementMenu::TofdMenu(this));
+    add_menu(MainMenu::Measurement_FlawRecord,  new DplMeasurementMenu::FlawRecordMenu(this));
 
-//    /* File/Report */
-//    add_menu(MainMenu::FileReport_File,         new DplFileReportMenu::FileMenu(this));
-//    add_menu(MainMenu::FileReport_SaveMode,     new DplFileReportMenu::SaveModeMenu(this));
-//    add_menu(MainMenu::FileReport_Report,       new DplFileReportMenu::ReportMenu(this));
-//    add_menu(MainMenu::FileReport_Format,       new DplFileReportMenu::FormatMenu(this));
-//    add_menu(MainMenu::FileReport_UserField,    new DplFileReportMenu::UserFieldMenu(this));
+    /* File/Report */
+    add_menu(MainMenu::FileReport_File,         new DplFileReportMenu::FileMenu(this));
+    add_menu(MainMenu::FileReport_SaveMode,     new DplFileReportMenu::SaveModeMenu(this));
+    add_menu(MainMenu::FileReport_Report,       new DplFileReportMenu::ReportMenu(this));
+    add_menu(MainMenu::FileReport_Format,       new DplFileReportMenu::FormatMenu(this));
+    add_menu(MainMenu::FileReport_UserField,    new DplFileReportMenu::UserFieldMenu(this));
 
-//    /* Preference */
-//    add_menu(MainMenu::Preference_Preference,   new DplPreferenceMenu::PreferenceMenu(this));
-//    add_menu(MainMenu::Preference_System,       new DplPreferenceMenu::SystemMenu(this));
-//    add_menu(MainMenu::Preference_Network,      new DplPreferenceMenu::NetworkMenu(this));
+    /* Preference */
+    add_menu(MainMenu::Preference_Preference,   new DplPreferenceMenu::PreferenceMenu(this));
+    add_menu(MainMenu::Preference_System,       new DplPreferenceMenu::SystemMenu(this));
+    add_menu(MainMenu::Preference_Network,      new DplPreferenceMenu::NetworkMenu(this));
 }
