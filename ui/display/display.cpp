@@ -7,6 +7,7 @@
 #include "display.h"
 #include "a_scan_vdisplay.h"
 #include "a_scan_hdisplay.h"
+#include "s_scan_display.h"
 
 #include <source/source.h>
 
@@ -96,9 +97,7 @@ void Display::set_layout(ScanLayout *scanlayout)
         /* S-Scan */
         l = m_scanLayout->findChild<QLayout *>(QString("S%1").arg(grpIds[i]));
         if (l != NULL) {
-            qDebug()<<__func__<<__LINE__<<"umimplement";
-//            sscan = new SscanDisplay(groupPtr, m_scanLayout);
-            AscanDisplay *sscan = new AscanHDisplay(group, m_scanLayout);
+            SscanDisplay *sscan = new SscanDisplay(group, m_scanLayout);
             l->addWidget(sscan);
         }
     }
