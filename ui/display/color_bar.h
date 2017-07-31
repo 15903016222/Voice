@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+typedef QSharedPointer<QColor> QColorPointer;
+
 class QXmlStreamReader;
 class ColorBar : public QWidget
 {
@@ -11,6 +13,8 @@ public:
     explicit ColorBar(QWidget *parent = 0);
 
     void load_file(const QString &path);
+
+    QColorPointer color(quint8 index) const;
 
 protected:
     void read_special_colors(QXmlStreamReader &xml);
@@ -22,6 +26,17 @@ protected:
 signals:
 
 public slots:
+
+private:
+    QVector<QColorPointer> m_colorVector;
 };
+
+inline QColorPointer ColorBar::color(quint8 index) const
+{
+    if (index <  m_colorVector.size()) {
+        return m_colorVector[index];
+    }
+    return QColorPointer(new QColor(Qt::black));
+}
 
 #endif // __COLOR_BAR_H__

@@ -10,6 +10,8 @@ SscanDisplay::SscanDisplay(DplDevice::GroupPointer &grp, QWidget *parent) :
 
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
     ui->rightRulerWidget->set_type(RulerWidget::RIGHT);
+
+    ui->colorBarWidget->load_file("/opt/mercury/palette/ONDT_Amplitude.pal");
 }
 
 SscanDisplay::~SscanDisplay()
