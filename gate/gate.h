@@ -2,6 +2,7 @@
 #define __DPLGATE_GATE_H__
 
 #include <QObject>
+#include <QColor>
 #include <QSharedPointer>
 
 namespace DplGate {
@@ -67,6 +68,18 @@ public:
      */
     void set_visible(bool visible);
 
+    /**
+     * @brief color 获取闸门显示颜色
+     * @return      颜色值
+     */
+    const QColor &color() const;
+
+    /**
+     * @brief set_color 设置闸门显示颜色
+     * @param color     颜色
+     */
+    void set_color(const QColor &color);
+
 signals:
     /**
      * @brief changed   闸门改变信号
@@ -97,12 +110,19 @@ signals:
      */
     void visible_changed(bool visible);
 
+    /**
+     * @brief color_changed 颜色改变信号
+     * @param color         改变后的颜色
+     */
+    void color_changed(const QColor &color);
+
 private:
     Gate::Type m_type;
     float m_start;      // 起点(ns)
     float m_width;      // 宽度(ns)
     int m_height;       // 高度(%)
     bool m_visible;     // 可视标志
+    QColor m_color;     // 闸门显示颜色
 };
 
 typedef QSharedPointer<Gate> GatePointer;
@@ -156,6 +176,19 @@ inline void Gate::set_visible(bool visible)
     if (visible != m_visible) {
         m_visible = visible;
         emit visible_changed(visible);
+    }
+}
+
+inline const QColor &Gate::color() const
+{
+    return m_color;
+}
+
+inline void Gate::set_color(const QColor &color)
+{
+    if (m_color != color) {
+        m_color = color;
+        emit color_changed(color);
     }
 }
 

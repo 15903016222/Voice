@@ -213,6 +213,10 @@ void Group::init_gate(DplGate::Gate *gate)
 
 void Group::init_gates()
 {
+    m_gateA->set_color(Qt::red);
+    m_gateB->set_color(Qt::green);
+    m_gateI->set_color(Qt::darkCyan);
+
     /* 关联闸门 */
     connect(static_cast<DplGate::Gate *>(m_gateA.data()),
             SIGNAL(height_changed(int)),
