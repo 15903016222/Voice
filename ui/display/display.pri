@@ -1,5 +1,3 @@
-INCLUDEPATH += $$PWD
-
 SOURCES += \
     $$PWD/display.cpp \
     $$PWD/ruler_widget.cpp \

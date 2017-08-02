@@ -191,6 +191,7 @@ inline bool Sample::set_point_qty(int qty)
         emit point_qty_changed(qty);
         emit scale_factor_changed(scale_factor());
     }
+    return true;
 }
 
 inline float Sample::velocity()

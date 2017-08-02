@@ -1,6 +1,3 @@
-
-INCLUDEPATH += $$PWD
-
 RESOURCES += \
     $$PWD/main_window.qrc
 

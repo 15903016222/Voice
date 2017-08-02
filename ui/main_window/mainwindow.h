@@ -3,8 +3,8 @@
 
 #include "mcu/mcu.h"
 #include "virtualkeyboard.h"
-#include "menu/main_menu.h"
-#include "menu/sub_menu.h"
+#include "../menu/main_menu.h"
+#include "../menu/sub_menu.h"
 
 #include <QMainWindow>
 #include <QTranslator>

@@ -2,10 +2,10 @@
 #include "ui_mainwindow.h"
 
 #include <device/device.h>
-#include "display/display.h"
+#include "../display/display.h"
 #include "vinput.h"
-#include "menu/ut_setting/general_menu.h"
-#include "menu/preference/preference_menu.h"
+#include "../menu/ut_setting/general_menu.h"
+#include "../menu/preference/preference_menu.h"
 
 #include <QDebug>
 #include <QResizeEvent>
@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *vboxLayout = new QVBoxLayout(ui->display);
     vboxLayout->setContentsMargins(0, 0, 0, 0);
     vboxLayout->setSpacing(0);
-    vboxLayout->addWidget(DplDisplay::Display::get_instance());
+    vboxLayout->addWidget(DplUi::Display::get_instance());
 }
 
 MainWindow::~MainWindow()

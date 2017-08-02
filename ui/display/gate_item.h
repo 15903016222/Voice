@@ -51,7 +51,6 @@ public:
     bool is_moving() const;
 
 protected:
-    void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 

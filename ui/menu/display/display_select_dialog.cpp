@@ -3,7 +3,7 @@
 #include "mode_radio_button.h"
 
 #include <device/device.h>
-#include <display/display.h>
+#include "../display/display.h"
 
 DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     QDialog(parent),
@@ -101,7 +101,7 @@ void DisplaySelectDialog::update_widget()
 void DisplaySelectDialog::on_buttonBox_accepted()
 {
     ModeRadioButton *radioBtn = static_cast<ModeRadioButton *>(m_radioBtnGrp->checkedButton());
-    DplDisplay::Display *display = DplDisplay::Display::get_instance();
+    DplUi::Display *display = DplUi::Display::get_instance();
     if (radioBtn == NULL || display == NULL) {
         accept();
         return;

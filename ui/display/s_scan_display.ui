@@ -129,13 +129,13 @@ color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>RulerWidget</class>
    <extends>QWidget</extends>
-   <header>ruler_widget.h</header>
+   <header>ui/display/ruler_widget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>ColorBar</class>
    <extends>QWidget</extends>
-   <header>color_bar.h</header>
+   <header>ui/display/color_bar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

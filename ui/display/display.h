@@ -10,10 +10,7 @@
 #include <device/group.h>
 #include "scan_layout.h"
 
-#include <QMutex>
-#include <QMap>
-
-namespace DplDisplay {
+namespace DplUi {
 
 class Display : public QWidget
 {

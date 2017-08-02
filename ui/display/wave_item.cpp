@@ -1,9 +1,9 @@
 #include "wave_item.h"
 #include <QPainter>
 
-WaveItem::WaveItem(QGraphicsItem *parent) :
+WaveItem::WaveItem(const DplDisplay::AscanPointer &ascan, QGraphicsItem *parent) :
     QGraphicsItem(parent),
-    m_color("#ffff77"),
+    m_ascan(ascan),
     m_size(400, 200)
 {
 
@@ -43,7 +43,7 @@ QPainterPath WaveItem::draw(const QByteArray &wave, int w, int h)
 void WaveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->translate(boundingRect().topLeft());
-    painter->setPen(m_color);
+    painter->setPen(m_ascan->color());
     painter->drawPath(draw(m_beam,
                            boundingRect().width(),
                            boundingRect().height()));

@@ -2,11 +2,12 @@
 #define __WAVE_ITEM_H__
 
 #include <QGraphicsItem>
+#include <display/a_scan.h>
 
 class WaveItem : public QGraphicsItem
 {
 public:
-    WaveItem(QGraphicsItem *parent = 0);
+    explicit WaveItem(const DplDisplay::AscanPointer &ascan, QGraphicsItem *parent = 0);
 
     QRectF boundingRect() const;
 
@@ -26,23 +27,11 @@ public:
      */
     void set_size(const QSize &size);
 
-    /**
-     * @brief color 获取波形颜色
-     * @return      颜色
-     */
-    const QColor &color() const;
-
-    /**
-     * @brief set_color 设置波形
-     * @param color
-     */
-    void set_color(const QColor &color);
-
 protected:
     QPainterPath draw(const QByteArray &wave, int w, int h);
 
 private:
-    QColor m_color;
+    DplDisplay::AscanPointer m_ascan;
     QByteArray m_beam;
     QSize m_size;
 };
@@ -64,16 +53,6 @@ inline void WaveItem::set_size(const QSize &size)
 {
     m_size = size;
     update();
-}
-
-inline const QColor &WaveItem::color() const
-{
-    return m_color;
-}
-
-inline void WaveItem::set_color(const QColor &color)
-{
-    m_color = color;
 }
 
 #endif // __WAVE_ITEM_H__

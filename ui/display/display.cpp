@@ -13,7 +13,7 @@
 
 #include <QDebug>
 
-namespace DplDisplay {
+namespace DplUi {
 
 Display::Display(QWidget *parent) :
     QWidget(parent),

@@ -24,7 +24,7 @@ AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orien
     m_group(group),
     m_ascanView(new ScanView),
     m_ascanScene(new AscanScene),
-    m_waveItem(new WaveItem),
+    m_waveItem(new WaveItem(group->ascan())),
     m_gateAItem(new GateItem(group->gate(DplGate::Gate::A))),
     m_gateBItem(new GateItem(group->gate(DplGate::Gate::B))),
     m_gateIItem(new GateItem(group->gate(DplGate::Gate::I))),
