@@ -64,7 +64,7 @@ QPushButton{
      </property>
      <property name="icon">
       <iconset resource="../main_window.qrc">
-       <normaloff>:/file/resources/up.png</normaloff>:/file/resources/up.png</iconset>
+       <normaloff>://resource/up.png</normaloff>://resource/up.png</iconset>
      </property>
     </widget>
    </item>
@@ -186,8 +186,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -246,8 +246,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -299,8 +299,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -342,8 +342,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -395,8 +395,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -443,8 +443,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -491,8 +491,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -534,8 +534,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -587,8 +587,8 @@ QTreeWidget::branch{
       </property>
       <property name="icon">
        <iconset resource="../main_window.qrc">
-        <normaloff>:/file/resources/triangle_up.png</normaloff>
-        <normalon>:/file/resources/triangle_down.png</normalon>:/file/resources/triangle_up.png</iconset>
+        <normaloff>://resource/triangle_up.png</normaloff>
+        <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
       <item>
        <property name="text">
@@ -627,7 +627,7 @@ QTreeWidget::branch{
      </property>
      <property name="icon">
       <iconset resource="../main_window.qrc">
-       <normaloff>:/file/resources/down.png</normaloff>:/file/resources/down.png</iconset>
+       <normaloff>://resource/down.png</normaloff>://resource/down.png</iconset>
      </property>
     </widget>
    </item>

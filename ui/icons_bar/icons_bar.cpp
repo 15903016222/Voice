@@ -57,9 +57,9 @@ void IconsBar::do_battery_quantity_event(int index, int value)
 void IconsBar::show_gear(bool flag)
 {
     if (flag) {
-        ui->encoderLabel->setPixmap(QPixmap(":/file/resources/gear.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
+        ui->encoderLabel->setPixmap(QPixmap("://resource/gear.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
     } else {
-        ui->encoderLabel->setPixmap(QPixmap(":/file/resources/clock.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
+        ui->encoderLabel->setPixmap(QPixmap("://resource/clock.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
     }
 }
 

@@ -11,6 +11,7 @@
 #include "group.h"
 #include "cert.h"
 
+#include <display/display.h>
 #include <fpga/fpga.h>
 
 #include <QDateTime>
@@ -154,6 +155,12 @@ public:
      */
     int total_beam_qty() const;
 
+    /**
+     * @brief display   获取显示配置
+     * @return          显示配置
+     */
+    const DplDisplay::DisplayPointer &display() const;
+
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
 
@@ -169,11 +176,17 @@ protected:
 
 private:
     DevicePrivate *d_ptr;
+    DplDisplay::DisplayPointer m_display;
 };
 
 inline bool Device::set_date_time(const QDateTime &t)
 {
     return set_date_time(t.toTime_t());
+}
+
+inline const DplDisplay::DisplayPointer &Device::display() const
+{
+    return m_display;
 }
 
 }

@@ -292,9 +292,9 @@ void Device::deploy_beams()
 
 Device::Device(QObject *parent) :
     QObject(parent),
-    d_ptr(new DevicePrivate())
+    d_ptr(new DevicePrivate()),
+    m_display(new DplDisplay::Display())
 {
-//    DplFpga::Fpga::instance()->show_info();
 }
 
 Device::~Device()

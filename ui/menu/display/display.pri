@@ -15,3 +15,5 @@ SOURCES += \
 FORMS += \
     $$PWD/display_select_dialog.ui
 
+RESOURCES +=
+

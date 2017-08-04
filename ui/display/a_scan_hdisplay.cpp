@@ -13,7 +13,8 @@
 
 #include <QDebug>
 
-AscanHDisplay::AscanHDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
+AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
+                             QWidget *parent) :
     AscanDisplay(group, Qt::Horizontal, parent)
 {
     /* ruler setting */

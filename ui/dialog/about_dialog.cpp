@@ -40,7 +40,7 @@ AboutDialog::AboutDialog(QWidget *parent)
     connect(buttonBox , SIGNAL(rejected()), this, SLOT(reject()));
 
     QLabel *logoLabel = new QLabel;
-    logoLabel->setPixmap(QPixmap(":/file/resources/logo.png"));
+    logoLabel->setPixmap(QPixmap("://resource/logo.png"));
 
     layout->addWidget(logoLabel , 0, 0, 1, 1, Qt::AlignCenter);
     layout->addWidget(copyRightLabel, 1, 0);

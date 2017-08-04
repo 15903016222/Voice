@@ -17,16 +17,16 @@ void BatteryLabel::set_status(Mcu::BatteryStatus status)
     QString image;
     switch (m_status) {
     case Mcu::DISCHARGE:
-        image.sprintf(":/file/resources/battery/b%d.png", m_quantity/10);
+        image.sprintf("://resource/battery/b%d.png", m_quantity/10);
         break;
     case Mcu::CHARGE:
-        image.sprintf(":/file/resources/battery/bc%d.png", m_quantity/10);
+        image.sprintf("://resource/battery/bc%d.png", m_quantity/10);
         break;
     case Mcu::BATTERY_FULL:
-        image.append(":/file/resources/battery/b10.png");
+        image.append("://resource/battery/b10.png");
         break;
     default:
-        image.append(":/file/resources/battery/b_error.png");
+        image.append("://resource/battery/b_error.png");
         break;
     }
     setPixmap(QPixmap(image).scaled(40, 15));

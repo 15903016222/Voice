@@ -13,7 +13,8 @@ class AscanHDisplay : public AscanDisplay
 {
     Q_OBJECT
 public:
-    explicit AscanHDisplay(DplDevice::GroupPointer &group, QWidget *parent = 0);
+    explicit AscanHDisplay(const DplDevice::GroupPointer &group,
+                           QWidget *parent = 0);
     ~AscanHDisplay();
 
 private slots:

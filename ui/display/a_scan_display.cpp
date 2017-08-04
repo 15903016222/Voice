@@ -18,13 +18,14 @@
 
 #include <QDebug>
 
-AscanDisplay::AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orientation, QWidget *parent) :
+AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
+                           Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AscanDisplay),
     m_group(group),
     m_ascanView(new ScanView),
     m_ascanScene(new AscanScene),
-    m_waveItem(new WaveItem(group->ascan())),
+    m_waveItem(new WaveItem(DplDevice::Device::instance()->display()->ascan())),
     m_gateAItem(new GateItem(group->gate(DplGate::Gate::A))),
     m_gateBItem(new GateItem(group->gate(DplGate::Gate::B))),
     m_gateIItem(new GateItem(group->gate(DplGate::Gate::I))),

@@ -57,11 +57,8 @@ Group::Group(int index, QObject *parent):
     m_gateI(new DplGate::Gate(DplGate::Gate::I, parent)),
     m_beams(new DplSource::Beams),
     m_focallawer(new DplFocallaw::Focallawer),
-    m_ascan(new DplDisplay::Ascan),
     m_fpgaGroup(new DplFpga::Group(index, parent))
 {
-//    m_fpgaGroup->show_info();
-
     init_gates();
 
     init_sample();

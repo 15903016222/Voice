@@ -28,7 +28,7 @@ private slots:
 private:
     Ui::DisplaySelectDialog *ui;
     QButtonGroup *m_radioBtnGrp;
-    QList<int> m_grpIds;
+    QVector<int> m_grpIds;
 
     void update(int startMode, int endMode);
 };

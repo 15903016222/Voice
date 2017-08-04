@@ -98,7 +98,7 @@
          <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-image: url(:/file/resources/keyboard.png);</string>
+         <string notr="true">border-image: url(://resource/keyboard.png);</string>
         </property>
         <property name="text">
          <string/>

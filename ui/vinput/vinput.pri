@@ -1,6 +1,3 @@
-
-INCLUDEPATH += $$PWD
-
 HEADERS += \
     $$PWD/vinput.h
 

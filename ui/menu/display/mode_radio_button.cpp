@@ -8,7 +8,7 @@ ModeRadioButton::ModeRadioButton(int mode, QWidget *parent) :
     QRadioButton(parent),
     m_mode(mode)
 {
-    setIcon(QIcon(QString(":/file/resources/display_mode/%1.png").arg(mode)));
+    setIcon(QIcon(QString(":/resource/display_mode/%1.png").arg(mode)));
     setIconSize(QSize(W_SIZE, H_SIZE));
     setFocusPolicy(Qt::NoFocus);
 }

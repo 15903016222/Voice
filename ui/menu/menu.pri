@@ -13,7 +13,6 @@ SOURCES += \
     $$PWD/base_menu.cpp
 
 include($$PWD/menu_item/menu_item.pri)
-
 include($$PWD/ut_setting/ut_setting.pri)
 include($$PWD/gate_curves/gate_curves.pri)
 include($$PWD/display/display.pri)

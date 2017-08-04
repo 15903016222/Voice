@@ -12,7 +12,8 @@
 
 #include <QDebug>
 
-AscanVDisplay::AscanVDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
+AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group,
+                             QWidget *parent) :
     AscanDisplay(group, Qt::Vertical, parent)
 {  
     /* ruler setting */

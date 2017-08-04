@@ -14,7 +14,8 @@ class AscanVDisplay : public AscanDisplay
 {
     Q_OBJECT
 public:
-    explicit AscanVDisplay(DplDevice::GroupPointer &group, QWidget *parent = 0);
+    explicit AscanVDisplay(const DplDevice::GroupPointer &group,
+                           QWidget *parent = 0);
     ~AscanVDisplay();
 
 private:

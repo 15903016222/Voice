@@ -1,7 +1,7 @@
 #include "virtualkeyboard.h"
 #include "ui_virtualkeyboard.h"
 
-#include "vinput.h"
+#include "../vinput/vinput.h"
 
 #include <QPushButton>
 #include <QDebug>

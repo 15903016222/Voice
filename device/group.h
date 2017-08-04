@@ -13,7 +13,6 @@
 #include <focallaw/focallawer.h>
 #include <ut/sample.h>
 #include <gate/gate.h>
-#include <display/a_scan.h>
 
 namespace DplDevice {
 
@@ -119,8 +118,6 @@ public:
      */
     const DplFocallaw::FocallawerPointer &focallawer() const;
 
-    const DplDisplay::AscanPointer &ascan() const;
-
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void velocity_changed(double val);
@@ -144,7 +141,6 @@ private:
     DplGate::GatePointer m_gateI;
     DplSource::BeamsPointer m_beams;
     DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
-    DplDisplay::AscanPointer m_ascan;
     DplFpga::GroupPointer m_fpgaGroup;
 
 private:
@@ -194,11 +190,6 @@ inline const DplSource::BeamsPointer &Group::beams() const
 inline const DplFocallaw::FocallawerPointer &Group::focallawer() const
 {
     return m_focallawer;
-}
-
-inline const DplDisplay::AscanPointer &Group::ascan() const
-{
-    return m_ascan;
 }
 
 }

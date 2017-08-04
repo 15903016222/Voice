@@ -3,7 +3,7 @@
 #include "mode_radio_button.h"
 
 #include <device/device.h>
-#include "../display/display.h"
+#include "../display/display_widget.h"
 
 DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     QDialog(parent),
@@ -72,28 +72,28 @@ void DisplaySelectDialog::update_widget()
 
     switch (m_grpIds.size()) {
     case 1:
-        update(ScanLayout::A, ScanLayout::ASC);
+        update(DplDisplay::Display::A, DplDisplay::Display::ASC);
         break;
     case 2:
-        update(ScanLayout::A2, ScanLayout::ASB2);
+        update(DplDisplay::Display::A2, DplDisplay::Display::ASB2);
         break;
     case 3:
-        update(ScanLayout::A3, ScanLayout::ABC3);
+        update(DplDisplay::Display::A3, DplDisplay::Display::ABC3);
         break;
     case 4:
-        update(ScanLayout::A4, ScanLayout::S2_B2);
+        update(DplDisplay::Display::A4, DplDisplay::Display::S2_B2);
         break;
     case 5:
-        update(ScanLayout::A5, ScanLayout::S3_B2);
+        update(DplDisplay::Display::A5, DplDisplay::Display::S3_B2);
         break;
     case 6:
-        update(ScanLayout::A6, ScanLayout::S4_B2);
+        update(DplDisplay::Display::A6, DplDisplay::Display::S4_B2);
         break;
     case 7:
-        update(ScanLayout::A7, ScanLayout::A7);
+        update(DplDisplay::Display::A7, DplDisplay::Display::A7);
         break;
     case 8:
-        update(ScanLayout::A8, ScanLayout::A8);
+        update(DplDisplay::Display::A8, DplDisplay::Display::A8);
         break;
     };
 }
@@ -101,17 +101,14 @@ void DisplaySelectDialog::update_widget()
 void DisplaySelectDialog::on_buttonBox_accepted()
 {
     ModeRadioButton *radioBtn = static_cast<ModeRadioButton *>(m_radioBtnGrp->checkedButton());
-    DplUi::Display *display = DplUi::Display::get_instance();
-    if (radioBtn == NULL || display == NULL) {
+    if (radioBtn == NULL) {
         accept();
         return;
     }
 
-    ScanLayout *l = new ScanLayout;
-    l->set_mode(static_cast<ScanLayout::Mode>(radioBtn->get_mode()),
+    DplDevice::Device::instance()->display()->set_layout(
+                static_cast<DplDisplay::Display::Layout>(radioBtn->get_mode()),
                 m_grpIds);
-
-    display->set_layout(l);
 
     accept();
 }

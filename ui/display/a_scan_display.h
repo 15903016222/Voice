@@ -25,7 +25,8 @@ class AscanDisplay : public QWidget
     Q_OBJECT
 
 public:
-    explicit AscanDisplay(DplDevice::GroupPointer &group, Qt::Orientation orientation, QWidget *parent = 0);
+    explicit AscanDisplay(const DplDevice::GroupPointer &group,
+                          Qt::Orientation orientation, QWidget *parent = 0);
     ~AscanDisplay();
 
 protected slots:
