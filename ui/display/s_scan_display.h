@@ -13,7 +13,7 @@ class SscanDisplay : public QWidget
     Q_OBJECT
 
 public:
-    explicit SscanDisplay(DplDevice::GroupPointer &grp, QWidget *parent = 0);
+    explicit SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
     ~SscanDisplay();
 
 private:

@@ -50,14 +50,15 @@ public:
 
 typedef SingleLayout<AscanHDisplay> ALayoutH;
 typedef SingleLayout<AscanVDisplay> ALayoutV;
+typedef SingleLayout<SscanDisplay> SLayout;
 
 class ASLayout : public HLayout
 {
 public:
     ASLayout(int grp, QWidget *parent) : HLayout (parent)
     {
-        addLayout(new SingleLayout<AscanVDisplay>(grp, parent), 1);
-//        addLayout(new SingleLayout<Scan);
+        addLayout(new ALayoutV(grp, parent), 1);
+        addLayout(new SLayout(grp, parent), 2);
     }
 };
 
@@ -97,7 +98,7 @@ void DisplayWidget::set_layout(DplDisplay::Display::Layout mode, const QVector<i
         l = new ALayoutH(grps.first(), w);
         break;
     case DplDisplay::Display::S:
-        l = new ALayoutH(grps.first(), w);
+        l = new SLayout(grps.first(), w);
         break;
     case DplDisplay::Display::C:
         l = new ALayoutH(grps.first(), w);
