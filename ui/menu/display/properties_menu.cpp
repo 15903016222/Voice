@@ -1,12 +1,16 @@
 #include "properties_menu.h"
 #include "ui_base_menu.h"
 
+#include <QColorDialog>
+#include <device/device.h>
+
 namespace DplDisplayMenu {
 
 PropertiesMenu::PropertiesMenu(QWidget *parent) :
     BaseMenu(parent),
+    m_display(DplDevice::Device::instance()->display()),
     m_scanItem(new ComboMenuItem(this, tr("Scan"))),
-    m_colorItem(new ComboMenuItem(this, tr("Color"))),
+    m_colorItem(new LabelMenuItem(this, tr("Color"))),
     m_envelopItem(new ComboMenuItem(this, tr("Envelope"))),
     m_peakHoldingItem(new ComboMenuItem(this, tr("Peak Holding"))),
     m_referenceholdingItem(new ComboMenuItem(this, tr("Reference<br>Holding"))),
@@ -29,34 +33,26 @@ PropertiesMenu::PropertiesMenu(QWidget *parent) :
     ui->layout1->addWidget(m_ratioItem);
     ui->layout2->addWidget(m_cScanModeItem);
 
-    QStringList scanList;
-    QStringList colorList;
-    QStringList envelopeList;
-    QStringList cScanModeList;
-
-    scanList.append(tr("A-Scan"));
-    scanList.append(tr("B-Scan"));
-    scanList.append(tr("C-Scan"));
-
-    colorList.append(tr("Blue"));
-    colorList.append(tr("Green"));
-    colorList.append(tr("Red"));
-    colorList.append(tr("Yellow"));
-    colorList.append(tr("Black"));
-    colorList.append(tr("White"));
-
-    envelopeList.append(tr("None"));
-    envelopeList.append(tr("Infinite"));
-
-    cScanModeList.append(tr("Sectorial"));
-    cScanModeList.append(tr("Linear"));
-
-    m_scanItem->set(scanList);
+    m_scanItem->add_item(tr("A-Scan"));
+    m_scanItem->add_item(tr("B-Scan"));
+    m_scanItem->add_item(tr("C-Scan"));
     connect(m_scanItem, SIGNAL(value_changed(int)), this, SLOT(do_scanItem_changed(int)));
 
     /* A-Scan */
-    m_colorItem->set(colorList);
-    m_envelopItem->set(envelopeList);
+//    m_colorItem->add_item(tr("Blue"));
+//    m_colorItem->add_item(tr("Green"));
+//    m_colorItem->add_item(tr("Red"));
+//    m_colorItem->add_item(tr("Yellow"));
+//    m_colorItem->add_item(tr("Black"));
+//    m_colorItem->add_item(tr("White"));
+    connect(m_colorItem, SIGNAL(clicked()),
+            this, SLOT(do_colorItem_clicked()));
+    m_colorItem->set_text(QString("<p style=\"color:%1\">%1</p>")
+                          .arg(m_display->ascan()->color().name()));
+
+    m_envelopItem->add_item(tr("None"));
+    m_envelopItem->add_item(tr("Infinite"));
+
     m_peakHoldingItem->set(s_onOff);
     m_referenceholdingItem->set(s_onOff);
 
@@ -66,7 +62,8 @@ PropertiesMenu::PropertiesMenu(QWidget *parent) :
     /* C-Scan */
     m_ratioItem->set(s_onOff);
 
-    m_cScanModeItem->set(cScanModeList);
+    m_cScanModeItem->add_item(tr("Sectorial"));
+    m_cScanModeItem->add_item(tr("Linear"));
 
     do_scanItem_changed(0);
 }
@@ -132,6 +129,19 @@ void PropertiesMenu::do_scanItem_changed(int i)
     default:
         break;
     }
+}
+
+void PropertiesMenu::do_colorItem_clicked()
+{
+    QColorDialog dlg;
+    dlg.setCursor(Qt::BlankCursor);
+    dlg.setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+    if ( dlg.exec() == QDialog::Accepted ) {
+        m_display->ascan()->set_color(dlg.currentColor());
+        m_colorItem->set_text(QString("<p style=\"color:%1\">%1</p>")
+                              .arg(dlg.currentColor().name()));
+    }
+
 }
 
 }

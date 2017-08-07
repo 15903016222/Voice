@@ -57,6 +57,12 @@ public:
      */
     int current_index() const;
 
+    /**
+     * @brief current_text  获取当前文本信息
+     * @return              字符串
+     */
+    QString current_text() const;
+
     enum DisplayMode {
         ALL,
         PREFIX,

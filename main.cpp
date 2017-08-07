@@ -43,7 +43,8 @@ int main(int argc, char *argv[])
         w.setFont(font);
     }
 #if (PHASCAN | PHASCAN_II)
-    QApplication::setOverrideCursor(Qt::BlankCursor);       // 隐藏鼠标
+//    QApplication::setOverrideCursor(Qt::BlankCursor);       // 隐藏鼠标
+    w.setCursor(Qt::BlankCursor);
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 #endif
 

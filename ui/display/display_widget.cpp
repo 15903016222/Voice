@@ -67,6 +67,7 @@ DisplayWidget::DisplayWidget(const DplDisplay::DisplayPointer &display,
     m_display(display)
 {
     DplSource::Source *source = DplSource::Source::instance();
+    setStyleSheet(QString("background-color: rgb(0, 0, 0)"));
 
     new VLayout(this);
 

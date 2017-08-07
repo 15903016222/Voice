@@ -89,6 +89,11 @@ int ComboMenuItem::current_index() const
     return ui->comboBox->currentIndex();
 }
 
+QString ComboMenuItem::current_text() const
+{
+    return ui->comboBox->currentText();
+}
+
 void ComboMenuItem::set_dispay_mode(ComboMenuItem::DisplayMode mode)
 {
     m_displayMode = mode;
