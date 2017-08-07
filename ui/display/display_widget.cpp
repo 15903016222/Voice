@@ -89,7 +89,7 @@ void DisplayWidget::set_layout(DplDisplay::Display::Layout mode, const QVector<i
         delete w;
     }
 
-    w = new QWidget(this);
+    w = new QWidget();
     w->setObjectName("TopWidget");
 
     QLayout *l = NULL;

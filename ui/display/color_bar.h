@@ -2,41 +2,31 @@
 #define __COLOR_BAR_H__
 
 #include <QWidget>
+#include <display/palette_color.h>
 
-typedef QSharedPointer<QColor> QColorPointer;
-
-class QXmlStreamReader;
 class ColorBar : public QWidget
 {
     Q_OBJECT
 public:
     explicit ColorBar(QWidget *parent = 0);
 
-    void load_file(const QString &path);
-
-    QColorPointer color(quint8 index) const;
+    /**
+     * @brief set_palette   设置要显示调色板
+     * @param palette       调色板
+     */
+    void set_palette(const DplDisplay::PaletteColorPointer &palette);
 
 protected:
-    void read_special_colors(QXmlStreamReader &xml);
-
-    void read_main_colors(QXmlStreamReader &xml);
-
     void paintEvent(QPaintEvent *e);
 
-signals:
-
-public slots:
-
 private:
-    QVector<QColorPointer> m_colorVector;
+    DplDisplay::PaletteColorPointer m_palette;
 };
 
-inline QColorPointer ColorBar::color(quint8 index) const
+inline void ColorBar::set_palette(const DplDisplay::PaletteColorPointer &palette)
 {
-    if (index <  m_colorVector.size()) {
-        return m_colorVector[index];
-    }
-    return QColorPointer(new QColor(Qt::black));
+    m_palette = palette;
+    update();
 }
 
 #endif // __COLOR_BAR_H__

@@ -1,8 +1,8 @@
 #ifndef __DISPLAY_H__
 #define __DISPLAY_H__
 
-#include <QVector>
 #include "a_scan.h"
+#include "palette_color.h"
 
 namespace DplDisplay {
 
@@ -93,6 +93,12 @@ public:
      */
     const DplDisplay::AscanPointer &ascan() const;
 
+    /**
+     * @brief palette   获取PaletteColor
+     * @return          PaletteColor
+     */
+    const PaletteColorPointer &palette() const;
+
 signals:
     void layout_changed(DplDisplay::Display::Layout layout, const QVector<int> grps);
 
@@ -102,7 +108,7 @@ private:
     Layout m_layout;
     QVector<int> m_grps;
     AscanPointer m_ascan;
-
+    PaletteColorPointer m_palette;
 };
 
 typedef QSharedPointer<Display> DisplayPointer;
@@ -130,6 +136,11 @@ inline const QVector<int> &Display::grps() const
 inline const AscanPointer &Display::ascan() const
 {
     return m_ascan;
+}
+
+inline const PaletteColorPointer &Display::palette() const
+{
+    return m_palette;
 }
 
 }
