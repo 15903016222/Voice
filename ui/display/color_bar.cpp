@@ -20,7 +20,7 @@ void ColorBar::paintEvent(QPaintEvent *e)
     float step = 1.0 / m_palette->size();
 
     for (int i = 0; i < m_palette->size(); ++i) {
-        l.setColorAt(step* (m_palette->size() - i - 1), *(m_palette->color(i)));
+        l.setColorAt(step* (m_palette->size() - i - 1), m_palette->color(i));
     }
 
     QPainter painter(this);

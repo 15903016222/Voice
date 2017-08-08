@@ -9,7 +9,8 @@ SOURCES += \
     $$PWD/wave_item.cpp \
     $$PWD/color_bar.cpp \
     $$PWD/s_scan_display.cpp \
-    $$PWD/display_widget.cpp
+    $$PWD/display_widget.cpp \
+    $$PWD/s_scan_scene.cpp
 
 HEADERS += \
     $$PWD/ruler_widget.h \
@@ -22,7 +23,8 @@ HEADERS += \
     $$PWD/wave_item.h \
     $$PWD/color_bar.h \
     $$PWD/s_scan_display.h \
-    $$PWD/display_widget.h
+    $$PWD/display_widget.h \
+    $$PWD/s_scan_scene.h
 
 FORMS += \
     $$PWD/a_scan_display.ui \

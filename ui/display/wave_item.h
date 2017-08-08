@@ -13,7 +13,11 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    void set_wave(const QByteArray &beam);
+    /**
+     * @brief show_wave 显示波形
+     * @param beam      波形数据
+     */
+    void show_wave(const QByteArray &beam);
 
     /**
      * @brief size  获取显示大小
@@ -36,7 +40,7 @@ private:
     QSize m_size;
 };
 
-inline void WaveItem::set_wave(const QByteArray &beam)
+inline void WaveItem::show_wave(const QByteArray &beam)
 {
     if (! beam.isEmpty()) {
         m_beam.setRawData(beam.constData(), beam.size());

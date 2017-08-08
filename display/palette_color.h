@@ -6,7 +6,6 @@
 #include <QColor>
 
 class QXmlStreamReader;
-typedef QSharedPointer<QColor> QColorPointer;
 
 namespace DplDisplay {
 
@@ -28,7 +27,7 @@ public:
      * @param index 位置（幅值)
      * @return      颜色
      */
-    QColorPointer color(quint8 index) const;
+    QColor color(quint8 index) const;
 
     /**
      * @brief size  获取调色板颜色数量
@@ -47,18 +46,18 @@ protected:
     void read_main_colors(QXmlStreamReader &xml);
 
 private:
-    QVector<QColorPointer> m_colorVector;
+    QVector<QRgb> m_colorVector;
 };
 
 typedef QSharedPointer<PaletteColor> PaletteColorPointer;
 
-inline QColorPointer PaletteColor::color(quint8 index) const
+inline QColor PaletteColor::color(quint8 index) const
 {
-    if (index < m_colorVector.size()) {
-        return m_colorVector[index];
-    } else {
-        return QColorPointer(new QColor(Qt::black));
-    }
+//    if (index < m_colorVector.size()) {
+        return QColor(m_colorVector[index]);
+//    } else {
+//        return QColorPointer(new QColor(Qt::black));
+//    }
 }
 
 inline int PaletteColor::size() const
@@ -68,7 +67,7 @@ inline int PaletteColor::size() const
 
 inline quint32 PaletteColor::pixmap(quint8 index) const
 {
-    return color(index)->rgb();
+    return m_colorVector[index];
 }
 
 }

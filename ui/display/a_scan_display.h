@@ -32,7 +32,7 @@ public:
 protected slots:
     void do_data_event();
 
-    void do_ascanView_size_changed(const QSize &size);
+    void do_view_size_changed(const QSize &size);
 
     void update_gates();
 
@@ -41,8 +41,8 @@ protected:
     DplDevice::GroupPointer m_group;
 
 private:
-    ScanView *m_ascanView;
-    AscanScene *m_ascanScene;
+    ScanView *m_view;
+    AscanScene *m_scene;
     WaveItem *m_waveItem;
     GateItem *m_gateAItem;
     GateItem *m_gateBItem;

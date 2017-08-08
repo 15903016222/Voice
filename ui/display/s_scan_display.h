@@ -8,6 +8,9 @@ namespace Ui {
 class SscanDisplay;
 }
 
+class ScanView;
+class SscanScene;
+
 class SscanDisplay : public QWidget
 {
     Q_OBJECT
@@ -16,9 +19,16 @@ public:
     explicit SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
     ~SscanDisplay();
 
-private:
+protected slots:
+    void do_data_event();
+
+protected:
     Ui::SscanDisplay *ui;
     DplDevice::GroupPointer m_group;
+
+private:
+    ScanView *m_view;
+    SscanScene *m_scene;
 };
 
 #endif // __S_SCAN_DISPLAY_H__

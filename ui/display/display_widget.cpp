@@ -42,7 +42,7 @@ template <typename ScanT>
 class SingleLayout : public VLayout
 {
 public:
-    explicit SingleLayout(int grp, QWidget *parent) : VLayout (parent)
+    explicit SingleLayout(int grp, QWidget *parent = 0) : VLayout (parent)
     {
         addWidget(new ScanT(DplDevice::Device::instance()->get_group(grp), parent));
     }
@@ -57,8 +57,8 @@ class ASLayout : public HLayout
 public:
     ASLayout(int grp, QWidget *parent) : HLayout (parent)
     {
-        addLayout(new ALayoutV(grp, parent), 1);
-        addLayout(new SLayout(grp, parent), 2);
+        addLayout(new ALayoutV(grp), 1);
+        addLayout(new SLayout(grp), 2);
     }
 };
 

@@ -58,12 +58,11 @@ void PaletteColor::read_main_colors(QXmlStreamReader &xml)
           ! (xml.isEndElement() && xml.name() == "MainColors" );
           xml.readNext() ) {
         if ( xml.isStartElement() && xml.name() == "Color" ) {
-            m_colorVector.append(QColorPointer(new QColor(
-                                                   xml.attributes().value("R").toString().toInt(),
-                                                   xml.attributes().value("G").toString().toInt(),
-                                                   xml.attributes().value("B").toString().toInt(),
-                                                   255 - xml.attributes().value("F").toString().toInt()
-                                                   )));
+            m_colorVector.append(qRgb(
+                                     xml.attributes().value("R").toString().toInt(),
+                                     xml.attributes().value("G").toString().toInt(),
+                                     xml.attributes().value("B").toString().toInt()
+                                     ));
         }
     }
 }
