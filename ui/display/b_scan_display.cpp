@@ -30,7 +30,6 @@ BscanDisplay::BscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
     ui->rightRuler->set_unit("(%)");
     ui->rightRuler->update();
 
-
     /* source setting */
     DplSource::BeamsPointer beams = m_group->beams();
     connect(static_cast<DplSource::Beams *>(beams.data()),
@@ -40,13 +39,11 @@ BscanDisplay::BscanDisplay(DplDevice::GroupPointer &group, QWidget *parent) :
 
     ui->titleLabel->setText(QString("B-Scan|Grp") + QString::number(m_group->index() + 1));
 
+    connect(m_bscanView, SIGNAL(size_changed(QSize)), m_bscanScene, SLOT(set_size(QSize)));
+
     ui->bScanWidgetVerticalLayout->addWidget(m_bscanView);
-
     m_bscanView->setScene(m_bscanScene);
-    m_bscanScene->addItem(m_bWaveItem);
 
-    qDebug() << "==Scene w : " << m_bscanScene->width() << " h : " << m_bscanScene->height()
-             << "==View w : " << m_bscanView->width() << " h ; " << m_bscanView->height();
 }
 
 BscanDisplay::~BscanDisplay()
@@ -60,6 +57,6 @@ BscanDisplay::~BscanDisplay()
 
 void BscanDisplay::do_data_event()
 {
-    m_bWaveItem->set_size(m_bscanView->size());
-    m_bWaveItem->set_wave(m_group->beams());
+    m_bscanScene->set_size(m_bscanView->size());
+    m_bscanScene->show_wave(m_group->beams());
 }

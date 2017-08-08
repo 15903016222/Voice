@@ -65,7 +65,7 @@ color: rgb(255, 255, 255);</string>
       <widget class="ColorBar" name="colorBar" native="true">
        <property name="minimumSize">
         <size>
-         <width>10</width>
+         <width>5</width>
          <height>0</height>
         </size>
        </property>
@@ -105,7 +105,7 @@ color: rgb(255, 255, 255);</string>
       <widget class="QWidget" name="rightEmptyWidget" native="true">
        <property name="minimumSize">
         <size>
-         <width>30</width>
+         <width>25</width>
          <height>0</height>
         </size>
        </property>
@@ -117,15 +117,15 @@ color: rgb(255, 255, 255);</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ColorBar</class>
+   <class>RulerWidget</class>
    <extends>QWidget</extends>
-   <header>color_bar.h</header>
+   <header>ui/display/ruler_widget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>RulerWidget</class>
+   <class>ColorBar</class>
    <extends>QWidget</extends>
-   <header>ruler_widget.h</header>
+   <header>ui/display/color_bar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
