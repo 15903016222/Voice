@@ -28,4 +28,4 @@ HEADERS += \
 
 FORMS += \
     $$PWD/a_scan_display.ui \
-    $$PWD/s_scan_display.ui
+    $$PWD/scan_display.ui

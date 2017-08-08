@@ -1,5 +1,5 @@
 #include "s_scan_display.h"
-#include "ui_s_scan_display.h"
+#include "ui_scan_display.h"
 
 #include "scan_view.h"
 #include "s_scan_scene.h"
@@ -8,7 +8,7 @@
 
 SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SscanDisplay),
+    ui(new Ui::ScanDisplay),
     m_group(grp),
     m_view(new ScanView),
     m_scene(new SscanScene(DplDevice::Device::instance()->display()->palette()))

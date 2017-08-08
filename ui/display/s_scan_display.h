@@ -5,7 +5,7 @@
 #include <device/group.h>
 
 namespace Ui {
-class SscanDisplay;
+class ScanDisplay;
 }
 
 class ScanView;
@@ -23,7 +23,7 @@ protected slots:
     void do_data_event();
 
 protected:
-    Ui::SscanDisplay *ui;
+    Ui::ScanDisplay *ui;
     DplDevice::GroupPointer m_group;
 
 private:
