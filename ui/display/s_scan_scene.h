@@ -32,7 +32,7 @@ public slots:
 
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
-    void draw_area(int x, int y, int w, int h, QRgb c);
+    void draw_area(int x, int y, int w, int h, quint8 val);
 
 private:
     QImage *m_image;

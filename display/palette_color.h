@@ -29,6 +29,9 @@ public:
      */
     QColor color(quint8 index) const;
 
+
+    const QVector<QRgb> &colors() const;
+
     /**
      * @brief size  获取调色板颜色数量
      * @return      数量
@@ -46,7 +49,7 @@ protected:
     void read_main_colors(QXmlStreamReader &xml);
 
 private:
-    QVector<QRgb> m_colorVector;
+    QVector<QRgb> m_colors;
 };
 
 typedef QSharedPointer<PaletteColor> PaletteColorPointer;
@@ -54,20 +57,25 @@ typedef QSharedPointer<PaletteColor> PaletteColorPointer;
 inline QColor PaletteColor::color(quint8 index) const
 {
 //    if (index < m_colorVector.size()) {
-        return QColor(m_colorVector[index]);
+        return QColor(m_colors[index]);
 //    } else {
 //        return QColorPointer(new QColor(Qt::black));
-//    }
+        //    }
+}
+
+inline const QVector<QRgb> &PaletteColor::colors() const
+{
+    return m_colors;
 }
 
 inline int PaletteColor::size() const
 {
-    return m_colorVector.size();
+    return m_colors.size();
 }
 
 inline quint32 PaletteColor::pixmap(quint8 index) const
 {
-    return m_colorVector[index];
+    return m_colors[index];
 }
 
 }

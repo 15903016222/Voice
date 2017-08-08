@@ -18,15 +18,16 @@ void SscanScene::set_size(const QSize &size)
         delete m_image;
         m_image = NULL;
     }
-    m_image = new QImage(size, QImage::Format_RGB32);
+    m_image = new QImage(size, QImage::Format_Indexed8);
+    m_image->setColorTable(m_palette->colors());
 }
 
-void SscanScene::draw_area(int x, int y, int w, int h, QRgb c)
+void SscanScene::draw_area(int x, int y, int w, int h, quint8 val)
 {
-    quint32 *image = (quint32 *)m_image->bits();
+    quint8 *image = (quint8 *)m_image->bits();
     for (int i=0; i < w; ++i) {
         for (int j = 0; j < h; ++j) {
-            image[m_image->width()*(j+y) + i+x] = c;
+            image[m_image->width()*(j+y) + i+x] = val;
         }
     }
 }
@@ -45,7 +46,7 @@ void SscanScene::show_beams(const DplSource::BeamsPointer &beams)
         beam = beams->get(i)->get_wave();
         for (int j=0; j < pointQty; ++j) {
             draw_area(i*xStep, j*yStep, xStep, yStep+0.5,
-                      m_palette->pixmap((quint8)beam.at(j)));
+                      (quint8)beam.at(j));
         }
     }
 

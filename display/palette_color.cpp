@@ -17,7 +17,7 @@ bool PaletteColor::load(const QString &path)
         return false;
     }
 
-    m_colorVector.clear();
+    m_colors.clear();
 
     QXmlStreamReader xml(&file);
 
@@ -58,7 +58,7 @@ void PaletteColor::read_main_colors(QXmlStreamReader &xml)
           ! (xml.isEndElement() && xml.name() == "MainColors" );
           xml.readNext() ) {
         if ( xml.isStartElement() && xml.name() == "Color" ) {
-            m_colorVector.append(qRgb(
+            m_colors.append(qRgb(
                                      xml.attributes().value("R").toString().toInt(),
                                      xml.attributes().value("G").toString().toInt(),
                                      xml.attributes().value("B").toString().toInt()
