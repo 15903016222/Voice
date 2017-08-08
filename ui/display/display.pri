@@ -10,7 +10,9 @@ SOURCES += \
     $$PWD/color_bar.cpp \
     $$PWD/s_scan_display.cpp \
     $$PWD/display_widget.cpp \
-    $$PWD/s_scan_scene.cpp
+    $$PWD/s_scan_scene.cpp \
+    $$PWD/c_scan_display.cpp \
+    $$PWD/c_scan_scene.cpp
 
 HEADERS += \
     $$PWD/ruler_widget.h \
@@ -24,7 +26,9 @@ HEADERS += \
     $$PWD/color_bar.h \
     $$PWD/s_scan_display.h \
     $$PWD/display_widget.h \
-    $$PWD/s_scan_scene.h
+    $$PWD/s_scan_scene.h \
+    $$PWD/c_scan_display.h \
+    $$PWD/c_scan_scene.h
 
 FORMS += \
     $$PWD/a_scan_display.ui \

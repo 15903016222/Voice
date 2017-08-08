@@ -1,17 +1,17 @@
-#include "s_scan_display.h"
+#include "c_scan_display.h"
 #include "ui_scan_display.h"
 
 #include "scan_view.h"
-#include "s_scan_scene.h"
+#include "c_scan_scene.h"
 
 #include <device/device.h>
 
-SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
+CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ScanDisplay),
     m_group(grp),
     m_view(new ScanView),
-    m_scene(new SscanScene(DplDevice::Device::instance()->display()->palette()))
+    m_scene(new CscanScene(DplDevice::Device::instance()->display()->palette()))
 {
     ui->setupUi(this);
     ui->scanLayout->addWidget(m_view);
@@ -27,22 +27,11 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     ui->rightRulerWidget->set_direction(RulerWidget::Down);
 
     ui->colorBarWidget->set_palette(DplDevice::Device::instance()->display()->palette());
-
-
-    connect(static_cast<DplSource::Beams *>(grp->beams().data()),
-            SIGNAL(data_event()),
-            this, SLOT(do_data_event()));
 }
 
-SscanDisplay::~SscanDisplay()
+CscanDisplay::~CscanDisplay()
 {
     delete ui;
     delete m_view;
     delete m_scene;
 }
-
-void SscanDisplay::do_data_event()
-{
-    m_scene->show_beams(m_group->beams());
-}
-

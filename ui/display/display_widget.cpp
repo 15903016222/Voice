@@ -7,6 +7,7 @@
 #include "display_widget.h"
 #include "a_scan_vdisplay.h"
 #include "a_scan_hdisplay.h"
+#include "c_scan_display.h"
 #include "s_scan_display.h"
 
 #include <QVBoxLayout>
@@ -50,15 +51,36 @@ public:
 
 typedef SingleLayout<AscanHDisplay> ALayoutH;
 typedef SingleLayout<AscanVDisplay> ALayoutV;
+typedef SingleLayout<CscanDisplay> CLayout;
 typedef SingleLayout<SscanDisplay> SLayout;
 
 class ASLayout : public HLayout
 {
 public:
-    ASLayout(int grp, QWidget *parent) : HLayout (parent)
+    ASLayout(int grp, QWidget *parent = 0) : HLayout (parent)
     {
         addLayout(new ALayoutV(grp), 1);
         addLayout(new SLayout(grp), 2);
+    }
+};
+
+class SCLayout : public HLayout
+{
+public:
+    SCLayout(int grp, QWidget *parent) : HLayout(parent)
+    {
+        addLayout(new SLayout(grp), 1);
+        addLayout(new CLayout(grp), 2);
+    }
+};
+
+class ASCLayout : public VLayout
+{
+public:
+    ASCLayout(int grp, QWidget *parent) : VLayout(parent)
+    {
+        addLayout(new ASLayout(grp), 1);
+        addLayout(new CLayout(grp), 1);
     }
 };
 
@@ -101,12 +123,13 @@ void DisplayWidget::set_layout(DplDisplay::Display::Layout mode, const QVector<i
         l = new SLayout(grps.first(), w);
         break;
     case DplDisplay::Display::C:
-        l = new ALayoutH(grps.first(), w);
+        l = new CLayout(grps.first(), w);
         break;
     case DplDisplay::Display::AS:
         l = new ASLayout(grps.first(), w);
         break;
     case DplDisplay::Display::SC:
+        l = new SCLayout(grps.first(), w);
         break;
     case DplDisplay::Display::AB:
         break;
@@ -115,6 +138,7 @@ void DisplayWidget::set_layout(DplDisplay::Display::Layout mode, const QVector<i
     case DplDisplay::Display::ASB:
         break;
     case DplDisplay::Display::ASC:
+        l = new ASCLayout(grps.first(), w);
         break;
     default:
         break;
