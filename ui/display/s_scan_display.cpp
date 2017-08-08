@@ -32,6 +32,8 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     connect(static_cast<DplSource::Beams *>(grp->beams().data()),
             SIGNAL(data_event()),
             this, SLOT(do_data_event()));
+
+    ui->titleLabel->setText(QString("S-Scan|Grp%1").arg(m_group->index()+1));
 }
 
 SscanDisplay::~SscanDisplay()

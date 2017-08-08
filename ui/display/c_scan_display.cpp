@@ -27,6 +27,8 @@ CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     ui->rightRulerWidget->set_direction(RulerWidget::Down);
 
     ui->colorBarWidget->set_palette(DplDevice::Device::instance()->display()->palette());
+
+    ui->titleLabel->setText(QString("C-Scan|Grp%1").arg(m_group->index()+1));
 }
 
 CscanDisplay::~CscanDisplay()
