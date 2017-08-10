@@ -5,6 +5,7 @@
 #include <display/palette_color.h>
 #include <source/beams.h>
 
+class SscanImage;
 class SscanScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -32,12 +33,12 @@ public slots:
 
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
-    void draw_area(int x, int y, int w, int h, quint8 val);
 
 private:
-    QImage *m_image;
+    SscanImage *m_image;
     DplDisplay::PaletteColorPointer m_palette;
     DplSource::BeamsPointer m_beams;
+    QThread *m_thread;
 };
 
 inline void SscanScene::set_palette(const DplDisplay::PaletteColorPointer &palette)

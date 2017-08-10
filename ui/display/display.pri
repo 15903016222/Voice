@@ -12,7 +12,8 @@ SOURCES += \
     $$PWD/display_widget.cpp \
     $$PWD/s_scan_scene.cpp \
     $$PWD/c_scan_display.cpp \
-    $$PWD/c_scan_scene.cpp
+    $$PWD/c_scan_scene.cpp \
+    $$PWD/s_scan_image.cpp
 
 HEADERS += \
     $$PWD/ruler_widget.h \
@@ -28,7 +29,8 @@ HEADERS += \
     $$PWD/display_widget.h \
     $$PWD/s_scan_scene.h \
     $$PWD/c_scan_display.h \
-    $$PWD/c_scan_scene.h
+    $$PWD/c_scan_scene.h \
+    $$PWD/s_scan_image.h
 
 FORMS += \
     $$PWD/a_scan_display.ui \
