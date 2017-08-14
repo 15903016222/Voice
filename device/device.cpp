@@ -190,6 +190,11 @@ void Device::start()
     source->start();
 }
 
+void Device::stop()
+{
+    DplSource::Source::instance()->stop();
+}
+
 void Device::deploy_beams()
 {
     Q_D(Device);
@@ -204,7 +209,7 @@ void Device::deploy_beams()
 
 Device::Device(QObject *parent) :
     QObject(parent),
-    d_ptr(new DevicePrivate()),
+    d_ptr(new DevicePrivate(this)),
     m_display(new DplDisplay::Display())
 {
 }

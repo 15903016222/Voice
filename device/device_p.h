@@ -9,14 +9,17 @@
 #define __DEVICE_P_H__
 
 #include "device.h"
+#include "paint_thread.h"
 #include <source/source.h>
 
 namespace DplDevice {
 
-class DevicePrivate
+class DevicePrivate : public QObject
 {
+    Q_OBJECT
 public:
-    explicit DevicePrivate();
+    explicit DevicePrivate(Device *parent);
+    ~DevicePrivate();
 
     const QString &serial_number() const;
 
@@ -53,20 +56,26 @@ protected:
      */
     time_t get_relative_time();
 
+    void init_paintThread();
+
+protected slots:
+    void do_data_event();
+
 public:
     /* Group */
     QVector<GroupPointer> m_groups;
     GroupPointer m_curGroup;
     mutable QReadWriteLock m_groupsRWLock;
 
-private:    
+private:
+    Device *q_ptr;
     QString m_serialNo;         // 序列号
     QString m_version;          // 设备版本号
     time_t m_time;              // 相对设备的时间差
     Cert m_cert;
     Device::Type m_type;
 
-//    PaintThread *m_paintThread;
+    PaintThread *m_paintThread;
 };
 
 inline const QString &DevicePrivate::serial_number() const

@@ -165,8 +165,15 @@ public:
      */
     void start();
 
+    /**
+     * @brief stop  停止设备
+     */
+    void stop();
+
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
+    void start_paint_event();
+    void finish_paint_event();
 
 public slots:
     /**
