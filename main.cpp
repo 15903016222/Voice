@@ -50,6 +50,8 @@ int main(int argc, char *argv[])
 
     w.show();
 
+    DplDevice::Device::instance()->start();
+
     splash->finish(&w);
     delete splash;
 
