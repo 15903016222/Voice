@@ -91,6 +91,16 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_BACK:
         VInput::instance()->send(VInput::Key_Esc);
         break;
+    case Mcu::KEY_FREEZE: {
+        static bool flag = true;
+        if (flag) {
+            DplDevice::Device::instance()->stop();
+        } else {
+            DplDevice::Device::instance()->start();
+        }
+        flag = !flag;
+    }
+        break;
     default:
         break;
     }
