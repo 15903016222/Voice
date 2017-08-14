@@ -1,11 +1,15 @@
-#ifndef BSCANVDISPLAY_H
-#define BSCANVDISPLAY_H
+#ifndef __B_SCAN_VDISPLAY_H__
+#define __B_SCAN_VDISPLAY_H__
 
+#include "b_scan_display.h"
 
 class BscanVDisplay : public BscanDisplay
 {
 public:
-    BscanVDisplay();
+    BscanVDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
+
+protected:
+    virtual void init_ruler();
 };
 
-#endif // BSCANVDISPLAY_H
+#endif // __B_SCAN_VDISPLAY_H__
