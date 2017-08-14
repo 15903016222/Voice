@@ -8,7 +8,10 @@ PRIVATE_HEADERS += \
 
 SOURCES += \
     $$PWD/device.cpp \
-    $$PWD/group.cpp
+    $$PWD/group.cpp \
+    $$PWD/paint_thread.cpp \
+    $$PWD/group_p.cpp \
+    $$PWD/device_p.cpp
 
 pcwin {
     SOURCES += $$PWD/device_pcwin.cpp
@@ -34,4 +37,6 @@ phascan_ii {
         $$PWD/cert.h
 }
 
-HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS
+HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS \
+    $$PWD/paint_thread.h \
+    $$PWD/group_p.h
