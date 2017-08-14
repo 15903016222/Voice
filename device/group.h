@@ -21,6 +21,7 @@ class GroupPrivate;
 class Group : public QObject
 {
     Q_OBJECT
+    friend class GroupPrivate;
 public:
     explicit Group(int index, QObject *parent = 0);
     ~Group();
@@ -122,6 +123,7 @@ signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void velocity_changed(double val);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
+    void current_angle_changed(double val);
     void probe_changed(DplFocallaw::ProbePointer probePtr);
 
 public slots:
@@ -134,7 +136,6 @@ private slots:
     void update_sample();
 
 private:
-    GroupPrivate *d;
     DplUt::SamplePointer m_sample;
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
@@ -142,6 +143,7 @@ private:
     DplSource::BeamsPointer m_beams;
     DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplFpga::GroupPointer m_fpgaGroup;
+    GroupPrivate *d;
 
 private:
     void init_gate(DplGate::Gate *gate);

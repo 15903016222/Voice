@@ -30,7 +30,12 @@ DevicePrivate::DevicePrivate(Device *parent) :
 
 DevicePrivate::~DevicePrivate()
 {
-
+    DplSource::Source *source = DplSource::Source::instance();
+    disconnect(source, SIGNAL(data_event(const char*)),
+            this, SLOT(do_data_event()));
+    m_paintThread->quit();
+    m_paintThread->wait();
+    delete m_paintThread;
 }
 
 bool DevicePrivate::set_relative_time(time_t t)

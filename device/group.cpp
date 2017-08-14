@@ -6,8 +6,10 @@
  * @date 2016-11-04
  */
 
-#include "group.h"
+#include "group_p.h"
+
 #include "device.h"
+#include "paint_thread.h"
 
 #include <fpga/fpga.h>
 
@@ -17,47 +19,17 @@
 
 namespace DplDevice {
 
-class GroupPrivate
-{
-public:
-    GroupPrivate() :
-        m_mode(Group::PA),
-        m_utUnit(Group::SoundPath),
-        m_currentAngle(M_PI/6)
-    {}
-
-    /**
-     * @brief max_beam_delay    获取最大的BeamDelay
-     * @return                  BeamDelay值，　单位(ns)
-     */
-    int max_beam_delay();
-
-    /* Attribution */
-    Group::Mode m_mode;         /* 组模式 */
-    Group::UtUnit m_utUnit;     /* Ut Unit */
-
-    double m_currentAngle;      /* 声速入射角度, 单位(度) */
-
-    QReadWriteLock m_rwlock;
-};
-
-int GroupPrivate::max_beam_delay()
-{
-    qDebug()<<__FILE__<<__func__<<"Unimplement";
-    return 0;
-}
-
 /* Group */
 Group::Group(int index, QObject *parent):
     QObject(parent),
-    d(new GroupPrivate()),
     m_sample(new DplUt::Sample(DplFpga::Fpga::SAMPLE_PRECISION, parent)),
     m_gateA(new DplGate::Gate(DplGate::Gate::A, parent)),
     m_gateB(new DplGate::Gate(DplGate::Gate::B, parent)),
     m_gateI(new DplGate::Gate(DplGate::Gate::I, parent)),
     m_beams(new DplSource::Beams),
     m_focallawer(new DplFocallaw::Focallawer),
-    m_fpgaGroup(new DplFpga::Group(index, parent))
+    m_fpgaGroup(new DplFpga::Group(index, parent)),
+    d(new GroupPrivate(this))
 {
     init_gates();
 
@@ -85,50 +57,32 @@ Group::~Group()
 
 Group::Mode Group::mode()
 {
-    QReadLocker l(&d->m_rwlock);
-    return d->m_mode;
+    return d->mode();
 }
 
 void Group::set_mode(Group::Mode mode)
 {
-    {
-        QWriteLocker l(&d->m_rwlock);
-        if (d->m_mode == mode) {
-            return;
-        }
-        d->m_mode = mode;
-    }
-    emit mode_changed(mode);
+    d->set_mode(mode);
 }
 
 Group::UtUnit Group::ut_unit()
 {
-    QReadLocker l(&d->m_rwlock);
-    return d->m_utUnit;
+    return d->ut_unit();
 }
 
 void Group::set_ut_unit(Group::UtUnit type)
 {
-    {
-        QWriteLocker l(&d->m_rwlock);
-        if (d->m_utUnit == type) {
-            return;
-        }
-        d->m_utUnit = type;
-    }
-    emit ut_unit_changed(type);
+    d->set_ut_unit(type);
 }
 
 double Group::current_angle()
 {
-    QReadLocker l(&d->m_rwlock);
-    return d->m_currentAngle;
+    return d->current_angle();
 }
 
 void Group::set_current_angle(double angle)
 {
-    QWriteLocker l(&d->m_rwlock);
-    d->m_currentAngle = angle;
+    d->set_current_angle(angle);
 }
 
 double Group::max_sample_time()
