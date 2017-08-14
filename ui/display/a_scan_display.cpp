@@ -76,7 +76,7 @@ AscanDisplay::~AscanDisplay()
 
 void AscanDisplay::do_data_event()
 {
-    m_waveItem->show_wave(m_group->beams()->get(0)->get_wave());
+    m_waveItem->show_wave(m_group->beams()->get(0)->wave());
 }
 
 void AscanDisplay::do_view_size_changed(const QSize &size)
