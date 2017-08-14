@@ -39,6 +39,7 @@ HEADERS += \
     $$PWD/b_scan_hdisplay.h \
     $$PWD/b_scan_vdisplay.h
     $$PWD/s_scan_image.h
+    $$PWD/s_scan_image.h
 
 
 FORMS += \
