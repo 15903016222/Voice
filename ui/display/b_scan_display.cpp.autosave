@@ -132,8 +132,8 @@ void BscanDisplay::do_data_event()
 {
     m_currentTimeCount += TIME_OUT_VALUE / 1000.0;
     ui->label->setText(QString::number(m_currentTimeCount, 'f', 1));
+    
     double rulerEnd;
-
     if(m_type == TIME) {
         rulerEnd = m_bscanView->width() / (SECOND / (double)DplSource::Source::instance()->interval());
     } else {

@@ -10,7 +10,12 @@ RulerWidget::RulerWidget(QWidget *parent) :
     m_end(100),
     m_unitName("(mm)"),
     m_type(BOTTOM),
-    m_direction(Up)
+    m_direction(Up),
+    m_move(0),
+    m_step(0),
+    m_offset(0),
+    m_moveUnit(0),
+    m_totalMove(0)
 {
 //    QScrollBar bar;
 //    bar.setOrientation(Qt::Orientation);
@@ -26,6 +31,15 @@ bool RulerWidget::set_range(double start, double end)
     m_end = end;
 
     return true;
+}
+
+void RulerWidget::move_pix(unsigned int step)
+{
+    m_totalMove +=(step / 1000.0);
+    m_move = -m_totalMove * (y_axis_length() / (m_end - m_start) + 0.5);    /* 偏移多少个像素*/
+    m_moveUnit = abs(m_move) / m_step;
+    m_offset = abs(m_move) % m_step * (-1) - 1;
+
 }
 
 void RulerWidget::paintEvent(QPaintEvent *e)
@@ -95,31 +109,73 @@ void RulerWidget::paintEvent(QPaintEvent *e)
 
     painter.drawText(length/2, 19, m_unitName);
 
+    /* 最大步进 */
+    m_step = (int)(10 * interval * m_pixelPerUnit + 0.5);
+
     if (RulerWidget::Down == m_direction) {
         for(int i = 0; i < markQty; ++i) {
-            painter.drawLine( length - (int)(i * interval * m_pixelPerUnit+0.5), 0, length - (int)(i * interval * m_pixelPerUnit+0.5), 3);
+            int targetX = length - (int)(i * interval * m_pixelPerUnit + 0.5) + m_move;
+
+            if(targetX < 0) {
+                targetX = length - (int)((markQty + i) * interval * m_pixelPerUnit + 0.5) + m_move;
+            }
+
+            painter.drawLine(targetX, 0, targetX, 3);
         }
 
         for(int i = 5; i < markQty; i += 10) {
-            painter.drawLine( length - (int)(i * interval * m_pixelPerUnit+0.5), 0, length - (int)(i * interval * m_pixelPerUnit+0.5), 7);
+            int targetX = length - (int)(i * interval * m_pixelPerUnit + 0.5) + m_move;
+            if(targetX < 0) {
+                targetX = length - (int)((markQty + i) * interval * m_pixelPerUnit + 0.5) + m_move;
+            }
+
+            painter.drawLine(targetX, 0, targetX, 7);
         }
 
         for(int i = 0; i < markQty; i += 10) {
-            painter.drawLine( length - (int)(i * interval * m_pixelPerUnit+0.5), 0, length - (int)(i * interval * m_pixelPerUnit+0.5), 13);
-            painter.drawText( length - (int)(i * interval * m_pixelPerUnit+0.5) - 15, 12, QString::number(i*interval+m_start));
+
+            int targetX = length - (int)(i * interval * m_pixelPerUnit + 0.5) + m_move;
+            if(targetX < 0) {
+                targetX = length - (int)((markQty + i) * interval * m_pixelPerUnit + 0.5) + m_move;
+                painter.drawText(targetX - 15, 12, QString::number((markQty + i) * interval + m_start));
+            } else {
+                painter.drawText(targetX - 15, 12, QString::number(i * interval + m_start));
+            }
+
+            painter.drawLine(targetX, 0, targetX, 13);
         }
     } else {
+
         for(int i = 0; i < markQty; ++i) {
-            painter.drawLine((int)(i * interval * m_pixelPerUnit+0.5), 0, (int)(i * interval * m_pixelPerUnit+0.5), 3);
+            int targetX = (int)(i * interval * m_pixelPerUnit + 0.5) + m_offset;
+            if(targetX < 0) {
+                targetX = (int)((markQty + i) * interval * m_pixelPerUnit + 0.5) + m_offset;
+            }
+            painter.drawLine(targetX, 0, targetX, 3);
         }
 
         for(int i = 5; i < markQty; i += 10) {
-            painter.drawLine((int)(i * interval * m_pixelPerUnit+0.5), 0, (int)(i * interval * m_pixelPerUnit+0.5), 7);
+            int targetX = (int)(i * interval * m_pixelPerUnit + 0.5) + m_offset;
+
+            if(targetX < 0) {
+                int markQtyEnd = markQty - (markQty - 5) % 10;
+                targetX = (int)((markQtyEnd + i + 5) * interval * m_pixelPerUnit + 0.5) + m_offset;
+            }
+
+            painter.drawLine(targetX, 0, targetX, 7);
         }
 
         for(int i = 0; i < markQty; i += 10) {
-            painter.drawLine((int)(i * interval * m_pixelPerUnit+0.5), 0, (int)(i * interval * m_pixelPerUnit+0.5), 13);
-            painter.drawText((int)(i * interval * m_pixelPerUnit+0.5)+2, 12, QString::number(i*interval+m_start));
+            int targetX = (int)(i * interval * m_pixelPerUnit + 0.5) + m_offset;
+            if(targetX < 0) {
+                int align = markQty % 10;
+                targetX = (int)((markQty - align + i + 10) * interval * m_pixelPerUnit + 0.5) + m_offset;
+                painter.drawLine(targetX, 0, targetX, 13);
+                painter.drawText(targetX + 2, 12, QString::number(((markQty / 10 + 1 + m_moveUnit) * 10) * interval + m_start, 'f', 1));
+            } else {
+                painter.drawLine(targetX, 0, (int)(i * interval * m_pixelPerUnit + 0.5)  + m_offset, 13);
+                painter.drawText(targetX + 2, 12, QString::number((i + m_moveUnit * 10) * interval + m_start, 'f', 1));
+            }
         }
     }
 }

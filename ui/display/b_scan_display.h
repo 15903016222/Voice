@@ -31,7 +31,7 @@ public:
     explicit BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
     ~BscanDisplay();
 
-    bool set_current_beam(int index);
+    bool set_current_beam(unsigned int index);
     bool set_scan_type(E_SCAN_TYPE type);
 
 protected slots:

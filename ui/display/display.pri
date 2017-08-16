@@ -16,7 +16,7 @@ SOURCES += \
     $$PWD/b_scan_display.cpp \
     $$PWD/b_scan_scene.cpp \
     $$PWD/b_scan_hdisplay.cpp \
-    $$PWD/b_scan_vdisplay.cpp
+    $$PWD/b_scan_vdisplay.cpp \
     $$PWD/s_scan_image.cpp
 
 HEADERS += \
@@ -37,8 +37,7 @@ HEADERS += \
     $$PWD/b_scan_display.h \
     $$PWD/b_scan_scene.h \
     $$PWD/b_scan_hdisplay.h \
-    $$PWD/b_scan_vdisplay.h
-    $$PWD/s_scan_image.h
+    $$PWD/b_scan_vdisplay.h \
     $$PWD/s_scan_image.h
 
 

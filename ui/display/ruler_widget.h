@@ -24,6 +24,7 @@ public:
     void set_backgroup_color(const QColor &color) { m_bgColor = color; }
     void set_type(RulerWidget::Type type) { m_type = type; }
     void set_direction(RulerWidget::Direction direction) { m_direction = direction; }
+    void move_pix(unsigned int step);
 
 protected:
     int y_axis_length() const;
@@ -39,6 +40,11 @@ private:
 
     Type m_type;
     Direction m_direction;
+    int     m_move;
+    int     m_step;
+    int     m_moveUnit;
+    int     m_offset;
+    double  m_totalMove;
 };
 
 inline int RulerWidget::y_axis_length() const

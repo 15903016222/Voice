@@ -56,6 +56,7 @@ typedef SingleLayout<AscanVDisplay> ALayoutV;
 typedef SingleLayout<CscanDisplay> CLayout;
 typedef SingleLayout<SscanDisplay> SLayout;
 typedef SingleLayout<BscanVDisplay> BLayoutV;
+typedef SingleLayout<BscanHDisplay> BLayoutH;
 
 class ASLayout : public HLayout
 {
