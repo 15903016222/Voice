@@ -3,24 +3,29 @@
 #include "s_scan_image.h"
 
 #include <QPainter>
-#include <QThread>
 
 #include <device/device.h>
 
 SscanScene::SscanScene(const DplDisplay::PaletteColorPointer &palette, QObject *parent) :
     QGraphicsScene(parent),
     m_image(NULL),
-    m_palette(palette),
-    m_thread(new QThread(this))
+    m_palette(palette)
 {
-    connect(m_thread, SIGNAL(started()),
-            this, SLOT(show_beams()), Qt::DirectConnection);
-    connect(m_thread, SIGNAL(finished()),
-            this, SLOT(update()), Qt::DirectConnection);
+    connect(this, SIGNAL(image_changed()),
+            this, SLOT(update()));
+}
+
+SscanScene::~SscanScene()
+{
+    if(m_image) {
+        delete m_image;
+    }
 }
 
 void SscanScene::set_size(const QSize &size)
 {
+    QWriteLocker l(&m_rwLock);
+
     setSceneRect(-size.width()/2, -size.height()/2,
                  size.width(), size.height());
     if (m_image) {
@@ -31,14 +36,17 @@ void SscanScene::set_size(const QSize &size)
     m_image->setColorTable(m_palette->colors());
 }
 
-void SscanScene::show_beams(const DplSource::BeamsPointer &beams)
+void SscanScene::set_beams(const DplSource::BeamsPointer &beams)
 {
+    QWriteLocker l(&m_rwLock);
     m_image->draw_beams(beams);
-    update();
+    emit image_changed();
 }
 
 void SscanScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
+    QReadLocker l(&m_rwLock);
+
     if (m_image) {
         painter->drawImage(rect, *m_image);
     }

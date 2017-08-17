@@ -13,40 +13,87 @@
 
 namespace DplDevice {
 
-class DevicePrivate
+class DevicePrivate : public QObject
 {
+    Q_OBJECT
 public:
-    DevicePrivate();
+    explicit DevicePrivate(Device *parent);
+    ~DevicePrivate();
 
-    mutable QReadWriteLock m_rwlock;
+    const QString &serial_number() const;
 
-    QString m_serialNo;         // 序列号
-    QString m_version;          // 软件版本号
+    const QString &version() const;
 
-    time_t m_time;
-    Cert m_cert;
-    Device::Type m_type;
+    time_t relative_time() const;
 
+    bool set_relative_time(time_t t);
+
+    bool import_cert(const QString &certFile);
+
+    const Cert &cert() const;
+
+    Device::Type type() const;
+
+    bool is_valid() const;
+
+protected:
+    /**
+     * @brief get_serial_number 获取序列号
+     * @return                  序列号
+     */
+    QString get_serial_number();
+
+    /**
+     * @brief get_version   获取设备版本号
+     * @return              版本号
+     */
+    QByteArray get_version();
+
+    /**
+     * @brief get_relative_time 获取相对设备的时间差
+     * @return                  时间差
+     */
+    time_t get_relative_time();
+
+public:
     /* Group */
     QVector<GroupPointer> m_groups;
     GroupPointer m_curGroup;
     mutable QReadWriteLock m_groupsRWLock;
 
 private:
-    /**
-     * @brief get_version   获取版本号
-     * @return              版本号
-     */
-    QByteArray get_version();
-
-    time_t get_time();
-
-    /**
-     * @brief get_serial_number 获取序列号
-     * @return                  序列号
-     */
-    QString get_serial_number();
+    Device *q_ptr;
+    QString m_serialNo;         // 序列号
+    QString m_version;          // 设备版本号
+    time_t m_time;              // 相对设备的时间差
+    Cert m_cert;
+    Device::Type m_type;
 };
+
+inline const QString &DevicePrivate::serial_number() const
+{
+    return m_serialNo;
+}
+
+inline const QString &DevicePrivate::version() const
+{
+    return m_version;
+}
+
+inline time_t DevicePrivate::relative_time() const
+{
+    return m_time;
+}
+
+inline const Cert &DevicePrivate::cert() const
+{
+    return m_cert;
+}
+
+inline Device::Type DevicePrivate::type() const
+{
+    return m_type;
+}
 
 }
 

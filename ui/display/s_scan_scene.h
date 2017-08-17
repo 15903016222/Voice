@@ -2,6 +2,8 @@
 #define __S_SCAN_SCENE_H__
 
 #include <QGraphicsScene>
+#include <QReadWriteLock>
+
 #include <display/palette_color.h>
 #include <source/beams.h>
 
@@ -11,6 +13,7 @@ class SscanScene : public QGraphicsScene
     Q_OBJECT
 public:
     explicit SscanScene(const DplDisplay::PaletteColorPointer &palette, QObject *parent = 0);
+    ~SscanScene();
 
     /**
      * @brief set_palette   设置调色板
@@ -26,19 +29,22 @@ public slots:
     void set_size(const QSize &size);
 
     /**
-     * @brief show_wave 显示Beam组
+     * @brief set_beams 设置显示Beam组数据
      * @param beams     Beam组
      */
-    void show_beams(const DplSource::BeamsPointer &beams);
+    void set_beams(const DplSource::BeamsPointer &beams);
+
+signals:
+    void image_changed();
 
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
 
 private:
     SscanImage *m_image;
+    QReadWriteLock m_rwLock;
     DplDisplay::PaletteColorPointer m_palette;
     DplSource::BeamsPointer m_beams;
-    QThread *m_thread;
 };
 
 inline void SscanScene::set_palette(const DplDisplay::PaletteColorPointer &palette)

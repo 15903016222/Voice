@@ -15,10 +15,6 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
-#include <source/source.h>
-
-#include <QDebug>
-
 namespace DplUi {
 
 class VLayout : public QVBoxLayout
@@ -126,7 +122,6 @@ DisplayWidget::DisplayWidget(const DplDisplay::DisplayPointer &display,
     QWidget(parent),
     m_display(display)
 {
-    DplSource::Source *source = DplSource::Source::instance();
     setStyleSheet(QString("background-color: rgb(0, 0, 0)"));
 
     new VLayout(this);
@@ -137,8 +132,6 @@ DisplayWidget::DisplayWidget(const DplDisplay::DisplayPointer &display,
             SLOT(set_layout(DplDisplay::Display::Layout,QVector<int>)));
 
     set_layout(display->layout(), display->grps());
-
-    source->start();
 }
 
 void DisplayWidget::set_layout(DplDisplay::Display::Layout mode, const QVector<int> &grps)

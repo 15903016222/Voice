@@ -6,5 +6,7 @@ if [ -z $1 ]; then
 	exit
 fi
 
-scp ${TOP_PATH}/fpga/lib/libFpga* $1 
-scp ${TOP_PATH}/source/lib/libSource* $1
+scp ${TOP_PATH}/fpga/lib/* $1 
+scp ${TOP_PATH}/source/lib/* $1
+scp ${TOP_PATH}/mcu/lib/* $1
+scp ${TOP_PATH}/focallaw/lib/* $1

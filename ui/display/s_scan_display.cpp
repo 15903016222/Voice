@@ -28,10 +28,10 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
 
     ui->colorBarWidget->set_palette(DplDevice::Device::instance()->display()->palette());
 
-
-    connect(static_cast<DplSource::Beams *>(grp->beams().data()),
-            SIGNAL(data_event()),
-            this, SLOT(do_data_event()));
+    connect(static_cast<DplDevice::Group *>(grp.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
+            this, SLOT(do_data_event(DplSource::BeamsPointer)),
+            Qt::DirectConnection);
 
     ui->titleLabel->setText(QString("S-Scan|Grp%1").arg(m_group->index()+1));
 }
@@ -43,8 +43,8 @@ SscanDisplay::~SscanDisplay()
     delete m_scene;
 }
 
-void SscanDisplay::do_data_event()
+void SscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
-    m_scene->show_beams(m_group->beams());
+    m_scene->set_beams(beams);
 }
 

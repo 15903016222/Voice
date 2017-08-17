@@ -79,9 +79,15 @@ QByteArray CertPrivate::read_cert_file(const QString &certFile, const QString &p
 }
 
 
-Cert::Cert()
-    :d(new CertPrivate())
+Cert::Cert():
+    d(new CertPrivate())
 {
+}
+
+Cert::Cert(const QString &certFile, const QString &pubPemFile) :
+    d(new CertPrivate)
+{
+    load(certFile, pubPemFile);
 }
 
 Cert::~Cert()

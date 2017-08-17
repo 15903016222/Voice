@@ -9,10 +9,10 @@
 #define __DEVICE_GROUP_H__
 
 #include <fpga/group.h>
-#include <source/beams.h>
 #include <focallaw/focallawer.h>
 #include <ut/sample.h>
 #include <gate/gate.h>
+#include <source/beams.h>
 
 namespace DplDevice {
 
@@ -21,6 +21,7 @@ class GroupPrivate;
 class Group : public QObject
 {
     Q_OBJECT
+    friend class GroupPrivate;
 public:
     explicit Group(int index, QObject *parent = 0);
     ~Group();
@@ -107,10 +108,16 @@ public:
     const DplGate::GatePointer &gate(DplGate::Gate::Type type) const;
 
     /**
-     * @brief beams 获取数据源Beam组
-     * @return      返回数据源Beam组
+     * @brief current_beams 获取数据源当前Beam组
+     * @return              返回数据源Beam组
      */
-    const DplSource::BeamsPointer &beams() const;
+    const DplSource::BeamsPointer &current_beams() const;
+
+    /**
+     * @brief current_beam  获取数据源的当前Beam
+     * @return              Beam
+     */
+    const DplSource::BeamPointer &current_beam() const;
 
     /**
      * @brief get_focallawer    获取聚焦法则计算器
@@ -122,7 +129,9 @@ signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void velocity_changed(double val);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
+    void current_angle_changed(double val);
     void probe_changed(DplFocallaw::ProbePointer probePtr);
+    void data_event(const DplSource::BeamsPointer &beams);
 
 public slots:
     /**
@@ -132,16 +141,16 @@ public slots:
 
 private slots:
     void update_sample();
+    void update_source();
 
 private:
-    GroupPrivate *d;
     DplUt::SamplePointer m_sample;
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
-    DplSource::BeamsPointer m_beams;
     DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplFpga::GroupPointer m_fpgaGroup;
+    GroupPrivate *d;
 
 private:
     void init_gate(DplGate::Gate *gate);
@@ -180,11 +189,6 @@ inline const DplGate::GatePointer &Group::gate(DplGate::Gate::Type type) const
     } else {
         return m_gateI;
     }
-}
-
-inline const DplSource::BeamsPointer &Group::beams() const
-{
-    return m_beams;
 }
 
 inline const DplFocallaw::FocallawerPointer &Group::focallawer() const

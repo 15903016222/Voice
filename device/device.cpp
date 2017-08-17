@@ -8,65 +8,10 @@
 
 #include "device_p.h"
 
-#include <QFile>
-#include <QDebug>
-
 namespace DplDevice {
 
 static const int MAX_GROUPS_NUM = 8;
 
-#if defined(PHASCAN) || defined(PHASCAN_II) || defined(PCUNIX)
-static const char *CERT_FILE = "~/.mercury/cert";
-static const char *PUB_PEM_FILE = "~/.mercury/pem";
-static const char *TIME_FILE = "~/.mercury/time";
-#elif defined(PCWIN)
-static const char *CERT_FILE = "~/.mercury/cert";
-static const char *PUB_PEM_FILE = "~/.mercury/pem";
-static const char *TIME_FILE = "~/.mercury/time";
-#else
-#error("Not Specfied Device")
-#endif
-
-static const int TYPE_MAX = Device::DEV_32_128_PRO_TOFD+1;
-static const QString s_typeMap[TYPE_MAX] = {
-    QString("16-64-TOFD"),
-    QString("32-64-TOFD"),
-    QString("32-128-TOFD"),
-    QString("32-128-PRO-TOFD")
-};
-
-DevicePrivate::DevicePrivate()
-{
-    m_serialNo = get_serial_number();
-    m_version = get_version();
-    m_time = get_time();
-    m_cert.load(CERT_FILE, PUB_PEM_FILE);
-}
-
-time_t DevicePrivate::get_time()
-{
-    time_t t = 0;
-    FILE *fp = ::fopen(TIME_FILE, "r");
-    if ( NULL == fp ) {
-        qWarning()<<"Cann't open"<<TIME_FILE;
-    } else {
-        ::fscanf(fp, "%ld", &t);
-        ::fclose(fp);
-    }
-    return t;
-}
-
-QByteArray DevicePrivate::get_version()
-{
-    QFile file("/etc/version");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return "";
-    }
-
-    return file.readAll();
-}
-
-/* Device */
 Device *Device::instance()
 {
     static Device *s_device = new Device();
@@ -76,94 +21,55 @@ Device *Device::instance()
 const QString &Device::version() const
 {
     Q_D(const Device);
-    return d->m_version;
+    return d->version();
 }
 
 uint Device::date_time() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_rwlock);
-    return ::time(NULL) + d->m_time;
+    return ::time(NULL) + d->relative_time();
 }
 
 bool Device::set_date_time(uint t)
 {
     Q_D(Device);
-    QString cmd;
-    QWriteLocker l(&d->m_rwlock);
-    d->m_time = t - ::time(NULL);
-    cmd.sprintf("echo %ld > %s && sync", d->m_time, TIME_FILE);
-    if ( ::system(cmd.toUtf8().data()) ) {
-        return false;
-    }
-    return true;
+    return d->set_relative_time(t - ::time(NULL));
 }
 
 bool Device::import_cert(const QString &certFile)
 {
     Q_D(Device);
-    QString cmd;
-    cmd.sprintf("cp %s %s && sync", certFile.toUtf8().data(), CERT_FILE);
-
-    if (::system(cmd.toUtf8().data()) != 0) {
-        return false;
-    }
-
-    QWriteLocker l(&d->m_rwlock);
-    bool ret = d->m_cert.load(CERT_FILE, PUB_PEM_FILE);
-    for (int i = 0; i < TYPE_MAX; ++i) {
-        if (s_typeMap[i] == d->m_cert.get_device_type()) {
-            d->m_type = (Device::Type)i;
-        }
-    }
-    return ret;
+    return d->import_cert(certFile);
 }
 
 const Cert &Device::get_cert() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_rwlock);
-    return d->m_cert;
+    return d->cert();
 }
 
 Device::Type Device::type() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_rwlock);
-    return d->m_type;
+    return d->type();
 }
 
 const QString &Device::type_string() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_rwlock);
-    return d->m_cert.get_device_type();
+    return d->cert().get_device_type();
 }
 
 const QString &Device::serial_number() const
 {
     Q_D(const Device);
-    return d->m_serialNo;
+    return d->serial_number();
 }
 
 bool Device::is_valid() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_rwlock);
-    bool flag = false;
-    if (d->m_cert.get_serial_number() == d->m_serialNo) {
-        switch (d->m_cert.get_auth_mode()) {
-        case Cert::ALWAYS_VALID:
-            flag = true;
-            break;
-        case Cert::VALID_DATE:
-            flag = (d->m_cert.get_expire() > ::time(NULL));
-            break;
-        default:
-            break;
-        }
-    }
-    return flag;
+    return d->is_valid();
 }
 
 int Device::groups()
@@ -278,6 +184,18 @@ int Device::total_beam_qty() const
     return qty;
 }
 
+void Device::start()
+{
+    DplSource::Source::instance()->start();
+    DplFpga::Fpga::instance()->set_freeze(false);
+}
+
+void Device::stop()
+{
+//    DplSource::Source::instance()->stop();
+    DplFpga::Fpga::instance()->set_freeze(true);
+}
+
 void Device::deploy_beams()
 {
     Q_D(Device);
@@ -292,7 +210,7 @@ void Device::deploy_beams()
 
 Device::Device(QObject *parent) :
     QObject(parent),
-    d_ptr(new DevicePrivate()),
+    d_ptr(new DevicePrivate(this)),
     m_display(new DplDisplay::Display())
 {
 }

@@ -15,6 +15,7 @@
 #include "gate_item.h"
 
 #include <qmath.h>
+#include <QThread>
 
 #include <QDebug>
 
@@ -57,12 +58,11 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
 
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
-    /* source setting */
-    DplSource::BeamsPointer beams = m_group->beams();
-    connect(static_cast<DplSource::Beams *>(beams.data()),
-            SIGNAL(data_event()),
-            this,
-            SLOT(do_data_event()));
+    /* source setting */    
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
+            this, SLOT(do_data_event()),
+            Qt::DirectConnection);
 
     ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
@@ -76,7 +76,8 @@ AscanDisplay::~AscanDisplay()
 
 void AscanDisplay::do_data_event()
 {
-    m_waveItem->show_wave(m_group->beams()->get(0)->wave());
+    m_waveItem->set_wave(m_group->current_beam()->wave());
+
 }
 
 void AscanDisplay::do_view_size_changed(const QSize &size)

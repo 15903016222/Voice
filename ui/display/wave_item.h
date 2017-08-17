@@ -4,20 +4,15 @@
 #include <QGraphicsItem>
 #include <display/a_scan.h>
 
-class WaveItem : public QGraphicsItem
+class WaveItem : public QGraphicsObject
 {
+    Q_OBJECT
 public:
     explicit WaveItem(const DplDisplay::AscanPointer &ascan, QGraphicsItem *parent = 0);
 
     QRectF boundingRect() const;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    /**
-     * @brief show_wave 显示波形
-     * @param beam      波形数据
-     */
-    void show_wave(const QByteArray &beam);
 
     /**
      * @brief size  获取显示大小
@@ -31,22 +26,25 @@ public:
      */
     void set_size(const QSize &size);
 
+signals:
+    void painter_path_changed();
+
+public slots:
+    /**
+     * @brief set_wave  设置要显示的波形数据
+     * @param beam      波形数据
+     */
+    void set_wave(const QByteArray &beam);
+    void update();
+
 protected:
     QPainterPath draw(const QByteArray &wave, int w, int h);
 
 private:
     DplDisplay::AscanPointer m_ascan;
-    QByteArray m_beam;
+    QPainterPath m_path;
     QSize m_size;
 };
-
-inline void WaveItem::show_wave(const QByteArray &beam)
-{
-    if (! beam.isEmpty()) {
-        m_beam.setRawData(beam.constData(), beam.size());
-        update();
-    }
-}
 
 inline const QSize &WaveItem::size() const
 {

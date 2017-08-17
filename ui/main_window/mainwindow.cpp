@@ -91,6 +91,16 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_BACK:
         VInput::instance()->send(VInput::Key_Esc);
         break;
+    case Mcu::KEY_FREEZE: {
+        static bool flag = true;
+        if (flag) {
+            DplDevice::Device::instance()->stop();
+        } else {
+            DplDevice::Device::instance()->start();
+        }
+        flag = !flag;
+    }
+        break;
     default:
         break;
     }
@@ -108,46 +118,6 @@ void MainWindow::update_translator(QString string)
 //    firstSecondMenu->retranslate_main_menu_ui(string);
 //    commonMenuWidget->retranslate_common_menu_ui();
 
-}
-
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-//    QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
-//                             ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
-//                             ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
-//    if(scrollRect.contains(event->pos())) {
-//        m_mainMenuStartPos = event->pos().y();
-//    }
-}
-
-void MainWindow::mouseMoveEvent(QMouseEvent *moveEvent)
-{
-//    QRect scrollRect = QRect(ui->widget_scrollArea->pos() + ui->widget->pos() +
-//                             ui->widget_firstSecondMenu->pos() + ui->widgetUSView->pos() +
-//                             ui->framePlot->pos() + ui->centralWidget->pos() ,ui->widget_scrollArea->size());
-//    if(scrollRect.contains(moveEvent->pos())) {
-//        m_mainMenuEndPos = moveEvent->pos().y();
-//        int scrollLength = m_mainMenuEndPos - m_mainMenuStartPos;
-//        int menuTopY = firstSecondMenu->pos().y() + ui->scrollArea->geometry().y();
-//        int scrollTopY = ui->scrollArea->geometry().y();
-//        int menuBottomY = firstSecondMenu->pos().y() + firstSecondMenu->geometry().height() + ui->scrollArea->geometry().y();
-//        int scrollBottomY = ui->scrollArea->geometry().y() + ui->scrollArea->geometry().height();
-
-//        if(scrollLength < 0) {
-//            if((menuBottomY + scrollLength) > scrollBottomY) {
-//                ui->scrollArea->viewport()->scroll(0, scrollLength);
-//            } else  {
-//                ui->scrollArea->viewport()->scroll(0, -(menuBottomY - scrollBottomY));
-//            }
-//        } else {
-//            if((menuTopY + scrollLength) < scrollTopY) {
-//                ui->scrollArea->viewport()->scroll(0, scrollLength);
-//            } else {
-//                ui->scrollArea->viewport()->scroll(0, scrollTopY - menuTopY);
-//            }
-//        }
-//        show_hidden_arrow();
-//    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)

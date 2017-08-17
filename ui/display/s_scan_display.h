@@ -20,7 +20,7 @@ public:
     ~SscanDisplay();
 
 protected slots:
-    void do_data_event();
+    void do_data_event(const DplSource::BeamsPointer &beams);
 
 protected:
     Ui::ScanDisplay *ui;

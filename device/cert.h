@@ -27,6 +27,7 @@ public:
     };
 
     Cert();
+    Cert(const QString &certFile, const QString &pubPemFile);
     ~Cert();
 
     bool load(const QString &certFile, const QString &pubPemFile);

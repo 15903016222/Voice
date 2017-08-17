@@ -15,7 +15,6 @@
 #include <fpga/fpga.h>
 
 #include <QDateTime>
-#include <QMutex>
 
 namespace DplDevice {
 
@@ -30,7 +29,7 @@ public:
         DEV_16_64_TOFD,
         DEV_32_64_TOFD,
         DEV_32_128_TOFD,
-        DEV_32_128_PRO_TOFD
+        DEV_32_128_PR_TOFD
     };
 
     /**
@@ -160,6 +159,16 @@ public:
      * @return          显示配置
      */
     const DplDisplay::DisplayPointer &display() const;
+
+    /**
+     * @brief start 启动设备
+     */
+    void start();
+
+    /**
+     * @brief stop  停止设备
+     */
+    void stop();
 
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
