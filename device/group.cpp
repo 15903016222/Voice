@@ -9,9 +9,9 @@
 #include "group_p.h"
 
 #include "device.h"
-#include "paint_thread.h"
 
 #include <fpga/fpga.h>
+#include <source/source.h>
 
 #include <QReadWriteLock>
 #include <qmath.h>
@@ -26,7 +26,6 @@ Group::Group(int index, QObject *parent):
     m_gateA(new DplGate::Gate(DplGate::Gate::A, parent)),
     m_gateB(new DplGate::Gate(DplGate::Gate::B, parent)),
     m_gateI(new DplGate::Gate(DplGate::Gate::I, parent)),
-    m_beams(new DplSource::Beams),
     m_focallawer(new DplFocallaw::Focallawer),
     m_fpgaGroup(new DplFpga::Group(index, parent)),
     d(new GroupPrivate(this))
@@ -35,17 +34,16 @@ Group::Group(int index, QObject *parent):
 
     init_sample();
 
-    m_beams->set_beam_qty(m_focallawer->beam_qty());
-    m_beams->set_point_qty(m_sample->point_qty());
-
     connect(static_cast<DplFocallaw::Wedge *>(m_focallawer->wedge().data()),
             SIGNAL(delay_changed(int)),
             this, SLOT(update_sample()));
 
+    DplSource::Source *source = DplSource::Source::instance();
+    source->register_group(index, m_focallawer->beam_qty(), m_sample->point_qty());
+
     connect(static_cast<DplFocallaw::Focallawer *>(m_focallawer.data()),
             SIGNAL(beam_qty_changed(int)),
-            static_cast<DplSource::Beams *>(m_beams.data()),
-            SLOT(set_beam_qty(int)));
+            this, SLOT(update_source()));
 
     update_sample();
 }
@@ -103,6 +101,16 @@ double Group::max_sample_time()
     return max ;
 }
 
+DplSource::BeamsPointer Group::current_beams() const
+{
+    return DplSource::Source::instance()->current_beams(index());
+}
+
+DplSource::BeamPointer Group::current_beam() const
+{
+    return current_beams()->get(0);
+}
+
 void Group::deploy_beams() const
 {
     DplFpga::Beam fpgaBeam;
@@ -153,6 +161,13 @@ void Group::update_sample()
     m_fpgaGroup->set_rx_time((d->max_beam_delay() + m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
 
     //    m_fpgaGroup->show_info();
+}
+
+void Group::update_source()
+{
+    DplSource::Source::instance()->edit_group(m_fpgaGroup->index(),
+                                              m_focallawer->beam_qty(),
+                                              m_sample->point_qty());
 }
 
 void Group::init_gate(DplGate::Gate *gate)
@@ -222,11 +237,10 @@ void Group::init_sample()
             SLOT(update_sample()));
 
     /* 关联Beams */
-    m_beams->set_point_qty(m_sample->point_qty());
     connect(sample,
             SIGNAL(point_qty_changed(int)),
-            static_cast<DplSource::Beams *>(m_beams.data()),
-            SLOT(set_point_qty(int)));
+            this,
+            SLOT(update_source()));
 }
 
 }

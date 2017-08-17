@@ -22,20 +22,12 @@ DevicePrivate::DevicePrivate(Device *parent) :
     m_serialNo(get_serial_number()),
     m_version(get_version()),
     m_time(get_relative_time()),
-    m_cert(CERT_FILE, PUBPEM_FILE),
-    m_paintThread(new PaintThread)
+    m_cert(CERT_FILE, PUBPEM_FILE)
 {
-    init_paintThread();
 }
 
 DevicePrivate::~DevicePrivate()
 {
-    DplSource::Source *source = DplSource::Source::instance();
-    disconnect(source, SIGNAL(data_event(const char*)),
-            this, SLOT(do_data_event()));
-    m_paintThread->quit();
-    m_paintThread->wait();
-    delete m_paintThread;
 }
 
 bool DevicePrivate::set_relative_time(time_t t)
@@ -100,27 +92,6 @@ time_t DevicePrivate::get_relative_time()
         return 0;
     }
     return f.readAll().toInt();
-}
-
-void DevicePrivate::init_paintThread()
-{
-    DplSource::Source *source = DplSource::Source::instance();
-    source->start();
-    connect(source, SIGNAL(data_event(const char*)),
-            this, SLOT(do_data_event()));
-    connect(m_paintThread, SIGNAL(started()),
-            q_ptr, SIGNAL(start_paint_event()),
-            Qt::DirectConnection);
-    connect(m_paintThread, SIGNAL(finished()),
-            q_ptr, SIGNAL(finish_paint_event()),
-            Qt::QueuedConnection);
-}
-
-void DevicePrivate::do_data_event()
-{
-    if (!m_paintThread->isRunning()) {
-        m_paintThread->start();
-    }
 }
 
 }

@@ -30,7 +30,6 @@ private:
     Ui::MeasureBar *ui;
 
     DplDevice::GroupPointer m_group;
-    DplSource::BeamsPointer m_beams;
 
     void set_measure_widget(MeasureWidget *w, Measure::Type type);
     void set_measure_widget(MeasureWidget *w, MeasureDialog &dlg);

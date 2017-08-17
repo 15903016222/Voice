@@ -7,6 +7,7 @@
 #include "source/source.h"
 #include "source/beams.h"
 
+#include <QThread>
 #include <QDebug>
 
 MeasureBar :: MeasureBar(QWidget *parent) :
@@ -19,6 +20,12 @@ MeasureBar :: MeasureBar(QWidget *parent) :
     connect(device, SIGNAL(current_group_changed(DplDevice::GroupPointer)),
             this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
     do_current_group_changed(device->current_group());
+
+    connect(DplSource::Source::instance(),
+            SIGNAL(data_event()),
+            this,
+            SLOT(do_beamgroup_data_event()),
+            Qt::DirectConnection);
 
     connect(ui->measureWidget1, SIGNAL(clicked(MeasureWidget*)), this, SLOT(do_measureWidget_clicked(MeasureWidget*)));
     connect(ui->measureWidget2, SIGNAL(clicked(MeasureWidget*)), this, SLOT(do_measureWidget_clicked(MeasureWidget*)));
@@ -54,18 +61,7 @@ void MeasureBar::do_measureWidget_clicked(MeasureWidget *w)
 
 void MeasureBar::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
-    disconnect(static_cast<DplSource::Beams *>(m_beams.data()),
-            SIGNAL(data_event()),
-            this,
-            SLOT(do_beamgroup_data_event()));
-
     m_group = group;
-    m_beams = m_group->beams();
-
-    connect(static_cast<DplSource::Beams *>(m_beams.data()),
-            SIGNAL(data_event()),
-            this,
-            SLOT(do_beamgroup_data_event()));
 }
 
 void MeasureBar::do_beamgroup_data_event()
@@ -92,7 +88,7 @@ void MeasureBar::set_measure_widget(MeasureWidget *w, MeasureDialog &dlg)
 QString MeasureBar::calculate_string(Measure::Type type)
 {
     double value = Measure::instance()->calculate(m_group, type);
-    if(value == MEASURE_DATA_ND) {
+    if(qFuzzyCompare(value, MEASURE_DATA_ND)) {
         return QString("ND");
     } else {
         if(type == Measure::LA || type == Measure::LB) {

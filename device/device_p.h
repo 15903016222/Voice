@@ -9,7 +9,6 @@
 #define __DEVICE_P_H__
 
 #include "device.h"
-#include "paint_thread.h"
 #include <source/source.h>
 
 namespace DplDevice {
@@ -56,11 +55,6 @@ protected:
      */
     time_t get_relative_time();
 
-    void init_paintThread();
-
-protected slots:
-    void do_data_event();
-
 public:
     /* Group */
     QVector<GroupPointer> m_groups;
@@ -74,8 +68,6 @@ private:
     time_t m_time;              // 相对设备的时间差
     Cert m_cert;
     Device::Type m_type;
-
-    PaintThread *m_paintThread;
 };
 
 inline const QString &DevicePrivate::serial_number() const

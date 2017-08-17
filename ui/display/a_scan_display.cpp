@@ -59,16 +59,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
     /* source setting */
-    qDebug() << __func__ << __LINE__ << ": Pid[" << QThread::currentThreadId() << "]";
-    DplDevice::Device *dev = DplDevice::Device::instance();
-
-    connect(dev, SIGNAL(start_paint_event()),
-            this, SLOT(do_start_paint_event()),
-            Qt::DirectConnection);
-    connect(dev, SIGNAL(finish_paint_event()),
-            this, SLOT(do_finish_paint_event()),
-            Qt::QueuedConnection);
-
     ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
 
@@ -81,7 +71,7 @@ AscanDisplay::~AscanDisplay()
 
 void AscanDisplay::do_start_paint_event()
 {
-    m_waveItem->set_wave(m_group->beams()->get(0)->wave());
+    m_waveItem->set_wave(m_group->current_beams()->get(0)->wave());
 }
 
 void AscanDisplay::do_finish_paint_event()

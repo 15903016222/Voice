@@ -9,10 +9,10 @@
 #define __DEVICE_GROUP_H__
 
 #include <fpga/group.h>
-#include <source/beams.h>
 #include <focallaw/focallawer.h>
 #include <ut/sample.h>
 #include <gate/gate.h>
+#include <source/beams.h>
 
 namespace DplDevice {
 
@@ -108,10 +108,16 @@ public:
     const DplGate::GatePointer &gate(DplGate::Gate::Type type) const;
 
     /**
-     * @brief beams 获取数据源Beam组
-     * @return      返回数据源Beam组
+     * @brief current_beams 获取数据源当前Beam组
+     * @return              返回数据源Beam组
      */
-    const DplSource::BeamsPointer &beams() const;
+    DplSource::BeamsPointer current_beams() const;
+
+    /**
+     * @brief current_beam  获取数据源的当前Beam
+     * @return              Beam
+     */
+    DplSource::BeamPointer current_beam() const;
 
     /**
      * @brief get_focallawer    获取聚焦法则计算器
@@ -134,13 +140,13 @@ public slots:
 
 private slots:
     void update_sample();
+    void update_source();
 
 private:
     DplUt::SamplePointer m_sample;
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
-    DplSource::BeamsPointer m_beams;
     DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplFpga::GroupPointer m_fpgaGroup;
     GroupPrivate *d;
@@ -182,11 +188,6 @@ inline const DplGate::GatePointer &Group::gate(DplGate::Gate::Type type) const
     } else {
         return m_gateI;
     }
-}
-
-inline const DplSource::BeamsPointer &Group::beams() const
-{
-    return m_beams;
 }
 
 inline const DplFocallaw::FocallawerPointer &Group::focallawer() const

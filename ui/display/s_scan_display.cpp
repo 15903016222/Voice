@@ -28,15 +28,6 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
 
     ui->colorBarWidget->set_palette(DplDevice::Device::instance()->display()->palette());
 
-    DplDevice::Device *dev = DplDevice::Device::instance();
-    connect(dev, SIGNAL(start_paint_event()),
-            this, SLOT(do_start_paint_thread()),
-            Qt::DirectConnection);
-
-    connect(dev, SIGNAL(finish_paint_event()),
-            m_scene, SLOT(update()),
-            Qt::QueuedConnection);
-
     ui->titleLabel->setText(QString("S-Scan|Grp%1").arg(m_group->index()+1));
 }
 
@@ -49,6 +40,6 @@ SscanDisplay::~SscanDisplay()
 
 void SscanDisplay::do_start_paint_thread()
 {
-    m_scene->set_beams(m_group->beams());
+    m_scene->set_beams(m_group->current_beams());
 }
 
