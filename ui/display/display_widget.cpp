@@ -84,7 +84,7 @@ public:
     ABLayout(int grp, QWidget *parent) : HLayout(parent)
     {
         addLayout(new ALayoutV(grp), 1);
-        addLayout(new BLayoutV(grp), 2);
+        addLayout(new BLayoutH(grp), 2);
     }
 };
 

@@ -28,7 +28,6 @@ void BscanHDisplay::init_ruler()
         m_soundPathRuler->set_type(RulerWidget::BOTTOM);
         m_soundPathRuler->set_direction(RulerWidget::Up);
 
-
         m_scanTypeRuler->set_type(RulerWidget::LEFT);
         m_scanTypeRuler->set_direction(RulerWidget::Down);
         m_scanTypeRuler->set_range(0, m_bscanView->width() * m_pixPerBeam);

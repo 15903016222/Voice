@@ -104,15 +104,22 @@ void BscanScene::draw_beams()
         int width;
 
         if(m_direction == VERTICAL) {
+            width   = m_size.width();
             height  = m_size.height();
-            width   =  m_size.width();
+
+
+            qDebug() << "[" << __FUNCTION__ << "]" << " VERTICAL ";
+
         } else {
+
             width  = m_size.height();
             height =  m_size.width();
+
+            qDebug() << "[" << __FUNCTION__ << "]" << " HORIZONTAL ";
         }
 
         float ratio = m_beamPointer->wave().size() / 1.0 / height; /* 一个像素点代表多少个point */
-        int pixCount = (int)(m_pixPerBeamRatio + 0.5);
+        double pixCount = m_pixPerBeamRatio;
         int maxIndex = width / (int)(m_pixPerBeamRatio + 0.5);
 
         int align = width % (int)(m_pixPerBeamRatio + 0.5);
@@ -136,14 +143,14 @@ void BscanScene::draw_beams()
         }
 
         if(m_direction == VERTICAL) {
-            draw_vertical_beam(ratio, pixCount, maxIndex, align);
+            draw_vertical_beam(ratio, (int)pixCount, maxIndex, align);
         } else {
-            draw_horizontal_beam(ratio, pixCount, maxIndex, align);
+            draw_horizontal_beam(ratio, (int)pixCount, maxIndex, align);
         }
     }
 }
 
-void BscanScene::draw_vertical_beam(float ratio, int pixCount, int maxIndex, int align)
+void BscanScene::draw_vertical_beam(float ratio, double pixCount, int maxIndex, int align)
 {
     if(m_currentIndex  < maxIndex) {
 
@@ -172,7 +179,7 @@ void BscanScene::draw_vertical_beam(float ratio, int pixCount, int maxIndex, int
 
                 for(int j = 0; j < pixCount; ++j) {
 
-                    line[m_currentIndex * pixCount + j] = m_beamPointer->wave().at((int)(i * ratio));
+                    line[(int)(m_currentIndex * pixCount + j)] = m_beamPointer->wave().at((int)(i * ratio));
                 }
             }
         }
@@ -188,7 +195,7 @@ void BscanScene::draw_vertical_beam(float ratio, int pixCount, int maxIndex, int
             quint8 *line = (quint8*) m_image->scanLine(i);
             quint8 *tmpline = (quint8*) tmp.scanLine(i);
 
-            memcpy(line, tmpline + pixCount, m_image->width() - 1);
+            memcpy(line, tmpline + (int)pixCount, m_image->width() - 1);
 
             for(int j = 0; j < pixCount; ++j) {
 
@@ -198,6 +205,7 @@ void BscanScene::draw_vertical_beam(float ratio, int pixCount, int maxIndex, int
         emit one_beam_show_successed();
     }
 }
+
 
 void BscanScene::reset_show()
 {
@@ -224,7 +232,7 @@ void BscanScene::reset_show()
         }
 
         float ratio = m_beamPointer->wave().size() / 1.0 / height; /* 一个像素点代表多少个point */
-        int pixCount = (int)(m_pixPerBeamRatio + 0.5);
+        double pixCount = m_pixPerBeamRatio + 0.5;
         int maxIndex = width / (int)(m_pixPerBeamRatio + 0.5);
 
         int align = width % (int)(m_pixPerBeamRatio + 0.5);
@@ -241,7 +249,7 @@ void BscanScene::reset_show()
 }
 
 
-void BscanScene::reset_draw_horizontal_beam(float ratio, int pixCount, int maxIndex, int align)
+void BscanScene::reset_draw_horizontal_beam(float ratio, double pixCount, int maxIndex, int align)
 {
     int startIndex;
     if(maxIndex >= m_waveVect.count()){
@@ -305,7 +313,7 @@ void BscanScene::reset_draw_horizontal_beam(float ratio, int pixCount, int maxIn
     }
 }
 
-void BscanScene::reset_draw_vertical_beam(float ratio, int pixCount, int maxIndex, int align)
+void BscanScene::reset_draw_vertical_beam(float ratio, double pixCount, int maxIndex, int align)
 {
     int startIndex;
     if(maxIndex >= m_waveVect.count()){
@@ -339,14 +347,13 @@ void BscanScene::reset_draw_vertical_beam(float ratio, int pixCount, int maxInde
                 }
             } else {
 
-
                 for (int i = 0; i < m_size.height(); ++i) {
 
                     quint8 *line = (quint8*) m_image->scanLine(i);
 
                     for(int j = 0; j < pixCount; ++j) {
 
-                        line[m_currentIndex * pixCount + j] = m_waveVect.at(resetIndex).wave.at((int)(i * ratio));
+                        line[(int)(m_currentIndex * pixCount + j)] = m_waveVect.at(resetIndex).wave.at((int)(i * ratio));
                     }
                 }
             }
@@ -357,7 +364,7 @@ void BscanScene::reset_draw_vertical_beam(float ratio, int pixCount, int maxInde
 }
 
 
-void BscanScene::draw_horizontal_beam(float ratio, int pixCount, int maxIndex, int align)
+void BscanScene::draw_horizontal_beam(float ratio, double pixCount, int maxIndex, int align)
 {
     if(m_currentIndex  < maxIndex) {
 
@@ -365,7 +372,7 @@ void BscanScene::draw_horizontal_beam(float ratio, int pixCount, int maxIndex, i
 
             /* 非对齐,最后一条beam */
             int offset =  pixCount - align;
-            int row = m_currentIndex * pixCount;
+            int row = m_currentIndex * pixCount + 0.5;
 
             for(int i = 0; i < row; ++i) {
 
@@ -381,6 +388,7 @@ void BscanScene::draw_horizontal_beam(float ratio, int pixCount, int maxIndex, i
                     targetLine[j] = m_beamPointer->wave().at((int)(j * ratio));
                 }
             }
+
         } else {
 
             for (int i = 0; i < pixCount; ++i) {

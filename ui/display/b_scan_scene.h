@@ -62,7 +62,7 @@ private:
      * @param maxIndex              最大的beam数，超出后滚动显示
      * @param align                 对齐数据（例子：width为20， ratio为3， 则align为 width % ratio = 2）
      */
-    void draw_horizontal_beam(float ratio, int pixCount, int maxIndex, int align);
+    void draw_horizontal_beam(float ratio, double pixCount, int maxIndex, int align);
 
     /**
      * @brief draw_vertical_beam    B扫的垂直显示
@@ -71,15 +71,15 @@ private:
      * @param maxIndex              最大的beam数，超出后滚动显示
      * @param align                 对齐数据（例子：width为20， pixCount为3， 则align为 width % pixCount = 2）
      */
-    void draw_vertical_beam(float ratio, int pixCount, int maxIndex, int align);
+    void draw_vertical_beam(float ratio, double pixCount, int maxIndex, int align);
 
     /**
      * @brief reset_show 当显示大小改变，重新画B扫
      */
     void reset_show();
 
-    void reset_draw_horizontal_beam(float ratio, int pixCount, int maxIndex, int align);
-    void reset_draw_vertical_beam(float ratio, int pixCount, int maxIndex, int align);
+    void reset_draw_horizontal_beam(float ratio, double pixCount, int maxIndex, int align);
+    void reset_draw_vertical_beam(float ratio, double pixCount, int maxIndex, int align);
 
 };
 

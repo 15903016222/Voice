@@ -9,6 +9,7 @@
 #include "global.h"
 #include "source/source.h"
 #include "device/device.h"
+#include "scroll_ruler_widget.h"
 
 static const int TIME_OUT_VALUE = 20;
 static const int SECOND         = 1000;
@@ -132,21 +133,46 @@ void BscanDisplay::do_data_event()
 {
     m_currentTimeCount += TIME_OUT_VALUE / 1000.0;
     ui->label->setText(QString::number(m_currentTimeCount, 'f', 1));
-    double rulerEnd;
 
-    if(m_type == TIME) {
-        rulerEnd = m_bscanView->width() / (SECOND / (double)DplSource::Source::instance()->interval());
-    } else {
+    double rulerEnd;
+    double stepTime =  (double)DplSource::Source::instance()->interval() / (double)SECOND;
+
+    if(m_bscanScene->direction() == BscanScene::HORIZONTAL) {
+
         rulerEnd = m_bscanView->height() / (SECOND / (double)DplSource::Source::instance()->interval());
+        m_bscanScene->set_pix_per_beam(m_bscanScene->height() / (rulerEnd / stepTime));
+
+    } else {
+
+        rulerEnd = m_bscanView->width() / (SECOND / (double)DplSource::Source::instance()->interval());
+        m_bscanScene->set_pix_per_beam(m_bscanScene->width() / (rulerEnd / stepTime));
     }
 
     if(m_currentTimeCount > rulerEnd) {
-        m_scanTypeRuler->move_pix(TIME_OUT_VALUE);
+
+        if(m_currentTimeCount > 5 * rulerEnd) {
+            DplSource::BeamsPointer beams = m_group->beams();
+            disconnect(static_cast<DplSource::Beams *>(beams.data()),
+                    SIGNAL(data_event()),
+                    this,
+                    SLOT(do_data_event()));
+            return;
+        }
+
+        m_scanTypeRuler->move_unit(TIME_OUT_VALUE);
         m_scanTypeRuler->update();
     }
 
     m_bscanScene->show_wave(m_group->beams()->get(m_currentBeamIndex));
 
+//    if(rulerEnd - m_currentTimeCount < 0.0000000001 && rulerEnd - m_currentTimeCount >= -0.0000000001) {
+//        DplSource::BeamsPointer beams = m_group->beams();
+//        disconnect(static_cast<DplSource::Beams *>(beams.data()),
+//                   SIGNAL(data_event()),
+//                   this,
+//                   SLOT(do_data_event()));
+//        return;
+//    }
 }
 
 
@@ -158,7 +184,11 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
 
     m_scanTypeRulerStart = 0.0;
     double beamQtyPerSecond = SECOND / (double)DplSource::Source::instance()->interval();
-    m_scanTypeRulerEnd   = size.width() / beamQtyPerSecond;
+    if(m_bscanScene->direction() == BscanScene::HORIZONTAL) {
+        m_scanTypeRulerEnd   = size.height() / beamQtyPerSecond;
+    } else {
+        m_scanTypeRulerEnd   = size.width() / beamQtyPerSecond;
+    }
     m_scanTypeRuler->set_range(m_scanTypeRulerStart, m_scanTypeRulerEnd);
     m_scanTypeRuler->update();
 

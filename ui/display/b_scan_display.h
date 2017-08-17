@@ -8,7 +8,7 @@
 class ScanView;
 class BscanScene;
 class BWaveItem;
-class RulerWidget;
+class ScrollRulerWidget;
 class QTimer;
 class QLabel;
 
@@ -44,8 +44,8 @@ protected slots:
 protected:
     Ui::BscanDisplay *ui;
     DplDevice::GroupPointer m_group;
-    RulerWidget      *m_scanTypeRuler;
-    RulerWidget      *m_soundPathRuler;
+    ScrollRulerWidget      *m_scanTypeRuler;
+    ScrollRulerWidget      *m_soundPathRuler;
     ScanView         *m_bscanView;
     double           m_pixPerBeam;  /* 每条beam用多少个像素表示 */
     double           m_scanTypeRulerStart;
