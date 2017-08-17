@@ -111,13 +111,13 @@ public:
      * @brief current_beams 获取数据源当前Beam组
      * @return              返回数据源Beam组
      */
-    DplSource::BeamsPointer current_beams() const;
+    const DplSource::BeamsPointer &current_beams() const;
 
     /**
      * @brief current_beam  获取数据源的当前Beam
      * @return              Beam
      */
-    DplSource::BeamPointer current_beam() const;
+    const DplSource::BeamPointer &current_beam() const;
 
     /**
      * @brief get_focallawer    获取聚焦法则计算器

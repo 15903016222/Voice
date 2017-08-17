@@ -21,12 +21,6 @@ MeasureBar :: MeasureBar(QWidget *parent) :
             this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
     do_current_group_changed(device->current_group());
 
-    connect(DplSource::Source::instance(),
-            SIGNAL(data_event()),
-            this,
-            SLOT(do_beamgroup_data_event()),
-            Qt::DirectConnection);
-
     connect(ui->measureWidget1, SIGNAL(clicked(MeasureWidget*)), this, SLOT(do_measureWidget_clicked(MeasureWidget*)));
     connect(ui->measureWidget2, SIGNAL(clicked(MeasureWidget*)), this, SLOT(do_measureWidget_clicked(MeasureWidget*)));
     connect(ui->measureWidget3, SIGNAL(clicked(MeasureWidget*)), this, SLOT(do_measureWidget_clicked(MeasureWidget*)));
@@ -61,7 +55,16 @@ void MeasureBar::do_measureWidget_clicked(MeasureWidget *w)
 
 void MeasureBar::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
+    disconnect(m_group.data(),
+               SIGNAL(data_event()),
+               this,
+               SLOT(do_beamgroup_data_event()));
     m_group = group;
+    connect(m_group.data(),
+            SIGNAL(data_event()),
+            this,
+            SLOT(do_beamgroup_data_event()),
+            Qt::DirectConnection);
 }
 
 void MeasureBar::do_beamgroup_data_event()

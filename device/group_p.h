@@ -31,6 +31,10 @@ public:
      */
     int max_beam_delay();
 
+    const DplSource::BeamsPointer &beams() const;
+
+    const DplSource::BeamPointer &beam() const;
+
 protected slots:
     void do_source_data_event();
 
@@ -40,6 +44,8 @@ private:
     Group::UtUnit m_utUnit;         // Ut 显示单位
     double m_currentAngle;          // 声速射角度(度)
     DplSource::Source *m_source;    // 数据源
+    DplSource::BeamsPointer m_beams;
+    DplSource::BeamPointer m_beam;
 };
 
 inline Group::Mode GroupPrivate::mode() const
@@ -85,6 +91,16 @@ inline int GroupPrivate::max_beam_delay()
 {
     qDebug()<<__FILE__<<__func__<<"Unimplement";
     return 0;
+}
+
+inline const DplSource::BeamsPointer &GroupPrivate::beams() const
+{
+    return m_beams;
+}
+
+inline const DplSource::BeamPointer &GroupPrivate::beam() const
+{
+    return m_beam;
 }
 
 }

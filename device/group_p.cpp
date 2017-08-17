@@ -17,8 +17,9 @@ GroupPrivate::GroupPrivate(Group *parent) :
 
 void GroupPrivate::do_source_data_event()
 {
-    DplSource::BeamsPointer beams = m_source->current_beams(q_ptr->index());
-    emit q_ptr->data_event(beams);
+    m_beams = m_source->current_beams(q_ptr->index());
+    m_beam = m_beams->get(0);
+    emit q_ptr->data_event(m_beams);
 }
 
 }

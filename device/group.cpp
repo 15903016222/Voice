@@ -40,7 +40,8 @@ Group::Group(int index, QObject *parent):
     DplSource::Source *source = DplSource::Source::instance();
     source->register_group(index, m_focallawer->beam_qty(), m_sample->point_qty());
     connect(source, SIGNAL(data_event()),
-            d, SLOT(do_source_data_event()));
+            d, SLOT(do_source_data_event()),
+            Qt::DirectConnection);
 
     connect(static_cast<DplFocallaw::Focallawer *>(m_focallawer.data()),
             SIGNAL(beam_qty_changed(int)),
@@ -102,14 +103,14 @@ double Group::max_sample_time()
     return max ;
 }
 
-DplSource::BeamsPointer Group::current_beams() const
+const DplSource::BeamsPointer &Group::current_beams() const
 {
-    return DplSource::Source::instance()->current_beams(index());
+    return d->beams();
 }
 
-DplSource::BeamPointer Group::current_beam() const
+const DplSource::BeamPointer &Group::current_beam() const
 {
-    return current_beams()->get(0);
+    return d->beam();
 }
 
 void Group::deploy_beams() const
