@@ -19,11 +19,8 @@ public:
     explicit SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
     ~SscanDisplay();
 
-signals:
-    void paint_event();
-
 protected slots:
-    void do_start_paint_thread();
+    void do_data_event(const DplSource::BeamsPointer &beams);
 
 protected:
     Ui::ScanDisplay *ui;

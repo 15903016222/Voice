@@ -34,6 +34,9 @@ public slots:
      */
     void set_beams(const DplSource::BeamsPointer &beams);
 
+signals:
+    void image_changed();
+
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
 
