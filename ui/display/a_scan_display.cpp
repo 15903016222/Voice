@@ -15,6 +15,7 @@
 #include "gate_item.h"
 
 #include <qmath.h>
+#include <QThread>
 
 #include <QDebug>
 
@@ -58,11 +59,15 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
     /* source setting */
-    DplSource::BeamsPointer beams = m_group->beams();
-    connect(static_cast<DplSource::Beams *>(beams.data()),
-            SIGNAL(data_event()),
-            this,
-            SLOT(do_data_event()));
+    qDebug() << __func__ << __LINE__ << ": Pid[" << QThread::currentThreadId() << "]";
+    DplDevice::Device *dev = DplDevice::Device::instance();
+
+    connect(dev, SIGNAL(start_paint_event()),
+            this, SLOT(do_start_paint_event()),
+            Qt::DirectConnection);
+    connect(dev, SIGNAL(finish_paint_event()),
+            this, SLOT(do_finish_paint_event()),
+            Qt::QueuedConnection);
 
     ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
@@ -74,9 +79,14 @@ AscanDisplay::~AscanDisplay()
     delete m_scene;
 }
 
-void AscanDisplay::do_data_event()
+void AscanDisplay::do_start_paint_event()
 {
-    m_waveItem->show_wave(m_group->beams()->get(0)->wave());
+    m_waveItem->set_wave(m_group->beams()->get(0)->wave());
+}
+
+void AscanDisplay::do_finish_paint_event()
+{
+    m_waveItem->update();
 }
 
 void AscanDisplay::do_view_size_changed(const QSize &size)

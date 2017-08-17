@@ -105,6 +105,7 @@ time_t DevicePrivate::get_relative_time()
 void DevicePrivate::init_paintThread()
 {
     DplSource::Source *source = DplSource::Source::instance();
+    source->start();
     connect(source, SIGNAL(data_event(const char*)),
             this, SLOT(do_data_event()));
     connect(m_paintThread, SIGNAL(started()),
