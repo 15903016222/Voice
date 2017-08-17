@@ -101,9 +101,10 @@ void SubMenu::set_opacity_main_menu(double value)
 
 void SubMenu::create_menus()
 {
-    return;
     /* UT Setting */
     add_menu(MainMenu::UTSettings_General,      new DplUtSettingMenu::GeneralMenu(this));
+
+    return;
     add_menu(MainMenu::UTSettings_Pulser,       new DplUtSettingMenu::PulserMenu(this));
     add_menu(MainMenu::UTSettings_Receiver,     new DplUtSettingMenu::ReceiverMenu(this));
     add_menu(MainMenu::UTSettings_Advanced,     new DplUtSettingMenu::UtAdvancedMenu(this));

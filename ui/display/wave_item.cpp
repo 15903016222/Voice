@@ -6,7 +6,8 @@ WaveItem::WaveItem(const DplDisplay::AscanPointer &ascan, QGraphicsItem *parent)
     m_ascan(ascan),
     m_size(400, 200)
 {
-
+    connect(this, SIGNAL(painter_path_changed()),
+            this, SLOT(update()));
 }
 
 QRectF WaveItem::boundingRect() const
@@ -54,5 +55,11 @@ void WaveItem::set_wave(const QByteArray &beam)
 {
     if (!beam.isEmpty()) {
         m_path = draw(beam, boundingRect().width(), boundingRect().height());
+        emit painter_path_changed();
     }
+}
+
+void WaveItem::update()
+{
+    QGraphicsObject::update();
 }

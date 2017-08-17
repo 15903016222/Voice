@@ -55,13 +55,13 @@ void MeasureBar::do_measureWidget_clicked(MeasureWidget *w)
 
 void MeasureBar::do_current_group_changed(const DplDevice::GroupPointer &group)
 {
-    disconnect(m_group.data(),
-               SIGNAL(data_event()),
+    disconnect(static_cast<DplDevice::Group *>(m_group.data()),
+               SIGNAL(data_event(DplSource::BeamsPointer)),
                this,
                SLOT(do_beamgroup_data_event()));
     m_group = group;
-    connect(m_group.data(),
-            SIGNAL(data_event()),
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
             this,
             SLOT(do_beamgroup_data_event()),
             Qt::DirectConnection);

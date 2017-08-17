@@ -58,7 +58,12 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
 
     ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
-    /* source setting */
+    /* source setting */    
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
+            this, SLOT(do_data_event()),
+            Qt::DirectConnection);
+
     ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
 
@@ -69,14 +74,10 @@ AscanDisplay::~AscanDisplay()
     delete m_scene;
 }
 
-void AscanDisplay::do_start_paint_event()
+void AscanDisplay::do_data_event()
 {
-    m_waveItem->set_wave(m_group->current_beams()->get(0)->wave());
-}
+    m_waveItem->set_wave(m_group->current_beam()->wave());
 
-void AscanDisplay::do_finish_paint_event()
-{
-    m_waveItem->update();
 }
 
 void AscanDisplay::do_view_size_changed(const QSize &size)

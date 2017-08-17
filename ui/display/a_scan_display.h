@@ -30,15 +30,11 @@ public:
     ~AscanDisplay();
 
 protected slots:
-    void do_start_paint_event();
-    void do_finish_paint_event();
+    void do_data_event();
 
     void do_view_size_changed(const QSize &size);
 
     void update_gates();
-
-signals:
-    void paint_wave_event(const QByteArray &wave);
 
 protected:
     Ui::AscanDisplay *ui;

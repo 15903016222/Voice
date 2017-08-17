@@ -26,12 +26,16 @@ public:
      */
     void set_size(const QSize &size);
 
+signals:
+    void painter_path_changed();
+
 public slots:
     /**
      * @brief set_wave  设置要显示的波形数据
      * @param beam      波形数据
      */
     void set_wave(const QByteArray &beam);
+    void update();
 
 protected:
     QPainterPath draw(const QByteArray &wave, int w, int h);
