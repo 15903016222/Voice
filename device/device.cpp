@@ -186,13 +186,14 @@ int Device::total_beam_qty() const
 
 void Device::start()
 {
-    DplSource::Source *source = DplSource::Source::instance();
-    source->start();
+    DplSource::Source::instance()->start();
+    DplFpga::Fpga::instance()->set_freeze(false);
 }
 
 void Device::stop()
 {
-    DplSource::Source::instance()->stop();
+//    DplSource::Source::instance()->stop();
+    DplFpga::Fpga::instance()->set_freeze(true);
 }
 
 void Device::deploy_beams()
