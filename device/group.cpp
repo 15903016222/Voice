@@ -11,7 +11,6 @@
 #include "device.h"
 
 #include <fpga/fpga.h>
-#include <source/source.h>
 
 #include <QReadWriteLock>
 #include <qmath.h>
@@ -40,6 +39,8 @@ Group::Group(int index, QObject *parent):
 
     DplSource::Source *source = DplSource::Source::instance();
     source->register_group(index, m_focallawer->beam_qty(), m_sample->point_qty());
+    connect(source, SIGNAL(data_event()),
+            d, SLOT(do_source_data_event()));
 
     connect(static_cast<DplFocallaw::Focallawer *>(m_focallawer.data()),
             SIGNAL(beam_qty_changed(int)),

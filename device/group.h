@@ -131,6 +131,7 @@ signals:
     void ut_unit_changed(DplDevice::Group::UtUnit type);
     void current_angle_changed(double val);
     void probe_changed(DplFocallaw::ProbePointer probePtr);
+    void data_event(const DplSource::BeamsPointer &beams);
 
 public slots:
     /**

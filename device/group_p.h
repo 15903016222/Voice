@@ -3,6 +3,8 @@
 
 #include "group.h"
 
+#include "source/source.h"
+
 namespace DplDevice {
 
 class GroupPrivate : public QObject
@@ -29,11 +31,15 @@ public:
      */
     int max_beam_delay();
 
+protected slots:
+    void do_source_data_event();
+
 private:
     Group *q_ptr;
-    Group::Mode m_mode;         // 组模式
-    Group::UtUnit m_utUnit;     // Ut 显示单位
-    double m_currentAngle;      // 声速射角度(度)
+    Group::Mode m_mode;             // 组模式
+    Group::UtUnit m_utUnit;         // Ut 显示单位
+    double m_currentAngle;          // 声速射角度(度)
+    DplSource::Source *m_source;    // 数据源
 };
 
 inline Group::Mode GroupPrivate::mode() const
