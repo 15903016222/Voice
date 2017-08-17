@@ -150,14 +150,14 @@ void BscanDisplay::do_data_event()
 
     if(m_currentTimeCount > rulerEnd) {
 
-        if(m_currentTimeCount > 5 * rulerEnd) {
-            DplSource::BeamsPointer beams = m_group->beams();
-            disconnect(static_cast<DplSource::Beams *>(beams.data()),
-                    SIGNAL(data_event()),
-                    this,
-                    SLOT(do_data_event()));
-            return;
-        }
+//        if(m_currentTimeCount > 5 * rulerEnd) {
+//            DplSource::BeamsPointer beams = m_group->beams();
+//            disconnect(static_cast<DplSource::Beams *>(beams.data()),
+//                    SIGNAL(data_event()),
+//                    this,
+//                    SLOT(do_data_event()));
+//            return;
+//        }
 
         m_scanTypeRuler->move_unit(TIME_OUT_VALUE);
         m_scanTypeRuler->update();

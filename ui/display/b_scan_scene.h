@@ -3,7 +3,8 @@
 
 #include <QGraphicsScene>
 #include <QVector>
-
+#include <QSemaphore>
+#include <QSharedPointer>
 #include <display/palette_color.h>
 #include <source/beams.h>
 
@@ -51,7 +52,8 @@ protected:
     double                          m_pixPerBeamRatio;
     static const int COMPRESS_TYPE = 0;
     E_BscanDirection                m_direction;
-    QVector<WaveIndex>            m_waveVect;
+    QVector<WaveIndex>              m_waveVect;
+    QSharedPointer<QSemaphore>      m_drawSemaphorePointer;
 
 
 private:
@@ -78,8 +80,8 @@ private:
      */
     void reset_show();
 
-    void reset_draw_horizontal_beam(float ratio, double pixCount, int maxIndex, int align);
-    void reset_draw_vertical_beam(float ratio, double pixCount, int maxIndex, int align);
+    void redraw_horizontal_beam(float ratio, double pixCount, int maxIndex, int align);
+    void redraw_vertical_beam(float ratio, double pixCount, int maxIndex, int align);
 
 };
 
