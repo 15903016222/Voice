@@ -170,6 +170,12 @@ public:
      */
     void stop();
 
+    /**
+     * @brief is_running    获取设备运行状态
+     * @return              在运行返回true，否则false
+     */
+    bool is_running() const;
+
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
 
