@@ -17,8 +17,10 @@ SscanScene::SscanScene(const DplDisplay::PaletteColorPointer &palette, QObject *
 
 SscanScene::~SscanScene()
 {
+    QWriteLocker l(&m_rwLock);
     if(m_image) {
         delete m_image;
+        m_image = NULL;
     }
 }
 
@@ -39,8 +41,10 @@ void SscanScene::set_size(const QSize &size)
 void SscanScene::set_beams(const DplSource::BeamsPointer &beams)
 {
     QWriteLocker l(&m_rwLock);
-    m_image->draw_beams(beams);
-    emit image_changed();
+    if (m_image) {
+        m_image->draw_beams(beams);
+        emit image_changed();
+    }
 }
 
 void SscanScene::drawBackground(QPainter *painter, const QRectF &rect)
