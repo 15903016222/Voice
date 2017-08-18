@@ -196,6 +196,11 @@ void Device::stop()
     DplFpga::Fpga::instance()->set_freeze(true);
 }
 
+bool Device::is_running() const
+{
+    return !DplFpga::Fpga::instance()->is_freeze();
+}
+
 void Device::deploy_beams()
 {
     Q_D(Device);
