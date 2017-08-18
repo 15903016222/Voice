@@ -87,6 +87,7 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_curMenu = get_menu(type);
+
     if(m_curMenu) {
         m_curMenu->show();
     }
@@ -104,7 +105,6 @@ void SubMenu::create_menus()
     /* UT Setting */
     add_menu(MainMenu::UTSettings_General,      new DplUtSettingMenu::GeneralMenu(this));
 
-    return;
     add_menu(MainMenu::UTSettings_Pulser,       new DplUtSettingMenu::PulserMenu(this));
     add_menu(MainMenu::UTSettings_Receiver,     new DplUtSettingMenu::ReceiverMenu(this));
     add_menu(MainMenu::UTSettings_Advanced,     new DplUtSettingMenu::UtAdvancedMenu(this));

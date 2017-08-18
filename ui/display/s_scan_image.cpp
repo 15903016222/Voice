@@ -41,6 +41,7 @@ void SscanImage::draw_beams(const DplSource::BeamsPointer &beams)
     }
 }
 
+
 void SscanImage::init_mark()
 {
     int w = width();

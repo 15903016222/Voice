@@ -37,12 +37,11 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     init_ruler();
 
     /* source setting */
-    DplSource::BeamsPointer beams = m_group->beams();
-
-    connect(static_cast<DplSource::Beams *>(beams.data()),
-            SIGNAL(data_event()),
+    connect(static_cast<DplDevice::Group *>(grp.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
             this,
-            SLOT(do_data_event()));
+            SLOT(do_data_event(DplSource::BeamsPointer)),
+            Qt::DirectConnection);
 
     ui->titleLabel->setText(QString("B-Scan|Grp") + QString::number(m_group->index() + 1));
 
@@ -69,14 +68,14 @@ BscanDisplay::~BscanDisplay()
 
 bool BscanDisplay::set_current_beam(unsigned int index)
 {
-    if(m_group->beams()->beam_qty() == 0) {
-        return false;
-    }
+//    if(m_group.data()->beam_qty() == 0) {
+//        return false;
+//    }
 
-    if(index < m_group->beams()->beam_qty()) {
-        m_currentBeamIndex = index;
-        return true;
-    }
+//    if(index < m_group->beams()->beam_qty()) {
+//        m_currentBeamIndex = index;
+//        return true;
+//    }
 
     return false;
 }
@@ -129,7 +128,7 @@ void BscanDisplay::init_ruler()
 }
 
 
-void BscanDisplay::do_data_event()
+void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
     m_currentTimeCount += TIME_OUT_VALUE / 1000.0;
     ui->label->setText(QString::number(m_currentTimeCount, 'f', 1));
@@ -163,7 +162,7 @@ void BscanDisplay::do_data_event()
         m_scanTypeRuler->update();
     }
 
-    m_bscanScene->show_wave(m_group->beams()->get(m_currentBeamIndex));
+    m_bscanScene->show_wave(beams);
 
 //    if(rulerEnd - m_currentTimeCount < 0.0000000001 && rulerEnd - m_currentTimeCount >= -0.0000000001) {
 //        DplSource::BeamsPointer beams = m_group->beams();
@@ -255,7 +254,7 @@ void BscanDisplay::do_timer_time_outed()
     m_currentTimeCount += TIME_OUT_VALUE / 1000.0;
     ui->label->setText(QString::number(m_currentTimeCount, 'f', 1));
 
-    m_bscanScene->show_wave(m_group->beams()->get(m_currentBeamIndex));
+   // m_bscanScene->show_wave(m_group->beams()->get(m_currentBeamIndex));
 
     if(m_currentTimeCount > (SECOND / (double)DplSource::Source::instance()->interval())) {
 

@@ -35,7 +35,7 @@ public:
     bool set_scan_type(E_SCAN_TYPE type);
 
 protected slots:
-    void do_data_event();
+    void do_data_event(const DplSource::BeamsPointer &beams);
     void update_scan_type_ruler(const QSize &size);
     virtual void update_scan_type_ruler();
     void update_sound_path_ruler();
