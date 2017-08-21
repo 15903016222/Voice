@@ -133,9 +133,10 @@ void SpinMenuItem::update_title()
     QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
     msg += m_title;
     msg += "</font>";
+    msg += "<br/>";
 
     if (!m_unit.isEmpty()){
-        msg += "<br/>(";
+        msg += "(";
         msg += m_unit;
         msg += ")";
     }
@@ -149,6 +150,7 @@ void SpinMenuItem::update_title()
     }
 
     msg += "</p>";
+
     ui->nameLabel->setText(msg);
 }
 
