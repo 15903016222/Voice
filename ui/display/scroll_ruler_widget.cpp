@@ -8,7 +8,7 @@ ScrollRulerWidget::ScrollRulerWidget(QWidget *parent) :
     m_stepUnit(0),
     m_offsetPix(0),
     m_unitNum(0),
-    m_moveTotalUnit(0)
+    m_moveTotalUnit(0.0)
 {
 
 }
@@ -21,12 +21,16 @@ void ScrollRulerWidget::move_encoder_x(unsigned int step)
 
 void ScrollRulerWidget::move_unit(unsigned int msec)
 {
-    m_moveTotalUnit +=(msec / 1000.0);
+    m_moveTotalUnit += (msec / 1000.0);
     int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start)) + 0.5;    /* 要偏移的像素点*/
-    //int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start) + 0.5);    /* 要偏移的像素点*/
     m_unitNum = movePix / m_stepUnit;             /* 要偏移多少个10 * m_pixelPerUnit */
     m_offsetPix = movePix % m_stepUnit;           /* 画标尺时真正偏移的像素点 */
 
+//    qDebug() << "m_moveTotalUnit = " << m_moveTotalUnit
+//             << " movePix = " << movePix
+//             << " m_unitNum = " << m_unitNum
+//             << " m_offsetPix = " << m_offsetPix
+//             << " m_stepUnit = " << m_stepUnit;
 }
 
 void ScrollRulerWidget::paintEvent(QPaintEvent *e)
@@ -130,9 +134,9 @@ void ScrollRulerWidget::paintEvent(QPaintEvent *e)
             if(length < targetX) {
 
                 int align = markQty % 10;
-                targetX = length - (int)((markQty - align + i) * interval * m_pixelPerUnit + 0.5) + m_offsetPix;
                 /* align == 0，则偏移一个单位画数值 */
                 if(align == 0) {
+                    targetX = length - (int)((markQty - align + i) * interval * m_pixelPerUnit + 0.5) + m_offsetPix;
                     painter.drawText(targetX + 2, 12, QString::number(((markQty / 10  + m_unitNum) * 10) * interval + m_start, 'f', 1));
                 }
 
@@ -187,5 +191,23 @@ void ScrollRulerWidget::paintEvent(QPaintEvent *e)
 
             painter.drawLine(targetX, 0, targetX, 13);
         }
+    }
+}
+
+void ScrollRulerWidget::resizeEvent(QResizeEvent *event)
+{
+    if(m_moveTotalUnit > 0.01) {
+
+        /* 计算旧size与新size间差值，得出时间差值 */
+        double differentValue;
+        if (RulerWidget::BOTTOM == m_type) {
+            differentValue = (event->oldSize().width() - event->size().width()) * ((m_end - m_start) / (double)y_axis_length());
+        } else {
+            differentValue = (event->oldSize().height() - event->size().height()) * ((m_end - m_start) / (double)y_axis_length());
+        }
+
+        m_moveTotalUnit += differentValue;
+
+        qDebug() << "[" << this->objectName() << "]" << " event old size = " << event->oldSize() << " new size = " << event->size();
     }
 }

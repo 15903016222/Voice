@@ -15,10 +15,20 @@ BscanHDisplay::BscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent
 
 }
 
+bool BscanHDisplay::set_scan_type(BscanDisplay::E_SCAN_TYPE type)
+{
+    BscanDisplay::set_scan_type(type);
+
+    m_bscanScene->set_direction(BscanScene::HORIZONTAL);
+
+    return true;
+}
+
+
 void BscanHDisplay::init_ruler()
 {
     m_soundPathRuler = ui->bottomRuler;
-    m_scanTypeRuler = ui->leftRuler;
+    m_scanTypeRuler  = ui->leftRuler;
 
     if(m_type == ENCODER) {
 

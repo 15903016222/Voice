@@ -2,6 +2,7 @@
 #define __SCROLL_RULER_WIDGET_H__
 
 #include <QWidget>
+#include <QResizeEvent>
 
 #include "ui/display/ruler_widget.h"
 
@@ -17,6 +18,7 @@ public:
 
 protected:
     virtual void paintEvent(QPaintEvent *e);
+    void resizeEvent(QResizeEvent *event);
 
 private:
 

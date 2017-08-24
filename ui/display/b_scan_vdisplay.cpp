@@ -14,6 +14,15 @@ BscanVDisplay::BscanVDisplay(const DplDevice::GroupPointer &grp, QWidget *parent
     m_bscanScene->set_pix_per_beam(m_pixPerBeam);
 }
 
+bool BscanVDisplay::set_scan_type(BscanDisplay::E_SCAN_TYPE type)
+{
+    BscanDisplay::set_scan_type(type);
+
+    m_bscanScene->set_direction(BscanScene::VERTICAL);
+
+    return true;
+}
+
 void BscanVDisplay::init_ruler()
 {
     m_soundPathRuler = ui->leftRuler;

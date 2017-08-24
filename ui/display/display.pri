@@ -18,7 +18,10 @@ SOURCES += \
     $$PWD/b_scan_hdisplay.cpp \
     $$PWD/b_scan_vdisplay.cpp \
     $$PWD/s_scan_image.cpp \
-    $$PWD/scroll_ruler_widget.cpp
+    $$PWD/scroll_ruler_widget.cpp \
+    $$PWD/b_scan_time_scene.cpp \
+    $$PWD/b_scan_encoder_scene.cpp
+
 
 HEADERS += \
     $$PWD/ruler_widget.h \
@@ -40,7 +43,9 @@ HEADERS += \
     $$PWD/b_scan_hdisplay.h \
     $$PWD/b_scan_vdisplay.h \
     $$PWD/s_scan_image.h \
-    $$PWD/scroll_ruler_widget.h
+    $$PWD/scroll_ruler_widget.h \
+    $$PWD/b_scan_time_scene.h \
+    $$PWD/b_scan_encoder_scene.h
 
 
 FORMS += \

@@ -28,13 +28,17 @@ public:
     };
 
 
-    explicit BscanScene(const DplDisplay::PaletteColorPointer &palette, QObject *parent = 0);
+    explicit BscanScene(const DplDisplay::PaletteColorPointer &palette, int group, QObject *parent = 0);
     ~BscanScene();
+
     void show_wave(const DplSource::BeamsPointer &beamPointer);
     void reset();
     bool set_pix_per_beam(double ratio);
+
     inline void set_direction(E_BscanDirection direction) { m_direction = direction; }
     inline E_BscanDirection direction() { return m_direction; }
+
+    bool set_current_beam(unsigned int index);
 
 signals:
     void one_beam_show_successed();
@@ -48,45 +52,35 @@ protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
     virtual void draw_beams();
 
-    QImage                          *m_image;
-    DplDisplay::PaletteColorPointer m_palette;
-    DplSource::BeamsPointer         m_beamsPointer;
-    QSize                           m_size;
-    int                             m_currentIndex;
-    double                          m_pixPerBeamRatio;
-    static const int COMPRESS_TYPE = 0;
-    E_BscanDirection                m_direction;
-    QVector<WaveIndex>              m_waveVect;
-    QReadWriteLock                  m_rwLock;
-    QReadWriteLock                  m_releaseLock;
-    volatile bool                   m_releasing;
+    /**
+     * @brief preproccess_beam  预处理beam数据，计算画B扫的具体参数
+     */
+    void preproccess_beam();
 
-
-private:
     /**
      * @brief draw_horizontal_beam  B扫的水平显示
      */
-    void draw_horizontal_beam();
+    virtual void draw_horizontal_beam();
 
     /**
      * @brief draw_vertical_beam    B扫的垂直显示
      */
-    void draw_vertical_beam();
+    virtual void draw_vertical_beam();
 
     /**
      * @brief reset_show 当显示大小改变，重新画B扫
      */
-    void reset_show();
+    virtual void reset_show();
 
     /**
      * @redraw_horizontal_beam 当显示大小改变，重新画水平B扫
      */
-    void redraw_horizontal_beam();
+    virtual void redraw_horizontal_beam();
 
     /**
      * @redraw_horizontal_beam 当显示大小改变，重新画垂直B扫
      */
-    void redraw_vertical_beam();
+    virtual void redraw_vertical_beam();
 
     /**
      * @brief calculate_properties  计算B扫所需参数
@@ -96,6 +90,22 @@ private:
      * @param align                 对齐数据（例子：width为20， pixCount为3， 则align为 width % pixCount = 2）
      */
     void calculate_properties(float &ratio, double &pixCount, int &maxIndex, int &align);
+
+    QImage                          *m_image;
+    DplDisplay::PaletteColorPointer m_palette;
+    DplSource::BeamsPointer         m_beamsPointer;
+    QSize                           m_size;
+    double                          m_pixPerBeamRatio;      /* 针对编码器，一个beam占多少像素，
+                                                             * 与扫查分辨率、扫查起始点有关，最小值为1. */
+    int                             m_group;
+
+    E_BscanDirection                m_direction;
+    QReadWriteLock                  m_rwLock;
+
+    volatile    bool                m_scrolling;            /* 标志当前窗口是否卷动 */
+    volatile    int                 m_beamsShowedCount;     /* 当前已显示多少条beam */
+    volatile    int                 m_maxBeamsCount;        /* 显示区最大beam数 */
+    int                             m_currentIndex;         /* 显示第index的beam数据 */
 
 };
 

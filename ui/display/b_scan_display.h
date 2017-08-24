@@ -2,11 +2,10 @@
 #define __B_SCAN_DISPLAY_H_
 
 #include <QWidget>
-
+#include <ui/display/b_scan_scene.h>
 #include <device/device.h>
 
 class ScanView;
-class BscanScene;
 class BWaveItem;
 class ScrollRulerWidget;
 class QTimer;
@@ -32,28 +31,38 @@ public:
     ~BscanDisplay();
 
     bool set_current_beam(unsigned int index);
-    bool set_scan_type(E_SCAN_TYPE type);
+    virtual bool set_scan_type(E_SCAN_TYPE type);
+
+signals:
+    void update_ruler();
+
 
 protected slots:
+
     void do_data_event(const DplSource::BeamsPointer &beams);
+    void do_update_ruler();
+
     void update_scan_type_ruler(const QSize &size);
     virtual void update_scan_type_ruler();
     void update_sound_path_ruler();
-    void do_timer_time_outed();
 
 protected:
     Ui::BscanDisplay *ui;
+
     DplDevice::GroupPointer m_group;
     ScrollRulerWidget      *m_scanTypeRuler;
     ScrollRulerWidget      *m_soundPathRuler;
+
     ScanView         *m_bscanView;
-    double           m_pixPerBeam;  /* 每条beam用多少个像素表示 */
-    double           m_scanTypeRulerStart;
-    double           m_scanTypeRulerEnd;
     BscanScene       *m_bscanScene;
-    E_SCAN_TYPE      m_type;
-    int              m_currentBeamIndex;
-    QTimer           *m_timer;
+
+    double           m_pixPerBeam;          /* 每条beam用多少个像素表示 */
+    double           m_scanTypeRulerStart;  /* 标尺开始（mm / s） */
+    double           m_scanTypeRulerEnd;    /* 标尺结束（mm / s） */
+
+    E_SCAN_TYPE      m_type;                /* 扫查类型：encoder / time */
+    int              m_currentBeamIndex;    /* 当前beam的index */
+
     double           m_currentTimeCount;    /* 秒 */
     QLabel           *m_timeShowLabel;
 

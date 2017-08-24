@@ -59,7 +59,11 @@ color: rgb(255, 255, 255);</string>
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="bScanWidgetVerticalLayout"/>
+      <layout class="QVBoxLayout" name="bScanWidgetVerticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+      </layout>
      </item>
      <item>
       <widget class="ColorBar" name="colorBar" native="true">
@@ -139,6 +143,11 @@ color: rgb(255, 255, 255);</string>
             <width>0</width>
             <height>20</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>5</pointsize>
+           </font>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 127);</string>

@@ -10,8 +10,9 @@
 #include "source/source.h"
 #include "device/device.h"
 #include "scroll_ruler_widget.h"
+#include "b_scan_encoder_scene.h"
+#include "b_scan_time_scene.h"
 
-static const int TIME_OUT_VALUE = 20;
 static const int SECOND         = 1000;
 
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
@@ -19,7 +20,7 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     ui(new Ui::BscanDisplay),
     m_group(grp),
     m_bscanView(new ScanView),
-    m_bscanScene(new BscanScene(DplDevice::Device::instance()->display()->palette())),
+    m_bscanScene(new BscanTimeScene(DplDevice::Device::instance()->display()->palette(), grp->index())),
     m_type(TIME),
     m_currentBeamIndex(0),
     m_pixPerBeam(1.0),
@@ -27,7 +28,6 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     m_scanTypeRulerEnd(0.0),
     m_soundPathRuler(NULL),
     m_scanTypeRuler(NULL),
-    m_timer(new QTimer(this)),
     m_currentTimeCount(0.0)
 {
     ui->setupUi(this);
@@ -52,9 +52,7 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     m_bscanView->setScene(m_bscanScene);
 
     connect(m_bscanScene, SIGNAL(one_beam_show_successed()), this, SLOT(update_scan_type_ruler()));
-
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(do_timer_time_outed()));
-//    m_timer->start(TIME_OUT_VALUE);
+    connect(this, SIGNAL(update_ruler()), this, SLOT(do_update_ruler()));
 
 }
 
@@ -68,16 +66,7 @@ BscanDisplay::~BscanDisplay()
 
 bool BscanDisplay::set_current_beam(unsigned int index)
 {
-//    if(m_group.data()->beam_qty() == 0) {
-//        return false;
-//    }
-
-//    if(index < m_group->beams()->beam_qty()) {
-//        m_currentBeamIndex = index;
-//        return true;
-//    }
-
-    return false;
+   return m_bscanScene->set_current_beam(index);
 }
 
 
@@ -86,21 +75,20 @@ bool BscanDisplay::set_scan_type(BscanDisplay::E_SCAN_TYPE type)
     if(m_type == type) {
         return true;
     }
+
     m_type = type;
+    if(NULL != m_bscanScene) {
+        delete m_bscanScene;
+    }
 
-//    if(m_bscanScene != NULL) {
-//        if(m_type == TIME) {
-//            m_bscanScene = new BscanScene(DplDevice::Device::instance()->display()->palette());
-//        } else if(m_type == ENCODER) {
-//            m_bscanScene->set_direction(BscanScene::HORIZONTAL);
-//        } else {
-//            m_bscanScene = NULL;
-//            return false;
-//        }
+    if(m_type == ENCODER) {
+        m_bscanScene = new BscanEncoderScene(DplDevice::Device::instance()->display()->palette(), m_group->index());
 
-//    }
-//    delete m_bscanScene;
+    } else {
+        m_bscanScene = new BscanTimeScene(DplDevice::Device::instance()->display()->palette(), m_group->index());
+    }
 
+    return true;
 }
 
 void BscanDisplay::init_ruler()
@@ -130,7 +118,29 @@ void BscanDisplay::init_ruler()
 
 void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
-    m_currentTimeCount += TIME_OUT_VALUE / 1000.0;
+
+#if 0
+    DplSource::BeamsPointer tmp1 = beams;
+    qDebug() << "[" << __FUNCTION__ << "]" << " index = " << tmp1->get(0)->index();
+    return;
+
+#else
+    DplSource::BeamsPointer tmp = beams;
+
+    for(int i = 0; i < tmp->get(0)->index(); ++i) {
+        DplSource::BeamsPointer check = DplSource::Source::instance()->beams(m_group->index(), tmp->get(0)->index() - i);
+        if(check.isNull()) {
+            qDebug() << "[" << __FUNCTION__ << "]" << " check is NULL"
+                     << " target index = " << tmp->get(0)->index() - i << " index = " << tmp->get(0)->index();
+        }
+    }
+
+#endif
+
+    qDebug() << "[" << __FUNCTION__ << "]" << "======================";
+    return;
+
+    m_currentTimeCount += DplSource::Source::instance()->interval() / 1000.0;
     ui->label->setText(QString::number(m_currentTimeCount, 'f', 1));
 
     double rulerEnd;
@@ -147,31 +157,22 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
         m_bscanScene->set_pix_per_beam(m_bscanScene->width() / (rulerEnd / stepTime));
     }
 
-    if(m_currentTimeCount > rulerEnd) {
-
-//        if(m_currentTimeCount > 5 * rulerEnd) {
-//            DplSource::BeamsPointer beams = m_group->beams();
-//            disconnect(static_cast<DplSource::Beams *>(beams.data()),
-//                    SIGNAL(data_event()),
-//                    this,
-//                    SLOT(do_data_event()));
-//            return;
-//        }
-
-        m_scanTypeRuler->move_unit(TIME_OUT_VALUE);
-        m_scanTypeRuler->update();
-    }
-
     m_bscanScene->show_wave(beams);
 
-//    if(rulerEnd - m_currentTimeCount < 0.0000000001 && rulerEnd - m_currentTimeCount >= -0.0000000001) {
-//        DplSource::BeamsPointer beams = m_group->beams();
-//        disconnect(static_cast<DplSource::Beams *>(beams.data()),
-//                   SIGNAL(data_event()),
-//                   this,
-//                   SLOT(do_data_event()));
-//        return;
-//    }
+    if(m_currentTimeCount > rulerEnd) {
+        emit update_ruler();
+    }
+
+}
+
+void BscanDisplay::do_update_ruler()
+{
+    if(m_scanTypeRuler == NULL) {
+        return;
+    }
+
+    m_scanTypeRuler->move_unit(DplSource::Source::instance()->interval());
+    m_scanTypeRuler->update();
 }
 
 
@@ -184,10 +185,11 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
     m_scanTypeRulerStart = 0.0;
     double beamQtyPerSecond = SECOND / (double)DplSource::Source::instance()->interval();
     if(m_bscanScene->direction() == BscanScene::HORIZONTAL) {
-        m_scanTypeRulerEnd   = size.height() / beamQtyPerSecond;
+        m_scanTypeRulerEnd = size.height() / beamQtyPerSecond;
     } else {
-        m_scanTypeRulerEnd   = size.width() / beamQtyPerSecond;
+        m_scanTypeRulerEnd = size.width() / beamQtyPerSecond;
     }
+
     m_scanTypeRuler->set_range(m_scanTypeRulerStart, m_scanTypeRulerEnd);
     m_scanTypeRuler->update();
 
@@ -248,30 +250,4 @@ void BscanDisplay::update_sound_path_ruler()
 
     qDebug("%s[%d]: start(%f) end(%f) precision(%f)",__func__, __LINE__, start, end, m_group->sample()->precision());
 }
-
-void BscanDisplay::do_timer_time_outed()
-{
-    m_currentTimeCount += TIME_OUT_VALUE / 1000.0;
-    ui->label->setText(QString::number(m_currentTimeCount, 'f', 1));
-
-   // m_bscanScene->show_wave(m_group->beams()->get(m_currentBeamIndex));
-
-    if(m_currentTimeCount > (SECOND / (double)DplSource::Source::instance()->interval())) {
-
-        static int timeOutedCount = 0;
-
-        m_scanTypeRulerStart += 0.02;
-        m_scanTypeRulerEnd   += 0.02;
-        ++timeOutedCount;
-
-        if(timeOutedCount == 5){
-            m_scanTypeRuler->set_range(m_scanTypeRulerStart, m_scanTypeRulerEnd);
-            m_scanTypeRuler->update();
-            timeOutedCount = 0;
-        }
-    }
-}
-
-
-
 
