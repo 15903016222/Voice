@@ -140,7 +140,6 @@ void GeneralMenu::update_start_item()
 
 void GeneralMenu::update_range_item()
 {
-
     double max = m_group->sample()->point_qty() * m_group->sample()->precision() * DplUt::Sample::MAX_SCALE_FACTOR;
     if (max > m_group->max_range()) {
         max = m_group->max_range();

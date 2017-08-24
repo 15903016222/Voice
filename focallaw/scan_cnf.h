@@ -19,9 +19,21 @@ class FOCALLAWSHARED_EXPORT ScanCnf : public QObject
     Q_DECLARE_PRIVATE(ScanCnf)
     Q_OBJECT
 public:
+    /**
+     * @brief ScanCnf   ScanCnf构造函数
+     * @param elemQty   阵元总数
+     * @param parent    父对象
+     */
     explicit ScanCnf(uint elemQty, QObject *parent=0);
+
+    /**
+     * @brief ~ScanCnf  ScanCnf析构函数
+     */
     virtual ~ScanCnf();
 
+    /**
+     * @brief The Mode enum 扫查模式
+     */
     enum Mode {
         Linear,     // 线性扫查
         Sectorial   // 扇性扫查
@@ -70,6 +82,9 @@ public:
      * @param qty               数量
      */
     virtual void set_element_qty(uint qty);
+
+signals:
+    void changed();
 
 private:
     ScanCnfPrivate *d_ptr;

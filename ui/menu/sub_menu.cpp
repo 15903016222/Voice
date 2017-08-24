@@ -104,7 +104,6 @@ void SubMenu::create_menus()
 {
     /* UT Setting */
     add_menu(MainMenu::UTSettings_General,      new DplUtSettingMenu::GeneralMenu(this));
-
     add_menu(MainMenu::UTSettings_Pulser,       new DplUtSettingMenu::PulserMenu(this));
     add_menu(MainMenu::UTSettings_Receiver,     new DplUtSettingMenu::ReceiverMenu(this));
     add_menu(MainMenu::UTSettings_Advanced,     new DplUtSettingMenu::UtAdvancedMenu(this));

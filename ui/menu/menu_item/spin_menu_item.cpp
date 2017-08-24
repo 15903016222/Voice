@@ -134,21 +134,25 @@ void SpinMenuItem::update_title()
     msg += m_title;
     msg += "</font>";
 
-    if (!m_unit.isEmpty()){
-        msg += "<br/>(";
-        msg += m_unit;
-        msg += ")";
-    }
-
-    if (ui->lineEdit->hasFocus()) {
-        if (m_unit.size()) {
-            msg += " ";
+    if (!ui->lineEdit->hasFocus()) {
+        if (!m_unit.isEmpty()) {
+            msg += "<br/>(";
+            msg += m_unit;
+            msg += ")";
+        }
+    } else {
+        msg += "<br/>";
+        if (!m_unit.isEmpty()) {
+            msg += "(";
+            msg += m_unit;
+            msg += ") ";
         }
         msg += "&Delta;";
         msg += QString::number(m_step, 'f', m_decimals);
     }
 
     msg += "</p>";
+
     ui->nameLabel->setText(msg);
 }
 
