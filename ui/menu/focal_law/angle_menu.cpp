@@ -15,6 +15,8 @@ AngleMenu::AngleMenu(QWidget *parent) :
 
     /* Min.Angle Menu Item */
     m_minAngleItem->set(-89, 89, 0);
+    connect(m_minAngleItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_minAngleItem_changed(double)));
 
     /* Max.Angle Menu Item */
     m_maxAngleItem->set(-89, 89, 0);
@@ -58,20 +60,24 @@ void AngleMenu::update(const DplDevice::GroupPointer &group)
 {
     m_group = group;
     DplFocallaw::FocallawerPointer focallawer = group->focallawer();
+    DplFocallaw::PaProbePointer probe = focallawer->probe().staticCast<DplFocallaw::PaProbe>();
 
     m_minAngleItem->hide();
     m_maxAngleItem->hide();
     m_angleStepItem->hide();
 
-    if (focallawer->probe()->is_pa()) {
-        DplFocallaw::ScanCnfPointer scanCnf = focallawer->scan_cnf();
-        update_minAngleItem(scanCnf);
-        if (scanCnf->mode() == DplFocallaw::ScanCnf::Linear) {
+    DplFocallaw::ScanCnfPointer scanCnf = probe->scan_configure();
+    update_minAngleItem(scanCnf);
+    if (scanCnf->mode() == DplFocallaw::ScanCnf::Linear) {
 
-        } else if (scanCnf->mode() == DplFocallaw::ScanCnf::Sectorial) {
+    } else if (scanCnf->mode() == DplFocallaw::ScanCnf::Sectorial) {
 
-        }
     }
+}
+
+void AngleMenu::do_minAngleItem_changed(double val)
+{
+
 }
 
 }

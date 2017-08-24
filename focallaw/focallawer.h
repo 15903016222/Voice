@@ -72,19 +72,6 @@ public:
     void set_specimen(const SpecimenPointer &s);
 
     /**
-     * @brief scan_cnf  获取扫查配置
-     * @return          扫查配置
-     */
-    ScanCnfPointer scan_cnf() const;
-
-    /**
-     * @brief set_scan_mode 设置扫查模式
-     * @param mode          扫查模式
-     * @return              设置成功返回扫查配置，否则为空指针
-     */
-    ScanCnfPointer set_scan_mode(ScanCnf::Mode mode);
-
-    /**
      * @brief focus_configure   获取焦点配置对象
      * @return                  焦点配置对象
      */

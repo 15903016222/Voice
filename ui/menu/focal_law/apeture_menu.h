@@ -21,13 +21,14 @@ protected:
 
 protected slots:
     void update(const DplDevice::GroupPointer &group);
+    void do_apetureitem_changed(double val);
 
 private:
     SpinMenuItem *m_apetureItem;
     SpinMenuItem *m_firstElementItem;
     SpinMenuItem *m_lastElementItem;
     SpinMenuItem *m_elementStep;
-    DplDevice::GroupPointer m_group;
+    DplFocallaw::FocallawerPointer m_focallawer;
 };
 
 }

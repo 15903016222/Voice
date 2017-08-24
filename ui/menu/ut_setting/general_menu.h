@@ -21,9 +21,6 @@ public:
     explicit GeneralMenu(QWidget *parent = 0);
     ~GeneralMenu();
 
-    void show();
-    void hide();
-
 public slots:
     void set_gain(double gain) { m_gainItem->set_value(gain); }
 

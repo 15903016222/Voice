@@ -17,6 +17,9 @@ ApetureMenu::ApetureMenu(QWidget *parent) :
 
     /* Apeture Menu Item */
     m_apetureItem->set_decimals(0);
+    m_apetureItem->set_step(1);
+    connect(m_apetureItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_apetureitem_changed(double)));
 
     /* First Element menu item */
     m_firstElementItem->set_decimals(0);
@@ -66,25 +69,33 @@ void ApetureMenu::update_elementStep(const DplFocallaw::LinearScanCnfPointer &sc
 
 void ApetureMenu::update(const DplDevice::GroupPointer &group)
 {
-    m_group = group;
-
-    DplFocallaw::FocallawerPointer focallawer = group->focallawer();
+    m_focallawer = group->focallawer();
 
     m_apetureItem->hide();
     m_firstElementItem->hide();
     m_lastElementItem->hide();
     m_elementStep->hide();
 
-    if (focallawer->probe()->is_pa()) {
-        DplFocallaw::ScanCnfPointer scanCnf = focallawer->scan_cnf();
-        update_apetureItem(scanCnf);
-        update_firstElementItem(scanCnf);
+    DplFocallaw::ScanCnfPointer scanCnf = m_focallawer->probe().staticCast<DplFocallaw::PaProbe>()->scan_configure();
+    update_apetureItem(scanCnf);
+    update_firstElementItem(scanCnf);
 
-        if (scanCnf->mode() == DplFocallaw::ScanCnf::Linear) {
-            update_lastElementItem(scanCnf.staticCast<DplFocallaw::LinearScanCnf>());
-            update_elementStep(scanCnf.staticCast<DplFocallaw::LinearScanCnf>());
-        }
+    if (scanCnf->mode() == DplFocallaw::ScanCnf::Linear) {
+        update_lastElementItem(scanCnf.staticCast<DplFocallaw::LinearScanCnf>());
+        update_elementStep(scanCnf.staticCast<DplFocallaw::LinearScanCnf>());
     }
+}
+
+void ApetureMenu::do_apetureitem_changed(double val)
+{
+    DplFocallaw::ScanCnfPointer scanCnf = m_focallawer->probe().staticCast<DplFocallaw::PaProbe>()->scan_configure();
+    if (scanCnf->aperture() == (uint)val) {
+        return;
+    }
+
+    scanCnf->set_aperture(val);
+
+    m_focallawer->focallaw();
 }
 
 }

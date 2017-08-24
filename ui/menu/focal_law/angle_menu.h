@@ -20,6 +20,7 @@ protected:
 
 protected slots:
     void update(const DplDevice::GroupPointer &group);
+    void do_minAngleItem_changed(double val);
 
 private:
     SpinMenuItem *m_minAngleItem;
