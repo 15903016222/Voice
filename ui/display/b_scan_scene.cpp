@@ -54,7 +54,6 @@ void BscanScene::set_size(const QSize &size)
     setSceneRect(-m_size.width()/2, -m_size.height()/2,
                                               m_size.width(), m_size.height());
     reset_show();
-
 }
 
 
@@ -65,13 +64,13 @@ void BscanScene::set_beams(const DplSource::BeamsPointer &beamPointer)
     m_beamsPointer = beamPointer;
 
     if(m_beamsPointer.isNull()) {
-        qDebug() << "[" << __FUNCTION__ << "]" << "m_beamsPointer is Null";
+        qDebug() << "[" << __FUNCTION__ << "]" << "m_beamsPointer is NULL";
         return;
     }
 
     if(m_image == NULL) {
 
-        qDebug() << "[" << __FUNCTION__ << "]" << "m_image is Null.";
+        qDebug() << "[" << __FUNCTION__ << "]" << "m_image is NULL.";
         return;
     }
 
@@ -110,6 +109,7 @@ bool BscanScene::set_pix_per_beam(double ratio)
 
 bool BscanScene::set_current_beam(unsigned int index)
 {
+    QWriteLocker lock(&m_rwLock);
     m_currentIndex = index;
 }
 
@@ -126,31 +126,11 @@ void BscanScene::drawBackground(QPainter *painter, const QRectF &rect)
 
 void BscanScene::draw_beams()
 {
-    preproccess_beam();
-
     if(m_direction == VERTICAL) {
         draw_vertical_beam();
     } else {
         draw_horizontal_beam();
     }
-}
-
-
-void BscanScene::preproccess_beam()
-{
-    /* 计算当前beam是否到显示区最后一条beam */
-    int width;
-    int height;
-
-    if(m_direction == HORIZONTAL) {
-        width  = this->width();
-        height = this->height();
-    } else {
-        width  = this->height();
-        height = this->width();
-    }
-
-    /* 计算填满显示区域所需beam数 */
 }
 
 

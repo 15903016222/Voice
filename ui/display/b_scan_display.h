@@ -35,7 +35,7 @@ public:
 
 signals:
     void update_ruler();
-
+    void update_label(const QString &time);
 
 protected slots:
 
@@ -45,6 +45,8 @@ protected slots:
     void update_scan_type_ruler(const QSize &size);
     virtual void update_scan_type_ruler();
     void update_sound_path_ruler();
+
+    void do_update_label(const QString &time);
 
 protected:
     Ui::BscanDisplay *ui;

@@ -26,7 +26,7 @@ bool BscanVDisplay::set_scan_type(BscanDisplay::E_SCAN_TYPE type)
 void BscanVDisplay::init_ruler()
 {
     m_soundPathRuler = ui->leftRuler;
-    m_scanTypeRuler = ui->bottomRuler;
+    m_scanTypeRuler  = ui->bottomRuler;
 
     if(m_type == ENCODER) {
 

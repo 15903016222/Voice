@@ -27,8 +27,6 @@ void BscanTimeScene::draw_horizontal_beam()
     } else {
 
         scroll_horizontal_image(commonProperties, waveData);
-
-        emit one_beam_show_successed();
     }
 
     ++m_beamsShowedCount;
@@ -54,8 +52,6 @@ void BscanTimeScene::draw_vertical_beam()
         /* 整个显示区域画满beam，开始滚动显示后续的beam */
 
         scroll_vertical_image(commonProperties, waveData);
-
-        emit one_beam_show_successed();
     }
 
     ++m_beamsShowedCount;
@@ -129,28 +125,6 @@ void BscanTimeScene::redraw_vertical_beam()
         && (m_image != NULL))) {
         return;
     }
-
-    QByteArray tmpWave = m_beamsPointer->get(0)->wave();
-    int index = m_beamsPointer->get(0)->index();
-    for(int i = 0; i < tmpWave.size(); ++i) {
-        qDebug() << "[" << __FUNCTION__ << "] " << index << " tmpWave Data = " << (int)tmpWave.at(i);
-    }
-
-    DplSource::BeamsPointer  aa = DplSource::Source::instance()->beams(m_group, index - 1);
-
-    if(aa.isNull())
-    {
-         qDebug() << "[" << __FUNCTION__ << "] " << " aa is NULL.";
-         return;
-    }
-
-    tmpWave = aa->get(0)->wave();
-    for(int i = 0; i < tmpWave.size(); ++i) {
-        qDebug() << "[" << __FUNCTION__ << "] " << index - 1 << " 2 tmpWave Data = " << (int)tmpWave.at(i);
-    }
-
-    return;
-
 
     S_CommonProperties commonProperties;
     S_RedrawProperties redrawProperties;

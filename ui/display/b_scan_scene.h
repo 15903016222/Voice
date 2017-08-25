@@ -50,7 +50,6 @@ public:
     bool set_current_beam(unsigned int index);
 
 signals:
-    void one_beam_show_successed();
     void image_changed();
 
 public slots:
@@ -59,12 +58,8 @@ public slots:
 
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
-    virtual void draw_beams();
 
-    /**
-     * @brief preproccess_beam  预处理beam数据，计算画B扫的具体参数
-     */
-    void preproccess_beam();
+    virtual void draw_beams();
 
     /**
      * @brief draw_horizontal_beam  B扫的水平显示
@@ -144,7 +139,6 @@ protected:
      */
     void scroll_horizontal_image(const BscanScene::S_CommonProperties &commonProperties,
                                const quint8 *waveData);
-
 
     QImage                          *m_image;
     DplDisplay::PaletteColorPointer m_palette;
