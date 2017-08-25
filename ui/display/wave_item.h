@@ -3,6 +3,7 @@
 
 #include <QGraphicsItem>
 #include <display/a_scan.h>
+#include <QMutex>
 
 class WaveItem : public QGraphicsObject
 {
@@ -44,6 +45,7 @@ private:
     DplDisplay::AscanPointer m_ascan;
     QPainterPath m_path;
     QSize m_size;
+    QMutex m_mutex;
 };
 
 inline const QSize &WaveItem::size() const

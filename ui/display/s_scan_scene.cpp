@@ -12,7 +12,7 @@ SscanScene::SscanScene(const DplDisplay::PaletteColorPointer &palette, QObject *
     m_palette(palette)
 {
     connect(this, SIGNAL(image_changed()),
-            this, SLOT(update()));
+            this, SLOT(update()), Qt::QueuedConnection);
 }
 
 SscanScene::~SscanScene()
