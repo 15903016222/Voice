@@ -9,6 +9,7 @@
 #include <display/palette_color.h>
 #include <source/beams.h>
 
+static const int STORE_BUFFER_SIZE = 256 * 1024 * 1024 ;    /* 256MB */
 
 class BscanScene : public QGraphicsScene
 {
@@ -16,22 +17,30 @@ class BscanScene : public QGraphicsScene
 
 public:
 
-
-    enum E_BscanDirection{
-        HORIZONTAL,
-        VERTICAL
+    struct S_CommonProperties {
+        float   ratio;      /* 每个像素代表多少beam中的多少个点数据 */
+        double  pixCount;   /* 每条beam占多少像素 */
+        int     maxIndex;   /* 最大的beam数，超出后滚动显示 */
+        int     align;      /* 对齐数据（例子：width为20， pixCount为3， 则align为 width % pixCount = 2）*/
     };
 
-    struct WaveIndex {
-        QByteArray  wave;
-        int         index;
+    struct S_RedrawProperties {
+        unsigned int currentFrameIndex; /* 当前显示的最后一帧数据的index */
+        int totalFrameCount;            /* 整个storeBuffer可存放的帧数 */
+        int redrawCount;                /* 需要重画的帧数 */
+        int beginShowIndex;             /* 从第beginShowIndex帧开始重画 */
+    };
+
+    enum E_BscanDirection {
+        HORIZONTAL,
+        VERTICAL
     };
 
 
     explicit BscanScene(const DplDisplay::PaletteColorPointer &palette, int group, QObject *parent = 0);
     ~BscanScene();
 
-    void show_wave(const DplSource::BeamsPointer &beamPointer);
+    void set_beams(const DplSource::BeamsPointer &beamPointer);
     void reset();
     bool set_pix_per_beam(double ratio);
 
@@ -82,14 +91,60 @@ protected:
      */
     virtual void redraw_vertical_beam();
 
+
     /**
-     * @brief calculate_properties  计算B扫所需参数
-     * @param ratio                 每个像素代表多少beam中的多少个点数据
-     * @param pixCount              每条beam占多少像素
-     * @param maxIndex              最大的beam数，超出后滚动显示
-     * @param align                 对齐数据（例子：width为20， pixCount为3， 则align为 width % pixCount = 2）
+     * @brief calculate_common_properties   计算画B扫的参数
+     * @param commonProperties
      */
-    void calculate_properties(float &ratio, double &pixCount, int &maxIndex, int &align);
+    void calculate_common_properties(BscanScene::S_CommonProperties &commonProperties);
+
+
+    /**
+     * @brief calculate_redraw_properties   计算改变显示大小后，重画B扫的参数
+     * @param commonProperties
+     * @param redrawProperites
+     */
+    void calculate_redraw_properties(BscanScene::S_CommonProperties &commonProperties,
+                                     BscanScene::S_RedrawProperties &redrawProperites);
+
+    /**
+     * @brief set_vertical_image_data   设置时间B扫的垂直显示image数据
+     * @param beamsShowedCount
+     * @param commonProperties
+     * @param waveData
+     */
+    void set_vertical_image_data(int beamsShowedCount,
+                        const BscanScene::S_CommonProperties &commonProperties,
+                        const quint8 *waveData);
+
+
+    /**
+     * @brief set_horizontal_image_data 设置时间B扫的水平显示image数据
+     * @param beamsShowedCount
+     * @param commonProperties
+     * @param waveData
+     */
+    void set_horizontal_image_data(int beamsShowedCount,
+                        const BscanScene::S_CommonProperties &commonProperties,
+                        const quint8 *waveData);
+
+
+    /**
+     * @brief scroll_vertical_image     时间B扫的垂直滚动image滚动实现
+     * @param commonProperties
+     * @param waveData
+     */
+    void scroll_vertical_image(const BscanScene::S_CommonProperties &commonProperties,
+                               const quint8 *waveData);
+
+    /**
+     * @brief scroll_horizontal_image   时间B扫的水平滚动image滚动实现
+     * @param commonProperties
+     * @param waveData
+     */
+    void scroll_horizontal_image(const BscanScene::S_CommonProperties &commonProperties,
+                               const quint8 *waveData);
+
 
     QImage                          *m_image;
     DplDisplay::PaletteColorPointer m_palette;

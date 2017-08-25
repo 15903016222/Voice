@@ -118,28 +118,6 @@ void BscanDisplay::init_ruler()
 
 void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
-
-#if 0
-    DplSource::BeamsPointer tmp1 = beams;
-    qDebug() << "[" << __FUNCTION__ << "]" << " index = " << tmp1->get(0)->index();
-    return;
-
-#else
-    DplSource::BeamsPointer tmp = beams;
-
-    for(int i = 0; i < tmp->get(0)->index(); ++i) {
-        DplSource::BeamsPointer check = DplSource::Source::instance()->beams(m_group->index(), tmp->get(0)->index() - i);
-        if(check.isNull()) {
-            qDebug() << "[" << __FUNCTION__ << "]" << " check is NULL"
-                     << " target index = " << tmp->get(0)->index() - i << " index = " << tmp->get(0)->index();
-        }
-    }
-
-#endif
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "======================";
-    return;
-
     m_currentTimeCount += DplSource::Source::instance()->interval() / 1000.0;
     ui->label->setText(QString::number(m_currentTimeCount, 'f', 1));
 
@@ -157,12 +135,11 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
         m_bscanScene->set_pix_per_beam(m_bscanScene->width() / (rulerEnd / stepTime));
     }
 
-    m_bscanScene->show_wave(beams);
+    m_bscanScene->set_beams(beams);
 
     if(m_currentTimeCount > rulerEnd) {
         emit update_ruler();
     }
-
 }
 
 void BscanDisplay::do_update_ruler()
