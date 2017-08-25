@@ -7,7 +7,7 @@ WaveItem::WaveItem(const DplDisplay::AscanPointer &ascan, QGraphicsItem *parent)
     m_size(400, 200)
 {
     connect(this, SIGNAL(painter_path_changed()),
-            this, SLOT(update()));
+            this, SLOT(update()), Qt::QueuedConnection);
 }
 
 QRectF WaveItem::boundingRect() const
@@ -43,6 +43,8 @@ QPainterPath WaveItem::draw(const QByteArray &wave, int w, int h)
 
 void WaveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    QMutexLocker l(&m_mutex);
+
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
@@ -53,6 +55,7 @@ void WaveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void WaveItem::set_wave(const QByteArray &beam)
 {
+    QMutexLocker l(&m_mutex);
     if (!beam.isEmpty()) {
         m_path = draw(beam, boundingRect().width(), boundingRect().height());
         emit painter_path_changed();
