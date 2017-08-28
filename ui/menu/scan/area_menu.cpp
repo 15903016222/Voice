@@ -6,11 +6,11 @@ namespace DplScanMenu {
 AreaMenu::AreaMenu(QWidget *parent) :
     BaseMenu(parent),
     m_scanStartItem(new SpinMenuItem(this, tr("Scan Start"), tr("mm"))),
-    m_scanEndItem(new SpinMenuItem(this, tr("Scan Start"), tr("mm"))),
-    m_scanResolutionItem(new SpinMenuItem(this, tr("Scan Start"), tr("mm"))),
-    m_indexStartItem(new SpinMenuItem(this, tr("Scan Start"), tr("mm"))),
-    m_indexEndItem(new SpinMenuItem(this, tr("Scan Start"), tr("mm"))),
-    m_indexResolutionItem(new SpinMenuItem(this, tr("Scan Start"), tr("mm")))
+    m_scanEndItem(new SpinMenuItem(this, tr("Scan End"), tr("mm"))),
+    m_scanResolutionItem(new SpinMenuItem(this, tr("Scan Res."), tr("mm"))),
+    m_indexStartItem(new SpinMenuItem(this, tr("Index Start"), tr("mm"))),
+    m_indexEndItem(new SpinMenuItem(this, tr("Index End"), tr("mm"))),
+    m_indexResolutionItem(new SpinMenuItem(this, tr("Index Res."), tr("mm")))
 {
     ui->layout0->addWidget(m_scanStartItem);
     ui->layout1->addWidget(m_scanEndItem);
