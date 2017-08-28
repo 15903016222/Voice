@@ -194,6 +194,7 @@ void ScrollRulerWidget::paintEvent(QPaintEvent *e)
     }
 }
 
+
 void ScrollRulerWidget::resizeEvent(QResizeEvent *event)
 {
     if(m_moveTotalUnit > 0.01) {

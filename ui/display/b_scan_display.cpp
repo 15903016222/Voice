@@ -118,6 +118,12 @@ void BscanDisplay::init_ruler()
 
 void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
+    if(m_bscanScene->width() == 0
+            || m_bscanScene->height() == 0) {
+        qDebug("[%s] w/h is 0.", __FUNCTION__);
+        return;
+    }
+
     m_currentTimeCount += DplSource::Source::instance()->interval() / 1000.0;
 
     double rulerEnd;
@@ -137,6 +143,7 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
     m_bscanScene->set_beams(beams);
 
     if(m_currentTimeCount > rulerEnd) {
+        m_bscanScene->set_scroll_window(true);
         emit update_ruler();
     }
 

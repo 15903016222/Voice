@@ -48,6 +48,7 @@ public:
     inline E_BscanDirection direction() { return m_direction; }
 
     bool set_current_beam(unsigned int index);
+    inline void set_scroll_window(bool flag) { m_scrolling = flag; }
 
 signals:
     void image_changed();
@@ -140,6 +141,8 @@ protected:
     void scroll_horizontal_image(const BscanScene::S_CommonProperties &commonProperties,
                                const quint8 *waveData);
 
+    void check_scroll_window(const QSize &oldSize);
+
     QImage                          *m_image;
     DplDisplay::PaletteColorPointer m_palette;
     DplSource::BeamsPointer         m_beamsPointer;
@@ -157,5 +160,6 @@ protected:
     int                             m_currentIndex;         /* 显示第index的beam数据 */
 
 };
+
 
 #endif // __B_SCAN_SCENE_H__
