@@ -8,20 +8,21 @@
 #ifndef __DPLSOURCE_ENCODER_H__
 #define __DPLSOURCE_ENCODER_H__
 
-#include "driving.h"
+#include "source_global.h"
+
+#include <QObject>
+#include <QSharedPointer>
 
 namespace DplSource {
 
 class EncoderPrivate;
-class SOURCESHARED_EXPORT Encoder : public Driving
+class SOURCESHARED_EXPORT Encoder : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Encoder)
 public:
     explicit Encoder(int id = 1, QObject *parent = 0);
     ~Encoder();
-
-    virtual Type type() const { return ENCODER; }
 
     /**
      * @brief index 获取编码器序号(1,2)
@@ -53,9 +54,10 @@ public:
     void set_polarity(Polarity val);
 
     enum Mode {
-        QUAD,
-        UP,
-        DOWN
+        OFF     = 0b000,
+        DOWN    = 0b001,
+        UP      = 0b010,
+        QUAD    = 0b011
     };
 
     /**
@@ -95,6 +97,7 @@ public:
     void set_origin(float val);
 
 signals:
+    void mode_changed(DplSource::Encoder::Mode mode);
     void resolution_changed(float val);
 
 private:

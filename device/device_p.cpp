@@ -24,6 +24,15 @@ DevicePrivate::DevicePrivate(Device *parent) :
     m_time(get_relative_time()),
     m_cert(CERT_FILE, PUBPEM_FILE)
 {
+    DplSource::Scan *scan = DplSource::Scan::instance();
+    DplSource::Encoder *scanEnc = scan->scan_axis()->encoder().data();
+    connect(scanEnc,
+            SIGNAL(mode_changed(DplSource::Encoder::Mode)),
+            this,
+            SLOT(do_scanAxis_enc_mode_changed(DplSource::Encoder::Mode)));
+    connect(scanEnc,
+            SIGNAL(resolution_changed(float)),
+            this, SLOT(do_test()));
 }
 
 DevicePrivate::~DevicePrivate()
@@ -92,6 +101,17 @@ time_t DevicePrivate::get_relative_time()
         return 0;
     }
     return f.readAll().toInt();
+}
+
+void DevicePrivate::do_scanAxis_enc_mode_changed(DplSource::Encoder::Mode mode)
+{
+    qDebug("%s[%d]: ",__func__, __LINE__);
+    DplFpga::Fpga::instance()->set_encoder_x_mode(static_cast<DplFpga::Fpga::EncoderMode>(mode));
+}
+
+void DevicePrivate::do_test()
+{
+
 }
 
 }
