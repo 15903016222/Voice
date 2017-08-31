@@ -84,8 +84,8 @@ void InspectionMenu::do_scanItem_changed(int pos)
             scanEnc->set_mode(DplSource::Encoder::OFF);
         } else {
             qDebug("%s[%d]: ",__func__, __LINE__);
-            scanEnc->set_mode(DplSource::Encoder::QUAD);
             scanEnc->set_index(pos);
+            scanEnc->set_mode(DplSource::Encoder::QUAD);
         }
     } else {
         if (scanEnc->mode() == DplSource::Encoder::OFF) {
