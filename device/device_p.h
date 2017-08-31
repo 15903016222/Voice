@@ -57,8 +57,7 @@ protected:
     time_t get_relative_time();
 
 protected slots:
-    void do_scanAxis_enc_mode_changed(DplSource::Encoder::Mode mode);
-    void do_test();
+    void do_scanAxis_enc_mode_changed(int id, DplSource::Encoder::Mode mode);
 
 public:
     /* Group */

@@ -27,12 +27,9 @@ DevicePrivate::DevicePrivate(Device *parent) :
     DplSource::Scan *scan = DplSource::Scan::instance();
     DplSource::Encoder *scanEnc = scan->scan_axis()->encoder().data();
     connect(scanEnc,
-            SIGNAL(mode_changed(DplSource::Encoder::Mode)),
+            SIGNAL(mode_changed(int, DplSource::Encoder::Mode)),
             this,
-            SLOT(do_scanAxis_enc_mode_changed(DplSource::Encoder::Mode)));
-    connect(scanEnc,
-            SIGNAL(resolution_changed(float)),
-            this, SLOT(do_test()));
+            SLOT(do_scanAxis_enc_mode_changed(int, DplSource::Encoder::Mode)));
 }
 
 DevicePrivate::~DevicePrivate()
@@ -103,15 +100,14 @@ time_t DevicePrivate::get_relative_time()
     return f.readAll().toInt();
 }
 
-void DevicePrivate::do_scanAxis_enc_mode_changed(DplSource::Encoder::Mode mode)
+void DevicePrivate::do_scanAxis_enc_mode_changed(int id, DplSource::Encoder::Mode mode)
 {
-    qDebug("%s[%d]: ",__func__, __LINE__);
-    DplFpga::Fpga::instance()->set_encoder_x_mode(static_cast<DplFpga::Fpga::EncoderMode>(mode));
-}
-
-void DevicePrivate::do_test()
-{
-
+    qDebug("%s[%d]: id(%d) mode(%d)",__func__, __LINE__, id, mode);
+    if (id == 1) {
+        DplFpga::Fpga::instance()->set_encoder_x_mode(static_cast<DplFpga::Fpga::EncoderMode>(mode));
+    } else {
+        DplFpga::Fpga::instance()->set_encoder_y_mode(static_cast<DplFpga::Fpga::EncoderMode>(mode));
+    }
 }
 
 }
