@@ -10,6 +10,7 @@
 
 #include "device.h"
 #include <source/source.h>
+#include <source/scan.h>
 
 namespace DplDevice {
 
@@ -54,6 +55,10 @@ protected:
      * @return                  时间差
      */
     time_t get_relative_time();
+
+protected slots:
+    void do_scanAxis_enc_mode_changed(DplSource::Encoder::Mode mode);
+    void do_test();
 
 public:
     /* Group */

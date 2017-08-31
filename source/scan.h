@@ -21,49 +21,49 @@ public:
     static Scan *instance();
 
     enum Mode {
-        ONELINE,
-        RASTER,
+        ONELINE,    // 单线检测
+        RASTER,     // 光栅检测
     };
+
+    /**
+     * @brief mode  获取检测模式
+     * @return      检测模式
+     */
+    Mode mode() const;
+
+    /**
+     * @brief set_mode  设置检测模式
+     * @param mode      检测模式
+     */
+    void set_mode(Mode mode);
 
     /**
      * @brief scan_axis 获取扫查轴
      * @return          扫查轴
      */
-    Axis *scan_axis() const;
+    const AxisPointer &scan_axis() const;
 
     /**
      * @brief index_axis    获取步进轴
      * @return              步进轴
      */
-    Axis *index_axis() const;
+    const AxisPointer &index_axis() const;
 
     /**
      * @brief speed 获取扫查速度
      * @return      扫查速度(mm/s)
      */
-    float speed() const;
+    double speed() const;
 
+public slots:
     /**
      * @brief set_speed 设置扫查速度
      * @param val       扫查速度(mm/s)
      */
-    void set_speed(float val);
+    void set_speed(double val);
 
-
-    enum ResetMode {
-        ENCODER = 0x01,
-        DATA    = 0x02,
-        ALL = ENCODER | DATA
-    };
-    ResetMode reset_mode() const;
-
-    void set_reset_mode(ResetMode mode);
-
-    void reset();
-
-    void pause();
-
-    bool is_pause();
+signals:
+    void mode_changed(Mode mode);
 
 protected:
     explicit Scan(QObject *parent = 0);
@@ -72,8 +72,6 @@ protected:
 private:
     ScanPrivate *d_ptr;
 };
-
-typedef QSharedPointer<Scan> ScanPointer;
 
 }
 

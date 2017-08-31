@@ -3,6 +3,8 @@
 
 #include "../base_menu.h"
 
+#include <source/scan.h>
+
 namespace DplScanMenu {
 
 class InspectionMenu : public BaseMenu
@@ -10,16 +12,24 @@ class InspectionMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit InspectionMenu(QWidget *parent);
-    ~InspectionMenu();
 
-    void show();
-    void hide();
+protected slots:
+    void do_typeItem_changed(int pos);
+    void do_scanItem_changed(int pos);
+    void do_indexItem_changed(int pos);
+
+protected:
+    void update_scanItem();
+    void update_indexItem();
 
 private:
-    ComboMenuItem *m_scanItem;
     ComboMenuItem *m_typeItem;
+    ComboMenuItem *m_scanItem;
+    ComboMenuItem *m_indexItem;
     SpinMenuItem *m_maxScanSpeedItem;
     SpinMenuItem *m_maxScanSpeedRPMItem;
+
+    DplSource::Scan *m_scan;
 };
 
 }
