@@ -13,24 +13,22 @@ ScrollRulerWidget::ScrollRulerWidget(QWidget *parent) :
 
 }
 
-void ScrollRulerWidget::move_encoder_x(unsigned int step)
+
+void ScrollRulerWidget::move_to_value(double targetValue)
 {
 
-}
+    if(0)
+    {
+        /* 时间扫查 */
+//        m_moveTotalUnit += (msec / 1000.0);
+//        int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start)) + 0.5;    /* 要偏移的像素点*/
+//        m_unitNum = movePix / m_stepUnit;             /* 要偏移多少个10 * m_pixelPerUnit */
+//        m_offsetPix = movePix % m_stepUnit;           /* 画标尺时真正偏移的像素点 */
+    }
 
-
-void ScrollRulerWidget::move_unit(unsigned int msec)
-{
-    m_moveTotalUnit += (msec / 1000.0);
-    int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start)) + 0.5;    /* 要偏移的像素点*/
-    m_unitNum = movePix / m_stepUnit;             /* 要偏移多少个10 * m_pixelPerUnit */
-    m_offsetPix = movePix % m_stepUnit;           /* 画标尺时真正偏移的像素点 */
-
-//    qDebug() << "m_moveTotalUnit = " << m_moveTotalUnit
-//             << " movePix = " << movePix
-//             << " m_unitNum = " << m_unitNum
-//             << " m_offsetPix = " << m_offsetPix
-//             << " m_stepUnit = " << m_stepUnit;
+    if(targetValue < m_end) {
+        return;
+    }
 }
 
 void ScrollRulerWidget::paintEvent(QPaintEvent *e)

@@ -9,6 +9,24 @@
 #include <display/palette_color.h>
 #include <source/beams.h>
 
+#if 0
+static const double SCAN_START      = -100.0;    /* 扫查起点 */
+static const double SCAN_END        = 285.0;    /* 扫查终点 */
+static const double SCAN_RESOLUTION = 1.0;     /* 扫查分辨率 */
+#else
+static const double SCAN_START      = -100.0;    /* 扫查起点 */
+static const double SCAN_END        = 700.0;    /* 扫查终点 */
+static const double SCAN_RESOLUTION = 15.0;     /* 扫查分辨率 */
+
+//static const double SCAN_START      = 0.0;    /* 扫查起点 */
+//static const double SCAN_END        = 700.0;    /* 扫查终点 */
+//static const double SCAN_RESOLUTION = 11.0;     /* 扫查分辨率 */
+
+#endif
+static const double ENCODER_ORIGIN  = 11.0;     /* 编码其起始位置 */
+static const double MIN_PIX_COUNT   = 1.0;      /* 一条beam最小显示的像素 */
+static const double ENCODER_RESOLUTION = 48.0;  /* 编码器分辨率 */
+
 static const int STORE_BUFFER_SIZE = 256 * 1024 * 1024 ;    /* 256MB */
 
 class BscanScene : public QGraphicsScene
@@ -18,7 +36,7 @@ class BscanScene : public QGraphicsScene
 public:
 
     struct S_CommonProperties {
-        float   ratio;      /* 每个像素代表多少beam中的多少个点数据 */
+        float   ratio;      /* 每个像素代表beam中的多少个点数据 */
         double  pixCount;   /* 每条beam占多少像素 */
         int     maxIndex;   /* 最大的beam数，超出后滚动显示 */
         int     align;      /* 对齐数据（例子：width为20， pixCount为3， 则align为 width % pixCount = 2）*/
@@ -31,11 +49,6 @@ public:
         int beginShowIndex;             /* 从第beginShowIndex帧开始重画 */
     };
 
-    enum E_BscanDirection {
-        HORIZONTAL,
-        VERTICAL
-    };
-
 
     explicit BscanScene(const DplDisplay::PaletteColorPointer &palette, int group, QObject *parent = 0);
     ~BscanScene();
@@ -43,9 +56,6 @@ public:
     void set_beams(const DplSource::BeamsPointer &beamPointer);
     void reset();
     bool set_pix_per_beam(double ratio);
-
-    inline void set_direction(E_BscanDirection direction) { m_direction = direction; }
-    inline E_BscanDirection direction() { return m_direction; }
 
     bool set_current_beam(unsigned int index);
     inline void set_scroll_window(bool flag) { m_scrolling = flag; }
@@ -109,7 +119,7 @@ protected:
      * @param commonProperties
      * @param waveData
      */
-    void set_vertical_image_data(int beamsShowedCount,
+    virtual void set_vertical_image_data(int beamsShowedCount,
                         const BscanScene::S_CommonProperties &commonProperties,
                         const quint8 *waveData);
 
@@ -120,7 +130,7 @@ protected:
      * @param commonProperties
      * @param waveData
      */
-    void set_horizontal_image_data(int beamsShowedCount,
+    virtual void set_horizontal_image_data(int beamsShowedCount,
                         const BscanScene::S_CommonProperties &commonProperties,
                         const quint8 *waveData);
 
@@ -141,6 +151,10 @@ protected:
     void scroll_horizontal_image(const BscanScene::S_CommonProperties &commonProperties,
                                const quint8 *waveData);
 
+    /**
+     * @brief check_scroll_window   检查是否滚动窗口
+     * @param oldSize               改变前的size
+     */
     void check_scroll_window(const QSize &oldSize);
 
     QImage                          *m_image;
@@ -150,8 +164,6 @@ protected:
     double                          m_pixPerBeamRatio;      /* 针对编码器，一个beam占多少像素，
                                                              * 与扫查分辨率、扫查起始点有关，最小值为1. */
     int                             m_group;
-
-    E_BscanDirection                m_direction;
     QReadWriteLock                  m_rwLock;
 
     volatile    bool                m_scrolling;            /* 标志当前窗口是否卷动 */

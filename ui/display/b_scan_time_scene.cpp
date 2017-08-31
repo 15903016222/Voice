@@ -41,8 +41,6 @@ void BscanTimeScene::draw_vertical_beam()
 
     const quint8 *waveData = (quint8 *) m_beamsPointer->raw_data();
 
-    qDebug("[%s]", __FUNCTION__);
-
     if(m_scrolling) {
         /* 整个显示区域画满beam，开始滚动显示后续的beam */
         scroll_vertical_image(commonProperties, waveData);
@@ -51,14 +49,13 @@ void BscanTimeScene::draw_vertical_beam()
     }
 
     ++m_beamsShowedCount;
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "leave.";
-
 }
 
 
 void BscanTimeScene::redraw_horizontal_beam()
 {
+    qDebug() << "[" << __FUNCTION__ << "]" << "enter .";
+
     if(!((m_beamsShowedCount > 0)
          && (!m_beamsPointer.isNull())
         && (m_image != NULL))) {
@@ -111,13 +108,13 @@ void BscanTimeScene::redraw_horizontal_beam()
     }
 
     m_beamsShowedCount = tmpBeamsShowedCount;
+
+    qDebug() << "[" << __FUNCTION__ << "]" << "leave .";
 }
 
 
 void BscanTimeScene::redraw_vertical_beam()
 {
-    qDebug("[%s]", __FUNCTION__);
-
     if(!((m_beamsShowedCount > 0)
          && (!m_beamsPointer.isNull())
         && (m_image != NULL))) {
@@ -170,4 +167,5 @@ void BscanTimeScene::redraw_vertical_beam()
     }
 
     m_beamsShowedCount = tmpBeamsShowedCount;
+
 }

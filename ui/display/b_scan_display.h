@@ -27,26 +27,24 @@ public:
     };
 
 public:
-    explicit BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
+    explicit BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent = 0);
     ~BscanDisplay();
 
     bool set_current_beam(unsigned int index);
     virtual bool set_scan_type(E_SCAN_TYPE type);
 
 signals:
-    void update_ruler();
+    void update_ruler(double value);
     void update_label(const QString &time);
 
 protected slots:
 
     void do_data_event(const DplSource::BeamsPointer &beams);
-    void do_update_ruler();
-
-    void update_scan_type_ruler(const QSize &size);
-    virtual void update_scan_type_ruler();
     void update_sound_path_ruler();
-
     void do_update_label(const QString &time);
+    void do_update_ruler(double value);
+
+    void do_view_size_changed(const QSize &size);
 
 protected:
     Ui::BscanDisplay *ui;
@@ -67,8 +65,10 @@ protected:
 
     double           m_currentTimeCount;    /* 秒 */
     QLabel           *m_timeShowLabel;
+    Qt::Orientation  m_orientation;
 
     virtual void init_ruler();
+    void update_scan_type_ruler(const QSize &size);
 
 };
 

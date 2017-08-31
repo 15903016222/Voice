@@ -13,8 +13,7 @@ public:
 
     explicit ScrollRulerWidget(QWidget *parent = 0);
 
-    void move_unit(unsigned int msec);
-    void move_encoder_x(unsigned int step);
+    void move_to_value(double targetValue);
 
 protected:
     virtual void paintEvent(QPaintEvent *e);

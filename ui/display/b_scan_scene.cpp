@@ -10,7 +10,6 @@ BscanScene::BscanScene(const DplDisplay::PaletteColorPointer &palette, int group
     m_image(NULL),
     m_palette(palette),
     m_pixPerBeamRatio(1.0),
-    m_direction(VERTICAL),
     m_beamsShowedCount(0),
     m_size(QSize(width(), height())),
     m_group(group),
@@ -50,14 +49,10 @@ void BscanScene::set_size(const QSize &size)
 
     m_image = new QImage(m_size, QImage::Format_Indexed8);
     m_image->setColorTable(m_palette->colors());
-    m_image->fill(Qt::white);
+    m_image->fill(Qt::red);
 
-    setSceneRect(-m_size.width()/2, -m_size.height()/2,
-                                              m_size.width(), m_size.height());
     /* 根据最新的size以及当前显示的beam数，
      * 重新计算是否scroll */
-
-    qDebug("[%s]", __FUNCTION__);
 
     if(m_size.width() != 0
             && m_size.height() != 0
@@ -76,18 +71,11 @@ void BscanScene::set_beams(const DplSource::BeamsPointer &beamPointer)
 
     m_beamsPointer = beamPointer;
 
-    if(m_beamsPointer.isNull()) {
-        qDebug() << "[" << __FUNCTION__ << "]" << "m_beamsPointer is NULL";
-        return;
-    }
-
     if(m_image == NULL) {
 
         qDebug() << "[" << __FUNCTION__ << "]" << "m_image is NULL.";
         return;
     }
-
-    qDebug("[%s]", __FUNCTION__);
 
     draw_beams();
 
@@ -141,21 +129,13 @@ void BscanScene::drawBackground(QPainter *painter, const QRectF &rect)
 
 void BscanScene::draw_beams()
 {
-    if(m_direction == VERTICAL) {
-        draw_vertical_beam();
-    } else {
-        draw_horizontal_beam();
-    }
+    draw_vertical_beam();
 }
 
 
 void BscanScene::reset_show()
 {
-    if(m_direction == VERTICAL) {
-        redraw_vertical_beam();
-    } else {
-        redraw_horizontal_beam();
-    }
+   redraw_vertical_beam();
 }
 
 void BscanScene::calculate_common_properties(BscanScene::S_CommonProperties &commonProperties)
@@ -163,17 +143,11 @@ void BscanScene::calculate_common_properties(BscanScene::S_CommonProperties &com
     int height;
     int width;
 
-    if(m_direction == HORIZONTAL) {
-        height =  m_size.width();
-        width  = m_size.height();
-    } else {
-        height =  m_size.height();
-        width  = m_size.width();
-    }
+    height =  m_size.height();
+    width  = m_size.width();
 
-
-    commonProperties.ratio      =  m_beamsPointer->point_qty() / (double)height; /* 一个像素点代表多少个point */
-    commonProperties.pixCount   = m_pixPerBeamRatio;//+ 0.5;
+    commonProperties.ratio      = m_beamsPointer->point_qty() / (double)height; /* 一个像素点代表多少个point */
+    commonProperties.pixCount   = m_pixPerBeamRatio;
     commonProperties.maxIndex   = width / (int)(m_pixPerBeamRatio + 0.5);  /* 最大的beam数 */
     commonProperties.align      = width % (int)(m_pixPerBeamRatio + 0.5);
 
@@ -198,11 +172,6 @@ void BscanScene::calculate_redraw_properties(BscanScene::S_CommonProperties &com
     }
 
     redrawProperites.beginShowIndex = redrawProperites.currentFrameIndex - redrawProperites.redrawCount + 1;
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " m_beamsShowedCount = " << m_beamsShowedCount
-             << " commonProperties.maxIndex = " << commonProperties.maxIndex
-             << " redrawCount = " << redrawProperites.redrawCount
-             << " beginShowIndex = " << redrawProperites.beginShowIndex;
 }
 
 
@@ -268,12 +237,8 @@ void BscanScene::set_horizontal_image_data(int beamsShowedCount, const BscanScen
 
 void BscanScene::scroll_vertical_image(const BscanScene::S_CommonProperties &commonProperties, const quint8 *waveData)
 {
-    qDebug() << "[" << __FUNCTION__ << "] == " << commonProperties.pixCount;
-
     QImage tmp = m_image->copy(commonProperties.pixCount, 0, m_image->width(), m_image->height());
     m_image->swap(tmp);
-
-    qDebug() << "[" << __FUNCTION__ << "] -- " << commonProperties.pixCount;
 
     for(int i = 0; i < m_size.height(); ++i) {
         quint8 *line = (quint8*) m_image->scanLine(i);
@@ -281,8 +246,6 @@ void BscanScene::scroll_vertical_image(const BscanScene::S_CommonProperties &com
             line[m_image->width() - j - 1] = waveData[(int)(i * commonProperties.ratio)];
         }
     }
-
-    qDebug() << "[" << __FUNCTION__ << "] *** " << commonProperties.pixCount;
 }
 
 
@@ -301,35 +264,18 @@ void BscanScene::scroll_horizontal_image(const BscanScene::S_CommonProperties &c
 
 void BscanScene::check_scroll_window(const QSize &oldSize)
 {
-    int newWidth;
-
-    if(m_direction == HORIZONTAL) {
-        newWidth  = m_size.height();
-    } else {
-        newWidth  = m_size.width();
-    }
+    int newWidth = m_size.width();
+    int oldWidth = oldSize.width();
 
     int newMaxIndex   = newWidth / (int)(m_pixPerBeamRatio + 0.5);  /* 最大的beam数 */
 
-    int oldWidth;
-    if(m_direction == HORIZONTAL) {
-        oldWidth  = oldSize.height();
-    } else {
-        oldWidth  = oldSize.width();
-    }
-
     /* size变小,同时已显示数超过最新size的最大显示数 */
     /* size变大，同时当前已为滚动状态且 */
-    qDebug() << " oldWidth = " << oldWidth
-             << " newWidth = " << newWidth
-             << " m_beamShowedCount = " << m_beamsShowedCount
-             << " newMaxIndex = " << newMaxIndex
-             << " m_scroll = " << m_scrolling ;
 
-    if((oldWidth > newWidth && m_beamsShowedCount > newMaxIndex)
-            || (oldWidth < newWidth && m_scrolling && m_beamsShowedCount > newMaxIndex)) {
+    if((oldWidth >= newWidth && m_beamsShowedCount > newMaxIndex)
+            || (oldWidth <= newWidth && m_scrolling && m_beamsShowedCount > newMaxIndex)) {
         /* 滚动 */
-        set_scroll_window(true);
+        m_scrolling = true;
     }
 }
 
