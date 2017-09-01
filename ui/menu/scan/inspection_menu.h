@@ -18,9 +18,8 @@ protected slots:
     void do_scanItem_changed(int pos);
     void do_indexItem_changed(int pos);
 
-protected:
-    void update_scanItem();
-    void update_indexItem();
+    void do_scanAxis_driving_changed(DplSource::Axis::Driving driving);
+    void do_indexAxis_driving_changed(DplSource::Axis::Driving driving);
 
 private:
     ComboMenuItem *m_typeItem;
@@ -30,6 +29,10 @@ private:
     SpinMenuItem *m_maxScanSpeedRPMItem;
 
     DplSource::Scan *m_scan;
+    DplSource::AxisPointer m_scanAxis;
+    DplSource::AxisPointer m_indexAxis;
+    DplSource::EncoderPointer m_encX;
+    DplSource::EncoderPointer m_encY;
 };
 
 }
