@@ -35,6 +35,9 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     /* Display menu item */
     connect(m_displayItem, SIGNAL(clicked()),
             this, SLOT(do_displayItem_clicked()));
+    connect(Mcu::instance(), SIGNAL(key_event(Mcu::KeyType)),
+            this, SLOT(do_mcu_key_event(Mcu::KeyType)),
+            Qt::DirectConnection);
 
     /* C-Scan Source menu item */
     m_cSourceItem->set(cScanSourceList);
@@ -57,6 +60,13 @@ void SelectionMenu::do_displayItem_clicked()
 {
     DisplaySelectDialog dialog;
     dialog.exec();
+}
+
+void SelectionMenu::do_mcu_key_event(Mcu::KeyType type)
+{
+    if (type == Mcu::KEY_DISPLAY) {
+        do_displayItem_clicked();
+    }
 }
 
 }

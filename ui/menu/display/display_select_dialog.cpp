@@ -8,7 +8,7 @@
 DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DisplaySelectDialog),
-    m_radioBtnGrp(new QButtonGroup)
+    m_radioBtnGrp(new QButtonGroup(this))
 {
     ui->setupUi(this);
 
