@@ -46,6 +46,7 @@ InspectionMenu::InspectionMenu(QWidget *parent) :
 
     /* Max Scan Speed menu item */
     m_maxScanSpeedItem->set(0, 1000, 2);
+    m_maxScanSpeedItem->set_value(m_scan->speed());
     connect(m_maxScanSpeedItem, SIGNAL(value_changed(double)),
             m_scan, SLOT(set_speed(double)));
 
