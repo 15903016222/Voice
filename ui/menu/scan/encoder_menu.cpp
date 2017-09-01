@@ -48,6 +48,8 @@ EncoderMenu::EncoderMenu(QWidget *parent) :
     m_originItem->set(0, 1000, 2);
     connect(m_originItem, SIGNAL(value_changed(double)),
             this, SLOT(do_originItem_changed(double)));
+
+    do_encoderItem_changed(0);
 }
 
 EncoderMenu::~EncoderMenu()
