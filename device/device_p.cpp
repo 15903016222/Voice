@@ -110,13 +110,17 @@ void DevicePrivate::do_encX_enabled_changed(bool enable)
 {
     if (!enable) {
         DplFpga::Fpga::instance()->set_encoder_x_mode(DplFpga::Fpga::OFF);
+    } else {
+        do_encX_mode_changed(DplSource::Scan::instance()->encoder_x()->mode());
     }
-
-    do_encX_mode_changed(DplSource::Scan::instance()->encoder_x()->mode());
 }
 
 void DevicePrivate::do_encX_mode_changed(DplSource::Encoder::Mode mode)
 {
+    if(!DplSource::Scan::instance()->encoder_x()->is_enabled()) {
+        return;
+    }
+
     switch (mode) {
     case DplSource::Encoder::UP:
         DplFpga::Fpga::instance()->set_encoder_x_mode(DplFpga::Fpga::UP);
@@ -136,13 +140,17 @@ void DevicePrivate::do_encY_enabled_changed(bool enable)
 {
     if (!enable) {
         DplFpga::Fpga::instance()->set_encoder_y_mode(DplFpga::Fpga::OFF);
+    } else {
+        do_encY_mode_changed(DplSource::Scan::instance()->encoder_y()->mode());
     }
-
-    do_encY_mode_changed(DplSource::Scan::instance()->encoder_y()->mode());
 }
 
 void DevicePrivate::do_encY_mode_changed(DplSource::Encoder::Mode mode)
 {
+    if (! DplSource::Scan::instance()->encoder_y()->is_enabled()) {
+        return;
+    }
+
     switch (mode) {
     case DplSource::Encoder::UP:
         DplFpga::Fpga::instance()->set_encoder_y_mode(DplFpga::Fpga::UP);
