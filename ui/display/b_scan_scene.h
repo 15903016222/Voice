@@ -16,7 +16,9 @@ static const double SCAN_RESOLUTION = 1.0;     /* 扫查分辨率 */
 #else
 static const double SCAN_START      = -100.0;    /* 扫查起点 */
 static const double SCAN_END        = 700.0;    /* 扫查终点 */
-static const double SCAN_RESOLUTION = 15.0;     /* 扫查分辨率 */
+
+static const double SCAN_RESOLUTION = 1.0;     /* 扫查分辨率 */
+//static const double SCAN_RESOLUTION = 15.0;     /* 扫查分辨率 */
 
 //static const double SCAN_START      = 0.0;    /* 扫查起点 */
 //static const double SCAN_END        = 700.0;    /* 扫查终点 */

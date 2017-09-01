@@ -16,10 +16,9 @@ struct S_WAVE_INFO{
     explicit BscanEncoderScene(const DplDisplay::PaletteColorPointer &palette, int group, QObject *parent = 0);
 
 protected:
-    virtual void draw_horizontal_beam();
+
     virtual void draw_vertical_beam();
 
-    virtual void redraw_horizontal_beam();
     virtual void redraw_vertical_beam();
 
     /**
@@ -45,16 +44,20 @@ protected:
      */
     void set_scroll_vertical_image_data(const BscanScene::S_CommonProperties &commonProperties);
 
-    /**
-     * @brief set_vertical_image_data 设置编码器B扫的水平显示image数据
-     * @param commonProperties
-     */
-    void set_horizontal_image_data(const BscanScene::S_CommonProperties &commonProperties);
+    void set_vertical_image_data_tmp(const BscanScene::S_CommonProperties &commonProperties);
+    void set_vertical_beam_data_tmp(double x,
+                        const BscanScene::S_CommonProperties &commonProperties,
+                        const quint8 *waveData);
+
 
 private:
-    QVector<S_WAVE_INFO>    m_waveVect;
-    double                  m_offsetX;
-    double                  m_currentX;
+
+    double m_offsetX;       /* 相对扫查起始点的偏移值 */
+    double m_currentX;      /* 当前显示的x */
+    double m_maxShowedX;    /* 当前最大已显示的x */
+
+    bool   m_trueData;
+    double m_moveOffsetX;   /* m_currentX与最新X差值 */
 
     bool is_equal(double value1, double value2);
 

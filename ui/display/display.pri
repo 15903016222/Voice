@@ -20,7 +20,8 @@ SOURCES += \
     $$PWD/s_scan_image.cpp \
     $$PWD/scroll_ruler_widget.cpp \
     $$PWD/b_scan_time_scene.cpp \
-    $$PWD/b_scan_encoder_scene.cpp
+    $$PWD/b_scan_encoder_scene.cpp \
+    $$PWD/Tracer.cpp
 
 
 HEADERS += \
@@ -45,7 +46,8 @@ HEADERS += \
     $$PWD/s_scan_image.h \
     $$PWD/scroll_ruler_widget.h \
     $$PWD/b_scan_time_scene.h \
-    $$PWD/b_scan_encoder_scene.h
+    $$PWD/b_scan_encoder_scene.h \
+    $$PWD/Tracer.h
 
 
 FORMS += \

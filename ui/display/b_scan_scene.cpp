@@ -5,6 +5,7 @@
 #include <QWriteLocker>
 
 #include <device/device.h>
+#include "Tracer.h"
 
 BscanScene::BscanScene(const DplDisplay::PaletteColorPointer &palette, int group, QObject *parent) : QGraphicsScene(parent),
     m_image(NULL),
@@ -32,6 +33,8 @@ BscanScene::~BscanScene()
 
 void BscanScene::set_size(const QSize &size)
 {
+    DEBUG_INIT("BscanScene", __FUNCTION__);
+
     QWriteLocker lock(&m_rwLock);
 
     if((size.height() == m_size.height())
@@ -39,6 +42,11 @@ void BscanScene::set_size(const QSize &size)
             && (m_image != NULL))  {
         return;
     }
+
+    qDebug() << "[BscanScene::set_size] m_size w = " << m_size.width()
+             << " h = " << m_size.height()
+             << " new w = " << size.width()
+             << " h = " << size.height();
 
     m_size = size;
 
@@ -49,7 +57,10 @@ void BscanScene::set_size(const QSize &size)
 
     m_image = new QImage(m_size, QImage::Format_Indexed8);
     m_image->setColorTable(m_palette->colors());
-    m_image->fill(Qt::red);
+    m_image->fill(Qt::white);
+
+    setSceneRect(-size.width()/2, -size.height()/2 + 1,
+                                       size.width(), size.height());
 
     /* 根据最新的size以及当前显示的beam数，
      * 重新计算是否scroll */
@@ -61,12 +72,15 @@ void BscanScene::set_size(const QSize &size)
         check_scroll_window(size);
 
         reset_show();
+
     }
 }
 
 
 void BscanScene::set_beams(const DplSource::BeamsPointer &beamPointer)
 {
+    DEBUG_INIT("BscanScene", __FUNCTION__);
+
     QWriteLocker lock(&m_rwLock);
 
     m_beamsPointer = beamPointer;

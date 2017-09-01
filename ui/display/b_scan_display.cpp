@@ -13,7 +13,7 @@
 #include "b_scan_encoder_scene.h"
 #include "b_scan_time_scene.h"
 #include "fpga/fpga.h"
-
+#include "Tracer.h"
 
 static const int SECOND         = 1000;
 
@@ -81,6 +81,8 @@ bool BscanDisplay::set_current_beam(unsigned int index)
 
 bool BscanDisplay::set_scan_type(BscanDisplay::E_SCAN_TYPE type)
 {
+    DEBUG_INIT("BscanDisplay", __FUNCTION__);
+
     if(m_type == type) {
         return true;
     }
@@ -127,6 +129,9 @@ void BscanDisplay::init_ruler()
 
 void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
+
+    DEBUG_INIT("BscanDisplay", __FUNCTION__);
+
     if(m_bscanScene->width() == 0
             || m_bscanScene->height() == 0) {
         qDebug("[%s] w/h is 0.", __FUNCTION__);
@@ -187,6 +192,8 @@ void BscanDisplay::do_update_ruler(double value)
 
 void BscanDisplay::update_scan_type_ruler(const QSize &size)
 {
+    DEBUG_INIT("BscanDisplay", __FUNCTION__);
+
     if(m_scanTypeRuler == NULL) {
         return;
     }
@@ -241,6 +248,8 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
 
 void BscanDisplay::update_sound_path_ruler()
 {
+    DEBUG_INIT("BscanDisplay", __FUNCTION__);
+
     if(m_soundPathRuler == NULL) {
         return;
     }
@@ -288,16 +297,17 @@ void BscanDisplay::do_update_label(const QString &time)
 
 void BscanDisplay::do_view_size_changed(const QSize &size)
 {
+    DEBUG_INIT("BscanDisplay", __FUNCTION__);
     if (m_orientation == Qt::Horizontal) {
 
-        m_bscanScene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
-                                   size.height(), size.width());
+//        m_bscanScene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
+//                                   size.height(), size.width());
         m_bscanScene->set_size(QSize(size.height(), size.width()));
 
     } else {
 
-        m_bscanScene->setSceneRect(-size.width()/2, -size.height()/2,
-                                   size.width(), size.height());
+//        m_bscanScene->setSceneRect(-size.width()/2, -size.height()/2,
+//                                   size.width(), size.height());
         m_bscanScene->set_size(QSize(size.width(), size.height()));
     }
 

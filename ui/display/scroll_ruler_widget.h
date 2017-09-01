@@ -25,6 +25,10 @@ private:
     int     m_unitNum;
     int     m_offsetPix;
     double  m_moveTotalUnit;
+
+    double  m_offsetValue;
+
+    void myPaintEvent();
 };
 
 
