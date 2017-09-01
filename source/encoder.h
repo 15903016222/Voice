@@ -21,25 +21,25 @@ class SOURCESHARED_EXPORT Encoder : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(Encoder)
 public:
-    explicit Encoder(int id = 1, QObject *parent = 0);
+    explicit Encoder(QObject *parent = 0);
     ~Encoder();
-
-    /**
-     * @brief index 获取编码器序号(1,2)
-     * @return      序号
-     */
-    int index() const;
-
-    /**
-     * @brief set_index 设置编码器序号(1,2)
-     * @param i         序号
-     */
-    void set_index(int i);
 
     enum Polarity {
         NORMAL,     // 正常
         INVERSE     // 反向
     };
+
+    /**
+     * @brief is_enabled    获取编码器使能状态
+     * @return              状态
+     */
+    bool is_enabled() const;
+
+    /**
+     * @brief set_enabled   设置编码器使用状态
+     * @param enable        状态
+     */
+    void set_enabled(bool enable);
 
     /**
      * @brief polarity  获取极性
@@ -54,10 +54,9 @@ public:
     void set_polarity(Polarity val);
 
     enum Mode {
-        OFF     = 0b000,
-        DOWN    = 0b001,
-        UP      = 0b010,
-        QUAD    = 0b011
+        DOWN,
+        UP,
+        QUAD
     };
 
     /**
@@ -97,7 +96,8 @@ public:
     void set_origin(float val);
 
 signals:
-    void mode_changed(int id, DplSource::Encoder::Mode mode);
+    void enabled_changed(bool enable);
+    void mode_changed(DplSource::Encoder::Mode mode);
     void resolution_changed(float val);
 
 private:
