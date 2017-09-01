@@ -9,6 +9,7 @@
 #define __DISPLAY_SELECTION_MENU_H__
 
 #include "../base_menu.h"
+#include <mcu/mcu.h>
 
 namespace DplDisplayMenu {
 
@@ -24,6 +25,7 @@ public:
 
 protected slots:
     void do_displayItem_clicked();
+    void do_mcu_key_event(Mcu::KeyType type);
 
 private:
     LabelMenuItem *m_displayItem;

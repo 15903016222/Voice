@@ -50,6 +50,18 @@ public:
     const AxisPointer &index_axis() const;
 
     /**
+     * @brief encoder_x 获取编码器X
+     * @return          编码器
+     */
+    const EncoderPointer &encoder_x() const;
+
+    /**
+     * @brief encoder_y 获取编码器Y
+     * @return          编码器
+     */
+    const EncoderPointer &encoder_y() const;
+
+    /**
      * @brief speed 获取扫查速度
      * @return      扫查速度(mm/s)
      */
@@ -63,7 +75,7 @@ public slots:
     void set_speed(double val);
 
 signals:
-    void mode_changed(Mode mode);
+    void mode_changed(DplSource::Scan::Mode mode);
 
 protected:
     explicit Scan(QObject *parent = 0);

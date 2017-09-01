@@ -25,14 +25,19 @@ DevicePrivate::DevicePrivate(Device *parent) :
     m_cert(CERT_FILE, PUBPEM_FILE)
 {
     DplSource::Scan *scan = DplSource::Scan::instance();
-    DplSource::Encoder *scanEnc = scan->scan_axis()->encoder().data();
-    connect(scanEnc,
-            SIGNAL(mode_changed(DplSource::Encoder::Mode)),
-            this,
-            SLOT(do_scanAxis_enc_mode_changed(DplSource::Encoder::Mode)));
-    connect(scanEnc,
-            SIGNAL(resolution_changed(float)),
-            this, SLOT(do_test()));
+    DplSource::Encoder *encX = scan->encoder_x().data();
+    DplSource::Encoder *encY = scan->encoder_y().data();
+
+    connect(encX, SIGNAL(enabled_changed(bool)),
+            this, SLOT(do_encX_enabled_changed(bool)));
+    connect(encX, SIGNAL(mode_changed(DplSource::Encoder::Mode)),
+            this, SLOT(do_encX_mode_changed(DplSource::Encoder::Mode)));
+    connect(encX, SIGNAL(polarity_changed(DplSource::Encoder::Polarity)),
+            this, SLOT(do_encX_polarity_changed(DplSource::Encoder::Polarity)));
+    connect(encY, SIGNAL(enabled_changed(bool)),
+            this, SLOT(do_encY_enabled_changed(bool)));
+    connect(encY, SIGNAL(mode_changed(DplSource::Encoder::Mode)),
+            this, SLOT(do_encY_mode_changed(DplSource::Encoder::Mode)));
 }
 
 DevicePrivate::~DevicePrivate()
@@ -103,15 +108,74 @@ time_t DevicePrivate::get_relative_time()
     return f.readAll().toInt();
 }
 
-void DevicePrivate::do_scanAxis_enc_mode_changed(DplSource::Encoder::Mode mode)
+void DevicePrivate::do_encX_enabled_changed(bool enable)
 {
-    qDebug("%s[%d]: ",__func__, __LINE__);
-    DplFpga::Fpga::instance()->set_encoder_x_mode(static_cast<DplFpga::Fpga::EncoderMode>(mode));
+    if (!enable) {
+        DplFpga::Fpga::instance()->set_encoder_x_mode(DplFpga::Fpga::OFF);
+    } else {
+        do_encX_mode_changed(DplSource::Scan::instance()->encoder_x()->mode());
+    }
 }
 
-void DevicePrivate::do_test()
+void DevicePrivate::do_encX_mode_changed(DplSource::Encoder::Mode mode)
 {
+    if(!DplSource::Scan::instance()->encoder_x()->is_enabled()) {
+        return;
+    }
 
+    switch (mode) {
+    case DplSource::Encoder::UP:
+        DplFpga::Fpga::instance()->set_encoder_x_mode(DplFpga::Fpga::UP);
+        break;
+    case DplSource::Encoder::DOWN:
+        DplFpga::Fpga::instance()->set_encoder_x_mode(DplFpga::Fpga::DOWN);
+        break;
+    case DplSource::Encoder::QUAD:
+        DplFpga::Fpga::instance()->set_encoder_x_mode(DplFpga::Fpga::QUAD);
+        break;
+    default:
+        break;
+    }
+}
+
+void DevicePrivate::do_encX_polarity_changed(DplSource::Encoder::Polarity polarity)
+{
+    DplFpga::Fpga::instance()->set_encoder_x_polarity(static_cast<DplFpga::Fpga::EncoderPolarity>(polarity));
+}
+
+void DevicePrivate::do_encY_enabled_changed(bool enable)
+{
+    if (!enable) {
+        DplFpga::Fpga::instance()->set_encoder_y_mode(DplFpga::Fpga::OFF);
+    } else {
+        do_encY_mode_changed(DplSource::Scan::instance()->encoder_y()->mode());
+    }
+}
+
+void DevicePrivate::do_encY_mode_changed(DplSource::Encoder::Mode mode)
+{
+    if (! DplSource::Scan::instance()->encoder_y()->is_enabled()) {
+        return;
+    }
+
+    switch (mode) {
+    case DplSource::Encoder::UP:
+        DplFpga::Fpga::instance()->set_encoder_y_mode(DplFpga::Fpga::UP);
+        break;
+    case DplSource::Encoder::DOWN:
+        DplFpga::Fpga::instance()->set_encoder_y_mode(DplFpga::Fpga::DOWN);
+        break;
+    case DplSource::Encoder::QUAD:
+        DplFpga::Fpga::instance()->set_encoder_y_mode(DplFpga::Fpga::QUAD);
+        break;
+    default:
+        break;
+    }
+}
+
+void DevicePrivate::do_encY_polarity_changed(DplSource::Encoder::Polarity polarity)
+{
+    DplFpga::Fpga::instance()->set_encoder_y_polarity(static_cast<DplFpga::Fpga::EncoderPolarity>(polarity));
 }
 
 }

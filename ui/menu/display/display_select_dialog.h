@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QButtonGroup>
 #include <QSharedPointer>
+#include <mcu/mcu.h>
 
 namespace Ui {
 class DisplaySelectDialog;
@@ -23,7 +24,6 @@ private slots:
     void update_widget();
 
     void on_buttonBox_accepted();
-
 
 private:
     Ui::DisplaySelectDialog *ui;
