@@ -34,7 +34,7 @@ EncoderMenu::EncoderMenu(QWidget *parent) :
             this, SLOT(do_encoderTypeItem_changed(int)));
 
     /* Resolution menu item */
-    m_resolutionItem->set(0.01, 10000, 2);
+    m_resolutionItem->set(0.01, 10000, 2, 0.01);
     connect(m_resolutionItem, SIGNAL(value_changed(double)),
             this, SLOT(do_resolutionItem_changed(double)));
 
@@ -45,7 +45,7 @@ EncoderMenu::EncoderMenu(QWidget *parent) :
             this, SLOT(do_polarityItem_changed(int)));
 
     /* Origin Menu Item */
-    m_originItem->set(0, 1000, 2);
+    m_originItem->set(0, 1000, 2, 0.01);
     connect(m_originItem, SIGNAL(value_changed(double)),
             this, SLOT(do_originItem_changed(double)));
 
