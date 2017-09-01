@@ -32,6 +32,8 @@ DevicePrivate::DevicePrivate(Device *parent) :
             this, SLOT(do_encX_enabled_changed(bool)));
     connect(encX, SIGNAL(mode_changed(DplSource::Encoder::Mode)),
             this, SLOT(do_encX_mode_changed(DplSource::Encoder::Mode)));
+    connect(encX, SIGNAL(polarity_changed(DplSource::Encoder::Polarity)),
+            this, SLOT(do_encX_polarity_changed(DplSource::Encoder::Polarity)));
     connect(encY, SIGNAL(enabled_changed(bool)),
             this, SLOT(do_encY_enabled_changed(bool)));
     connect(encY, SIGNAL(mode_changed(DplSource::Encoder::Mode)),
@@ -136,6 +138,11 @@ void DevicePrivate::do_encX_mode_changed(DplSource::Encoder::Mode mode)
     }
 }
 
+void DevicePrivate::do_encX_polarity_changed(DplSource::Encoder::Polarity polarity)
+{
+    DplFpga::Fpga::instance()->set_encoder_x_polarity(static_cast<DplFpga::Fpga::EncoderPolarity>(polarity));
+}
+
 void DevicePrivate::do_encY_enabled_changed(bool enable)
 {
     if (!enable) {
@@ -164,6 +171,11 @@ void DevicePrivate::do_encY_mode_changed(DplSource::Encoder::Mode mode)
     default:
         break;
     }
+}
+
+void DevicePrivate::do_encY_polarity_changed(DplSource::Encoder::Polarity polarity)
+{
+    DplFpga::Fpga::instance()->set_encoder_y_polarity(static_cast<DplFpga::Fpga::EncoderPolarity>(polarity));
 }
 
 }
