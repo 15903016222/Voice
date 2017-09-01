@@ -25,8 +25,6 @@ private slots:
 
     void on_buttonBox_accepted();
 
-    void do_mcu_key_event(Mcu::KeyType type);
-
 private:
     Ui::DisplaySelectDialog *ui;
     QButtonGroup *m_radioBtnGrp;
