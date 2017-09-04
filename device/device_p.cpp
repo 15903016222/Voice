@@ -89,14 +89,14 @@ bool DevicePrivate::is_valid() const
     return flag;
 }
 
-QByteArray DevicePrivate::get_version()
+QString DevicePrivate::get_version()
 {
     QFile file("/etc/version");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return "";
     }
 
-    return file.readAll();
+    return QString(file.readAll()).remove('\n');
 }
 
 time_t DevicePrivate::get_relative_time()
