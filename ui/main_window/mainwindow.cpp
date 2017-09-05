@@ -36,8 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Mcu */
     Mcu *mcu = Mcu::instance();
-    connect(mcu, SIGNAL(key_event(Mcu::KeyType)), this, SLOT(do_key_event(Mcu::KeyType)));
-    connect(mcu, SIGNAL(rotary_event(Mcu::RotaryType)), this, SLOT(do_rotary_event(Mcu::RotaryType)));
+    connect(mcu, SIGNAL(key_event(Mcu::KeyType)),
+            this, SLOT(do_key_event(Mcu::KeyType)));
+    connect(mcu, SIGNAL(rotary_event(Mcu::RotaryType)),
+            this, SLOT(do_rotary_event(Mcu::RotaryType)));
 
     /* Main Menu */
     m_mainMenu = new MainMenu(this);
