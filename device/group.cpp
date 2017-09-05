@@ -126,11 +126,11 @@ void Group::deploy_beams() const
 
     DplFpga::Fpga::instance();
 //    m_fpgaGroup->set_idel_time(304750);
-    m_fpgaGroup->set_idel_time(4992250);
+//    m_fpgaGroup->set_idel_time(4992250);
     m_fpgaGroup->reflesh();
 
     qDebug("%s[%d]: beam qty: %d",__func__, __LINE__, m_focallawer->beam_qty());
-    fpgaBeam.set_total_beam_qty( Device::instance()->total_beam_qty() - 1 );
+    fpgaBeam.set_total_beam_qty( Device::instance()->total_beam_qty() );
     fpgaBeam.set_group_id(index());
     fpgaBeam.set_gain_compensation(0);
 
