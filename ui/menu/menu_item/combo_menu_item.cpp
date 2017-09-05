@@ -19,6 +19,7 @@ ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
     ui->setupUi(this);
 
     ui->nameLabel->installEventFilter(this);
+    ui->label->installEventFilter(this);
 
     ui->comboBox->hide();
     ui->label->show();
@@ -59,11 +60,7 @@ void ComboMenuItem::add_items(const QStringList &texts)
 bool ComboMenuItem::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::MouseButtonRelease) {
-        if (ui->comboBox->count() == 2) {
-            ui->comboBox->setCurrentIndex((ui->comboBox->currentIndex()+1)%2);
-        } else {
         ui->comboBox->showPopup();
-        }
         return true;
     } else if (e->type() == QEvent::Hide) {
         ui->comboBox->hidePopup();
