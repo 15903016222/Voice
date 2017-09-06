@@ -21,12 +21,13 @@ namespace DplDevice {
 /* Group */
 Group::Group(int index, QObject *parent):
     QObject(parent),
-    m_sample(new DplUt::Sample(DplFpga::Fpga::SAMPLE_PRECISION, parent)),
-    m_gateA(new DplGate::Gate(DplGate::Gate::A, parent)),
-    m_gateB(new DplGate::Gate(DplGate::Gate::B, parent)),
-    m_gateI(new DplGate::Gate(DplGate::Gate::I, parent)),
+    m_sample(new DplUt::Sample(DplFpga::Fpga::SAMPLE_PRECISION)),
+    m_pulser(new DplUt::Pulser()),
+    m_gateA(new DplGate::Gate(DplGate::Gate::A)),
+    m_gateB(new DplGate::Gate(DplGate::Gate::B)),
+    m_gateI(new DplGate::Gate(DplGate::Gate::I)),
     m_focallawer(new DplFocallaw::Focallawer),
-    m_fpgaGroup(new DplFpga::Group(index, parent)),
+    m_fpgaGroup(new DplFpga::Group(index)),
     d(new GroupPrivate(this))
 {
     init_gates();

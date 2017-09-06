@@ -19,9 +19,6 @@ public:
     explicit PulserMenu(QWidget *parent);
     ~PulserMenu();
 
-    void show();
-    void hide();
-
 private:
     ComboMenuItem *m_txrxModeItem;
     SpinMenuItem *m_pulserItem;
