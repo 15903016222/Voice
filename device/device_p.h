@@ -37,6 +37,8 @@ public:
 
     bool is_valid() const;
 
+    int max_rx_time() const;
+
 protected:
     /**
      * @brief get_serial_number 获取序列号

@@ -89,6 +89,17 @@ bool DevicePrivate::is_valid() const
     return flag;
 }
 
+quint32 DevicePrivate::max_rx_time() const
+{
+    quint32 max = -1;
+    foreach (GroupPointer grp, m_groups) {
+        if (max < grp->rx_time()) {
+            max = grp->rx_time();
+        }
+    }
+    return max;
+}
+
 QString DevicePrivate::get_version()
 {
     QFile file("/etc/version");
