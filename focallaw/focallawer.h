@@ -95,6 +95,12 @@ public:
      */
     uint beam_qty() const;
 
+    /**
+     * @brief max_beam_delay    最大延迟时间
+     * @return                  时间(ns)
+     */
+    float max_beam_delay() const;
+
 signals:
     void beam_qty_changed(int);
     void beams_changed(const QList<BeamPointer> &list);
