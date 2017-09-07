@@ -132,6 +132,12 @@ public:
      */
     const DplFocallaw::FocallawerPointer &focallawer() const;
 
+    /**
+     * @brief rx_time   获取工作时间
+     * @return          时间(ns)
+     */
+    quint32 rx_time() const;
+
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void velocity_changed(double val);

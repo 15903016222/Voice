@@ -114,6 +114,14 @@ const DplSource::BeamPointer &Group::current_beam() const
     return d->beam();
 }
 
+quint32 Group::rx_time() const
+{
+    return m_focallawer->wedge()->delay()
+            + m_sample->start()
+            + m_sample->range()
+            + m_focallawer->max_beam_delay();
+}
+
 void Group::deploy_beams() const
 {
     DplFpga::Beam fpgaBeam;
