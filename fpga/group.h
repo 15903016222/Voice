@@ -121,8 +121,18 @@ public:
      */
     bool set_rx_time(int val);
 
-    int idel_time(void) const;
-    bool set_idel_time(int val, bool reflesh = false);
+    /**
+     * @brief idle_time     获取空闲时间
+     * @return              时间(采样精度)
+     */
+    int idle_time(void) const;
+
+    /**
+     * @brief set_idle_time 设置空闲时间
+     * @param val           时间（采样精度）
+     * @return
+     */
+    bool set_idle_time(int val);
 
     /**
      * @brief gate_a_height 闸门A高度
