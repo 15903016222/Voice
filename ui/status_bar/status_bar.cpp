@@ -1,6 +1,7 @@
 #include "status_bar.h"
 #include "ui_status_bar.h"
 
+#include <device/device.h>
 #include <source/scan.h>
 
 #include <QTime>
@@ -30,6 +31,8 @@ StatusBar::StatusBar(QWidget *parent) :
             Qt::QueuedConnection);
 
     do_current_group_changed(DplDevice::Device::instance()->current_group());
+
+    ui->versionLabel->setText(DplDevice::Device::instance()->type_string() + " " + DplDevice::Device::instance()->version());
 }
 
 StatusBar::~StatusBar()
@@ -77,7 +80,7 @@ void StatusBar::do_data_event(const DplSource::BeamsPointer &beams)
     DplSource::BeamPointer beam = beams->get(0);
 
     if (scanAxis->driving() == DplSource::Axis::TIMER) {
-        m_scanEncStr += "0 s";
+        m_scanEncStr += "0.00 s";
     } else if (scanAxis->driving() == DplSource::Axis::ENCODER_X) {
         m_scanEncStr += QString::number(beam->encoder_x()/ m_scan->encoder_x()->resolution(), 'f', 2) + " mm";
     } else {

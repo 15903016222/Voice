@@ -78,7 +78,7 @@ public:
 
     /**
      * @brief set_total_beam_qty    设置总共的Beam数
-     * @param qty                   数量
+     * @param qty                   数量(1~8192)
      */
     void set_total_beam_qty(quint32 qty);
 

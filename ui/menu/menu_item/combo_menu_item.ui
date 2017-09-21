@@ -104,7 +104,7 @@ QComboBox QAbstractItemView{
 }
 
 QComboBox QAbstractItemView::item{
-	height: 30px;
+	height: 35px;
 }
 
 QComboBox QAbstractItemView::item:hover{

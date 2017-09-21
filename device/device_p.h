@@ -48,7 +48,7 @@ protected:
      * @brief get_version   获取设备版本号
      * @return              版本号
      */
-    QByteArray get_version();
+    QString get_version();
 
     /**
      * @brief get_relative_time 获取相对设备的时间差

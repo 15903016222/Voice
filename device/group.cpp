@@ -121,6 +121,15 @@ void Group::deploy_beams() const
     int aperture = 0;
     int beamIndex = Device::instance()->first_beam_index(this);
 
+    DplFpga::Fpga::instance()->show_info();
+    m_fpgaGroup->show_info();
+
+    DplFpga::Fpga::instance();
+//    m_fpgaGroup->set_idel_time(304750);
+//    m_fpgaGroup->set_idel_time(4992250);
+    m_fpgaGroup->reflesh();
+
+    qDebug("%s[%d]: beam qty: %d",__func__, __LINE__, m_focallawer->beam_qty());
     fpgaBeam.set_total_beam_qty( Device::instance()->total_beam_qty() );
     fpgaBeam.set_group_id(index());
     fpgaBeam.set_gain_compensation(0);
@@ -147,11 +156,13 @@ void Group::deploy_beams() const
         for (int i = 0; i < aperture; ++i) {
             fpgaBeam.set_rx_delay(startRxChannel+i, focallawerBeam->rxdelay().at(i));
             fpgaBeam.set_tx_delay(startTxChannel+i, focallawerBeam->txdelay().at(i));
+//            qDebug("%s[%d]: %d - delay(%d)",__func__, __LINE__, i, focallawerBeam->rxdelay().at(i));
 //                fpgaBeam.set_rx_delay(startRxChannel+k, 0);
 //                fpgaBeam.set_tx_delay(startTxChannel+k, 0);
 //                qDebug("%s[%d]: enablet(0x%x) rx(%f) tx(%f)",__func__, __LINE__, (startRxChannel+i)&0x1f, focallawerBeamPtr->rxdelay().at(k), focallawerBeamPtr->txdelay().at(k));
         }
 
+        fpgaBeam.show_info();
         fpgaBeam.refresh();
     }
 }

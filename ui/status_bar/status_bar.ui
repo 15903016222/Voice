@@ -52,7 +52,7 @@
 QLabel {    
 	color: rgb(255, 255, 255);
 	background-color: rgb(210, 150, 0);    
-	font: 10pt &quot;Ubuntu&quot;;
+	font:  bold 10pt &quot;Ubuntu&quot;;
 }
 
 #versionLabel
@@ -265,9 +265,9 @@ QLabel {
       <font>
        <family>Ubuntu</family>
        <pointsize>10</pointsize>
-       <weight>50</weight>
+       <weight>75</weight>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -459,9 +459,9 @@ QLabel {
       <font>
        <family>Ubuntu</family>
        <pointsize>10</pointsize>
-       <weight>50</weight>
+       <weight>75</weight>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -663,9 +663,9 @@ QLabel {
       <font>
        <family>Ubuntu</family>
        <pointsize>10</pointsize>
-       <weight>50</weight>
+       <weight>75</weight>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -857,9 +857,9 @@ QLabel {
       <font>
        <family>Ubuntu</family>
        <pointsize>10</pointsize>
-       <weight>50</weight>
+       <weight>75</weight>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -1051,9 +1051,9 @@ QLabel {
       <font>
        <family>Ubuntu</family>
        <pointsize>10</pointsize>
-       <weight>50</weight>
+       <weight>75</weight>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
@@ -1248,9 +1248,9 @@ QLabel {
       <font>
        <family>Ubuntu</family>
        <pointsize>10</pointsize>
-       <weight>50</weight>
+       <weight>75</weight>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="frameShape">

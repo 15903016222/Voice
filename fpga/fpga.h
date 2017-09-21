@@ -167,12 +167,6 @@ public:
     static const int MAX_BEAMS_NUM;
     static const int MAX_TCGS_NUM;
 
-    /** Beam **/
-    int beams() const;
-    bool create_beam();
-    bool remove_beam();
-    const BeamPointer &get_beam(int index) const;
-
     /** Tcg **/
     int tcgs() const;
     bool create_tcg();
@@ -185,9 +179,6 @@ protected:
 
 private:
     FpgaPrivate *d_ptr;
-
-    QList<BeamPointer> m_beams;
-    mutable QReadWriteLock m_beamsLock;
 
     QList<TcgPointer> m_tcgs;
     mutable QReadWriteLock m_tcgsLock;
