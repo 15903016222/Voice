@@ -102,7 +102,7 @@ public:
     ASBLayout(int grp, QWidget *parent) : VLayout(parent)
     {
         addLayout(new ASLayout(grp), 1);
-        addLayout(new BLayoutV(grp), 2);
+        addLayout(new BLayoutV(grp), 1);
     }
 };
 

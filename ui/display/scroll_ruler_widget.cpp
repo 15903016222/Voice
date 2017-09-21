@@ -2,44 +2,95 @@
 #include <QPainter>
 #include <QDebug>
 #include <QScrollBar>
+#include <ui/display/Tracer.h>
 
 ScrollRulerWidget::ScrollRulerWidget(QWidget *parent) :
     RulerWidget(parent),
     m_stepUnit(0),
     m_offsetPix(0),
     m_unitNum(0),
-    m_moveTotalUnit(0.0)
+    m_moveTotalUnit(0.0),
+    m_maxEnd(m_end)
 {
 
 }
 
 
-void ScrollRulerWidget::move_to_value(double targetValue)
+void ScrollRulerWidget::set_show_range(double start, double end)
 {
-
-    if(0)
-    {
-        /* 时间扫查 */
-//        m_moveTotalUnit += (msec / 1000.0);
-//        int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start)) + 0.5;    /* 要偏移的像素点*/
-//        m_unitNum = movePix / m_stepUnit;             /* 要偏移多少个10 * m_pixelPerUnit */
-//        m_offsetPix = movePix % m_stepUnit;           /* 画标尺时真正偏移的像素点 */
+    if(start < m_start || end < m_end) {
+        m_moveTotalUnit = 0.0;  /* 不偏移 */
+    } else if(end > m_maxEnd) {
+        m_moveTotalUnit = m_maxEnd - m_end;
+    } else {
+        m_moveTotalUnit = end - m_end;
     }
 
-    if(targetValue > m_end) {
-        m_offsetValue = targetValue - m_end;
-
+    if(m_stepUnit == 0) {
+        init_step_unit();
     }
+    int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start)) + 0.5;    /* 要偏移的像素点*/
+    m_unitNum = movePix / m_stepUnit;             /* 要偏移多少个10 * m_pixelPerUnit */
+    m_offsetPix = movePix % m_stepUnit;           /* 画标尺时真正偏移的像素点 */
+
+}
+
+
+bool ScrollRulerWidget::move_to_value(double targetValue)
+{
+    DEBUG_INIT("ScrollRulerWidget", __FUNCTION__);
+
+    if(targetValue > m_maxEnd) {
+        m_moveTotalUnit = m_maxEnd - m_end;
+
+    } else if(targetValue > (m_start + m_moveTotalUnit) && targetValue < (m_end + m_moveTotalUnit)) {
+
+    } else if(targetValue > m_end && targetValue > (m_end + m_moveTotalUnit)) {
+        /* 往m_end滚动 */
+        m_moveTotalUnit = targetValue - m_end;
+
+    } else if(targetValue < (m_start + m_moveTotalUnit) && targetValue > m_start) {
+        /* 往m_start滚动 */
+        m_moveTotalUnit = targetValue - m_start;
+
+    } else if(targetValue < m_start) {
+        m_moveTotalUnit = 0.0;  /* 不偏移 */
+    }
+
+    if(m_stepUnit == 0) {
+        init_step_unit();
+    }
+    int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start)) + 0.5;    /* 要偏移的像素点*/
+    m_unitNum = movePix / m_stepUnit;             /* 要偏移多少个10 * m_pixelPerUnit */
+    m_offsetPix = movePix % m_stepUnit;           /* 画标尺时真正偏移的像素点 */
+
+    return true;
+}
+
+
+bool ScrollRulerWidget::set_max_end(double maxEnd)
+{
+    if(maxEnd > m_maxEnd) {
+        m_maxEnd = maxEnd;
+    } else if(maxEnd < m_end) {
+        return false;
+    } else {
+
+        if(m_end + m_moveTotalUnit > maxEnd) {
+            m_maxEnd = maxEnd;
+            m_moveTotalUnit = m_maxEnd - m_end;
+            move_to_value(maxEnd);
+        }
+    }
+
+    return true;
 }
 
 void ScrollRulerWidget::paintEvent(QPaintEvent *e)
 {
+    qDebug() << "[ScrollRulerWidget:" << __FUNCTION__ << "]";
+
     Q_UNUSED(e);
-
-
-
-    myPaintEvent();
-    return;
 
     QPainter painter(this);
 
@@ -218,16 +269,12 @@ void ScrollRulerWidget::resizeEvent(QResizeEvent *event)
     }
 }
 
-
-void ScrollRulerWidget::myPaintEvent()
+void ScrollRulerWidget::init_step_unit()
 {
-
-    QPainter painter(this);
-
     double interval = 0.0;                              // 单位/刻度
     int markQty = 0;                                    // 刻度数
     int length = y_axis_length();                       // 标尺像素长度
-    float m_pixelPerUnit = length/(m_end - m_start);    // 像素/单位
+    float pixelPerUnit = length/(m_end - m_start);    // 像素/单位
 
     if (length >= 400) {
         markQty = 100;
@@ -262,120 +309,8 @@ void ScrollRulerWidget::myPaintEvent()
     } else if (interval > 200) {
         interval = 100 * (1 + (int)(interval / 100));
     }
-    markQty = (int)((m_end - m_start) / interval + 0.5);
-
-    QFont font = painter.font();
-    font.setPointSize(10);
-    painter.setFont(font);
-
-    painter.setBrush(this->m_bgColor);
-    painter.drawRect(this->rect());
-
-    if (RulerWidget::LEFT == m_type) {
-        painter.rotate(90);
-        painter.translate(0, -20);
-    } else if (RulerWidget::RIGHT == m_type) {
-        QTransform form = painter.transform();
-        form.rotate(90);
-        form.rotate(180, Qt::XAxis);
-        painter.setTransform(form);
-    }
-
-    painter.setPen(QColor(Qt::black));
-
-    painter.drawText(length/2, 19, m_unitName);
 
     /* 最大步进 */
-    m_stepUnit = (int)(10 * interval * m_pixelPerUnit + 0.5);
-
-    if (RulerWidget::Down == m_direction) {
-
-        for(int i = 0; i < markQty; ++i) {
-            int targetX = length - (int)(i * interval * m_pixelPerUnit + 0.5) + m_offsetPix;
-            if(length < targetX) {
-                targetX = length - (int)((markQty + i) * interval * m_pixelPerUnit + 0.5) + m_offsetPix;
-            }
-
-            painter.drawLine(targetX, 0, targetX, 3);
-        }
-
-        for(int i = 5; i < markQty; i += 10) {
-
-            int targetX = length - (int)(i * interval * m_pixelPerUnit + 0.5) + m_offsetPix;
-
-            if(length < targetX) {
-
-                int markQtyEnd = markQty - (markQty - 5) % 10;
-                targetX = length - (int)((markQtyEnd + i + 5) * interval * m_pixelPerUnit + 0.5) + m_offsetPix;
-            }
-
-            painter.drawLine(targetX, 0, targetX, 7);
-        }
-
-
-        for(int i = 0; i < markQty; i += 10) {
-
-            int targetX = length - (int)(i * interval * m_pixelPerUnit + 0.5) + m_offsetPix;
-
-            if(length < targetX) {
-
-                int align = markQty % 10;
-                /* align == 0，则偏移一个单位画数值 */
-                if(align == 0) {
-                    targetX = length - (int)((markQty - align + i) * interval * m_pixelPerUnit + 0.5) + m_offsetPix;
-                    painter.drawText(targetX + 2, 12, QString::number(((markQty / 10  + m_unitNum) * 10) * interval + m_start, 'f', 1));
-                }
-
-            } else {
-                painter.drawText(targetX - 15, 12, QString::number((i + m_unitNum * 10) * interval + m_start));
-            }
-
-            painter.drawLine(targetX, 0, targetX, 13);
-        }
-
-    } else {
-
-        for(int i = 0; i < markQty; ++i) {
-            int targetX = (int)(i * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
-            if(targetX < 0) {
-                targetX = (int)((markQty + i) * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
-            }
-            painter.drawLine(targetX, 0, targetX, 3);
-        }
-
-        for(int i = 5; i < markQty; i += 10) {
-            int targetX = (int)(i * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
-
-            if(targetX < 0) {
-                int markQtyEnd = markQty - (markQty - 5) % 10;
-                targetX = (int)((markQtyEnd + i + 5) * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
-            }
-
-            painter.drawLine(targetX, 0, targetX, 7);
-        }
-
-        for(int i = 0; i < markQty; i += 10) {
-
-            int targetX = (int)(i * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
-
-            if(targetX < 0) {
-                int align = markQty % 10;
-                /* align == 0，则不偏移一个单位，若不等于1，则偏移一个单位 */
-                //if((interval * 10.0) >= 1.0) {
-                if(align == 0) {
-                    targetX = (int)((markQty - align + i) * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
-                    painter.drawText(targetX + 2, 12, QString::number(((markQty / 10  + m_unitNum) * 10) * interval + m_start, 'f', 1));
-                } else {
-                    targetX = (int)((markQty - align + i + 10) * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
-                    painter.drawText(targetX + 2, 12, QString::number(((markQty / 10 + 1 + m_unitNum) * 10) * interval + m_start, 'f', 1));
-                }
-
-            } else {
-
-                painter.drawText(targetX + 2, 12, QString::number((i + m_unitNum * 10) * interval + m_start, 'f', 1));
-            }
-
-            painter.drawLine(targetX, 0, targetX, 13);
-        }
-    }
+    m_stepUnit = (int)(10 * interval * pixelPerUnit + 0.5);
 }
+

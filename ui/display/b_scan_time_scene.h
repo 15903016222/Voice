@@ -7,12 +7,10 @@ class BscanTimeScene : public BscanScene
 {
 public:
     explicit BscanTimeScene(const DplDisplay::PaletteColorPointer &palette, int group, QObject *parent = 0);
-
+    virtual bool need_refresh();
 protected:
-    virtual void draw_horizontal_beam();
-    virtual void draw_vertical_beam();
 
-    virtual void redraw_horizontal_beam();
+    virtual void draw_vertical_beam();
     virtual void redraw_vertical_beam();
 };
 

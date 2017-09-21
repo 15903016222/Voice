@@ -8,6 +8,7 @@
 
 #include <display/palette_color.h>
 #include <source/beams.h>
+#include <source/axis.h>
 
 #if 0
 static const double SCAN_START      = -100.0;    /* 扫查起点 */
@@ -18,6 +19,7 @@ static const double SCAN_START      = -100.0;    /* 扫查起点 */
 static const double SCAN_END        = 700.0;    /* 扫查终点 */
 
 static const double SCAN_RESOLUTION = 1.0;     /* 扫查分辨率 */
+
 //static const double SCAN_RESOLUTION = 15.0;     /* 扫查分辨率 */
 
 //static const double SCAN_START      = 0.0;    /* 扫查起点 */
@@ -25,11 +27,11 @@ static const double SCAN_RESOLUTION = 1.0;     /* 扫查分辨率 */
 //static const double SCAN_RESOLUTION = 11.0;     /* 扫查分辨率 */
 
 #endif
-static const double ENCODER_ORIGIN  = 11.0;     /* 编码其起始位置 */
-static const double MIN_PIX_COUNT   = 1.0;      /* 一条beam最小显示的像素 */
-static const double ENCODER_RESOLUTION = 48.0;  /* 编码器分辨率 */
 
+static const double ENCODER_ORIGIN  = 11.0;     /* 编码其起始位置 */
 static const int STORE_BUFFER_SIZE = 256 * 1024 * 1024 ;    /* 256MB */
+
+static double DEFAULT_PIX_PER_BEAM = 1.0;       /* 默认每条beam占1pix */
 
 class BscanScene : public QGraphicsScene
 {
@@ -39,7 +41,7 @@ public:
 
     struct S_CommonProperties {
         float   ratio;      /* 每个像素代表beam中的多少个点数据 */
-        double  pixCount;   /* 每条beam占多少像素 */
+        double  pixCount;   /* 每条beam占多少像素,采用double进行计算具体数据 */
         int     maxIndex;   /* 最大的beam数，超出后滚动显示 */
         int     align;      /* 对齐数据（例子：width为20， pixCount为3， 则align为 width % pixCount = 2）*/
     };
@@ -60,7 +62,11 @@ public:
     bool set_pix_per_beam(double ratio);
 
     bool set_current_beam(unsigned int index);
+    bool redraw_beams();
     inline void set_scroll_window(bool flag) { m_scrolling = flag; }
+    inline DplSource::Axis::Driving     driving() { return m_driving;}
+
+    virtual bool need_refresh();
 
 signals:
     void image_changed();
@@ -72,27 +78,11 @@ public slots:
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
 
-    virtual void draw_beams();
-
-    /**
-     * @brief draw_horizontal_beam  B扫的水平显示
-     */
-    virtual void draw_horizontal_beam();
-
     /**
      * @brief draw_vertical_beam    B扫的垂直显示
      */
     virtual void draw_vertical_beam();
 
-    /**
-     * @brief reset_show 当显示大小改变，重新画B扫
-     */
-    virtual void reset_show();
-
-    /**
-     * @redraw_horizontal_beam 当显示大小改变，重新画水平B扫
-     */
-    virtual void redraw_horizontal_beam();
 
     /**
      * @redraw_horizontal_beam 当显示大小改变，重新画垂直B扫
@@ -125,32 +115,12 @@ protected:
                         const BscanScene::S_CommonProperties &commonProperties,
                         const quint8 *waveData);
 
-
-    /**
-     * @brief set_horizontal_image_data 设置时间B扫的水平显示image数据
-     * @param beamsShowedCount
-     * @param commonProperties
-     * @param waveData
-     */
-    virtual void set_horizontal_image_data(int beamsShowedCount,
-                        const BscanScene::S_CommonProperties &commonProperties,
-                        const quint8 *waveData);
-
-
     /**
      * @brief scroll_vertical_image     时间B扫的垂直滚动image滚动实现
      * @param commonProperties
      * @param waveData
      */
     void scroll_vertical_image(const BscanScene::S_CommonProperties &commonProperties,
-                               const quint8 *waveData);
-
-    /**
-     * @brief scroll_horizontal_image   时间B扫的水平滚动image滚动实现
-     * @param commonProperties
-     * @param waveData
-     */
-    void scroll_horizontal_image(const BscanScene::S_CommonProperties &commonProperties,
                                const quint8 *waveData);
 
     /**
@@ -167,11 +137,14 @@ protected:
                                                              * 与扫查分辨率、扫查起始点有关，最小值为1. */
     int                             m_group;
     QReadWriteLock                  m_rwLock;
+    volatile bool                   m_redrawFlag;           /* set_size后重画标志 */
 
     volatile    bool                m_scrolling;            /* 标志当前窗口是否卷动 */
     volatile    int                 m_beamsShowedCount;     /* 当前已显示多少条beam */
     volatile    int                 m_maxBeamsCount;        /* 显示区最大beam数 */
     int                             m_currentIndex;         /* 显示第index的beam数据 */
+
+    volatile DplSource::Axis::Driving        m_driving;
 
 };
 

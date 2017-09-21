@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <ui/display/b_scan_scene.h>
 #include <device/device.h>
+#include <QSemaphore>
 
 class ScanView;
 class BWaveItem;
@@ -20,31 +21,27 @@ class BscanDisplay : public QWidget
     Q_OBJECT
 
 public:
-
-    enum E_SCAN_TYPE{
-        TIME,
-        ENCODER
-    };
-
-public:
     explicit BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent = 0);
     ~BscanDisplay();
 
     bool set_current_beam(unsigned int index);
-    virtual bool set_scan_type(E_SCAN_TYPE type);
+
+
 
 signals:
     void update_ruler(double value);
     void update_label(const QString &time);
+    void refresh_scan_env();
 
 protected slots:
 
     void do_data_event(const DplSource::BeamsPointer &beams);
     void update_sound_path_ruler();
     void do_update_label(const QString &time);
-    void do_update_ruler(double value);
 
     void do_view_size_changed(const QSize &size);
+    void do_refresh_scan_env();
+    void do_update_ruler(double x);
 
 protected:
     Ui::BscanDisplay *ui;
@@ -56,19 +53,20 @@ protected:
     ScanView         *m_bscanView;
     BscanScene       *m_bscanScene;
 
-    double           m_pixPerBeam;          /* 每条beam用多少个像素表示 */
-    double           m_scanTypeRulerStart;  /* 标尺开始（mm / s） */
-    double           m_scanTypeRulerEnd;    /* 标尺结束（mm / s） */
-
-    E_SCAN_TYPE      m_type;                /* 扫查类型：encoder / time */
-    int              m_currentBeamIndex;    /* 当前beam的index */
+    DplSource::Axis::Driving      m_driving;                /* 扫查类型：encoder_x/y / timer*/
 
     double           m_currentTimeCount;    /* 秒 */
     QLabel           *m_timeShowLabel;
     Qt::Orientation  m_orientation;
+    QSemaphore       m_refreshSemaphore;    /* 切换时间扫查或编码器扫查时，刷新信号量 */
+
+    DplSource::AxisPointer      m_axisPointer;
+    DplSource::EncoderPointer   m_encoderPointer;
 
     virtual void init_ruler();
     void update_scan_type_ruler(const QSize &size);
+    void wait_for_refresh_finished();
+    void init_scan_env();
 
 };
 

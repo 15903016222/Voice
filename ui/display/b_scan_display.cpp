@@ -4,32 +4,30 @@
 #include <QTimer>
 
 #include "source/beams.h"
+#include "source/scan.h"
+#include "source/source.h"
+#include "device/device.h"
+#include "fpga/fpga.h"
+
 #include "scan_view.h"
 #include "b_scan_scene.h"
 #include "global.h"
-#include "source/source.h"
-#include "device/device.h"
 #include "scroll_ruler_widget.h"
 #include "b_scan_encoder_scene.h"
 #include "b_scan_time_scene.h"
-#include "fpga/fpga.h"
+
 #include "Tracer.h"
 
-static const int SECOND         = 1000;
+static const double SECOND = 1000.0;
 
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BscanDisplay),
     m_group(grp),
-    m_bscanView(new ScanView),
-    m_bscanScene(new BscanEncoderScene(DplDevice::Device::instance()->display()->palette(), grp->index())),
-    m_type(ENCODER),
-    m_currentBeamIndex(0),
-    m_pixPerBeam(1.0),
-    m_scanTypeRulerStart(0.0),
-    m_scanTypeRulerEnd(0.0),
-    m_soundPathRuler(NULL),
     m_scanTypeRuler(NULL),
+    m_soundPathRuler(NULL),
+    m_bscanView(new ScanView),
+    m_bscanScene(NULL),
     m_currentTimeCount(0.0),
     m_orientation(orientation)
 {
@@ -39,13 +37,14 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
 
     init_ruler();
 
-    connect(m_bscanView, SIGNAL(size_changed(QSize)), this, SLOT(do_view_size_changed(QSize)));
+    connect(m_bscanView, SIGNAL(size_changed(QSize)),
+            this, SLOT(do_view_size_changed(QSize)));
 
     ui->bScanWidgetVerticalLayout->addWidget(m_bscanView);
-    m_bscanView->setScene(m_bscanScene);
 
     connect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
     connect(this, SIGNAL(update_label(QString)), this, SLOT(do_update_label(QString)));
+    connect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
 
     /* source setting */
     connect(static_cast<DplDevice::Group *>(grp.data()),
@@ -56,12 +55,18 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
 
     ui->titleLabel->setText(QString("B-Scan|Grp") + QString::number(m_group->index() + 1));
 
-    DplFpga::Fpga::instance()->set_encoder_x_mode(DplFpga::Fpga::QUAD);
-    DplFpga::Fpga::instance()->set_encoder_y_mode(DplFpga::Fpga::QUAD);
-
     if(m_orientation == Qt::Horizontal) {
         m_bscanView->rotate(-90);
     }
+
+    init_scan_env();
+
+    if (m_orientation == Qt::Horizontal) {
+        m_bscanScene->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
+    } else {
+        m_bscanScene->set_size(QSize(m_bscanView->width(), m_bscanView->height()));
+    }
+
 
 }
 
@@ -79,31 +84,10 @@ bool BscanDisplay::set_current_beam(unsigned int index)
 }
 
 
-bool BscanDisplay::set_scan_type(BscanDisplay::E_SCAN_TYPE type)
+void BscanDisplay::init_ruler()
 {
     DEBUG_INIT("BscanDisplay", __FUNCTION__);
 
-    if(m_type == type) {
-        return true;
-    }
-
-    m_type = type;
-    if(NULL != m_bscanScene) {
-        delete m_bscanScene;
-    }
-
-    if(m_type == ENCODER) {
-        m_bscanScene = new BscanEncoderScene(DplDevice::Device::instance()->display()->palette(), m_group->index());
-
-    } else {
-        m_bscanScene = new BscanTimeScene(DplDevice::Device::instance()->display()->palette(), m_group->index());
-    }
-
-    return true;
-}
-
-void BscanDisplay::init_ruler()
-{
     /* ruler setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
@@ -123,13 +107,11 @@ void BscanDisplay::init_ruler()
     ui->rightRuler->set_range(0, 100);
     ui->rightRuler->set_unit("(%)");
     ui->rightRuler->update();
-
 }
 
 
 void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
-
     DEBUG_INIT("BscanDisplay", __FUNCTION__);
 
     if(m_bscanScene->width() == 0
@@ -143,28 +125,35 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
         return;
     }
 
-    if(m_type == TIME) {
+    qDebug() << "[" << __FUNCTION__ << "]"
+             << " scan_axis driving = " << DplSource::Scan::instance()->scan_axis()->driving()
+             << " scene driving = " << m_bscanScene->driving();
+    if(m_bscanScene->need_refresh()) {
+        emit refresh_scan_env();
+        wait_for_refresh_finished();
+    }
+
+    if(m_bscanScene->driving() == DplSource::Axis::TIMER) {
+
+        m_bscanScene->redraw_beams();
 
         m_currentTimeCount += DplSource::Source::instance()->interval() / 1000.0;
-
         double rulerEnd;
-        double stepTime =  (double)DplSource::Source::instance()->interval() / (double)SECOND;
 
         if(m_orientation == Qt::Horizontal) {
-
             rulerEnd = m_bscanView->height() / (SECOND / (double)DplSource::Source::instance()->interval());
-            m_bscanScene->set_pix_per_beam(m_bscanScene->height() / (rulerEnd / stepTime));
-
         } else {
-
             rulerEnd = m_bscanView->width() / (SECOND / (double)DplSource::Source::instance()->interval());
-            m_bscanScene->set_pix_per_beam(m_bscanScene->width() / (rulerEnd / stepTime));
         }
+
+        qDebug() << "[" << __FUNCTION__ << "]"
+                 << "begin set_beams.";
 
         m_bscanScene->set_beams(beams);
 
         if(m_currentTimeCount > rulerEnd) {
             m_bscanScene->set_scroll_window(true);
+            m_scanTypeRuler->move_to_value(m_currentTimeCount);
             emit update_ruler(m_currentTimeCount);
         }
 
@@ -172,9 +161,31 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 
     } else {
 
-        double x = ((int)((beams->get(0)->encoder_x() / ENCODER_RESOLUTION + 0.005) * 100)) / 100.0; /* 保留小数点两位 */
-        m_bscanScene->set_beams(beams);
+        if(m_bscanScene->redraw_beams()) {
+            BscanEncoderScene *scene = static_cast<BscanEncoderScene*> (m_bscanScene);
+            if(scene) {
+                qDebug() << "[" << __FUNCTION__ << "]" << " current X = " << scene->move_x();
+                m_scanTypeRuler->set_show_range(scene->show_start(), scene->show_end());
+                //emit update_ruler(scene->move_x());
+            }
+        }
 
+        double x;
+
+        qDebug() << "[" << __FUNCTION__ << "]"
+                 << " x = " << beams->get(0)->encoder_x()
+                 << " y = " << beams->get(0)->encoder_y()
+                 << " x true = " << beams->get(0)->encoder_x() / DplSource::Scan::instance()->encoder_x()->resolution()
+                 << " y true = " << beams->get(0)->encoder_y() / DplSource::Scan::instance()->encoder_y()->resolution();
+
+        if(DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::ENCODER_X) {
+            x = ((int)((beams->get(0)->encoder_x() / DplSource::Scan::instance()->encoder_x()->resolution() + 0.005) * 100)) / 100.0; /* 保留小数点两位 */
+        } else {
+            x = ((int)((beams->get(0)->encoder_y() / DplSource::Scan::instance()->encoder_y()->resolution() + 0.005) * 100)) / 100.0; /* 保留小数点两位 */
+        }
+
+        m_bscanScene->set_beams(beams);
+        m_scanTypeRuler->move_to_value(x);
         emit update_ruler(x);
     }
 }
@@ -185,7 +196,9 @@ void BscanDisplay::do_update_ruler(double value)
         return;
     }
 
-    m_scanTypeRuler->move_to_value(value);
+    qDebug() << "[" << __FUNCTION__ << "]"
+             << " update ruler x = " << value;
+//    m_scanTypeRuler->move_to_value(value);
     m_scanTypeRuler->update();
 }
 
@@ -198,10 +211,17 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
         return;
     }
 
-    if(m_type == ENCODER) {
+    if(m_bscanScene->driving() == DplSource::Axis::ENCODER_X
+           || m_bscanScene->driving() == DplSource::Axis::ENCODER_Y) {
+
         /* 扫查轴 */
         /* 根据scan start/end 及resolution（扫查分辨率）计算待显示的总beam数 */
-        double beamCount = (SCAN_END - SCAN_START) / SCAN_RESOLUTION;
+
+        double scanStart        = DplSource::Scan::instance()->scan_axis()->start();
+        double scanEnd          = DplSource::Scan::instance()->scan_axis()->end();
+        double scanResolution   = DplSource::Scan::instance()->scan_axis()->resolution();
+
+        double beamCount = (scanEnd - scanStart) / scanResolution;
         int width;
         if(m_orientation == Qt::Horizontal) {
             width = size.height();
@@ -209,42 +229,88 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
             width = size.width();
         }
 
-        double pixCount;
         if(width >= beamCount) {
             /* 若显示区域大于beam数，则计算每条beam占多少pix */
-            pixCount = width / beamCount;
-            m_scanTypeRuler->set_range(SCAN_START, SCAN_END);
+            double pixCount = width / beamCount;
+            m_scanTypeRuler->set_range(scanStart, scanEnd);
+            m_scanTypeRuler->set_max_end(scanEnd);
             m_bscanScene->set_pix_per_beam(pixCount);
             m_bscanScene->set_scroll_window(false);
+            m_scanTypeRuler->set_show_range(scanStart, scanEnd);
 
         } else {
             /* 若显示区域小于beam数，则计算每条beam占一个pix */
-            pixCount = MIN_PIX_COUNT;
-            m_scanTypeRuler->set_range(SCAN_START, SCAN_START + width);
-            m_bscanScene->set_pix_per_beam(pixCount);
+            m_scanTypeRuler->set_range(scanStart, scanStart + width);
+            m_scanTypeRuler->set_max_end(scanEnd);
+            m_bscanScene->set_pix_per_beam(DEFAULT_PIX_PER_BEAM);
             m_bscanScene->set_scroll_window(true);
+            m_scanTypeRuler->set_show_range(scanStart, scanStart + width);
         }
 
-        qDebug() << "[" << __FUNCTION__ << "]" << " width = " << width
-                 << " pixCount = " << pixCount
-                 << " beamCount = " << beamCount;
+        m_scanTypeRuler->set_unit("(mm)");
 
     } else {
 
-        m_scanTypeRulerStart = 0.0;
+        double scanTypeRulerEnd;
+
         double beamQtyPerSecond = SECOND / (double)DplSource::Source::instance()->interval();
+
         if(m_orientation == Qt::Horizontal) {
-            m_scanTypeRulerEnd = size.height() / beamQtyPerSecond;
+            scanTypeRulerEnd = size.height() / beamQtyPerSecond;
         } else {
-            m_scanTypeRulerEnd = size.width() / beamQtyPerSecond;
+            scanTypeRulerEnd = size.width() / beamQtyPerSecond;
         }
 
-        m_scanTypeRuler->set_range(m_scanTypeRulerStart, m_scanTypeRulerEnd);
+        m_scanTypeRuler->set_range(0.0, scanTypeRulerEnd);
+        m_scanTypeRuler->set_unit("(s)");
     }
 
     m_scanTypeRuler->update();
 }
 
+void BscanDisplay::wait_for_refresh_finished()
+{
+    DEBUG_INIT("BscanDisplay", __FUNCTION__);
+
+    m_refreshSemaphore.acquire(m_refreshSemaphore.available() + 1);
+}
+
+void BscanDisplay::init_scan_env()
+{
+    if(m_bscanScene != NULL) {
+        delete m_bscanScene;
+        m_bscanScene = NULL;
+    }
+
+    if(DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::TIMER) {
+        m_bscanScene = new BscanTimeScene(DplDevice::Device::instance()->display()->palette(), m_group->index());
+        m_currentTimeCount = 0.0;
+
+    } else {
+        m_bscanScene = new BscanEncoderScene(DplDevice::Device::instance()->display()->palette(), m_group->index());
+    }
+
+    ui->bScanWidgetVerticalLayout->addWidget(m_bscanView);
+    m_bscanView->setScene(m_bscanScene);
+
+    if (m_orientation == Qt::Horizontal) {
+        m_bscanScene->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
+    } else {
+        m_bscanScene->set_size(m_bscanView->size());
+    }
+}
+
+
+void BscanDisplay::do_refresh_scan_env()
+{
+    DEBUG_INIT("BscanDisplay", __FUNCTION__);
+
+    init_scan_env();
+
+    update_scan_type_ruler(m_bscanView->size());
+
+    m_refreshSemaphore.release();
+}
 
 void BscanDisplay::update_sound_path_ruler()
 {
@@ -298,20 +364,16 @@ void BscanDisplay::do_update_label(const QString &time)
 void BscanDisplay::do_view_size_changed(const QSize &size)
 {
     DEBUG_INIT("BscanDisplay", __FUNCTION__);
+
     if (m_orientation == Qt::Horizontal) {
 
-//        m_bscanScene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
-//                                   size.height(), size.width());
         m_bscanScene->set_size(QSize(size.height(), size.width()));
 
     } else {
 
-//        m_bscanScene->setSceneRect(-size.width()/2, -size.height()/2,
-//                                   size.width(), size.height());
         m_bscanScene->set_size(QSize(size.width(), size.height()));
     }
 
     update_scan_type_ruler(size);
-
 }
 
