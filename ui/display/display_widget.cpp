@@ -7,7 +7,7 @@
 #include "display_widget.h"
 #include "a_scan_vdisplay.h"
 #include "a_scan_hdisplay.h"
-#include "c_scan_display.h"
+#include "c_scan_vdisplay.h"
 #include "s_scan_display.h"
 
 #include <QVBoxLayout>
@@ -47,7 +47,7 @@ public:
 
 typedef SingleLayout<AscanHDisplay> ALayoutH;
 typedef SingleLayout<AscanVDisplay> ALayoutV;
-typedef SingleLayout<CscanDisplay> CLayout;
+typedef SingleLayout<CscanVDisplay> CLayoutV;
 typedef SingleLayout<SscanDisplay> SLayout;
 
 class ASLayout : public HLayout
@@ -66,7 +66,7 @@ public:
     SCLayout(int grp, QWidget *parent) : HLayout(parent)
     {
         addLayout(new SLayout(grp), 1);
-        addLayout(new CLayout(grp), 2);
+        addLayout(new CLayoutV(grp), 2);
     }
 };
 
@@ -76,7 +76,7 @@ public:
     ASCLayout(int grp, QWidget *parent) : VLayout(parent)
     {
         addLayout(new ASLayout(grp), 1);
-        addLayout(new CLayout(grp), 1);
+        addLayout(new CLayoutV(grp), 1);
     }
 };
 
@@ -116,7 +116,7 @@ void DisplayWidget::set_layout(DplDisplay::Display::Layout mode, const QVector<i
         l = new SLayout(grps.first(), w);
         break;
     case DplDisplay::Display::C:
-        l = new CLayout(grps.first(), w);
+        l = new CLayoutV(grps.first(), w);
         break;
     case DplDisplay::Display::AS:
         l = new ASLayout(grps.first(), w);
