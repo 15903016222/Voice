@@ -78,8 +78,10 @@ bool ScrollRulerWidget::set_max_end(double maxEnd)
 
         if(m_end + m_moveTotalUnit > maxEnd) {
             m_maxEnd = maxEnd;
-            m_moveTotalUnit = m_maxEnd - m_end;
+            m_moveTotalUnit = maxEnd - m_end;
             move_to_value(maxEnd);
+        } else {
+            m_maxEnd = maxEnd;
         }
     }
 
