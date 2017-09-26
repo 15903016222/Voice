@@ -19,7 +19,7 @@ public:
 
     explicit RulerWidget(QWidget *parent = 0);
 
-    bool set_range(double start, double end);
+    virtual bool set_range(double start, double end);
     void set_unit(const QString &unit) { m_unitName = unit; }
     void set_backgroup_color(const QColor &color) { m_bgColor = color; }
     void set_type(RulerWidget::Type type) { m_type = type; }
@@ -30,7 +30,6 @@ protected:
 
     void paintEvent(QPaintEvent *e);
 
-private:
     double m_start;
     double m_end;
     QString m_unitName;

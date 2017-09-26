@@ -9,6 +9,8 @@
 #include "display_select_dialog.h"
 #include "ui_base_menu.h"
 
+#include <ui/display/test_stub.h>
+
 namespace DplDisplayMenu {
 
 SelectionMenu::SelectionMenu(QWidget *parent) :
@@ -35,6 +37,9 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     /* Display menu item */
     connect(m_displayItem, SIGNAL(clicked()),
             this, SLOT(do_displayItem_clicked()));
+    connect(m_cSourceItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_cSourceItem_changed(int)));
+
     connect(Mcu::instance(), SIGNAL(key_event(Mcu::KeyType)),
             this, SLOT(do_mcu_key_event(Mcu::KeyType)),
             Qt::DirectConnection);
@@ -60,6 +65,11 @@ void SelectionMenu::do_displayItem_clicked()
 {
     DisplaySelectDialog dialog;
     dialog.exec();
+}
+
+void SelectionMenu::do_cSourceItem_changed(int index)
+{
+    TestStub::instance()->set_source(static_cast<TestStub::C_SCAN_SOURCE> (index));
 }
 
 void SelectionMenu::do_mcu_key_event(Mcu::KeyType type)

@@ -25,6 +25,7 @@ public:
 
 protected slots:
     void do_displayItem_clicked();
+    void do_cSourceItem_changed(int index);
     void do_mcu_key_event(Mcu::KeyType type);
 
 private:
