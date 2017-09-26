@@ -16,7 +16,7 @@ ReceiverMenu::ReceiverMenu(QWidget *parent) :
     m_filterItem(new ComboMenuItem(this, tr("Filter"))),
     m_rectifierItem(new ComboMenuItem(this, tr("Rectifier"))),
     m_videoFilterItem(new ComboMenuItem(this, tr("Video Filter"))),
-    m_averagingItem(new ComboMenuItem(this, tr("Averagin")))
+    m_averagingItem(new ComboMenuItem(this, tr("Averaging")))
 {
     ui->layout0->addWidget(m_receiverItem);
     ui->layout1->addWidget(m_filterItem);
