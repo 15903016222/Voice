@@ -15,6 +15,18 @@ ScrollRulerWidget::ScrollRulerWidget(QWidget *parent) :
 
 }
 
+bool ScrollRulerWidget::set_range(double start, double end)
+{
+    if(RulerWidget::set_range(start, end)) {
+        m_stepUnit      = 0;
+        m_unitNum       = 0;
+        m_offsetPix     = 0;
+        m_moveTotalUnit = 0;
+        return true;
+    }
+
+    return false;
+}
 
 void ScrollRulerWidget::set_show_range(double start, double end)
 {
