@@ -37,7 +37,29 @@ public:
 
     bool is_valid() const;
 
-    int max_rx_time() const;
+    /**
+     * @brief pa_max_power  PA最大输出功率
+     * @return              功率(W)
+     */
+    float pa_max_power() const;
+
+    /**
+     * @brief total_beam_qty    获取所有组的Beam总数
+     * @return                  数量
+     */
+    int total_beam_qty() const;
+
+    /**
+     * @brief max_txrx_time 获取最大工作时间
+     * @return              时间(ns)
+     */
+    quint32 max_txrx_time() const;
+
+    /**
+     * @brief max_acquisition_rate  获取最大的采集率
+     * @return                      采集率(Hz)
+     */
+    int max_acquisition_rate() const;
 
 protected:
     /**
@@ -70,7 +92,6 @@ public:
     /* Group */
     QVector<GroupPointer> m_groups;
     GroupPointer m_curGroup;
-    mutable QReadWriteLock m_groupsRWLock;
 
 private:
     Device *q_ptr;
@@ -104,6 +125,11 @@ inline const Cert &DevicePrivate::cert() const
 inline Device::Type DevicePrivate::type() const
 {
     return m_type;
+}
+
+inline float DevicePrivate::pa_max_power() const
+{
+    return 1.0;
 }
 
 }
