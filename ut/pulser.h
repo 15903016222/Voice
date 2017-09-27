@@ -32,10 +32,10 @@ public:
     void set_tx_rx_mode(TxRxMode mode);
 
     enum Voltage {
-        V50,
-        V100,
-        V200,
-        V400
+        V50     = 50,
+        V100    = 100,
+        V200    = 200,
+        V400    = 400
     };
 
     /**
@@ -53,26 +53,48 @@ public:
     void set_voltage(bool pa, Voltage v);
 
     /**
-     * @brief width 获取脉冲宽度
+     * @brief pw    获取脉冲宽度
      * @return      宽度(ns)
      */
-    float width() const;
+    float pw() const;
 
     /**
-     * @brief set_width 设置脉冲宽度
+     * @brief set_pw    设置脉冲宽度
      * @param w         宽度(ns)
      */
-    void set_width(float w);
+    void set_pw(float w);
+
+    enum PrfMode {
+        MAX,
+        MAX_HALF,
+        OPTIMUM,
+        USER_DEF
+    };
+
+    /**
+     * @brief prf_mode  获取重复频率模式
+     * @return          模式
+     */
+    static PrfMode prf_mode();
+
+    /**
+     * @brief set_prf_mode  设置重复频率模式
+     * @param mode          模式
+     */
+    static void set_prf_mode(PrfMode mode);
 
 signals:
-    void tx_rx_mode_changed(TxRxMode mode);
+    void txrx_mode_changed(TxRxMode);
+    void pw_changed(float);
 
 public slots:
 
 private:
     static Voltage s_paVoltage;
     static Voltage s_utVoltage;
+    static PrfMode s_prfMode;
     TxRxMode m_txrxMode;
+    float m_pw;
 };
 
 typedef QSharedPointer<Pulser> PulserPointer;
@@ -80,6 +102,11 @@ typedef QSharedPointer<Pulser> PulserPointer;
 inline Pulser::TxRxMode Pulser::tx_rx_mode() const
 {
     return m_txrxMode;
+}
+
+inline float Pulser::pw() const
+{
+    return m_pw;
 }
 
 }
