@@ -86,6 +86,7 @@ public:
 signals:
     void txrx_mode_changed(TxRxMode);
     void pw_changed(float);
+    void prf_mode_changed(PrfMode);
 
 public slots:
 

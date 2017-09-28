@@ -55,6 +55,7 @@ void Pulser::set_prf_mode(Pulser::PrfMode mode)
 {
     if (s_prfMode != mode) {
         s_prfMode = mode;
+        emit prf_mode_changed(mode);
     }
 }
 
