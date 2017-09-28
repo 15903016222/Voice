@@ -201,6 +201,7 @@ int Device::acquisition_rate() const
         rate = 1;
         break;
     }
+    return rate;
 }
 
 bool Device::set_acquisition_rate(uint val)

@@ -61,6 +61,10 @@ public:
      */
     int max_acquisition_rate() const;
 
+    int acquisition_rate() const;
+
+    void set_acquisition_rate(int val);
+
 protected:
     /**
      * @brief get_serial_number 获取序列号
@@ -79,10 +83,6 @@ protected:
      * @return                  时间差
      */
     time_t get_relative_time();
-
-    int acquisition_rate() const;
-
-    void set_acquisition_rate(int val);
 
 protected slots:
     void do_encX_enabled_changed(bool enable);
