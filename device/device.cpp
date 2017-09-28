@@ -134,6 +134,12 @@ int Device::group_qty() const
     return d->m_groups.size();
 }
 
+const QVector<GroupPointer> &Device::groups() const
+{
+    Q_D(const Device);
+    return d->m_groups;
+}
+
 const GroupPointer &Device::get_group(int index) const
 {
     Q_D(const Device);

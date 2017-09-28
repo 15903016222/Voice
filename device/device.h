@@ -128,6 +128,12 @@ public:
     int group_qty() const;
 
     /**
+     * @brief groups    获取所有组
+     * @return          组列表
+     */
+    const QVector<GroupPointer> &groups() const;
+
+    /**
      * @brief get_group 获取指定组
      * @param index     指定组号
      * @return          成功返回指定组，失败返回空组
