@@ -202,7 +202,7 @@ void BscanScene::calculate_redraw_properties(BscanScene::S_CommonProperties &com
 
     DEBUG_INIT("BscanTimeScene", __FUNCTION__);
     /* index从0开始 */
-    redrawProperites.currentFrameIndex  = m_beamsPointer->get(0)->index() / DplDevice::Device::instance()->total_beam_qty();
+    redrawProperites.currentFrameIndex  = m_beamsPointer->get(0)->index() / DplDevice::Device::instance()->beam_qty();
     redrawProperites.totalFrameCount    = STORE_BUFFER_SIZE / m_beamsPointer->size();
 
     if(m_scrolling) {

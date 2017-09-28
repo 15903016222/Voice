@@ -154,6 +154,7 @@ public slots:
 
 private slots:
     void update_sample();
+    void update_pulser();
     void update_source();
 
 private:

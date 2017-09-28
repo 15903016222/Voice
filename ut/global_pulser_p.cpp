@@ -36,7 +36,7 @@ int GlobalPulserPrivate::max_acquisition_rate() const
     DplDevice::Device *dev = DplDevice::Device::instance();
 
     double prfLimit[3] = {0.0};
-    int beamQty = dev->total_beam_qty();
+    int beamQty = dev->beam_qty();
     int totalDataSize = DplSource::Source::instance()->beams_size();
 
     // the rx_time used to calculate PRF is the max rx_time of each group

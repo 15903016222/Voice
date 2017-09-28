@@ -86,6 +86,8 @@ public:
 signals:
     void voltage_changed(bool, DplUt::GlobalPulser::Voltage);
     void acquisition_rate_changed(int);
+    void prf_changed();
+    void beam_cycle_changed();
 
 protected:
     explicit GlobalPulser();

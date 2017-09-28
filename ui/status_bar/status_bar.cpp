@@ -2,6 +2,7 @@
 #include "ui_status_bar.h"
 
 #include <device/device.h>
+#include <ut/global_pulser.h>
 #include <source/scan.h>
 
 #include <QTime>
@@ -33,6 +34,12 @@ StatusBar::StatusBar(QWidget *parent) :
     do_current_group_changed(DplDevice::Device::instance()->current_group());
 
     ui->versionLabel->setText(DplDevice::Device::instance()->type_string() + " " + DplDevice::Device::instance()->version());
+
+    connect(DplUt::GlobalPulser::instance(),
+            SIGNAL(prf_changed()),
+            this,
+            SLOT(do_acquisition_rate_changed()));
+    do_acquisition_rate_changed();
 }
 
 StatusBar::~StatusBar()
@@ -101,4 +108,9 @@ void StatusBar::do_encoder_text_changed()
     QReadLocker l(&m_encStringRWLock);
     ui->scanEncLabel->setText(m_scanEncStr);
     ui->indexEncLabel->setText(m_indexEncStr);
+}
+
+void StatusBar::do_acquisition_rate_changed()
+{
+    ui->prfLabel->setText(QString("PRF:%1(%2)").arg(DplUt::GlobalPulser::instance()->acquisition_rate()).arg(DplUt::GlobalPulser::instance()->prf()));
 }

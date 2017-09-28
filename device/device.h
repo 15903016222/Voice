@@ -158,7 +158,7 @@ public:
      * @brief beam_qty  获取beam的总数
      * @return          返回beam的总数
      */
-    int total_beam_qty() const;
+    int beam_qty() const;
 
     /**
      * @brief display   获取显示配置
@@ -184,6 +184,7 @@ public:
 
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
+    void beam_qty_changed();
 
 public slots:
     /**

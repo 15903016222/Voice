@@ -51,6 +51,11 @@ Group::Group(int index, QObject *parent):
             this, SLOT(update_source()));
 
     update_sample();
+
+    connect(DplUt::GlobalPulser::instance(),
+            SIGNAL(beam_cycle_changed()),
+            this,
+            SLOT(update_pulser()));
 }
 
 Group::~Group()
@@ -94,7 +99,7 @@ double Group::max_sample_time()
     // 1s/4,   idle_time + rx_time >= 4 * rx_time
     // one beam cycle = loading time + rx_time  + idle + 50, 单位ns
     // rx time = beam delay + wedge delay + sample start + sample range
-    float rxTime =  (Dpl::s_to_ns(1.0)/4) / Device::instance()->total_beam_qty();
+    float rxTime =  (Dpl::s_to_ns(1.0)/4) / Device::instance()->beam_qty();
     double max = rxTime
             - DplFpga::Fpga::LOADING_TIME * DplFpga::Fpga::SAMPLE_PRECISION
             - m_focallawer->max_beam_delay()
@@ -136,7 +141,7 @@ void Group::deploy_beams() const
     m_fpgaGroup->show_info();
 
     qDebug("%s[%d]: beam qty: %d",__func__, __LINE__, m_focallawer->beam_qty());
-    fpgaBeam.set_total_beam_qty( Device::instance()->total_beam_qty() );
+    fpgaBeam.set_total_beam_qty( Device::instance()->beam_qty() );
     fpgaBeam.set_group_id(index());
     fpgaBeam.set_gain_compensation(0);
 
@@ -178,9 +183,12 @@ void Group::update_sample()
     m_fpgaGroup->set_sample_start((m_focallawer->wedge()->delay() + m_sample->start())/DplFpga::Fpga::SAMPLE_PRECISION);
     m_fpgaGroup->set_sample_range((m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range())/DplFpga::Fpga::SAMPLE_PRECISION);
     m_fpgaGroup->set_rx_time((txrx_time() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
-
-    m_fpgaGroup->set_idle_time((DplUt::GlobalPulser::instance()->beam_cycle() - txrx_time())/DplFpga::Fpga::SAMPLE_PRECISION);
     //    m_fpgaGroup->show_info();
+}
+
+void Group::update_pulser()
+{
+    m_fpgaGroup->set_idle_time((DplUt::GlobalPulser::instance()->beam_cycle() - txrx_time())/DplFpga::Fpga::SAMPLE_PRECISION);
 }
 
 void Group::update_source()

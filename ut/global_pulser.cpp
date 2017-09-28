@@ -41,7 +41,7 @@ GlobalPulser::PrfMode GlobalPulser::prf_mode()
 
 uint GlobalPulser::prf() const
 {
-    return DplDevice::Device::instance()->total_beam_qty() * acquisition_rate();
+    return DplDevice::Device::instance()->beam_qty() * acquisition_rate();
 }
 
 int GlobalPulser::acquisition_rate() const
@@ -84,7 +84,14 @@ float GlobalPulser::beam_cycle() const
 GlobalPulser::GlobalPulser() :
     d(new GlobalPulserPrivate)
 {
-
+    connect(DplDevice::Device::instance(),
+            SIGNAL(beam_qty_changed()),
+            this,
+            SIGNAL(prf_changed()));
+    connect(DplDevice::Device::instance(),
+            SIGNAL(beam_qty_changed()),
+            this,
+            SIGNAL(beam_cycle_changed()));
 }
 
 GlobalPulser::~GlobalPulser()

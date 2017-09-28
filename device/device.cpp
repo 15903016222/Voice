@@ -95,6 +95,11 @@ bool Device::add_group()
             SIGNAL(receiver_index_changed(uint)),
             this, SLOT(deploy_beams()));
 
+    connect(static_cast<DplFocallaw::Focallawer *>(d->m_curGroup->focallawer().data()),
+            SIGNAL(beam_qty_changed(int)),
+            this,
+            SIGNAL(beam_qty_changed()));
+
     deploy_beams();
 
     emit current_group_changed(d->m_curGroup);
@@ -172,7 +177,7 @@ int Device::first_beam_index(const Group *grp) const
     return index;
 }
 
-int Device::total_beam_qty() const
+int Device::beam_qty() const
 {
     Q_D(const Device);
 
@@ -200,8 +205,8 @@ void Device::deploy_beams()
 {
     Q_D(Device);
 
-    DplFpga::Fpga::instance()->set_pa_law_qty(total_beam_qty());
-    DplFpga::Fpga::instance()->set_ut_law_qty(total_beam_qty());
+    DplFpga::Fpga::instance()->set_pa_law_qty(beam_qty());
+    DplFpga::Fpga::instance()->set_ut_law_qty(beam_qty());
 
     foreach (GroupPointer grp, d->m_groups) {
         grp->deploy_beams();
