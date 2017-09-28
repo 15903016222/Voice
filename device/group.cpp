@@ -10,6 +10,7 @@
 
 #include "device.h"
 
+#include <global.h>
 #include <fpga/fpga.h>
 
 #include <QReadWriteLock>
@@ -88,18 +89,18 @@ void Group::set_current_angle(double angle)
 
 double Group::max_sample_time()
 {
-    int beamQty = Device::instance()->total_beam_qty();
     // prf为1即(1s)时，rx_time时间为最大
-    // 1_000_000_000 / 4    idle_time + rx_time >= 4 * rx_time
-    // one beam cycle = loading time +  beam delay + wedge delay + sample start + sample range + 50 /* 单位 ns */
-    int beamCycle =  (250*1000*1000) / beamQty;
-    double max = beamCycle
+    // 1s/4,   idle_time + rx_time >= 4 * rx_time
+    // one beam cycle = loading time + rx_time  + idle + 50, 单位ns
+    // rx time = beam delay + wedge delay + sample start + sample range
+    float rxTime =  (Dpl::s_to_ns(1.0)/4) / Device::instance()->total_beam_qty();
+    double max = rxTime
             - DplFpga::Fpga::LOADING_TIME * DplFpga::Fpga::SAMPLE_PRECISION
-            - d->max_beam_delay()
+            - m_focallawer->max_beam_delay()
             - m_focallawer->wedge()->delay()
             - 50;
-    if(max > 1000*1000) {
-        max = 1000*1000;
+    if(max > Dpl::ms_to_ns(1)) {
+        max = Dpl::ms_to_ns(1);
     }
     return max ;
 }
@@ -114,12 +115,12 @@ const DplSource::BeamPointer &Group::current_beam() const
     return d->beam();
 }
 
-quint32 Group::rx_time() const
+quint32 Group::txrx_time() const
 {
-    return m_focallawer->wedge()->delay()
+    return m_focallawer->max_beam_delay()
+            + m_focallawer->wedge()->delay()
             + m_sample->start()
-            + m_sample->range()
-            + m_focallawer->max_beam_delay();
+            + m_sample->range();
 }
 
 void Group::deploy_beams() const
@@ -132,11 +133,6 @@ void Group::deploy_beams() const
 
     DplFpga::Fpga::instance()->show_info();
     m_fpgaGroup->show_info();
-
-    DplFpga::Fpga::instance();
-//    m_fpgaGroup->set_idel_time(304750);
-//    m_fpgaGroup->set_idel_time(4992250);
-    m_fpgaGroup->reflesh();
 
     qDebug("%s[%d]: beam qty: %d",__func__, __LINE__, m_focallawer->beam_qty());
     fpgaBeam.set_total_beam_qty( Device::instance()->total_beam_qty() );
@@ -180,8 +176,9 @@ void Group::update_sample()
 {
     m_fpgaGroup->set_sample_start((m_focallawer->wedge()->delay() + m_sample->start())/DplFpga::Fpga::SAMPLE_PRECISION);
     m_fpgaGroup->set_sample_range((m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range())/DplFpga::Fpga::SAMPLE_PRECISION);
-    m_fpgaGroup->set_rx_time((d->max_beam_delay() + m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
+    m_fpgaGroup->set_rx_time((txrx_time() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
 
+    m_fpgaGroup->set_idle_time((Device::instance()->beam_cycle() - txrx_time())/DplFpga::Fpga::SAMPLE_PRECISION);
     //    m_fpgaGroup->show_info();
 }
 
