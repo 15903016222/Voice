@@ -87,6 +87,7 @@ void SubMenu::set_menu(MainMenu::Type type)
     }
 
     m_curMenu = get_menu(type);
+
     if(m_curMenu) {
         m_curMenu->show();
     }

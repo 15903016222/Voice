@@ -13,7 +13,16 @@ SOURCES += \
     $$PWD/s_scan_scene.cpp \
     $$PWD/c_scan_display.cpp \
     $$PWD/c_scan_scene.cpp \
-    $$PWD/s_scan_image.cpp
+    $$PWD/b_scan_display.cpp \
+    $$PWD/b_scan_scene.cpp \
+    $$PWD/b_scan_hdisplay.cpp \
+    $$PWD/b_scan_vdisplay.cpp \
+    $$PWD/s_scan_image.cpp \
+    $$PWD/scroll_ruler_widget.cpp \
+    $$PWD/b_scan_time_scene.cpp \
+    $$PWD/b_scan_encoder_scene.cpp \
+    $$PWD/Tracer.cpp
+
 
 HEADERS += \
     $$PWD/ruler_widget.h \
@@ -30,8 +39,18 @@ HEADERS += \
     $$PWD/s_scan_scene.h \
     $$PWD/c_scan_display.h \
     $$PWD/c_scan_scene.h \
-    $$PWD/s_scan_image.h
+    $$PWD/b_scan_display.h \
+    $$PWD/b_scan_scene.h \
+    $$PWD/b_scan_hdisplay.h \
+    $$PWD/b_scan_vdisplay.h \
+    $$PWD/s_scan_image.h \
+    $$PWD/scroll_ruler_widget.h \
+    $$PWD/b_scan_time_scene.h \
+    $$PWD/b_scan_encoder_scene.h \
+    $$PWD/Tracer.h
+
 
 FORMS += \
     $$PWD/a_scan_display.ui \
-    $$PWD/scan_display.ui
+    $$PWD/scan_display.ui \
+    $$PWD/b_scan_display.ui

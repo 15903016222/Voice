@@ -28,9 +28,9 @@ public:
 protected:
     int y_axis_length() const;
 
-    void paintEvent(QPaintEvent *e);
+    virtual void paintEvent(QPaintEvent *e);
 
-private:
+protected:
     double m_start;
     double m_end;
     QString m_unitName;
