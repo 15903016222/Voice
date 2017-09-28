@@ -8,6 +8,8 @@
 
 #include "device_p.h"
 
+#include <global.h>
+
 namespace DplDevice {
 
 static const int MAX_GROUPS_NUM = 8;
@@ -75,21 +77,19 @@ bool Device::is_valid() const
 int Device::groups()
 {
     Q_D(Device);
-    QReadLocker l(&d->m_groupsRWLock);
     return d->m_groups.size();
 }
 
 bool Device::add_group()
 {
     Q_D(Device);
-    {
-        QWriteLocker l(&d->m_groupsRWLock);
-        if (d->m_groups.size() >= MAX_GROUPS_NUM) {
-            return false;
-        }
-        d->m_groups.append(GroupPointer(new Group(d_ptr->m_groups.size())));
-        d->m_curGroup = d_ptr->m_groups.last();
+
+    if (d->m_groups.size() >= MAX_GROUPS_NUM) {
+        return false;
     }
+
+    d->m_groups.append(GroupPointer(new Group(d_ptr->m_groups.size())));
+    d->m_curGroup = d_ptr->m_groups.last();
 
     connect(static_cast<DplFocallaw::Focallawer *>(d->m_curGroup->focallawer().data()),
             SIGNAL(focallawed()),
@@ -110,17 +110,16 @@ bool Device::add_group()
 bool Device::remove_group(int id)
 {
     Q_D(Device);
-    {
-        QWriteLocker l(&d->m_groupsRWLock);
-        if (d->m_groups.isEmpty()
-                || id >= d->m_groups.size()) {
-            return false;
-        }
 
-        d->m_groups.remove(id);
-        if (d->m_curGroup->index() != id) {
-            return true;
-        }
+    if (d->m_groups.isEmpty()
+            || id >= d->m_groups.size()) {
+        return false;
+    }
+
+    d->m_groups.remove(id);
+
+    if (d->m_curGroup->index() != id) {
+        return true;
     }
 
     d->m_curGroup = d->m_groups.last();
@@ -129,24 +128,28 @@ bool Device::remove_group(int id)
     return true;
 }
 
+int Device::group_qty() const
+{
+    Q_D(const Device);
+    return d->m_groups.size();
+}
+
 const GroupPointer &Device::get_group(int index) const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_groupsRWLock);
     return d->m_groups[index];
 }
 
 bool Device::set_current_group(int index)
 {
     Q_D(Device);
-    {
-        QWriteLocker l(&d->m_groupsRWLock);
-        if (index >= d->m_groups.size()
-                || index == d->m_curGroup->index()) {
-            return false;
-        }
-        d->m_curGroup = d->m_groups[index];
+
+    if (index >= d->m_groups.size()
+            || index == d->m_curGroup->index()) {
+        return false;
     }
+    d->m_curGroup = d->m_groups[index];
+
     emit current_group_changed(d->m_curGroup);
     return true;
 }
@@ -154,34 +157,66 @@ bool Device::set_current_group(int index)
 const GroupPointer &Device::current_group() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_groupsRWLock);
     return d->m_curGroup;
 }
 
 int Device::first_beam_index(const Group *grp) const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_groupsRWLock);
+
     int index = 0;
     for (int i = 0; i < grp->index(); ++i) {
         index += d->m_groups[i]->focallawer()->beam_qty();
     }
+
     return index;
 }
 
 int Device::total_beam_qty() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_groupsRWLock);
-    int qty = 0;
-    foreach (GroupPointer grp, d->m_groups) {
-        if (grp->mode() == Group::PA) {
-            qty += grp->focallawer()->beam_qty();
-        } else {
-            qty += 1;
+
+    return d->total_beam_qty();
+}
+
+int Device::acquisition_rate() const
+{
+    Q_D(const Device);
+    int rate = d->max_acquisition_rate();
+    switch(DplUt::Pulser::prf_mode()) {
+    case DplUt::Pulser::MAX_HALF:
+        if (rate > 1) {
+            rate /= 2;
         }
+        break;
+    case DplUt::Pulser::OPTIMUM:
+        if (rate > 60) {
+            rate = 60;
+        }
+        break;
+    case DplUt::Pulser::USER_DEF:
+        rate = d->acquisition_rate();
+        break;
+    default:
+        rate = 1;
+        break;
     }
-    return qty;
+}
+
+bool Device::set_acquisition_rate(uint val)
+{
+    Q_D(Device);
+    if (DplUt::Pulser::prf_mode() != DplUt::Pulser::USER_DEF) {
+        return false;
+    }
+    d->set_acquisition_rate(val);
+    return true;
+}
+
+float Device::beam_cycle() const
+{
+    Q_D(const Device);
+    return Dpl::s_to_ns(1.0)/(d->total_beam_qty() * d->max_acquisition_rate()) - DplFpga::Fpga::LOADING_TIME * DplFpga::Fpga::SAMPLE_PRECISION;
 }
 
 void Device::start()
@@ -224,6 +259,5 @@ Device::~Device()
 {
     delete d_ptr;
 }
-
 
 }

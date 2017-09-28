@@ -122,6 +122,12 @@ public:
     bool remove_group(int id);
 
     /**
+     * @brief group_qty 获取组数
+     * @return          数量
+     */
+    int group_qty() const;
+
+    /**
      * @brief get_group 获取指定组
      * @param index     指定组号
      * @return          成功返回指定组，失败返回空组
@@ -153,6 +159,31 @@ public:
      * @return          返回beam的总数
      */
     int total_beam_qty() const;
+
+    /**
+     * @brief prf   获取脉冲发射重复频率
+     * @return      频率(Hz)
+     */
+    uint prf() const;
+
+    /**
+     * @brief acquisition_rate  获取采集率
+     * @return                  频率(Hz)
+     */
+    int acquisition_rate() const;
+
+    /**
+     * @brief set_acquisition_rate  设置采集率
+     * @param val                   频率(Hz)
+     * @return                      成功返回true,失败返回false
+     */
+    bool set_acquisition_rate(uint val);
+
+    /**
+     * @brief beam_cycle    每条Beam的周期时间
+     * @return              时间(ns)
+     */
+    float beam_cycle() const;
 
     /**
      * @brief display   获取显示配置

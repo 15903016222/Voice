@@ -80,6 +80,10 @@ protected:
      */
     time_t get_relative_time();
 
+    int acquisition_rate() const;
+
+    void set_acquisition_rate(int val);
+
 protected slots:
     void do_encX_enabled_changed(bool enable);
     void do_encX_mode_changed(DplSource::Encoder::Mode mode);
@@ -100,6 +104,7 @@ private:
     time_t m_time;              // 相对设备的时间差
     Cert m_cert;
     Device::Type m_type;
+    int m_acqRate;              // 采集频率, prf*总声束数
 };
 
 inline const QString &DevicePrivate::serial_number() const
@@ -130,6 +135,16 @@ inline Device::Type DevicePrivate::type() const
 inline float DevicePrivate::pa_max_power() const
 {
     return 1.0;
+}
+
+inline int DevicePrivate::acquisition_rate() const
+{
+    return m_acqRate;
+}
+
+inline void DevicePrivate::set_acquisition_rate(int val)
+{
+    m_acqRate = val;
 }
 
 }
