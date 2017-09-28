@@ -31,27 +31,6 @@ public:
      */
     void set_tx_rx_mode(TxRxMode mode);
 
-    enum Voltage {
-        V50     = 50,
-        V100    = 100,
-        V200    = 200,
-        V400    = 400
-    };
-
-    /**
-     * @brief voltage   获取PA/UT输出电压
-     * @param pa        PA标志
-     * @return          返回电压类型
-     */
-    Voltage voltage(bool pa) const;
-
-    /**
-     * @brief set_voltage   设置PA/UT输出电压
-     * @param pa            PA标志
-     * @param v             电压类型
-     */
-    void set_voltage(bool pa, Voltage v);
-
     /**
      * @brief pw    获取脉冲宽度
      * @return      宽度(ns)
@@ -64,36 +43,13 @@ public:
      */
     void set_pw(float w);
 
-    enum PrfMode {
-        MAX,
-        MAX_HALF,
-        OPTIMUM,
-        USER_DEF
-    };
-
-    /**
-     * @brief prf_mode  获取重复频率模式
-     * @return          模式
-     */
-    static PrfMode prf_mode();
-
-    /**
-     * @brief set_prf_mode  设置重复频率模式
-     * @param mode          模式
-     */
-    static void set_prf_mode(PrfMode mode);
-
 signals:
     void txrx_mode_changed(TxRxMode);
     void pw_changed(float);
-    void prf_mode_changed(PrfMode);
 
 public slots:
 
 private:
-    static Voltage s_paVoltage;
-    static Voltage s_utVoltage;
-    static PrfMode s_prfMode;
     TxRxMode m_txrxMode;
     float m_pw;
 };
