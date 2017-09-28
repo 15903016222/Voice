@@ -74,12 +74,6 @@ bool Device::is_valid() const
     return d->is_valid();
 }
 
-int Device::groups()
-{
-    Q_D(Device);
-    return d->m_groups.size();
-}
-
 bool Device::add_group()
 {
     Q_D(Device);
@@ -183,47 +177,6 @@ int Device::total_beam_qty() const
     Q_D(const Device);
 
     return d->total_beam_qty();
-}
-
-int Device::acquisition_rate() const
-{
-    Q_D(const Device);
-    int rate = d->max_acquisition_rate();
-    switch(DplUt::Pulser::prf_mode()) {
-    case DplUt::Pulser::MAX_HALF:
-        if (rate > 1) {
-            rate /= 2;
-        }
-        break;
-    case DplUt::Pulser::OPTIMUM:
-        if (rate > 60) {
-            rate = 60;
-        }
-        break;
-    case DplUt::Pulser::USER_DEF:
-        rate = d->acquisition_rate();
-        break;
-    default:
-        rate = 1;
-        break;
-    }
-    return rate;
-}
-
-bool Device::set_acquisition_rate(uint val)
-{
-    Q_D(Device);
-    if (DplUt::Pulser::prf_mode() != DplUt::Pulser::USER_DEF) {
-        return false;
-    }
-    d->set_acquisition_rate(val);
-    return true;
-}
-
-float Device::beam_cycle() const
-{
-    Q_D(const Device);
-    return Dpl::s_to_ns(1.0)/(d->total_beam_qty() * d->max_acquisition_rate()) - DplFpga::Fpga::LOADING_TIME * DplFpga::Fpga::SAMPLE_PRECISION;
 }
 
 void Device::start()

@@ -38,32 +38,10 @@ public:
     bool is_valid() const;
 
     /**
-     * @brief pa_max_power  PA最大输出功率
-     * @return              功率(W)
-     */
-    float pa_max_power() const;
-
-    /**
      * @brief total_beam_qty    获取所有组的Beam总数
      * @return                  数量
      */
     int total_beam_qty() const;
-
-    /**
-     * @brief max_txrx_time 获取最大工作时间
-     * @return              时间(ns)
-     */
-    quint32 max_txrx_time() const;
-
-    /**
-     * @brief max_acquisition_rate  获取最大的采集率
-     * @return                      采集率(Hz)
-     */
-    int max_acquisition_rate() const;
-
-    int acquisition_rate() const;
-
-    void set_acquisition_rate(int val);
 
 protected:
     /**
@@ -104,7 +82,6 @@ private:
     time_t m_time;              // 相对设备的时间差
     Cert m_cert;
     Device::Type m_type;
-    int m_acqRate;              // 采集频率, prf*总声束数
 };
 
 inline const QString &DevicePrivate::serial_number() const
@@ -130,21 +107,6 @@ inline const Cert &DevicePrivate::cert() const
 inline Device::Type DevicePrivate::type() const
 {
     return m_type;
-}
-
-inline float DevicePrivate::pa_max_power() const
-{
-    return 1.0;
-}
-
-inline int DevicePrivate::acquisition_rate() const
-{
-    return m_acqRate;
-}
-
-inline void DevicePrivate::set_acquisition_rate(int val)
-{
-    m_acqRate = val;
 }
 
 }

@@ -15,7 +15,7 @@ DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 
     DplDevice::Device *dev = DplDevice::Device::instance();
-    int grpQty = dev->groups();
+    int grpQty = dev->group_qty();
     grpQty = 8;
     for (int i = grpQty; i < 8; ++i) {
         QCheckBox *checkBox = findChild<QCheckBox *>("checkBox_"+QString::number(i+1));
@@ -53,7 +53,7 @@ void DisplaySelectDialog::update_widget()
     m_grpIds.clear();
 
     if (ui->checkBox_all->isChecked()) {
-        for (int i = 0; i < dev->groups(); ++i) {
+        for (int i = 0; i < dev->group_qty(); ++i) {
             m_grpIds.append(i);
         }
     } else {

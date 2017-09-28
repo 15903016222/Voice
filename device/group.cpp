@@ -11,6 +11,7 @@
 #include "device.h"
 
 #include <global.h>
+#include <ut/global_pulser.h>
 #include <fpga/fpga.h>
 
 #include <QReadWriteLock>
@@ -115,7 +116,7 @@ const DplSource::BeamPointer &Group::current_beam() const
     return d->beam();
 }
 
-quint32 Group::txrx_time() const
+int Group::txrx_time() const
 {
     return m_focallawer->max_beam_delay()
             + m_focallawer->wedge()->delay()
@@ -178,7 +179,7 @@ void Group::update_sample()
     m_fpgaGroup->set_sample_range((m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range())/DplFpga::Fpga::SAMPLE_PRECISION);
     m_fpgaGroup->set_rx_time((txrx_time() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
 
-    m_fpgaGroup->set_idle_time((Device::instance()->beam_cycle() - txrx_time())/DplFpga::Fpga::SAMPLE_PRECISION);
+    m_fpgaGroup->set_idle_time((DplUt::GlobalPulser::instance()->beam_cycle() - txrx_time())/DplFpga::Fpga::SAMPLE_PRECISION);
     //    m_fpgaGroup->show_info();
 }
 

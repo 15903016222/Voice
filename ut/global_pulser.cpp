@@ -5,24 +5,9 @@
  * @date 2017-09-28
  */
 
-#include "global_pulser.h"
+#include "global_pulser_p.h"
 
 namespace DplUt {
-
-class GlobalPulserPrivate
-{
-public:
-    GlobalPulserPrivate() :
-        m_paVoltage(GlobalPulser::V50),
-        m_utVoltage(GlobalPulser::V50),
-        m_prfMode(GlobalPulser::OPTIMUM)
-    {}
-
-    /* attributions */
-    GlobalPulser::Voltage m_paVoltage;
-    GlobalPulser::Voltage m_utVoltage;
-    GlobalPulser::PrfMode m_prfMode;
-};
 
 GlobalPulser *GlobalPulser::instance()
 {
@@ -32,7 +17,7 @@ GlobalPulser *GlobalPulser::instance()
 
 GlobalPulser::Voltage GlobalPulser::voltage(bool pa) const
 {
-    if (ps) {
+    if (pa) {
         return d->m_paVoltage;
     }
     return d->m_utVoltage;
@@ -54,12 +39,57 @@ GlobalPulser::PrfMode GlobalPulser::prf_mode()
     return d->m_prfMode;
 }
 
-void GlobalPulser::set_prf_mode(GlobalPulser::PrfMode mode)
+uint GlobalPulser::prf() const
 {
-    if (d->m_prfMode != mode) {
-        d->m_prfMode = mode;
-        emit prf_mode_changed(d->m_prfMode);
+    return DplDevice::Device::instance()->total_beam_qty() * acquisition_rate();
+}
+
+int GlobalPulser::acquisition_rate() const
+{
+    return d->m_acqRate;
+}
+
+void GlobalPulser::set_acquisition_rate(GlobalPulser::PrfMode mode, uint val)
+{
+    int rate = 1;
+    if (MAX == mode) {
+        rate = d->max_acquisition_rate();
+    } else if (MAX_HALF == mode) {
+        rate = d->max_acquisition_rate();
+        if (rate > 1) {
+            rate /= 2;
+        }
+    } else if (OPTIMUM == mode) {
+        rate = d->max_acquisition_rate();
+        if (rate > 60) {
+            rate = 60;
+        }
+    } else if (USER_DEF == mode) {
+        rate = val;
     }
+
+    d->m_prfMode = mode;
+
+    if (d->m_acqRate != rate) {
+        d->m_acqRate = rate;
+        emit acquisition_rate_changed(rate);
+    }
+}
+
+float GlobalPulser::beam_cycle() const
+{
+    return Dpl::s_to_ns(1.0)/prf() - DplFpga::Fpga::LOADING_TIME * DplFpga::Fpga::SAMPLE_PRECISION;
+}
+
+GlobalPulser::GlobalPulser() :
+    d(new GlobalPulserPrivate)
+{
+
+}
+
+GlobalPulser::~GlobalPulser()
+{
+    delete d;
 }
 
 

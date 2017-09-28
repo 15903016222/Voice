@@ -59,17 +59,36 @@ public:
     PrfMode prf_mode();
 
     /**
-     * @brief set_prf_mode  设置重复频率模式
-     * @param mode          模式
+     * @brief prf   获取脉冲发射重复频率
+     * @return      频率(Hz)
      */
-    void set_prf_mode(PrfMode mode);
+    uint prf() const;
+
+    /**
+     * @brief acquisition_rate  获取采集率
+     * @return                  频率(Hz)
+     */
+    int acquisition_rate() const;
+
+    /**
+     * @brief set_acquisition_rate  设置采集率
+     * @param mode                  脉冲重复频率模式
+     * @param val                   采集频率(Hz),当重复频率模式设置为USER_DEF时才有效
+     */
+    void set_acquisition_rate(PrfMode mode, uint val=0);
+
+    /**
+     * @brief beam_cycle    每条Beam的周期时间
+     * @return              时间(ns)
+     */
+    float beam_cycle() const;
 
 signals:
     void voltage_changed(bool, DplUt::GlobalPulser::Voltage);
-    void prf_mode_changed(DplUt::GlobalPulser::PrfMode);
+    void acquisition_rate_changed(int);
 
 protected:
-    explicit GlobalPulser() {}
+    explicit GlobalPulser();
     ~GlobalPulser();
 
 private:
