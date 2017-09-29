@@ -1,15 +1,17 @@
 #ifndef __DPLUT_PULSER_H__
 #define __DPLUT_PULSER_H__
 
-#include <QSharedPointer>
+#include "sample.h"
+#include "focallaw/focallawer.h"
 
 namespace DplUt {
 
+class PulserPrivate;
 class Pulser : public QObject
 {
     Q_OBJECT
 public:
-    explicit Pulser(QObject *parent = 0);
+    explicit Pulser(const SamplePointer &sample, const DplFocallaw::Focallawer &focallawer);
 
     enum TxRxMode {
         PE,
@@ -43,28 +45,22 @@ public:
      */
     void set_pw(float w);
 
+    /**
+     * @brief txrx_time 获取工作时间
+     * @return          时间(ns)
+     */
+    int txrx_time() const;
+
 signals:
     void txrx_mode_changed(TxRxMode);
     void pw_changed(float);
-
-public slots:
+    void txrx_time_changed();
 
 private:
-    TxRxMode m_txrxMode;
-    float m_pw;
+    PulserPrivate *d;
 };
 
 typedef QSharedPointer<Pulser> PulserPointer;
-
-inline Pulser::TxRxMode Pulser::tx_rx_mode() const
-{
-    return m_txrxMode;
-}
-
-inline float Pulser::pw() const
-{
-    return m_pw;
-}
 
 }
 #endif // __DPLUT_PULSER_H__
