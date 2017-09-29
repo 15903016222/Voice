@@ -36,9 +36,7 @@ Group::Group(int index, QObject *parent):
 
     init_sample();
 
-    connect(static_cast<DplFocallaw::Wedge *>(m_focallawer->wedge().data()),
-            SIGNAL(delay_changed(int)),
-            this, SLOT(update_sample()));
+    init_pulser();
 
     DplSource::Source *source = DplSource::Source::instance();
     source->register_group(index, m_focallawer->beam_qty(), m_sample->point_qty());
@@ -51,11 +49,6 @@ Group::Group(int index, QObject *parent):
             this, SLOT(update_source()));
 
     update_sample();
-
-    connect(DplUt::GlobalPulser::instance(),
-            SIGNAL(beam_cycle_changed()),
-            this,
-            SLOT(update_pulser()));
 }
 
 Group::~Group()
@@ -269,6 +262,36 @@ void Group::init_sample()
             SIGNAL(point_qty_changed(int)),
             this,
             SLOT(update_source()));
+
+    /* Wedge */
+    connect(static_cast<DplFocallaw::Wedge *>(m_focallawer->wedge().data()),
+            SIGNAL(delay_changed(int)),
+            this,
+            SLOT(update_sample()));
+}
+
+void Group::init_pulser()
+{
+    connect(DplUt::GlobalPulser::instance(),
+            SIGNAL(beam_cycle_changed()),
+            this,
+            SLOT(update_pulser()));
+    connect(static_cast<DplUt::Sample*>(m_sample.data()),
+            SIGNAL(start_changed(float)),
+            this,
+            SLOT(update_pulser()));
+    connect(static_cast<DplUt::Sample*>(m_sample.data()),
+            SIGNAL(range_changed(float)),
+            this,
+            SLOT(update_pulser()));
+    connect(static_cast<DplFocallaw::Wedge *>(m_focallawer->wedge().data()),
+            SIGNAL(delay_changed(int)),
+            this,
+            SLOT(update_pulser()));
+    connect(static_cast<DplFocallaw::Focallawer*>(m_focallawer.data()),
+            SIGNAL(focallawed()),
+            this,
+            SLOT(update_pulser()));
 }
 
 }

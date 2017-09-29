@@ -171,6 +171,7 @@ private:
     void init_gate(DplGate::Gate *gate);
     void init_gates();
     void init_sample();
+    void init_pulser();
 };
 
 typedef QSharedPointer<Group> GroupPointer;
