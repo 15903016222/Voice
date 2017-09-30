@@ -11,21 +11,25 @@
 
 namespace DplUt {
 
-GlobalPulserPrivate::GlobalPulserPrivate() :
+GlobalPulserPrivate::GlobalPulserPrivate(GlobalPulser *parent) : QObject(),
     m_paVoltage(GlobalPulser::V50),
     m_utVoltage(GlobalPulser::V50),
     m_prfMode(GlobalPulser::OPTIMUM),
-    m_acqRate(60)
+    m_acqRate(60),
+    q(parent)
 {
-
+    connect(DplDevice::Device::instance(),
+            SIGNAL(beam_qty_changed()),
+            this,
+            SLOT(update_acquisition_rate()));
 }
 
 int GlobalPulserPrivate::max_txrx_time() const
 {
     int max = 1;
     foreach (DplDevice::GroupPointer grp, DplDevice::Device::instance()->groups()) {
-        if (max < grp->txrx_time()) {
-            max = grp->txrx_time();
+        if (max < grp->pulser()->txrx_time()) {
+            max = grp->pulser()->txrx_time();
         }
     }
     return max;
@@ -92,6 +96,25 @@ int GlobalPulserPrivate::max_acquisition_rate() const
     }
 
     return  (result)<1 ? 1: result;
+}
+
+void GlobalPulserPrivate::update_acquisition_rate()
+{
+    if (GlobalPulser::USER_DEF == m_prfMode) {
+        return;
+    }
+
+    int rate = max_acquisition_rate();
+    if (GlobalPulser::MAX_HALF == m_prfMode && rate > 1) {
+        rate /= 2;
+    } else if (GlobalPulser::OPTIMUM == m_prfMode && rate > 60) {
+        rate = 60;
+    }
+
+    if (m_acqRate != rate) {
+        m_acqRate = rate;
+        emit q->prf_changed();
+    }
 }
 
 }

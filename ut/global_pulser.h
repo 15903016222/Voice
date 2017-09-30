@@ -8,14 +8,14 @@
 #ifndef __GLOBAL_PULSER_H__
 #define __GLOBAL_PULSER_H__
 
-#include <QObject>
+#include <device/group.h>
 
 namespace DplUt {
 
 class GlobalPulserPrivate;
 class GlobalPulser : public QObject
 {
-    Q_DECLARE_PRIVATE(GlobalPulser)
+    friend class GlobalPulserPrivate;
     Q_OBJECT
 public:
     /**
@@ -75,7 +75,7 @@ public:
      * @param mode                  脉冲重复频率模式
      * @param val                   采集频率(Hz),当重复频率模式设置为USER_DEF时才有效
      */
-    void set_acquisition_rate(PrfMode mode, uint val=0);
+    void set_acquisition_rate(PrfMode mode, int val=0);
 
     /**
      * @brief beam_cycle    每条Beam的周期时间
@@ -83,11 +83,15 @@ public:
      */
     float beam_cycle() const;
 
+    /**
+     * @brief connect_group 关联组信息
+     * @param grp           组对象
+     */
+    void connect_group(const DplDevice::Group *grp);
+
 signals:
     void voltage_changed(bool, DplUt::GlobalPulser::Voltage);
-    void acquisition_rate_changed(int);
     void prf_changed();
-    void beam_cycle_changed();
 
 protected:
     explicit GlobalPulser();

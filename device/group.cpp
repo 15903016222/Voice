@@ -38,6 +38,8 @@ Group::Group(int index, QObject *parent) : QObject(parent),
     init_pulser();
 
     init_source();
+
+    DplUt::GlobalPulser::instance()->connect_group(this);
 }
 
 Group::~Group()
@@ -260,7 +262,7 @@ void Group::init_pulser()
             SLOT(update_pulser()));
 
     connect(DplUt::GlobalPulser::instance(),
-            SIGNAL(beam_cycle_changed()),
+            SIGNAL(prf_changed()),
             this,
             SLOT(update_pulser()));
 }

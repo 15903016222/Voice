@@ -11,10 +11,11 @@
 
 namespace DplUt {
 
-class GlobalPulserPrivate
+class GlobalPulserPrivate : public QObject
 {
+    Q_OBJECT
 public:
-    GlobalPulserPrivate();
+    GlobalPulserPrivate(GlobalPulser *parent);
 
     /**
      * @brief pa_max_power  PA最大输出功率
@@ -39,6 +40,12 @@ public:
     GlobalPulser::Voltage m_utVoltage;
     GlobalPulser::PrfMode m_prfMode;        // 脉冲重复频率模式
     int m_acqRate;                          // 采集率
+
+public slots:
+    void update_acquisition_rate();
+
+private:
+    GlobalPulser *q;
 };
 
 inline float GlobalPulserPrivate::pa_max_power() const
