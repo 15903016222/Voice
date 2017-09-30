@@ -41,7 +41,7 @@ Pulser::Pulser(const SamplePointer &sample, const DplFocallaw::FocallawerPointer
 
 Pulser::TxRxMode Pulser::tx_rx_mode() const
 {
-    return m_txrxMode;
+    return d->m_txrxMode;
 }
 
 void Pulser::set_tx_rx_mode(Pulser::TxRxMode mode)
@@ -54,14 +54,14 @@ void Pulser::set_tx_rx_mode(Pulser::TxRxMode mode)
 
 float Pulser::pw() const
 {
-    return m_pw;
+    return d->m_pw;
 }
 
 void Pulser::set_pw(float w)
 {
-    if (!qFuzzyIsNull(w) && qFuzzyCompare(m_pw, w)) {
-        m_pw = w;
-        emit pw_changed(m_pw);
+    if (!qFuzzyIsNull(w) && qFuzzyCompare(d->m_pw, w)) {
+        d->m_pw = w;
+        emit pw_changed(w);
     }
 }
 
