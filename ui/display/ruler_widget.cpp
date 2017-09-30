@@ -12,8 +12,6 @@ RulerWidget::RulerWidget(QWidget *parent) :
     m_type(BOTTOM),
     m_direction(Up)
 {
-//    QScrollBar bar;
-//    bar.setOrientation(Qt::Orientation);
 }
 
 bool RulerWidget::set_range(double start, double end)

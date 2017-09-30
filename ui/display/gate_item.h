@@ -16,7 +16,7 @@ class GateItem :public QGraphicsObject
 {
     Q_OBJECT
 public:
-    GateItem(const DplGate::GatePointer &gate, QGraphicsItem *parent = 0);
+    GateItem(const DplUt::SamplePointer &sample, const DplGate::GatePointer &gate, QGraphicsItem *parent = 0);
 
     /**
      * @brief boundingRect  外边范围
@@ -62,6 +62,7 @@ protected slots:
     void update_pos();
 
 private:
+    DplUt::SamplePointer m_sample;
     DplGate::GatePointer m_gate;
     float m_ratio;
     bool m_movingFlag;
