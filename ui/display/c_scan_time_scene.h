@@ -20,7 +20,10 @@ protected:
     /**
      * @redraw_horizontal_beam 当显示大小改变，重新画垂直C扫
      */
-    virtual void redraw_vertical_beam();
+    virtual bool redraw_vertical_beam();
+
+    double      m_currentTimeCount;
+    double      m_pendingTimeCount;
 
 };
 

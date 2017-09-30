@@ -5,7 +5,9 @@
 TestStub *TestStub::s_instance = NULL;
 
 TestStub::TestStub():
-    m_source(SOURCE_A)
+    m_source(SOURCE_A),
+    m_thicknessSource(A_POSITION_MINUS_I_POSITION),
+    m_timeCount(0.0)
 {
 
 }
@@ -18,3 +20,5 @@ TestStub *TestStub::instance()
 
     return s_instance;
 }
+
+

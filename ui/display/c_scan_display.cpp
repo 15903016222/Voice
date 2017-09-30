@@ -23,8 +23,7 @@ CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     m_group(grp),
     m_view(new ScanView),
     m_scene(NULL),
-    m_orientation(orientation),
-    m_currentTimeCount(0.0)
+    m_orientation(orientation)
 {
     ui->setupUi(this);
 
@@ -179,38 +178,43 @@ void CscanDisplay::update_law_type_ruler()
 {
     const DplFocallaw::ProbePointer &probe = m_group->focallawer()->probe();
 
-    if(probe->is_pa()) {
+    if(!probe->is_pa()) {
+        return;
+    }
 
-        qDebug() << "[" << __FUNCTION__ << "]" << " is PA. beam qty = " << m_group->focallawer()->beam_qty();
+    qDebug() << "[" << __FUNCTION__ << "]" << " is PA. beam qty = " << m_group->focallawer()->beam_qty();
 
-        DplFocallaw::PaProbe *paProbe = static_cast<DplFocallaw::PaProbe * > (probe.data());
+    DplFocallaw::PaProbePointer paProbe = probe.staticCast<DplFocallaw::PaProbe>();
 
-        if(paProbe != NULL) {
+    if(paProbe.isNull()) {
+        return;
+    }
 
-            qDebug() << "[" << __FUNCTION__ << "]" << " PA: mode is " << paProbe->scan_configure()->mode();
+    qDebug() << "[" << __FUNCTION__ << "]" << " PA: mode is " << paProbe->scan_configure()->mode();
 
-            if(paProbe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
-                /* 线扫 */
-                m_lawTypeRuler->set_range(0.0, m_group->focallawer()->beam_qty());
-                m_lawTypeRuler->set_unit("(VPA)");
+    if(paProbe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
+        /* 线扫 */
+        m_lawTypeRuler->set_range(0.0, m_group->focallawer()->beam_qty());
+        m_lawTypeRuler->set_unit("(VPA)");
 
-            } else {
-                /* 扇扫 */
-                /* 获取起始角度、终止角度 */
+    } else {
+        /* 扇扫 */
+        /* 获取起始角度、终止角度 */
 
-                 DplFocallaw::SectorialScanCnf *sectorialScanCnf =
-                         static_cast<DplFocallaw::SectorialScanCnf *> (paProbe->scan_configure().data());
-                 if(sectorialScanCnf) {
-                    double startAngle = sectorialScanCnf->first_angle();
-                    double lastAngle  = sectorialScanCnf->last_angle();
-                    double stepAngle  = sectorialScanCnf->angle_step();
-                    double beamQty    = (startAngle - lastAngle) / stepAngle + 1.0;
-                 }
+         DplFocallaw::SectorialScanCnfPointer sectorialScanCnf =
+                 paProbe->scan_configure().staticCast<DplFocallaw::SectorialScanCnf>();
 
-                 m_lawTypeRuler->set_range(0.0, m_group->focallawer()->beam_qty());
-                 m_lawTypeRuler->set_unit("(°)");
-            }
-        }
+         if(sectorialScanCnf.isNull()) {
+            return;
+         }
+
+         double startAngle = sectorialScanCnf->first_angle();
+         double lastAngle  = sectorialScanCnf->last_angle();
+         double stepAngle  = sectorialScanCnf->angle_step();
+         double beamQty    = (startAngle - lastAngle) / stepAngle + 1.0;
+
+         m_lawTypeRuler->set_range(startAngle, lastAngle);
+         m_lawTypeRuler->set_unit("(°)");
     }
 
     m_lawTypeRuler->update();
@@ -264,8 +268,6 @@ void CscanDisplay::init_scan_env()
 
     if(DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::TIMER) {
         m_scene = new CscanTimeScene(DplDevice::Device::instance()->display()->palette(), m_group);
-        m_currentTimeCount = 0.0;
-
     } else {
         m_scene = new CscanEncoderScene(DplDevice::Device::instance()->display()->palette(), m_group);
     }
@@ -291,11 +293,10 @@ bool CscanDisplay::focallaw_mode_changed()
     return true;
 }
 
+
 void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 {
-    m_scene->redraw_beams();
-
-    m_currentTimeCount += DplSource::Source::instance()->interval() / 1000.0;
+    double currentTimeCount = TestStub::instance()->get_time();
     double rulerEnd;
     if(m_orientation == Qt::Horizontal) {
         rulerEnd = m_view->height() / (SECOND / (double)DplSource::Source::instance()->interval());
@@ -303,18 +304,20 @@ void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
         rulerEnd = m_view->width() / (SECOND / (double)DplSource::Source::instance()->interval());
     }
 
-    m_scene->set_beams(beams);
+    if(!m_scene->redraw_beams(beams)) {
+        m_scene->set_beams(beams);
+    }
 
-    if(m_currentTimeCount > rulerEnd) {
+    if(currentTimeCount > rulerEnd) {
         m_scene->set_scroll_window(true);
-        m_scanTypeRuler->move_to_value(m_currentTimeCount);
-        emit update_ruler(m_currentTimeCount);
+        m_scanTypeRuler->move_to_value(currentTimeCount);
+        emit update_ruler(currentTimeCount);
     }
 }
 
 void CscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
 {
-    if(m_scene->redraw_beams()) {
+    if(m_scene->redraw_beams(beams)) {
 
         CscanEncoderScene *scene = static_cast<CscanEncoderScene*> (m_scene);
         if(scene) {

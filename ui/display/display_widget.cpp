@@ -80,6 +80,7 @@ public:
     }
 };
 
+
 DisplayWidget::DisplayWidget(const DplDisplay::DisplayPointer &display,
                              QWidget *parent) :
     QWidget(parent),

@@ -31,18 +31,16 @@ public slots:
     void do_update_ruler(double value);
 
 protected:
-    Ui::ScanDisplay *ui;
+    Ui::ScanDisplay         *ui;
     DplDevice::GroupPointer m_group;
-    ScanView    *m_view;
-    CscanScene  *m_scene;
+    ScanView                *m_view;
+    CscanScene              *m_scene;
 
-    Qt::Orientation m_orientation;
+    Qt::Orientation     m_orientation;
+    ScrollRulerWidget   *m_scanTypeRuler;       /* 时间扫查（s）/编码器扫擦（mm） */
+    ScrollRulerWidget   *m_lawTypeRuler;    /* 一维扫查：该标尺为度数（扫查类型：扇扫）或阵元数（扫查方式：线性）；
+                                             二维扫查，该标尺为步进轴 */
 
-    ScrollRulerWidget *m_scanTypeRuler;       /* 时间扫查（s）/编码器扫擦（mm） */
-    ScrollRulerWidget *m_lawTypeRuler;    /* 一维扫查：该标尺为度数（扫查类型：扇扫）或阵元数（扫查方式：线性）；
-                                       二维扫查，该标尺为步进轴 */
-
-    double                 m_currentTimeCount;
     QSemaphore             m_refreshSemaphore;
 
     DplFocallaw::ScanCnf::Mode      m_focallawMode;

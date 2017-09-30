@@ -3,7 +3,9 @@
 #include <source/source.h>
 
 CscanTimeScene::CscanTimeScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
-    : CscanScene(palette, grp, parent)
+    : CscanScene(palette, grp, parent),
+      m_currentTimeCount(0.0),
+      m_pendingTimeCount(0.0)
 {
     m_driving = DplSource::Axis::TIMER;
 }
@@ -20,34 +22,111 @@ bool CscanTimeScene::need_refresh(const DplSource::BeamsPointer &beams)
 
 void CscanTimeScene::draw_vertical_beam()
 {
+    m_pendingTimeCount = TestStub::instance()->get_time();
+
     S_CommonProperties commonProperties;
 
     calculate_common_properties(commonProperties);
+
+    int pendingFrameCount = (m_pendingTimeCount * 1000) / DplSource::Source::instance()->interval();
+    int totalFrameCount = STORE_BUFFER_SIZE / m_beamsPointer->size();
+
+    DplSource::BeamsPointer beamsPointer = DplSource::Source::instance()->beams(m_group->index(),
+                                                                                pendingFrameCount % totalFrameCount);
+
+    qDebug() << "[" << __FUNCTION__ << "]" << " target frame index = " << pendingFrameCount % totalFrameCount;
 
     if(m_scrolling) {
         /* 整个显示区域画满beam，开始滚动显示后续的beam */
-        scroll_vertical_image(commonProperties);
+        scroll_vertical_image(commonProperties, beamsPointer);
     } else {
-        set_vertical_image_data(m_beamsShowedCount, commonProperties, m_beamsPointer);
+        set_vertical_image_data(m_beamsShowedCount, commonProperties, beamsPointer);
     }
 
     ++m_beamsShowedCount;
+    m_currentTimeCount = m_pendingTimeCount;
 }
 
 
-void CscanTimeScene::redraw_vertical_beam()
+bool CscanTimeScene::redraw_vertical_beam()
 {
-    if(!((m_beamsShowedCount > 0)
-         && (!m_beamsPointer.isNull())
+//    qDebug() << "[" << __FUNCTION__ << "]" << " m_beamsShowedCount = " << m_beamsShowedCount
+//             << "  m_image = " << m_image
+//             << " m_beamsPointer = " << m_beamsPointer.isNull();
+
+    if(!((!m_beamsPointer.isNull())
         && (m_image != NULL))) {
-        return;
+        return false;
     }
 
+    m_pendingTimeCount = TestStub::instance()->get_time();
+    double timeSpace = m_pendingTimeCount - m_currentTimeCount;
+    int beamsCount = (timeSpace * 1000) / DplSource::Source::instance()->interval();
+
     S_CommonProperties commonProperties;
+    calculate_common_properties(commonProperties);
+
     S_RedrawProperties redrawProperties;
 
-    calculate_common_properties(commonProperties);
-    calculate_redraw_properties(commonProperties, redrawProperties);
+//    qDebug() << "[" << __FUNCTION__ << "]"
+//             << " m_pendingTimeCount = " << m_pendingTimeCount
+//             << " m_currentTimeCount = " << m_currentTimeCount
+//             << " timeSpace = " << timeSpace;
+
+//    qDebug() << "[" << __FUNCTION__ << "]"
+//             << " beamsCount = " << beamsCount
+//             << " maxIndex = " << commonProperties.maxIndex;
+
+//    qDebug() << "[" << __FUNCTION__ << "]"
+//             << " m_redrawFlag = " << m_redrawFlag;
+
+    if(beamsCount > commonProperties.maxIndex) {
+
+        int pendingFrameCount = m_pendingTimeCount * 1000 / DplSource::Source::instance()->interval();
+
+        redrawProperties.currentFrameIndex  = pendingFrameCount;
+        redrawProperties.totalFrameCount    = STORE_BUFFER_SIZE / m_beamsPointer->size();
+        redrawProperties.redrawCount        = commonProperties.maxIndex;
+        redrawProperties.beginShowIndex     = redrawProperties.currentFrameIndex - redrawProperties.redrawCount + 1;
+
+    } else if(beamsCount > 1) {
+
+        int pendingFrameCount = m_pendingTimeCount * 1000 / DplSource::Source::instance()->interval();
+        int currentFrameCount = m_currentTimeCount * 1000 / DplSource::Source::instance()->interval();
+
+        redrawProperties.currentFrameIndex  = pendingFrameCount;
+        redrawProperties.totalFrameCount    = STORE_BUFFER_SIZE / m_beamsPointer->size();
+        redrawProperties.redrawCount        = pendingFrameCount - currentFrameCount;
+        redrawProperties.beginShowIndex     = currentFrameCount;
+
+    } else if(m_redrawFlag) {
+
+        int pendingFrameCount = m_pendingTimeCount * 1000 / DplSource::Source::instance()->interval();
+
+        int tmpRedrawCount = pendingFrameCount - commonProperties.maxIndex;
+        if(tmpRedrawCount > 0) {
+            redrawProperties.redrawCount    = commonProperties.maxIndex;
+            redrawProperties.beginShowIndex = tmpRedrawCount;
+        } else {
+            redrawProperties.redrawCount    = pendingFrameCount;
+            redrawProperties.beginShowIndex = 0;
+        }
+
+        redrawProperties.currentFrameIndex  = pendingFrameCount;
+        redrawProperties.totalFrameCount    = STORE_BUFFER_SIZE / m_beamsPointer->size();
+
+
+    } else {
+
+        qDebug() << "[" << __FUNCTION__ << "]" << " no need to redraw.";
+        return false;
+    }
+
+//    qDebug() << "[" << __FUNCTION__ << "]"
+//             << " currentFrameIndex = " << redrawProperties.currentFrameIndex
+//             << " totalFrameCount = " << redrawProperties.totalFrameCount
+//             << " redrawCount = " << redrawProperties.redrawCount
+//             << " beginShowIndex = " << redrawProperties.beginShowIndex;
 
     DplSource::BeamsPointer tmp;
     int tmpBeamsShowedCount = 0;
@@ -56,7 +135,8 @@ void CscanTimeScene::redraw_vertical_beam()
 
         if(redrawProperties.beginShowIndex >= 0) {
             /* 顺序显示beams */
-            tmp = DplSource::Source::instance()->beams(m_group->index(), redrawProperties.beginShowIndex + i);
+            tmp = DplSource::Source::instance()->beams(m_group->index(),
+                                                       (redrawProperties.beginShowIndex + i) % redrawProperties.totalFrameCount);
 
         } else {
             /*
@@ -89,6 +169,10 @@ void CscanTimeScene::redraw_vertical_beam()
     }
 
     m_beamsShowedCount = tmpBeamsShowedCount;
+    m_currentTimeCount = m_pendingTimeCount;
+    m_redrawFlag = false;
+
+    return true;
 }
 
 

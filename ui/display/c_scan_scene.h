@@ -49,7 +49,7 @@ public:
 
     virtual bool need_refresh(const DplSource::BeamsPointer &beams);
 
-    bool redraw_beams();
+    bool redraw_beams(const DplSource::BeamsPointer &beams);
 
     void set_beams(const DplSource::BeamsPointer &beams);
 
@@ -89,7 +89,7 @@ protected:
     /**
      * @redraw_horizontal_beam 当显示大小改变，重新画垂直C扫
      */
-    virtual void redraw_vertical_beam();
+    virtual bool redraw_vertical_beam();
 
     void calculate_common_properties(CscanScene::S_CommonProperties &commonProperties);
     void calculate_redraw_properties(CscanScene::S_CommonProperties &commonProperties,
@@ -109,7 +109,8 @@ protected:
      * @brief scroll_vertical_image     时间Cs扫的垂直滚动image滚动实现
      * @param commonProperties
      */
-    void scroll_vertical_image(const CscanScene::S_CommonProperties &commonProperties);
+    void scroll_vertical_image(const CscanScene::S_CommonProperties &commonProperties,
+                               const DplSource::BeamsPointer &beamsPointer);
 
     void drawBackground(QPainter *painter, const QRectF &rect);
 
@@ -134,6 +135,29 @@ protected:
      * @return  true 获取成功； false 获取失败
      */
     bool get_peak_value(const DplSource::BeamsPointer &beamsPointer, int beamCount, double &gateValue);
+
+    /**
+     * @brief get_source_peak_value C扫源数据为Thickness，再根据不同的源机型C扫结果。
+     * @param beamsPointer
+     * @param beamCount
+     * @param gateValue
+     * @return
+     */
+    bool get_source_peak_value(const DplSource::BeamsPointer &beamsPointer,
+                               int beamCount,
+                               double &gateValue);
+
+
+    void get_gate_position(DplSource::Beam::GateType type,
+                           const DplSource::BeamsPointer &beamsPointer,
+                           int beamCount,
+                           double &gateValue);
+
+    void get_gate_position_distance(DplSource::Beam::GateType type1,
+                                    DplSource::Beam::GateType type2,
+                                    const DplSource::BeamsPointer &beamsPointer,
+                                    int beamCount,
+                                    double &gateValue);
 
 
 private:

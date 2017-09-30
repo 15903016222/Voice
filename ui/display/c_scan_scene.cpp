@@ -76,6 +76,8 @@ void CscanScene::set_size(const QSize &size)
         check_scroll_window(size);
         m_redrawFlag = true;
     }
+
+    qDebug() << "[" << __FUNCTION__ << "]" << " m_redrawFlag = " << m_redrawFlag;
 }
 
 void CscanScene::draw_vertical_beam()
@@ -83,9 +85,9 @@ void CscanScene::draw_vertical_beam()
 
 }
 
-void CscanScene::redraw_vertical_beam()
+bool CscanScene::redraw_vertical_beam()
 {
-
+    return false;
 }
 
 
@@ -100,13 +102,12 @@ void CscanScene::calculate_common_properties(CscanScene::S_CommonProperties &com
          commonProperties.maxIndex += 1;
     }
 
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " ratio = " << commonProperties.ratio
-             << " pixCount = " << commonProperties.pixCount
-             << " maxIndex = " << commonProperties.maxIndex
-             << " align = " << commonProperties.align
-             << " m_pixPerBeamRatio = " << m_pixPerBeamRatio;
-
+//    qDebug() << "[" << __FUNCTION__ << "]"
+//             << " ratio = " << commonProperties.ratio
+//             << " pixCount = " << commonProperties.pixCount
+//             << " maxIndex = " << commonProperties.maxIndex
+//             << " align = " << commonProperties.align
+//             << " m_pixPerBeamRatio = " << m_pixPerBeamRatio;
 }
 
 void CscanScene::calculate_redraw_properties(CscanScene::S_CommonProperties &commonProperties, CscanScene::S_RedrawProperties &redrawProperites)
@@ -123,33 +124,18 @@ void CscanScene::calculate_redraw_properties(CscanScene::S_CommonProperties &com
         redrawProperites.redrawCount = m_beamsShowedCount;
     }
 
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " maxIndex = " << commonProperties.maxIndex
-             << " redrawCount = " << redrawProperites.redrawCount
-             << " m_beamsShowedCount = " << m_beamsShowedCount
-             << " scrolling = " << m_scrolling
-             << " h target = " << m_image->height() / m_pixPerBeamRatio
-             << " w target = " << m_image->width() / m_pixPerBeamRatio;
-
-
     redrawProperites.beginShowIndex = redrawProperites.currentFrameIndex - redrawProperites.redrawCount + 1;
-
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " currentFrameIndex = " << redrawProperites.currentFrameIndex
-             << " beginShowIndex = " << redrawProperites.beginShowIndex
-             << " redrawCount = " << redrawProperites.redrawCount
-             << " totalFrameCount = " << redrawProperites.totalFrameCount;
 }
 
 void CscanScene::set_vertical_image_data(int beamsShowedCount,
                                          const CscanScene::S_CommonProperties &commonProperties,
                                          const DplSource::BeamsPointer &beamsPointer)
 {
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " m_image w = " << m_image->width()
-             << " h = " << m_image->height()
-             << " m_size w = " << m_size.width()
-             << " h = " << m_size.height();
+//    qDebug() << "[" << __FUNCTION__ << "]"
+//             << " m_image w = " << m_image->width()
+//             << " h = " << m_image->height()
+//             << " m_size w = " << m_size.width()
+//             << " h = " << m_size.height();
 
     if((beamsShowedCount + 1) == commonProperties.maxIndex && (commonProperties.align != 0)) {
         /* 非对齐,最后一条beam */
@@ -166,12 +152,13 @@ void CscanScene::set_vertical_image_data(int beamsShowedCount,
 }
 
 
-void CscanScene::scroll_vertical_image(const CscanScene::S_CommonProperties &commonProperties)
+void CscanScene::scroll_vertical_image(const CscanScene::S_CommonProperties &commonProperties,
+                                       const DplSource::BeamsPointer &beamsPointer)
 {
     QImage tmp = m_image->copy(commonProperties.pixCount, 0, m_image->width(), m_image->height());
     m_image->swap(tmp);
 
-    draw_c_scan_vertical_image_data(0, commonProperties, LAST_BEAM, m_beamsPointer);
+    draw_c_scan_vertical_image_data(0, commonProperties, LAST_BEAM, beamsPointer);
 }
 
 
@@ -195,7 +182,6 @@ void CscanScene::draw_c_scan_vertical_image_data(int beamsShowedCount,
     int beginLine  = 0;
     int endLine    = 0;
     int targetLine = 0;
-    int tmpPos     = beamsShowedCount * commonProperties.pixCount;
 
     for(int num = 0; num < beamQty; ++num) {
 
@@ -209,7 +195,14 @@ void CscanScene::draw_c_scan_vertical_image_data(int beamsShowedCount,
             continue;
         }
 
-        qDebug() << " gateValue = " << gateValue;
+        double gateValueTmp;
+        get_peak_value(m_beamsPointer, num, gateValueTmp);
+
+//        qDebug() << "[" << __FUNCTION__ << "]" << " gateValue = " << gateValue
+//                 << " gateValueTmp = " << gateValueTmp
+//                 << " drawLine = " << drawLine
+//                 << " beamsShowedCount = " << beamsShowedCount;
+
 
         for(int offset = 0; offset < drawLine; ++offset) {
 
@@ -226,6 +219,7 @@ void CscanScene::draw_c_scan_vertical_image_data(int beamsShowedCount,
                 if(type == LAST_BEAM) {
                     pos = m_image->width() - 1 - j;
                 } else {
+                    int tmpPos = beamsShowedCount * commonProperties.pixCount;
                     pos = (int)(tmpPos + j);
                 }
 
@@ -240,7 +234,6 @@ void CscanScene::draw_c_scan_vertical_image_data(int beamsShowedCount,
             }
         }
     }
-
 }
 
 
@@ -271,13 +264,18 @@ bool CscanScene::get_peak_value(const DplSource::BeamsPointer &beamsPointer, int
    }
    case TestStub::SOURCE_T:
    {
-       return true;
+       return get_source_peak_value(beamsPointer, beamCount, gateValue);
        break;
    }
    case TestStub::SOURCE_I:
    {
-       gateValue = beamPoint->gate_peak(DplSource::Beam::GATE_I);
+       if (m_group->ut_unit() == DplDevice::Group::Time) {
+           gateValue = beamPoint->gate_peak_position(DplSource::Beam::GATE_I) / 1000.0;
+       } else {
+           gateValue = beamPoint->gate_peak_position(DplSource::Beam::GATE_I) * m_group->sample()->velocity() / 200000.0;
+       }
        return true;
+
        break;
    }
    case TestStub::SOURCE_OFF:
@@ -293,6 +291,81 @@ bool CscanScene::get_peak_value(const DplSource::BeamsPointer &beamsPointer, int
 
 }
 
+bool CscanScene::get_source_peak_value(const DplSource::BeamsPointer &beamsPointer, int beamCount, double &gateValue)
+{
+    TestStub::THICKNESS_SOURCE thicknessSourceType = TestStub::instance()->get_thickness_source();
+
+    switch (thicknessSourceType) {
+    case TestStub::A_POSITION:                      /* A^ */
+    {
+        get_gate_position(DplSource::Beam::GATE_A, beamsPointer, beamCount, gateValue);
+        break;
+    }
+    case TestStub::A_POSITION_MINUS_I_POSITION:     /* A^ - I^ */
+    case TestStub::A_POSITION_MINUS_I_AMPLITUDE:    /* A^ - I/ */
+    {
+        get_gate_position_distance(DplSource::Beam::GATE_A,
+                                   DplSource::Beam::GATE_I,
+                                   beamsPointer,
+                                   beamCount,
+                                   gateValue);
+        break;
+    }
+    case TestStub::B_POSITION:                       /* B^ */
+    {
+        get_gate_position(DplSource::Beam::GATE_A,
+                          beamsPointer,
+                          beamCount,
+                          gateValue);
+        break;
+    }
+    case TestStub::B_POSITION_MINUS_I_POSITION:      /* B^ - I^*/
+    case TestStub::B_POSITION_MINUS_I_AMPLITUDE:     /* B^ - I/ */
+    {
+        get_gate_position_distance(DplSource::Beam::GATE_B,
+                                   DplSource::Beam::GATE_I,
+                                   beamsPointer,
+                                   beamCount,
+                                   gateValue);
+        break;
+    }
+    case TestStub::B_POSITION_MINUS_A_POSITION:      /* B^ - A^ */
+    {
+        get_gate_position_distance(DplSource::Beam::GATE_B,
+                                   DplSource::Beam::GATE_A,
+                                   beamsPointer,
+                                   beamCount,
+                                   gateValue);
+        break;
+    }
+    case TestStub::I_POSITION:            /* I^ */
+    case TestStub::I_AMPLITUDE:           /* I/ */
+    {
+        get_gate_position(DplSource::Beam::GATE_A, beamsPointer, beamCount, gateValue);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void CscanScene::get_gate_position(DplSource::Beam::GateType type,
+                                   const DplSource::BeamsPointer &beamsPointer,
+                                   int beamCount,
+                                   double &gateValue)
+{
+
+}
+
+void CscanScene::get_gate_position_distance(DplSource::Beam::GateType type1,
+                                            DplSource::Beam::GateType type2,
+                                            const DplSource::BeamsPointer &beamsPointer,
+                                            int beamCount,
+                                            double &gateValue)
+{
+
+}
+
 
 void CscanScene::check_scroll_window(const QSize &oldSize)
 {
@@ -303,11 +376,12 @@ void CscanScene::check_scroll_window(const QSize &oldSize)
 
     /* size变小,同时已显示数超过最新size的最大显示数 */
     /* size变大，同时当前已为滚动状态 */
-
     if((oldWidth >= newWidth && m_beamsShowedCount > newMaxIndex)
             || (oldWidth <= newWidth && m_scrolling && m_beamsShowedCount > newMaxIndex)) {
         /* 滚动 */
         m_scrolling = true;
+    } else {
+        m_scrolling = false;
     }
 }
 
@@ -325,14 +399,10 @@ bool CscanScene::need_refresh(const DplSource::BeamsPointer &beams)
         m_source = TestStub::instance()->get_source();
         qDebug() << "=========================sourc update==============================";
         qDebug() << "=========================sourc update==============================";
-        qDebug() << "=========================sourc update==============================";
-        qDebug() << "=========================sourc update==============================";
         return true;
     }
 
     if((!m_beamsPointer.isNull()) && beams->beam_qty() != m_beamsPointer->beam_qty()) {
-        qDebug() << "=========================beam_qty update==============================";
-        qDebug() << "=========================beam_qty update==============================";
         qDebug() << "=========================beam_qty update==============================";
         qDebug() << "=========================beam_qty update==============================";
         return true;
@@ -346,20 +416,21 @@ bool CscanScene::need_refresh(const DplSource::BeamsPointer &beams)
 
     /* （VPA/角度/beamQty）更改后，需要更新C扫 */
 
+    /* Thickness数据源：A^、A^ - I^、A^ - I/等 */
+
     return false;
 }
 
-bool CscanScene::redraw_beams()
+bool CscanScene::redraw_beams(const DplSource::BeamsPointer &beams)
 {
     QWriteLocker lock(&m_rwLock);
 
-    if(!m_redrawFlag) {
-        return false;
+    if(m_beamsPointer.isNull()) {
+        m_beamsPointer = beams;
     }
 
-    redraw_vertical_beam();
-    m_redrawFlag = false;
-    return true;
+    return redraw_vertical_beam();
+
 }
 
 void CscanScene::set_beams(const DplSource::BeamsPointer &beams)
@@ -368,7 +439,9 @@ void CscanScene::set_beams(const DplSource::BeamsPointer &beams)
 
     if(m_image == NULL) {
         qDebug() << "[" << __FUNCTION__ << "]" << " image is NULL. warning!!!!!";
-        return;
+        m_image = new QImage(m_size, QImage::Format_Indexed8);
+        m_image->setColorTable(m_palette->colors());
+        m_image->fill(Qt::white);
     }
 
     m_beamsPointer = beams;
@@ -376,5 +449,7 @@ void CscanScene::set_beams(const DplSource::BeamsPointer &beams)
     draw_vertical_beam();
 
     emit image_changed();
+
+    qDebug() << "[" << __FUNCTION__ <<  "]" << " beamsShowCount = " << m_beamsShowedCount;
 
 }

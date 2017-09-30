@@ -6,12 +6,14 @@
 
 #include <QTime>
 #include <QTimer>
+#include <ui/display/test_stub.h>
 
 StatusBar::StatusBar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StatusBar),
     m_timer(new QTimer),
-    m_scan(DplSource::Scan::instance())
+    m_scan(DplSource::Scan::instance()),
+    m_timeCount(0.0)
 {
     ui->setupUi(this);
     ui->indexEncLabel->hide();
@@ -25,6 +27,8 @@ StatusBar::StatusBar(QWidget *parent) :
 
     connect(m_scan, SIGNAL(mode_changed(DplSource::Scan::Mode)),
             this, SLOT(do_scan_mode_changed(DplSource::Scan::Mode)));
+
+    TestStub::instance();
 
     connect(this, SIGNAL(encoder_text_changed()),
             this, SLOT(do_encoder_text_changed()),
@@ -79,8 +83,21 @@ void StatusBar::do_data_event(const DplSource::BeamsPointer &beams)
     DplSource::AxisPointer indexAxis = m_scan->index_axis();
     DplSource::BeamPointer beam = beams->get(0);
 
+#if 1
+    m_timeCount += 0.02;
+    qDebug() << "[StatusBar] [1] " << m_timeCount;
+    TestStub::instance()->update_time(m_timeCount);
+
+#endif
+
     if (scanAxis->driving() == DplSource::Axis::TIMER) {
+#if 1
+        QString tmp;
+        tmp.sprintf("%0.2f", m_timeCount);
+        m_scanEncStr = m_scanEncStr + tmp + tr(" s");
+#else
         m_scanEncStr += "0.00 s";
+#endif
     } else if (scanAxis->driving() == DplSource::Axis::ENCODER_X) {
         m_scanEncStr += QString::number(beam->encoder_x()/ m_scan->encoder_x()->resolution(), 'f', 2) + " mm";
     } else {
@@ -102,3 +119,4 @@ void StatusBar::do_encoder_text_changed()
     ui->scanEncLabel->setText(m_scanEncStr);
     ui->indexEncLabel->setText(m_indexEncStr);
 }
+
