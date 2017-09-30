@@ -5,7 +5,7 @@ namespace DplUt {
 class PulserPrivate
 {
 public:
-    PulserPrivate(const SamplePointer &sample, const DplFocallaw::Focallawer &focallawer) :
+    PulserPrivate(const SamplePointer &sample, const DplFocallaw::FocallawerPointer &focallawer) :
         m_txrxMode(Pulser::PE),
         m_pw(100),
         m_sample(sample),
@@ -19,7 +19,7 @@ public:
 };
 
 Pulser::Pulser(const SamplePointer &sample, const DplFocallaw::FocallawerPointer &focallawer) : QObject(),
-    d(new PulserPrivate)
+    d(new PulserPrivate(sample, focallawer))
 {
     connect(static_cast<Sample *>(sample.data()),
             SIGNAL(start_changed(float)),
@@ -46,9 +46,9 @@ Pulser::TxRxMode Pulser::tx_rx_mode() const
 
 void Pulser::set_tx_rx_mode(Pulser::TxRxMode mode)
 {
-    if (m_txrxMode != mode) {
-        m_txrxMode = mode;
-        emit txrx_mode_changed(m_txrxMode);
+    if (d->m_txrxMode != mode) {
+        d->m_txrxMode = mode;
+        emit txrx_mode_changed(d->m_txrxMode);
     }
 }
 

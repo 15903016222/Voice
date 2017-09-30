@@ -11,7 +11,7 @@ class Pulser : public QObject
 {
     Q_OBJECT
 public:
-    explicit Pulser(const SamplePointer &sample, const DplFocallaw::Focallawer &focallawer);
+    explicit Pulser(const SamplePointer &sample, const DplFocallaw::FocallawerPointer &focallawer);
 
     enum TxRxMode {
         PE,
