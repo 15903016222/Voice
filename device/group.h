@@ -132,12 +132,6 @@ public:
      */
     const DplFocallaw::FocallawerPointer &focallawer() const;
 
-    /**
-     * @brief rx_time   获取工作时间
-     * @return          时间(ns)
-     */
-    int txrx_time() const;
-
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void velocity_changed(double val);
@@ -158,12 +152,12 @@ private slots:
     void update_source();
 
 private:
+    DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplUt::SamplePointer m_sample;
     DplUt::PulserPointer m_pulser;
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
-    DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplFpga::GroupPointer m_fpgaGroup;
     GroupPrivate *d;
 
@@ -172,6 +166,7 @@ private:
     void init_gates();
     void init_sample();
     void init_pulser();
+    void init_source();
 };
 
 typedef QSharedPointer<Group> GroupPointer;

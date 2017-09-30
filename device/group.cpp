@@ -21,14 +21,13 @@
 namespace DplDevice {
 
 /* Group */
-Group::Group(int index, QObject *parent):
-    QObject(parent),
+Group::Group(int index, QObject *parent) : QObject(parent),
+    m_focallawer(new DplFocallaw::Focallawer),
     m_sample(new DplUt::Sample(DplFpga::Fpga::SAMPLE_PRECISION)),
-    m_pulser(new DplUt::Pulser()),
+    m_pulser(new DplUt::Pulser(m_sample, m_focallawer)),
     m_gateA(new DplGate::Gate(DplGate::Gate::A)),
     m_gateB(new DplGate::Gate(DplGate::Gate::B)),
     m_gateI(new DplGate::Gate(DplGate::Gate::I)),
-    m_focallawer(new DplFocallaw::Focallawer),
     m_fpgaGroup(new DplFpga::Group(index)),
     d(new GroupPrivate(this))
 {
@@ -38,17 +37,7 @@ Group::Group(int index, QObject *parent):
 
     init_pulser();
 
-    DplSource::Source *source = DplSource::Source::instance();
-    source->register_group(index, m_focallawer->beam_qty(), m_sample->point_qty());
-    connect(source, SIGNAL(data_event()),
-            d, SLOT(do_source_data_event()),
-            Qt::DirectConnection);
-
-    connect(static_cast<DplFocallaw::Focallawer *>(m_focallawer.data()),
-            SIGNAL(beam_qty_changed(int)),
-            this, SLOT(update_source()));
-
-    update_sample();
+    init_source();
 }
 
 Group::~Group()
@@ -114,14 +103,6 @@ const DplSource::BeamPointer &Group::current_beam() const
     return d->beam();
 }
 
-int Group::txrx_time() const
-{
-    return m_focallawer->max_beam_delay()
-            + m_focallawer->wedge()->delay()
-            + m_sample->start()
-            + m_sample->range();
-}
-
 void Group::deploy_beams() const
 {
     DplFpga::Beam fpgaBeam;
@@ -175,13 +156,12 @@ void Group::update_sample()
 {
     m_fpgaGroup->set_sample_start((m_focallawer->wedge()->delay() + m_sample->start())/DplFpga::Fpga::SAMPLE_PRECISION);
     m_fpgaGroup->set_sample_range((m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range())/DplFpga::Fpga::SAMPLE_PRECISION);
-    m_fpgaGroup->set_rx_time((txrx_time() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
-    //    m_fpgaGroup->show_info();
 }
 
 void Group::update_pulser()
 {
-    m_fpgaGroup->set_idle_time((DplUt::GlobalPulser::instance()->beam_cycle() - txrx_time())/DplFpga::Fpga::SAMPLE_PRECISION);
+    m_fpgaGroup->set_rx_time((m_pulser->txrx_time() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
+    m_fpgaGroup->set_idle_time((DplUt::GlobalPulser::instance()->beam_cycle() - m_pulser->txrx_time())/DplFpga::Fpga::SAMPLE_PRECISION);
 }
 
 void Group::update_source()
@@ -268,30 +248,34 @@ void Group::init_sample()
             SIGNAL(delay_changed(int)),
             this,
             SLOT(update_sample()));
+
+    update_sample();
 }
 
 void Group::init_pulser()
 {
+    connect(static_cast<DplUt::Pulser *>(m_pulser.data()),
+            SIGNAL(txrx_time_changed()),
+            this,
+            SLOT(update_pulser()));
+
     connect(DplUt::GlobalPulser::instance(),
             SIGNAL(beam_cycle_changed()),
             this,
             SLOT(update_pulser()));
-    connect(static_cast<DplUt::Sample*>(m_sample.data()),
-            SIGNAL(start_changed(float)),
-            this,
-            SLOT(update_pulser()));
-    connect(static_cast<DplUt::Sample*>(m_sample.data()),
-            SIGNAL(range_changed(float)),
-            this,
-            SLOT(update_pulser()));
-    connect(static_cast<DplFocallaw::Wedge *>(m_focallawer->wedge().data()),
-            SIGNAL(delay_changed(int)),
-            this,
-            SLOT(update_pulser()));
-    connect(static_cast<DplFocallaw::Focallawer*>(m_focallawer.data()),
-            SIGNAL(focallawed()),
-            this,
-            SLOT(update_pulser()));
+}
+
+void Group::init_source()
+{
+    DplSource::Source *source = DplSource::Source::instance();
+    source->register_group(index(), m_focallawer->beam_qty(), m_sample->point_qty());
+    connect(source, SIGNAL(data_event()),
+            d, SLOT(do_source_data_event()),
+            Qt::DirectConnection);
+
+    connect(static_cast<DplFocallaw::Focallawer *>(m_focallawer.data()),
+            SIGNAL(beam_qty_changed(int)),
+            this, SLOT(update_source()));
 }
 
 }
