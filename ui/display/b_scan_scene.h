@@ -10,24 +10,6 @@
 #include <source/beams.h>
 #include <source/axis.h>
 
-#if 0
-static const double SCAN_START      = -100.0;    /* 扫查起点 */
-static const double SCAN_END        = 285.0;    /* 扫查终点 */
-static const double SCAN_RESOLUTION = 1.0;     /* 扫查分辨率 */
-#else
-static const double SCAN_START      = -100.0;    /* 扫查起点 */
-static const double SCAN_END        = 700.0;    /* 扫查终点 */
-
-static const double SCAN_RESOLUTION = 1.0;     /* 扫查分辨率 */
-
-//static const double SCAN_RESOLUTION = 15.0;     /* 扫查分辨率 */
-
-//static const double SCAN_START      = 0.0;    /* 扫查起点 */
-//static const double SCAN_END        = 700.0;    /* 扫查终点 */
-//static const double SCAN_RESOLUTION = 11.0;     /* 扫查分辨率 */
-
-#endif
-
 static const double ENCODER_ORIGIN  = 11.0;     /* 编码其起始位置 */
 static const int STORE_BUFFER_SIZE = 256 * 1024 * 1024 ;    /* 256MB */
 

@@ -199,7 +199,6 @@ void BscanScene::calculate_common_properties(BscanScene::S_CommonProperties &com
 void BscanScene::calculate_redraw_properties(BscanScene::S_CommonProperties &commonProperties,
                                              BscanScene::S_RedrawProperties &redrawProperites)
 {
-
     DEBUG_INIT("BscanTimeScene", __FUNCTION__);
     /* index从0开始 */
     redrawProperites.currentFrameIndex  = m_beamsPointer->get(0)->index() / DplDevice::Device::instance()->beam_qty();
