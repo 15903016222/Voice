@@ -13,8 +13,9 @@
 namespace DplFocallaw {
 
 class SpecimenPrivate;
-class FOCALLAWSHARED_EXPORT Specimen
+class FOCALLAWSHARED_EXPORT Specimen : public QObject
 {
+    Q_OBJECT
     Q_DECLARE_PRIVATE(Specimen)
 public:
     explicit Specimen();
@@ -59,10 +60,11 @@ public:
      */
     void set_velocity(uint v);
 
+signals:
+    void velocity_changed(uint val);
+
 private:
     SpecimenPrivate *d_ptr;
-
-    Q_DISABLE_COPY(Specimen)
 };
 
 typedef QSharedPointer<Specimen> SpecimenPointer;

@@ -102,7 +102,6 @@ void GeneralMenu::do_rangeItem_changed(double value)
 void GeneralMenu::do_velocityItem_changed(double value)
 {
     m_group->focallawer()->specimen()->set_velocity(value);
-    m_group->focallawer()->focallaw();
 }
 
 void GeneralMenu::do_wedgeDelayItem_changed(double value)
