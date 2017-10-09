@@ -17,9 +17,12 @@
 
 #include "true_depth_focus.h"
 #include "half_path_focus.h"
+#include "projection_focus.h"
+#include "focal_plane_focus.h"
 
 #include "flat.h"
 #include "cylinder.h"
+#include "cylinder_cod.h"
 
 #include "beam.h"
 

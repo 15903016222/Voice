@@ -19,6 +19,12 @@ public:
     explicit Cylinder();
     ~Cylinder();
 
+    enum InspectionFrom {
+        COD,
+        CID
+    };
+    virtual InspectionFrom inspection_from() const = 0;
+
     Type type() const { return CYLINDER; }
 
     /**
@@ -62,6 +68,7 @@ private:
     Q_DISABLE_COPY(Cylinder)
 };
 
+typedef QSharedPointer<Cylinder> CylinderPointer;
 }
 
 #endif // __CYLINDRICAL_SPECIMEN_H__
