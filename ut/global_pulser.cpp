@@ -35,9 +35,17 @@ void GlobalPulser::set_voltage(bool pa, GlobalPulser::Voltage v)
     }
 }
 
-GlobalPulser::PrfMode GlobalPulser::prf_mode()
+GlobalPulser::PrfMode GlobalPulser::prf_mode() const
 {
     return d->m_prfMode;
+}
+
+void GlobalPulser::set_prf_mode(GlobalPulser::PrfMode mode)
+{
+    if (d->m_prfMode != mode) {
+        d->m_prfMode = mode;
+        d->update_acquisition_rate();
+    }
 }
 
 uint GlobalPulser::prf() const
@@ -50,15 +58,19 @@ int GlobalPulser::acquisition_rate() const
     return d->m_acqRate;
 }
 
-void GlobalPulser::set_acquisition_rate(GlobalPulser::PrfMode mode, int val)
+int GlobalPulser::max_acquisition_rate() const
 {
-    int rate = val;
-    d->m_prfMode = mode;
-    if (USER_DEF == mode && rate != val) {
-        rate = val;
+    return d->max_acquisition_rate();
+}
+
+bool GlobalPulser::set_acquisition_rate(int val)
+{
+    if (USER_DEF == d->m_prfMode && d->m_acqRate != val) {
+        d->m_acqRate = val;
         emit prf_changed();
-    } else if (USER_DEF != mode){
-        d->update_acquisition_rate();
+        return true;
+    } else {
+        return false;
     }
 }
 

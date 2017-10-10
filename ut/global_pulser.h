@@ -56,7 +56,13 @@ public:
      * @brief prf_mode  获取重复频率模式
      * @return          模式
      */
-    PrfMode prf_mode();
+    PrfMode prf_mode() const;
+
+    /**
+     * @brief set_prf_mode  设置重复频率模式
+     * @param mode          模式
+     */
+    void set_prf_mode(PrfMode mode);
 
     /**
      * @brief prf   获取脉冲发射重复频率
@@ -71,11 +77,17 @@ public:
     int acquisition_rate() const;
 
     /**
-     * @brief set_acquisition_rate  设置采集率
-     * @param mode                  脉冲重复频率模式
-     * @param val                   采集频率(Hz),当重复频率模式设置为USER_DEF时才有效
+     * @brief max_acquisition_rate  获取最大的采集率
+     * @return                      频率(Hz)
      */
-    void set_acquisition_rate(PrfMode mode, int val=0);
+    int max_acquisition_rate() const;
+
+    /**
+     * @brief set_acquisition_rate  设置采集率
+     * @param val                   采集频率(Hz),当重复频率模式设置为USER_DEF时才有效
+     * @return                      成功返回true,否则为false
+     */
+    bool set_acquisition_rate(int val);
 
     /**
      * @brief beam_cycle    每条Beam的周期时间
