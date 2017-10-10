@@ -39,6 +39,11 @@ Pulser::Pulser(const SamplePointer &sample, const DplFocallaw::FocallawerPointer
             SIGNAL(txrx_time_changed()));
 }
 
+Pulser::~Pulser()
+{
+    delete d;
+}
+
 Pulser::TxRxMode Pulser::tx_rx_mode() const
 {
     return d->m_txrxMode;

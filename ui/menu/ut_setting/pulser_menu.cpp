@@ -77,11 +77,11 @@ PulserMenu::PulserMenu(QWidget *parent) :
             this,
             SLOT(do_userDevItem_changed(double)));
 
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this,
+            SLOT(update(DplDevice::GroupPointer)));
     update(DplDevice::Device::instance()->current_group());
-}
-
-PulserMenu::~PulserMenu()
-{
 }
 
 void PulserMenu::update_voltage_item()
