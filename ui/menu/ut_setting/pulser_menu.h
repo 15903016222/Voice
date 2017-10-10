@@ -9,6 +9,7 @@
 #define __PULSER_MENU_H__
 
 #include "../base_menu.h"
+#include <device/device.h>
 
 namespace DplUtSettingMenu {
 
@@ -19,12 +20,29 @@ public:
     explicit PulserMenu(QWidget *parent);
     ~PulserMenu();
 
+protected:
+    void update_voltage_item();
+
+protected slots:
+    void do_txrxModeItem_changed(int index);
+    void do_pulserItem_changed(double val);
+    void do_voltageItem_changed(int index);
+    void do_pwItem_changed(double val);
+    void do_prfItem_changed(int index);
+    void do_userDevItem_changed(double val);
+
+    void update(const DplDevice::GroupPointer &group);
+    void update_user_def_item();
+
 private:
     ComboMenuItem *m_txrxModeItem;
     SpinMenuItem *m_pulserItem;
     ComboMenuItem *m_voltageItem;
     SpinMenuItem *m_pwItem;
     ComboMenuItem *m_prfItem;
+    SpinMenuItem *m_userDefItem;
+
+    DplDevice::GroupPointer m_group;
 };
 
 }
