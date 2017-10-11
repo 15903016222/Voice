@@ -28,20 +28,42 @@ public:
      */
     int index(void) const;
 
-    /* 频带选择 */
-    enum FreqBand {             /* 探头频率  对应带宽   采样频率 */
-        FREQ_BAND_05_20,        /*  none    0.5-20    100M */
-        FREQ_BAND_05_25,        /*  1       0.5-2.5   25M */
-        FREQ_BAND_10_25,        /*  1.5-2.5 1-5       25M */
-        FREQ_BAND_20_100,       /*  3-5     2-10      50M */
-        FREQ_BAND_40_160,       /*  7.5     4-16      100M */
-        FREQ_BAND_50_200        /*  >=10    5-20      100M */
-    };
-    FreqBand freq_band(void) const;
-    bool set_freq_band(FreqBand band, bool reflesh = false);
+    /****************************************************************
+     *                            滤波器档位说明
+     *                  PA                            UT
+     * 档位  探头频率  对应带宽   采样频率      探头频率  对应带宽   采样频率
+     * 0     none    0.5-20    100M
+     * 1      1      0.5-2.5   25M
+     * 2     1.5-2.5  1-5      25M
+     * 3     3-5     2-10      50M
+     * 4     7.5     4-16      100M
+     * 5     >=10    5-20      100M
+     *****************************************************************/
+    /**
+     * @brief filter    获取滤波器档位
+     * @return          档位
+     */
+    int filter(void) const;
 
-    bool video_filter(void) const;         /* 视频滤波 */
-    bool enable_video_filter(bool flag, bool reflesh = false);
+    /**
+     * @brief set_filter    设置滤波器档位
+     * @param val           档位
+     * @return              成功返回true, 失败返回false
+     */
+    bool set_filter(int val);
+
+    /**
+     * @brief video_filter  获取视频滤波状态
+     * @return              开启则返回true, 否则为false
+     */
+    bool video_filter(void) const;
+
+    /**
+     * @brief enable_video_filter   设置视频滤波
+     * @param flag                  true为开启,false为关闭
+     * @return                      设置成功返回true, 失败返回false
+     */
+    bool enable_video_filter(bool flag);
 
     enum RectifierType {
         RF,
