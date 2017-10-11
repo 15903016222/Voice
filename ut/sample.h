@@ -95,9 +95,6 @@ signals:
     void range_changed(float range);
     void scale_factor_changed(int ratio);
     void point_qty_changed(int qty);
-    void velocity_changed(float velocity);
-
-public slots:
 
 private:
     const float m_precision;    // 采样精度(ns)
