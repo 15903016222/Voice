@@ -680,7 +680,7 @@ QLabel {
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_1">
+    <widget class="QLabel" name="prfLabel">
      <property name="palette">
       <palette>
        <active>

@@ -138,7 +138,7 @@ float Measure::gate_a_position(DplDevice::GroupPointer &group)
     if (group->ut_unit() == DplDevice::Group::Time) {
         return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) / 1000;
     } else {
-        return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) * group->sample()->velocity() / 200000;
+        return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) * group->focallawer()->specimen()->velocity() / 200000;
     }
 }
 
@@ -152,7 +152,7 @@ float Measure::gate_b_position(DplDevice::GroupPointer &group)
     if (group->ut_unit() == DplDevice::Group::Time) {
         return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) / 1000;
     } else {
-        return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) * group->sample()->velocity() / 200000;
+        return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) * group->focallawer()->specimen()->velocity() / 200000;
     }
 }
 

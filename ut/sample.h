@@ -89,18 +89,6 @@ public:
      */
     bool set_point_qty(int qty);
 
-    /**
-     * @brief velocity  获取声速
-     * @return          返回声速(m/s)
-     */
-    float velocity();
-
-    /**
-     * @brief set_velocity  设置声速
-     * @param value         声速(m/s)
-     */
-    void set_velocity(float velocity);
-
 signals:
     void gain_changed(float gain);
     void start_changed(float start);
@@ -116,7 +104,6 @@ private:
     float m_gain;               // 增益(dB)
     float m_start;              // 采样起点(ns)
     float m_range;              // 采样范围(ns)
-    float m_velocity;           // 声速(m/s)
     bool m_autoSetPointQty;     // 自动设置采样点标志
     int m_pointQty;             // 采样点数
 };
@@ -192,19 +179,6 @@ inline bool Sample::set_point_qty(int qty)
         emit scale_factor_changed(scale_factor());
     }
     return true;
-}
-
-inline float Sample::velocity()
-{
-    return m_velocity;
-}
-
-inline void Sample::set_velocity(float velocity)
-{
-    if ( ! qFuzzyCompare(m_velocity, velocity) ) {
-        m_velocity = velocity;
-    }
-    emit velocity_changed(velocity);
 }
 
 }

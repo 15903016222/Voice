@@ -11,6 +11,7 @@
 #include <fpga/group.h>
 #include <focallaw/focallawer.h>
 #include <ut/sample.h>
+#include <ut/pulser.h>
 #include <gate/gate.h>
 #include <source/beams.h>
 
@@ -101,6 +102,12 @@ public:
     const DplUt::SamplePointer &sample() const;
 
     /**
+     * @brief pulser    获取脉冲发生器对象
+     * @return          对象指针
+     */
+    const DplUt::PulserPointer &pulser() const;
+
+    /**
      * @brief gate  获取闸门对象指针
      * @param type  闸门类型
      * @return      闸门对象指针
@@ -141,14 +148,16 @@ public slots:
 
 private slots:
     void update_sample();
+    void update_pulser();
     void update_source();
 
 private:
+    DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplUt::SamplePointer m_sample;
+    DplUt::PulserPointer m_pulser;
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
-    DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplFpga::GroupPointer m_fpgaGroup;
     GroupPrivate *d;
 
@@ -156,6 +165,8 @@ private:
     void init_gate(DplGate::Gate *gate);
     void init_gates();
     void init_sample();
+    void init_pulser();
+    void init_source();
 };
 
 typedef QSharedPointer<Group> GroupPointer;
@@ -178,6 +189,11 @@ inline double Group::max_range()
 inline const DplUt::SamplePointer &Group::sample() const
 {
     return m_sample;
+}
+
+inline const DplUt::PulserPointer &Group::pulser() const
+{
+    return m_pulser;
 }
 
 inline const DplGate::GatePointer &Group::gate(DplGate::Gate::Type type) const

@@ -1,5 +1,7 @@
 #include "device_p.h"
 
+#include <global.h>
+
 #include <QFile>
 
 namespace DplDevice {
@@ -87,6 +89,19 @@ bool DevicePrivate::is_valid() const
         }
     }
     return flag;
+}
+
+int DevicePrivate::total_beam_qty() const
+{
+    int qty = 0;
+    foreach (GroupPointer grp, m_groups) {
+        if (grp->mode() == Group::PA) {
+            qty += grp->focallawer()->beam_qty();
+        } else {
+            qty += 1;
+        }
+    }
+    return qty;
 }
 
 QString DevicePrivate::get_version()

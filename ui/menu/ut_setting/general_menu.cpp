@@ -76,7 +76,7 @@ void GeneralMenu::update(const DplDevice::GroupPointer &group)
     update_start_item();
     update_range_item();
 
-    m_velocityItem->set_value(m_group->sample()->velocity());
+    m_velocityItem->set_value(m_group->focallawer()->specimen()->velocity());
 
     double delay = m_group->focallawer()->wedge()->delay();
     m_wedgeDelayItem->set_value(Dpl::ns_to_us(delay));
@@ -101,7 +101,7 @@ void GeneralMenu::do_rangeItem_changed(double value)
 
 void GeneralMenu::do_velocityItem_changed(double value)
 {
-    m_group->sample()->set_velocity(value);
+    m_group->focallawer()->specimen()->set_velocity(value);
 }
 
 void GeneralMenu::do_wedgeDelayItem_changed(double value)

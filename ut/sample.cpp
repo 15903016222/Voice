@@ -10,7 +10,6 @@ Sample::Sample(float precision, QObject *parent) :
     m_gain(20.0),
     m_start(0),
     m_range(57020),
-    m_velocity(3240),
     m_autoSetPointQty(true),
     m_pointQty(605)
 {

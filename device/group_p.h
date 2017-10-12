@@ -25,12 +25,6 @@ public:
 
     void set_current_angle(double angle);
 
-    /**
-     * @brief max_beam_delay    获取最大的Beam延迟时间
-     * @return                  延迟时间(ns)
-     */
-    int max_beam_delay();
-
     const DplSource::BeamsPointer &beams() const;
 
     const DplSource::BeamPointer &beam() const;
@@ -85,12 +79,6 @@ inline void GroupPrivate::set_current_angle(double angle)
         m_currentAngle = angle;
         emit q_ptr->current_angle_changed(angle);
     }
-}
-
-inline int GroupPrivate::max_beam_delay()
-{
-    qDebug()<<__FILE__<<__func__<<"Unimplement";
-    return 0;
 }
 
 inline const DplSource::BeamsPointer &GroupPrivate::beams() const

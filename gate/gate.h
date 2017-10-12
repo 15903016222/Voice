@@ -82,11 +82,6 @@ public:
 
 signals:
     /**
-     * @brief changed   闸门改变信号
-     */
-    void changed();
-
-    /**
      * @brief height_changed    高度改变信号
      * @param val               高度值(%)
      */

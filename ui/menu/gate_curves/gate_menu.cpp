@@ -197,9 +197,11 @@ void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
 
     m_group = group;
 
-    connect(m_group->sample().data(), SIGNAL(start_changed(float)),
+    connect(m_group->sample().data(),
+            SIGNAL(start_changed(float)),
             this, SLOT(do_sample_changed()));
-    connect(m_group->sample().data(), SIGNAL(range_changed(float)),
+    connect(m_group->sample().data(),
+            SIGNAL(range_changed(float)),
             this, SLOT(do_sample_changed()));
 
     do_gateItem_changed(DplGate::Gate::A);

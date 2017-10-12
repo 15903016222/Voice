@@ -22,6 +22,8 @@ public:
     explicit PaProbe(QObject *parent = 0);
     ~PaProbe();
 
+    static const int RESISTANCE;    // 电阻(欧)
+
     bool is_pa() const { return true; }
 
     /**
