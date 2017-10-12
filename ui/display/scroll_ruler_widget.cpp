@@ -21,6 +21,7 @@ bool ScrollRulerWidget::set_range(double start, double end)
         m_unitNum       = 0;
         m_offsetPix     = 0;
         m_moveTotalUnit = 0;
+        m_maxEnd        = -1.0;
         return true;
     }
 

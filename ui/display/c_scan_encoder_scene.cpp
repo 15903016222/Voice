@@ -1,20 +1,24 @@
 #include "c_scan_encoder_scene.h"
 
 #include <source/scan.h>
+#include <source/source.h>
+#include <source/beams.h>
 
 #define FLOAT_ZERO  0.0000001
 
 CscanEncoderScene::CscanEncoderScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
-    : CscanScene(palette, grp, parent)
+    : EncoderScene(palette, grp, parent),
+      m_cscanDataPointer(new CScanData(grp))
 {
     set_driving(DplSource::Scan::instance()->scan_axis()->driving());
     init_encoder_properties();
     init_scan_properties();
 }
 
+
 bool CscanEncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
 {
-    if(CscanScene::need_refresh(beams)) {
+    if(EncoderScene::need_refresh(beams)) {
         init_encoder_properties();
         init_scan_properties();
         return true;
@@ -55,59 +59,62 @@ bool CscanEncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
     }
 
     return false;
-
-}
-
-void CscanEncoderScene::draw_vertical_beam()
-{
-
-}
-
-bool CscanEncoderScene::redraw_vertical_beam()
-{
-    return false;
-}
-
-bool CscanEncoderScene::is_equal(double value1, double value2)
-{
-     return (((value1 - value2) < FLOAT_ZERO) && ((value1 - value2) > -FLOAT_ZERO)) ? true : false;
-
-}
-
-void CscanEncoderScene::init_encoder_properties()
-{
-    m_encoder.set_enabled(m_encoderPointer->is_enabled());
-    m_encoder.set_mode(m_encoderPointer->mode());
-    m_encoder.set_origin(m_encoderPointer->origin());
-    m_encoder.set_polarity(m_encoderPointer->polarity());
-    m_encoder.set_resolution(m_encoderPointer->resolution());
-}
-
-void CscanEncoderScene::init_scan_properties()
-{
-    m_axis.set_driving(DplSource::Scan::instance()->scan_axis()->driving());
-    m_axis.set_end(DplSource::Scan::instance()->scan_axis()->end());
-    m_axis.set_start(DplSource::Scan::instance()->scan_axis()->start());
-    m_axis.set_resolution(DplSource::Scan::instance()->scan_axis()->resolution());
 }
 
 
-void CscanEncoderScene::set_driving(DplSource::Axis::Driving driving)
+void CscanEncoderScene::set_vertical_image_data(int beamsShowedCount, const BaseScanScene::S_CommonProperties &commonProperties, BaseScanScene::E_BEAM_TYPE type, const DplSource::BeamsPointer &beamsPointer)
 {
-    m_driving = driving;
+    double beamQty = beamsPointer->beam_qty();
+    double perBeamSpace = m_image->height() / beamQty;
 
-    m_offsetX       = 0.0;
-    m_moveOffsetX   = 0.0;
+    int beginLine  = 0;
+    int endLine    = 0;
+    int targetLine = 0;
 
-    m_currentX      = DplSource::Scan::instance()->scan_axis()->start();
+    for(int num = 0; num < beamQty; ++num) {
 
-    m_maxShowedWave.x   = DplSource::Scan::instance()->scan_axis()->start();
-    m_maxShowedWave.y   = DplSource::Scan::instance()->scan_axis()->start();
+        beginLine = perBeamSpace * num + 0.5;
+        endLine   = beginLine + perBeamSpace + 0.5;
+        int drawLine = endLine - beginLine;
 
-    if(m_driving == DplSource::Axis::ENCODER_X) {
-        m_encoderPointer = DplSource::Scan::instance()->encoder_x();
-    } else if(m_driving == DplSource::Axis::ENCODER_Y) {
-        m_encoderPointer = DplSource::Scan::instance()->encoder_y();
+        double gateValue;
+        if(!m_cscanDataPointer->get_peak_value(beamsPointer, num, gateValue))
+        {
+            continue;
+        }
+
+        double gateValueTmp;
+        m_cscanDataPointer->get_peak_value(m_beamsPointer, num, gateValueTmp);
+
+        for(int offset = 0; offset < drawLine; ++offset) {
+
+            for(int j = 0; j < commonProperties.pixCount; ++j) {
+
+                targetLine = beginLine + offset;
+
+                if(targetLine >= m_image->height() || targetLine < 0) {
+                    qDebug() << "[" << __FUNCTION__ << "]" << " error target line = " << targetLine;
+                    continue;
+                }
+
+                int pos;
+                if(type == LAST_BEAM) {
+                    pos = m_image->width() - 1 - j;
+                } else {
+                    int tmpPos = beamsShowedCount * commonProperties.pixCount;
+                    pos = (int)(tmpPos + j);
+                }
+
+                quint8 *line    = (quint8*) m_image->scanLine(targetLine);
+
+                if(pos >= m_image->width() || pos < 0) {
+                    qDebug() << "[" << __FUNCTION__ << "]" << " error pos = " << pos;
+                    continue;
+                }
+
+                line[pos] = gateValue;
+            }
+        }
     }
 }
 

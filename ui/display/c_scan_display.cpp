@@ -1,7 +1,7 @@
 #include "c_scan_display.h"
 #include "ui_scan_display.h"
 
-
+#include "base_scan_scene.h"
 #include "c_scan_scene.h"
 #include "c_scan_encoder_scene.h"
 #include "c_scan_time_scene.h"

@@ -10,15 +10,18 @@ SOURCES += \
     $$PWD/color_bar.cpp \
     $$PWD/s_scan_display.cpp \
     $$PWD/display_widget.cpp \
-    $$PWD/s_scan_scene.cpp \
     $$PWD/c_scan_display.cpp \
-    $$PWD/c_scan_scene.cpp \
     $$PWD/s_scan_image.cpp \
     $$PWD/c_scan_vdisplay.cpp \
     $$PWD/scroll_ruler_widget.cpp \
     $$PWD/c_scan_time_scene.cpp \
     $$PWD/c_scan_encoder_scene.cpp \
-    $$PWD/test_stub.cpp
+    $$PWD/test_stub.cpp \
+    $$PWD/base_scan_scene.cpp \
+    $$PWD/encoder_scene.cpp \
+    $$PWD/time_scene.cpp \
+    $$PWD/c_scan_data.cpp \
+    $$PWD/s_scan_scene.cpp
 
 HEADERS += \
     $$PWD/ruler_widget.h \
@@ -32,15 +35,18 @@ HEADERS += \
     $$PWD/color_bar.h \
     $$PWD/s_scan_display.h \
     $$PWD/display_widget.h \
-    $$PWD/s_scan_scene.h \
     $$PWD/c_scan_display.h \
-    $$PWD/c_scan_scene.h \
     $$PWD/s_scan_image.h \
     $$PWD/c_scan_vdisplay.h \
     $$PWD/scroll_ruler_widget.h \
     $$PWD/c_scan_time_scene.h \
     $$PWD/c_scan_encoder_scene.h \
-    $$PWD/test_stub.h
+    $$PWD/test_stub.h \
+    $$PWD/base_scan_scene.h \
+    $$PWD/encoder_scene.h \
+    $$PWD/time_scene.h \
+    $$PWD/c_scan_data.h \
+    $$PWD/s_scan_scene.h
 
 FORMS += \
     $$PWD/a_scan_display.ui \
