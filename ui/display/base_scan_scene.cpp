@@ -3,7 +3,9 @@
 #include <QDebug>
 #include <QPainter>
 
+#include <ui/display/Tracer.h>
 #include <source/scan.h>
+#include <typeinfo>
 
 BaseScanScene::BaseScanScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
     : QGraphicsScene(parent),
@@ -19,6 +21,16 @@ BaseScanScene::BaseScanScene(const DplDisplay::PaletteColorPointer &palette, con
 {
     connect(this, SIGNAL(image_changed()),
             this, SLOT(update()), Qt::QueuedConnection);
+}
+
+BaseScanScene::~BaseScanScene()
+{
+    QWriteLocker lock(&m_rwLock);
+
+    if(m_image) {
+        delete m_image;
+        m_image = NULL;
+    }
 }
 
 bool BaseScanScene::set_pix_per_beam(double ratio)
@@ -61,6 +73,8 @@ void BaseScanScene::set_beams(const DplSource::BeamsPointer &beams)
 {
     QWriteLocker lock(&m_rwLock);
 
+    DEBUG_INIT("BaseScanScene", __FUNCTION__);
+
     if(m_image == NULL) {
         qDebug() << "[" << __FUNCTION__ << "]" << " image is NULL. warning!!!!!";
         m_image = new QImage(m_size, QImage::Format_Indexed8);
@@ -80,6 +94,10 @@ void BaseScanScene::set_size(const QSize &size)
 {
     QWriteLocker lock(&m_rwLock);
 
+    DEBUG_INIT("BaseScanScene", __FUNCTION__);
+
+    qDebug() << typeid(this).name();
+
     if((size.height() == m_size.height())
             && (size.width() == m_size.width())
             && (m_image != NULL))  {
@@ -98,6 +116,7 @@ void BaseScanScene::set_size(const QSize &size)
     m_image = new QImage(m_size, QImage::Format_Indexed8);
     m_image->setColorTable(m_palette->colors());
     m_image->fill(Qt::white);
+
 
     setSceneRect(-size.width()/2, -size.height()/2,
                  size.width(), size.height());
@@ -119,9 +138,15 @@ void BaseScanScene::set_size(const QSize &size)
 void BaseScanScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
     QWriteLocker lock(&m_rwLock);
+
+    QTime time;
+    time.restart();
+
     if(m_image != NULL) {
         painter->drawImage(rect, *m_image);
     }
+
+    qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
 
 

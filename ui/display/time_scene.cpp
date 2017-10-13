@@ -1,6 +1,7 @@
 #include "time_scene.h"
 
 #include <source/source.h>
+#include <ui/display/Tracer.h>
 
 TimeScene::TimeScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
     : BaseScanScene(palette, grp, parent)
@@ -11,6 +12,8 @@ TimeScene::TimeScene(const DplDisplay::PaletteColorPointer &palette, const DplDe
 
 void TimeScene::draw_vertical_beam()
 {
+    DEBUG_INIT("TimeScene", __FUNCTION__);
+
     m_pendingTimeCount = TestStub::instance()->get_time();
 
     S_CommonProperties commonProperties;

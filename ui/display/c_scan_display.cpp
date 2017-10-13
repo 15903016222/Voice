@@ -2,7 +2,6 @@
 #include "ui_scan_display.h"
 
 #include "base_scan_scene.h"
-#include "c_scan_scene.h"
 #include "c_scan_encoder_scene.h"
 #include "c_scan_time_scene.h"
 #include "scroll_ruler_widget.h"
@@ -12,10 +11,8 @@
 #include <source/axis.h>
 #include <source/scan.h>
 #include <source/source.h>
-
+#include <ui/display/Tracer.h>
 #include <QDebug>
-
-static const double SECOND = 1000.0;
 
 CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),
@@ -36,12 +33,14 @@ CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     connect(m_view, SIGNAL(size_changed(QSize)),
             this, SLOT(do_view_size_changed(QSize)));
 
-    m_view->setScene(m_scene);
-
     init_ruler();
 
     ui->colorBarWidget->set_palette(DplDevice::Device::instance()->display()->palette());
     ui->titleLabel->setText(QString("C-Scan|Grp%1").arg(m_group->index()+1));
+
+    if(m_orientation == Qt::Horizontal) {
+        m_view->rotate(-90);
+    }
 
     /* source setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),
@@ -56,13 +55,35 @@ CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
 
 CscanDisplay::~CscanDisplay()
 {
+    DEBUG_INIT("CscanDisplay", __FUNCTION__);
+
+    disconnect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
+            this, SLOT(do_data_event(DplSource::BeamsPointer)));
+
+    disconnect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
+    disconnect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
+
     delete ui;
     delete m_view;
     delete m_scene;
+
+    m_view = NULL;
+    m_scene = NULL;
 }
 
 void CscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
+    DEBUG_INIT("CscanDisplay", __FUNCTION__);
+
+    QTime time;
+    time.restart();
+
+    if(m_scene == NULL
+            || m_view == NULL) {
+        return;
+    }
+
     if(m_scene->width() == 0
             || m_scene->height() == 0) {
         qDebug("[%s] w/h is 0.", __FUNCTION__);
@@ -90,7 +111,9 @@ void CscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
     } else {
         draw_encoder_beams(beams);
     }
+     qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
+
 
 void CscanDisplay::init_ruler()
 {
@@ -109,6 +132,7 @@ void CscanDisplay::init_ruler()
     ui->rightRulerWidget->update();
 
 }
+
 
 void CscanDisplay::update_scan_type_ruler(const QSize &size)
 {
@@ -296,6 +320,8 @@ bool CscanDisplay::focallaw_mode_changed()
 
 void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 {
+    DEBUG_INIT("CscanDisplay", __FUNCTION__);
+
     double currentTimeCount = TestStub::instance()->get_time();
     double rulerEnd;
     if(m_orientation == Qt::Horizontal) {

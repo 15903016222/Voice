@@ -3,7 +3,6 @@
 #include "source/source.h"
 #include "source/scan.h"
 #include "scan_view.h"
-#include "b_scan_scene.h"
 
 #include "ui/display/Tracer.h"
 

@@ -4,6 +4,7 @@
 #include <QImage>
 #include <source/beams.h>
 #include <source/source.h>
+
 class SscanImage : public QImage
 {
 public:

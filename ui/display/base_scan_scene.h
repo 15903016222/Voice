@@ -17,6 +17,7 @@ static const double DEFAULT_PIX_PER_BEAM = 1.0;                  /* 默认每条
 static const int    DEFAULT_POINT_SIZE   = 256;                  /* 默认每条beam多少个point */
 
 static const double FLOAT_ZERO  = 0.0000001;
+static const double SECOND      = 1000.0;
 
 struct S_BEAM_INFO{
     int x;
@@ -51,6 +52,7 @@ public:
     };
 
     explicit BaseScanScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    ~BaseScanScene();
 
     bool set_pix_per_beam(double ratio);
 

@@ -3,7 +3,6 @@
 #include "s_scan_image.h"
 
 #include <QPainter>
-
 #include <device/device.h>
 
 SscanScene::SscanScene(const DplDisplay::PaletteColorPointer &palette, QObject *parent) :
@@ -53,5 +52,5 @@ void SscanScene::drawBackground(QPainter *painter, const QRectF &rect)
 
     if (m_image) {
         painter->drawImage(rect, *m_image);
-    }
+    } 
 }

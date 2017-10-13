@@ -40,7 +40,7 @@ bool CscanTimeScene::need_refresh(const DplSource::BeamsPointer &beams)
 
     /* TODO */
     /* 闸门开始值、宽度、幅度更改后，需更新C扫 */
-    if(gate_info_changed()){
+    if(gate_info_changed()) {
         return true;
     }
 

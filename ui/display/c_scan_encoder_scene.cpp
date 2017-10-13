@@ -4,7 +4,6 @@
 #include <source/source.h>
 #include <source/beams.h>
 
-#define FLOAT_ZERO  0.0000001
 
 CscanEncoderScene::CscanEncoderScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
     : EncoderScene(palette, grp, parent),

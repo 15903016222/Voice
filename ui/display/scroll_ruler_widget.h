@@ -8,16 +8,13 @@
 
 class ScrollRulerWidget : public RulerWidget
 {
-    Q_OBJECT
+//    Q_OBJECT
 public:
 
     explicit ScrollRulerWidget(QWidget *parent = 0);
 
-<<<<<<< HEAD
     virtual bool set_range(double start, double end);
 
-=======
->>>>>>> 5ea24c39331e6d74f8f9e54238878abb6161cd09
     /**
      * @brief move_to_value 将标尺移动到指定value，若value在当前标尺显示范围
      * 则不移动，若value大于end或小于start，则向start/end移动。
@@ -49,7 +46,7 @@ public:
 
 protected:
     virtual void paintEvent(QPaintEvent *e);
-    void resizeEvent(QResizeEvent *event);
+    virtual void resizeEvent(QResizeEvent *event);
 
 private:
 

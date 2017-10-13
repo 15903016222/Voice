@@ -4,6 +4,8 @@
 #include <source/source.h>
 #include <source/beams.h>
 
+#include "ui/display/Tracer.h"
+
 EncoderScene::EncoderScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
     : BaseScanScene(palette, grp, parent)
 {
@@ -60,6 +62,8 @@ bool EncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
 
 void EncoderScene::draw_vertical_beam()
 {
+    DEBUG_INIT("EncoderScene", __FUNCTION__);
+
     S_CommonProperties commonProperties;
     calculate_common_properties(commonProperties);
 
@@ -156,6 +160,8 @@ bool EncoderScene::redraw_vertical_beam()
 
 void EncoderScene::draw_vertical_image(const BaseScanScene::S_CommonProperties &commonProperties)
 {
+    DEBUG_INIT("EncoderScene", __FUNCTION__);
+
     double x = ((int)((get_dealing_x(m_beamsPointer) + 0.005) * 100)) / 100.0; /* 保留小数点两位 */
 
     /* 设置当前beam数据 */
@@ -181,7 +187,7 @@ void EncoderScene::draw_vertical_image(const BaseScanScene::S_CommonProperties &
         double targetX = m_currentX - (i * symbol) / retain;
 
         //TODO
-#if 1
+#if 0
         if(m_axis.driving() == DplSource::Axis::ENCODER_X) {
             tmpBeams = DplSource::Source::instance()->beams(m_group->index(), (int)targetX, m_beamsPointer->get(0)->encoder_y());
         } else if(m_axis.driving() == DplSource::Axis::ENCODER_Y) {

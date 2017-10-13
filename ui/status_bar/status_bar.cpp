@@ -90,21 +90,13 @@ void StatusBar::do_data_event(const DplSource::BeamsPointer &beams)
     DplSource::AxisPointer indexAxis = m_scan->index_axis();
     DplSource::BeamPointer beam = beams->get(0);
 
-#if 1
     m_timeCount += 0.02;
-    qDebug() << "[StatusBar] [1] " << m_timeCount;
     TestStub::instance()->update_time(m_timeCount);
 
-#endif
-
     if (scanAxis->driving() == DplSource::Axis::TIMER) {
-#if 1
         QString tmp;
         tmp.sprintf("%0.2f", m_timeCount);
         m_scanEncStr = m_scanEncStr + tmp + tr(" s");
-#else
-        m_scanEncStr += "0.00 s";
-#endif
     } else if (scanAxis->driving() == DplSource::Axis::ENCODER_X) {
         m_scanEncStr += QString::number(beam->encoder_x()/ m_scan->encoder_x()->resolution(), 'f', 2) + " mm";
     } else {
@@ -127,10 +119,9 @@ void StatusBar::do_encoder_text_changed()
     ui->indexEncLabel->setText(m_indexEncStr);
 }
 
-<<<<<<< HEAD
-=======
+
 void StatusBar::do_acquisition_rate_changed()
 {
     ui->prfLabel->setText(QString("PRF:%1(%2)").arg(DplUt::GlobalPulser::instance()->acquisition_rate()).arg(DplUt::GlobalPulser::instance()->prf()));
 }
->>>>>>> 5ea24c39331e6d74f8f9e54238878abb6161cd09
+

@@ -55,9 +55,6 @@ protected:
     bool focallaw_mode_changed();
     void draw_timer_beams(const DplSource::BeamsPointer &beams);
     void draw_encoder_beams(const DplSource::BeamsPointer &beams);
-
-
-
 };
 
 #endif // __C_SCAN_DISPLAY_H__

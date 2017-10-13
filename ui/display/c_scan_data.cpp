@@ -46,7 +46,7 @@ bool CScanData::get_peak_value(const DplSource::BeamsPointer &beamsPointer, int 
        if (m_group->ut_unit() == DplDevice::Group::Time) {
            gateValue = beamsPointer->get(beamCount)->gate_peak_position(DplSource::Beam::GATE_I) / 1000.0;
        } else {
-           gateValue = beamsPointer->get(beamCount)->gate_peak_position(DplSource::Beam::GATE_I) * m_group->sample()->velocity() / 200000.0;
+           gateValue = beamsPointer->get(beamCount)->gate_peak_position(DplSource::Beam::GATE_I) * m_group->focallawer()->specimen()->velocity() / 200000.0;
        }
 
        return true;
@@ -140,7 +140,7 @@ bool CScanData::get_gate_position(DplSource::Beam::GateType type,
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         tmpValue = beamsPointer->get(beamCount)->gate_peak_position(type) / 1000.0;
     } else {
-        tmpValue = beamsPointer->get(beamCount)->gate_peak_position(type) * m_group->sample()->velocity() / 200000.0;
+        tmpValue = beamsPointer->get(beamCount)->gate_peak_position(type) * m_group->focallawer()->specimen()->velocity() / 200000.0;
     }
 
     if(tmpValue < TestStub::instance()->get_min_thickness())
@@ -166,8 +166,8 @@ bool CScanData::get_gate_position_distance(DplSource::Beam::GateType type1,
         tmpValue1= beamsPointer->get(beamCount)->gate_peak_position(type1) / 1000.0;
         tmpValue2= beamsPointer->get(beamCount)->gate_peak_position(type2) / 1000.0;
     } else {
-        tmpValue1 = beamsPointer->get(beamCount)->gate_peak_position(type1) * m_group->sample()->velocity() / 200000.0;
-        tmpValue2 = beamsPointer->get(beamCount)->gate_peak_position(type2) * m_group->sample()->velocity() / 200000.0;
+        tmpValue1 = beamsPointer->get(beamCount)->gate_peak_position(type1) * m_group->focallawer()->specimen()->velocity() / 200000.0;
+        tmpValue2 = beamsPointer->get(beamCount)->gate_peak_position(type2) * m_group->focallawer()->specimen()->velocity() / 200000.0;
     }
 
     double spaceValue = fabs(tmpValue1 - tmpValue2);

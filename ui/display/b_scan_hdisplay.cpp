@@ -1,6 +1,5 @@
 #include "b_scan_hdisplay.h"
 #include "ui_b_scan_display.h"
-#include "b_scan_scene.h"
 #include "scan_view.h"
 #include "source/scan.h"
 

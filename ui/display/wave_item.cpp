@@ -51,6 +51,7 @@ void WaveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->translate(boundingRect().topLeft());
     painter->setPen(m_ascan->color());
     painter->drawPath(m_path);
+
 }
 
 void WaveItem::set_wave(const QByteArray &beam)

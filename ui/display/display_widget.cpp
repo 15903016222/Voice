@@ -11,6 +11,7 @@
 #include "s_scan_display.h"
 #include "b_scan_vdisplay.h"
 #include "b_scan_hdisplay.h"
+#include "c_scan_hdisplay.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -50,7 +51,8 @@ public:
 typedef SingleLayout<AscanHDisplay> ALayoutH;
 typedef SingleLayout<AscanVDisplay> ALayoutV;
 typedef SingleLayout<CscanVDisplay> CLayoutV;
-typedef SingleLayout<SscanDisplay> SLayout;
+typedef SingleLayout<CscanHDisplay> CLayoutH;
+typedef SingleLayout<SscanDisplay>  SLayout;
 typedef SingleLayout<BscanVDisplay> BLayoutV;
 typedef SingleLayout<BscanHDisplay> BLayoutH;
 
@@ -91,7 +93,7 @@ public:
     {
         addLayout(new ALayoutH(grp), 1);
         addLayout(new BLayoutH(grp), 2);
-        addLayout(new CLayout(grp), 3);
+        addLayout(new CLayoutH(grp), 3);
     }
 };
 

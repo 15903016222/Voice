@@ -2,7 +2,7 @@
 #define __B_SCAN_DISPLAY_H_
 
 #include <QWidget>
-#include <ui/display/b_scan_scene.h>
+#include <ui/display/base_scan_scene.h>
 #include <device/device.h>
 #include <QSemaphore>
 
@@ -24,10 +24,6 @@ public:
     explicit BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent = 0);
     ~BscanDisplay();
 
-    bool set_current_beam(unsigned int index);
-
-
-
 signals:
     void update_ruler(double value);
     void update_label(const QString &time);
@@ -37,7 +33,6 @@ protected slots:
 
     void do_data_event(const DplSource::BeamsPointer &beams);
     void update_sound_path_ruler();
-    void do_update_label(const QString &time);
 
     void do_view_size_changed(const QSize &size);
     void do_refresh_scan_env();
@@ -51,11 +46,10 @@ protected:
     ScrollRulerWidget      *m_soundPathRuler;
 
     ScanView         *m_bscanView;
-    BscanScene       *m_bscanScene;
+    BaseScanScene    *m_bscanScene;
 
     DplSource::Axis::Driving      m_driving;                /* 扫查类型：encoder_x/y / timer*/
 
-    double           m_currentTimeCount;    /* 秒 */
     QLabel           *m_timeShowLabel;
     Qt::Orientation  m_orientation;
     QSemaphore       m_refreshSemaphore;    /* 切换时间扫查或编码器扫查时，刷新信号量 */
@@ -68,6 +62,8 @@ protected:
     void wait_for_refresh_finished();
     void init_scan_env();
 
+    void draw_timer_beams(const DplSource::BeamsPointer &beams);
+    void draw_encoder_beams(const DplSource::BeamsPointer &beams);
 };
 
 #endif // __B_SCAN_DISPLAY_H_
