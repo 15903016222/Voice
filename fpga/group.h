@@ -220,8 +220,26 @@ public:
      */
     bool set_sample_start(int val);
 
-    int average(void) const;
-    bool set_average(int val, bool reflesh = false);
+    enum Averaging {
+        AVERAGING_1,
+        AVERAGING_2,
+        AVERAGING_4,
+        AVERAGING_8,
+        AVERAGING_16
+    };
+
+    /**
+     * @brief averaging 获取平均值类型
+     * @return          平均值类型
+     */
+    Averaging averaging(void) const;
+
+    /**
+     * @brief set_averaging 设置平均值类型
+     * @param val
+     * @return
+     */
+    bool set_averaging(Averaging val);
 
     int thickness_max(void) const;
     bool set_thickness_max(int val, bool reflesh = false);
