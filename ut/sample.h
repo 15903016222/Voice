@@ -1,15 +1,16 @@
 #ifndef __DPLUT_SAMPLE_H__
 #define __DPLUT_SAMPLE_H__
 
-#include <QSharedPointer>
+#include <fpga/group.h>
 
 namespace DplUt {
 
+class SamplePrivate;
 class Sample : public QObject
 {
     Q_OBJECT
 public:
-    explicit Sample(float precision, QObject *parent = 0);
+    explicit Sample(const DplFpga::GroupPointer &fpgaGrp, float precision);
 
     /**
      * @brief precision 获取采样精度
@@ -98,11 +99,11 @@ signals:
 
 private:
     const float m_precision;    // 采样精度(ns)
-    float m_gain;               // 增益(dB)
     float m_start;              // 采样起点(ns)
     float m_range;              // 采样范围(ns)
     bool m_autoSetPointQty;     // 自动设置采样点标志
     int m_pointQty;             // 采样点数
+    SamplePrivate *d;
 };
 
 typedef QSharedPointer<Sample> SamplePointer;
@@ -110,19 +111,6 @@ typedef QSharedPointer<Sample> SamplePointer;
 inline float Sample::precision() const
 {
     return m_precision;
-}
-
-inline float Sample::gain() const
-{
-    return m_gain;
-}
-
-inline void Sample::set_gain(float gain)
-{
-    if (!qFuzzyCompare(gain, m_gain)) {
-        m_gain = gain;
-        emit gain_changed(gain);
-    }
 }
 
 inline float Sample::start() const

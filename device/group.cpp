@@ -24,7 +24,7 @@ namespace DplDevice {
 Group::Group(int index, QObject *parent) : QObject(parent),
     m_fpgaGroup(new DplFpga::Group(index)),
     m_focallawer(new DplFocallaw::Focallawer),
-    m_sample(new DplUt::Sample(DplFpga::Fpga::SAMPLE_PRECISION)),
+    m_sample(new DplUt::Sample(m_fpgaGroup, DplFpga::Fpga::SAMPLE_PRECISION)),
     m_pulser(new DplUt::Pulser(m_sample, m_focallawer)),
     m_receiver(new DplUt::Receiver(m_fpgaGroup)),
     m_gateA(new DplGate::Gate(DplGate::Gate::A)),
@@ -116,7 +116,6 @@ void Group::deploy_beams() const
 //    DplFpga::Fpga::instance()->show_info();
 //    m_fpgaGroup->show_info();
 
-    qDebug("%s[%d]: beam qty: %d",__func__, __LINE__, m_focallawer->beam_qty());
     fpgaBeam.set_total_beam_qty( Device::instance()->beam_qty() );
     fpgaBeam.set_group_id(index());
     fpgaBeam.set_gain_compensation(0);
@@ -210,12 +209,6 @@ void Group::init_sample()
 {
     DplUt::Sample *sample = m_sample.data();
     /* 关联FPGA */
-    m_fpgaGroup->set_gain(m_sample->gain());
-    connect(sample,
-            SIGNAL(gain_changed(float)),
-            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
-            SLOT(set_gain(float)));
-
     m_fpgaGroup->set_scale_factor(m_sample->scale_factor());
     connect(sample,
             SIGNAL(scale_factor_changed(int)),
