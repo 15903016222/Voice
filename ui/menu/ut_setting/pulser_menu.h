@@ -18,7 +18,6 @@ class PulserMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit PulserMenu(QWidget *parent);
-    ~PulserMenu();
 
 protected:
     void update_voltage_item();

@@ -22,19 +22,19 @@ namespace DplDevice {
 
 /* Group */
 Group::Group(int index, QObject *parent) : QObject(parent),
+    m_fpgaGroup(new DplFpga::Group(index)),
     m_focallawer(new DplFocallaw::Focallawer),
     m_sample(new DplUt::Sample(DplFpga::Fpga::SAMPLE_PRECISION)),
     m_pulser(new DplUt::Pulser(m_sample, m_focallawer)),
+    m_receiver(new DplUt::Receiver(m_fpgaGroup)),
     m_gateA(new DplGate::Gate(DplGate::Gate::A)),
     m_gateB(new DplGate::Gate(DplGate::Gate::B)),
     m_gateI(new DplGate::Gate(DplGate::Gate::I)),
-    m_fpgaGroup(new DplFpga::Group(index)),
     d(new GroupPrivate(this))
 {
     init_gates();
 
     init_sample();
-
     init_pulser();
 
     init_source();
