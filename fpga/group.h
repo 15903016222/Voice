@@ -32,12 +32,12 @@ public:
      *                            滤波器档位说明
      *                  PA                            UT
      * 档位  探头频率  对应带宽   采样频率      探头频率  对应带宽   采样频率
-     * 0     none    0.5-20    100M
-     * 1      1      0.5-2.5   25M
-     * 2     1.5-2.5  1-5      25M
-     * 3     3-5     2-10      50M
-     * 4     7.5     4-16      100M
-     * 5     >=10    5-20      100M
+     * 0     none    0.5-20    100M         none
+     * 1      1      0.5-2.5   25M          1-2M
+     * 2     1.5-2.5  1-5      25M          2-3M
+     * 3     3-5     2-10      50M          3-6M
+     * 4     7.5     4-16      100M         6-10M
+     * 5     >=10    5-20      100M         >=10M
      *****************************************************************/
     /**
      * @brief filter    获取滤波器档位
@@ -65,14 +65,28 @@ public:
      */
     bool enable_video_filter(bool flag);
 
-    enum RectifierType {
+    /**
+     * @brief The Rectifier enum    整流器类型
+     */
+    enum Rectifier {
         RF,
         POSITIVE_HW,
         NEGATIVE_HW,
         FULL_WAVE
     };
-    Group::RectifierType rectifier(void) const;
-    bool set_rectifier(Group::RectifierType type, bool reflesh = false);
+
+    /**
+     * @brief rectifier 获取整流器类型
+     * @return          类型
+     */
+    Group::Rectifier rectifier(void) const;
+
+    /**
+     * @brief set_rectifier 设置整流器类型
+     * @param type          类型
+     * @return              成功返回true，否则为false
+     */
+    bool set_rectifier(Group::Rectifier type);
 
     /**
      * @brief scale_factor  获取采样点压缩系数
