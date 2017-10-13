@@ -12,6 +12,7 @@
 #include <focallaw/focallawer.h>
 #include <ut/sample.h>
 #include <ut/pulser.h>
+#include <ut/receiver.h>
 #include <gate/gate.h>
 #include <source/beams.h>
 
@@ -108,6 +109,12 @@ public:
     const DplUt::PulserPointer &pulser() const;
 
     /**
+     * @brief receiver  获取脉冲接收器对象
+     * @return
+     */
+    const DplUt::ReceiverPointer &receiver() const;
+
+    /**
      * @brief gate  获取闸门对象指针
      * @param type  闸门类型
      * @return      闸门对象指针
@@ -134,7 +141,6 @@ public:
 
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
-    void velocity_changed(double val);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
     void current_angle_changed(double val);
     void probe_changed(DplFocallaw::ProbePointer probePtr);
@@ -152,13 +158,14 @@ private slots:
     void update_source();
 
 private:
+    DplFpga::GroupPointer m_fpgaGroup;
     DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplUt::SamplePointer m_sample;
     DplUt::PulserPointer m_pulser;
+    DplUt::ReceiverPointer m_receiver;
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
-    DplFpga::GroupPointer m_fpgaGroup;
     GroupPrivate *d;
 
 private:
@@ -194,6 +201,11 @@ inline const DplUt::SamplePointer &Group::sample() const
 inline const DplUt::PulserPointer &Group::pulser() const
 {
     return m_pulser;
+}
+
+inline const DplUt::ReceiverPointer &Group::receiver() const
+{
+    return m_receiver;
 }
 
 inline const DplGate::GatePointer &Group::gate(DplGate::Gate::Type type) const
