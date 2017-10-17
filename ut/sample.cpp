@@ -81,7 +81,6 @@ void Sample::set_range(float range)
     if (d->m_autoset) {
         curPointQty = d->auto_point_qty(range);
     }
-    qDebug("%s[%d]: pointQty(%d)",__func__, __LINE__, curPointQty);
 
     if (maxPointQty%curPointQty) {
         /* 类似四舍五入 */
@@ -90,30 +89,21 @@ void Sample::set_range(float range)
 
     bool rangeEmitFlag = false;
     range = maxPointQty * DplFpga::Fpga::SAMPLE_PRECISION;
-    qDebug("%s[%d]: range(%f, %f, %f, %f)",__func__, __LINE__,
-           range,
-           m_range,
-           range*3240/2,
-           m_range*3240/2);
     if ( !qFuzzyCompare(range, m_range) ) {
         m_range = range;
         rangeEmitFlag = true;
     }
 
-    bool pointQtyEmitFlag = false;
     if (curPointQty != d->m_fpgaGrp->point_qty()) {
         d->m_fpgaGrp->set_point_qty(curPointQty);
-        pointQtyEmitFlag = true;
         emit point_qty_changed(curPointQty);
     }
 
-//    if (rangeEmitFlag) {
+    if (rangeEmitFlag) {
         emit range_changed(range);
-//    }
+    }
 
-//    if (rangeEmitFlag || pointQtyEmitFlag) {
-        emit scale_factor_changed(maxPointQty/curPointQty);
-//    }
+    emit scale_factor_changed(maxPointQty/curPointQty);
 }
 
 int Sample::point_qty() const

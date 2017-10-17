@@ -20,24 +20,24 @@ class UtAdvancedMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit UtAdvancedMenu(QWidget *parent);
-    ~UtAdvancedMenu();
 
-    void show();
-    void hide();
+protected slots:
+    void update(const DplDevice::GroupPointer &group);
+    void update_scaleFactorItem();
+
+    void do_eightPercentItem_clicked();
+    void do_dbRefItem_changed(int index);
+    void do_pointQtyItem(int index);
 
 private:
     LabelMenuItem *m_eightPercentItem;
     ComboMenuItem *m_dbRefItem;
-    ComboMenuItem *m_pointQtyItem;
     LabelMenuItem *m_scaleFactorItem;
     SpinMenuItem *m_sumGainItem;
+    ComboMenuItem *m_pointQtyItem;
+    SpinMenuItem *m_userDefItem;
 
     DplUt::SamplePointer m_sample;
-
-private slots:
-    void update(const DplDevice::GroupPointer &group);
-    void update_scale_factor_item();
-
 };
 
 }

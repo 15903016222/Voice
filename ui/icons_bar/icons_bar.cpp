@@ -61,7 +61,6 @@ void IconsBar::do_battery_quantity_event(int index, int value)
 
 void IconsBar::do_driving_changed()
 {
-    qDebug("%s[%d]: wh(%d, %d)",__func__, __LINE__, ui->encoderLabel->width(), ui->encoderLabel->height());
     if ( DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::TIMER ) {
         ui->encoderLabel->setPixmap(QPixmap("://resource/clock.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
     } else {
