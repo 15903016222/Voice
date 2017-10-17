@@ -24,7 +24,7 @@ namespace DplDevice {
 Group::Group(int index, QObject *parent) : QObject(parent),
     m_fpgaGroup(new DplFpga::Group(index)),
     m_focallawer(new DplFocallaw::Focallawer),
-    m_sample(new DplUt::Sample(m_fpgaGroup, DplFpga::Fpga::SAMPLE_PRECISION)),
+    m_sample(new DplUt::Sample(m_fpgaGroup)),
     m_pulser(new DplUt::Pulser(m_sample, m_focallawer)),
     m_receiver(new DplUt::Receiver(m_fpgaGroup)),
     m_gateA(new DplGate::Gate(DplGate::Gate::A)),
@@ -208,13 +208,7 @@ void Group::init_gates()
 void Group::init_sample()
 {
     DplUt::Sample *sample = m_sample.data();
-    /* 关联FPGA */
-    m_fpgaGroup->set_scale_factor(m_sample->scale_factor());
-    connect(sample,
-            SIGNAL(scale_factor_changed(int)),
-            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
-            SLOT(set_scale_factor(int)));
-
+    /* 关联FPGA */            
     m_fpgaGroup->set_point_qty(m_sample->point_qty());
     connect(sample,
             SIGNAL(point_qty_changed(int)),

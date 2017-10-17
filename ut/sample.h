@@ -10,7 +10,7 @@ class Sample : public QObject
 {
     Q_OBJECT
 public:
-    explicit Sample(const DplFpga::GroupPointer &fpgaGrp, float precision);
+    explicit Sample(const DplFpga::GroupPointer &fpgaGrp);
 
     /**
      * @brief precision 获取采样精度
@@ -72,23 +72,24 @@ public:
     int point_qty() const;
 
     /**
-     * @brief is_auto_set_point_qty 获取自动设置采样点状态
-     * @return                      是自动设置采样点返回true
+     * @brief is_auto_set_point_qty 获取设置采样点方式
+     * @return                      如果是自动设置采样点，则返回true，否则为false
      */
     bool is_auto_set_point_qty() const;
 
     /**
-     * @brief set_point_qty 设置采样点为自动设置
-     * @param autoset       true为自动设置
+     * @brief max_point_qty 采取最大采样点数
+     * @return              采样点数
      */
-    void set_point_qty(bool autoset);
+    int max_point_qty() const;
 
     /**
      * @brief set_point_qty 设置采样点数, 如果设置了自动设置采样点状态，那么该函数会一直返回false
      * @param qty           采样点数
+     * @param autoset       自动设置采样点，如果设置为自动，那么qty则没用
      * @return              设置成功返回true， 失败返回false
      */
-    bool set_point_qty(int qty);
+    bool set_point_qty(int qty, bool autoset=false);
 
 signals:
     void gain_changed(float gain);
@@ -98,20 +99,12 @@ signals:
     void point_qty_changed(int qty);
 
 private:
-    const float m_precision;    // 采样精度(ns)
     float m_start;              // 采样起点(ns)
     float m_range;              // 采样范围(ns)
-    bool m_autoSetPointQty;     // 自动设置采样点标志
-    int m_pointQty;             // 采样点数
     SamplePrivate *d;
 };
 
 typedef QSharedPointer<Sample> SamplePointer;
-
-inline float Sample::precision() const
-{
-    return m_precision;
-}
 
 inline float Sample::start() const
 {
@@ -134,36 +127,6 @@ inline float Sample::range() const
 inline int Sample::scale_factor() const
 {
     return range()/precision()/point_qty();
-}
-
-inline int Sample::point_qty() const
-{
-    return m_pointQty;
-}
-
-inline bool Sample::is_auto_set_point_qty() const
-{
-    return m_autoSetPointQty;
-}
-
-inline void Sample::set_point_qty(bool autoset)
-{
-    if (m_autoSetPointQty != autoset) {
-        m_autoSetPointQty = autoset;
-        if (autoset) {
-            set_range(m_range);
-        }
-    }
-}
-
-inline bool Sample::set_point_qty(int qty)
-{
-    if (m_pointQty != qty) {
-        m_pointQty = qty;
-        emit point_qty_changed(qty);
-        emit scale_factor_changed(scale_factor());
-    }
-    return true;
 }
 
 }
