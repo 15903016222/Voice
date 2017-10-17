@@ -24,8 +24,8 @@ public slots:
     void do_temperature_event(Mcu::TemperatureType type, int value);
     void do_battery_status_event(int index, Mcu::BatteryStatus status);
     void do_battery_quantity_event(int index, int value);
+    void do_driving_changed();
 
-    void show_gear(bool flag);
     void show_tcg(bool flag);
     void show_dac(bool flag);
     void show_sensitivity_calibration(bool flag);
