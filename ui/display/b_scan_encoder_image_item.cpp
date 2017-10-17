@@ -1,4 +1,4 @@
-#include "b_scan_encoder_scene.h"
+#include "b_scan_encoder_image_item.h"
 #include <QDebug>
 #include <math.h>
 
@@ -10,20 +10,21 @@
 
 #include "Tracer.h"
 
-BscanEncoderScene::BscanEncoderScene(const DplDisplay::PaletteColorPointer &palette,
+BscanEncoderImageItem::BscanEncoderImageItem(const DplDisplay::PaletteColorPointer &palette,
                                      const DplDevice::GroupPointer &grp,
                                      QObject *parent) :
-    EncoderScene(palette, grp, parent)
+    EncoderImageItem(palette, grp, parent)
 {
     set_driving(DplSource::Scan::instance()->scan_axis()->driving());
     init_encoder_properties();
     init_scan_properties();
+    m_initFinished = true;
 }
 
 
-bool BscanEncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
+bool BscanEncoderImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 {
-    if(EncoderScene::need_refresh(beams)) {
+    if(EncoderImageItem::need_refresh(beams)) {
         init_encoder_properties();
         init_scan_properties();
         return true;
@@ -67,8 +68,9 @@ bool BscanEncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
 }
 
 
-void BscanEncoderScene::set_vertical_image_data(int beamsShowedCount, const BaseScanScene::S_CommonProperties &commonProperties, BaseScanScene::E_BEAM_TYPE type, const DplSource::BeamsPointer &beamsPointer)
+void BscanEncoderImageItem::set_vertical_image_data(int beamsShowedCount, const BaseImageItem::S_CommonProperties &commonProperties, BaseImageItem::E_BEAM_TYPE type, const DplSource::BeamsPointer &beamsPointer)
 {
+#if 1
     int pos = 0;
     for(int i = 0; i < m_image->height(); ++i) {
 
@@ -90,6 +92,24 @@ void BscanEncoderScene::set_vertical_image_data(int beamsShowedCount, const Base
             line[pos] = beamsPointer->get(0)->wave().at((int)(i * commonProperties.ratio));
         }
     }
+
+#else
+
+    m_image->fill(0);
+   for(int i = 0; i < m_image->height(); ++i) {
+       quint8 *line    = (quint8*) m_image->scanLine(i);
+
+       if((i == 0) || (i == (m_image->height() - 1))) {
+           for(int k = 0; k < m_image->width(); ++k) {
+               line[k] = 155;
+           }
+       } else {
+           line[0] = 155;
+           line[m_image->width() - 1] = 155;
+       }
+   }
+
+#endif
 }
 
 

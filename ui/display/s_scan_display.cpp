@@ -3,9 +3,9 @@
 
 #include "s_scan_scene.h"
 #include "scan_view.h"
-#include "base_scan_scene.h"
-#include "c_scan_encoder_scene.h"
-#include "c_scan_time_scene.h"
+#include "base_image_item.h"
+#include "c_scan_encoder_image_item.h"
+#include "c_scan_time_image_item.h"
 #include <device/device.h>
 
 SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :

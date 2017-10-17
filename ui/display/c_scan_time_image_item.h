@@ -1,21 +1,21 @@
-#ifndef __C_SCAN_TIME_SCENE_H__
-#define __C_SCAN_TIME_SCENE_H__
+#ifndef __C_SCAN_TIME_IMAGE_ITEM_H__
+#define __C_SCAN_TIME_IMAGE_ITEM_H__
 
-#include "time_scene.h"
+#include "time_image_item.h"
 #include "c_scan_data.h"
 
-class CscanTimeScene : public TimeScene
+class CscanTimeImageItem : public TimeImageItem
 {
 
 public:
-    explicit CscanTimeScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    explicit CscanTimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
 
     virtual bool need_refresh(const DplSource::BeamsPointer &beams);
 
 protected:
 
     virtual void set_vertical_image_data(int beamsShowedCount,
-                                         const BaseScanScene::S_CommonProperties &commonProperties,
+                                         const BaseImageItem::S_CommonProperties &commonProperties,
                                          E_BEAM_TYPE type,
                                          const DplSource::BeamsPointer &beamsPointer);
 
@@ -28,4 +28,4 @@ private:
     bool gate_info_changed();
 };
 
-#endif // __C_SCAN_TIME_SCENE_H__
+#endif // __C_SCAN_TIME_IMAGE_ITEM_H__

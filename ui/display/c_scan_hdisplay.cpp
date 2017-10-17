@@ -6,7 +6,7 @@
 CscanHDisplay::CscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent)
     : CscanDisplay(grp, Qt::Horizontal, parent)
 {
-    init_ruler();
+     init_ruler();
 }
 
 void CscanHDisplay::init_ruler()

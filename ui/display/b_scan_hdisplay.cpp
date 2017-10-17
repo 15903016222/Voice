@@ -26,4 +26,5 @@ void BscanHDisplay::init_ruler()
     update_scan_type_ruler(m_bscanView->size());
 
     update_sound_path_ruler();
+
 }

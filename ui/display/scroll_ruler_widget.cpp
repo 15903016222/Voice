@@ -57,8 +57,6 @@ void ScrollRulerWidget::set_show_range(double start, double end)
 
 bool ScrollRulerWidget::move_to_value(double targetValue)
 {
-    DEBUG_INIT("ScrollRulerWidget", __FUNCTION__);
-
     if(targetValue > m_maxEnd) {
 
         if(m_maxEnd < 0.0) {

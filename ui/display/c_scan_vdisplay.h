@@ -9,7 +9,7 @@ public:
     CscanVDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
 
 protected:
-    virtual void init_ruler();
+    void init_ruler();
 
 };
 

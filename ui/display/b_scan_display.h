@@ -2,12 +2,13 @@
 #define __B_SCAN_DISPLAY_H_
 
 #include <QWidget>
-#include <ui/display/base_scan_scene.h>
+#include <ui/display/base_image_item.h>
 #include <device/device.h>
 #include <QSemaphore>
 
 class ScanView;
 class BWaveItem;
+class BscanScene;
 class ScrollRulerWidget;
 class QTimer;
 class QLabel;
@@ -46,7 +47,8 @@ protected:
     ScrollRulerWidget      *m_soundPathRuler;
 
     ScanView         *m_bscanView;
-    BaseScanScene    *m_bscanScene;
+    BscanScene       *m_bscanScene;
+    BaseImageItem    *m_bscanImageItem;
 
     DplSource::Axis::Driving      m_driving;                /* 扫查类型：encoder_x/y / timer*/
 
@@ -57,7 +59,7 @@ protected:
     DplSource::AxisPointer      m_axisPointer;
     DplSource::EncoderPointer   m_encoderPointer;
 
-    virtual void init_ruler();
+    void init_ruler();
     void update_scan_type_ruler(const QSize &size);
     void wait_for_refresh_finished();
     void init_scan_env();

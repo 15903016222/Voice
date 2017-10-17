@@ -1,4 +1,4 @@
-#include "encoder_scene.h"
+#include "encoder_image_item.h"
 
 #include <source/scan.h>
 #include <source/source.h>
@@ -6,16 +6,16 @@
 
 #include "ui/display/Tracer.h"
 
-EncoderScene::EncoderScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
-    : BaseScanScene(palette, grp, parent)
+EncoderImageItem::EncoderImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+    : BaseImageItem(palette, grp, parent)
 {
 
 }
 
 
-bool EncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
+bool EncoderImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 {
-    if(BaseScanScene::need_refresh(beams)) {
+    if(BaseImageItem::need_refresh(beams)) {
         init_encoder_properties();
         init_scan_properties();
         return true;
@@ -60,10 +60,8 @@ bool EncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
 }
 
 
-void EncoderScene::draw_vertical_beam()
+void EncoderImageItem::draw_vertical_beam()
 {
-    DEBUG_INIT("EncoderScene", __FUNCTION__);
-
     S_CommonProperties commonProperties;
     calculate_common_properties(commonProperties);
 
@@ -75,7 +73,7 @@ void EncoderScene::draw_vertical_beam()
 }
 
 
-bool EncoderScene::redraw_vertical_beam()
+bool EncoderImageItem::redraw_vertical_beam()
 {
     if(!m_redrawFlag) {
         return false;
@@ -158,10 +156,8 @@ bool EncoderScene::redraw_vertical_beam()
     return true;
 }
 
-void EncoderScene::draw_vertical_image(const BaseScanScene::S_CommonProperties &commonProperties)
+void EncoderImageItem::draw_vertical_image(const BaseImageItem::S_CommonProperties &commonProperties)
 {
-    DEBUG_INIT("EncoderScene", __FUNCTION__);
-
     double x = ((int)((get_dealing_x(m_beamsPointer) + 0.005) * 100)) / 100.0; /* 保留小数点两位 */
 
     /* 设置当前beam数据 */
@@ -222,7 +218,7 @@ void EncoderScene::draw_vertical_image(const BaseScanScene::S_CommonProperties &
 }
 
 
-void EncoderScene::set_one_vertical_beam(double x, const BaseScanScene::S_CommonProperties &commonProperties, const DplSource::BeamsPointer &beamsPointer)
+void EncoderImageItem::set_one_vertical_beam(double x, const BaseImageItem::S_CommonProperties &commonProperties, const DplSource::BeamsPointer &beamsPointer)
 {
     /* 没有滚动显示，当前区域可显示所扫查范围 */
     double scanEnd          = DplSource::Scan::instance()->scan_axis()->end();
@@ -267,7 +263,7 @@ void EncoderScene::set_one_vertical_beam(double x, const BaseScanScene::S_Common
 }
 
 
-void EncoderScene::set_scroll_env(const BaseScanScene::S_CommonProperties &commonProperties)
+void EncoderImageItem::set_scroll_env(const BaseImageItem::S_CommonProperties &commonProperties)
 {
     double scanStart        = DplSource::Scan::instance()->scan_axis()->start();
     double scanEnd          = DplSource::Scan::instance()->scan_axis()->end();
@@ -354,13 +350,13 @@ void EncoderScene::set_scroll_env(const BaseScanScene::S_CommonProperties &commo
 }
 
 
-bool EncoderScene::is_equal(double value1, double value2)
+bool EncoderImageItem::is_equal(double value1, double value2)
 {
     return (((value1 - value2) < FLOAT_ZERO) && ((value1 - value2) > -FLOAT_ZERO)) ? true : false;
 }
 
 
-void EncoderScene::init_encoder_properties()
+void EncoderImageItem::init_encoder_properties()
 {
     m_encoder.set_enabled(m_encoderPointer->is_enabled());
     m_encoder.set_mode(m_encoderPointer->mode());
@@ -370,7 +366,7 @@ void EncoderScene::init_encoder_properties()
 }
 
 
-void EncoderScene::init_scan_properties()
+void EncoderImageItem::init_scan_properties()
 {
     m_axis.set_driving(DplSource::Scan::instance()->scan_axis()->driving());
     m_axis.set_end(DplSource::Scan::instance()->scan_axis()->end());
@@ -378,7 +374,7 @@ void EncoderScene::init_scan_properties()
     m_axis.set_resolution(DplSource::Scan::instance()->scan_axis()->resolution());
 }
 
-void EncoderScene::set_driving(DplSource::Axis::Driving driving)
+void EncoderImageItem::set_driving(DplSource::Axis::Driving driving)
 {
     m_driving = driving;
 
@@ -395,7 +391,7 @@ void EncoderScene::set_driving(DplSource::Axis::Driving driving)
     }
 }
 
-double EncoderScene::get_dealing_x(const DplSource::BeamsPointer &beamsPointer)
+double EncoderImageItem::get_dealing_x(const DplSource::BeamsPointer &beamsPointer)
 {
     double x = 0.0;
 
@@ -427,7 +423,7 @@ double EncoderScene::get_dealing_x(const DplSource::BeamsPointer &beamsPointer)
     return x;
 }
 
-void EncoderScene::set_move_x(double moveX, double moveY)
+void EncoderImageItem::set_move_x(double moveX, double moveY)
 {
     if(m_driving == DplSource::Axis::ENCODER_X) {
         m_moveX = moveX;

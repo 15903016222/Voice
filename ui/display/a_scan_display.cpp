@@ -19,7 +19,7 @@
 
 #include <QDebug>
 
-AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
+AscanDisplay:: AscanDisplay(const DplDevice::GroupPointer &group,
                            Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AscanDisplay),
@@ -87,7 +87,7 @@ void AscanDisplay::do_view_size_changed(const QSize &size)
                                    size.width(), size.height());
         m_waveItem->set_size(size);
     } else {
-        m_scene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
+        m_scene->setSceneRect(-size.height()/2, -size.width()/2,
                                    size.height(), size.width());
         m_waveItem->set_size(QSize(size.height(), size.width()));
     }

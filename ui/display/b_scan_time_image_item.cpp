@@ -1,4 +1,4 @@
-#include "b_scan_time_scene.h"
+#include "b_scan_time_image_item.h"
 #include <QDebug>
 #include <QByteArray>
 
@@ -7,20 +7,24 @@
 #include <source/beams.h>
 #include <source/scan.h>
 
+#include "Tracer.h"
 
-BscanTimeScene::BscanTimeScene(const DplDisplay::PaletteColorPointer &palette,
+
+BscanTimeImageItem::BscanTimeImageItem(const DplDisplay::PaletteColorPointer &palette,
                                const DplDevice::GroupPointer &grp,
                                QObject *parent) :
-    TimeScene(palette, grp, parent)
+    TimeImageItem(palette, grp, parent)
 {
-    m_driving = DplSource::Axis::TIMER;
+    m_initFinished = true;
 }
 
-void BscanTimeScene::set_vertical_image_data(int beamsShowedCount,
-                                             const BaseScanScene::S_CommonProperties &commonProperties,
-                                             BaseScanScene::E_BEAM_TYPE type,
+void BscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
+                                             const BaseImageItem::S_CommonProperties &commonProperties,
+                                             BaseImageItem::E_BEAM_TYPE type,
                                              const DplSource::BeamsPointer &beamsPointer)
 {
+
+#if 1
     int pos = 0;
     for(int i = 0; i < m_image->height(); ++i) {
 
@@ -42,12 +46,29 @@ void BscanTimeScene::set_vertical_image_data(int beamsShowedCount,
             line[pos] = beamsPointer->get(0)->wave().at((int)(i * commonProperties.ratio));
         }
     }
+
+#else
+
+    m_image->fill(0);
+   for(int i = 0; i < m_image->height(); ++i) {
+       quint8 *line    = (quint8*) m_image->scanLine(i);
+
+       if((i == 0) || (i == (m_image->height() - 1))) {
+           for(int k = 0; k < m_image->width(); ++k) {
+               line[k] = 155;
+           }
+       } else {
+           line[0] = 155;
+           line[m_image->width() - 1] = 155;
+       }
+   }
+#endif
 }
 
 
-bool BscanTimeScene::need_refresh(const DplSource::BeamsPointer &beams)
+bool BscanTimeImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 {
-    if(TimeScene::need_refresh(beams)) {
+    if(TimeImageItem::need_refresh(beams)) {
         return true;
     }
 }

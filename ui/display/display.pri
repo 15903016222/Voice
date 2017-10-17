@@ -14,21 +14,23 @@ SOURCES += \
     $$PWD/s_scan_image.cpp \
     $$PWD/c_scan_vdisplay.cpp \
     $$PWD/scroll_ruler_widget.cpp \
-    $$PWD/c_scan_time_scene.cpp \
-    $$PWD/c_scan_encoder_scene.cpp \
     $$PWD/test_stub.cpp \
-    $$PWD/base_scan_scene.cpp \
-    $$PWD/encoder_scene.cpp \
-    $$PWD/time_scene.cpp \
     $$PWD/c_scan_data.cpp \
     $$PWD/s_scan_scene.cpp \
     $$PWD/b_scan_display.cpp \
     $$PWD/b_scan_hdisplay.cpp \
     $$PWD/b_scan_vdisplay.cpp \
-    $$PWD/b_scan_time_scene.cpp \
-    $$PWD/b_scan_encoder_scene.cpp \
     $$PWD/Tracer.cpp \
-    $$PWD/c_scan_hdisplay.cpp
+    $$PWD/c_scan_hdisplay.cpp \
+    $$PWD/base_image_item.cpp \
+    $$PWD/time_image_item.cpp \
+    $$PWD/encoder_image_item.cpp \
+    $$PWD/c_scan_encoder_image_item.cpp \
+    $$PWD/b_scan_encoder_image_item.cpp \
+    $$PWD/b_scan_time_image_item.cpp \
+    $$PWD/b_scan_scene.cpp \
+    $$PWD/c_scan_scene.cpp \
+    $$PWD/c_scan_time_image_item.cpp
 
 
 
@@ -48,21 +50,23 @@ HEADERS += \
     $$PWD/s_scan_image.h \
     $$PWD/c_scan_vdisplay.h \
     $$PWD/scroll_ruler_widget.h \
-    $$PWD/c_scan_time_scene.h \
-    $$PWD/c_scan_encoder_scene.h \
     $$PWD/test_stub.h \
-    $$PWD/base_scan_scene.h \
-    $$PWD/encoder_scene.h \
-    $$PWD/time_scene.h \
     $$PWD/c_scan_data.h \
     $$PWD/s_scan_scene.h \
     $$PWD/b_scan_display.h \
     $$PWD/b_scan_hdisplay.h \
     $$PWD/b_scan_vdisplay.h \
-    $$PWD/b_scan_time_scene.h \
-    $$PWD/b_scan_encoder_scene.h \
     $$PWD/Tracer.h \
-    $$PWD/c_scan_hdisplay.h
+    $$PWD/c_scan_hdisplay.h \
+    $$PWD/base_image_item.h \
+    $$PWD/time_image_item.h \
+    $$PWD/encoder_image_item.h \
+    $$PWD/c_scan_encoder_image_item.h \
+    $$PWD/b_scan_encoder_image_item.h \
+    $$PWD/b_scan_time_image_item.h \
+    $$PWD/b_scan_scene.h \
+    $$PWD/c_scan_scene.h \
+    $$PWD/c_scan_time_image_item.h
 
 
 FORMS += \

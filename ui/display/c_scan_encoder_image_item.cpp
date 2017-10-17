@@ -1,23 +1,25 @@
-#include "c_scan_encoder_scene.h"
+#include "c_scan_encoder_image_item.h"
 
 #include <source/scan.h>
 #include <source/source.h>
 #include <source/beams.h>
 
 
-CscanEncoderScene::CscanEncoderScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
-    : EncoderScene(palette, grp, parent),
+CscanEncoderImageItem::CscanEncoderImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+    : EncoderImageItem(palette, grp, parent),
       m_cscanDataPointer(new CScanData(grp))
 {
     set_driving(DplSource::Scan::instance()->scan_axis()->driving());
     init_encoder_properties();
     init_scan_properties();
+
+    m_initFinished = true;
 }
 
 
-bool CscanEncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
+bool CscanEncoderImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 {
-    if(EncoderScene::need_refresh(beams)) {
+    if(EncoderImageItem::need_refresh(beams)) {
         init_encoder_properties();
         init_scan_properties();
         return true;
@@ -61,7 +63,10 @@ bool CscanEncoderScene::need_refresh(const DplSource::BeamsPointer &beams)
 }
 
 
-void CscanEncoderScene::set_vertical_image_data(int beamsShowedCount, const BaseScanScene::S_CommonProperties &commonProperties, BaseScanScene::E_BEAM_TYPE type, const DplSource::BeamsPointer &beamsPointer)
+void CscanEncoderImageItem::set_vertical_image_data(int beamsShowedCount,
+                                                const BaseImageItem::S_CommonProperties &commonProperties,
+                                                BaseImageItem::E_BEAM_TYPE type,
+                                                const DplSource::BeamsPointer &beamsPointer)
 {
     double beamQty = beamsPointer->beam_qty();
     double perBeamSpace = m_image->height() / beamQty;

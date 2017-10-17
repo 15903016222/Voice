@@ -12,6 +12,7 @@
 #include <qmath.h>
 
 #include <QDebug>
+#include "Tracer.h"
 
 AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
                              QWidget *parent) :
@@ -41,6 +42,7 @@ AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
 
 AscanHDisplay::~AscanHDisplay()
 {
+    DEBUG_INIT("AscanHDisplay", __FUNCTION__);
 }
 
 void AscanHDisplay::update_bottom_ruler()

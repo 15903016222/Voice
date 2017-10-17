@@ -1,12 +1,12 @@
-#ifndef __ENCODER_SCENE_H__
-#define __ENCODER_SCENE_H__
+#ifndef __ENCODER_IMAGE_ITEM_H__
+#define __ENCODER_IMAGE_ITEM_H__
 
-#include "base_scan_scene.h"
+#include "base_image_item.h"
 
-class EncoderScene : public BaseScanScene
+class EncoderImageItem : public BaseImageItem
 {
 public:
-    explicit EncoderScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    explicit EncoderImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
 
     inline double show_start() { return m_currentStart; }
     inline double show_end() { return m_currentEnd; }
@@ -29,7 +29,7 @@ protected:
      * @brief draw_vertical_image 设置编码器C扫的垂直显示image数据
      * @param commonProperties
      */
-    void draw_vertical_image(const BaseScanScene::S_CommonProperties &commonProperties);
+    void draw_vertical_image(const BaseImageItem::S_CommonProperties &commonProperties);
 
 
     /**
@@ -39,14 +39,14 @@ protected:
      * @param waveData
      */
     void set_one_vertical_beam(double x,
-                        const BaseScanScene::S_CommonProperties &commonProperties,
+                        const BaseImageItem::S_CommonProperties &commonProperties,
                         const DplSource::BeamsPointer &beamsPointer);
 
     /**
      * @brief set_scroll_env
      * @param commonProperties
      */
-    void set_scroll_env(const BaseScanScene::S_CommonProperties &commonProperties);
+    void set_scroll_env(const BaseImageItem::S_CommonProperties &commonProperties);
 
     /**
      * @brief set_vertical_image_data   画指定帧的C扫
@@ -56,7 +56,7 @@ protected:
      * @param beamsPointer                      当前帧数据
      */
     virtual void set_vertical_image_data(int beamsShowedCount,
-                                         const BaseScanScene::S_CommonProperties &commonProperties,
+                                         const BaseImageItem::S_CommonProperties &commonProperties,
                                          E_BEAM_TYPE type,
                                          const DplSource::BeamsPointer &beamsPointer) = 0;
 
@@ -85,4 +85,4 @@ protected:
 
 };
 
-#endif // __ENCODER_SCENE_H__
+#endif // __ENCODER_IMAGE_ITEM_H__

@@ -1,12 +1,12 @@
-#ifndef __TIME_SCENE_H__
-#define __TIME_SCENE_H__
+#ifndef __TIME_IMAGE_ITEM_H__
+#define __TIME_IMAGE_ITEM_H__
 
-#include "base_scan_scene.h"
+#include "base_image_item.h"
 
-class TimeScene : public BaseScanScene
+class TimeImageItem : public BaseImageItem
 {
 public:
-    explicit TimeScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    explicit TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
 
 protected:
 
@@ -27,21 +27,15 @@ protected:
      * @param waveData
      */
     void draw_vertical_image(int beamsShowedCount,
-                        const BaseScanScene::S_CommonProperties &commonProperties,
+                        const BaseImageItem::S_CommonProperties &commonProperties,
                                          const DplSource::BeamsPointer &beamsPointer);
 
     /**
      * @brief scroll_vertical_image     时间扫的垂直滚动image滚动实现
      * @param commonProperties
      */
-    void scroll_vertical_image(const BaseScanScene::S_CommonProperties &commonProperties,
+    void scroll_vertical_image(const BaseImageItem::S_CommonProperties &commonProperties,
                                const DplSource::BeamsPointer &beamsPointer);
-
-
-    virtual void set_vertical_image_data(int beamsShowedCount,
-                                         const BaseScanScene::S_CommonProperties &commonProperties,
-                                         E_BEAM_TYPE type,
-                                         const DplSource::BeamsPointer &beamsPointer) = 0;
 
 
     double      m_currentTimeCount;
@@ -49,4 +43,4 @@ protected:
 
 };
 
-#endif // __TIME_SCENE_H__
+#endif // __TIME_IMAGE_ITEM_H__

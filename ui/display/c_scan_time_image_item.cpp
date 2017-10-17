@@ -1,23 +1,23 @@
-#include "c_scan_time_scene.h"
+#include "c_scan_time_image_item.h"
 
 #include <source/source.h>
 #include <source/scan.h>
 
-CscanTimeScene::CscanTimeScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
-    : TimeScene(palette, grp, parent),
-      m_cscanDataPointer(new CScanData(grp)),
+CscanTimeImageItem::CscanTimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+    : TimeImageItem(palette, grp, parent),
       m_source(TestStub::instance()->get_source()),
+      m_cscanDataPointer(new CScanData(grp)),
       m_thicknessSource(TestStub::instance()->get_thickness_source())
 {
-    m_driving = DplSource::Axis::TIMER;
+    m_initFinished = true;
 }
 
 
-bool CscanTimeScene::need_refresh(const DplSource::BeamsPointer &beams)
+bool CscanTimeImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 {
     QWriteLocker lock(&m_rwLock);
 
-    if(TimeScene::need_refresh(beams)) {
+    if(TimeImageItem::need_refresh(beams)) {
         return true;
     }
 
@@ -60,7 +60,10 @@ bool CscanTimeScene::need_refresh(const DplSource::BeamsPointer &beams)
 
 
 
-void CscanTimeScene::set_vertical_image_data(int beamsShowedCount, const BaseScanScene::S_CommonProperties &commonProperties, BaseScanScene::E_BEAM_TYPE type, const DplSource::BeamsPointer &beamsPointer)
+void CscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
+                                             const BaseImageItem::S_CommonProperties &commonProperties,
+                                             BaseImageItem::E_BEAM_TYPE type,
+                                             const DplSource::BeamsPointer &beamsPointer)
 {
     double beamQty = beamsPointer->beam_qty();
     double perBeamSpace = m_image->height() / beamQty;
@@ -122,7 +125,7 @@ void CscanTimeScene::set_vertical_image_data(int beamsShowedCount, const BaseSca
 }
 
 
-bool CscanTimeScene::gate_info_changed()
+bool CscanTimeImageItem::gate_info_changed()
 {
     bool ret = false;
     switch (TestStub::instance()->get_source()) {

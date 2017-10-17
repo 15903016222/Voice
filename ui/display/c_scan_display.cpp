@@ -1,11 +1,12 @@
 #include "c_scan_display.h"
 #include "ui_scan_display.h"
 
-#include "base_scan_scene.h"
-#include "c_scan_encoder_scene.h"
-#include "c_scan_time_scene.h"
+#include "base_image_item.h"
+#include "c_scan_encoder_image_item.h"
+#include "c_scan_time_image_item.h"
 #include "scroll_ruler_widget.h"
 #include "scan_view.h"
+#include "c_scan_scene.h"
 
 #include <device/device.h>
 #include <source/axis.h>
@@ -19,21 +20,20 @@ CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     ui(new Ui::ScanDisplay),
     m_group(grp),
     m_view(new ScanView),
-    m_scene(NULL),
-    m_orientation(orientation)
+    m_scene(new CscanScene),
+    m_orientation(orientation),
+    m_cscanImageItem(NULL)
 {
     ui->setupUi(this);
 
     ui->scanLayout->addWidget(m_view);
+    m_view->setScene(m_scene);
 
     init_scan_env();
+    init_ruler();
 
-    connect(m_view, SIGNAL(size_changed(QSize)),
-            m_scene, SLOT(set_size(QSize)));
     connect(m_view, SIGNAL(size_changed(QSize)),
             this, SLOT(do_view_size_changed(QSize)));
-
-    init_ruler();
 
     ui->colorBarWidget->set_palette(DplDevice::Device::instance()->display()->palette());
     ui->titleLabel->setText(QString("C-Scan|Grp%1").arg(m_group->index()+1));
@@ -50,7 +50,6 @@ CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
 
     connect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
     connect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
-
 }
 
 CscanDisplay::~CscanDisplay()
@@ -101,17 +100,18 @@ void CscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
         m_scanCnfPointer = paProbe->scan_configure();
     }
 
-    if(m_scene->need_refresh(beams) || focallaw_mode_changed()) {
+    if(m_cscanImageItem->need_refresh(beams) || focallaw_mode_changed()) {
         emit refresh_scan_env();
         wait_for_refresh_finished();
     }
 
-    if(m_scene->driving() == DplSource::Axis::TIMER) {
+    if(m_cscanImageItem->driving() == DplSource::Axis::TIMER) {
         draw_timer_beams(beams);
     } else {
         draw_encoder_beams(beams);
     }
-     qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
+
+    qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
 
 
@@ -140,8 +140,8 @@ void CscanDisplay::update_scan_type_ruler(const QSize &size)
         return;
     }
 
-    if(m_scene->driving() == DplSource::Axis::ENCODER_X
-           || m_scene->driving() == DplSource::Axis::ENCODER_Y) {
+    if(m_cscanImageItem->driving() == DplSource::Axis::ENCODER_X
+           || m_cscanImageItem->driving() == DplSource::Axis::ENCODER_Y) {
 
         /* 扫查轴 */
         /* 根据scan start/end 及resolution（扫查分辨率）计算待显示的总beam数 */
@@ -164,16 +164,16 @@ void CscanDisplay::update_scan_type_ruler(const QSize &size)
             double pixCount = width / beamCount;
             m_scanTypeRuler->set_range(scanStart, scanEnd);
             m_scanTypeRuler->set_max_end(scanEnd);
-            m_scene->set_pix_per_beam(pixCount);
-            m_scene->set_scroll_window(false);
+            m_cscanImageItem->set_pix_per_beam(pixCount);
+            m_cscanImageItem->set_scroll_window(false);
             m_scanTypeRuler->set_show_range(scanStart, scanEnd);
 
         } else {
             /* 若显示区域小于beam数，则计算每条beam占一个pix */
             m_scanTypeRuler->set_range(scanStart, scanStart + width);
             m_scanTypeRuler->set_max_end(scanEnd);
-            m_scene->set_pix_per_beam(DEFAULT_PIX_PER_BEAM);
-            m_scene->set_scroll_window(true);
+            m_cscanImageItem->set_pix_per_beam(DEFAULT_PIX_PER_BEAM);
+            m_cscanImageItem->set_scroll_window(true);
             m_scanTypeRuler->set_show_range(scanStart, scanStart + width);
         }
 
@@ -262,16 +262,31 @@ void CscanDisplay::do_refresh_scan_env()
 
 void CscanDisplay::do_view_size_changed(const QSize &size)
 {
-    if (m_orientation == Qt::Horizontal) {
+    disconnect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
+            this, SLOT(do_data_event(DplSource::BeamsPointer)));
 
-        m_scene->set_size(QSize(size.height(), size.width()));
+    if (m_orientation == Qt::Vertical) {
+
+        m_scene->setSceneRect(-size.width()/2.0, -size.height()/2.0,
+                          size.width(), size.height());
+        m_cscanImageItem->set_size(size);
 
     } else {
 
-        m_scene->set_size(QSize(size.width(), size.height()));
+        m_scene->setSceneRect(-size.height()/2.0, -size.width()/2.0,
+                                   size.height(), size.width());
+        m_cscanImageItem->set_size(QSize(size.height(), size.width()));
     }
 
     update_scan_type_ruler(size);
+
+    update();
+
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
+            this, SLOT(do_data_event(DplSource::BeamsPointer)),
+            Qt::DirectConnection);
 }
 
 void CscanDisplay::do_update_ruler(double value)
@@ -285,24 +300,24 @@ void CscanDisplay::do_update_ruler(double value)
 
 void CscanDisplay::init_scan_env()
 {
-    if(m_scene != NULL) {
-        delete m_scene;
-        m_scene = NULL;
+    if(m_cscanImageItem != NULL) {
+        m_scene->removeItem(m_cscanImageItem);
+        delete m_cscanImageItem;
+        m_cscanImageItem = NULL;
     }
 
     if(DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::TIMER) {
-        m_scene = new CscanTimeScene(DplDevice::Device::instance()->display()->palette(), m_group);
+        m_cscanImageItem = new CscanTimeImageItem(DplDevice::Device::instance()->display()->palette(), m_group);
     } else {
-        m_scene = new CscanEncoderScene(DplDevice::Device::instance()->display()->palette(), m_group);
+        m_cscanImageItem = new CscanEncoderImageItem(DplDevice::Device::instance()->display()->palette(), m_group);
     }
 
-    ui->scanLayout->addWidget(m_view);
-    m_view->setScene(m_scene);
+    m_scene->addItem(m_cscanImageItem);
 
     if (m_orientation == Qt::Horizontal) {
-        m_scene->set_size(QSize(m_view->height(), m_view->width()));
+        m_cscanImageItem->set_size(QSize(m_view->height(), m_view->width()));
     } else {
-        m_scene->set_size(m_view->size());
+        m_cscanImageItem->set_size(m_view->size());
     }
 }
 
@@ -320,8 +335,6 @@ bool CscanDisplay::focallaw_mode_changed()
 
 void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 {
-    DEBUG_INIT("CscanDisplay", __FUNCTION__);
-
     double currentTimeCount = TestStub::instance()->get_time();
     double rulerEnd;
     if(m_orientation == Qt::Horizontal) {
@@ -330,12 +343,12 @@ void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
         rulerEnd = m_view->width() / (SECOND / (double)DplSource::Source::instance()->interval());
     }
 
-    if(!m_scene->redraw_beams(beams)) {
-        m_scene->set_beams(beams);
+    if(!m_cscanImageItem->redraw_beams(beams)) {
+        m_cscanImageItem->set_beams(beams);
     }
 
     if(currentTimeCount > rulerEnd) {
-        m_scene->set_scroll_window(true);
+        m_cscanImageItem->set_scroll_window(true);
         m_scanTypeRuler->move_to_value(currentTimeCount);
         emit update_ruler(currentTimeCount);
     }
@@ -343,11 +356,11 @@ void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 
 void CscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
 {
-    if(m_scene->redraw_beams(beams)) {
+    if(m_cscanImageItem->redraw_beams(beams)) {
 
-        CscanEncoderScene *scene = static_cast<CscanEncoderScene*> (m_scene);
-        if(scene) {
-            m_scanTypeRuler->set_show_range(scene->show_start(), scene->show_end());
+        CscanEncoderImageItem *imageItem = static_cast<CscanEncoderImageItem*> (m_cscanImageItem);
+        if(imageItem) {
+            m_scanTypeRuler->set_show_range(imageItem->show_start(), imageItem->show_end());
         }
     }
 
@@ -359,7 +372,7 @@ void CscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
         x = ((int)((beams->get(0)->encoder_y() / DplSource::Scan::instance()->encoder_y()->resolution() + 0.005) * 100)) / 100.0; /* 保留小数点两位 */
     }
 
-    m_scene->set_beams(beams);
+    m_cscanImageItem->set_beams(beams);
     m_scanTypeRuler->move_to_value(x);
     emit update_ruler(x);
 }

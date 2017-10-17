@@ -6,13 +6,13 @@ CScanData::CScanData(const DplDevice::GroupPointer &grp)
 
 }
 
-bool CScanData::get_peak_value(const DplSource::BeamsPointer &beamsPointer, int beamCount, double &gateValue)
+bool CScanData::get_peak_value(const DplSource::BeamsPointer &beamsPointer, int beamIndex, double &gateValue)
 {
-    if(beamCount > beamsPointer->beam_qty()) {
+    if(beamIndex > beamsPointer->beam_qty()) {
         return false;
     }
 
-   DplSource::BeamPointer beamPoint = beamsPointer->get(beamCount);
+   DplSource::BeamPointer beamPoint = beamsPointer->get(beamIndex);
 
    if(beamPoint.isNull()) {
        return false;
@@ -36,18 +36,14 @@ bool CScanData::get_peak_value(const DplSource::BeamsPointer &beamsPointer, int 
     /*  T(？): 厚度  */
    case TestStub::SOURCE_T:
    {
-       return get_source_peak_value(beamsPointer, beamCount, gateValue);
+       return get_source_peak_value(beamsPointer, beamIndex, gateValue);
        break;
    }
     /*  I/: 闸门 I 内信号的前沿位置  */
    case TestStub::SOURCE_I:
    {
         /* 闸门I內的信号前沿位置? */
-       if (m_group->ut_unit() == DplDevice::Group::Time) {
-           gateValue = beamsPointer->get(beamCount)->gate_peak_position(DplSource::Beam::GATE_I) / 1000.0;
-       } else {
-           gateValue = beamsPointer->get(beamCount)->gate_peak_position(DplSource::Beam::GATE_I) * m_group->focallawer()->specimen()->velocity() / 200000.0;
-       }
+       gateValue = beamsPointer->get(beamIndex)->gate_peak_position(DplSource::Beam::GATE_I) * m_group->focallawer()->specimen()->velocity() / 200000.0;
 
        return true;
        break;
@@ -64,7 +60,7 @@ bool CScanData::get_peak_value(const DplSource::BeamsPointer &beamsPointer, int 
 }
 
 
-bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointer, int beamCount, double &gateValue)
+bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointer, int beamIndex, double &gateValue)
 {
     TestStub::THICKNESS_SOURCE thicknessSourceType = TestStub::instance()->get_thickness_source();
 
@@ -72,7 +68,7 @@ bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointe
     /*  T(A^): 厚度  */
     case TestStub::A_POSITION:                      /* A^ */
     {
-        return get_gate_position(DplSource::Beam::GATE_A, beamsPointer, beamCount, gateValue);
+        return get_gate_position(DplSource::Beam::GATE_A, beamsPointer, beamIndex, gateValue);
         break;
     }
     /*  T(A^-I^)、T(A^-I/): 厚度  */
@@ -82,7 +78,7 @@ bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointe
         return get_gate_position_distance(DplSource::Beam::GATE_A,
                                    DplSource::Beam::GATE_I,
                                    beamsPointer,
-                                   beamCount,
+                                   beamIndex,
                                    gateValue);
         break;
     }
@@ -91,7 +87,7 @@ bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointe
     {
         return get_gate_position(DplSource::Beam::GATE_A,
                           beamsPointer,
-                          beamCount,
+                          beamIndex,
                           gateValue);
         break;
     }
@@ -102,7 +98,7 @@ bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointe
         return get_gate_position_distance(DplSource::Beam::GATE_B,
                                    DplSource::Beam::GATE_I,
                                    beamsPointer,
-                                   beamCount,
+                                   beamIndex,
                                    gateValue);
         break;
     }
@@ -112,7 +108,7 @@ bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointe
         return get_gate_position_distance(DplSource::Beam::GATE_B,
                                    DplSource::Beam::GATE_A,
                                    beamsPointer,
-                                   beamCount,
+                                   beamIndex,
                                    gateValue);
         break;
     }
@@ -120,7 +116,7 @@ bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointe
     case TestStub::I_POSITION:            /* I^ */
     case TestStub::I_AMPLITUDE:           /* I/ */
     {
-        return get_gate_position(DplSource::Beam::GATE_A, beamsPointer, beamCount, gateValue);
+        return get_gate_position(DplSource::Beam::GATE_A, beamsPointer, beamIndex, gateValue);
         break;
     }
     default:
@@ -133,15 +129,11 @@ bool CScanData::get_source_peak_value(const DplSource::BeamsPointer &beamsPointe
 
 bool CScanData::get_gate_position(DplSource::Beam::GateType type,
                                    const DplSource::BeamsPointer &beamsPointer,
-                                   int beamCount,
+                                   int beamIndex,
                                    double &gateValue)
 {
     double tmpValue;
-    if (m_group->ut_unit() == DplDevice::Group::Time) {
-        tmpValue = beamsPointer->get(beamCount)->gate_peak_position(type) / 1000.0;
-    } else {
-        tmpValue = beamsPointer->get(beamCount)->gate_peak_position(type) * m_group->focallawer()->specimen()->velocity() / 200000.0;
-    }
+    tmpValue = beamsPointer->get(beamIndex)->gate_peak_position(type) * m_group->focallawer()->specimen()->velocity() / 200000.0;
 
     if(tmpValue < TestStub::instance()->get_min_thickness())
         gateValue = 0 ;
@@ -156,19 +148,14 @@ bool CScanData::get_gate_position(DplSource::Beam::GateType type,
 bool CScanData::get_gate_position_distance(DplSource::Beam::GateType type1,
                                             DplSource::Beam::GateType type2,
                                             const DplSource::BeamsPointer &beamsPointer,
-                                            int beamCount,
+                                            int beamIndex,
                                             double &gateValue)
 {
     double tmpValue1;
     double tmpValue2;
 
-    if (m_group->ut_unit() == DplDevice::Group::Time) {
-        tmpValue1= beamsPointer->get(beamCount)->gate_peak_position(type1) / 1000.0;
-        tmpValue2= beamsPointer->get(beamCount)->gate_peak_position(type2) / 1000.0;
-    } else {
-        tmpValue1 = beamsPointer->get(beamCount)->gate_peak_position(type1) * m_group->focallawer()->specimen()->velocity() / 200000.0;
-        tmpValue2 = beamsPointer->get(beamCount)->gate_peak_position(type2) * m_group->focallawer()->specimen()->velocity() / 200000.0;
-    }
+    tmpValue1 = beamsPointer->get(beamIndex)->gate_peak_position(type1) * m_group->focallawer()->specimen()->velocity() / 200000.0;
+    tmpValue2 = beamsPointer->get(beamIndex)->gate_peak_position(type2) * m_group->focallawer()->specimen()->velocity() / 200000.0;
 
     double spaceValue = fabs(tmpValue1 - tmpValue2);
 

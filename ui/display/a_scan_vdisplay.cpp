@@ -29,6 +29,7 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group,
             SIGNAL(range_changed(float)),
             this,
             SLOT(update_left_ruler()));
+
     update_left_ruler();
 
     ui->bottomRulerWidget->set_range(0, 100);
@@ -68,7 +69,6 @@ void AscanVDisplay::update_left_ruler()
             ui->leftRulerWidget->set_backgroup_color(QColor("#ff00ff"));
         }
     }
-
     ui->leftRulerWidget->set_range(start, end);
 
     ui->leftRulerWidget->update();

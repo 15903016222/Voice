@@ -1,7 +1,7 @@
-#ifndef __BASE_SCANSCENE_H__
-#define __BASE_SCANSCENE_H__
+#ifndef __BASE_IMAGE_ITEM_H__
+#define __BASE_IMAGE_ITEM_H__
 
-#include <QGraphicsScene>
+#include <QGraphicsItem>
 #include <QReadWriteLock>
 
 #include <display/palette_color.h>
@@ -26,7 +26,7 @@ struct S_BEAM_INFO{
 };
 
 
-class BaseScanScene : public QGraphicsScene
+class BaseImageItem : public QGraphicsObject
 {
     Q_OBJECT
 
@@ -51,8 +51,8 @@ public:
         int beginShowIndex;             /* 从第beginShowIndex帧开始重画 */
     };
 
-    explicit BaseScanScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
-    ~BaseScanScene();
+    explicit BaseImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    ~BaseImageItem();
 
     bool set_pix_per_beam(double ratio);
 
@@ -66,11 +66,23 @@ public:
 
     inline DplSource::Axis::Driving driving() { return m_driving; }
 
+    QRectF boundingRect() const;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+
+    /**
+     * @brief size  获取显示大小
+     * @return      大小
+     */
+    inline const QSize &size() const { return m_size; }
+
 signals:
     void image_changed();
 
 public slots:
     void set_size(const QSize &size);
+    void update();
 
 protected:
 
@@ -87,6 +99,7 @@ protected:
     double          m_pixPerBeamRatio;
     int             m_beamsShowedCount;
     DplDevice::GroupPointer m_group;
+    volatile bool   m_initFinished;
 
 
     /**
@@ -99,9 +112,12 @@ protected:
      */
     virtual bool redraw_vertical_beam() = 0;
 
-    void drawBackground(QPainter *painter, const QRectF &rect);
+    void calculate_common_properties(BaseImageItem::S_CommonProperties &commonProperties);
 
-    void calculate_common_properties(BaseScanScene::S_CommonProperties &commonProperties);
+    virtual void set_vertical_image_data(int beamsShowedCount,
+                                         const BaseImageItem::S_CommonProperties &commonProperties,
+                                         E_BEAM_TYPE type,
+                                         const DplSource::BeamsPointer &beamsPointer) = 0;
 
 private:
 
@@ -109,4 +125,4 @@ private:
 
 };
 
-#endif // __BASE_SCANSCENE_H__
+#endif // __BASE_IMAGE_ITEM_H__

@@ -1,19 +1,18 @@
-#include "time_scene.h"
+#include "time_image_item.h"
 
 #include <source/source.h>
 #include <ui/display/Tracer.h>
 
-TimeScene::TimeScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
-    : BaseScanScene(palette, grp, parent)
+
+TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+    : BaseImageItem(palette, grp, parent)
 {
 
 }
 
 
-void TimeScene::draw_vertical_beam()
+void TimeImageItem::draw_vertical_beam()
 {
-    DEBUG_INIT("TimeScene", __FUNCTION__);
-
     m_pendingTimeCount = TestStub::instance()->get_time();
 
     S_CommonProperties commonProperties;
@@ -23,8 +22,10 @@ void TimeScene::draw_vertical_beam()
     int pendingFrameCount = (m_pendingTimeCount * 1000) / DplSource::Source::instance()->interval();
     int totalFrameCount = STORE_BUFFER_SIZE / m_beamsPointer->size();
 
+    /* TODO */
     DplSource::BeamsPointer beamsPointer = DplSource::Source::instance()->beams(m_group->index(),
                                                                                 pendingFrameCount % totalFrameCount);
+    beamsPointer = m_beamsPointer;
 
     qDebug() << "[" << __FUNCTION__ << "]" << " target frame index = " << pendingFrameCount % totalFrameCount;
 
@@ -40,10 +41,9 @@ void TimeScene::draw_vertical_beam()
 }
 
 
-bool TimeScene::redraw_vertical_beam()
+bool TimeImageItem::redraw_vertical_beam()
 {
-    if(!((!m_beamsPointer.isNull())
-        && (m_image != NULL))) {
+    if(m_beamsPointer.isNull() ) {
         return false;
     }
 
@@ -142,8 +142,11 @@ bool TimeScene::redraw_vertical_beam()
 }
 
 
-void TimeScene::draw_vertical_image(int beamsShowedCount, const BaseScanScene::S_CommonProperties &commonProperties, const DplSource::BeamsPointer &beamsPointer)
+void TimeImageItem::draw_vertical_image(int beamsShowedCount,
+                                        const BaseImageItem::S_CommonProperties &commonProperties,
+                                        const DplSource::BeamsPointer &beamsPointer)
 {
+
     if((beamsShowedCount + 1) == commonProperties.maxIndex && (commonProperties.align != 0)) {
         /* 非对齐,最后一条beam */
         int offset =  commonProperties.pixCount - commonProperties.align;
@@ -158,7 +161,8 @@ void TimeScene::draw_vertical_image(int beamsShowedCount, const BaseScanScene::S
 }
 
 
-void TimeScene::scroll_vertical_image(const BaseScanScene::S_CommonProperties &commonProperties, const DplSource::BeamsPointer &beamsPointer)
+void TimeImageItem::scroll_vertical_image(const BaseImageItem::S_CommonProperties &commonProperties,
+                                     const DplSource::BeamsPointer &beamsPointer)
 {
     QImage tmp = m_image->copy(commonProperties.pixCount, 0, m_image->width(), m_image->height());
     m_image->swap(tmp);

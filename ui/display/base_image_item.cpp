@@ -1,4 +1,4 @@
-#include "base_scan_scene.h"
+#include "base_image_item.h"
 
 #include <QDebug>
 #include <QPainter>
@@ -7,9 +7,8 @@
 #include <source/scan.h>
 #include <typeinfo>
 
-BaseScanScene::BaseScanScene(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
-    : QGraphicsScene(parent),
-      m_size(width(), height()),
+BaseImageItem::BaseImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+    : QGraphicsObject(),
       m_image(NULL),
       m_palette(palette),
       m_scrolling(false),
@@ -17,15 +16,18 @@ BaseScanScene::BaseScanScene(const DplDisplay::PaletteColorPointer &palette, con
       m_driving(DplSource::Scan::instance()->scan_axis()->driving()),
       m_pixPerBeamRatio(DEFAULT_PIX_PER_BEAM),
       m_beamsShowedCount(0.0),
-      m_group(grp)
+      m_group(grp),
+      m_initFinished(false)
 {
     connect(this, SIGNAL(image_changed()),
-            this, SLOT(update()), Qt::QueuedConnection);
+            this, SLOT(update()));
 }
 
-BaseScanScene::~BaseScanScene()
+BaseImageItem::~BaseImageItem()
 {
     QWriteLocker lock(&m_rwLock);
+
+    DEBUG_INIT("BaseImageItem", __FUNCTION__);
 
     if(m_image) {
         delete m_image;
@@ -33,7 +35,7 @@ BaseScanScene::~BaseScanScene()
     }
 }
 
-bool BaseScanScene::set_pix_per_beam(double ratio)
+bool BaseImageItem::set_pix_per_beam(double ratio)
 {
     QWriteLocker lock(&m_rwLock);
 
@@ -46,7 +48,7 @@ bool BaseScanScene::set_pix_per_beam(double ratio)
     return true;
 }
 
-bool BaseScanScene::need_refresh(const DplSource::BeamsPointer &beams)
+bool BaseImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 {
     /* 更改扫查方式后（时间/编码器），需要更新C扫 */
     if(m_driving != DplSource::Scan::instance()->scan_axis()->driving()) {
@@ -57,9 +59,13 @@ bool BaseScanScene::need_refresh(const DplSource::BeamsPointer &beams)
 }
 
 
-bool BaseScanScene::redraw_beams(const DplSource::BeamsPointer &beams)
+bool BaseImageItem::redraw_beams(const DplSource::BeamsPointer &beams)
 {
     QWriteLocker lock(&m_rwLock);
+
+    if(m_image == NULL) {
+        return false;
+    }
 
     if(m_beamsPointer.isNull()) {
         m_beamsPointer = beams;
@@ -69,17 +75,20 @@ bool BaseScanScene::redraw_beams(const DplSource::BeamsPointer &beams)
 }
 
 
-void BaseScanScene::set_beams(const DplSource::BeamsPointer &beams)
+void BaseImageItem::set_beams(const DplSource::BeamsPointer &beams)
 {
     QWriteLocker lock(&m_rwLock);
 
-    DEBUG_INIT("BaseScanScene", __FUNCTION__);
+    DEBUG_INIT("BaseImageItem", __FUNCTION__);
 
     if(m_image == NULL) {
         qDebug() << "[" << __FUNCTION__ << "]" << " image is NULL. warning!!!!!";
-        m_image = new QImage(m_size, QImage::Format_Indexed8);
-        m_image->setColorTable(m_palette->colors());
-        m_image->fill(Qt::white);
+        return;
+    }
+
+    if(!m_initFinished) {
+        qDebug() << "[" << __FUNCTION__ << "]" << " had not been init finished.";
+        return;
     }
 
     m_beamsPointer = beams;
@@ -90,13 +99,13 @@ void BaseScanScene::set_beams(const DplSource::BeamsPointer &beams)
 }
 
 
-void BaseScanScene::set_size(const QSize &size)
+void BaseImageItem::set_size(const QSize &size)
 {
     QWriteLocker lock(&m_rwLock);
 
-    DEBUG_INIT("BaseScanScene", __FUNCTION__);
+    DEBUG_INIT("BaseImageItem", __FUNCTION__);
 
-    qDebug() << typeid(this).name();
+    qDebug("[%s] name  = %s", __FUNCTION__, typeid(this).name());
 
     if((size.height() == m_size.height())
             && (size.width() == m_size.width())
@@ -117,10 +126,6 @@ void BaseScanScene::set_size(const QSize &size)
     m_image->setColorTable(m_palette->colors());
     m_image->fill(Qt::white);
 
-
-    setSceneRect(-size.width()/2, -size.height()/2,
-                 size.width(), size.height());
-
     /* 根据最新的size以及当前显示的beam数，
      * 重新计算是否scroll */
     if(m_size.width() != 0
@@ -134,23 +139,13 @@ void BaseScanScene::set_size(const QSize &size)
     qDebug() << "[" << __FUNCTION__ << "]" << " m_redrawFlag = " << m_redrawFlag;
 }
 
-
-void BaseScanScene::drawBackground(QPainter *painter, const QRectF &rect)
+void BaseImageItem::update()
 {
-    QWriteLocker lock(&m_rwLock);
-
-    QTime time;
-    time.restart();
-
-    if(m_image != NULL) {
-        painter->drawImage(rect, *m_image);
-    }
-
-    qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
+    QGraphicsObject::update();
 }
 
 
-void BaseScanScene::calculate_common_properties(BaseScanScene::S_CommonProperties &commonProperties)
+void BaseImageItem::calculate_common_properties(BaseImageItem::S_CommonProperties &commonProperties)
 {
     commonProperties.ratio      = m_beamsPointer->point_qty() / (double)m_image->height(); /* 一个像素点代表多少个point */
     commonProperties.pixCount   = m_pixPerBeamRatio;
@@ -163,7 +158,7 @@ void BaseScanScene::calculate_common_properties(BaseScanScene::S_CommonPropertie
 }
 
 
-void BaseScanScene::check_scroll_window(const QSize &oldSize)
+void BaseImageItem::check_scroll_window(const QSize &oldSize)
 {
     int newWidth = m_size.width();
     int oldWidth = oldSize.width();
@@ -180,4 +175,24 @@ void BaseScanScene::check_scroll_window(const QSize &oldSize)
         m_scrolling = false;
     }
 }
+
+
+QRectF BaseImageItem::boundingRect() const
+{
+    return QRectF(-m_size.width()/2.0, -m_size.height()/2.0,
+                  m_size.width(), m_size.height());
+}
+
+void BaseImageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QWriteLocker lock(&m_rwLock);
+
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
+    if(m_image) {
+        painter->drawImage(boundingRect(), *m_image);
+    }
+}
+
 

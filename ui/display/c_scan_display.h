@@ -10,7 +10,8 @@ class ScanDisplay;
 }
 
 class ScanView;
-class BaseScanScene;
+class CscanScene;
+class BaseImageItem;
 class ScrollRulerWidget;
 
 class CscanDisplay : public QWidget
@@ -34,7 +35,8 @@ protected:
     Ui::ScanDisplay         *ui;
     DplDevice::GroupPointer m_group;
     ScanView                *m_view;
-    BaseScanScene           *m_scene;
+    CscanScene              *m_scene;
+    BaseImageItem           *m_cscanImageItem;
 
     Qt::Orientation     m_orientation;
     ScrollRulerWidget   *m_scanTypeRuler;       /* 时间扫查（s）/编码器扫擦（mm） */
@@ -47,7 +49,7 @@ protected:
     DplFocallaw::ScanCnfPointer     m_scanCnfPointer;
 
 
-    virtual void init_ruler();
+    void init_ruler();
     void update_scan_type_ruler(const QSize &size);
     void update_law_type_ruler();
     void wait_for_refresh_finished();
