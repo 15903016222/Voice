@@ -58,9 +58,9 @@ void AscanVDisplay::update_left_ruler()
         ui->leftRulerWidget->set_backgroup_color(QColor("#F9CCE2"));
     } else{
         ui->leftRulerWidget->set_unit("(mm)");
-        start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1) / Dpl::s_to_us(1);
+        start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         start /= 2;
-        end   *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1) / Dpl::s_to_us(1);
+        end   *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         end /= 2;
         ui->leftRulerWidget->set_backgroup_color(QColor("#f29cb1"));
         if (DplDevice::Group::TruePath == unit) {
