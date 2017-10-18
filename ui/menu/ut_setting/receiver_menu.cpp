@@ -35,15 +35,6 @@ ReceiverMenu::ReceiverMenu(QWidget *parent) :
             this,
             SLOT(do_filterItem_changed(int)));
 
-    m_rectifierItem->add_item(tr("RF"));
-    m_rectifierItem->add_item(tr("HW+"));
-    m_rectifierItem->add_item(tr("HW-"));
-    m_rectifierItem->add_item(tr("FW"));
-    connect(m_rectifierItem,
-            SIGNAL(value_changed(int)),
-            this,
-            SLOT(do_rectifierItem_changed(int)));
-
     m_videoFilterItem->set(s_onOff);
     connect(m_videoFilterItem,
             SIGNAL(value_changed(int)),
@@ -108,7 +99,11 @@ void ReceiverMenu::do_filterItem_changed(int index)
 
 void ReceiverMenu::do_rectifierItem_changed(int index)
 {
-    m_group->receiver()->set_rectifier(static_cast<DplFpga::Group::Rectifier>(index));
+    if ( m_group->pulser()->tx_rx_mode() == DplUt::Pulser::TOFD ) {
+        m_group->receiver()->set_rectifier(static_cast<DplFpga::Group::Rectifier>(index));
+    } else {
+        m_group->receiver()->set_rectifier(static_cast<DplFpga::Group::Rectifier>(index+1));
+    }
 }
 
 void ReceiverMenu::do_videoFilterItem_changed(int index)
@@ -123,15 +118,29 @@ void ReceiverMenu::do_averagingItem_changed(int index)
 
 void ReceiverMenu::update(const DplDevice::GroupPointer &grp)
 {
+    /* disconnect */
+    if (m_group) {
+        disconnect(static_cast<DplUt::Pulser*>(m_group->pulser().data()),
+                   SIGNAL(txrx_mode_changed(TxRxMode)),
+                   this,
+                   SLOT(update_rectifierItem()));
+    }
+
     m_group = grp;
-    update_filter_item();
-    update_receiver_item();
-    m_rectifierItem->set_current_index(m_group->receiver()->rectifier());
+    update_filterItem();
+    update_receiverItem();
+
+    connect(static_cast<DplUt::Pulser*>(m_group->pulser().data()),
+            SIGNAL(txrx_mode_changed(TxRxMode)),
+            this,
+            SLOT(update_rectifierItem()));
+    update_rectifierItem();
+
     m_videoFilterItem->set_current_index(!m_group->receiver()->video_filter());
     m_averagingItem->set_current_index(m_group->receiver()->averaging());
 }
 
-void ReceiverMenu::update_filter_item()
+void ReceiverMenu::update_filterItem()
 {
     QStringList msgs;
 
@@ -153,13 +162,38 @@ void ReceiverMenu::update_filter_item()
     m_filterItem->set_current_index(1);
 }
 
-void ReceiverMenu::update_receiver_item()
+void ReceiverMenu::update_receiverItem()
 {
     DplFocallaw::ProbePointer probe = m_group->focallawer()->probe();
     if (!probe.isNull() && probe->is_pa()) {
         m_receiverItem->set_value(probe.staticCast<DplFocallaw::PaProbe>()->receiver_index());
     } else {
         m_receiverItem->set_value(1);
+    }
+}
+
+void ReceiverMenu::update_rectifierItem()
+{
+    disconnect(m_rectifierItem,
+               SIGNAL(value_changed(int)),
+               this,
+               SLOT(do_rectifierItem_changed(int)));
+    m_rectifierItem->set(QStringList());
+    if ( m_group->pulser()->tx_rx_mode() == DplUt::Pulser::TOFD ) {
+        m_rectifierItem->add_item(tr("RF"));
+    }
+    m_rectifierItem->add_item(tr("HW+"));
+    m_rectifierItem->add_item(tr("HW-"));
+    m_rectifierItem->add_item(tr("FW"));
+    connect(m_rectifierItem,
+            SIGNAL(value_changed(int)),
+            this,
+            SLOT(do_rectifierItem_changed(int)));
+
+    if ( m_group->pulser()->tx_rx_mode() == DplUt::Pulser::TOFD ) {
+        m_rectifierItem->set_current_index(m_group->receiver()->rectifier());
+    } else {
+        m_rectifierItem->set_current_index(m_group->receiver()->rectifier()-1);
     }
 }
 

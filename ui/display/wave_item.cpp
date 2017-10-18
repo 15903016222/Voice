@@ -16,13 +16,13 @@ QRectF WaveItem::boundingRect() const
                   m_size.width(), m_size.height());
 }
 
-QPainterPath WaveItem::draw(const QByteArray &wave, int w, int h)
+QPainterPath WaveItem::draw(const QByteArray &wave, bool rf, int w, int h)
 {
     QPainterPath path;
 
     float xRatio1 = 1.0;
     float xRatio2 = 1.0;
-    float yRatio = h / 255.0;
+    float yRatio = h / 256.0;
 
     int drawPoints = 0;
     if ( wave.size() < w) {
@@ -33,9 +33,22 @@ QPainterPath WaveItem::draw(const QByteArray &wave, int w, int h)
         drawPoints = w;
     }
 
-    for (int i = 0; i < drawPoints; ++i) {
-        path.lineTo( i*xRatio1,
-                     ((quint8)(255-wave.at((int)(i*xRatio2)))) * yRatio - 0.5);
+    if (rf) {
+        for (int i = 0; i < drawPoints; ++i) {
+            qDebug("%s[%d](%d): y(%d) h(%d) yRatio(%f) val(%d)",__func__, __LINE__, i,
+                   ((uint)(128-(qint8)(wave.at((int)(i*xRatio2))))),
+                   h,
+                   yRatio,
+                   wave.at(i));
+            path.lineTo( i*xRatio1,
+                         ((uint)(128-(qint8)(wave.at((int)(i*xRatio2))))) * yRatio - 0.5 );
+
+        }
+    } else {
+        for (int i = 0; i < drawPoints; ++i) {
+            path.lineTo( i*xRatio1,
+                         ((quint8)(255-wave.at((int)(i*xRatio2)))) * yRatio + 0.5);
+        }
     }
 
     return path;
@@ -54,11 +67,11 @@ void WaveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 }
 
-void WaveItem::set_wave(const QByteArray &beam)
+void WaveItem::set_wave(const QByteArray &beam, bool rf)
 {
     QMutexLocker l(&m_mutex);
     if (!beam.isEmpty()) {
-        m_path = draw(beam, boundingRect().width(), boundingRect().height());
+        m_path = draw(beam, rf, boundingRect().width(), boundingRect().height());
         emit painter_path_changed();
     }
 }

@@ -27,16 +27,8 @@ PulserMenu::PulserMenu(QWidget *parent) :
     ui->layout3->addWidget(m_pwItem);
     ui->layout4->addWidget(m_prfItem);
     ui->layout5->addWidget(m_userDefItem);
-    m_userDefItem->hide();
 
-    m_txrxModeItem->add_item(tr("PE"));
-    m_txrxModeItem->add_item(tr("PC"));
-    m_txrxModeItem->add_item(tr("TT"));
-    m_txrxModeItem->add_item(tr("TOFD"));
-    connect(m_txrxModeItem,
-            SIGNAL(value_changed(int)),
-            this,
-            SLOT(do_txrxModeItem_changed(int)));
+    m_userDefItem->hide();
 
     m_voltageItem->add_item("50V");
     m_voltageItem->add_item("100V");
@@ -70,7 +62,7 @@ PulserMenu::PulserMenu(QWidget *parent) :
     connect(DplUt::GlobalPulser::instance(),
             SIGNAL(prf_changed()),
             this,
-            SLOT(update_user_def_item()));
+            SLOT(update_userDefItem()));
 
     connect(m_userDefItem,
             SIGNAL(value_changed(double)),
@@ -84,7 +76,7 @@ PulserMenu::PulserMenu(QWidget *parent) :
     update(DplDevice::Device::instance()->current_group());
 }
 
-void PulserMenu::update_voltage_item()
+void PulserMenu::update_voltageItem()
 {
     switch (DplUt::GlobalPulser::instance()->voltage(
                 m_group->focallawer()->probe()->is_pa())) {
@@ -161,18 +153,40 @@ void PulserMenu::update(const DplDevice::GroupPointer &group)
 {
     m_group = group;
 
-    m_txrxModeItem->set_current_index(m_group->pulser()->tx_rx_mode());
+    update_txrxModeItem();
     m_pulserItem->set_value(m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>()->pulser_index());
-    update_voltage_item();
+    update_voltageItem();
     m_pwItem->set_value(m_group->pulser()->pw());
     m_prfItem->set_current_index(DplUt::GlobalPulser::instance()->prf_mode());
-    update_user_def_item();
+    update_userDefItem();
 }
 
-void PulserMenu::update_user_def_item()
+void PulserMenu::update_userDefItem()
 {
     m_userDefItem->set_range(1, DplUt::GlobalPulser::instance()->max_acquisition_rate());
     m_userDefItem->set_value(DplUt::GlobalPulser::instance()->acquisition_rate());
+}
+
+void PulserMenu::update_txrxModeItem()
+{
+    disconnect(m_txrxModeItem,
+            SIGNAL(value_changed(int)),
+            this,
+            SLOT(do_txrxModeItem_changed(int)));
+
+    m_txrxModeItem->add_item(tr("PE"));
+    m_txrxModeItem->add_item(tr("PC"));
+    m_txrxModeItem->add_item(tr("TT"));
+    if (m_group->mode() != DplDevice::Group::PA) {
+        m_txrxModeItem->add_item(tr("TOFD"));
+    }
+    m_txrxModeItem->set_current_index(m_group->pulser()->tx_rx_mode());
+
+    connect(m_txrxModeItem,
+            SIGNAL(value_changed(int)),
+            this,
+            SLOT(do_txrxModeItem_changed(int)));
+
 }
 
 

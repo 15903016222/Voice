@@ -76,8 +76,7 @@ AscanDisplay::~AscanDisplay()
 
 void AscanDisplay::do_data_event()
 {
-    m_waveItem->set_wave(m_group->current_beam()->wave());
-
+    m_waveItem->set_wave(m_group->current_beam()->wave(), !m_group->receiver()->rectifier());
 }
 
 void AscanDisplay::do_view_size_changed(const QSize &size)

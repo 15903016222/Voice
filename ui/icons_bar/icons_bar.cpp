@@ -1,6 +1,6 @@
 #include "icons_bar.h"
 #include "ui_icons_bar.h"
-
+#include <source/scan.h>
 #include <QDebug>
 
 IconsBar::IconsBar(QWidget *parent) :
@@ -14,6 +14,11 @@ IconsBar::IconsBar(QWidget *parent) :
     connect(mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
     connect(mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
     connect(mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
+    connect(static_cast<DplSource::Axis *>(DplSource::Scan::instance()->scan_axis().data()),
+            SIGNAL(driving_changed(DplSource::Axis::Driving)),
+            this,
+            SLOT(do_driving_changed()));
+    do_driving_changed();
 }
 
 IconsBar::~IconsBar()
@@ -54,12 +59,12 @@ void IconsBar::do_battery_quantity_event(int index, int value)
     }
 }
 
-void IconsBar::show_gear(bool flag)
+void IconsBar::do_driving_changed()
 {
-    if (flag) {
-        ui->encoderLabel->setPixmap(QPixmap("://resource/gear.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
-    } else {
+    if ( DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::TIMER ) {
         ui->encoderLabel->setPixmap(QPixmap("://resource/clock.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
+    } else {
+        ui->encoderLabel->setPixmap(QPixmap("://resource/gear.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
     }
 }
 
