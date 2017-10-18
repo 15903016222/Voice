@@ -20,7 +20,6 @@ SOURCES += \
     $$PWD/b_scan_display.cpp \
     $$PWD/b_scan_hdisplay.cpp \
     $$PWD/b_scan_vdisplay.cpp \
-    $$PWD/Tracer.cpp \
     $$PWD/c_scan_hdisplay.cpp \
     $$PWD/base_image_item.cpp \
     $$PWD/time_image_item.cpp \
@@ -56,7 +55,6 @@ HEADERS += \
     $$PWD/b_scan_display.h \
     $$PWD/b_scan_hdisplay.h \
     $$PWD/b_scan_vdisplay.h \
-    $$PWD/Tracer.h \
     $$PWD/c_scan_hdisplay.h \
     $$PWD/base_image_item.h \
     $$PWD/time_image_item.h \

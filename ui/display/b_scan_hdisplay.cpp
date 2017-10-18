@@ -3,9 +3,6 @@
 #include "scan_view.h"
 #include "source/scan.h"
 
-#include "ui/display/Tracer.h"
-
-
 BscanHDisplay::BscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent)
     : BscanDisplay(grp, Qt::Horizontal, parent)
 {
@@ -15,8 +12,6 @@ BscanHDisplay::BscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent
 
 void BscanHDisplay::init_ruler()
 {
-    DEBUG_INIT("BscanHDisplay", __FUNCTION__);
-
     m_soundPathRuler->set_type(RulerWidget::BOTTOM);
     m_soundPathRuler->set_direction(RulerWidget::Up);
 

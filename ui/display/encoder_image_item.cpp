@@ -4,8 +4,6 @@
 #include <source/source.h>
 #include <source/beams.h>
 
-#include "ui/display/Tracer.h"
-
 EncoderImageItem::EncoderImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
     : BaseImageItem(palette, grp, parent)
 {
@@ -129,7 +127,6 @@ bool EncoderImageItem::redraw_vertical_beam()
         lastBeamsPointer = DplSource::Source::instance()->beams(m_group->index(), m_maxBeamInfo.x, m_maxBeamInfo.y);
         set_move_x(m_maxBeamInfo.x, m_maxBeamInfo.x);
 
-        qDebug() << "[" << __FUNCTION__ << "]" << " is not scroll window redrawing";
     }
 
     if(lastBeamsPointer.isNull()) {
@@ -275,33 +272,15 @@ void EncoderImageItem::set_scroll_env(const BaseImageItem::S_CommonProperties &c
     double currentStart = scanStart + m_offsetX;
     double currentEnd   = currentStart + scanWidth;
 
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " scanStart = " << scanStart
-             << " scanEnd = " << scanEnd
-             << " scanResolution = " << scanResolution;
-
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " x = " << x
-             << " currentStart = " << currentStart
-             << " currentEnd = " << currentEnd
-             << " scanWidth = " << scanWidth
-             << " m_pixPerBeamRatio = " << m_pixPerBeamRatio;
-
      if(is_equal(x, currentStart)
             || (x > currentStart && x < currentEnd)
             /*|| is_equal(x, currentEnd)*/){
-
         /* 当前位置在该显示区域 */
-        qDebug() << "[" << __FUNCTION__ << "]" << " show here."
-                 << " x = " << x << " m_offsetX = " << m_offsetX;
-
     } else if(is_equal(x, currentEnd)
               || (x > currentEnd && x < scanEnd)
               || is_equal(x, scanEnd)) {
 
         /* 往SCAN_END滚动,重画已显示的beams */
-
-        qDebug() << "[" << __FUNCTION__ << "]" << " scroll back.";
 
         m_moveOffsetX = x - currentEnd + 1;
         m_offsetX += m_moveOffsetX;
@@ -319,9 +298,6 @@ void EncoderImageItem::set_scroll_env(const BaseImageItem::S_CommonProperties &c
               || is_equal(x, scanStart)) {
 
         /* 往SCAN_START滚动,重画已显示的beams */
-
-        qDebug() << "[" << __FUNCTION__ << "]" << " scroll front.";
-
         m_moveOffsetX = x - currentStart;
         m_offsetX += m_moveOffsetX;
 
@@ -337,12 +313,10 @@ void EncoderImageItem::set_scroll_env(const BaseImageItem::S_CommonProperties &c
     } else if(x > scanEnd) {
 
         m_offsetX = scanEnd - scanStart - scanWidth;
-        qDebug() << "[" << __FUNCTION__ << "]" << " x > SCAN_END not in rang. new m_offsetX = " << m_offsetX;
 
     } else if(x < scanStart) {
 
         m_offsetX = 0.0;
-        qDebug() << "[" << __FUNCTION__ << "]" << " x < SCAN_START not in rang. new m_offsetX = " << m_offsetX;
 
     } else {
         qDebug() << "[" << __FUNCTION__ << "]" << " nothing to do.";
@@ -415,10 +389,6 @@ double EncoderImageItem::get_dealing_x(const DplSource::BeamsPointer &beamsPoint
             x = beamsPointer->get(0)->encoder_y() / m_encoderPointer->resolution();
         }
     }
-
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " m_offsetX = " << m_offsetX
-             << " --> dealing x = " << x;
 
     return x;
 }

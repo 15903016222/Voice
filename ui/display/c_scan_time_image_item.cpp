@@ -29,12 +29,10 @@ bool CscanTimeImageItem::need_refresh(const DplSource::BeamsPointer &beams)
     /* C扫的源更改后，需要更新C扫 */
     if(m_source != TestStub::instance()->get_source()) {
         m_source = TestStub::instance()->get_source();
-        qDebug() << "=========================sourc update==============================";
         return true;
     }
 
     if((!m_beamsPointer.isNull()) && (beams->beam_qty() != m_beamsPointer->beam_qty())) {
-        qDebug() << "=========================beam_qty update==============================";
         return true;
     }
 
@@ -87,38 +85,53 @@ void CscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
         double gateValueTmp;
         m_cscanDataPointer->get_peak_value(m_beamsPointer, num, gateValueTmp);
 
-//        qDebug() << "[" << __FUNCTION__ << "]" << " gateValue = " << gateValue
-//                 << " gateValueTmp = " << gateValueTmp
-//                 << " drawLine = " << drawLine
-//                 << " beamsShowedCount = " << beamsShowedCount;
+        if(type == LAST_BEAM) {
+            for(int offset = 0; offset < drawLine; ++offset) {
 
-        for(int offset = 0; offset < drawLine; ++offset) {
+                for(int j = 0; j < commonProperties.pixCount; ++j) {
 
-            for(int j = 0; j < commonProperties.pixCount; ++j) {
+                    targetLine = beginLine + offset;
 
-                targetLine = beginLine + offset;
+                    if(targetLine >= m_image->height() || targetLine < 0) {
+                        qDebug() << "[" << __FUNCTION__ << "]" << " error target line = " << targetLine;
+                        continue;
+                    }
 
-                if(targetLine >= m_image->height() || targetLine < 0) {
-                    qDebug() << "[" << __FUNCTION__ << "]" << " error target line = " << targetLine;
-                    continue;
-                }
-
-                int pos;
-                if(type == LAST_BEAM) {
+                    int pos;
                     pos = m_image->width() - 1 - j;
-                } else {
-                    int tmpPos = beamsShowedCount * commonProperties.pixCount;
-                    pos = (int)(tmpPos + j);
+
+                    quint8 *line    = (quint8*) m_image->scanLine(targetLine);
+
+                    if(pos >= m_image->width() || pos < 0) {
+                        qDebug() << "[" << __FUNCTION__ << "]" << " error pos = " << pos;
+                        continue;
+                    }
+
+                    line[pos] = gateValue;
                 }
+            }
+        } else {
+            for(int offset = 0; offset < drawLine; ++offset) {
 
-                quint8 *line    = (quint8*) m_image->scanLine(targetLine);
+                for(int j = 0; j < commonProperties.pixCount; ++j) {
 
-                if(pos >= m_image->width() || pos < 0) {
-                    qDebug() << "[" << __FUNCTION__ << "]" << " error pos = " << pos;
-                    continue;
+                    targetLine = beginLine + offset;
+
+                    if(targetLine >= m_image->height() || targetLine < 0) {
+                        qDebug() << "[" << __FUNCTION__ << "]" << " error target line = " << targetLine;
+                        continue;
+                    }
+
+                    quint8 *line    = (quint8*) m_image->scanLine(targetLine);
+
+                    int pos = beamsShowedCount * commonProperties.pixCount + j;
+                    if(pos >= m_image->width() || pos < 0) {
+                        qDebug() << "[" << __FUNCTION__ << "]" << " error pos = " << pos;
+                        continue;
+                    }
+
+                    line[pos] = gateValue;
                 }
-
-                line[pos] = gateValue;
             }
         }
     }

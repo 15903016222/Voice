@@ -2,8 +2,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QScrollBar>
-
-#include <ui/display/Tracer.h>
+#include <QTime>
 
 ScrollRulerWidget::ScrollRulerWidget(QWidget *parent) :
     RulerWidget(parent),

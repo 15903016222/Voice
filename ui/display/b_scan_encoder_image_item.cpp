@@ -8,8 +8,6 @@
 #include <source/driving.h>
 #include <fpga/fpga.h>
 
-#include "Tracer.h"
-
 BscanEncoderImageItem::BscanEncoderImageItem(const DplDisplay::PaletteColorPointer &palette,
                                      const DplDevice::GroupPointer &grp,
                                      QObject *parent) :
@@ -71,25 +69,48 @@ bool BscanEncoderImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 void BscanEncoderImageItem::set_vertical_image_data(int beamsShowedCount, const BaseImageItem::S_CommonProperties &commonProperties, BaseImageItem::E_BEAM_TYPE type, const DplSource::BeamsPointer &beamsPointer)
 {
 #if 1
+
+    DplSource::BeamPointer beamPointer = beamsPointer->get(0);
+    if(beamPointer.isNull()) {
+        return;
+    }
+
+    const QByteArray &wave = beamPointer->wave();
+
     int pos = 0;
-    for(int i = 0; i < m_image->height(); ++i) {
 
-        quint8 *line    = (quint8*) m_image->scanLine(i);
+    if(type == LAST_BEAM) {
+        for(int i = 0; i < m_image->height(); ++i) {
 
-        for(int j = 0; j < commonProperties.pixCount; ++j) {
+            quint8 *line    = (quint8*) m_image->scanLine(i);
 
-            if(type == LAST_BEAM) {
+            for(int j = 0; j < commonProperties.pixCount; ++j) {
+
                 pos = m_image->width() - j - 1;
-            } else {
+                if(pos >= m_image->width() || pos < 0) {
+                    qDebug() << "[" << __FUNCTION__ << "]" << " last beam error pos = " << pos;
+                    continue;
+                }
+
+                line[pos] = wave.at((int)(i * commonProperties.ratio));
+            }
+        }
+    } else {
+        for(int i = 0; i < m_image->height(); ++i) {
+
+            quint8 *line    = (quint8*) m_image->scanLine(i);
+
+            for(int j = 0; j < commonProperties.pixCount; ++j) {
+
                 pos = (int)(beamsShowedCount * commonProperties.pixCount + j);
-            }
 
-            if(pos >= m_image->width() || pos < 0) {
-                qDebug() << "[" << __FUNCTION__ << "]" << " last beam error pos = " << pos;
-                continue;
-            }
+                if(pos >= m_image->width() || pos < 0) {
+                    qDebug() << "[" << __FUNCTION__ << "]" << " last beam error pos = " << pos;
+                    continue;
+                }
 
-            line[pos] = beamsPointer->get(0)->wave().at((int)(i * commonProperties.ratio));
+                line[pos] = wave.at((int)(i * commonProperties.ratio));
+            }
         }
     }
 

@@ -1,8 +1,6 @@
 #include "time_image_item.h"
 
 #include <source/source.h>
-#include <ui/display/Tracer.h>
-
 
 TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
     : BaseImageItem(palette, grp, parent)
@@ -19,15 +17,16 @@ void TimeImageItem::draw_vertical_beam()
 
     calculate_common_properties(commonProperties);
 
-    int pendingFrameCount = (m_pendingTimeCount * 1000) / DplSource::Source::instance()->interval();
+    /* 正在处理的第几帧 */
+    int pendingFrameCount = (m_pendingTimeCount * SECOND) / DplSource::Source::instance()->interval();
+    /* 系统一共有多少帧 */
     int totalFrameCount = STORE_BUFFER_SIZE / m_beamsPointer->size();
 
-    /* TODO */
+    /* TODO
+     */
     DplSource::BeamsPointer beamsPointer = DplSource::Source::instance()->beams(m_group->index(),
                                                                                 pendingFrameCount % totalFrameCount);
     beamsPointer = m_beamsPointer;
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " target frame index = " << pendingFrameCount % totalFrameCount;
 
     if(m_scrolling) {
         /* 整个显示区域画满beam，开始滚动显示后续的beam */
@@ -43,13 +42,16 @@ void TimeImageItem::draw_vertical_beam()
 
 bool TimeImageItem::redraw_vertical_beam()
 {
+    QTime time;
+    time.restart();
+
     if(m_beamsPointer.isNull() ) {
         return false;
     }
 
     m_pendingTimeCount = TestStub::instance()->get_time();
     double timeSpace = m_pendingTimeCount - m_currentTimeCount;
-    int beamsCount = (timeSpace * 1000) / DplSource::Source::instance()->interval();
+    int beamsCount = (timeSpace * SECOND) / DplSource::Source::instance()->interval();
 
     S_CommonProperties commonProperties;
     calculate_common_properties(commonProperties);
@@ -58,7 +60,7 @@ bool TimeImageItem::redraw_vertical_beam()
 
     if(beamsCount > commonProperties.maxIndex) {
 
-        int pendingFrameCount = m_pendingTimeCount * 1000 / DplSource::Source::instance()->interval();
+        int pendingFrameCount = m_pendingTimeCount * SECOND / DplSource::Source::instance()->interval();
 
         redrawProperties.currentFrameIndex  = pendingFrameCount;
         redrawProperties.totalFrameCount    = STORE_BUFFER_SIZE / m_beamsPointer->size();
@@ -67,8 +69,8 @@ bool TimeImageItem::redraw_vertical_beam()
 
     } else if(beamsCount > 1) {
 
-        int pendingFrameCount = m_pendingTimeCount * 1000 / DplSource::Source::instance()->interval();
-        int currentFrameCount = m_currentTimeCount * 1000 / DplSource::Source::instance()->interval();
+        int pendingFrameCount = m_pendingTimeCount * SECOND / DplSource::Source::instance()->interval();
+        int currentFrameCount = m_currentTimeCount * SECOND / DplSource::Source::instance()->interval();
 
         redrawProperties.currentFrameIndex  = pendingFrameCount;
         redrawProperties.totalFrameCount    = STORE_BUFFER_SIZE / m_beamsPointer->size();
@@ -77,7 +79,7 @@ bool TimeImageItem::redraw_vertical_beam()
 
     } else if(m_redrawFlag) {
 
-        int pendingFrameCount = m_pendingTimeCount * 1000 / DplSource::Source::instance()->interval();
+        int pendingFrameCount = m_pendingTimeCount * SECOND / DplSource::Source::instance()->interval();
 
         int tmpRedrawCount = pendingFrameCount - commonProperties.maxIndex;
         if(tmpRedrawCount > 0) {
@@ -92,20 +94,32 @@ bool TimeImageItem::redraw_vertical_beam()
         redrawProperties.totalFrameCount    = STORE_BUFFER_SIZE / m_beamsPointer->size();
 
     } else {
-        qDebug() << "[" << __FUNCTION__ << "]" << " no need to redraw.";
+        /* no need to redraw */
         return false;
     }
 
     DplSource::BeamsPointer tmp;
     int tmpBeamsShowedCount = 0;
 
-    for(int i = 0; i < redrawProperties.redrawCount; ++i) {
+    qDebug() << " redraw count " << redrawProperties.redrawCount
+             << " size  = " << m_size;
 
-        if(redrawProperties.beginShowIndex >= 0) {
-            /* 顺序显示beams */
+     /* 顺序显示beams */
+    if(redrawProperties.beginShowIndex >= 0) {
+        for(int i = 0; i < redrawProperties.redrawCount; ++i) {
+
             tmp = DplSource::Source::instance()->beams(m_group->index(),
-                                                       (redrawProperties.beginShowIndex + i) % redrawProperties.totalFrameCount);
-        } else {
+                                                           (redrawProperties.beginShowIndex + i) % redrawProperties.totalFrameCount);
+            if(tmp.isNull()) {
+                qDebug() << "[" << __FUNCTION__ << "]" << " BeamsPointer is NULL. tmpBeamsShowedCount = " << tmpBeamsShowedCount;
+            }
+
+            draw_vertical_image(tmpBeamsShowedCount, commonProperties, tmp);
+
+            ++tmpBeamsShowedCount;
+        }
+    } else {
+        for(int i = 0; i < redrawProperties.redrawCount; ++i) {
             /*
              * ________________________________________________________
              * |__0__|__1__|____|____|____|.....  |__20__|__21__|__22__|
@@ -123,20 +137,22 @@ bool TimeImageItem::redraw_vertical_beam()
             } else {
                 tmp = DplSource::Source::instance()->beams(m_group->index(), i - abs(redrawProperties.beginShowIndex));
             }
+
+            if(tmp.isNull()) {
+                qDebug() << "[" << __FUNCTION__ << "]" << " BeamsPointer is NULL. tmpBeamsShowedCount = " << tmpBeamsShowedCount;
+            }
+
+            draw_vertical_image(tmpBeamsShowedCount, commonProperties, tmp);
+
+            ++tmpBeamsShowedCount;
         }
-
-        if(tmp.isNull()) {
-            qDebug() << "[" << __FUNCTION__ << "]" << " BeamsPointer is NULL. tmpBeamsShowedCount = " << tmpBeamsShowedCount;
-        }
-
-        draw_vertical_image(tmpBeamsShowedCount, commonProperties, tmp);
-
-        ++tmpBeamsShowedCount;
     }
 
     m_beamsShowedCount = tmpBeamsShowedCount;
     m_currentTimeCount = m_pendingTimeCount;
-    m_redrawFlag = false;
+    m_redrawFlag       = false;
+
+    qDebug("TimeImageItem:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 
     return true;
 }
@@ -146,8 +162,8 @@ void TimeImageItem::draw_vertical_image(int beamsShowedCount,
                                         const BaseImageItem::S_CommonProperties &commonProperties,
                                         const DplSource::BeamsPointer &beamsPointer)
 {
-
-    if((beamsShowedCount + 1) == commonProperties.maxIndex && (commonProperties.align != 0)) {
+    if((beamsShowedCount + 1) == commonProperties.maxIndex
+            && (commonProperties.align != 0)) {
         /* 非对齐,最后一条beam */
         int offset =  commonProperties.pixCount - commonProperties.align;
         QImage tmp = m_image->copy(offset, 0, m_image->width(), m_image->height());

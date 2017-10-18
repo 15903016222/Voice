@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QPainter>
 
-#include <ui/display/Tracer.h>
 #include <source/scan.h>
 #include <typeinfo>
 
@@ -26,8 +25,6 @@ BaseImageItem::BaseImageItem(const DplDisplay::PaletteColorPointer &palette, con
 BaseImageItem::~BaseImageItem()
 {
     QWriteLocker lock(&m_rwLock);
-
-    DEBUG_INIT("BaseImageItem", __FUNCTION__);
 
     if(m_image) {
         delete m_image;
@@ -79,8 +76,6 @@ void BaseImageItem::set_beams(const DplSource::BeamsPointer &beams)
 {
     QWriteLocker lock(&m_rwLock);
 
-    DEBUG_INIT("BaseImageItem", __FUNCTION__);
-
     if(m_image == NULL) {
         qDebug() << "[" << __FUNCTION__ << "]" << " image is NULL. warning!!!!!";
         return;
@@ -103,10 +98,6 @@ void BaseImageItem::set_size(const QSize &size)
 {
     QWriteLocker lock(&m_rwLock);
 
-    DEBUG_INIT("BaseImageItem", __FUNCTION__);
-
-    qDebug("[%s] name  = %s", __FUNCTION__, typeid(this).name());
-
     if((size.height() == m_size.height())
             && (size.width() == m_size.width())
             && (m_image != NULL))  {
@@ -119,8 +110,6 @@ void BaseImageItem::set_size(const QSize &size)
         delete m_image;
         m_image = NULL;
     }
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " w = " << size.width() << " h " << size.height();
 
     m_image = new QImage(m_size, QImage::Format_Indexed8);
     m_image->setColorTable(m_palette->colors());
@@ -135,8 +124,6 @@ void BaseImageItem::set_size(const QSize &size)
         check_scroll_window(size);
         m_redrawFlag = true;
     }
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " m_redrawFlag = " << m_redrawFlag;
 }
 
 void BaseImageItem::update()

@@ -26,20 +26,17 @@ public:
      * @param gateValue
      * @return
      */
-    bool get_source_peak_value(const DplSource::BeamsPointer &beamsPointer,
-                               int beamIndex,
+    bool get_source_peak_value(const DplSource::BeamPointer &beamPointer,
                                double &gateValue);
 
 
     bool get_gate_position(DplSource::Beam::GateType type,
-                           const DplSource::BeamsPointer &beamsPointer,
-                           int beamIndex,
+                           const DplSource::BeamPointer &beamPointer,
                            double &gateValue);
 
     bool get_gate_position_distance(DplSource::Beam::GateType type1,
                                     DplSource::Beam::GateType type2,
-                                    const DplSource::BeamsPointer &beamsPointer,
-                                    int beamIndex,
+                                    const DplSource::BeamPointer &beamPointer,
                                     double &gateValue);
 
 private:

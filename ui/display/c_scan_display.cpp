@@ -12,7 +12,6 @@
 #include <source/axis.h>
 #include <source/scan.h>
 #include <source/source.h>
-#include <ui/display/Tracer.h>
 #include <QDebug>
 
 CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
@@ -52,10 +51,9 @@ CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     connect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
 }
 
+
 CscanDisplay::~CscanDisplay()
 {
-    DEBUG_INIT("CscanDisplay", __FUNCTION__);
-
     disconnect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)));
@@ -71,13 +69,9 @@ CscanDisplay::~CscanDisplay()
     m_scene = NULL;
 }
 
+
 void CscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
-    DEBUG_INIT("CscanDisplay", __FUNCTION__);
-
-    QTime time;
-    time.restart();
-
     if(m_scene == NULL
             || m_view == NULL) {
         return;
@@ -110,8 +104,6 @@ void CscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
     } else {
         draw_encoder_beams(beams);
     }
-
-    qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
 
 
@@ -198,6 +190,7 @@ void CscanDisplay::update_scan_type_ruler(const QSize &size)
     m_scanTypeRuler->update();
 }
 
+
 void CscanDisplay::update_law_type_ruler()
 {
     const DplFocallaw::ProbePointer &probe = m_group->focallawer()->probe();
@@ -206,15 +199,11 @@ void CscanDisplay::update_law_type_ruler()
         return;
     }
 
-    qDebug() << "[" << __FUNCTION__ << "]" << " is PA. beam qty = " << m_group->focallawer()->beam_qty();
-
     DplFocallaw::PaProbePointer paProbe = probe.staticCast<DplFocallaw::PaProbe>();
 
     if(paProbe.isNull()) {
         return;
     }
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " PA: mode is " << paProbe->scan_configure()->mode();
 
     if(paProbe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
         /* 线扫 */
@@ -234,8 +223,6 @@ void CscanDisplay::update_law_type_ruler()
 
          double startAngle = sectorialScanCnf->first_angle();
          double lastAngle  = sectorialScanCnf->last_angle();
-         double stepAngle  = sectorialScanCnf->angle_step();
-         double beamQty    = (startAngle - lastAngle) / stepAngle + 1.0;
 
          m_lawTypeRuler->set_range(startAngle, lastAngle);
          m_lawTypeRuler->set_unit("(°)");
@@ -244,10 +231,12 @@ void CscanDisplay::update_law_type_ruler()
     m_lawTypeRuler->update();
 }
 
+
 void CscanDisplay::wait_for_refresh_finished()
 {
     m_refreshSemaphore.acquire(m_refreshSemaphore.available() + 1);
 }
+
 
 void CscanDisplay::do_refresh_scan_env()
 {
@@ -260,8 +249,13 @@ void CscanDisplay::do_refresh_scan_env()
     m_refreshSemaphore.release();
 }
 
+
 void CscanDisplay::do_view_size_changed(const QSize &size)
 {
+    QTime time;
+    time.restart();
+
+
     disconnect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)));
@@ -287,7 +281,10 @@ void CscanDisplay::do_view_size_changed(const QSize &size)
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)),
             Qt::DirectConnection);
+
+    qDebug("CscanDisplay:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
+
 
 void CscanDisplay::do_update_ruler(double value)
 {
@@ -297,6 +294,7 @@ void CscanDisplay::do_update_ruler(double value)
 
     m_scanTypeRuler->update();
 }
+
 
 void CscanDisplay::init_scan_env()
 {
@@ -320,6 +318,7 @@ void CscanDisplay::init_scan_env()
         m_cscanImageItem->set_size(m_view->size());
     }
 }
+
 
 bool CscanDisplay::focallaw_mode_changed()
 {
@@ -353,6 +352,7 @@ void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
         emit update_ruler(currentTimeCount);
     }
 }
+
 
 void CscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
 {

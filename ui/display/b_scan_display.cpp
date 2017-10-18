@@ -16,8 +16,6 @@
 #include "b_scan_encoder_image_item.h"
 #include "b_scan_time_image_item.h"
 
-#include "Tracer.h"
-
 
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),
@@ -63,8 +61,6 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
 
 BscanDisplay::~BscanDisplay()
 {
-    DEBUG_INIT("BscanDisplay", __FUNCTION__);
-
     disconnect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this,
@@ -85,8 +81,6 @@ BscanDisplay::~BscanDisplay()
 
 void BscanDisplay::init_ruler()
 {
-    DEBUG_INIT("BscanDisplay", __FUNCTION__);
-
     if(m_orientation == Qt::Vertical) {
         m_soundPathRuler = ui->leftRuler;
         m_scanTypeRuler  = ui->bottomRuler;
@@ -119,11 +113,6 @@ void BscanDisplay::init_ruler()
 
 void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
-    DEBUG_INIT("BscanDisplay", __FUNCTION__);
-
-    QTime time;
-    time.restart();
-
     if(m_bscanScene == NULL
             || m_bscanView == NULL
             || m_bscanImageItem == NULL) {
@@ -141,10 +130,6 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
         return;
     }
 
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " scan_axis driving = " << DplSource::Scan::instance()->scan_axis()->driving()
-             << " scene driving = " << m_bscanImageItem->driving();
-
     if(m_bscanImageItem->need_refresh(beams)) {
         emit refresh_scan_env();
         wait_for_refresh_finished();
@@ -155,8 +140,6 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
     } else {
         draw_encoder_beams(beams);
     }
-
-    qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
 
 void BscanDisplay::do_update_ruler(double value)
@@ -171,8 +154,6 @@ void BscanDisplay::do_update_ruler(double value)
 
 void BscanDisplay::update_scan_type_ruler(const QSize &size)
 {
-    DEBUG_INIT("BscanDisplay", __FUNCTION__);
-
     if(m_scanTypeRuler == NULL) {
         return;
     }
@@ -236,8 +217,6 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
 
 void BscanDisplay::wait_for_refresh_finished()
 {
-    DEBUG_INIT("BscanDisplay", __FUNCTION__);
-
     m_refreshSemaphore.acquire(m_refreshSemaphore.available() + 1);
 }
 
@@ -296,12 +275,6 @@ void BscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
 
     double x;
 
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " x = " << beams->get(0)->encoder_x()
-             << " y = " << beams->get(0)->encoder_y()
-             << " x true = " << beams->get(0)->encoder_x() / DplSource::Scan::instance()->encoder_x()->resolution()
-             << " y true = " << beams->get(0)->encoder_y() / DplSource::Scan::instance()->encoder_y()->resolution();
-
     if(DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::ENCODER_X) {
         x = ((int)((beams->get(0)->encoder_x() / DplSource::Scan::instance()->encoder_x()->resolution() + 0.005) * 100)) / 100.0; /* 保留小数点两位 */
     } else {
@@ -316,8 +289,6 @@ void BscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
 
 void BscanDisplay::do_refresh_scan_env()
 {
-    DEBUG_INIT("BscanDisplay", __FUNCTION__);
-
     init_scan_env();
 
     update_scan_type_ruler(m_bscanView->size());
@@ -329,8 +300,6 @@ void BscanDisplay::do_refresh_scan_env()
 
 void BscanDisplay::update_sound_path_ruler()
 {
-    DEBUG_INIT("BscanDisplay", __FUNCTION__);
-
     if(m_soundPathRuler == NULL) {
         return;
     }
@@ -372,7 +341,8 @@ void BscanDisplay::update_sound_path_ruler()
 
 void BscanDisplay::do_view_size_changed(const QSize &size)
 {
-    DEBUG_INIT("BscanDisplay", __FUNCTION__);
+    QTime time;
+    time.restart();
 
     disconnect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
@@ -400,5 +370,7 @@ void BscanDisplay::do_view_size_changed(const QSize &size)
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)),
             Qt::DirectConnection);
+
+    qDebug("BscanDisplay:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
 
