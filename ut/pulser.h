@@ -30,7 +30,6 @@ public:
     /**
      * @brief set_tx_rx_mode    设置Tx/Rx模式
      * @param mode              模式
-     * @return                  成功返回true，否则返回false
      */
     void set_tx_rx_mode(TxRxMode mode);
 
