@@ -27,8 +27,9 @@ protected slots:
     void do_averagingItem_changed(int index);
 
     void update(const DplDevice::GroupPointer &grp);
-    void update_filter_item();
-    void update_receiver_item();
+    void update_filterItem();
+    void update_receiverItem();
+    void update_rectifierItem();
 
 private:
     SpinMenuItem *m_receiverItem;
