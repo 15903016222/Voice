@@ -38,6 +38,9 @@ MeasureBar :: MeasureBar(QWidget *parent) :
     set_measure_widget(ui->measureWidget6, Measure::Measurement_Cursor_Index_Position);
     set_measure_widget(ui->measureWidget7, Measure::Measurement_Cursor_Scan_Position);
     set_measure_widget(ui->measureWidget8, Measure::Gate_A_Position);
+
+    connect(this, SIGNAL(calculated(MeasureWidget*,QString)),
+            this, SLOT(do_calculated(MeasureWidget*,QString)), Qt::QueuedConnection);
 }
 
 MeasureBar::~MeasureBar()
@@ -71,8 +74,13 @@ void MeasureBar::do_beamgroup_data_event()
 {
     QList<MeasureWidget *> lst = findChildren<MeasureWidget *>(QRegExp("measureWidget[1-8]"));
     foreach (MeasureWidget *w, lst) {
-        w->set_value( calculate_string( static_cast<Measure::Type>(w->property("Type").toInt()) ) );
+        emit calculated( w, Measure::instance()->calculate_str(m_group, static_cast<Measure::Type>(w->property("Type").toInt()) ) );
     }
+}
+
+void MeasureBar::do_calculated(MeasureWidget *w, const QString &str)
+{
+    w->set_value(str);
 }
 
 void MeasureBar::set_measure_widget(MeasureWidget *w, Measure::Type type)
@@ -86,18 +94,4 @@ void MeasureBar::set_measure_widget(MeasureWidget *w, MeasureDialog &dlg)
     w->setProperty("Type", dlg.get_type());
     w->set_title(dlg.get_type_string());
     w->set_unit(dlg.get_unit());
-}
-
-QString MeasureBar::calculate_string(Measure::Type type)
-{
-    double value = Measure::instance()->calculate(m_group, type);
-    if(qFuzzyCompare(value, MEASURE_DATA_ND)) {
-        return QString("ND");
-    } else {
-        if(type == Measure::LA || type == Measure::LB) {
-            return QString::number(value, 'f', 0);
-        } else {
-            return QString::number(value, 'f', 1);
-        }
-    }
 }
