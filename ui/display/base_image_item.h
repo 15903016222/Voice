@@ -14,8 +14,6 @@
 
 static const int    STORE_BUFFER_SIZE    = 256 * 1024 * 1024 ;   /* 256MB */
 static const double DEFAULT_PIX_PER_BEAM = 1.0;                  /* 默认每条beam占1pix */
-static const int    DEFAULT_POINT_SIZE   = 256;                  /* 默认每条beam多少个point */
-
 static const double FLOAT_ZERO  = 0.0000001;
 static const double SECOND      = 1000.0;
 

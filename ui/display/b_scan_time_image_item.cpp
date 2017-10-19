@@ -40,7 +40,6 @@ void BscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
                 pos = m_image->width() - j - 1;
 
                 if(pos >= m_image->width() || pos < 0) {
-                    qDebug() << "[" << __FUNCTION__ << "]" << " last beam error pos = " << pos;
                     continue;
                 }
 
@@ -57,7 +56,6 @@ void BscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
                 pos = (int)(beamsShowedCount * commonProperties.pixCount + j);
 
                 if(pos >= m_image->width() || pos < 0) {
-                    qDebug() << "[" << __FUNCTION__ << "]" << " last beam error pos = " << pos;
                     continue;
                 }
 

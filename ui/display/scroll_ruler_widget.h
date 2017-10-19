@@ -8,7 +8,7 @@
 
 class ScrollRulerWidget : public RulerWidget
 {
-//    Q_OBJECT
+
 public:
 
     explicit ScrollRulerWidget(QWidget *parent = 0);

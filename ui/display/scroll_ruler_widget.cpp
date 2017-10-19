@@ -252,7 +252,6 @@ void ScrollRulerWidget::paintEvent(QPaintEvent *e)
             if(targetX < 0) {
                 int align = markQty % 10;
                 /* align == 0，则不偏移一个单位，若不等于1，则偏移一个单位 */
-                //if((interval * 10.0) >= 1.0) {
                 if(align == 0) {
                     targetX = (int)((markQty - align + i) * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
                     painter.drawText(targetX + 2, 12, QString::number(((markQty / 10  + m_unitNum) * 10) * interval + m_start, 'f', 1));

@@ -130,7 +130,7 @@ bool EncoderImageItem::redraw_vertical_beam()
     }
 
     if(lastBeamsPointer.isNull()) {
-        qDebug() << "[" << __FUNCTION__ << "]" << " beamsPointer is NULL.";
+        qDebug() << "[" << __FUNCTION__ << "]" << " last beamsPointer is NULL.";
         return false;
     }
 
@@ -179,16 +179,11 @@ void EncoderImageItem::draw_vertical_image(const BaseImageItem::S_CommonProperti
 
         double targetX = m_currentX - (i * symbol) / retain;
 
-        //TODO
-#if 0
         if(m_axis.driving() == DplSource::Axis::ENCODER_X) {
             tmpBeams = DplSource::Source::instance()->beams(m_group->index(), (int)targetX, m_beamsPointer->get(0)->encoder_y());
         } else if(m_axis.driving() == DplSource::Axis::ENCODER_Y) {
             tmpBeams = DplSource::Source::instance()->beams(m_group->index(), m_beamsPointer->get(0)->encoder_x(), (int)targetX);
         }
-#else
-        tmpBeams = m_beamsPointer;
-#endif
 
         if(tmpBeams.isNull()) {
             qDebug() << "[" << __FUNCTION__ << "]" << " tmpBeams is NULL.";
@@ -246,9 +241,9 @@ void EncoderImageItem::set_one_vertical_beam(double x, const BaseImageItem::S_Co
 
     if((beamIndex + 1) == commonProperties.maxIndex && (commonProperties.align != 0)) {
         /* 非对齐,最后一条beam */
-        int offset =  commonProperties.pixCount - commonProperties.align;
-        QImage tmp = m_image->copy(offset, 0, m_image->width(), m_image->height());
-        m_image->swap(tmp);
+//        int offset =  commonProperties.pixCount - commonProperties.align;
+//        QImage tmp = m_image->copy(offset, 0, m_image->width(), m_image->height());
+//        m_image->swap(tmp);
 
         set_vertical_image_data(beamIndex, commonProperties, LAST_BEAM, beamsPointer);
 
@@ -309,18 +304,11 @@ void EncoderImageItem::set_scroll_env(const BaseImageItem::S_CommonProperties &c
             /* 移动数值大于显示区域数值，直接填充white */
             m_image->fill(Qt::white);
         }
-
     } else if(x > scanEnd) {
-
         m_offsetX = scanEnd - scanStart - scanWidth;
-
     } else if(x < scanStart) {
-
         m_offsetX = 0.0;
-
-    } else {
-        qDebug() << "[" << __FUNCTION__ << "]" << " nothing to do.";
-     }
+    }
 }
 
 

@@ -22,12 +22,8 @@ void TimeImageItem::draw_vertical_beam()
     /* 系统一共有多少帧 */
     int totalFrameCount = STORE_BUFFER_SIZE / m_beamsPointer->size();
 
-    /* TODO
-     */
     DplSource::BeamsPointer beamsPointer = DplSource::Source::instance()->beams(m_group->index(),
                                                                                 pendingFrameCount % totalFrameCount);
-    beamsPointer = m_beamsPointer;
-
     if(m_scrolling) {
         /* 整个显示区域画满beam，开始滚动显示后续的beam */
         scroll_vertical_image(commonProperties, beamsPointer);
@@ -100,9 +96,6 @@ bool TimeImageItem::redraw_vertical_beam()
 
     DplSource::BeamsPointer tmp;
     int tmpBeamsShowedCount = 0;
-
-    qDebug() << " redraw count " << redrawProperties.redrawCount
-             << " size  = " << m_size;
 
      /* 顺序显示beams */
     if(redrawProperties.beginShowIndex >= 0) {

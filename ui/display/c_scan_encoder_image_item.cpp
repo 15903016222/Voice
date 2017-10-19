@@ -97,7 +97,6 @@ void CscanEncoderImageItem::set_vertical_image_data(int beamsShowedCount,
                 targetLine = beginLine + offset;
 
                 if(targetLine >= m_image->height() || targetLine < 0) {
-                    qDebug() << "[" << __FUNCTION__ << "]" << " error target line = " << targetLine;
                     continue;
                 }
 
@@ -112,7 +111,6 @@ void CscanEncoderImageItem::set_vertical_image_data(int beamsShowedCount,
                 quint8 *line    = (quint8*) m_image->scanLine(targetLine);
 
                 if(pos >= m_image->width() || pos < 0) {
-                    qDebug() << "[" << __FUNCTION__ << "]" << " error pos = " << pos;
                     continue;
                 }
 
