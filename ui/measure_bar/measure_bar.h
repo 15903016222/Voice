@@ -1,3 +1,9 @@
+/**
+ * @file measure_bar.h
+ * @brief 测量显示栏
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
 #ifndef __MEASURE_BAR_H__
 #define __MEASURE_BAR_H__
 

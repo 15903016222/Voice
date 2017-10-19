@@ -1,3 +1,10 @@
+/**
+ * @file measure.h
+ * @brief 测量计算类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
+
 #ifndef __MEASURE_H__
 #define __MEASURE_H__
 

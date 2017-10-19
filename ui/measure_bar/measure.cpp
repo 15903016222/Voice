@@ -1,3 +1,9 @@
+/**
+ * @file measure.cpp
+ * @brief 测量计算类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
 #include "measure.h"
 
 #include <device/device.h>

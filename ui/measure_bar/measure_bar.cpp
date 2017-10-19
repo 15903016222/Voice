@@ -1,3 +1,9 @@
+/**
+ * @file measure_bar.cpp
+ * @brief 测量显示栏
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
 #include "measure_bar.h"
 #include "ui_measure_bar.h"
 

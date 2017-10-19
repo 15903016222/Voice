@@ -1,3 +1,9 @@
+/**
+ * @file measure_widget.cpp
+ * @brief 测量部件
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
 #include "measure_widget.h"
 #include "ui_measure_widget.h"
 
