@@ -1,3 +1,9 @@
+/**
+ * @file measure_bar.h
+ * @brief 测量显示栏
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
 #ifndef __MEASURE_BAR_H__
 #define __MEASURE_BAR_H__
 
@@ -26,6 +32,12 @@ public slots:
     void do_current_group_changed(const DplDevice::GroupPointer &group);
     void do_beamgroup_data_event();
 
+signals:
+    void calculated(MeasureWidget *w, const QString &str);
+
+protected slots:
+    void do_calculated(MeasureWidget *w, const QString &str);
+
 private:
     Ui::MeasureBar *ui;
 
@@ -33,8 +45,6 @@ private:
 
     void set_measure_widget(MeasureWidget *w, Measure::Type type);
     void set_measure_widget(MeasureWidget *w, MeasureDialog &dlg);
-
-    QString calculate_string(Measure::Type type);
 };
 
 #endif // __MEASURE_BAR_H__
