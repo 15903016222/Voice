@@ -19,12 +19,13 @@ class GateMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit GateMenu(QWidget *parent);
-    ~GateMenu();
 
 protected:
     void update_items();
-    void update_gateItem();
+    void update_switchItem();
     void update_widhtItem();
+    void update_synchroItem();
+    void update_measureModeItem();
 
 protected slots:
     void do_gateItem_changed(int val);
@@ -41,7 +42,11 @@ protected slots:
 
     void do_sample_changed(void);
 
-    void do_current_group_changed(const DplDevice::GroupPointer &group);
+    void do_synchroItem_changed(int index);
+
+    void do_measureModeItem_changed(int index);
+
+    void update(const DplDevice::GroupPointer &group);
 
     void update_startItem();
 
