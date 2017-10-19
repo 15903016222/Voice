@@ -17,6 +17,12 @@ public:
     ~Gate();
 
     /**
+     * @brief type  获取闸门类型
+     * @return      闸门类型
+     */
+    DplFpga::Group::GateType type() const;
+
+    /**
      * @brief start 获取闸门起点
      * @return      起点(ns)
      */

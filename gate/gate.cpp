@@ -33,6 +33,11 @@ Gate::~Gate()
     delete d;
 }
 
+DplFpga::Group::GateType Gate::type() const
+{
+    return d->m_type;
+}
+
 float Gate::start() const
 {
     return d->m_start;
