@@ -23,7 +23,7 @@ Measure *Measure::instance()
     return s_calculation;
 }
 
-float Measure::calculate(const DplDevice::GroupPointer &grp, Measure::Type type)
+double Measure::calculate(const DplDevice::GroupPointer &grp, Measure::Type type)
 {
     Measure::Function pFun = m_map.value(type);
     if (pFun == NULL) {
@@ -109,47 +109,47 @@ Measure::~Measure()
 }
 
 /*  A%: 闸门 A 中测得的信号的峰值波幅  */
-float Measure::gate_a_peak(const DplDevice::GroupPointer &group)
+double Measure::gate_a_peak(const DplDevice::GroupPointer &group)
 {
     return group->current_beam()->gate_peak(DplSource::Beam::GATE_A);
 }
 
 /*  AdBA: 闸门 A 内峰值幅度与闸门阈值幅度之差(dB)  */
-float Measure::gate_adBa(const DplDevice::GroupPointer &group)
+double Measure::gate_adBa(const DplDevice::GroupPointer &group)
 {
     return group->current_beam()->gate_minus(DplSource::Beam::GATE_A,
                                                       group->gate_a()->height());
 }
 
 /*  AdBr: 闸门 A 内峰值幅度与参考信号幅度之差(dB)  */
-float Measure::gate_adBr(const DplDevice::GroupPointer &group)
+double Measure::gate_adBr(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"umimplemented";
     return 10.0;
 }
 
 /*  B%: 闸门 B 中测得的信号的峰值波幅  */
-float Measure::gate_b_peak(const DplDevice::GroupPointer &group)
+double Measure::gate_b_peak(const DplDevice::GroupPointer &group)
 {
     return group->current_beam()->gate_peak(DplSource::Beam::GATE_B);
 }
 
 /*  BdBB: 闸门 B 内峰值幅度与闸门阈值幅度之差(dB)  */
-float Measure::gate_bdBb(const DplDevice::GroupPointer &group)
+double Measure::gate_bdBb(const DplDevice::GroupPointer &group)
 {
     return group->current_beam()->gate_minus(DplSource::Beam::GATE_B,
                                                       group->gate_b()->height());
 }
 
 /*  BdBr: 闸门 B 内峰值幅度与参考信号幅度之差(dB)  */
-float Measure::gate_bdBr(const DplDevice::GroupPointer &group)
+double Measure::gate_bdBr(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"umimplemented";
     return 0;
 }
 
 /*  A^: 闸门 A 内的信号峰值位置  */
-float Measure::gate_a_position(const DplDevice::GroupPointer &group)
+double Measure::gate_a_position(const DplDevice::GroupPointer &group)
 {
     if (group->gate_a()->height() > fabs(group->current_beam()->gate_peak(DplSource::Beam::GATE_A))) {
         return MEASURE_DATA_ND;
@@ -163,7 +163,7 @@ float Measure::gate_a_position(const DplDevice::GroupPointer &group)
 }
 
 /*  B^: 闸门 B 内的信号峰值位置  */
-float Measure::gate_b_position(const DplDevice::GroupPointer &group)
+double Measure::gate_b_position(const DplDevice::GroupPointer &group)
 {
     if (group->gate_b()->height() > fabs(group->current_beam()->gate_peak(DplSource::Beam::GATE_B))) {
         return MEASURE_DATA_ND;
@@ -177,11 +177,11 @@ float Measure::gate_b_position(const DplDevice::GroupPointer &group)
 }
 
 /*  I/: 闸门 I 内信号的前沿位置  */
-float Measure::gate_i_position(const DplDevice::GroupPointer &group)
+double Measure::gate_i_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少闸门I内波形前沿的位置
     return 0;
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -198,7 +198,7 @@ float Measure::gate_i_position(const DplDevice::GroupPointer &group)
 //    if(_nGateIHeight > fabs(_nMeasureData)) {
 //        _nMeasureData = MEASURE_DATA_ND;
 //    } else {
-//        float _nVelocity = group->velocity();// 单位: m/s
+//        double _nVelocity = group->velocity();// 单位: m/s
 //        if(group->ut_unit() == DplDevice::Group::Time) {
 //            _nMeasureData = _nDataPos / 1000;// 单位: 微秒
 //        } else {
@@ -209,11 +209,11 @@ float Measure::gate_i_position(const DplDevice::GroupPointer &group)
 }
 
 /*  I(w)/: 闸门 I 内信号的前沿位置(水) */
-float Measure::gate_i_water_position(const DplDevice::GroupPointer &group)
+double Measure::gate_i_water_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少闸门I内波形前沿的位置
     return 0;
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -233,7 +233,7 @@ float Measure::gate_i_water_position(const DplDevice::GroupPointer &group)
 //        if(group->ut_unit() == DplDevice::Group::Time) {
 //            _nMeasureData = _nDataPos / 1000;
 //        } else {
-//            float _nVelocity = 1480;// 单位: m/s
+//            double _nVelocity = 1480;// 单位: m/s
 //            _nMeasureData = _nDataPos * _nVelocity / 200000;
 //        }
 //    }
@@ -241,11 +241,11 @@ float Measure::gate_i_water_position(const DplDevice::GroupPointer &group)
 }
 
 /*  T(A^): 厚度  */
-float Measure::thickness(const DplDevice::GroupPointer &group)
+double Measure::thickness(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少PulserWidth(脉宽)和BeamDelay
     return 0.0;
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -262,13 +262,13 @@ float Measure::thickness(const DplDevice::GroupPointer &group)
 //    if(_nGateAHeight > fabs(_nMeasureData)) {
 //        _nMeasureData = MEASURE_DATA_ND;
 //    } else {
-//        float _nAngle = group->current_angle();
+//        double _nAngle = group->current_angle();
 ////        _nPulserWidth = group->
 //        int _nWedgeDelay = group->get_wedge()->delay() / 10;
 ////        int _nBeamDelay = beam->
 //        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
 
-//        float _nVelocity = group->velocity();// 单位: m/s
+//        double _nVelocity = group->velocity();// 单位: m/s
 //        _nMeasureData = _nDataPos - _nWedgeDelay;
 //        _nMeasureData = _nMeasureData * _nVelocity * cos(_nAngle) / 200000;
 //    }
@@ -277,10 +277,10 @@ float Measure::thickness(const DplDevice::GroupPointer &group)
 }
 
 /*  ML: 材料损失百分比  */
-float Measure::ml(const DplDevice::GroupPointer &group)
+double Measure::ml(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽),BeamDelay,工件厚度
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -297,15 +297,15 @@ float Measure::ml(const DplDevice::GroupPointer &group)
 //    if(_nGateAHeight > fabs(_nMeasureData)) {
 //        _nMeasureData = MEASURE_DATA_ND;
 //    } else {
-//        float _nAngle = group->current_angle();
-////        float _nThickness = part->
+//        double _nAngle = group->current_angle();
+////        double _nThickness = part->
 ////        if(_nThickness < 0.1) _nThickness = 0.1;
 ////        _nPulserWidth = group->
 //        int _nWedgeDelay = group->get_wedge()->delay() / 10;
 ////        int _nBeamDelay = beam->
 //        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
 
-//        float _nVelocity = group->velocity();// 单位: m/s
+//        double _nVelocity = group->velocity();// 单位: m/s
 //        _nMeasureData = _nDataPos - _nWedgeDelay;
 //        _nMeasureData = _nMeasureData * _nVelocity * cos(_nAngle) / 200000; // T(A^)
 ////        _nMeasureData = (_nThickness - _nMeasureData) / _nThickness * 100;
@@ -316,115 +316,115 @@ float Measure::ml(const DplDevice::GroupPointer &group)
 }
 
 /*  %(r): 参考光标位置的幅度值  */
-float Measure::reference_cursor_amplitude(const DplDevice::GroupPointer &group)
+double Measure::reference_cursor_amplitude(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  %(m): 测量光标位置的幅度值  */
-float Measure::measurement_cursor_amplitude(const DplDevice::GroupPointer &group)
+double Measure::measurement_cursor_amplitude(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  %(m-r): 测量光标减去参考光标的幅度值  */
-float Measure::measurement_reference(const DplDevice::GroupPointer &group)
+double Measure::measurement_reference(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  U(r): 参考光标在超声轴上的位置  */
-float Measure::reference_cursor_ut_position(const DplDevice::GroupPointer &group)
+double Measure::reference_cursor_ut_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  U(m): 测量光标在超声轴上的位置  */
-float Measure::measurement_cursor_ut_position(const DplDevice::GroupPointer &group)
+double Measure::measurement_cursor_ut_position(const DplDevice::GroupPointer &group)
 {
 //    qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  U(m-r): 超声轴上测量光标位置与参考光标位置之差 */
-float Measure::measurement_reference_ut_position(const DplDevice::GroupPointer &group)
+double Measure::measurement_reference_ut_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  P(r): 相对于参考光标的探头位置  */
-float Measure::reference_cursor_probe_position(const DplDevice::GroupPointer &group)
+double Measure::reference_cursor_probe_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  P(m): 相对于测量光标的探头位置  */
-float Measure::measurement_cursor_probe_position(const DplDevice::GroupPointer &group)
+double Measure::measurement_cursor_probe_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  P(m-r): 探头相对于测量光标位置与参考光标位置的差值  */
-float Measure::measurement_reference_probe_position(const DplDevice::GroupPointer &group)
+double Measure::measurement_reference_probe_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  S(r): 扫查轴上参考光标的位置  */
-float Measure::reference_cursor_scan_position(const DplDevice::GroupPointer &group)
+double Measure::reference_cursor_scan_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  S(m): 扫查轴上测量光标的位置  */
-float Measure::measurement_cursor_scan_position(const DplDevice::GroupPointer &group)
+double Measure::measurement_cursor_scan_position(const DplDevice::GroupPointer &group)
 {
 //    qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  S(m-r): 扫查轴上的测量光标位置与参考光标位置之差  */
-float Measure::measurement_reference_scan_position(const DplDevice::GroupPointer &group)
+double Measure::measurement_reference_scan_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  I(r): 步进轴上的参考光标位置  */
-float Measure::reference_cursor_index_position(const DplDevice::GroupPointer &group)
+double Measure::reference_cursor_index_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  I(m): 步进轴上的测量光标位置  */
-float Measure::measurement_cursor_index_position(const DplDevice::GroupPointer &group)
+double Measure::measurement_cursor_index_position(const DplDevice::GroupPointer &group)
 {
 //    qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  I(m-r): 步进轴上的测量光标位置与参考光标位置之差  */
-float Measure::measurement_reference_index_position(const DplDevice::GroupPointer &group)
+double Measure::measurement_reference_index_position(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  RA^: 声束出射点与闸门A内检测到的缺陷之间的距离  */
-float Measure::ra(const DplDevice::GroupPointer &group)
+double Measure::ra(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少PulserWidth(脉宽)和BeamDelay
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -441,13 +441,13 @@ float Measure::ra(const DplDevice::GroupPointer &group)
 //    if(_nGateAHeight > fabs(_nMeasureData)) {
 //        _nMeasureData = MEASURE_DATA_ND;
 //    } else {
-//        float _nAngle = group->current_angle();
+//        double _nAngle = group->current_angle();
 ////        _nPulserWidth = group->
 //        int _nWedgeDelay = group->get_wedge()->delay() / 10;
 ////        int _nBeamDelay = beam->
 //        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
 
-//        float _nVelocity = group->velocity();// 单位: m/s
+//        double _nVelocity = group->velocity();// 单位: m/s
 //        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity * sin(_nAngle) / 200000; // 单位: mm
 //    }
 
@@ -457,10 +457,10 @@ float Measure::ra(const DplDevice::GroupPointer &group)
 }
 
 /*  RB^: 声束出射点与闸门B内检测到的缺陷之间的距离  */
-float Measure::rb(const DplDevice::GroupPointer &group)
+double Measure::rb(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)和BeamDelay
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -477,13 +477,13 @@ float Measure::rb(const DplDevice::GroupPointer &group)
 //    if(_nGateBHeight > fabs(_nMeasureData)) {
 //        _nMeasureData = MEASURE_DATA_ND;
 //    } else {
-//        float _nAngle = group->current_angle();
+//        double _nAngle = group->current_angle();
 ////        _nPulserWidth = group->
 //        int _nWedgeDelay = group->get_wedge()->delay() / 10;
 ////        int _nBeamDelay = beam->
 //        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
 
-//        float _nVelocity = group->velocity();// 单位: m/s
+//        double _nVelocity = group->velocity();// 单位: m/s
 //        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity * sin(_nAngle) / 200000; // 单位: mm
 //    }
 
@@ -492,39 +492,39 @@ float Measure::rb(const DplDevice::GroupPointer &group)
 }
 
 /*  PA^: 探头前表面与闸门A内检测到的缺陷之间的距离  */
-float Measure::pa(const DplDevice::GroupPointer &group)
+double Measure::pa(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 10.2;
 }
 
 /*  PB^: 探头前表面与闸门B内检测到的缺陷之间的距离  */
-float Measure::pb(const DplDevice::GroupPointer &group)
+double Measure::pb(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  DA^: 闸门A内检测到的缺陷在工件中的深度  */
-float Measure::da(const DplDevice::GroupPointer &group)
+double Measure::da(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 10.1;
 }
 
 /*  DB^: 闸门B内检测到的缺陷在工件中的深度  */
-float Measure::db(const DplDevice::GroupPointer &group)
+double Measure::db(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  SA^: 声束出射点与闸门A内检测到的缺陷之间的声程  */
-float Measure::sa(const DplDevice::GroupPointer &group)
+double Measure::sa(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少PulserWidth(脉宽)和BeamDelay
 
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -546,7 +546,7 @@ float Measure::sa(const DplDevice::GroupPointer &group)
 ////        int _nBeamDelay = beam->
 //        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
 
-//        float _nVelocity = group->velocity();// 单位: m/s
+//        double _nVelocity = group->velocity();// 单位: m/s
 //        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity / 200000; // 单位: mm
 //    }
 
@@ -556,10 +556,10 @@ float Measure::sa(const DplDevice::GroupPointer &group)
 }
 
 /*  SB^: 声束出射点与闸门B内检测到的缺陷之间的声程  */
-float Measure::sb(const DplDevice::GroupPointer &group)
+double Measure::sb(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)和BeamDelay
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -581,7 +581,7 @@ float Measure::sb(const DplDevice::GroupPointer &group)
 ////        int _nBeamDelay = beam->
 //        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
 
-//        float _nVelocity = group->velocity();// 单位: m/s
+//        double _nVelocity = group->velocity();// 单位: m/s
 //        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity / 200000; // 单位: mm
 //    }
 
@@ -591,38 +591,38 @@ float Measure::sb(const DplDevice::GroupPointer &group)
 }
 
 /*  ViA^: 闸门A中测得的信号指示在步进轴上的空间位置  */
-float Measure::via(const DplDevice::GroupPointer &group)
+double Measure::via(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  ViB^: 闸门B中测得的信号指示在步进轴上的空间位置  */
-float Measure::vib(const DplDevice::GroupPointer &group)
+double Measure::vib(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  VsA^: 闸门A中测得的信号指示在扫查轴上的空间位置  */
-float Measure::vsa(const DplDevice::GroupPointer &group)
+double Measure::vsa(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  VsB^: 闸门B中测得的信号指示在扫查轴上的空间位置  */
-float Measure::vsb(const DplDevice::GroupPointer &group)
+double Measure::vsb(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  LA^: 从声束入射点到闸门A中测得的信号指示之间声波反射的次数  */
-float Measure::la(const DplDevice::GroupPointer &group)
+double Measure::la(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)，BeamDelay，工件厚度
-//    float _nMeasureData;
+//    double _nMeasureData;
 
 //    DplSource::BeamGroupPointer beams = group->get_beam_group();
 //    DplSource::BeamPointer beam = beams->get(beamIndex);
@@ -639,14 +639,14 @@ float Measure::la(const DplDevice::GroupPointer &group)
 //    if(_nGateAHeight > fabs(_nMeasureData)) {
 //        _nMeasureData = MEASURE_DATA_ND;
 //    } else {
-//        float _nAngle = group->current_angle();
-////        float _nThickness = part->  / 1000;
+//        double _nAngle = group->current_angle();
+////        double _nThickness = part->  / 1000;
 ////        _nPulserWidth = group->
 //        int _nWedgeDelay = group->get_wedge()->delay() / 10;
 ////        int _nBeamDelay = beam->
 //        _nWedgeDelay += _nBeamDelay + _nPulserWidth;
 
-//        float _nVelocity = group->velocity();// 单位: m/s
+//        double _nVelocity = group->velocity();// 单位: m/s
 //        _nMeasureData = (_nDataPos - _nWedgeDelay) * _nVelocity * cos(_nAngle) / 200000; // T(A^)
 ////        _nMeasureData = (_nThickness - _nMeasureData) / _nThickness * 100;
 //    }
@@ -656,98 +656,98 @@ float Measure::la(const DplDevice::GroupPointer &group)
 }
 
 /*  LB^: 从声束入射点到闸门B中测得的信号指示之间声波反射的次数  */
-float Measure::lb(const DplDevice::GroupPointer &group)
+double Measure::lb(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";// 缺少PulserWidth(脉宽)，BeamDelay，工件厚度
     return 0;
 }
 
 /*  E%: 闸门 A 中包络线的峰值波幅  */
-float Measure::e(const DplDevice::GroupPointer &group)
+double Measure::e(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  AWS-DA: 根据 AWS-D1.5 A 标准规定的指示电平  */
-float Measure::aws_da(const DplDevice::GroupPointer &group)
+double Measure::aws_da(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  AWS-DB: 根据 AWS-D1.5 B 标准的零点参考电平  */
-float Measure::aws_db(const DplDevice::GroupPointer &group)
+double Measure::aws_db(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  AWS-DC: 根据 AWS-D1.5 C 标准的衰减系数  */
-float Measure::aws_dc(const DplDevice::GroupPointer &group)
+double Measure::aws_dc(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  AWS-DD: 根据 AWS-D1.5 D 标准的衰减系数  */
-float Measure::aws_dd(const DplDevice::GroupPointer &group)
+double Measure::aws_dd(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  AWS-D45: 根据 AWS-D1.5 45°标准的不连续性严重等级  */
-float Measure::aws_d45(const DplDevice::GroupPointer &group)
+double Measure::aws_d45(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  AWS-D60: 根据 AWS-D1.5 60°标准的不连续性严重等级  */
-float Measure::aws_d60(const DplDevice::GroupPointer &group)
+double Measure::aws_d60(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  AWS-D70: 根据 AWS-D1.5 70°标准的不连续性严重等级  */
-float Measure::aws_d70(const DplDevice::GroupPointer &group)
+double Measure::aws_d70(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  AWS-DCL: 根据 AWS-D1.5 标准的不连续性严重等级  */
-float Measure::aws_dcl(const DplDevice::GroupPointer &group)
+double Measure::aws_dcl(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  T-D(r): TOFD超声轴方向参考光标深度  */
-float Measure::t_d_r(const DplDevice::GroupPointer &group)
+double Measure::t_d_r(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  T-D(m): TOFD超声轴方向测量光标深度  */
-float Measure::t_d_m(const DplDevice::GroupPointer &group)
+double Measure::t_d_m(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  T-S(m-r): TOFD扫查轴测量光标与参考光标间距  */
-float Measure::t_s_mr(const DplDevice::GroupPointer &group)
+double Measure::t_s_mr(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;
 }
 
 /*  T-D(m-r): TOFD超声轴测量光标与参考光标间距  */
-float Measure::t_d_mr(const DplDevice::GroupPointer &group)
+double Measure::t_d_mr(const DplDevice::GroupPointer &group)
 {
     qDebug()<<__FILE__<<__func__<<"Unimplemented";
     return 0;

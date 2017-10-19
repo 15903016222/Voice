@@ -85,7 +85,7 @@ public:
      * @param type      测量类型
      * @return          测量值
      */
-    float calculate(const DplDevice::GroupPointer &grp, Type type);
+    double calculate(const DplDevice::GroupPointer &grp, Type type);
 
     /**
      * @brief calculate_str 获取测量值字符串
@@ -100,63 +100,63 @@ protected:
     ~Measure();
 
 private:
-    float gate_a_peak(const DplDevice::GroupPointer &group);
-    float gate_adBa(const DplDevice::GroupPointer &group);
-    float gate_adBr(const DplDevice::GroupPointer &group);
-    float gate_b_peak(const DplDevice::GroupPointer &group);
-    float gate_bdBb(const DplDevice::GroupPointer &group);
-    float gate_bdBr(const DplDevice::GroupPointer &group);
-    float gate_a_position(const DplDevice::GroupPointer &group);
-    float gate_b_position(const DplDevice::GroupPointer &group);
-    float gate_i_position(const DplDevice::GroupPointer &group);
-    float gate_i_water_position(const DplDevice::GroupPointer &group);
-    float thickness(const DplDevice::GroupPointer &group);
-    float ml(const DplDevice::GroupPointer &group);
-    float reference_cursor_amplitude(const DplDevice::GroupPointer &group);
-    float measurement_cursor_amplitude(const DplDevice::GroupPointer &group);
-    float measurement_reference(const DplDevice::GroupPointer &group);
-    float reference_cursor_ut_position(const DplDevice::GroupPointer &group);
-    float measurement_cursor_ut_position(const DplDevice::GroupPointer &group);
-    float measurement_reference_ut_position(const DplDevice::GroupPointer &group);
-    float reference_cursor_probe_position(const DplDevice::GroupPointer &group);
-    float measurement_cursor_probe_position(const DplDevice::GroupPointer &group);
-    float measurement_reference_probe_position(const DplDevice::GroupPointer &group);
-    float reference_cursor_scan_position(const DplDevice::GroupPointer &group);
-    float measurement_cursor_scan_position(const DplDevice::GroupPointer &group);
-    float measurement_reference_scan_position(const DplDevice::GroupPointer &group);
-    float reference_cursor_index_position(const DplDevice::GroupPointer &group);
-    float measurement_cursor_index_position(const DplDevice::GroupPointer &group);
-    float measurement_reference_index_position(const DplDevice::GroupPointer &group);
-    float ra(const DplDevice::GroupPointer &group);
-    float rb(const DplDevice::GroupPointer &group);
-    float pa(const DplDevice::GroupPointer &group);
-    float pb(const DplDevice::GroupPointer &group);
-    float da(const DplDevice::GroupPointer &group);
-    float db(const DplDevice::GroupPointer &group);
-    float sa(const DplDevice::GroupPointer &group);
-    float sb(const DplDevice::GroupPointer &group);
-    float via(const DplDevice::GroupPointer &group);
-    float vib(const DplDevice::GroupPointer &group);
-    float vsa(const DplDevice::GroupPointer &group);
-    float vsb(const DplDevice::GroupPointer &group);
-    float la(const DplDevice::GroupPointer &group);
-    float lb(const DplDevice::GroupPointer &group);
-    float e(const DplDevice::GroupPointer &group);
-    float aws_da(const DplDevice::GroupPointer &group);
-    float aws_db(const DplDevice::GroupPointer &group);
-    float aws_dc(const DplDevice::GroupPointer &group);
-    float aws_dd(const DplDevice::GroupPointer &group);
-    float aws_d45(const DplDevice::GroupPointer &group);
-    float aws_d60(const DplDevice::GroupPointer &group);
-    float aws_d70(const DplDevice::GroupPointer &group);
-    float aws_dcl(const DplDevice::GroupPointer &group);
-    float t_d_r(const DplDevice::GroupPointer &group);
-    float t_d_m(const DplDevice::GroupPointer &group);
-    float t_s_mr(const DplDevice::GroupPointer &group);
-    float t_d_mr(const DplDevice::GroupPointer &group);
+    double gate_a_peak(const DplDevice::GroupPointer &group);
+    double gate_adBa(const DplDevice::GroupPointer &group);
+    double gate_adBr(const DplDevice::GroupPointer &group);
+    double gate_b_peak(const DplDevice::GroupPointer &group);
+    double gate_bdBb(const DplDevice::GroupPointer &group);
+    double gate_bdBr(const DplDevice::GroupPointer &group);
+    double gate_a_position(const DplDevice::GroupPointer &group);
+    double gate_b_position(const DplDevice::GroupPointer &group);
+    double gate_i_position(const DplDevice::GroupPointer &group);
+    double gate_i_water_position(const DplDevice::GroupPointer &group);
+    double thickness(const DplDevice::GroupPointer &group);
+    double ml(const DplDevice::GroupPointer &group);
+    double reference_cursor_amplitude(const DplDevice::GroupPointer &group);
+    double measurement_cursor_amplitude(const DplDevice::GroupPointer &group);
+    double measurement_reference(const DplDevice::GroupPointer &group);
+    double reference_cursor_ut_position(const DplDevice::GroupPointer &group);
+    double measurement_cursor_ut_position(const DplDevice::GroupPointer &group);
+    double measurement_reference_ut_position(const DplDevice::GroupPointer &group);
+    double reference_cursor_probe_position(const DplDevice::GroupPointer &group);
+    double measurement_cursor_probe_position(const DplDevice::GroupPointer &group);
+    double measurement_reference_probe_position(const DplDevice::GroupPointer &group);
+    double reference_cursor_scan_position(const DplDevice::GroupPointer &group);
+    double measurement_cursor_scan_position(const DplDevice::GroupPointer &group);
+    double measurement_reference_scan_position(const DplDevice::GroupPointer &group);
+    double reference_cursor_index_position(const DplDevice::GroupPointer &group);
+    double measurement_cursor_index_position(const DplDevice::GroupPointer &group);
+    double measurement_reference_index_position(const DplDevice::GroupPointer &group);
+    double ra(const DplDevice::GroupPointer &group);
+    double rb(const DplDevice::GroupPointer &group);
+    double pa(const DplDevice::GroupPointer &group);
+    double pb(const DplDevice::GroupPointer &group);
+    double da(const DplDevice::GroupPointer &group);
+    double db(const DplDevice::GroupPointer &group);
+    double sa(const DplDevice::GroupPointer &group);
+    double sb(const DplDevice::GroupPointer &group);
+    double via(const DplDevice::GroupPointer &group);
+    double vib(const DplDevice::GroupPointer &group);
+    double vsa(const DplDevice::GroupPointer &group);
+    double vsb(const DplDevice::GroupPointer &group);
+    double la(const DplDevice::GroupPointer &group);
+    double lb(const DplDevice::GroupPointer &group);
+    double e(const DplDevice::GroupPointer &group);
+    double aws_da(const DplDevice::GroupPointer &group);
+    double aws_db(const DplDevice::GroupPointer &group);
+    double aws_dc(const DplDevice::GroupPointer &group);
+    double aws_dd(const DplDevice::GroupPointer &group);
+    double aws_d45(const DplDevice::GroupPointer &group);
+    double aws_d60(const DplDevice::GroupPointer &group);
+    double aws_d70(const DplDevice::GroupPointer &group);
+    double aws_dcl(const DplDevice::GroupPointer &group);
+    double t_d_r(const DplDevice::GroupPointer &group);
+    double t_d_m(const DplDevice::GroupPointer &group);
+    double t_s_mr(const DplDevice::GroupPointer &group);
+    double t_d_mr(const DplDevice::GroupPointer &group);
 
     /* attributions */
-    typedef float (Measure::*Function)(const DplDevice::GroupPointer &);
+    typedef double (Measure::*Function)(const DplDevice::GroupPointer &);
     QMap<Type, Measure::Function> m_map;
 };
 
