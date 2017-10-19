@@ -6,16 +6,10 @@
  */
 #include "measure.h"
 
+#include <global.h>
 #include <device/device.h>
 #include <source/beams.h>
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <QDebug>
-#include <QThread>
 
 Measure *Measure::instance()
 {
@@ -156,9 +150,11 @@ double Measure::gate_a_position(const DplDevice::GroupPointer &group)
     }
 
     if (group->ut_unit() == DplDevice::Group::Time) {
-        return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) / 1000;
+        return Dpl::ns_to_us(group->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) * DplFpga::Fpga::SAMPLE_PRECISION);
     } else {
-        return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) * group->focallawer()->specimen()->velocity() / 200000;
+        return Dpl::ns_to_s(group->current_beam()->gate_peak_position(DplSource::Beam::GATE_A) * DplFpga::Fpga::SAMPLE_PRECISION)
+                * group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0)
+                / 2;
     }
 }
 
@@ -170,42 +166,28 @@ double Measure::gate_b_position(const DplDevice::GroupPointer &group)
     }
 
     if (group->ut_unit() == DplDevice::Group::Time) {
-        return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) / 1000;
+        return Dpl::ns_to_us(group->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) * DplFpga::Fpga::SAMPLE_PRECISION);
     } else {
-        return group->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) * group->focallawer()->specimen()->velocity() / 200000;
+        return Dpl::ns_to_s(group->current_beam()->gate_peak_position(DplSource::Beam::GATE_B) * DplFpga::Fpga::SAMPLE_PRECISION)
+                * group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0)
+                / 2;
     }
 }
 
 /*  I/: 闸门 I 内信号的前沿位置  */
 double Measure::gate_i_position(const DplDevice::GroupPointer &group)
 {
-    qDebug()<<__FILE__<<__func__<<"Unimplemented"; // 缺少闸门I内波形前沿的位置
-    return 0;
-//    double _nMeasureData;
+    if (group->gate_i()->height() > fabs(group->current_beam()->gate_peak(DplSource::Beam::GATE_I))) {
+        return MEASURE_DATA_ND;
+    }
 
-//    DplSource::BeamGroupPointer beams = group->get_beam_group();
-//    DplSource::BeamPointer beam = beams->get(beamIndex);
-//    int _nData = beam->gate_i_height();
-//    int _nDataPos = beam->gate_i_position();// 单位: ns
-//    int _nGateIHeight = group->gate_i_height() / 20.47;
-
-//    if(group->rectifier()){
-//        _nMeasureData = _nData / 20.47;// 满屏时200% 4095 I%
-//    } else {
-//        _nMeasureData = _nData / (10.24 * 16);// I%
-//    }
-
-//    if(_nGateIHeight > fabs(_nMeasureData)) {
-//        _nMeasureData = MEASURE_DATA_ND;
-//    } else {
-//        double _nVelocity = group->velocity();// 单位: m/s
-//        if(group->ut_unit() == DplDevice::Group::Time) {
-//            _nMeasureData = _nDataPos / 1000;// 单位: 微秒
-//        } else {
-//            _nMeasureData = _nDataPos * _nVelocity / 200000;// 单位: mm
-//        }
-//    }
-//    return _nMeasureData;
+    if (group->ut_unit() == DplDevice::Group::Time) {
+        return Dpl::ns_to_us(group->current_beam()->gate_peak_position(DplSource::Beam::GATE_I) * DplFpga::Fpga::SAMPLE_PRECISION);
+    } else {
+        return Dpl::ns_to_s(group->current_beam()->gate_peak_position(DplSource::Beam::GATE_I) * DplFpga::Fpga::SAMPLE_PRECISION)
+                * group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0)
+                / 2;
+    }
 }
 
 /*  I(w)/: 闸门 I 内信号的前沿位置(水) */

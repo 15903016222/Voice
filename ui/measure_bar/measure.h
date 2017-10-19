@@ -9,8 +9,6 @@
 #define __MEASURE_H__
 
 #include <device/group.h>
-
-#include <QObject>
 #include <QMutex>
 
 #define MEASURE_DATA_ND    987654321.123
