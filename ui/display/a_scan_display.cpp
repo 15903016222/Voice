@@ -27,9 +27,9 @@ AscanDisplay:: AscanDisplay(const DplDevice::GroupPointer &group,
     m_view(new ScanView),
     m_scene(new AscanScene),
     m_waveItem(new WaveItem(DplDevice::Device::instance()->display()->ascan())),
-    m_gateAItem(new GateItem(group->sample(), group->gate(DplGate::Gate::A))),
-    m_gateBItem(new GateItem(group->sample(), group->gate(DplGate::Gate::B))),
-    m_gateIItem(new GateItem(group->sample(), group->gate(DplGate::Gate::I))),
+    m_gateAItem(new GateItem(group->sample(), group->gate_a())),
+    m_gateBItem(new GateItem(group->sample(), group->gate_b())),
+    m_gateIItem(new GateItem(group->sample(), group->gate_i())),
     m_orientation(orientation)
 {  
     ui->setupUi(this);

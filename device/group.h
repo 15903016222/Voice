@@ -115,11 +115,29 @@ public:
     const DplUt::ReceiverPointer &receiver() const;
 
     /**
-     * @brief gate  获取闸门对象指针
+     * @brief gate  获取指定闸门对象
      * @param type  闸门类型
-     * @return      闸门对象指针
+     * @return      闸门对象
      */
-    const DplGate::GatePointer &gate(DplGate::Gate::Type type) const;
+    const DplGate::GatePointer &gate(DplFpga::Group::GateType type) const;
+
+    /**
+     * @brief gate_a    获取闸门A对象
+     * @return          闸门对象
+     */
+    const DplGate::GatePointer &gate_a() const;
+
+    /**
+     * @brief gate_b    获取闸门B对象
+     * @return          闸门对象
+     */
+    const DplGate::GatePointer &gate_b() const;
+
+    /**
+     * @brief gate_i    获取闸门I对象
+     * @return          闸门对象
+     */
+    const DplGate::GatePointer &gate_i() const;
 
     /**
      * @brief current_beams 获取数据源当前Beam组
@@ -208,15 +226,19 @@ inline const DplUt::ReceiverPointer &Group::receiver() const
     return m_receiver;
 }
 
-inline const DplGate::GatePointer &Group::gate(DplGate::Gate::Type type) const
+inline const DplGate::GatePointer &Group::gate_a() const
 {
-    if (type == DplGate::Gate::A) {
-        return m_gateA;
-    } else if (type == DplGate::Gate::B) {
-        return m_gateB;
-    } else {
-        return m_gateI;
-    }
+    return m_gateA;
+}
+
+inline const DplGate::GatePointer &Group::gate_b() const
+{
+    return m_gateB;
+}
+
+inline const DplGate::GatePointer &Group::gate_i() const
+{
+    return m_gateI;
 }
 
 inline const DplFocallaw::FocallawerPointer &Group::focallawer() const

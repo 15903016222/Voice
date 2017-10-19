@@ -4,21 +4,23 @@
 #include <QObject>
 #include <QColor>
 #include <QSharedPointer>
+#include <fpga/group.h>
 
 namespace DplGate {
 
+class GatePrivate;
 class Gate : public QObject
 {
     Q_OBJECT
 public:
-    enum Type {
-        A,
-        B,
-        I
-    };
-
-    explicit Gate(Type type, QObject *parent = 0);
+    explicit Gate(const DplFpga::GroupPointer &fpgaGrp, DplFpga::Group::GateType type, const QColor &color=Qt::red);
     ~Gate();
+
+    /**
+     * @brief type  获取闸门类型
+     * @return      闸门类型
+     */
+    DplFpga::Group::GateType type() const;
 
     /**
      * @brief start 获取闸门起点
@@ -80,6 +82,30 @@ public:
      */
     void set_color(const QColor &color);
 
+    /**
+     * @brief measure_mode  获取测量模式
+     * @return              测量模式
+     */
+    DplFpga::Group::MeasureMode measure_mode() const;
+
+    /**
+     * @brief set_measure_mode  设置测量模式
+     * @param mode              测量模式
+     */
+    void set_measure_mode(DplFpga::Group::MeasureMode mode);
+
+    /**
+     * @brief synchro_mode  获取闸门同步模式
+     * @return              同步模式
+     */
+    DplFpga::Group::SynchroMode synchro_mode() const;
+
+    /**
+     * @brief set_synchro_mode  设置闸门同步模式
+     * @param mode              同步模式
+     */
+    void set_synchro_mode(DplFpga::Group::SynchroMode mode);
+
 signals:
     /**
      * @brief height_changed    高度改变信号
@@ -111,81 +137,23 @@ signals:
      */
     void color_changed(const QColor &color);
 
+    /**
+     * @brief measure_mode_changed  测量模式信号
+     * @param mode                  测量模式
+     */
+    void measure_mode_changed(DplFpga::Group::MeasureMode mode);
+
+    /**
+     * @brief synchro_mode_changed  同步模式信号
+     * @param mode                  同步模式
+     */
+    void synchro_mode_changed(DplFpga::Group::SynchroMode mode);
+
 private:
-    Gate::Type m_type;
-    float m_start;      // 起点(ns)
-    float m_width;      // 宽度(ns)
-    int m_height;       // 高度(%)
-    bool m_visible;     // 可视标志
-    QColor m_color;     // 闸门显示颜色
+    GatePrivate *d;
 };
 
 typedef QSharedPointer<Gate> GatePointer;
-
-inline float Gate::start() const
-{
-    return m_start;
-}
-
-inline void Gate::set_start(float val)
-{
-    if (!qFuzzyCompare(val, m_start)) {
-        m_start = val;
-        emit start_changed(val);
-    }
-}
-
-inline float Gate::width() const
-{
-    return m_width;
-}
-
-inline void Gate::set_width(float val)
-{
-    if (!qFuzzyCompare(val, m_width)) {
-        m_width = val;
-        emit width_changed(val);
-    }
-}
-
-inline int Gate::height() const
-{
-    return m_height;
-}
-
-inline void Gate::set_height(int val)
-{
-    if (val != m_height) {
-        m_height = val;
-        emit height_changed(val);
-    }
-}
-
-inline bool Gate::is_visible() const
-{
-    return m_visible;
-}
-
-inline void Gate::set_visible(bool visible)
-{
-    if (visible != m_visible) {
-        m_visible = visible;
-        emit visible_changed(visible);
-    }
-}
-
-inline const QColor &Gate::color() const
-{
-    return m_color;
-}
-
-inline void Gate::set_color(const QColor &color)
-{
-    if (m_color != color) {
-        m_color = color;
-        emit color_changed(color);
-    }
-}
 
 }
 #endif // __DPLGATE_GATE_H__

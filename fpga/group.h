@@ -171,35 +171,76 @@ public:
     bool set_idle_time(int val);
 
     /**
-     * @brief gate_a_height 闸门A高度
-     * @return              高度(%)
+     * @brief The GateType enum 闸门类型
      */
-    int gate_a_height() const;
-
+    enum GateType {
+        GATE_A,
+        GATE_B,
+        GATE_I
+    };
 
     /**
-     * @brief gate_b_height 闸门B高度
+     * @brief gate_height   获取指定闸门高度
+     * @param type          闸门类型
      * @return              高度(%)
      */
-    int gate_b_height() const;
-
+    int gate_height(GateType type) const;
 
     /**
-     * @brief gate_i_height 闸门I高度
-     * @return              高度(%)
+     * @brief set_gate_height   设置指定闸门高度
+     * @param type              闸门类型
+     * @param height            高度(%)
+     * @return                  设置成功返回true，失败为false
      */
-    int gate_i_height() const;
+    bool set_gate_height(GateType type, int height);
 
+    /**
+     * @brief The SynchroMode enum  闸门同步模式
+     */
+    enum SynchroMode {
+        SYNCHRO_PULSER,
+        SYNCHRO_I,
+        SYNCHRO_A,
+        SYNCHRO_B,
+    };
 
-    int gate_a_logic(void) const;
-    bool set_gate_a_logic(int val, bool reflesh = false);
+    /**
+     * @brief gate_synchro_mode 获取指定闸门的同步模式
+     * @param type              闸门类型
+     * @return                  同步模式
+     */
+    SynchroMode gate_synchro_mode(GateType type) const;
 
+    /**
+     * @brief set_gate_synchro_mode 设置指定闸门的同步模式
+     * @param type                  闸门类型
+     * @param mode                  同步模式
+     * @return                      设置成功返回true，失败返回false
+     */
+    bool set_gate_synchro_mode(GateType type, SynchroMode mode);
 
-    int gate_b_logic(void) const;
-    bool set_gate_b_logic(int val, bool reflesh = false);
+    /**
+     * @brief The MeasureMode enum  闸门测量模式
+     */
+    enum MeasureMode {
+        EDGE,
+        PEAK
+    };
 
-    int gate_i_logic(void) const;
-    bool set_gate_i_logic(int val, bool reflesh = false);
+    /**
+     * @brief gate_measure_mode 获取指定闸门的测量模式
+     * @param type              闸门类型
+     * @return                  测量模式
+     */
+    MeasureMode gate_measure_mode(GateType type) const;
+
+    /**
+     * @brief set_gate_measure_mode 设置指定闸门的测量模式
+     * @param type                  闸门类型
+     * @param mode                  测量模式
+     * @return                      设置成功返回true，失败返回false
+     */
+    bool set_gate_measure_mode(GateType type, MeasureMode mode);
 
     int thickness_min(void) const;
     bool set_thickness_min(int val, bool reflesh = false);
@@ -287,24 +328,6 @@ public slots:
      * @param qty           采样点数
      */
     void set_point_qty(int qty);
-
-    /**
-     * @brief set_gate_a_height 设置闸门A高度
-     * @param height            高度(%)
-     */
-    void set_gate_a_height(int height);
-
-    /**
-     * @brief set_gate_b_height 设置闸门B高度
-     * @param height            高度(%)
-     */
-    void set_gate_b_height(int height);
-
-    /**
-     * @brief set_gate_i_height 设置闸门I高度
-     * @param height            高度(%)
-     */
-    void set_gate_i_height(int height);
 
 private:
     GroupPrivate *d;

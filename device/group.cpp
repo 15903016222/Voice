@@ -27,9 +27,9 @@ Group::Group(int index, QObject *parent) : QObject(parent),
     m_sample(new DplUt::Sample(m_fpgaGroup)),
     m_pulser(new DplUt::Pulser(m_sample, m_focallawer)),
     m_receiver(new DplUt::Receiver(m_fpgaGroup)),
-    m_gateA(new DplGate::Gate(DplGate::Gate::A)),
-    m_gateB(new DplGate::Gate(DplGate::Gate::B)),
-    m_gateI(new DplGate::Gate(DplGate::Gate::I)),
+    m_gateA(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_A)),
+    m_gateB(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_B, Qt::green)),
+    m_gateI(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_I, Qt::darkCyan)),
     d(new GroupPrivate(this))
 {
     init_gates();
@@ -93,6 +93,17 @@ double Group::max_sample_time()
         max = Dpl::ms_to_ns(1);
     }
     return max ;
+}
+
+const DplGate::GatePointer &Group::gate(DplFpga::Group::GateType type) const
+{
+    if (type == DplFpga::Group::GATE_A) {
+        return m_gateA;
+    } else if (type == DplFpga::Group::GATE_B) {
+        return m_gateB;
+    } else {
+        return m_gateI;
+    }
 }
 
 const DplSource::BeamsPointer &Group::current_beams() const
@@ -182,24 +193,6 @@ void Group::init_gate(DplGate::Gate *gate)
 
 void Group::init_gates()
 {
-    m_gateA->set_color(Qt::red);
-    m_gateB->set_color(Qt::green);
-    m_gateI->set_color(Qt::darkCyan);
-
-    /* 关联闸门 */
-    connect(static_cast<DplGate::Gate *>(m_gateA.data()),
-            SIGNAL(height_changed(int)),
-            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
-            SLOT(set_gate_a_height(int)));
-    connect(static_cast<DplGate::Gate *>(m_gateB.data()),
-            SIGNAL(height_changed(int)),
-            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
-            SLOT(set_gate_b_height(int)));
-    connect(static_cast<DplGate::Gate *>(m_gateI.data()),
-            SIGNAL(height_changed(int)),
-            static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
-            SLOT(set_gate_i_height(int)));
-
     init_gate(m_gateA.data());
     init_gate(m_gateB.data());
     init_gate(m_gateI.data());
