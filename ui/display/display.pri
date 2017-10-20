@@ -24,7 +24,8 @@ SOURCES += \
     $$PWD/base_image_item.cpp \
     $$PWD/encoder_image_item.cpp \
     $$PWD/test_stub.cpp \
-    $$PWD/time_image_item.cpp
+    $$PWD/time_image_item.cpp \
+    $$PWD/base_cursor_item.cpp
 
 
 HEADERS += \
@@ -53,7 +54,8 @@ HEADERS += \
     $$PWD/base_image_item.h \
     $$PWD/encoder_image_item.h \
     $$PWD/test_stub.h \
-    $$PWD/time_image_item.h
+    $$PWD/time_image_item.h \
+    $$PWD/base_cursor_item.h
 
 
 FORMS += \
