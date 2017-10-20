@@ -73,6 +73,9 @@ void EncoderImageItem::draw_vertical_beam()
 
 bool EncoderImageItem::redraw_vertical_beam()
 {
+    QTime time;
+    time.restart();
+
     if(!m_redrawFlag) {
         return false;
     }
@@ -150,6 +153,9 @@ bool EncoderImageItem::redraw_vertical_beam()
     }
 
     m_redrawFlag = false;
+
+    qDebug("TimeImageItem:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
+
     return true;
 }
 
@@ -184,6 +190,9 @@ void EncoderImageItem::draw_vertical_image(const BaseImageItem::S_CommonProperti
         } else if(m_axis.driving() == DplSource::Axis::ENCODER_Y) {
             tmpBeams = DplSource::Source::instance()->beams(m_group->index(), m_beamsPointer->get(0)->encoder_x(), (int)targetX);
         }
+
+        /* 待DplSource::Source::instance()->beams(）接口修改好，即删除下面赋值代码 */
+        tmpBeams = m_beamsPointer;
 
         if(tmpBeams.isNull()) {
             qDebug() << "[" << __FUNCTION__ << "]" << " tmpBeams is NULL.";

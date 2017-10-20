@@ -94,9 +94,7 @@ void StatusBar::do_data_event(const DplSource::BeamsPointer &beams)
     TestStub::instance()->update_time(m_timeCount);
 
     if (scanAxis->driving() == DplSource::Axis::TIMER) {
-        QString tmp;
-        tmp.sprintf("%0.2f", m_timeCount);
-        m_scanEncStr = m_scanEncStr + tmp + tr(" s");
+        m_scanEncStr += tr(" 0.0 s");
     } else if (scanAxis->driving() == DplSource::Axis::ENCODER_X) {
         m_scanEncStr += QString::number(beam->encoder_x()/ m_scan->encoder_x()->resolution(), 'f', 2) + " mm";
     } else {
