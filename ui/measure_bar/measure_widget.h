@@ -9,6 +9,8 @@
 #define __MEASURE_WIDGET_H__
 
 #include <QWidget>
+#include <measure.h>
+#include <QReadWriteLock>
 
 namespace Ui {
 class MeasureWidget;
@@ -21,6 +23,18 @@ public:
     explicit MeasureWidget(QWidget *parent = 0);
     ~MeasureWidget();
 
+    /**
+     * @brief type      获取显示测量类型
+     * @return          测量类型
+     */
+    Measure::Type type() const;
+
+    /**
+     * @brief set_type  设置显示测量类型
+     * @param type      测量类型
+     */
+    void set_type(Measure::Type type);
+
     QString title() const;
     void set_title(const QString &name);
 
@@ -32,17 +46,29 @@ public:
 
 signals:
     void clicked(MeasureWidget *w);
+    void calculated(const QString &text);
 
 protected:
     bool eventFilter(QObject *object, QEvent *event);
+    void update_name_label();
+
+protected slots:
+    void do_current_group_changed(const DplDevice::GroupPointer &grp);
+    void do_data_event();
 
 private:
     Ui::MeasureWidget *ui;
     QString m_title;
     QString m_unit;
-
-    void update_name_label();
+    Measure::Type m_type;
+    DplDevice::GroupPointer m_group;
+    QReadWriteLock m_rwLock;
 };
+
+inline Measure::Type MeasureWidget::type() const
+{
+    return m_type;
+}
 
 inline QString MeasureWidget::title() const
 {
