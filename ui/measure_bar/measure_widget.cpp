@@ -6,6 +6,7 @@
  */
 #include "measure_widget.h"
 #include "ui_measure_widget.h"
+#include <device/device.h>
 
 MeasureWidget::MeasureWidget(QWidget *parent) :
     QWidget(parent),
@@ -13,11 +14,29 @@ MeasureWidget::MeasureWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->nameLabel->installEventFilter(this);
+
+    connect(this,
+            SIGNAL(calculated(QString)),
+            ui->valueLabel,
+            SLOT(setText(QString)), Qt::QueuedConnection);
+
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this,
+            SLOT(do_current_group_changed(DplDevice::GroupPointer)));
+    do_current_group_changed(DplDevice::Device::instance()->current_group());
+
 }
 
 MeasureWidget::~MeasureWidget()
 {
     delete ui;
+}
+
+void MeasureWidget::set_type(Measure::Type type)
+{
+    QWriteLocker l(&m_rwLock);
+    m_type = type;
 }
 
 QString MeasureWidget::value() const
@@ -54,4 +73,25 @@ void MeasureWidget::update_name_label()
     }
 
     ui->nameLabel->setText(msg);
+}
+
+void MeasureWidget::do_current_group_changed(const DplDevice::GroupPointer &grp)
+{
+    QWriteLocker l(&m_rwLock);
+    disconnect(static_cast<DplDevice::Group *>(m_group.data()),
+               SIGNAL(data_event(DplSource::BeamsPointer)),
+               this,
+               SLOT(do_data_event()));
+    m_group = grp;
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
+            this,
+            SLOT(do_data_event()),
+            Qt::DirectConnection);
+}
+
+void MeasureWidget::do_data_event()
+{
+    QReadLocker l(&m_rwLock);
+    emit calculated(Measure::instance()->calculate_str(m_group, m_type));
 }
