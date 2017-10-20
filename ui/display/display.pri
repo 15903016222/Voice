@@ -19,9 +19,12 @@ SOURCES += \
     $$PWD/b_scan_vdisplay.cpp \
     $$PWD/s_scan_image.cpp \
     $$PWD/scroll_ruler_widget.cpp \
-    $$PWD/b_scan_time_scene.cpp \
-    $$PWD/b_scan_encoder_scene.cpp \
-    $$PWD/Tracer.cpp
+    $$PWD/b_scan_encoder_image_item.cpp \
+    $$PWD/b_scan_time_image_item.cpp \
+    $$PWD/base_image_item.cpp \
+    $$PWD/encoder_image_item.cpp \
+    $$PWD/test_stub.cpp \
+    $$PWD/time_image_item.cpp
 
 
 HEADERS += \
@@ -45,9 +48,12 @@ HEADERS += \
     $$PWD/b_scan_vdisplay.h \
     $$PWD/s_scan_image.h \
     $$PWD/scroll_ruler_widget.h \
-    $$PWD/b_scan_time_scene.h \
-    $$PWD/b_scan_encoder_scene.h \
-    $$PWD/Tracer.h
+    $$PWD/b_scan_encoder_image_item.h \
+    $$PWD/b_scan_time_image_item.h \
+    $$PWD/base_image_item.h \
+    $$PWD/encoder_image_item.h \
+    $$PWD/test_stub.h \
+    $$PWD/time_image_item.h
 
 
 FORMS += \

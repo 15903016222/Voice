@@ -1,16 +1,15 @@
-#include "ui/display/scroll_ruler_widget.h"
+#include "scroll_ruler_widget.h"
 #include <QPainter>
 #include <QDebug>
 #include <QScrollBar>
-#include <ui/display/Tracer.h>
 
 ScrollRulerWidget::ScrollRulerWidget(QWidget *parent) :
     RulerWidget(parent),
     m_stepUnit(0),
-    m_offsetPix(0),
     m_unitNum(0),
+    m_offsetPix(0),
     m_moveTotalUnit(0.0),
-    m_maxEnd(m_end)
+    m_maxEnd(-1.0)
 {
 
 }
@@ -22,14 +21,20 @@ bool ScrollRulerWidget::set_range(double start, double end)
         m_unitNum       = 0;
         m_offsetPix     = 0;
         m_moveTotalUnit = 0;
+        m_maxEnd        = -1.0;
         return true;
     }
 
     return false;
 }
 
+
 void ScrollRulerWidget::set_show_range(double start, double end)
 {
+    if(m_maxEnd < 0.0) {
+        return;
+    }
+
     if(start < m_start || end < m_end) {
         m_moveTotalUnit = 0.0;  /* 不偏移 */
     } else if(end > m_maxEnd) {
@@ -50,11 +55,14 @@ void ScrollRulerWidget::set_show_range(double start, double end)
 
 bool ScrollRulerWidget::move_to_value(double targetValue)
 {
-    DEBUG_INIT("ScrollRulerWidget", __FUNCTION__);
-
     if(targetValue > m_maxEnd) {
-        m_moveTotalUnit = m_maxEnd - m_end;
 
+        if(m_maxEnd < 0.0) {
+            m_moveTotalUnit = targetValue - m_end;
+        } else {
+            /*  */
+            m_moveTotalUnit = m_maxEnd - m_end;
+        }
     } else if(targetValue > (m_start + m_moveTotalUnit) && targetValue < (m_end + m_moveTotalUnit)) {
 
     } else if(targetValue > m_end && targetValue > (m_end + m_moveTotalUnit)) {
@@ -102,8 +110,6 @@ bool ScrollRulerWidget::set_max_end(double maxEnd)
 
 void ScrollRulerWidget::paintEvent(QPaintEvent *e)
 {
-    qDebug() << "[ScrollRulerWidget:" << __FUNCTION__ << "]";
-
     Q_UNUSED(e);
 
     QPainter painter(this);
@@ -245,7 +251,6 @@ void ScrollRulerWidget::paintEvent(QPaintEvent *e)
             if(targetX < 0) {
                 int align = markQty % 10;
                 /* align == 0，则不偏移一个单位，若不等于1，则偏移一个单位 */
-                //if((interval * 10.0) >= 1.0) {
                 if(align == 0) {
                     targetX = (int)((markQty - align + i) * interval * m_pixelPerUnit + 0.5) - m_offsetPix;
                     painter.drawText(targetX + 2, 12, QString::number(((markQty / 10  + m_unitNum) * 10) * interval + m_start, 'f', 1));
@@ -278,8 +283,6 @@ void ScrollRulerWidget::resizeEvent(QResizeEvent *event)
         }
 
         m_moveTotalUnit += differentValue;
-
-        qDebug() << "[" << this->objectName() << "]" << " event old size = " << event->oldSize() << " new size = " << event->size();
     }
 }
 
@@ -288,7 +291,7 @@ void ScrollRulerWidget::init_step_unit()
     double interval = 0.0;                              // 单位/刻度
     int markQty = 0;                                    // 刻度数
     int length = y_axis_length();                       // 标尺像素长度
-    float pixelPerUnit = length/(m_end - m_start);    // 像素/单位
+    float pixelPerUnit = length/(m_end - m_start);      // 像素/单位
 
     if (length >= 400) {
         markQty = 100;
