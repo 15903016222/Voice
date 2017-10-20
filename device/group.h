@@ -14,6 +14,7 @@
 #include <ut/pulser.h>
 #include <ut/receiver.h>
 #include <gate/gate.h>
+#include <measure/cursor.h>
 #include <source/beams.h>
 
 namespace DplDevice {
@@ -157,6 +158,12 @@ public:
      */
     const DplFocallaw::FocallawerPointer &focallawer() const;
 
+    /**
+     * @brief cursor    获取光标对象
+     * @return          光标对象
+     */
+    const DplMeasure::CursorPointer &cursor() const;
+
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
@@ -184,6 +191,7 @@ private:
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
+    DplMeasure::CursorPointer m_cursor;
     GroupPrivate *d;
 
 private:
@@ -244,6 +252,11 @@ inline const DplGate::GatePointer &Group::gate_i() const
 inline const DplFocallaw::FocallawerPointer &Group::focallawer() const
 {
     return m_focallawer;
+}
+
+inline const DplMeasure::CursorPointer &Group::cursor() const
+{
+    return m_cursor;
 }
 
 }
