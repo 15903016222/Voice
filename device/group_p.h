@@ -25,12 +25,6 @@ public:
 
     void set_current_angle(double angle);
 
-    /**
-     * @brief max_beam_delay    获取最大的Beam延迟时间
-     * @return                  延迟时间(ns)
-     */
-    int max_beam_delay();
-
     const DplSource::BeamsPointer &beams() const;
 
     const DplSource::BeamPointer &beam() const;
@@ -39,7 +33,7 @@ protected slots:
     void do_source_data_event();
 
 private:
-    Group *q_ptr;
+    Group *q;
     Group::Mode m_mode;             // 组模式
     Group::UtUnit m_utUnit;         // Ut 显示单位
     double m_currentAngle;          // 声速射角度(度)
@@ -57,7 +51,7 @@ inline void GroupPrivate::set_mode(Group::Mode mode)
 {
     if (m_mode != mode) {
         m_mode = mode;
-        emit q_ptr->mode_changed(mode);
+        emit q->mode_changed(mode);
     }
 }
 
@@ -70,7 +64,7 @@ inline void GroupPrivate::set_ut_unit(Group::UtUnit unit)
 {
     if (m_utUnit != unit) {
         m_utUnit = unit;
-        emit q_ptr->ut_unit_changed(unit);
+        emit q->ut_unit_changed(unit);
     }
 }
 
@@ -83,14 +77,8 @@ inline void GroupPrivate::set_current_angle(double angle)
 {
     if (!qFuzzyCompare(m_currentAngle, angle)) {
         m_currentAngle = angle;
-        emit q_ptr->current_angle_changed(angle);
+        emit q->current_angle_changed(angle);
     }
-}
-
-inline int GroupPrivate::max_beam_delay()
-{
-    qDebug()<<__FILE__<<__func__<<"Unimplement";
-    return 0;
 }
 
 inline const DplSource::BeamsPointer &GroupPrivate::beams() const

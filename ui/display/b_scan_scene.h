@@ -2,6 +2,14 @@
 #define __B_SCAN_SCENE_H__
 
 #include <QGraphicsScene>
+#include <QVector>
+#include <QSharedPointer>
+#include <QReadWriteLock>
+
+#include <display/palette_color.h>
+#include <source/beams.h>
+#include <source/axis.h>
+
 
 class BscanScene : public QGraphicsScene
 {

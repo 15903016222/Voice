@@ -27,13 +27,7 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     ui->layout3->addWidget(m_wedgeItem);
     ui->layout4->addWidget(m_autoDetectItem);
 
-    DplDevice::Device *dev = DplDevice::Device::instance();
-    connect(dev, SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(update(DplDevice::GroupPointer)));
-    m_group = dev->current_group();
-
     QStringList groupList;
-    QStringList modeList;
 
     groupList.append(tr("Add"));
     groupList.append("1");
@@ -45,15 +39,12 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     groupList.append("7");
     groupList.append("8");
     groupList.append(tr("Remove"));
-
-    modeList.append(tr("UT (PA Connector)"));
-    modeList.append(tr("PA (Phassed Array)"));
-    modeList.append(tr("UT1 (Conventional UT)"));
-    modeList.append(tr("UT2 (Conventional UT)"));
-
     m_groupItem->set(groupList);
 
-    m_modeItem->set(modeList);
+    m_modeItem->add_item(tr("UT (PA Connector)"));
+    m_modeItem->add_item(tr("PA (Phassed Array)"));
+    m_modeItem->add_item(tr("UT1 (Conventional UT)"));
+    m_modeItem->add_item(tr("UT2 (Conventional UT)"));
     m_modeItem->set_dispay_mode(ComboMenuItem::PREFIX);
     connect(m_modeItem, SIGNAL(value_changed(int)),
             this, SLOT(do_groupModeItem_changed(int)));
@@ -63,6 +54,12 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     connect(m_wedgeItem, SIGNAL(clicked()), this, SLOT(do_wedgeItem_clicked()));
 
     m_autoDetectItem->set(s_onOff);
+
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this,
+            SLOT(update(DplDevice::GroupPointer)));
+    update(DplDevice::Device::instance()->current_group());
 }
 
 SelectionMenu::~SelectionMenu()

@@ -23,7 +23,7 @@ GateMenu::GateMenu(QWidget *parent) :
     m_widthItem(new SpinMenuItem(this, tr("Width"), "mm")),
     m_thresholdItem(new SpinMenuItem(this, tr("Threshold"), "%")),
     m_synchroItem(new ComboMenuItem(this, tr("Synchro"))),
-    m_measureModeItem(new ComboMenuItem(this, tr("Measure Mode"))),
+    m_measureModeItem(new ComboMenuItem(this, tr("Measure"))),
     m_modeItem(new ComboMenuItem(this, tr("Mode")))
 {
     ui->layout0->addWidget(m_gateItem);
@@ -63,34 +63,36 @@ GateMenu::GateMenu(QWidget *parent) :
     connect(m_thresholdItem, SIGNAL(value_changed(double)),
             this, SLOT(do_thresholdItem_changed(double)));
 
-    m_synchroItem->add_item(tr("Gate A"));
-    m_synchroItem->add_item(tr("Gate I"));
-    m_synchroItem->add_item(tr("Pulse"));
-
     m_measureModeItem->add_item(tr("Edge"));
     m_measureModeItem->add_item(tr("Peak"));
-
-    connect(DplDevice::Device::instance(),
-            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
+    connect(m_measureModeItem,
+            SIGNAL(value_changed(int)),
+            this,
+            SLOT(do_measureModeItem_changed(int)));
 
     m_modeItem->add_item(tr("Sound Path"));
     m_modeItem->add_item(tr("Depth"));
 
-    do_current_group_changed(DplDevice::Device::instance()->current_group());
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this, SLOT(update(DplDevice::GroupPointer)));
+    update(DplDevice::Device::instance()->current_group());
     do_paramsItem_changed(0);
-}
-
-GateMenu::~GateMenu()
-{
 }
 
 void GateMenu::update_items()
 {
-    m_switchItem->set_current_index(!m_gate->is_visible());
+    update_switchItem();
     update_startItem();
     update_widhtItem();
     update_thresholdItem();
+    update_synchroItem();
+    update_measureModeItem();
+}
+
+void GateMenu::update_switchItem()
+{
+    m_switchItem->set_current_index(!m_gate->is_visible());
 }
 
 void GateMenu::update_startItem()
@@ -121,6 +123,32 @@ void GateMenu::update_widhtItem()
     m_widthItem->set_value(Tool::cnf_to_display(m_group, m_gate->width()));
 }
 
+void GateMenu::update_synchroItem()
+{
+    disconnect(m_synchroItem,
+               SIGNAL(value_changed(int)),
+               this,
+               SLOT(do_synchroItem_changed(int)));
+
+    m_synchroItem->set(QStringList());
+    m_synchroItem->add_item(tr("Pulser"));
+    m_synchroItem->add_item("I/");
+    if (m_gate->type() == DplFpga::Group::GATE_B) {
+        m_synchroItem->add_item("A/");
+    }
+    m_synchroItem->set_current_index(m_gate->synchro_mode());
+
+    connect(m_synchroItem,
+            SIGNAL(value_changed(int)),
+            this,
+            SLOT(do_synchroItem_changed(int)));
+}
+
+void GateMenu::update_measureModeItem()
+{
+    m_measureModeItem->set_current_index(m_gate->measure_mode());
+}
+
 void GateMenu::update_thresholdItem()
 {
     m_thresholdItem->set_value(m_gate->height());
@@ -137,7 +165,7 @@ void GateMenu::do_gateItem_changed(int val)
                    this, SLOT(update_thresholdItem()));
     }
 
-    m_gate = m_group->gate(static_cast<DplGate::Gate::Type>(val));
+    m_gate = m_group->gate(static_cast<DplFpga::Group::GateType>(val));
 
     connect(static_cast<DplGate::Gate *>(m_gate.data()),
                SIGNAL(start_changed(float)),
@@ -150,35 +178,41 @@ void GateMenu::do_gateItem_changed(int val)
 
 void GateMenu::do_startItem_changed(double val)
 {
-    DplGate::GatePointer gate = m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()));
-    gate->set_start(Tool::display_to_cnf(m_group, val));
+    m_gate->set_start(Tool::display_to_cnf(m_group, val));
 }
 
 void GateMenu::do_widthItem_changed(double val)
 {
-    DplGate::GatePointer gate = m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()));
-    gate->set_width(Tool::display_to_cnf(m_group, val));
+    m_gate->set_width(Tool::display_to_cnf(m_group, val));
 }
 
 void GateMenu::do_thresholdItem_changed(double val)
 {
-    DplGate::GatePointer gate = m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()));
-    gate->set_height(val+0.5);
+    m_gate->set_height(val+0.5);
 }
 
 void GateMenu::do_switchItem_changed(int index)
 {
-    m_group->gate(static_cast<DplGate::Gate::Type>(m_gateItem->current_index()))->set_visible(!index);
+    m_gate->set_visible(!index);
 }
 
 void GateMenu::do_paramsItem_changed(int index)
 {
-    m_startItem->setVisible(!index);
-    m_widthItem->setVisible(!index);
-    m_thresholdItem->setVisible(!index);
-    m_synchroItem->setVisible(!!index);
-    m_measureModeItem->setVisible(!!index);
-    m_modeItem->setVisible(!!index);
+    if (m_synchroItem->isVisible()) {
+        m_synchroItem->setVisible(!!index);
+        m_measureModeItem->setVisible(!!index);
+        m_modeItem->setVisible(!!index);
+        m_startItem->setVisible(!index);
+        m_widthItem->setVisible(!index);
+        m_thresholdItem->setVisible(!index);
+    } else {
+        m_startItem->setVisible(!index);
+        m_widthItem->setVisible(!index);
+        m_thresholdItem->setVisible(!index);
+        m_synchroItem->setVisible(!!index);
+        m_measureModeItem->setVisible(!!index);
+        m_modeItem->setVisible(!!index);
+    }
 }
 
 void GateMenu::do_sample_changed()
@@ -186,7 +220,17 @@ void GateMenu::do_sample_changed()
     do_gateItem_changed(m_gateItem->current_index());
 }
 
-void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
+void GateMenu::do_synchroItem_changed(int index)
+{
+    m_gate->set_synchro_mode(static_cast<DplFpga::Group::SynchroMode>(index));
+}
+
+void GateMenu::do_measureModeItem_changed(int index)
+{
+    m_gate->set_measure_mode(static_cast<DplFpga::Group::MeasureMode>(index));
+}
+
+void GateMenu::update(const DplDevice::GroupPointer &group)
 {
     if (!m_group.isNull()) {
         disconnect(m_group->sample().data(), SIGNAL(start_changed(float)),
@@ -197,12 +241,14 @@ void GateMenu::do_current_group_changed(const DplDevice::GroupPointer &group)
 
     m_group = group;
 
-    connect(m_group->sample().data(), SIGNAL(start_changed(float)),
+    connect(m_group->sample().data(),
+            SIGNAL(start_changed(float)),
             this, SLOT(do_sample_changed()));
-    connect(m_group->sample().data(), SIGNAL(range_changed(float)),
+    connect(m_group->sample().data(),
+            SIGNAL(range_changed(float)),
             this, SLOT(do_sample_changed()));
 
-    do_gateItem_changed(DplGate::Gate::A);
+    do_gateItem_changed(DplFpga::Group::GATE_A);
 }
 
 }

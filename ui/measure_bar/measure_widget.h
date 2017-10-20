@@ -1,3 +1,10 @@
+/**
+ * @file measure_widget.h
+ * @brief 测量部件
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
+
 #ifndef __MEASURE_WIDGET_H__
 #define __MEASURE_WIDGET_H__
 

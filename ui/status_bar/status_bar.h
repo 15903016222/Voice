@@ -24,6 +24,7 @@ protected slots:
     void do_scan_mode_changed(DplSource::Scan::Mode mode);
     void do_data_event(const DplSource::BeamsPointer &beams);
     void do_encoder_text_changed();
+    void do_acquisition_rate_changed();
 
 signals:
     void encoder_text_changed();

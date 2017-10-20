@@ -76,7 +76,7 @@ void GeneralMenu::update(const DplDevice::GroupPointer &group)
     update_start_item();
     update_range_item();
 
-    m_velocityItem->set_value(m_group->sample()->velocity());
+    m_velocityItem->set_value(m_group->focallawer()->specimen()->velocity());
 
     double delay = m_group->focallawer()->wedge()->delay();
     m_wedgeDelayItem->set_value(Dpl::ns_to_us(delay));
@@ -101,7 +101,7 @@ void GeneralMenu::do_rangeItem_changed(double value)
 
 void GeneralMenu::do_velocityItem_changed(double value)
 {
-    m_group->sample()->set_velocity(value);
+    m_group->focallawer()->specimen()->set_velocity(value);
 }
 
 void GeneralMenu::do_wedgeDelayItem_changed(double value)
@@ -118,7 +118,7 @@ void GeneralMenu::do_utUnitItem_changed(int index)
 
 void GeneralMenu::update_gain_item()
 {
-    m_gainItem->set(0, 90, 1);
+    m_gainItem->set(0, 90, 1, 0.1);
     m_gainItem->set_value(m_group->sample()->gain());
 }
 
@@ -146,10 +146,13 @@ void GeneralMenu::update_range_item()
     }
 
     double min = 0.0;
+    double step = 0.0;
     if (m_group->sample()->is_auto_set_point_qty()) {
         min = 32 * m_group->sample()->precision() * 1;
+        step = m_group->sample()->precision();
     } else {
         min = m_group->sample()->point_qty() * m_group->sample()->precision() * 1;
+        step = m_group->sample()->point_qty() * m_group->sample()->precision();
     }
 
     if (m_group->ut_unit() == DplDevice::Group::Time) {
@@ -161,7 +164,7 @@ void GeneralMenu::update_range_item()
     m_rangeItem->set(Tool::cnf_to_display(m_group, min),
                      Tool::cnf_to_display(m_group, max),
                      2,
-                     Tool::cnf_to_display(m_group, m_group->sample()->precision()));
+                     Tool::cnf_to_display(m_group, step));
     m_rangeItem->set_value(Tool::cnf_to_display(m_group, m_group->sample()->range()));
 }
 

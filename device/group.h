@@ -11,6 +11,8 @@
 #include <fpga/group.h>
 #include <focallaw/focallawer.h>
 #include <ut/sample.h>
+#include <ut/pulser.h>
+#include <ut/receiver.h>
 #include <gate/gate.h>
 #include <source/beams.h>
 
@@ -101,11 +103,41 @@ public:
     const DplUt::SamplePointer &sample() const;
 
     /**
-     * @brief gate  获取闸门对象指针
-     * @param type  闸门类型
-     * @return      闸门对象指针
+     * @brief pulser    获取脉冲发生器对象
+     * @return          对象指针
      */
-    const DplGate::GatePointer &gate(DplGate::Gate::Type type) const;
+    const DplUt::PulserPointer &pulser() const;
+
+    /**
+     * @brief receiver  获取脉冲接收器对象
+     * @return
+     */
+    const DplUt::ReceiverPointer &receiver() const;
+
+    /**
+     * @brief gate  获取指定闸门对象
+     * @param type  闸门类型
+     * @return      闸门对象
+     */
+    const DplGate::GatePointer &gate(DplFpga::Group::GateType type) const;
+
+    /**
+     * @brief gate_a    获取闸门A对象
+     * @return          闸门对象
+     */
+    const DplGate::GatePointer &gate_a() const;
+
+    /**
+     * @brief gate_b    获取闸门B对象
+     * @return          闸门对象
+     */
+    const DplGate::GatePointer &gate_b() const;
+
+    /**
+     * @brief gate_i    获取闸门I对象
+     * @return          闸门对象
+     */
+    const DplGate::GatePointer &gate_i() const;
 
     /**
      * @brief current_beams 获取数据源当前Beam组
@@ -127,7 +159,6 @@ public:
 
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
-    void velocity_changed(double val);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
     void current_angle_changed(double val);
     void probe_changed(DplFocallaw::ProbePointer probePtr);
@@ -141,21 +172,26 @@ public slots:
 
 private slots:
     void update_sample();
+    void update_pulser();
     void update_source();
 
 private:
+    DplFpga::GroupPointer m_fpgaGroup;
+    DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
     DplUt::SamplePointer m_sample;
+    DplUt::PulserPointer m_pulser;
+    DplUt::ReceiverPointer m_receiver;
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
-    DplFocallaw::FocallawerPointer m_focallawer; // 聚焦法则计算器
-    DplFpga::GroupPointer m_fpgaGroup;
     GroupPrivate *d;
 
 private:
     void init_gate(DplGate::Gate *gate);
     void init_gates();
     void init_sample();
+    void init_pulser();
+    void init_source();
 };
 
 typedef QSharedPointer<Group> GroupPointer;
@@ -180,15 +216,29 @@ inline const DplUt::SamplePointer &Group::sample() const
     return m_sample;
 }
 
-inline const DplGate::GatePointer &Group::gate(DplGate::Gate::Type type) const
+inline const DplUt::PulserPointer &Group::pulser() const
 {
-    if (type == DplGate::Gate::A) {
-        return m_gateA;
-    } else if (type == DplGate::Gate::B) {
-        return m_gateB;
-    } else {
-        return m_gateI;
-    }
+    return m_pulser;
+}
+
+inline const DplUt::ReceiverPointer &Group::receiver() const
+{
+    return m_receiver;
+}
+
+inline const DplGate::GatePointer &Group::gate_a() const
+{
+    return m_gateA;
+}
+
+inline const DplGate::GatePointer &Group::gate_b() const
+{
+    return m_gateB;
+}
+
+inline const DplGate::GatePointer &Group::gate_i() const
+{
+    return m_gateI;
 }
 
 inline const DplFocallaw::FocallawerPointer &Group::focallawer() const

@@ -15,8 +15,8 @@
 
 static const int GATE_HEIGHT = 4;
 
-GateItem::GateItem(const DplGate::GatePointer &gate, QGraphicsItem *parent) :
-    QGraphicsObject(parent),
+GateItem::GateItem(const DplUt::SamplePointer &sample, const DplGate::GatePointer &gate, QGraphicsItem *parent) : QGraphicsObject(parent),
+    m_sample(sample),
     m_gate(gate),
     m_ratio(1),
     m_movingFlag(false)
@@ -34,6 +34,10 @@ GateItem::GateItem(const DplGate::GatePointer &gate, QGraphicsItem *parent) :
     connect(static_cast<DplGate::Gate *>(m_gate.data()),
             SIGNAL(height_changed(int)),
             this, SLOT(update_pos()));
+    connect(static_cast<DplUt::Sample *>(m_sample.data()),
+            SIGNAL(start_changed(float)),
+            this,
+            SLOT(update_pos()));
 
     do_visible_changed(m_gate->is_visible());
 }
@@ -72,7 +76,7 @@ void GateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 QVariant GateItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
-    if (change == ItemPositionChange && scene()) {
+    if (change == ItemPositionChange && scene() && m_movingFlag) {
         // value is the new position.
         QPointF newPos = value.toPointF();
         QRectF rect = scene()->sceneRect();
@@ -82,7 +86,7 @@ QVariant GateItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
             newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
         }
 
-        m_gate->set_start((newPos.x() - rect.left())/ratio());
+        m_gate->set_start((newPos.x() - rect.left())/ratio() + m_sample->start());
         m_gate->set_height((rect.bottom() - newPos.y()) / rect.height() * 100);
 
         return newPos;
@@ -102,7 +106,7 @@ void GateItem::update_pos()
     }
 
     if (scene() && !scene()->views().isEmpty()) {
-        setPos(scene()->sceneRect().left() + m_gate->start() * ratio(),
+        setPos(scene()->sceneRect().left() + m_gate->start() * ratio() - m_sample->start() * ratio(),
                scene()->sceneRect().bottom() - scene()->sceneRect().height() * m_gate->height() / 100);
     }
 }

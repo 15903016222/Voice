@@ -17,9 +17,12 @@
 
 #include "true_depth_focus.h"
 #include "half_path_focus.h"
+#include "projection_focus.h"
+#include "focal_plane_focus.h"
 
 #include "flat.h"
 #include "cylinder.h"
+#include "cylinder_cod.h"
 
 #include "beam.h"
 
@@ -94,6 +97,12 @@ public:
      * @return          数量
      */
     uint beam_qty() const;
+
+    /**
+     * @brief max_beam_delay    最大延迟时间
+     * @return                  时间(ns)
+     */
+    float max_beam_delay() const;
 
 signals:
     void beam_qty_changed(int);

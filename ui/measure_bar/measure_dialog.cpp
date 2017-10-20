@@ -1,3 +1,9 @@
+/**
+ * @file measure_dialog.cpp
+ * @brief 测量选择对话框
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
 #include "measure_dialog.h"
 #include "ui_measure_dialog.h"
 

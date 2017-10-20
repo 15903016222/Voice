@@ -8,6 +8,8 @@
 
 #include "device_p.h"
 
+#include <global.h>
+
 namespace DplDevice {
 
 static const int MAX_GROUPS_NUM = 8;
@@ -72,24 +74,16 @@ bool Device::is_valid() const
     return d->is_valid();
 }
 
-int Device::groups()
-{
-    Q_D(Device);
-    QReadLocker l(&d->m_groupsRWLock);
-    return d->m_groups.size();
-}
-
 bool Device::add_group()
 {
     Q_D(Device);
-    {
-        QWriteLocker l(&d->m_groupsRWLock);
-        if (d->m_groups.size() >= MAX_GROUPS_NUM) {
-            return false;
-        }
-        d->m_groups.append(GroupPointer(new Group(d_ptr->m_groups.size())));
-        d->m_curGroup = d_ptr->m_groups.last();
+
+    if (d->m_groups.size() >= MAX_GROUPS_NUM) {
+        return false;
     }
+
+    d->m_groups.append(GroupPointer(new Group(d_ptr->m_groups.size())));
+    d->m_curGroup = d_ptr->m_groups.last();
 
     connect(static_cast<DplFocallaw::Focallawer *>(d->m_curGroup->focallawer().data()),
             SIGNAL(focallawed()),
@@ -101,6 +95,11 @@ bool Device::add_group()
             SIGNAL(receiver_index_changed(uint)),
             this, SLOT(deploy_beams()));
 
+    connect(static_cast<DplFocallaw::Focallawer *>(d->m_curGroup->focallawer().data()),
+            SIGNAL(beam_qty_changed(int)),
+            this,
+            SIGNAL(beam_qty_changed()));
+
     deploy_beams();
 
     emit current_group_changed(d->m_curGroup);
@@ -110,17 +109,16 @@ bool Device::add_group()
 bool Device::remove_group(int id)
 {
     Q_D(Device);
-    {
-        QWriteLocker l(&d->m_groupsRWLock);
-        if (d->m_groups.isEmpty()
-                || id >= d->m_groups.size()) {
-            return false;
-        }
 
-        d->m_groups.remove(id);
-        if (d->m_curGroup->index() != id) {
-            return true;
-        }
+    if (d->m_groups.isEmpty()
+            || id >= d->m_groups.size()) {
+        return false;
+    }
+
+    d->m_groups.remove(id);
+
+    if (d->m_curGroup->index() != id) {
+        return true;
     }
 
     d->m_curGroup = d->m_groups.last();
@@ -129,24 +127,34 @@ bool Device::remove_group(int id)
     return true;
 }
 
+int Device::group_qty() const
+{
+    Q_D(const Device);
+    return d->m_groups.size();
+}
+
+const QVector<GroupPointer> &Device::groups() const
+{
+    Q_D(const Device);
+    return d->m_groups;
+}
+
 const GroupPointer &Device::get_group(int index) const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_groupsRWLock);
     return d->m_groups[index];
 }
 
 bool Device::set_current_group(int index)
 {
     Q_D(Device);
-    {
-        QWriteLocker l(&d->m_groupsRWLock);
-        if (index >= d->m_groups.size()
-                || index == d->m_curGroup->index()) {
-            return false;
-        }
-        d->m_curGroup = d->m_groups[index];
+
+    if (index >= d->m_groups.size()
+            || index == d->m_curGroup->index()) {
+        return false;
     }
+    d->m_curGroup = d->m_groups[index];
+
     emit current_group_changed(d->m_curGroup);
     return true;
 }
@@ -154,34 +162,26 @@ bool Device::set_current_group(int index)
 const GroupPointer &Device::current_group() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_groupsRWLock);
     return d->m_curGroup;
 }
 
 int Device::first_beam_index(const Group *grp) const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_groupsRWLock);
+
     int index = 0;
     for (int i = 0; i < grp->index(); ++i) {
         index += d->m_groups[i]->focallawer()->beam_qty();
     }
+
     return index;
 }
 
-int Device::total_beam_qty() const
+int Device::beam_qty() const
 {
     Q_D(const Device);
-    QReadLocker l(&d->m_groupsRWLock);
-    int qty = 0;
-    foreach (GroupPointer grp, d->m_groups) {
-        if (grp->mode() == Group::PA) {
-            qty += grp->focallawer()->beam_qty();
-        } else {
-            qty += 1;
-        }
-    }
-    return qty;
+
+    return d->total_beam_qty();
 }
 
 void Device::start()
@@ -205,8 +205,8 @@ void Device::deploy_beams()
 {
     Q_D(Device);
 
-    DplFpga::Fpga::instance()->set_pa_law_qty(total_beam_qty());
-    DplFpga::Fpga::instance()->set_ut_law_qty(total_beam_qty());
+    DplFpga::Fpga::instance()->set_pa_law_qty(beam_qty());
+    DplFpga::Fpga::instance()->set_ut_law_qty(beam_qty());
 
     foreach (GroupPointer grp, d->m_groups) {
         grp->deploy_beams();
@@ -224,6 +224,5 @@ Device::~Device()
 {
     delete d_ptr;
 }
-
 
 }

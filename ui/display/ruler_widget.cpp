@@ -5,15 +5,13 @@
 
 RulerWidget::RulerWidget(QWidget *parent) :
     QWidget(parent),
-    m_bgColor("#ff88ff"),
     m_start(0),
     m_end(100),
     m_unitName("(mm)"),
+    m_bgColor("#ff88ff"),
     m_type(BOTTOM),
     m_direction(Up)
 {
-//    QScrollBar bar;
-//    bar.setOrientation(Qt::Orientation);
 }
 
 bool RulerWidget::set_range(double start, double end)

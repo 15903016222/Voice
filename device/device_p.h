@@ -37,6 +37,12 @@ public:
 
     bool is_valid() const;
 
+    /**
+     * @brief total_beam_qty    获取所有组的Beam总数
+     * @return                  数量
+     */
+    int total_beam_qty() const;
+
 protected:
     /**
      * @brief get_serial_number 获取序列号
@@ -68,7 +74,6 @@ public:
     /* Group */
     QVector<GroupPointer> m_groups;
     GroupPointer m_curGroup;
-    mutable QReadWriteLock m_groupsRWLock;
 
 private:
     Device *q_ptr;

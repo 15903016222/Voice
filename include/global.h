@@ -9,6 +9,7 @@ namespace Dpl {
 #define US_TO_NS    (1000)
 #define S_TO_US     (1000000)
 #define S_TO_NS     (1000000000)
+#define MS_TO_NS    (1000000)
 
 #define M_TO_MM     (1000)
 #define MM_TO_UM    (1000)
@@ -45,6 +46,14 @@ template <typename T>
  * @return          纳秒值
  */
 static inline T s_to_ns(T val) { return val * S_TO_NS; }
+
+template <typename T>
+/**
+ * @brief ms_to_ns  毫秒换算成纳秒
+ * @param val       毫秒值
+ * @return          纳秒值
+ */
+static inline T ms_to_ns(T val) { return val * MS_TO_NS; }
 
 template <typename T>
 /**

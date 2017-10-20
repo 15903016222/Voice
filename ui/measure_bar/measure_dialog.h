@@ -1,3 +1,9 @@
+/**
+ * @file measure_dialog.h
+ * @brief 测量选择对话框
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-10-19
+ */
 #ifndef __MEASURE_DIALOG_H__
 #define __MEASURE_DIALOG_H__
 

@@ -103,12 +103,6 @@ public:
 
     /* Group */
     /**
-     * @brief groups    获取组数量
-     * @return          返回组数
-     */
-    int groups();
-
-    /**
      * @brief create_group  创建组
      * @return              成功返回true，失败返回false
      */
@@ -120,6 +114,18 @@ public:
      * @return              成功返回true，失败返回false
      */
     bool remove_group(int id);
+
+    /**
+     * @brief group_qty 获取组数
+     * @return          数量
+     */
+    int group_qty() const;
+
+    /**
+     * @brief groups    获取所有组
+     * @return          组列表
+     */
+    const QVector<GroupPointer> &groups() const;
 
     /**
      * @brief get_group 获取指定组
@@ -152,7 +158,7 @@ public:
      * @brief beam_qty  获取beam的总数
      * @return          返回beam的总数
      */
-    int total_beam_qty() const;
+    int beam_qty() const;
 
     /**
      * @brief display   获取显示配置
@@ -178,6 +184,7 @@ public:
 
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
+    void beam_qty_changed();
 
 public slots:
     /**
