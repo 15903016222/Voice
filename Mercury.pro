@@ -62,6 +62,8 @@ include(gate/gate.pri)
 
 include(display/display.pri)
 
+include(measure/measure.pri)
+
 include(ui/ui.pri)
 
 include(mcu/mcu.pri)
