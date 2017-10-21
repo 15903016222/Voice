@@ -50,6 +50,12 @@ public:
      */
     bool is_moving() const;
 
+    /**
+     * @brief set_offset    设置偏移位置
+     * @param offset        偏移位置(ns)
+     */
+    void set_offset(qreal offset);
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -66,6 +72,7 @@ private:
     DplGate::GatePointer m_gate;
     float m_ratio;
     bool m_movingFlag;
+    qreal m_offset;
 };
 
 inline void GateItem::set_ratio(qreal ratio)

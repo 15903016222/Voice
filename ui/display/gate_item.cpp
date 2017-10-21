@@ -19,7 +19,8 @@ GateItem::GateItem(const DplUt::SamplePointer &sample, const DplGate::GatePointe
     m_sample(sample),
     m_gate(gate),
     m_ratio(1),
-    m_movingFlag(false)
+    m_movingFlag(false),
+    m_offset(0.0)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges); // 启动itemChanged()
@@ -62,6 +63,12 @@ void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
                       m_gate->width() * ratio(), 0);
 }
 
+void GateItem::set_offset(qreal offset)
+{
+    m_offset = offset;
+    update_pos();
+}
+
 void GateItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     m_movingFlag = true;
@@ -86,7 +93,7 @@ QVariant GateItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
             newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
         }
 
-        m_gate->set_start((newPos.x() - rect.left())/ratio() + m_sample->start());
+        m_gate->set_start((newPos.x() - rect.left())/ratio() + m_sample->start() - m_offset);
         m_gate->set_height((rect.bottom() - newPos.y()) / rect.height() * 100);
 
         return newPos;
@@ -106,7 +113,7 @@ void GateItem::update_pos()
     }
 
     if (scene() && !scene()->views().isEmpty()) {
-        setPos(scene()->sceneRect().left() + m_gate->start() * ratio() - m_sample->start() * ratio(),
+        setPos(scene()->sceneRect().left() + (m_gate->start() - m_sample->start()  + m_offset )* ratio(),
                scene()->sceneRect().bottom() - scene()->sceneRect().height() * m_gate->height() / 100);
     }
 }
