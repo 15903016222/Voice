@@ -48,7 +48,8 @@ protected:
     ScanView         *m_bscanView;
     BscanScene       *m_bscanScene;
     BaseImageItem    *m_bscanImageItem;
-    BaseCursorItem   *m_baseCursorItem;
+    BaseCursorItem   *m_baseVCursorItem;
+    BaseCursorItem   *m_baseHCursorItem;
 
     DplSource::Axis::Driving      m_driving;                /* 扫查类型：encoder_x/y / timer*/
 

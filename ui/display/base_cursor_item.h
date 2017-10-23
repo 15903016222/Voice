@@ -3,14 +3,13 @@
 
 #include <QGraphicsItem>
 
-static const int    DEFAULT_TOOLTIP_WIDTH  = 25;
-static const int    DEFAULT_TOOLTIP_HEIGHT = 13;
+
 
 class BaseCursorItem : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    explicit BaseCursorItem(Qt::Orientation orientation, QGraphicsItem *parent = 0);
+    explicit BaseCursorItem(Qt::Orientation orientation, Qt::Orientation innerOrientation, QGraphicsItem *parent = 0);
 
     QRectF boundingRect() const;
 
@@ -26,6 +25,7 @@ protected:
     QSize   m_size;
     QColor  m_color;
     Qt::Orientation m_orientation;
+    Qt::Orientation m_innerOrientation;
 
     volatile bool m_movingFlag;
 

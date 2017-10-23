@@ -4,12 +4,22 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
-BaseCursorItem::BaseCursorItem(Qt::Orientation orientation, QGraphicsItem *parent) :
+static const int    DEFAULT_TOOLTIP_WIDTH  = 25;
+static const int    DEFAULT_TOOLTIP_HEIGHT = 13;
+
+BaseCursorItem::BaseCursorItem(Qt::Orientation orientation, Qt::Orientation innerOrientation, QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_movingFlag(false),
     m_color(Qt::red),
-    m_orientation(orientation)
+    m_orientation(orientation),
+    m_innerOrientation(innerOrientation)
 {
+    if((m_orientation == Qt::Vertical && m_innerOrientation == Qt::Horizontal)
+            || (m_innerOrientation == Qt::Vertical &&  m_orientation == Qt::Horizontal))
+    {
+        m_color = QColor(Qt::blue);
+    }
+
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
 }
@@ -34,51 +44,118 @@ void BaseCursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     QFont font;
     font.setPointSize(8);
 
-    if(m_orientation == Qt::Vertical) {
-         rectF = QRectF(-m_size.width() / 2.0,
-                     -m_size.height() / 2.0,
-                     DEFAULT_TOOLTIP_WIDTH,
-                     DEFAULT_TOOLTIP_HEIGHT);
+    if(Qt::Vertical == m_orientation) {
+        if(Qt::Horizontal == m_innerOrientation) {
 
-         painter->fillRect(rectF, QBrush(color));
-         painter->setPen(QColor(Qt::black));
-         painter->setFont(font);
-         painter->drawText(rectF, QString::number(11.88),
-                           QTextOption(Qt::AlignCenter));
+            rectF = QRectF(-m_size.width() / 2.0,
+                        -m_size.height() / 2.0,
+                        DEFAULT_TOOLTIP_WIDTH,
+                        DEFAULT_TOOLTIP_HEIGHT);
+
+            painter->fillRect(rectF, QBrush(color));
+            painter->setPen(QColor(Qt::black));
+            painter->setFont(font);
+            painter->drawText(rectF, QString::number(11.88),
+                              QTextOption(Qt::AlignCenter));
+
+            painter->setPen(m_color);
+            QPointF point1(-m_size.width() / 2.0,
+                           -m_size.height() / 2.0);
+
+            QPointF point2(m_size.width() / 2.0,
+                           -m_size.height() / 2.0);
+
+            painter->drawLine(point1, point2);
+
+        } else {
+
+             rectF = QRectF(-m_size.width() / 2.0,
+                         -m_size.height() / 2.0,
+                         DEFAULT_TOOLTIP_WIDTH,
+                         DEFAULT_TOOLTIP_HEIGHT);
+
+             painter->fillRect(rectF, QBrush(color));
+             painter->setPen(QColor(Qt::black));
+             painter->setFont(font);
+             painter->drawText(rectF, QString::number(11.88),
+                               QTextOption(Qt::AlignCenter));
+
+             painter->setPen(m_color);
+             QPointF point1(-m_size.width() / 2.0,
+                            -m_size.height() / 2.0);
+
+             QPointF point2(-m_size.width() / 2.0,
+                            m_size.height());
+
+             painter->drawLine(point1, point2);
+
+        }
+
 
     } else {
-        rectF = QRectF(-m_size.width() / 2.0,
-                     -m_size.height() / 2.0,
-                     DEFAULT_TOOLTIP_HEIGHT,
-                     DEFAULT_TOOLTIP_WIDTH);
+        if(Qt::Horizontal == m_innerOrientation) {
 
-        painter->fillRect(rectF, QBrush(color));
-        painter->setPen(QColor(Qt::black));
-        painter->setFont(font);
-        /* 旋转90度 */
-        painter->rotate(90);
+            rectF = QRectF(m_size.width() / 2.0 - DEFAULT_TOOLTIP_HEIGHT,
+                         -m_size.height() / 2.0,
+                         DEFAULT_TOOLTIP_HEIGHT,
+                         DEFAULT_TOOLTIP_WIDTH);
 
-        painter->drawText(QRectF(-m_size.height() / 2.0,
-                                 -m_size.width() / 2.0,
-                                 DEFAULT_TOOLTIP_WIDTH,
-                                 DEFAULT_TOOLTIP_HEIGHT),
-                          QString::number(11.88),
-                          QTextOption(Qt::AlignCenter));
+            painter->fillRect(rectF, QBrush(color));
+            painter->setPen(QColor(Qt::black));
+            painter->setFont(font);
+            /* 旋转90度 */
+            painter->rotate(90);
 
-        qDebug() << " x  = " << -m_size.height() / 2.0
-                 <<  " y = " << -m_size.width() / 2.0;
+            painter->drawText(QRectF(-m_size.height() / 2.0,
+                                     -m_size.width() / 2.0,
+                                     DEFAULT_TOOLTIP_WIDTH,
+                                     DEFAULT_TOOLTIP_HEIGHT),
+                              QString::number(11.88),
+                              QTextOption(Qt::AlignCenter));
 
-        painter->rotate(-90);
+            painter->rotate(-90);
+
+            painter->setPen(m_color);
+            QPointF point1(-m_size.width() / 2.0,
+                           -m_size.height() / 2.0);
+
+            QPointF point2(m_size.width() / 2.0,
+                           -m_size.height() / 2.0);
+
+            painter->drawLine(point1, point2);
+
+        } else {
+
+            rectF = QRectF(-m_size.width() / 2.0,
+                         -m_size.height() / 2.0,
+                         DEFAULT_TOOLTIP_HEIGHT,
+                         DEFAULT_TOOLTIP_WIDTH);
+
+            painter->fillRect(rectF, QBrush(color));
+            painter->setPen(QColor(Qt::black));
+            painter->setFont(font);
+            /* 旋转90度 */
+            painter->rotate(90);
+
+            painter->drawText(QRectF(-m_size.height() / 2.0,
+                                     m_size.width() / 2.0 - DEFAULT_TOOLTIP_HEIGHT,
+                                     DEFAULT_TOOLTIP_WIDTH,
+                                     DEFAULT_TOOLTIP_HEIGHT),
+                              QString::number(11.88),
+                              QTextOption(Qt::AlignCenter));
+
+            painter->rotate(-90);
+
+            painter->setPen(m_color);
+            QPointF point1(-m_size.width() / 2.0,
+                           -m_size.height() / 2.0);
+
+            QPointF point2(-m_size.width() / 2.0,
+                           m_size.height());
+
+            painter->drawLine(point1, point2);
+        }
     }
-
-    painter->setBrush(QBrush(m_color));
-    QPointF point1(-m_size.width() / 2.0,
-                   -m_size.height() / 2.0);
-
-    QPointF point2(-m_size.width() / 2.0,
-                   m_size.height());
-
-    painter->drawLine(point1, point2);
 }
 
 void BaseCursorItem::do_visible_changed(bool flag)
@@ -112,14 +189,11 @@ QVariant BaseCursorItem::itemChange(QGraphicsItem::GraphicsItemChange change, co
             qDebug() << " contains......";
         }
 
-        newPos.setY(0.0);
-
-        qDebug() << "new x = " << newPos.x() << " Y = " << newPos.y()
-                 << " rect x = " << boundingRect().x()
-                 << " y = " << boundingRect().y()
-                 << " w = " << boundingRect().width()
-                 << " h = " << boundingRect().height();
-
+        if(m_innerOrientation == Qt::Vertical) {
+            newPos.setY(0.0);
+        } else {
+            newPos.setX(0.0);
+        }
 
         return newPos;
     }

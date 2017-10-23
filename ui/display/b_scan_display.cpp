@@ -27,7 +27,8 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     m_bscanView(new ScanView),
     m_bscanScene(new BscanScene),
     m_bscanImageItem(NULL),
-    m_baseCursorItem(new BaseCursorItem(orientation)),
+    m_baseVCursorItem(new BaseCursorItem(orientation, Qt::Vertical)),
+    m_baseHCursorItem(new BaseCursorItem(orientation, Qt::Horizontal)),
     m_orientation(orientation)
 
 {
@@ -239,7 +240,10 @@ void BscanDisplay::init_scan_env()
     }
 
     m_bscanScene->addItem(m_bscanImageItem);
-    m_bscanScene->addItem(m_baseCursorItem);
+    m_bscanScene->addItem(m_baseVCursorItem);
+    m_bscanScene->addItem(m_baseHCursorItem);
+    m_baseVCursorItem->setPos(QPointF(10.0, 0.0));
+    m_baseHCursorItem->setPos(QPointF(0.0, 30.0));
 
     if (m_orientation == Qt::Horizontal) {
         m_bscanImageItem->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
@@ -248,11 +252,12 @@ void BscanDisplay::init_scan_env()
     }
 
     if (m_orientation == Qt::Horizontal) {
-        m_baseCursorItem->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
+        m_baseVCursorItem->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
+        m_baseHCursorItem->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
     } else {
-        m_baseCursorItem->set_size(m_bscanView->size());
+        m_baseVCursorItem->set_size(m_bscanView->size());
+        m_baseHCursorItem->set_size(m_bscanView->size());
     }
-
 }
 
 void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
@@ -365,7 +370,8 @@ void BscanDisplay::do_view_size_changed(const QSize &size)
         m_bscanScene->setSceneRect(-size.width()/2.0, -size.height()/2.0,
                                    size.width(), size.height());
         m_bscanImageItem->set_size(size);
-        m_baseCursorItem->set_size(size);
+        m_baseVCursorItem->set_size(size);
+        m_baseHCursorItem->set_size(size);
 
     } else {
 
@@ -375,7 +381,8 @@ void BscanDisplay::do_view_size_changed(const QSize &size)
         QSize newSize(size.height(), size.width());
 
         m_bscanImageItem->set_size(newSize);
-        m_baseCursorItem->set_size(newSize);
+        m_baseVCursorItem->set_size(newSize);
+        m_baseHCursorItem->set_size(newSize);
     }
 
 
