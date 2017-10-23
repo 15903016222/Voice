@@ -25,7 +25,7 @@ public:
      * @param end       结束数
      * @return          成功返回true,失败返回false
      */
-    bool set_range(double start, double end);
+    virtual bool set_range(double start, double end);
 
     /**
      * @brief set_unit  设置标尺显示单位

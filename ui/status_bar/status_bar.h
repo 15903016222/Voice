@@ -38,6 +38,8 @@ private:
     QString m_scanEncStr;
     QString m_indexEncStr;
     QReadWriteLock m_encStringRWLock;
+
+    double        m_timeCount;
 };
 
 #endif // __STATUS_BAR__
