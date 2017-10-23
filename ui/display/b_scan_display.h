@@ -7,11 +7,10 @@
 #include <QSemaphore>
 
 class ScanView;
-class BWaveItem;
 class BscanScene;
 class ScrollRulerWidget;
-class QTimer;
 class QLabel;
+class BaseCursorItem;
 
 namespace Ui {
 class BscanDisplay;
@@ -49,6 +48,7 @@ protected:
     ScanView         *m_bscanView;
     BscanScene       *m_bscanScene;
     BaseImageItem    *m_bscanImageItem;
+    BaseCursorItem   *m_baseCursorItem;
 
     DplSource::Axis::Driving      m_driving;                /* 扫查类型：encoder_x/y / timer*/
 

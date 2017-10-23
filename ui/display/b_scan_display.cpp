@@ -15,6 +15,7 @@
 #include "scroll_ruler_widget.h"
 #include "b_scan_encoder_image_item.h"
 #include "b_scan_time_image_item.h"
+#include "base_cursor_item.h"
 
 
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
@@ -26,7 +27,9 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     m_bscanView(new ScanView),
     m_bscanScene(new BscanScene),
     m_bscanImageItem(NULL),
+    m_baseCursorItem(new BaseCursorItem(orientation)),
     m_orientation(orientation)
+
 {
     ui->setupUi(this);
 
@@ -222,6 +225,7 @@ void BscanDisplay::wait_for_refresh_finished()
 
 void BscanDisplay::init_scan_env()
 {
+
     if(m_bscanImageItem != NULL) {
         m_bscanScene->removeItem(m_bscanImageItem);
         delete m_bscanImageItem;
@@ -235,12 +239,20 @@ void BscanDisplay::init_scan_env()
     }
 
     m_bscanScene->addItem(m_bscanImageItem);
+    m_bscanScene->addItem(m_baseCursorItem);
 
     if (m_orientation == Qt::Horizontal) {
         m_bscanImageItem->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
     } else {
         m_bscanImageItem->set_size(m_bscanView->size());
     }
+
+    if (m_orientation == Qt::Horizontal) {
+        m_baseCursorItem->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
+    } else {
+        m_baseCursorItem->set_size(m_bscanView->size());
+    }
+
 }
 
 void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
@@ -353,12 +365,17 @@ void BscanDisplay::do_view_size_changed(const QSize &size)
         m_bscanScene->setSceneRect(-size.width()/2.0, -size.height()/2.0,
                                    size.width(), size.height());
         m_bscanImageItem->set_size(size);
+        m_baseCursorItem->set_size(size);
 
     } else {
 
         m_bscanScene->setSceneRect(-size.height()/2.0, -size.width()/2.0,
                                    size.height(), size.width());
-        m_bscanImageItem->set_size(QSize(size.height(), size.width()));
+
+        QSize newSize(size.height(), size.width());
+
+        m_bscanImageItem->set_size(newSize);
+        m_baseCursorItem->set_size(newSize);
     }
 
 
