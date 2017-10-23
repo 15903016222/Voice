@@ -27,7 +27,7 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     m_bscanView(new ScanView),
     m_bscanScene(new BscanScene),
     m_bscanImageItem(NULL),
-    m_baseCursorItem(new BaseCursorItem),
+    m_baseCursorItem(new BaseCursorItem(orientation)),
     m_orientation(orientation)
 
 {

@@ -4,10 +4,11 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
-BaseCursorItem::BaseCursorItem(QGraphicsItem *parent) :
+BaseCursorItem::BaseCursorItem(Qt::Orientation orientation, QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_movingFlag(false),
-    m_position(-m_size.width() / 2.0)
+    m_color(Qt::red),
+    m_orientation(orientation)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
@@ -26,8 +27,51 @@ void BaseCursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    painter->setBrush(QBrush(Qt::red));
+    /* 指示框 */
+    QColor color(205, 205, 205); /* 灰色 */
 
+    QRectF rectF;
+    QFont font;
+    font.setPointSize(8);
+
+    if(m_orientation == Qt::Vertical) {
+         rectF = QRectF(-m_size.width() / 2.0,
+                     -m_size.height() / 2.0,
+                     DEFAULT_TOOLTIP_WIDTH,
+                     DEFAULT_TOOLTIP_HEIGHT);
+
+         painter->fillRect(rectF, QBrush(color));
+         painter->setPen(QColor(Qt::black));
+         painter->setFont(font);
+         painter->drawText(rectF, QString::number(11.88),
+                           QTextOption(Qt::AlignCenter));
+
+    } else {
+        rectF = QRectF(-m_size.width() / 2.0,
+                     -m_size.height() / 2.0,
+                     DEFAULT_TOOLTIP_HEIGHT,
+                     DEFAULT_TOOLTIP_WIDTH);
+
+        painter->fillRect(rectF, QBrush(color));
+        painter->setPen(QColor(Qt::black));
+        painter->setFont(font);
+        /* 旋转90度 */
+        painter->rotate(90);
+
+        painter->drawText(QRectF(-m_size.height() / 2.0,
+                                 -m_size.width() / 2.0,
+                                 DEFAULT_TOOLTIP_WIDTH,
+                                 DEFAULT_TOOLTIP_HEIGHT),
+                          QString::number(11.88),
+                          QTextOption(Qt::AlignCenter));
+
+        qDebug() << " x  = " << -m_size.height() / 2.0
+                 <<  " y = " << -m_size.width() / 2.0;
+
+        painter->rotate(-90);
+    }
+
+    painter->setBrush(QBrush(m_color));
     QPointF point1(-m_size.width() / 2.0,
                    -m_size.height() / 2.0);
 
@@ -35,13 +79,11 @@ void BaseCursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
                    m_size.height());
 
     painter->drawLine(point1, point2);
+}
 
-    painter->drawRect(-m_size.width() / 2.0,
-                      -m_size.height() / 2.0,
-                      DEFAULT_TOOLTIP_WIDTH,
-                      DEFAULT_TOOLTIP_HEIGHT);
-
-
+void BaseCursorItem::do_visible_changed(bool flag)
+{
+    setVisible(flag);
 }
 
 void BaseCursorItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
