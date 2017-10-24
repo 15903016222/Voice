@@ -3,8 +3,7 @@
 
 #include <QGraphicsItem>
 #include <device/device.h>
-#include <mcu/mcu.h>
-
+#include <measure/cursor.h>
 
 class BaseCursorItem : public QGraphicsObject
 {
@@ -12,8 +11,8 @@ class BaseCursorItem : public QGraphicsObject
 public:
 
     enum E_CURSOR_TYPE {
-        REFERENCE,
-        MEASUREMENT
+        Reference,
+        Measurement
     };
 
     enum E_CURSOR_SOURCE_TYPE {
@@ -25,9 +24,9 @@ public:
 
 
     explicit BaseCursorItem(Qt::Orientation cursorOrientation,
-                            const DplDevice::GroupPointer &group,
                             E_CURSOR_TYPE cursorType,
                             E_CURSOR_SOURCE_TYPE sourceType,
+                            const DplMeasure::CursorPointer &cursorPointer,
                             QGraphicsItem *parent = 0);
 
     QRectF boundingRect() const;
@@ -51,18 +50,29 @@ signals:
 
 protected slots:
     void do_visible_changed(bool flag);
-    void update_pos(float value);
-    void do_mcu_key_event(Mcu::KeyType type);
+
+    void do_amplitude_reference_changed(double value);
+    void do_amplitude_measurement_changed(double value);
+    void do_ultrasound_reference_changed(double value);
+    void do_ultrasound_measurement_changed(double value);
+    void do_scan_reference_changed(double value);
+    void do_scan_measurement_changed(double value);
+    void do_index_reference_changed(double value);
+    void do_index_measurement_changed(double value);
 
 protected:
 
     Qt::Orientation         m_cursorOrientation;
-    DplDevice::GroupPointer m_group;
+    E_CURSOR_TYPE           m_cursorType;
     E_CURSOR_SOURCE_TYPE    m_sourceType;
     QSize   m_size;
     QColor  m_color;
     volatile bool m_movingFlag;
     volatile bool m_visible;
+    DplMeasure::CursorPointer   m_cursorPointer;
+
+    static const int    s_defaultTooltipWidth;
+    static const int    s_defaultTooltipHeight;
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -73,32 +83,5 @@ protected:
 private:
     void init_update_pos();
 };
-
-class VScanCursorItem : public BaseCursorItem
-{
-public:
-    explicit VScanCursorItem(Qt::Orientation cursorOrientation,
-                    const DplDevice::GroupPointer &group,
-                    E_CURSOR_TYPE cursorType,
-                    E_CURSOR_SOURCE_TYPE sourceType,
-                    QGraphicsItem *parent = 0);
-protected:
-    virtual void paint_cursor(QPainter *painter);
-};
-
-
-class HScanCursorItem : public BaseCursorItem
-{
-public:
-    explicit HScanCursorItem(Qt::Orientation cursorOrientation,
-                    const DplDevice::GroupPointer &group,
-                    E_CURSOR_TYPE cursorType,
-                    E_CURSOR_SOURCE_TYPE sourceType,
-                    QGraphicsItem *parent = 0);
-protected:
-    virtual void paint_cursor(QPainter *painter);
-};
-
-
 
 #endif // __BASE_CURSOR_ITEM_H__

@@ -11,6 +11,8 @@ TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, con
 
 void TimeImageItem::draw_vertical_beam()
 {
+    qDebug("[%s:%s] debug here.", "TimeImageItem", __FUNCTION__);
+
     m_pendingTimeCount = TestStub::instance()->get_time();
 
     S_CommonProperties commonProperties;
@@ -38,6 +40,8 @@ void TimeImageItem::draw_vertical_beam()
 
 bool TimeImageItem::redraw_vertical_beam()
 {
+    qDebug("[%s:%s] debug here.", "TimeImageItem", __FUNCTION__);
+
     QTime time;
     time.restart();
 
@@ -155,6 +159,8 @@ void TimeImageItem::draw_vertical_image(int beamsShowedCount,
                                         const BaseImageItem::S_CommonProperties &commonProperties,
                                         const DplSource::BeamsPointer &beamsPointer)
 {
+    qDebug("[%s:%s] debug here.", "TimeImageItem", __FUNCTION__);
+
     if((beamsShowedCount + 1) == commonProperties.maxIndex
             && (commonProperties.align != 0)) {
         /* 非对齐,最后一条beam */

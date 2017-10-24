@@ -6,25 +6,23 @@
 #include <QDebug>
 #include <QString>
 
-#include <measure/cursor.h>
-
-
-static const int    DEFAULT_TOOLTIP_WIDTH  = 25;
-static const int    DEFAULT_TOOLTIP_HEIGHT = 13;
+const int BaseCursorItem::s_defaultTooltipWidth     = 25;
+const int BaseCursorItem::s_defaultTooltipHeight    = 13;
 
 BaseCursorItem::BaseCursorItem(Qt::Orientation cursorOrientation,
-                               const DplDevice::GroupPointer &group,
                                E_CURSOR_TYPE cursorType,
                                E_CURSOR_SOURCE_TYPE sourceType,
+                               const DplMeasure::CursorPointer &cursorPointer,
                                QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_cursorOrientation(cursorOrientation),
-    m_group(group),
+    m_cursorType(cursorType),
     m_sourceType(sourceType),
     m_movingFlag(false),
-    m_visible(false)
+    m_visible(false),
+    m_cursorPointer(cursorPointer)
 {
-    if(cursorType == BaseCursorItem::REFERENCE) {
+    if(cursorType == BaseCursorItem::Reference) {
         m_color = QColor(Qt::blue);
     } else {
         m_color = QColor(Qt::red);
@@ -32,24 +30,23 @@ BaseCursorItem::BaseCursorItem(Qt::Orientation cursorOrientation,
 
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
+    setZValue(1);
     setVisible(m_visible);
 
     init_update_pos();
 
-    connect(Mcu::instance(), SIGNAL(key_event(Mcu::KeyType)),
-            this, SLOT(do_mcu_key_event(Mcu::KeyType)),
-            Qt::DirectConnection);
-
-    connect(this, SIGNAL(visible_changed(bool)), this, SLOT(do_visible_changed(bool)));
 }
-
 
 QRectF BaseCursorItem::boundingRect() const
 {
-    return QRectF(-m_size.width() / 2.0, -m_size.height() / 2.0,
-                  m_size.width(), DEFAULT_TOOLTIP_HEIGHT);
+    if(Qt::Horizontal == m_cursorOrientation) {
+        return QRectF(-m_size.width() / 2.0, -m_size.height() / 2.0,
+                      m_size.width(), BaseCursorItem::s_defaultTooltipWidth);
+    } else {
+        return QRectF(-m_size.width() / 2.0, -m_size.height() / 2.0,
+                      BaseCursorItem::s_defaultTooltipWidth, m_size.height());
+    }
 }
-
 
 void BaseCursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -64,29 +61,62 @@ void BaseCursorItem::do_visible_changed(bool flag)
     setVisible(flag);
 }
 
-void BaseCursorItem::update_pos(float value)
-{
-    /* 参考值/测量值 更新pos */
-}
 
-void BaseCursorItem::do_mcu_key_event(Mcu::KeyType type)
+void BaseCursorItem::do_amplitude_reference_changed(double value)
 {
-    if (type != Mcu::KEY_CURSOR) {
+    if(m_movingFlag) {
         return;
     }
 
-    if (DplDevice::Device::instance()->is_running()) {
+    if (scene() && !scene()->views().isEmpty()) {
+//        setPos(scene()->sceneRect().left() + (m_gate->start() - m_sample->start()  + m_offset )* ratio(),
+//               scene()->sceneRect().bottom() - scene()->sceneRect().height() * m_gate->height() / 100);
+    }
+    update();
+}
+
+void BaseCursorItem::do_amplitude_measurement_changed(double value)
+{
+    update();
+}
+
+void BaseCursorItem::do_ultrasound_reference_changed(double value)
+{
+    update();
+}
+
+void BaseCursorItem::do_ultrasound_measurement_changed(double value)
+{
+    update();
+}
+
+void BaseCursorItem::do_scan_reference_changed(double value)
+{
+    if(m_movingFlag) {
         return;
     }
 
-    if(m_visible) {
-        m_visible = false;
-    } else {
-        m_visible = true;
-    }
+    if (scene() && !scene()->views().isEmpty()) {
 
-    emit visible_changed(m_visible);
+    }
+    update();
 }
+
+void BaseCursorItem::do_scan_measurement_changed(double value)
+{
+    update();
+}
+
+void BaseCursorItem::do_index_reference_changed(double value)
+{
+    update();
+}
+
+void BaseCursorItem::do_index_measurement_changed(double value)
+{
+    update();
+}
+
 
 void BaseCursorItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -127,154 +157,64 @@ QVariant BaseCursorItem::itemChange(QGraphicsItem::GraphicsItemChange change, co
 
 void BaseCursorItem::get_value(QString &valueText)
 {
-    valueText.append(tr("11.88"));
+    double value;
+    if(Reference == m_cursorType) {
+        if(BaseCursorItem::Amplitude == m_sourceType) {
+            value = m_cursorPointer->amplitude_reference();
+        } else if(BaseCursorItem::Scan == m_sourceType) {
+            value = m_cursorPointer->scan_reference();
+        } else if(BaseCursorItem::Index == m_sourceType) {
+            value = m_cursorPointer->index_reference();
+        } else if(BaseCursorItem::Ultrasound == m_sourceType) {
+            value = m_cursorPointer->ultrasound_reference();
+        }
+    } else {
+        if(BaseCursorItem::Amplitude == m_sourceType) {
+            value = m_cursorPointer->amplitude_measurement();
+        } else if(BaseCursorItem::Scan == m_sourceType) {
+            value = m_cursorPointer->scan_measurement();
+        } else if(BaseCursorItem::Index == m_sourceType) {
+            value = m_cursorPointer->index_measurement();
+        } else if(BaseCursorItem::Ultrasound == m_sourceType) {
+            value = m_cursorPointer->ultrasound_measurement();
+        }
+    }
+
+    qDebug() << " value = " << value;
+
+    valueText = QString::number(value, 'f', 2);
 }
 
 void BaseCursorItem::init_update_pos()
 {
-    if(BaseCursorItem::Amplitude == m_sourceType) {
-
-    } else if(BaseCursorItem::Scan == m_sourceType) {
-
-    } else if(BaseCursorItem::Index == m_sourceType) {
-
-    } else if(BaseCursorItem::Ultrasound == m_sourceType) {
-
-    }
-}
-
-
-VScanCursorItem::VScanCursorItem(Qt::Orientation cursorOrientation,
-                                 const DplDevice::GroupPointer &group,
-                                 BaseCursorItem::E_CURSOR_TYPE cursorType,
-                                 BaseCursorItem::E_CURSOR_SOURCE_TYPE sourceType,
-                                 QGraphicsItem *parent) :
-    BaseCursorItem(cursorOrientation, group, cursorType, sourceType, parent)
-{
-
-}
-
-void VScanCursorItem::paint_cursor(QPainter *painter)
-{
-    /* 指示框 */
-    QColor color(205, 205, 205); /* 灰色 */
-
-    QRectF rectF;
-    QFont font;
-    font.setPointSize(8);
-    rectF = QRectF(-m_size.width() / 2.0,
-                -m_size.height() / 2.0,
-                DEFAULT_TOOLTIP_WIDTH,
-                DEFAULT_TOOLTIP_HEIGHT);
-
-    painter->fillRect(rectF, QBrush(color));
-    painter->setPen(QColor(Qt::black));
-    painter->setFont(font);
-    QString valueText;
-    get_value(valueText);
-    painter->drawText(rectF, valueText, QTextOption(Qt::AlignCenter));
-
-    painter->setPen(m_color);
-    QPointF startPoint(-m_size.width() / 2.0,
-                   -m_size.height() / 2.0);
-
-    if(Qt::Vertical == m_cursorOrientation) {
-
-        QPointF endPoint(-m_size.width() / 2.0,
-                       m_size.height());
-        painter->drawLine(startPoint, endPoint);
-
+    if(Reference == m_cursorType) {
+        if(BaseCursorItem::Amplitude == m_sourceType) {
+            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(amplitude_reference_changed(double)),
+                    this, SLOT(do_amplitude_reference_changed(double)));
+        } else if(BaseCursorItem::Scan == m_sourceType) {
+            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(scan_reference_changed(double)),
+                    this, SLOT(do_scan_reference_changed(double)));
+        } else if(BaseCursorItem::Index == m_sourceType) {
+            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(index_reference_changed(double)),
+                    this, SLOT(do_index_reference_changed(double)));
+        } else if(BaseCursorItem::Ultrasound == m_sourceType) {
+            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(ultrasound_reference_changed(double)),
+                    this, SLOT(do_ultrasound_reference_changed(double)));
+        }
     } else {
-
-        QPointF endPoint(m_size.width() / 2.0,
-                       -m_size.height() / 2.0);
-        painter->drawLine(startPoint, endPoint);
-
+        if(BaseCursorItem::Amplitude == m_sourceType) {
+            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(amplitude_measurement_changed(double)),
+                    this, SLOT(do_amplitude_measurement_changed(double)));
+        } else if(BaseCursorItem::Scan == m_sourceType) {
+            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(scan_measurement_changed(double)),
+                    this, SLOT(do_scan_measurement_changed(double)));
+        } else if(BaseCursorItem::Index == m_sourceType) {
+            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(index_measurement_changed(double)),
+                    this, SLOT(do_index_measurement_changed(double)));
+        } else if(BaseCursorItem::Ultrasound == m_sourceType) {
+            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(ultrasound_measurement_changed(double)),
+                    this, SLOT(do_ultrasound_measurement_changed(double)));
+        }
     }
 }
 
-HScanCursorItem::HScanCursorItem(Qt::Orientation cursorOrientation,
-                                 const DplDevice::GroupPointer &group,
-                                 BaseCursorItem::E_CURSOR_TYPE cursorType,
-                                 BaseCursorItem::E_CURSOR_SOURCE_TYPE sourceType,
-                                 QGraphicsItem *parent) :
-    BaseCursorItem(cursorOrientation, group, cursorType, sourceType, parent)
-{
-
-}
-
-void HScanCursorItem::paint_cursor(QPainter *painter)
-{
-    /* 指示框 */
-    QColor color(205, 205, 205); /* 灰色 */
-
-    QRectF rectF;
-    QFont font;
-    font.setPointSize(8);
-
-    if(Qt::Horizontal == m_cursorOrientation) {
-
-        rectF = QRectF(m_size.width() / 2.0 - DEFAULT_TOOLTIP_HEIGHT,
-                     -m_size.height() / 2.0,
-                     DEFAULT_TOOLTIP_HEIGHT,
-                     DEFAULT_TOOLTIP_WIDTH);
-
-        painter->fillRect(rectF, QBrush(color));
-        painter->setPen(QColor(Qt::black));
-        painter->setFont(font);
-        /* 旋转90度 */
-        painter->rotate(90);
-        QString valueText;
-        get_value(valueText);
-        painter->drawText(QRectF(-m_size.height() / 2.0,
-                                 -m_size.width() / 2.0,
-                                 DEFAULT_TOOLTIP_WIDTH,
-                                 DEFAULT_TOOLTIP_HEIGHT),
-                          valueText,
-                          QTextOption(Qt::AlignCenter));
-
-        painter->rotate(-90);
-
-        painter->setPen(m_color);
-        QPointF point1(-m_size.width() / 2.0,
-                       -m_size.height() / 2.0);
-
-        QPointF point2(m_size.width() / 2.0,
-                       -m_size.height() / 2.0);
-
-        painter->drawLine(point1, point2);
-
-    } else {
-
-        rectF = QRectF(-m_size.width() / 2.0,
-                     -m_size.height() / 2.0,
-                     DEFAULT_TOOLTIP_HEIGHT,
-                     DEFAULT_TOOLTIP_WIDTH);
-
-        painter->fillRect(rectF, QBrush(color));
-        painter->setPen(QColor(Qt::black));
-        painter->setFont(font);
-        /* 旋转90度 */
-        painter->rotate(90);
-
-        QString valueText;
-        get_value(valueText);
-        painter->drawText(QRectF(-m_size.height() / 2.0,
-                                 m_size.width() / 2.0 - DEFAULT_TOOLTIP_HEIGHT,
-                                 DEFAULT_TOOLTIP_WIDTH,
-                                 DEFAULT_TOOLTIP_HEIGHT),
-                          valueText,
-                          QTextOption(Qt::AlignCenter));
-
-        painter->rotate(-90);
-
-        painter->setPen(m_color);
-        QPointF point1(-m_size.width() / 2.0,
-                       -m_size.height() / 2.0);
-
-        QPointF point2(-m_size.width() / 2.0,
-                       m_size.height());
-
-        painter->drawLine(point1, point2);
-    }
-}

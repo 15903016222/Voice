@@ -15,7 +15,10 @@
 #include "scroll_ruler_widget.h"
 #include "b_scan_encoder_image_item.h"
 #include "b_scan_time_image_item.h"
-#include "base_cursor_item.h"
+
+#include "hdisplay_cursor_item.h"
+#include "vdisplay_cursor_item.h"
+
 
 
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
@@ -27,7 +30,8 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     m_bscanView(new ScanView),
     m_bscanScene(new BscanScene),
     m_bscanImageItem(NULL),
-    m_orientation(orientation)
+    m_orientation(orientation),
+    m_cursorVisible(false)
 
 {
     ui->setupUi(this);
@@ -61,6 +65,12 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
 
     connect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
     connect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
+
+    connect(Mcu::instance(), SIGNAL(key_event(Mcu::KeyType)),
+            this, SLOT(do_mcu_key_event(Mcu::KeyType)),
+            Qt::DirectConnection);
+
+    connect(this, SIGNAL(cursor_visible_changed(bool)), this, SLOT(do_cursor_visible_changed(bool)));
 }
 
 BscanDisplay::~BscanDisplay()
@@ -117,6 +127,8 @@ void BscanDisplay::init_ruler()
 
 void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
+    qDebug("[%s:%s] debug here.", "BscanDisplay", __FUNCTION__);
+
     if(m_bscanScene == NULL
             || m_bscanView == NULL
             || m_bscanImageItem == NULL) {
@@ -157,38 +169,64 @@ void BscanDisplay::do_update_ruler(double value)
     m_scanTypeRuler->update();
 }
 
-void BscanDisplay::do_update_all_item()
+
+void BscanDisplay::do_mcu_key_event(Mcu::KeyType type)
 {
-    m_bscanView->update();
+    if(Mcu::KEY_CURSOR == type) {
+        if (DplDevice::Device::instance()->is_running()) {
+            return;
+        }
+
+        if(m_cursorVisible) {
+            m_cursorVisible = false;
+        } else {
+            m_cursorVisible = true;
+        }
+
+        emit cursor_visible_changed(m_cursorVisible);
+
+    } else if(Mcu::KEY_FREEZE == type) {
+        if (DplDevice::Device::instance()->is_running() && m_cursorVisible) {
+            m_cursorVisible = false;
+            emit cursor_visible_changed(m_cursorVisible);
+        }
+    }
+}
+
+void BscanDisplay::do_cursor_visible_changed(bool flag)
+{
+    m_sReferneceCursorItem->setVisible(flag);
+    m_sMeasurementCursorItem->setVisible(flag);
+    m_uReferneceCursorItem->setVisible(flag);
+    m_uMeasurementCursorItem->setVisible(flag);
+
+    m_sReferneceCursorItem->update();
+    m_sMeasurementCursorItem->update();
+    m_uReferneceCursorItem->update();
+    m_uMeasurementCursorItem->update();
 }
 
 void BscanDisplay::init_cursor()
 {
     if(Qt::Vertical == m_orientation) {
-        m_sReferneceCursorItem = new VScanCursorItem(Qt::Vertical , m_group,
-                                                     BaseCursorItem::REFERENCE, BaseCursorItem::Scan);
-        m_sMeasurementCursorItem = new VScanCursorItem(Qt::Vertical , m_group,
-                                                      BaseCursorItem::MEASUREMENT, BaseCursorItem::Scan);
-        m_uReferneceCursorItem = new VScanCursorItem(Qt::Horizontal , m_group,
-                                                    BaseCursorItem::REFERENCE, BaseCursorItem::Ultrasound);
-        m_uMeasurementCursorItem = new VScanCursorItem(Qt::Horizontal , m_group,
-                                                      BaseCursorItem::MEASUREMENT, BaseCursorItem::Ultrasound);
+        m_sReferneceCursorItem = new VDisplayCursorItem(Qt::Vertical, BaseCursorItem::Reference,
+                                                        BaseCursorItem::Scan, m_group->cursor());
+        m_sMeasurementCursorItem = new VDisplayCursorItem(Qt::Vertical, BaseCursorItem::Measurement,
+                                                          BaseCursorItem::Scan, m_group->cursor());
+        m_uReferneceCursorItem = new VDisplayCursorItem(Qt::Horizontal, BaseCursorItem::Reference,
+                                                        BaseCursorItem::Ultrasound, m_group->cursor());
+        m_uMeasurementCursorItem = new VDisplayCursorItem(Qt::Horizontal, BaseCursorItem::Measurement,
+                                                          BaseCursorItem::Ultrasound, m_group->cursor());
     } else {
-        m_sReferneceCursorItem = new HScanCursorItem(Qt::Horizontal , m_group,
-                                                     BaseCursorItem::REFERENCE, BaseCursorItem::Scan);
-        m_sMeasurementCursorItem = new HScanCursorItem(Qt::Horizontal , m_group,
-                                                      BaseCursorItem::MEASUREMENT, BaseCursorItem::Scan);
-        m_uReferneceCursorItem = new HScanCursorItem(Qt::Vertical , m_group,
-                                                    BaseCursorItem::REFERENCE, BaseCursorItem::Ultrasound);
-        m_uMeasurementCursorItem = new HScanCursorItem(Qt::Vertical , m_group,
-                                                      BaseCursorItem::MEASUREMENT, BaseCursorItem::Ultrasound);
+        m_sReferneceCursorItem = new HDisplayCursorItem(Qt::Horizontal, BaseCursorItem::Reference,
+                                                        BaseCursorItem::Scan, m_group->cursor());
+        m_sMeasurementCursorItem = new HDisplayCursorItem(Qt::Horizontal, BaseCursorItem::Measurement,
+                                                          BaseCursorItem::Scan, m_group->cursor());
+        m_uReferneceCursorItem = new HDisplayCursorItem(Qt::Vertical, BaseCursorItem::Reference,
+                                                        BaseCursorItem::Ultrasound, m_group->cursor());
+        m_uMeasurementCursorItem = new HDisplayCursorItem(Qt::Vertical, BaseCursorItem::Measurement,
+                                                          BaseCursorItem::Ultrasound, m_group->cursor());
     }
-
-    connect(m_sReferneceCursorItem, SIGNAL(visible_changed(bool)), this, SLOT(do_update_all_item()));
-    connect(m_sMeasurementCursorItem, SIGNAL(visible_changed(bool)), this, SLOT(do_update_all_item()));
-    connect(m_uReferneceCursorItem, SIGNAL(visible_changed(bool)), this, SLOT(do_update_all_item()));
-    connect(m_uMeasurementCursorItem, SIGNAL(visible_changed(bool)), this, SLOT(do_update_all_item()));
-
 }
 
 
@@ -262,7 +300,6 @@ void BscanDisplay::wait_for_refresh_finished()
 
 void BscanDisplay::init_scan_env()
 {
-
     if(m_bscanImageItem != NULL) {
         m_bscanScene->removeItem(m_bscanImageItem);
         delete m_bscanImageItem;
@@ -318,6 +355,8 @@ void BscanDisplay::init_scan_env()
 
 void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 {
+    qDebug("[%s:%s] debug here.", "BscanDisplay", __FUNCTION__);
+
     double currentTimeCount = TestStub::instance()->get_time();
     double rulerEnd;
     if(m_orientation == Qt::Horizontal) {
@@ -339,6 +378,8 @@ void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 
 void BscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
 {
+    qDebug("[%s:%s] debug here.", __FUNCTION__, "draw_encoder_beams");
+
     if(m_bscanImageItem->redraw_beams(beams)) {
         BscanEncoderImageItem *imageItem = static_cast<BscanEncoderImageItem*> (m_bscanImageItem);
         if(imageItem) {

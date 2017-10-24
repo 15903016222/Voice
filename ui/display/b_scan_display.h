@@ -2,9 +2,11 @@
 #define __B_SCAN_DISPLAY_H_
 
 #include <QWidget>
+#include <QSemaphore>
+
 #include <ui/display/base_image_item.h>
 #include <device/device.h>
-#include <QSemaphore>
+#include <mcu/mcu.h>
 
 class ScanView;
 class BscanScene;
@@ -28,6 +30,7 @@ signals:
     void update_ruler(double value);
     void update_label(const QString &time);
     void refresh_scan_env();
+    void cursor_visible_changed(bool flag);
 
 protected slots:
 
@@ -38,7 +41,8 @@ protected slots:
     void do_refresh_scan_env();
     void do_update_ruler(double x);
 
-    void do_update_all_item();
+    void do_mcu_key_event(Mcu::KeyType type);
+    void do_cursor_visible_changed(bool flag);
 
 protected:
     Ui::BscanDisplay *ui;
@@ -64,6 +68,8 @@ protected:
 
     DplSource::AxisPointer      m_axisPointer;
     DplSource::EncoderPointer   m_encoderPointer;
+
+    volatile bool m_cursorVisible;
 
     void init_cursor();
     void init_ruler();

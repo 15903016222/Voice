@@ -28,6 +28,7 @@ void BscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
     }
 
     const QByteArray &wave = beamPointer->wave();
+    int waveSize = wave.size();
 
     int pos = 0;
     if(type == LAST_BEAM) {
@@ -40,6 +41,10 @@ void BscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
                 pos = m_image->width() - j - 1;
 
                 if(pos >= m_image->width() || pos < 0) {
+                    continue;
+                }
+
+                if(waveSize <= (int)(i * commonProperties.ratio)) {
                     continue;
                 }
 
@@ -56,6 +61,10 @@ void BscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
                 pos = (int)(beamsShowedCount * commonProperties.pixCount + j);
 
                 if(pos >= m_image->width() || pos < 0) {
+                    continue;
+                }
+
+                if(waveSize <= (int)(i * commonProperties.ratio)) {
                     continue;
                 }
 

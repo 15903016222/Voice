@@ -58,6 +58,8 @@ bool BaseImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 
 bool BaseImageItem::redraw_beams(const DplSource::BeamsPointer &beams)
 {
+//    qDebug("[%s:%s] debug here.", "BaseImageItem", __FUNCTION__);
+
     QWriteLocker lock(&m_rwLock);
 
     if(m_image == NULL) {
@@ -74,6 +76,8 @@ bool BaseImageItem::redraw_beams(const DplSource::BeamsPointer &beams)
 
 void BaseImageItem::set_beams(const DplSource::BeamsPointer &beams)
 {
+    qDebug("[%s:%s] debug here.", "BscanDisplay", __FUNCTION__);
+
     QWriteLocker lock(&m_rwLock);
 
     if(m_image == NULL) {
