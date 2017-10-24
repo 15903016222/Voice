@@ -38,6 +38,8 @@ protected slots:
     void do_refresh_scan_env();
     void do_update_ruler(double x);
 
+    void do_update_all_item();
+
 protected:
     Ui::BscanDisplay *ui;
 
@@ -47,19 +49,23 @@ protected:
 
     ScanView         *m_bscanView;
     BscanScene       *m_bscanScene;
+
     BaseImageItem    *m_bscanImageItem;
-    BaseCursorItem   *m_baseVCursorItem;
-    BaseCursorItem   *m_baseHCursorItem;
+    BaseCursorItem   *m_sReferneceCursorItem;
+    BaseCursorItem   *m_sMeasurementCursorItem;
+    BaseCursorItem   *m_uReferneceCursorItem;
+    BaseCursorItem   *m_uMeasurementCursorItem;
+    DplSource::BeamsPointer m_beamsPointer;
 
     DplSource::Axis::Driving      m_driving;                /* 扫查类型：encoder_x/y / timer*/
 
-    QLabel           *m_timeShowLabel;
     Qt::Orientation  m_orientation;
     QSemaphore       m_refreshSemaphore;    /* 切换时间扫查或编码器扫查时，刷新信号量 */
 
     DplSource::AxisPointer      m_axisPointer;
     DplSource::EncoderPointer   m_encoderPointer;
 
+    void init_cursor();
     void init_ruler();
     void update_scan_type_ruler(const QSize &size);
     void wait_for_refresh_finished();
