@@ -167,10 +167,11 @@ void TimeImageItem::draw_vertical_image(int beamsShowedCount,
         int offset =  commonProperties.pixCount - commonProperties.align;
         QImage tmp = m_image->copy(offset, 0, m_image->width(), m_image->height());
         m_image->swap(tmp);
-
+        qDebug("[%s:%s] begin call set_vertical_image_data.", "TimeImageItem", __FUNCTION__);
         set_vertical_image_data(beamsShowedCount, commonProperties, LAST_BEAM, beamsPointer);
 
     } else {
+        qDebug("[%s:%s] begin call set_vertical_image_data.", "TimeImageItem", __FUNCTION__);
         set_vertical_image_data(beamsShowedCount, commonProperties, NORMAL_BEAM, beamsPointer);
     }
 }

@@ -43,6 +43,13 @@ public:
      */
     void set_show_range(double start, double end);
 
+    /**
+     * @brief get_show_range    获取当前标尺显示的范围
+     * @param start 标尺开始
+     * @param end   标尺结束
+     */
+    void get_show_range(double &start, double &end);
+
 
 protected:
     virtual void paintEvent(QPaintEvent *e);

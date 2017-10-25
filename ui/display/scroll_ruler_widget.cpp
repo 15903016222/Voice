@@ -52,6 +52,12 @@ void ScrollRulerWidget::set_show_range(double start, double end)
 
 }
 
+void ScrollRulerWidget::get_show_range(double &start, double &end)
+{
+    start = m_start + m_moveTotalUnit;
+    end   = m_end + m_moveTotalUnit;
+}
+
 
 bool ScrollRulerWidget::move_to_value(double targetValue)
 {

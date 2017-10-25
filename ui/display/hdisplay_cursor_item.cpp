@@ -3,10 +3,8 @@
 
 HDisplayCursorItem::HDisplayCursorItem(Qt::Orientation cursorOrientation,
                                  BaseCursorItem::E_CURSOR_TYPE cursorType,
-                                 BaseCursorItem::E_CURSOR_SOURCE_TYPE sourceType,
-                                 const DplMeasure::CursorPointer &cursorPointer,
                                  QGraphicsItem *parent) :
-    BaseCursorItem(cursorOrientation, cursorType, sourceType, cursorPointer, parent)
+    BaseCursorItem(cursorOrientation, cursorType, parent)
 {
 
 }

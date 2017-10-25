@@ -6,21 +6,17 @@
 #include <QDebug>
 #include <QString>
 
-const int BaseCursorItem::s_defaultTooltipWidth     = 25;
+const int BaseCursorItem::s_defaultTooltipWidth     = 30;
 const int BaseCursorItem::s_defaultTooltipHeight    = 13;
 
 BaseCursorItem::BaseCursorItem(Qt::Orientation cursorOrientation,
                                E_CURSOR_TYPE cursorType,
-                               E_CURSOR_SOURCE_TYPE sourceType,
-                               const DplMeasure::CursorPointer &cursorPointer,
                                QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_cursorOrientation(cursorOrientation),
     m_cursorType(cursorType),
-    m_sourceType(sourceType),
     m_movingFlag(false),
-    m_visible(false),
-    m_cursorPointer(cursorPointer)
+    m_visible(false)
 {
     if(cursorType == BaseCursorItem::Reference) {
         m_color = QColor(Qt::blue);
@@ -28,12 +24,15 @@ BaseCursorItem::BaseCursorItem(Qt::Orientation cursorOrientation,
         m_color = QColor(Qt::red);
     }
 
+    m_cursorInfo.currentValue = 0;
+    m_cursorInfo.end          = 0;
+    m_cursorInfo.start        = 0;
+    m_cursorInfo.pos          = 0;
+
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
     setZValue(1);
     setVisible(m_visible);
-
-    init_update_pos();
 
 }
 
@@ -56,67 +55,30 @@ void BaseCursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     paint_cursor(painter);
 }
 
+void BaseCursorItem::set_cursor_info(const S_CURSOR_INFO &cursorInfo)
+{
+    if(m_movingFlag) {
+        return;
+    }
+
+    m_cursorInfo = cursorInfo;
+
+    QPointF pointF = this->pos();
+
+    if(Qt::Vertical == m_cursorOrientation) {
+        pointF.setX(cursorInfo.pos);
+    } else {
+        pointF.setY(cursorInfo.pos);
+    }
+
+    setPos(pointF);
+    update();
+}
+
 void BaseCursorItem::do_visible_changed(bool flag)
 {
     setVisible(flag);
 }
-
-
-void BaseCursorItem::do_amplitude_reference_changed(double value)
-{
-    if(m_movingFlag) {
-        return;
-    }
-
-    if (scene() && !scene()->views().isEmpty()) {
-//        setPos(scene()->sceneRect().left() + (m_gate->start() - m_sample->start()  + m_offset )* ratio(),
-//               scene()->sceneRect().bottom() - scene()->sceneRect().height() * m_gate->height() / 100);
-    }
-    update();
-}
-
-void BaseCursorItem::do_amplitude_measurement_changed(double value)
-{
-    update();
-}
-
-void BaseCursorItem::do_ultrasound_reference_changed(double value)
-{
-    update();
-}
-
-void BaseCursorItem::do_ultrasound_measurement_changed(double value)
-{
-    update();
-}
-
-void BaseCursorItem::do_scan_reference_changed(double value)
-{
-    if(m_movingFlag) {
-        return;
-    }
-
-    if (scene() && !scene()->views().isEmpty()) {
-
-    }
-    update();
-}
-
-void BaseCursorItem::do_scan_measurement_changed(double value)
-{
-    update();
-}
-
-void BaseCursorItem::do_index_reference_changed(double value)
-{
-    update();
-}
-
-void BaseCursorItem::do_index_measurement_changed(double value)
-{
-    update();
-}
-
 
 void BaseCursorItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -136,17 +98,26 @@ QVariant BaseCursorItem::itemChange(QGraphicsItem::GraphicsItemChange change, co
         QPointF newPos = value.toPointF();
         QRectF rect = scene()->sceneRect();
 
+        double x = qMin(rect.right(), qMax(newPos.x(), rect.left()));
+        double y = qMin(rect.bottom(), qMax(newPos.y(), rect.top()));
         if(!rect.contains(newPos)) {
             // Keep the item inside the scene rect.
-            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
-            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
+            newPos.setX(x);
+            newPos.setY(y);
         }
+
 
         if(m_cursorOrientation == Qt::Vertical) {
             newPos.setY(0.0);
+            m_cursorInfo.pos = x;
+            m_cursorInfo.currentValue = x * ((m_cursorInfo.end - m_cursorInfo.start) / (double)m_size.width()) + m_cursorInfo.start;
         } else {
             newPos.setX(0.0);
+            m_cursorInfo.pos = y;
+            m_cursorInfo.currentValue = y * ((m_cursorInfo.end - m_cursorInfo.start) / (double)m_size.height()) + m_cursorInfo.start;
         }
+
+        emit value_changed(m_cursorInfo.currentValue);
 
         return newPos;
     }
@@ -157,64 +128,7 @@ QVariant BaseCursorItem::itemChange(QGraphicsItem::GraphicsItemChange change, co
 
 void BaseCursorItem::get_value(QString &valueText)
 {
-    double value;
-    if(Reference == m_cursorType) {
-        if(BaseCursorItem::Amplitude == m_sourceType) {
-            value = m_cursorPointer->amplitude_reference();
-        } else if(BaseCursorItem::Scan == m_sourceType) {
-            value = m_cursorPointer->scan_reference();
-        } else if(BaseCursorItem::Index == m_sourceType) {
-            value = m_cursorPointer->index_reference();
-        } else if(BaseCursorItem::Ultrasound == m_sourceType) {
-            value = m_cursorPointer->ultrasound_reference();
-        }
-    } else {
-        if(BaseCursorItem::Amplitude == m_sourceType) {
-            value = m_cursorPointer->amplitude_measurement();
-        } else if(BaseCursorItem::Scan == m_sourceType) {
-            value = m_cursorPointer->scan_measurement();
-        } else if(BaseCursorItem::Index == m_sourceType) {
-            value = m_cursorPointer->index_measurement();
-        } else if(BaseCursorItem::Ultrasound == m_sourceType) {
-            value = m_cursorPointer->ultrasound_measurement();
-        }
-    }
-
-    qDebug() << " value = " << value;
-
-    valueText = QString::number(value, 'f', 2);
+    valueText = QString::number(m_cursorInfo.currentValue, 'f', 2);
 }
 
-void BaseCursorItem::init_update_pos()
-{
-    if(Reference == m_cursorType) {
-        if(BaseCursorItem::Amplitude == m_sourceType) {
-            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(amplitude_reference_changed(double)),
-                    this, SLOT(do_amplitude_reference_changed(double)));
-        } else if(BaseCursorItem::Scan == m_sourceType) {
-            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(scan_reference_changed(double)),
-                    this, SLOT(do_scan_reference_changed(double)));
-        } else if(BaseCursorItem::Index == m_sourceType) {
-            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(index_reference_changed(double)),
-                    this, SLOT(do_index_reference_changed(double)));
-        } else if(BaseCursorItem::Ultrasound == m_sourceType) {
-            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(ultrasound_reference_changed(double)),
-                    this, SLOT(do_ultrasound_reference_changed(double)));
-        }
-    } else {
-        if(BaseCursorItem::Amplitude == m_sourceType) {
-            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(amplitude_measurement_changed(double)),
-                    this, SLOT(do_amplitude_measurement_changed(double)));
-        } else if(BaseCursorItem::Scan == m_sourceType) {
-            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(scan_measurement_changed(double)),
-                    this, SLOT(do_scan_measurement_changed(double)));
-        } else if(BaseCursorItem::Index == m_sourceType) {
-            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(index_measurement_changed(double)),
-                    this, SLOT(do_index_measurement_changed(double)));
-        } else if(BaseCursorItem::Ultrasound == m_sourceType) {
-            connect(static_cast<DplMeasure::Cursor*>(m_cursorPointer.data()), SIGNAL(ultrasound_measurement_changed(double)),
-                    this, SLOT(do_ultrasound_measurement_changed(double)));
-        }
-    }
-}
 

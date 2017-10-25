@@ -5,8 +5,10 @@
 #include <QSemaphore>
 
 #include <ui/display/base_image_item.h>
+#include <ui/display/base_cursor_item.h>
 #include <device/device.h>
 #include <mcu/mcu.h>
+
 
 class ScanView;
 class BscanScene;
@@ -44,6 +46,36 @@ protected slots:
     void do_mcu_key_event(Mcu::KeyType type);
     void do_cursor_visible_changed(bool flag);
 
+    /**
+     * @brief do_ultrasound_reference_changed 处理引用光标在超声轴位置变化
+     * @param value         位置值（ns）
+     */
+    void do_ultrasound_reference_changed(double value);
+
+    /**
+     * @brief do_ultrasound_measurement_changed 处理测量光标在超声轴位置变化
+     * @param value         位置值（ns）
+     */
+    void do_ultrasound_measurement_changed(double value);
+
+    /**
+     * @brief do_scan_reference_changed 处理引用光标在扫查轴位置变化
+     * @param value         位置（mm）
+     */
+    void do_scan_reference_changed(double value);
+
+    /**
+     * @brief do_scan_measurement_changed   处理测量光标在扫擦轴位置变化
+     * @param value     位置（mm）
+     */
+    void do_scan_measurement_changed(double value);
+
+    /**
+     * @brief do_value_changed  处理光标拖动后，数值变化处理
+     * @param value             变化后的数值
+     */
+    void do_value_changed(double value);
+
 protected:
     Ui::BscanDisplay *ui;
 
@@ -71,7 +103,10 @@ protected:
 
     volatile bool m_cursorVisible;
 
+    DplMeasure::CursorPointer   m_cursorPointer;
+
     void init_cursor();
+    void init_cursor_connection();
     void init_ruler();
     void update_scan_type_ruler(const QSize &size);
     void wait_for_refresh_finished();
@@ -79,6 +114,9 @@ protected:
 
     void draw_timer_beams(const DplSource::BeamsPointer &beams);
     void draw_encoder_beams(const DplSource::BeamsPointer &beams);
+
+    void cal_cursor_info(double value, BaseCursorItem::S_CURSOR_INFO &cursorInfo);
+    void update_cursor_info();
 };
 
 #endif // __B_SCAN_DISPLAY_H_

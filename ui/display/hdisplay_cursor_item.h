@@ -8,11 +8,13 @@ class HDisplayCursorItem : public BaseCursorItem
 public:
     explicit HDisplayCursorItem(Qt::Orientation cursorOrientation,
                     E_CURSOR_TYPE cursorType,
-                    E_CURSOR_SOURCE_TYPE sourceType,
-                    const DplMeasure::CursorPointer &cursorPointer,
                     QGraphicsItem *parent = 0);
 
 protected:
+    /**
+     * @brief paint_cursor  画光标
+     * @param painter       画光标的painter
+     */
     virtual void paint_cursor(QPainter *painter);
 };
 
