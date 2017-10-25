@@ -99,11 +99,8 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         return true;
     }
 
-    qDebug("%s[%d]: type(%d)",__func__, __LINE__, e->type());
-
     if (e->type() == QEvent::KeyRelease) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
-        qDebug("%s[%d]: val(%d)",__func__, __LINE__, keyEvent->key());
         switch (keyEvent->key()) {
         case Qt::Key_Escape:
         case Qt::Key_Back:

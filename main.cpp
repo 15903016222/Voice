@@ -19,9 +19,9 @@ int main(int argc, char *argv[])
     a.setApplicationName(QLatin1String("Mercury"));
 //    a.setApplicationVersion();
 
-    QSplashScreen *splash = new QSplashScreen;
-    splash->setPixmap(QPixmap("/opt/mercury/image/splash.png"));
-    splash->show();
+    QSplashScreen splash(QPixmap("/opt/mercury/image/splash.png"));
+    splash.show();
+    a.processEvents();
 
     QTime time;
     time.restart();
@@ -29,10 +29,6 @@ int main(int argc, char *argv[])
     qDebug("Mercury Starting");
 
     MainWindow w;
-
-//#if (PHASCAN | PHASCAN_II)
-//    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
-//    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 
     int fontId = QFontDatabase::addApplicationFont(FONT_FILE);
     QStringList list = QFontDatabase::applicationFontFamilies(fontId);
@@ -42,9 +38,12 @@ int main(int argc, char *argv[])
         QFont font(list.at(0), 16);
         w.setFont(font);
     }
-#if (PHASCAN | PHASCAN_II)
+
+#if PHASCAN
 //    QApplication::setOverrideCursor(Qt::BlankCursor);       // 隐藏鼠标
-    w.setCursor(Qt::BlankCursor);
+    w.setCursor(Qt::BlankCursor);                           // 隐藏鼠标
+    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+#elif PHASCAN_II
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 #endif
 
@@ -52,10 +51,8 @@ int main(int argc, char *argv[])
 
     DplDevice::Device::instance()->start();
 
-    splash->finish(&w);
-    delete splash;
-
     qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 
+    splash.finish(&w);
     return a.exec();
 }

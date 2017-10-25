@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_subMenu = new SubMenu(this);
     m_subMenu->hide();
     ui->subMenuLayout->addWidget(m_subMenu);
+    show_hidden_Menu();
 //    m_subMenu->setGeometry(m_mainMenu->width(),
 //                           height()-m_subMenu->height(),
 //                           width()-m_mainMenu->width(),

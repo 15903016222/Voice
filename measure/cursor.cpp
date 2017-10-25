@@ -19,7 +19,8 @@ public:
         m_sr(0.0),
         m_sm(0.0),
         m_ir(0.0),
-        m_im(0.0)
+        m_im(0.0),
+        m_visible(false)
     {}
 
     /* attributions */
@@ -31,6 +32,7 @@ public:
     double m_sm;     // Position of the Measurement cursor on the scan axis
     double m_ir;     // Position of the Reference cursor on the index axis
     double m_im;     // Position of the Measurement cursor on the index axis
+    bool m_visible;
 };
 
 Cursor::Cursor(QObject *parent) : QObject(parent),
@@ -145,6 +147,19 @@ void Cursor::set_index_measurement(double val)
     if ( !qFuzzyCompare(val, d->m_im) ) {
         d->m_im = val;
         emit index_measurement_changed(val);
+    }
+}
+
+bool Cursor::is_visible() const
+{
+    return d->m_visible;
+}
+
+void Cursor::set_visible(bool flag)
+{
+    if (flag != d->m_visible) {
+        d->m_visible = flag;
+        emit visible_changed(flag);
     }
 }
 

@@ -115,6 +115,18 @@ public:
      */
     void set_index_measurement(double val);
 
+    /**
+     * @brief is_visible    获取光标显示状态
+     * @return              显示返回true，否则为false
+     */
+    bool is_visible() const;
+
+    /**
+     * @brief set_visible   设置光标显示状态
+     * @param flag          true为显示，false为不显示
+     */
+    void set_visible(bool flag);
+
 signals:
     void amplitude_reference_changed(double val);
     void amplitude_measurement_changed(double val);
@@ -124,6 +136,7 @@ signals:
     void scan_measurement_changed(double val);
     void index_reference_changed(double val);
     void index_measurement_changed(double val);
+    void visible_changed(bool flag);
 
 public slots:
 
