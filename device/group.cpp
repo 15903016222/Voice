@@ -117,6 +117,11 @@ const DplSource::BeamPointer &Group::current_beam() const
     return d->beam();
 }
 
+void Group::deploy() const
+{
+    m_fpgaGroup->deploy();
+}
+
 void Group::deploy_beams() const
 {
     DplFpga::Beam fpgaBeam;
@@ -161,7 +166,7 @@ void Group::deploy_beams() const
         }
 
 //        fpgaBeam.show_info();
-        fpgaBeam.refresh();
+        fpgaBeam.deploy();
     }
 }
 

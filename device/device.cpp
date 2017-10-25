@@ -201,6 +201,17 @@ bool Device::is_running() const
     return !DplFpga::Fpga::instance()->is_freeze();
 }
 
+void Device::deploy() const
+{
+    Q_D(const Device);
+
+    DplFpga::Fpga::instance()->deploy();
+    foreach (GroupPointer grp, d->m_groups) {
+        grp->deploy();
+        grp->deploy_beams();
+    }
+}
+
 void Device::deploy_beams()
 {
     Q_D(Device);

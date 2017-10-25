@@ -173,6 +173,11 @@ signals:
 
 public slots:
     /**
+     * @brief deploy    下发组配置信息
+     */
+    void deploy() const;
+
+    /**
      * @brief deploy_beams  下发组Beams的配置信息
      */
     void deploy_beams() const;

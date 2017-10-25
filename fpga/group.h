@@ -101,7 +101,7 @@ public:
     float gain(void) const;
 
     int thickness_factor(void) const;
-    bool set_thickness_factor(int factor, bool reflesh = false);
+    bool set_thickness_factor(int factor, bool deploy = false);
 
     /**
      * @brief The Mode enum 组工作模式
@@ -126,7 +126,7 @@ public:
     bool set_mode(Mode m);
 
     int sum_gain(void) const;
-    bool set_sum_gain(int gain, bool reflesh = false);
+    bool set_sum_gain(int gain, bool deploy = false);
 
     int sample_range(void) const;
     bool set_sample_range(int range);
@@ -139,10 +139,10 @@ public:
 
 
     int tcg_point_qty(void) const;
-    bool set_tcg_point_qty(int qty, bool reflesh = false);
+    bool set_tcg_point_qty(int qty, bool deploy = false);
 
     bool tcg(void) const;
-    bool enable_tcg(bool flag, bool reflesh = false);
+    bool enable_tcg(bool flag, bool deploy = false);
 
     /**
      * @brief rx_time   获取接收工作时间
@@ -243,10 +243,10 @@ public:
     bool set_gate_measure_mode(GateType type, MeasureMode mode);
 
     int thickness_min(void) const;
-    bool set_thickness_min(int val, bool reflesh = false);
+    bool set_thickness_min(int val, bool deploy = false);
 
     int reject(void) const;
-    bool set_reject(int val, bool reflesh = false);
+    bool set_reject(int val, bool deploy = false);
 
     /**
      * @brief sample_start  获取采样起点
@@ -283,16 +283,16 @@ public:
     bool set_averaging(Averaging val);
 
     int thickness_max(void) const;
-    bool set_thickness_max(int val, bool reflesh = false);
+    bool set_thickness_max(int val, bool deploy = false);
 
     int thickness_source(void) const;
-    bool set_thickness_source(int val, bool reflesh = false);
+    bool set_thickness_source(int val, bool deploy = false);
 
     int tx_end(void) const;
-    bool set_tx_end(int val, bool reflesh = false);
+    bool set_tx_end(int val, bool deploy = false);
 
     int tx_start(void) const;
-    bool set_tx_start(int val, bool reflesh = false);
+    bool set_tx_start(int val, bool deploy = false);
 
     /**
      * @brief init  初始化配置
@@ -301,9 +301,9 @@ public:
 
     /**
      * @brief reflesh   更新配置
-     * @return
+     * @return          成功返回true，否则为false
      */
-    bool reflesh(void);
+    bool deploy(void);
 
     /**
      * @brief show_info 显示信息

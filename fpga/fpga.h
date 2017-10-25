@@ -262,6 +262,12 @@ public:
     bool remove_tcg();
     const TcgPointer &get_tcg(int index) const;
 
+    /**
+     * @brief deploy    下发FPGA配置参数
+     * @return          成功返回true，失败返回false
+     */
+    bool deploy() const;
+
 protected:
     Fpga();
     ~Fpga();

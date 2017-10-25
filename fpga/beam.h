@@ -196,10 +196,10 @@ public:
     bool set_rx_delay(uint channel, quint32 val);
 
     /**
-     * @brief refresh   下发配置
+     * @brief deploy   下发配置
      * @return          成功返回true，否则false
      */
-    bool refresh(void);
+    bool deploy(void);
 
     /**
      * @brief show_info 显示信息
