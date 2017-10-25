@@ -99,8 +99,11 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         return true;
     }
 
+    qDebug("%s[%d]: type(%d)",__func__, __LINE__, e->type());
+
     if (e->type() == QEvent::KeyRelease) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
+        qDebug("%s[%d]: val(%d)",__func__, __LINE__, keyEvent->key());
         switch (keyEvent->key()) {
         case Qt::Key_Escape:
         case Qt::Key_Back:
@@ -123,6 +126,13 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
     } else if (e->type() == QEvent::FocusOut) {
         set_focus_out();
         return true;
+    } else if (e->type() == QEvent::Wheel) {
+        QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(e);
+        if (wheelEvent->delta() > 0) {
+            add();
+        } else if(wheelEvent->delta() < 0) {
+            sub();
+        }
     }
 
     return QWidget::eventFilter(obj, e);
