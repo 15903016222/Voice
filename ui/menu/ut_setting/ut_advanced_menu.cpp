@@ -28,6 +28,7 @@ UtAdvancedMenu::UtAdvancedMenu(QWidget *parent) :
     ui->layout3->addWidget(m_scaleFactorItem);
     ui->layout4->addWidget(m_pointQtyItem);
     ui->layout5->addWidget(m_userDefItem);
+    m_userDefItem->hide();
 
     connect(m_eightPercentItem,
             SIGNAL(clicked()),
@@ -95,10 +96,23 @@ void UtAdvancedMenu::do_dbRefItem_changed(int index)
 
 void UtAdvancedMenu::do_pointQtyItem(int index)
 {
-    if (4 == index) {
-        m_userDefItem->setFocus();
-    } else {
-        m_sample->set_point_qty(160*index, !index);
+    switch (index) {
+    case 0:
+        m_sample->set_point_qty(0, true);
+        break;
+    case 1:
+        m_sample->set_point_qty(160);
+        break;
+    case 2:
+        m_sample->set_point_qty(320);
+        break;
+    case 3:
+        m_sample->set_point_qty(640);
+        break;
+    case 4:
+        m_userDefItem->show();
+    default:
+        break;
     }
 }
 
