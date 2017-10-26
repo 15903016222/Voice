@@ -33,17 +33,14 @@ BaseCursorItem::BaseCursorItem(Qt::Orientation cursorOrientation,
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
     setZValue(1);
     setVisible(m_visible);
-
 }
 
 QRectF BaseCursorItem::boundingRect() const
 {
     if(Qt::Horizontal == m_cursorOrientation) {
-        return QRectF(-m_size.width() / 2.0, -m_size.height() / 2.0,
-                      m_size.width(), BaseCursorItem::s_defaultTooltipWidth);
+        return QRectF(0, 0, m_size.width(), BaseCursorItem::s_defaultTooltipWidth);
     } else {
-        return QRectF(-m_size.width() / 2.0, -m_size.height() / 2.0,
-                      BaseCursorItem::s_defaultTooltipWidth, m_size.height());
+        return QRectF(0, 0, BaseCursorItem::s_defaultTooltipWidth, m_size.height());
     }
 }
 
@@ -63,12 +60,26 @@ void BaseCursorItem::set_cursor_info(const S_CURSOR_INFO &cursorInfo)
 
     m_cursorInfo = cursorInfo;
 
-    QPointF pointF = this->pos();
-
+    double lenght;
     if(Qt::Vertical == m_cursorOrientation) {
-        pointF.setX(cursorInfo.pos);
+        lenght =  m_size.width();
     } else {
-        pointF.setY(cursorInfo.pos);
+        lenght = m_size.height();
+    }
+
+    double pos =  (cursorInfo.currentValue - cursorInfo.start)
+                    * (lenght / (cursorInfo.end - cursorInfo.start));
+
+    pos -= (lenght / 2.0);
+    m_cursorInfo.pos = pos;
+
+    QPointF pointF = this->pos();
+    if(m_cursorOrientation == Qt::Vertical) {
+        pointF.setY(-m_size.height() / 2.0);    /* 限制指定移动路线 */
+        pointF.setX(m_cursorInfo.pos);
+    } else {
+        pointF.setX(-m_size.width() / 2.0);     /* 限制指定移动路线 */
+        pointF.setY(m_cursorInfo.pos);
     }
 
     setPos(pointF);
@@ -100,21 +111,38 @@ QVariant BaseCursorItem::itemChange(QGraphicsItem::GraphicsItemChange change, co
 
         double x = qMin(rect.right(), qMax(newPos.x(), rect.left()));
         double y = qMin(rect.bottom(), qMax(newPos.y(), rect.top()));
+
         if(!rect.contains(newPos)) {
             // Keep the item inside the scene rect.
             newPos.setX(x);
             newPos.setY(y);
         }
 
-
         if(m_cursorOrientation == Qt::Vertical) {
-            newPos.setY(0.0);
+            newPos.setY(-m_size.height() / 2.0);
+            double lenght = m_size.width();
             m_cursorInfo.pos = x;
-            m_cursorInfo.currentValue = x * ((m_cursorInfo.end - m_cursorInfo.start) / (double)m_size.width()) + m_cursorInfo.start;
+            double tmpX;
+            if(x < 0.0) {
+                tmpX = lenght / 2.0 - fabs(x);
+            } else {
+                tmpX = lenght / 2.0 + x;
+            }
+
+            m_cursorInfo.currentValue = tmpX * ((m_cursorInfo.end - m_cursorInfo.start) / lenght) + m_cursorInfo.start;
+
         } else {
-            newPos.setX(0.0);
+
+            newPos.setX(-m_size.width() / 2.0);
+            double lenght = m_size.height();
             m_cursorInfo.pos = y;
-            m_cursorInfo.currentValue = y * ((m_cursorInfo.end - m_cursorInfo.start) / (double)m_size.height()) + m_cursorInfo.start;
+            double tmpY;
+            if(y < 0.0) {
+                tmpY = lenght / 2.0 - fabs(y);
+            } else {
+                tmpY = lenght / 2.0 + y;
+            }
+            m_cursorInfo.currentValue = tmpY * ((m_cursorInfo.end - m_cursorInfo.start) / lenght) + m_cursorInfo.start;
         }
 
         emit value_changed(m_cursorInfo.currentValue);

@@ -21,67 +21,52 @@ void HDisplayCursorItem::paint_cursor(QPainter *painter)
 
     if(Qt::Horizontal == m_cursorOrientation) {
 
-        rectF = QRectF(m_size.width() / 2.0 - BaseCursorItem::s_defaultTooltipHeight,
-                     -m_size.height() / 2.0,
+        rectF = QRectF(m_size.width() - BaseCursorItem::s_defaultTooltipHeight, 0.0,
                      BaseCursorItem::s_defaultTooltipHeight,
                      BaseCursorItem::s_defaultTooltipWidth);
-
         painter->fillRect(rectF, QBrush(color));
+
         painter->setPen(QColor(Qt::black));
         painter->setFont(font);
         /* 旋转90度 */
         painter->rotate(90);
         QString valueText;
         get_value(valueText);
-        painter->drawText(QRectF(-m_size.height() / 2.0,
-                                 -m_size.width() / 2.0,
+        painter->drawText(QRectF(0.0, -m_size.width(),
                                  BaseCursorItem::s_defaultTooltipWidth,
                                  BaseCursorItem::s_defaultTooltipHeight),
                           valueText,
                           QTextOption(Qt::AlignCenter));
-
         painter->rotate(-90);
 
         painter->setPen(m_color);
-        QPointF point1(-m_size.width() / 2.0,
-                       -m_size.height() / 2.0);
-
-        QPointF point2(m_size.width() / 2.0,
-                       -m_size.height() / 2.0);
-
+        QPointF point1(0.0, 0.0);
+        QPointF point2(m_size.width(), 0.0);
         painter->drawLine(point1, point2);
 
     } else {
 
-        rectF = QRectF(-m_size.width() / 2.0,
-                     -m_size.height() / 2.0,
-                     BaseCursorItem::s_defaultTooltipHeight,
-                     BaseCursorItem::s_defaultTooltipWidth);
-
+        rectF = QRectF(0.0, 0.0, BaseCursorItem::s_defaultTooltipHeight, BaseCursorItem::s_defaultTooltipWidth);
         painter->fillRect(rectF, QBrush(color));
         painter->setPen(QColor(Qt::black));
         painter->setFont(font);
+
         /* 旋转90度 */
         painter->rotate(90);
 
         QString valueText;
         get_value(valueText);
-        painter->drawText(QRectF(-m_size.height() / 2.0,
-                                 m_size.width() / 2.0 - BaseCursorItem::s_defaultTooltipHeight,
+        painter->drawText(QRectF(0.0, -BaseCursorItem::s_defaultTooltipHeight,
                                  BaseCursorItem::s_defaultTooltipWidth,
                                  BaseCursorItem::s_defaultTooltipHeight),
                           valueText,
                           QTextOption(Qt::AlignCenter));
-
         painter->rotate(-90);
 
         painter->setPen(m_color);
-        QPointF point1(-m_size.width() / 2.0,
-                       -m_size.height() / 2.0);
-
-        QPointF point2(-m_size.width() / 2.0,
-                       m_size.height());
-
+        QPointF point1(0.0, 0.0);
+        QPointF point2(0.0, m_size.height());
         painter->drawLine(point1, point2);
     }
 }
+

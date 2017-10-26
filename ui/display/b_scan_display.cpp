@@ -21,7 +21,7 @@
 
 #include <measure/cursor.h>
 #include <ui/tool/tool.h>
-
+#include <ui/display/gate_item.h>
 
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),
@@ -164,6 +164,8 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 
 void BscanDisplay::do_update_ruler(double value)
 {
+    Q_UNUSED(value);
+
     if(m_scanTypeRuler == NULL) {
         return;
     }
@@ -228,46 +230,20 @@ void BscanDisplay::do_scan_reference_changed(double value)
 {
     BaseCursorItem::S_CURSOR_INFO cursorInfo;
     m_scanTypeRuler->get_show_range(cursorInfo.start, cursorInfo.end);
-
-    double lenght;
-    if(Qt::Vertical == m_orientation) {
-        lenght = m_bscanView->height();
-        cursorInfo.pos   = (value - cursorInfo.start) * (m_bscanView->width() / (cursorInfo.end - cursorInfo.start));
-    } else {
-        lenght = m_bscanView->width();
-        cursorInfo.pos   = (value - cursorInfo.start) * (m_bscanView->height() / (cursorInfo.end - cursorInfo.start));
-    }
-
     cursorInfo.currentValue = value;
-
     m_sReferneceCursorItem->set_cursor_info(cursorInfo);
 }
 
 void BscanDisplay::do_scan_measurement_changed(double value)
 {
     BaseCursorItem::S_CURSOR_INFO cursorInfo;
-
     m_scanTypeRuler->get_show_range(cursorInfo.start, cursorInfo.end);
-
-    double lenght;
-    if(Qt::Vertical == m_orientation) {
-        lenght = m_bscanView->height();
-        cursorInfo.pos   = (value - cursorInfo.start) * (m_bscanView->width() / (cursorInfo.end - cursorInfo.start));
-    } else {
-        lenght = m_bscanView->width();
-        cursorInfo.pos   = (value - cursorInfo.start) * (m_bscanView->height() / (cursorInfo.end - cursorInfo.start));
-    }
-
     cursorInfo.currentValue = value;
-
     m_sMeasurementCursorItem->set_cursor_info(cursorInfo);
 }
 
 void BscanDisplay::do_value_changed(double value)
 {
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << value;
-
     BaseCursorItem *send = static_cast<BaseCursorItem*> (sender());
 
     if(send == NULL) {
@@ -281,9 +257,6 @@ void BscanDisplay::do_value_changed(double value)
     } else if(send == m_uMeasurementCursorItem) {
         m_cursorPointer->set_ultrasound_measurement(Tool::cnf_to_display(m_group, value));
     }
-
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << "end...";
 }
 
 
@@ -302,7 +275,8 @@ void BscanDisplay::init_cursor()
         m_uMeasurementCursorItem = new HDisplayCursorItem(Qt::Horizontal, BaseCursorItem::Measurement);
     }
 
-    init_cursor_connection();
+
+   init_cursor_connection();
 }
 
 void BscanDisplay::init_cursor_connection()
@@ -422,10 +396,10 @@ void BscanDisplay::init_scan_env()
 
     m_bscanScene->addItem(m_bscanImageItem);
 
-    m_bscanScene->addItem(m_sReferneceCursorItem);
-    m_bscanScene->addItem(m_sMeasurementCursorItem);
     m_bscanScene->addItem(m_uReferneceCursorItem);
     m_bscanScene->addItem(m_uMeasurementCursorItem);
+    m_bscanScene->addItem(m_sReferneceCursorItem);
+    m_bscanScene->addItem(m_sMeasurementCursorItem);
 
     if (m_orientation == Qt::Horizontal) {
 
@@ -530,11 +504,8 @@ void BscanDisplay::cal_cursor_info(double value, BaseCursorItem::S_CURSOR_INFO &
         lenght = m_bscanView->width();
     }
 
-    double pos =  (currentValue - start) * (lenght / (end - start));
-
     cursorInfo.start = start;
     cursorInfo.end   = end;
-    cursorInfo.pos   = pos;
     cursorInfo.currentValue = currentValue;
 }
 
@@ -620,7 +591,6 @@ void BscanDisplay::do_view_size_changed(const QSize &size)
         m_uMeasurementCursorItem->set_size(size);
 
     } else {
-
         m_bscanScene->setSceneRect(-size.height()/2.0, -size.width()/2.0,
                                    size.height(), size.width());
 

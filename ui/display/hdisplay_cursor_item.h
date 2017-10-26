@@ -16,6 +16,7 @@ protected:
      * @param painter       画光标的painter
      */
     virtual void paint_cursor(QPainter *painter);
+
 };
 
 #endif // __H_DISPLAY_CURSOR_ITEM_H__

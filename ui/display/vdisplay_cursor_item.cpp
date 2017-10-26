@@ -11,18 +11,17 @@ VDisplayCursorItem::VDisplayCursorItem(Qt::Orientation cursorOrientation,
 
 void VDisplayCursorItem::paint_cursor(QPainter *painter)
 {
-    /* 指示框 */
-    QColor color(205, 205, 205); /* 灰色 */
-
     QRectF rectF;
     QFont font;
     font.setPointSize(8);
-    rectF = QRectF(-m_size.width() / 2.0,
-                -m_size.height() / 2.0,
+    /* 指示框 */
+    QColor color(205, 205, 205); /* 灰色 */
+    rectF = QRectF(0.0, 0.0,
                 BaseCursorItem::s_defaultTooltipWidth,
                 BaseCursorItem::s_defaultTooltipHeight);
 
     painter->fillRect(rectF, QBrush(color));
+
     painter->setPen(QColor(Qt::black));
     painter->setFont(font);
     QString valueText;
@@ -30,21 +29,15 @@ void VDisplayCursorItem::paint_cursor(QPainter *painter)
     painter->drawText(rectF, valueText, QTextOption(Qt::AlignCenter));
 
     painter->setPen(m_color);
-    QPointF startPoint(-m_size.width() / 2.0,
-                   -m_size.height() / 2.0);
+    QPointF startPoint(0.0, 0.0);
 
     if(Qt::Vertical == m_cursorOrientation) {
-
-        QPointF endPoint(-m_size.width() / 2.0,
-                       m_size.height());
+        QPointF endPoint(0.0, m_size.height());
         painter->drawLine(startPoint, endPoint);
-
     } else {
-
-        QPointF endPoint(m_size.width() / 2.0,
-                       -m_size.height() / 2.0);
+        QPointF endPoint(m_size.width(), 0.0);
         painter->drawLine(startPoint, endPoint);
-
     }
 }
+
 
