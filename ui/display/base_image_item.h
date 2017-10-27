@@ -49,7 +49,8 @@ public:
         int beginShowIndex;             /* 从第beginShowIndex帧开始重画 */
     };
 
-    explicit BaseImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    explicit BaseImageItem(const DplDisplay::PaletteColorPointer &palette,
+                           const DplDevice::GroupPointer &grp, QGraphicsObject *parent = 0);
     ~BaseImageItem();
 
     bool set_pix_per_beam(double ratio);

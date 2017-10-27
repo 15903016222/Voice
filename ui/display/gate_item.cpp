@@ -88,41 +88,14 @@ QVariant GateItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
         QPointF newPos = value.toPointF();
         QRectF rect = scene()->sceneRect();
 
-        qDebug() << "[" << __FUNCTION__ << "]"
-                << "cal X = " << newPos.x()
-                 << " Y = " << newPos.y();
-
-        qDebug() << "[" << __FUNCTION__ << "]"
-                 << " rect w = " << rect.width()
-                 << "  h = " << rect.height()
-                 << "  x = " << rect.x()
-                 << "  y = " << rect.y();
-
         if (!rect.contains(newPos)) {
             // Keep the item inside the scene rect.
             newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
             newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
-
-            qDebug() << "[" << __FUNCTION__ << "]"
-                    << "not in range "
-                     << " X = " << newPos.x()
-                     << " Y = " << newPos.y();
-        } else {
-            qDebug() << "[" << __FUNCTION__ << "]"
-                    << " in ... range.. "
-                     << " X = " << newPos.x()
-                     << " Y = " << newPos.y();
         }
 
         m_gate->set_start((newPos.x() - rect.left())/ratio() + m_sample->start() - m_offset);
         m_gate->set_height((rect.bottom() - newPos.y()) / rect.height() * 100);
-
-        qDebug() << "[" << __FUNCTION__ << "]"
-                << "last X = " << newPos.x()
-                 << " Y = " << newPos.y();
-
-        qDebug() << "[" << __FUNCTION__ << "]" << "******************************* \n";
-
 
         return newPos;
     }

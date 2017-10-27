@@ -610,6 +610,8 @@ void BscanDisplay::do_view_size_changed(const QSize &size)
         do_data_event(m_beamsPointer);
     }
 
+    update_cursor_info();
+
     update();
 
     connect(static_cast<DplDevice::Group *>(m_group.data()),

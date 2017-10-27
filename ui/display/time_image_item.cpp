@@ -2,7 +2,7 @@
 
 #include <source/source.h>
 
-TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QGraphicsObject *parent)
     : BaseImageItem(palette, grp, parent)
 {
 

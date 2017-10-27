@@ -9,7 +9,7 @@
 
 BscanTimeImageItem::BscanTimeImageItem(const DplDisplay::PaletteColorPointer &palette,
                                const DplDevice::GroupPointer &grp,
-                               QObject *parent) :
+                               QGraphicsObject *parent) :
     TimeImageItem(palette, grp, parent)
 {
     m_initFinished = true;
@@ -20,8 +20,6 @@ void BscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
                                              BaseImageItem::E_BEAM_TYPE type,
                                              const DplSource::BeamsPointer &beamsPointer)
 {
-
-#if 1
     DplSource::BeamPointer beamPointer = beamsPointer->get(0);
     if(beamPointer.isNull()) {
         return;
@@ -72,23 +70,6 @@ void BscanTimeImageItem::set_vertical_image_data(int beamsShowedCount,
             }
         }
     }
-
-#else
-
-   m_image->fill(0);
-   for(int i = 0; i < m_image->height(); ++i) {
-       quint8 *line    = (quint8*) m_image->scanLine(i);
-
-       if((i == 0) || (i == (m_image->height() - 1))) {
-           for(int k = 0; k < m_image->width(); ++k) {
-               line[k] = 155;
-           }
-       } else {
-           line[0] = 155;
-           line[m_image->width() - 1] = 155;
-       }
-   }
-#endif
 }
 
 
@@ -97,5 +78,7 @@ bool BscanTimeImageItem::need_refresh(const DplSource::BeamsPointer &beams)
     if(TimeImageItem::need_refresh(beams)) {
         return true;
     }
+
+    return false;
 }
 
