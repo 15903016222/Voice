@@ -14,9 +14,9 @@
 namespace DplFpga {
 
 class GroupPrivate;
-
 class FPGASHARED_EXPORT Group : public QObject
 {
+    friend class GroupPrivate;
     Q_OBJECT
 public:
     explicit Group(const int index, QObject *parent = 0);
@@ -128,8 +128,7 @@ public:
     int sum_gain(void) const;
     bool set_sum_gain(int gain, bool deploy = false);
 
-    int sample_range(void) const;
-    bool set_sample_range(int range);
+
 
     /**
      * @brief point_qty 获取压缩后的采样点数
@@ -156,19 +155,6 @@ public:
      * @return              成功返回true，失败返回false
      */
     bool set_rx_time(int val);
-
-    /**
-     * @brief idle_time     获取空闲时间
-     * @return              时间(采样精度)
-     */
-    int idle_time(void) const;
-
-    /**
-     * @brief set_idle_time 设置空闲时间
-     * @param val           时间（采样精度）
-     * @return
-     */
-    bool set_idle_time(int val);
 
     /**
      * @brief The GateType enum 闸门类型
@@ -249,10 +235,35 @@ public:
     bool set_reject(int val, bool deploy = false);
 
     /**
-     * @brief sample_start  获取采样起点
-     * @return              返回采样起点值，单位(采样精度)
+     * @brief beam_delay    获取声束延迟时间
+     * @return              时间(采样精度)
      */
-    int sample_start(void) const;
+    int beam_delay() const;
+
+    /**
+     * @brief set_beam_delay    设置声束延迟时间
+     * @param delay             时间(采样精度)
+     * @return                  成功返回true，否则为false
+     */
+    bool set_beam_delay(int delay);
+
+    /**
+     * @brief wedge_delay   设置楔块延迟时间
+     * @return              时间(采样精度)
+     */
+    int wedge_delay() const;
+
+    /**
+     * @brief set_wedge_delay   设置楔块延迟时间
+     * @param delay             时间(采样精度)
+     */
+    bool set_wedge_delay(int delay);
+
+    /**
+     * @brief sample_start  获取采样起点
+     * @return              返回采样起点值，单位(ns)
+     */
+    float sample_start(void) const;
 
     /**
      * @brief set_sample_start  设置采样起点
@@ -260,6 +271,43 @@ public:
      * @return                  成功返回true，否则返回false
      */
     bool set_sample_start(int val);
+
+    /**
+     * @brief sample_range  获取采样范围
+     * @return              采样范围(采样精度)
+     */
+    int sample_range(void) const;
+
+    /**
+     * @brief set_sample_range  设置采样范围
+     * @param range             采样范围(采样精度)
+     * @return                  成功返回true，否则为false
+     */
+    bool set_sample_range(int range);
+
+    /**
+     * @brief sample_cycle  采样周期时间
+     * @return              时间(采样精度)
+     */
+    int sample_cycle(void) const;
+
+    /**
+     * @brief set_sample_cycle  设置采样周期时间
+     * @param val               时间(采样精度)
+     */
+    bool set_sample_cycle(int val);
+
+    /**
+     * @brief work_time 获取工作时间
+     * @return          时间(采样精度)
+     */
+    int work_time(void) const;
+
+    /**
+     * @brief idle_time     获取空闲时间
+     * @return              时间(采样精度)
+     */
+    int idle_time(void) const;
 
     enum Averaging {
         AVERAGING_1,
@@ -328,6 +376,9 @@ public slots:
      * @param qty           采样点数
      */
     void set_point_qty(int qty);
+
+signals:
+    void work_time_changed();
 
 private:
     GroupPrivate *d;
