@@ -261,9 +261,9 @@ public:
 
     /**
      * @brief sample_start  获取采样起点
-     * @return              返回采样起点值，单位(ns)
+     * @return              返回采样起点值，单位(采样精度)
      */
-    float sample_start(void) const;
+    int sample_start(void) const;
 
     /**
      * @brief set_sample_start  设置采样起点
