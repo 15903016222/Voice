@@ -53,7 +53,6 @@ public:
 
 protected:
     virtual void paintEvent(QPaintEvent *e);
-    virtual void resizeEvent(QResizeEvent *event);
 
 private:
 
@@ -63,7 +62,10 @@ private:
     double  m_moveTotalUnit;
     double  m_maxEnd;
 
+    double m_targetValue;
+
     void init_step_unit();
+    void cal_offset_info(double targetValue);
 };
 
 

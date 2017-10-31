@@ -60,7 +60,7 @@ bool BaseImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 
 bool BaseImageItem::redraw_beams(const DplSource::BeamsPointer &beams)
 {
-//    qDebug("[%s:%s] debug here.", "BaseImageItem", __FUNCTION__);
+    qDebug("[%s:%s] debug here.", "BaseImageItem", __FUNCTION__);
 
     QWriteLocker lock(&m_rwLock);
 
