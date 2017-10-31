@@ -77,7 +77,7 @@ AscanDisplay::~AscanDisplay()
 void AscanDisplay::do_data_event()
 {
     DplSource::BeamPointer beam = m_group->current_beam();
-    m_waveItem->set_wave(beam->wave(), !m_group->receiver()->rectifier());
+    m_waveItem->set_wave(beam->wave(), !m_group->transceiver()->rectifier());
     if (m_group->gate_a()->synchro_mode() == DplFpga::Group::SYNCHRO_I) {
         m_gateAItem->set_offset(beam->gate_peak_position(DplSource::Beam::GATE_I) * DplFpga::Fpga::SAMPLE_PRECISION);
     } else {

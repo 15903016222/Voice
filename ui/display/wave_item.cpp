@@ -20,34 +20,21 @@ QPainterPath WaveItem::draw(const QByteArray &wave, bool rf, int w, int h)
 {
     QPainterPath path;
 
-    float xRatio1 = 1.0;
-    float xRatio2 = 1.0;
-    float yRatio = h / 256.0;
+    float xRatio = w / 1.0 / ( wave.size() - 1);     // n个点，分为n-1段
+    float yRatio = h / 255.0;
 
-    int drawPoints = 0;
-    if ( wave.size() < w) {
-        xRatio1 = w / 1.0 / wave.size();
-        drawPoints = wave.size();
-    } else {
-        xRatio2 = wave.size() / 1.0 / w;
-        drawPoints = w;
-    }
+    int drawPoints = wave.size();
 
     if (rf) {
         for (int i = 0; i < drawPoints; ++i) {
-            qDebug("%s[%d](%d): y(%d) h(%d) yRatio(%f) val(%d)",__func__, __LINE__, i,
-                   ((uint)(128-(qint8)(wave.at((int)(i*xRatio2))))),
-                   h,
-                   yRatio,
-                   wave.at(i));
-            path.lineTo( i*xRatio1,
-                         ((uint)(128-(qint8)(wave.at((int)(i*xRatio2))))) * yRatio - 0.5 );
+            path.lineTo( i*xRatio + 0.5,
+                         ((uint)(128-(qint8)(wave.at(i)))) * yRatio - 0.5 );
 
         }
     } else {
         for (int i = 0; i < drawPoints; ++i) {
-            path.lineTo( i*xRatio1,
-                         ((quint8)(255-wave.at((int)(i*xRatio2)))) * yRatio + 0.5);
+            path.lineTo( i*xRatio + 0.5,
+                         ((quint8)(255-wave.at(i))) * yRatio + 0.5);
         }
     }
 
