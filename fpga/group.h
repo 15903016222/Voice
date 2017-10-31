@@ -14,9 +14,9 @@
 namespace DplFpga {
 
 class GroupPrivate;
-
 class FPGASHARED_EXPORT Group : public QObject
 {
+    friend class GroupPrivate;
     Q_OBJECT
 public:
     explicit Group(const int index, QObject *parent = 0);
@@ -95,13 +95,19 @@ public:
     int scale_factor(void) const;
 
     /**
+     * @brief set_scale_factor      设置采样点压缩系数
+     * @param val                   压缩系数
+     */
+    void set_scale_factor(int val);
+
+    /**
      * @brief gain  获取增益
      * @return      返回增益值， 单位(dB)
      */
     float gain(void) const;
 
     int thickness_factor(void) const;
-    bool set_thickness_factor(int factor, bool reflesh = false);
+    bool set_thickness_factor(int factor, bool deploy = false);
 
     /**
      * @brief The Mode enum 组工作模式
@@ -126,10 +132,9 @@ public:
     bool set_mode(Mode m);
 
     int sum_gain(void) const;
-    bool set_sum_gain(int gain, bool reflesh = false);
+    bool set_sum_gain(int gain, bool deploy = false);
 
-    int sample_range(void) const;
-    bool set_sample_range(int range);
+
 
     /**
      * @brief point_qty 获取压缩后的采样点数
@@ -139,10 +144,10 @@ public:
 
 
     int tcg_point_qty(void) const;
-    bool set_tcg_point_qty(int qty, bool reflesh = false);
+    bool set_tcg_point_qty(int qty, bool deploy = false);
 
     bool tcg(void) const;
-    bool enable_tcg(bool flag, bool reflesh = false);
+    bool enable_tcg(bool flag, bool deploy = false);
 
     /**
      * @brief rx_time   获取接收工作时间
@@ -156,19 +161,6 @@ public:
      * @return              成功返回true，失败返回false
      */
     bool set_rx_time(int val);
-
-    /**
-     * @brief idle_time     获取空闲时间
-     * @return              时间(采样精度)
-     */
-    int idle_time(void) const;
-
-    /**
-     * @brief set_idle_time 设置空闲时间
-     * @param val           时间（采样精度）
-     * @return
-     */
-    bool set_idle_time(int val);
 
     /**
      * @brief The GateType enum 闸门类型
@@ -243,10 +235,35 @@ public:
     bool set_gate_measure_mode(GateType type, MeasureMode mode);
 
     int thickness_min(void) const;
-    bool set_thickness_min(int val, bool reflesh = false);
+    bool set_thickness_min(int val, bool deploy = false);
 
     int reject(void) const;
-    bool set_reject(int val, bool reflesh = false);
+    bool set_reject(int val, bool deploy = false);
+
+    /**
+     * @brief beam_delay    获取声束延迟时间
+     * @return              时间(采样精度)
+     */
+    int beam_delay() const;
+
+    /**
+     * @brief set_beam_delay    设置声束延迟时间
+     * @param delay             时间(采样精度)
+     * @return                  成功返回true，否则为false
+     */
+    bool set_beam_delay(int delay);
+
+    /**
+     * @brief wedge_delay   设置楔块延迟时间
+     * @return              时间(采样精度)
+     */
+    int wedge_delay() const;
+
+    /**
+     * @brief set_wedge_delay   设置楔块延迟时间
+     * @param delay             时间(采样精度)
+     */
+    bool set_wedge_delay(int delay);
 
     /**
      * @brief sample_start  获取采样起点
@@ -260,6 +277,43 @@ public:
      * @return                  成功返回true，否则返回false
      */
     bool set_sample_start(int val);
+
+    /**
+     * @brief sample_range  获取采样范围
+     * @return              采样范围(采样精度)
+     */
+    int sample_range(void) const;
+
+    /**
+     * @brief set_sample_range  设置采样范围
+     * @param range             采样范围(采样精度)
+     * @return                  成功返回true，否则为false
+     */
+    bool set_sample_range(int range);
+
+    /**
+     * @brief sample_cycle  采样周期时间
+     * @return              时间(采样精度)
+     */
+    int sample_cycle(void) const;
+
+    /**
+     * @brief set_sample_cycle  设置采样周期时间
+     * @param val               时间(采样精度)
+     */
+    bool set_sample_cycle(int val);
+
+    /**
+     * @brief work_time 获取工作时间
+     * @return          时间(采样精度)
+     */
+    int work_time(void) const;
+
+    /**
+     * @brief idle_time     获取空闲时间
+     * @return              时间(采样精度)
+     */
+    int idle_time(void) const;
 
     enum Averaging {
         AVERAGING_1,
@@ -283,16 +337,16 @@ public:
     bool set_averaging(Averaging val);
 
     int thickness_max(void) const;
-    bool set_thickness_max(int val, bool reflesh = false);
+    bool set_thickness_max(int val, bool deploy = false);
 
     int thickness_source(void) const;
-    bool set_thickness_source(int val, bool reflesh = false);
+    bool set_thickness_source(int val, bool deploy = false);
 
     int tx_end(void) const;
-    bool set_tx_end(int val, bool reflesh = false);
+    bool set_tx_end(int val, bool deploy = false);
 
     int tx_start(void) const;
-    bool set_tx_start(int val, bool reflesh = false);
+    bool set_tx_start(int val, bool deploy = false);
 
     /**
      * @brief init  初始化配置
@@ -301,9 +355,9 @@ public:
 
     /**
      * @brief reflesh   更新配置
-     * @return
+     * @return          成功返回true，否则为false
      */
-    bool reflesh(void);
+    bool deploy(void);
 
     /**
      * @brief show_info 显示信息
@@ -317,17 +371,16 @@ public slots:
      */
     void set_gain(float gain);
 
-    /**
-     * @brief set_scale_factor      设置采样点压缩系数
-     * @param val                   压缩系数
-     */
-    void set_scale_factor(int val);
 
     /**
      * @brief set_point_qty 设置压缩后的采样点数
      * @param qty           采样点数
      */
     void set_point_qty(int qty);
+
+signals:
+    void work_time_changed();
+    void scale_factor_changed(int);
 
 private:
     GroupPrivate *d;

@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_subMenu = new SubMenu(this);
     m_subMenu->hide();
     ui->subMenuLayout->addWidget(m_subMenu);
+    show_hidden_Menu();
 //    m_subMenu->setGeometry(m_mainMenu->width(),
 //                           height()-m_subMenu->height(),
 //                           width()-m_mainMenu->width(),
@@ -79,6 +80,22 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::RightButton) {
+        show_hidden_Menu();
+    }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Alt) {
+        show_hidden_Menu();
+        return;
+    }
+    return QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
@@ -118,15 +135,6 @@ void MainWindow::update_translator(QString string)
 //    firstSecondMenu->retranslate_main_menu_ui(string);
 //    commonMenuWidget->retranslate_common_menu_ui();
 
-}
-
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    if (event->key() == Qt::Key_Alt) {
-        show_hidden_Menu();
-        return;
-    }
-    return QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::show_hidden_Menu()

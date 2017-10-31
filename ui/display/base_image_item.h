@@ -17,6 +17,7 @@ static const double DEFAULT_PIX_PER_BEAM = 1.0;                  /* 默认每条
 static const double FLOAT_ZERO  = 0.0000001;
 static const double SECOND      = 1000.0;
 
+
 struct S_BEAM_INFO{
     int x;
     int y;

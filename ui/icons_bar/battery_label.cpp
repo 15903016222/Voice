@@ -1,8 +1,6 @@
 #include "battery_label.h"
 #include <QPainter>
 
-#include <QDebug>
-
 BatteryLabel::BatteryLabel(QWidget *parent)
     : QLabel(parent),
       m_status(Mcu::BATTERY_NO_WORK),

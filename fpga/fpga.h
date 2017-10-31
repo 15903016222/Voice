@@ -72,11 +72,17 @@ public:
      */
     bool set_ut_law_qty(int qty);
 
-    /* 编码器 */
+    /**
+     * @brief The EncoderPolarity enum  编码器极性类型
+     */
     enum EncoderPolarity {
         NORMAL  = 0,
         INVERSE = 1
     };
+
+    /**
+     * @brief The EncoderMode enum  编码器工作模式
+     */
     enum EncoderMode {
         OFF     = 0b000,
         DOWN    = 0b001,
@@ -84,13 +90,57 @@ public:
         QUAD    = 0b011,
         PAUSE   = 0b100
     };
-    EncoderPolarity encoder_x_polarity() const; /* 编码器X极性 */
-    EncoderPolarity encoder_y_polarity() const; /* 编码器Y极性 */
+
+    /**
+     * @brief encoder_x_polarity    获取编码器X极性
+     * @return                      极性
+     */
+    EncoderPolarity encoder_x_polarity() const;
+
+    /**
+     * @brief encoder_y_polarity    获取编码器Y极性
+     * @return                      极性
+     */
+    EncoderPolarity encoder_y_polarity() const;
+
+    /**
+     * @brief set_encoder_x_polarity    设置编码器X极性
+     * @param polarity                  极性
+     * @return                          成功返回true，否则为false
+     */
     bool set_encoder_x_polarity(Fpga::EncoderPolarity polarity);
+
+    /**
+     * @brief set_encoder_y_polarity    设置编码器Y极性
+     * @param polarity                  极性
+     * @return                          成功返回true，否则为false
+     */
     bool set_encoder_y_polarity(Fpga::EncoderPolarity polarity);
-    EncoderMode encoder_x_mode() const;         /* 编码器X模式 */
-    EncoderMode encoder_y_mode() const;         /* 编码器Y模式 */
+
+    /**
+     * @brief encoder_x_mode    获取编码器X模式
+     * @return                  编码器模式
+     */
+    EncoderMode encoder_x_mode() const;
+
+    /**
+     * @brief encoder_y_mode    获取编码器Y模式
+     * @return                  编码器Y模式
+     */
+    EncoderMode encoder_y_mode() const;
+
+    /**
+     * @brief set_encoder_x_mode    设置编码器X模式
+     * @param type                  编码器模式
+     * @return                      设置成功返回true，否则为false
+     */
     bool set_encoder_x_mode(EncoderMode type);
+
+    /**
+     * @brief set_encoder_y_mode    设置编码器Y模式
+     * @param type                  编码器模式
+     * @return                      设置成功返回true，否则为false
+     */
     bool set_encoder_y_mode(EncoderMode type);
 
     /* UT双晶状态 */
@@ -99,7 +149,9 @@ public:
     bool ut2_twin() const;
     bool set_ut2_twin(bool enable);
 
-    /* UT发射接收阻尼 */
+    /**
+     * @brief The DampingType enum  UT发射接收阻尼类型
+     */
     enum DampingType {
         R50  = 0b00,
         R100 = 0b01,
@@ -115,15 +167,39 @@ public:
     DampingType ut2_rx_damping() const;
     bool set_ut2_rx_damping(DampingType type);
 
-    /* PA/UT发射电压 */
+    /**
+     * @brief The VoltageType enum  PA/UT发射电压类型
+     */
     enum VoltageType {
         VOLTAGE_LOW     = 0b00,
         VOLTAGE_MIDDLE  = 0b01,
         VOLTAGE_HIGHT   = 0b10
     };
+
+    /**
+     * @brief ut_voltage    获取UT电压类型
+     * @return              电压类型
+     */
     VoltageType ut_voltage() const;
+
+    /**
+     * @brief set_ut_voltage    设置UT电压类型
+     * @param type              电压类型
+     * @return                  成功返回true，否则为false
+     */
     bool set_ut_voltage(VoltageType type);
+
+    /**
+     * @brief pa_voltage    获取PA电压类型
+     * @return              电压类型
+     */
     VoltageType pa_voltage() const;
+
+    /**
+     * @brief set_pa_voltage    设置PA电压类型
+     * @param type              电压类型
+     * @return                  成功返回true，否则为false
+     */
     bool set_pa_voltage(VoltageType type);
 
     /* 控制省电 */
@@ -141,7 +217,9 @@ public:
     bool is_freeze() const;
     bool set_freeze(bool freeze);
 
-    /* 蜂鸣器频率 */
+    /**
+     * @brief The SoundMode enum    蜂鸣器工作频率
+     */
     enum SoundMode {
         SOUND_OFF   = 0b000,
         SOUND_300HZ = 0b001,
@@ -149,7 +227,18 @@ public:
         SOUND_1000HZ= 0b011,
         SOUND_5000HZ= 0b100,
     };
+
+    /**
+     * @brief sound 获取蜂鸣器工作频率
+     * @return      频率模式
+     */
     SoundMode sound() const;
+
+    /**
+     * @brief set_sound 设置蜂鸣器工作频率
+     * @param mode      频率模式
+     * @return          成功返回true，否则为false
+     */
     bool set_sound(SoundMode mode);
 
     AlarmOutput *alarm_output(int index);
@@ -172,6 +261,12 @@ public:
     bool create_tcg();
     bool remove_tcg();
     const TcgPointer &get_tcg(int index) const;
+
+    /**
+     * @brief deploy    下发FPGA配置参数
+     * @return          成功返回true，失败返回false
+     */
+    bool deploy() const;
 
 protected:
     Fpga();

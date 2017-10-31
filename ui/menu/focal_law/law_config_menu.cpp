@@ -66,12 +66,12 @@ void LawConfigMenu::do_lawTypeItem_changed(int index)
 
 void LawConfigMenu::do_pulseItem_changed(double val)
 {
-    m_probePtr->set_pulser_index(val-1);
+    m_probePtr->set_pulser_index(val);
 }
 
 void LawConfigMenu::do_receiverItem_changed(double val)
 {
-    m_probePtr->set_receiver_index(val-1);
+    m_probePtr->set_receiver_index(val);
 }
 
 void LawConfigMenu::update(const DplDevice::GroupPointer &group)
@@ -80,8 +80,8 @@ void LawConfigMenu::update(const DplDevice::GroupPointer &group)
     m_scanScnPtr = m_probePtr->scan_configure().staticCast<DplFocallaw::ScanCnf>();
 
     m_lawTypeItem->set_current_index(m_scanScnPtr->mode());
-    m_pulseItem->set_value(m_probePtr->pulser_index()+1);
-    m_receiverItem->set_value(m_probePtr->receiver_index()+1);
+    m_pulseItem->set_value(m_probePtr->pulser_index());
+    m_receiverItem->set_value(m_probePtr->receiver_index());
 }
 
 }

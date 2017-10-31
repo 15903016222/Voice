@@ -7,6 +7,7 @@
  */
 #include "preference_menu.h"
 #include "ui_base_menu.h"
+#include <device/device.h>
 
 namespace DplPreferenceMenu {
 
@@ -16,13 +17,15 @@ PreferenceMenu::PreferenceMenu(QWidget *parent) :
     m_opacityItem(new SpinMenuItem(this, tr("Opacity"), "%")),
     m_languageItem(new ComboMenuItem(this, tr("Language"))),
     m_startingPageItem(new ComboMenuItem(this, tr("Starting Page"))),
-    m_gatemodeItem(new ComboMenuItem(this, tr("Gate Mode")))
+    m_gatemodeItem(new ComboMenuItem(this, tr("Gate Mode"))),
+    m_deployItem(new LabelMenuItem(this, tr("Deploy")))
 {
     ui->layout0->addWidget(m_brightItem);
     ui->layout1->addWidget(m_opacityItem);
     ui->layout2->addWidget(m_languageItem);
     ui->layout3->addWidget(m_startingPageItem);
     ui->layout4->addWidget(m_gatemodeItem);
+    ui->layout5->addWidget(m_deployItem);
 
     m_mcu = Mcu::instance();
 
@@ -47,6 +50,11 @@ PreferenceMenu::PreferenceMenu(QWidget *parent) :
 
     /* Gate Mode */
     m_gatemodeItem->set(s_onOff);
+
+    /* Deploy */
+    connect(m_deployItem,
+            SIGNAL(clicked()),
+            this, SLOT(do_deployItem_changed()));
 }
 
 PreferenceMenu::~PreferenceMenu()
@@ -56,6 +64,11 @@ PreferenceMenu::~PreferenceMenu()
 void PreferenceMenu::set_brightness(double value)
 {
     m_mcu->set_brightness((char)value);
+}
+
+void PreferenceMenu::do_deployItem_changed()
+{
+    DplDevice::Device::instance()->deploy();
 }
 
 }

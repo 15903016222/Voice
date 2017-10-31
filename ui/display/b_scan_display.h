@@ -98,9 +98,6 @@ protected:
     Qt::Orientation  m_orientation;
     QSemaphore       m_refreshSemaphore;    /* 切换时间扫查或编码器扫查时，刷新信号量 */
 
-    DplSource::AxisPointer      m_axisPointer;
-    DplSource::EncoderPointer   m_encoderPointer;
-
     volatile bool m_cursorVisible;
 
     DplMeasure::CursorPointer   m_cursorPointer;

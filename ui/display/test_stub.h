@@ -5,8 +5,6 @@
 #include <QReadWriteLock>
 #include <QWriteLocker>
 
-static const double  SECOND_T = 1000.0;
-
 class TestStub
 {
 

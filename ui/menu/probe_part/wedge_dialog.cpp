@@ -3,7 +3,6 @@
 
 #include <QDir>
 #include <QKeyEvent>
-#include <QDebug>
 
 #include <global.h>
 #include <device/device.h>

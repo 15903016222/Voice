@@ -3,7 +3,6 @@
 
 #include <QDir>
 #include <QKeyEvent>
-#include <QDebug>
 
 #include <device/device.h>
 #include <focallaw/ut_probe.h>

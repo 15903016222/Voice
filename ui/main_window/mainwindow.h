@@ -23,6 +23,7 @@ public:
     ~MainWindow();
 
 protected:
+    void mousePressEvent(QMouseEvent *e);
     void keyPressEvent(QKeyEvent *event);
 
 signals:

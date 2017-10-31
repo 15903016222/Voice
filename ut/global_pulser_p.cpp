@@ -28,8 +28,8 @@ int GlobalPulserPrivate::max_txrx_time() const
 {
     int max = 1;
     foreach (DplDevice::GroupPointer grp, DplDevice::Device::instance()->groups()) {
-        if (max < grp->pulser()->txrx_time()) {
-            max = grp->pulser()->txrx_time();
+        if (max < grp->transceiver()->work_time()) {
+            max = grp->transceiver()->work_time();
         }
     }
     return max;
@@ -55,7 +55,7 @@ int GlobalPulserPrivate::max_acquisition_rate() const
     foreach (DplDevice::GroupPointer grp, dev->groups()) {
         if (grp->focallawer()->probe()->is_pa()) {
             DplFocallaw::PaProbePointer probe = grp->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
-            power = grp->pulser()->pw() * qPow(m_paVoltage, 2) / DplFocallaw::PaProbe::RESISTANCE;
+            power = grp->transceiver()->pw() * qPow(m_paVoltage, 2) / DplFocallaw::PaProbe::RESISTANCE;
             elementPower += grp->focallawer()->beam_qty() * power;
             totalElementPower += probe->scan_configure()->aperture() * elementPower;
         }

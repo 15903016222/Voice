@@ -134,7 +134,6 @@ void PropertiesMenu::do_scanItem_changed(int i)
 void PropertiesMenu::do_colorItem_clicked()
 {
     QColorDialog dlg;
-    dlg.setCursor(Qt::BlankCursor);
     dlg.setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     if ( dlg.exec() == QDialog::Accepted ) {
         m_display->ascan()->set_color(dlg.currentColor());

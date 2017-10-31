@@ -75,6 +75,7 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     connect(this, SIGNAL(cursor_visible_changed(bool)), this, SLOT(do_cursor_visible_changed(bool)));
 }
 
+
 BscanDisplay::~BscanDisplay()
 {
     disconnect(static_cast<DplDevice::Group *>(m_group.data()),
@@ -358,17 +359,25 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
 
     } else {
 
+        DplSource::Scan *scan = DplSource::Scan::instance();
+        DplSource::AxisPointer axis = scan->scan_axis();
+        double timeWidth = (axis->end() - axis->start()) / scan->speed();
         double scanTypeRulerEnd;
-
         double beamQtyPerSecond = SECOND / (double)DplSource::Source::instance()->interval();
-
         if(m_orientation == Qt::Horizontal) {
             scanTypeRulerEnd = size.height() / beamQtyPerSecond;
         } else {
             scanTypeRulerEnd = size.width() / beamQtyPerSecond;
         }
 
-        m_scanTypeRuler->set_range(0.0, scanTypeRulerEnd);
+        if(scanTypeRulerEnd > timeWidth) {
+            /* 实际显示时间长度小于标尺最大长度 */
+            m_scanTypeRuler->set_range(0.0, timeWidth);
+        } else {
+            m_scanTypeRuler->set_range(0.0, scanTypeRulerEnd);
+            m_scanTypeRuler->set_max_end(timeWidth);
+        }
+
         m_scanTypeRuler->set_unit("(s)");
     }
 
@@ -428,18 +437,28 @@ void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
     qDebug("[%s:%s] debug here.", "BscanDisplay", __FUNCTION__);
 
     double currentTimeCount = TestStub::instance()->get_time();
-    double rulerEnd;
+
+    DplSource::Scan *scan = DplSource::Scan::instance();
+    DplSource::AxisPointer axis = scan->scan_axis();
+    double timeWidth = (axis->end() - axis->start()) / scan->speed();
+
+    if(currentTimeCount > timeWidth) {
+        return;
+    }
+
+    double scanTypeRulerEnd;
+    double beamQtyPerSecond = SECOND / (double)DplSource::Source::instance()->interval();
     if(m_orientation == Qt::Horizontal) {
-        rulerEnd = m_bscanView->height() / (SECOND / (double)DplSource::Source::instance()->interval());
+        scanTypeRulerEnd = m_bscanScene->height() / beamQtyPerSecond;
     } else {
-        rulerEnd = m_bscanView->width() / (SECOND / (double)DplSource::Source::instance()->interval());
+        scanTypeRulerEnd = m_bscanScene->width() / beamQtyPerSecond;
     }
 
     if(!m_bscanImageItem->redraw_beams(beams)) {
         m_bscanImageItem->set_beams(beams);
     }
 
-    if(currentTimeCount > rulerEnd) {
+    if(scanTypeRulerEnd < timeWidth && currentTimeCount > scanTypeRulerEnd) {
         m_bscanImageItem->set_scroll_window(true);
         m_scanTypeRuler->move_to_value(currentTimeCount);
         emit update_ruler(currentTimeCount);

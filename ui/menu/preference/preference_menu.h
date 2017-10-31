@@ -26,6 +26,7 @@ private:
     ComboMenuItem *m_languageItem;
     ComboMenuItem *m_startingPageItem;
     ComboMenuItem *m_gatemodeItem;
+    LabelMenuItem *m_deployItem;
 
     Mcu *m_mcu;
 
@@ -34,6 +35,7 @@ signals:
 
 private slots:
     void set_brightness(double value);
+    void do_deployItem_changed();
 };
 
 }
