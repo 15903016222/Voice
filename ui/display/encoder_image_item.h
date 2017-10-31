@@ -6,7 +6,8 @@
 class EncoderImageItem : public BaseImageItem
 {
 public:
-    explicit EncoderImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    explicit EncoderImageItem(const DplDisplay::PaletteColorPointer &palette,
+                              const DplDevice::GroupPointer &grp, QGraphicsObject *parent = 0);
 
     inline double show_start() { return m_currentStart; }
     inline double show_end() { return m_currentEnd; }

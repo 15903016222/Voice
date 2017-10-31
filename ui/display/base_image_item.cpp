@@ -6,13 +6,14 @@
 #include <source/scan.h>
 #include <typeinfo>
 
-BaseImageItem::BaseImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
-    : QGraphicsObject(),
+
+BaseImageItem::BaseImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QGraphicsObject *parent)
+    : QGraphicsObject(parent),
       m_image(NULL),
-      m_palette(palette),
       m_scrolling(false),
       m_redrawFlag(false),
       m_driving(DplSource::Scan::instance()->scan_axis()->driving()),
+      m_palette(palette),
       m_pixPerBeamRatio(DEFAULT_PIX_PER_BEAM),
       m_beamsShowedCount(0.0),
       m_group(grp),
@@ -47,6 +48,8 @@ bool BaseImageItem::set_pix_per_beam(double ratio)
 
 bool BaseImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 {
+    Q_UNUSED(beams);
+
     /* 更改扫查方式后（时间/编码器），需要更新C扫 */
     if(m_driving != DplSource::Scan::instance()->scan_axis()->driving()) {
         return true;

@@ -6,9 +6,9 @@
 
 BaseCursorItem::BaseCursorItem(Qt::Orientation orientation, QGraphicsItem *parent) :
     QGraphicsObject(parent),
-    m_movingFlag(false),
     m_color(Qt::red),
-    m_orientation(orientation)
+    m_orientation(orientation),
+    m_movingFlag(false)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);

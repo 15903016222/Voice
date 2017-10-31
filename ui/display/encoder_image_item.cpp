@@ -4,7 +4,8 @@
 #include <source/source.h>
 #include <source/beams.h>
 
-EncoderImageItem::EncoderImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+EncoderImageItem::EncoderImageItem(const DplDisplay::PaletteColorPointer &palette,
+                                   const DplDevice::GroupPointer &grp, QGraphicsObject *parent)
     : BaseImageItem(palette, grp, parent)
 {
 
@@ -266,6 +267,8 @@ void EncoderImageItem::set_one_vertical_beam(double x, const BaseImageItem::S_Co
 
 void EncoderImageItem::set_scroll_env(const BaseImageItem::S_CommonProperties &commonProperties)
 {
+    Q_UNUSED(commonProperties);
+
     double scanStart        = DplSource::Scan::instance()->scan_axis()->start();
     double scanEnd          = DplSource::Scan::instance()->scan_axis()->end();
     double scanResolution   = DplSource::Scan::instance()->scan_axis()->resolution();

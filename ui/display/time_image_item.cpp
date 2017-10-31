@@ -2,7 +2,7 @@
 
 #include <source/source.h>
 
-TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QGraphicsObject *parent)
     : BaseImageItem(palette, grp, parent)
 {
 
@@ -22,8 +22,10 @@ void TimeImageItem::draw_vertical_beam()
     /* 系统一共有多少帧 */
     int totalFrameCount = STORE_BUFFER_SIZE / m_beamsPointer->size();
 
-    DplSource::BeamsPointer beamsPointer = DplSource::Source::instance()->beams(m_group->index(),
-                                                                                pendingFrameCount % totalFrameCount);
+   // DplSource::BeamsPointer beamsPointer = DplSource::Source::instance()->beams(m_group->index(),
+     //                                                                           pendingFrameCount % totalFrameCount);
+    DplSource::BeamsPointer beamsPointer  = m_beamsPointer;
+
     if(m_scrolling) {
         /* 整个显示区域画满beam，开始滚动显示后续的beam */
         scroll_vertical_image(commonProperties, beamsPointer);

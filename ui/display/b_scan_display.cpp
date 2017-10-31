@@ -29,7 +29,6 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     m_bscanImageItem(NULL),
     m_baseCursorItem(new BaseCursorItem(orientation)),
     m_orientation(orientation)
-
 {
     ui->setupUi(this);
 
@@ -37,6 +36,8 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     m_bscanView->setScene(m_bscanScene);
 
     init_scan_env();
+
+    m_bscanScene->addItem(m_baseCursorItem);
 
     init_ruler();
 
@@ -61,6 +62,7 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     connect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
     connect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
 }
+
 
 BscanDisplay::~BscanDisplay()
 {
@@ -147,6 +149,8 @@ void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 
 void BscanDisplay::do_update_ruler(double value)
 {
+    Q_UNUSED(value);
+
     if(m_scanTypeRuler == NULL) {
         return;
     }
@@ -201,17 +205,27 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
 
     } else {
 
+        DplSource::Scan *scan = DplSource::Scan::instance();
+        DplSource::AxisPointer scanAxis = scan->scan_axis();
+
+        double timeWidth = (scanAxis->end() - scanAxis->start()) / scan->speed();
+
         double scanTypeRulerEnd;
-
         double beamQtyPerSecond = SECOND / (double)DplSource::Source::instance()->interval();
-
         if(m_orientation == Qt::Horizontal) {
             scanTypeRulerEnd = size.height() / beamQtyPerSecond;
         } else {
             scanTypeRulerEnd = size.width() / beamQtyPerSecond;
         }
 
-        m_scanTypeRuler->set_range(0.0, scanTypeRulerEnd);
+        if(scanTypeRulerEnd > timeWidth) {
+            /* 实际显示时间长度小于标尺最大长度 */
+            m_scanTypeRuler->set_range(0.0, timeWidth);
+        } else {
+            m_scanTypeRuler->set_range(0.0, scanTypeRulerEnd);
+            m_scanTypeRuler->set_max_end(timeWidth);
+        }
+
         m_scanTypeRuler->set_unit("(s)");
     }
 
@@ -239,37 +253,45 @@ void BscanDisplay::init_scan_env()
     }
 
     m_bscanScene->addItem(m_bscanImageItem);
-    m_bscanScene->addItem(m_baseCursorItem);
 
     if (m_orientation == Qt::Horizontal) {
         m_bscanImageItem->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
-    } else {
-        m_bscanImageItem->set_size(m_bscanView->size());
-    }
-
-    if (m_orientation == Qt::Horizontal) {
         m_baseCursorItem->set_size(QSize(m_bscanView->height(), m_bscanView->width()));
     } else {
+        m_bscanImageItem->set_size(m_bscanView->size());
         m_baseCursorItem->set_size(m_bscanView->size());
     }
-
 }
 
 void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 {
     double currentTimeCount = TestStub::instance()->get_time();
-    double rulerEnd;
+
+    qDebug() << "[" << __FUNCTION__ << "]"
+             << " current time  = " << currentTimeCount;
+
+    DplSource::Scan *scan = DplSource::Scan::instance();
+    DplSource::AxisPointer scanAxis = scan->scan_axis();
+
+    double timeWidth = (scanAxis->end() - scanAxis->start()) / scan->speed();
+
+    if(currentTimeCount > timeWidth) {
+        return;
+    }
+
+    double scanTypeRulerEnd;
+    double beamQtyPerSecond = SECOND / (double)DplSource::Source::instance()->interval();
     if(m_orientation == Qt::Horizontal) {
-        rulerEnd = m_bscanView->height() / (SECOND / (double)DplSource::Source::instance()->interval());
+        scanTypeRulerEnd = m_bscanScene->height() / beamQtyPerSecond;
     } else {
-        rulerEnd = m_bscanView->width() / (SECOND / (double)DplSource::Source::instance()->interval());
+        scanTypeRulerEnd = m_bscanScene->width() / beamQtyPerSecond;
     }
 
     if(!m_bscanImageItem->redraw_beams(beams)) {
         m_bscanImageItem->set_beams(beams);
     }
 
-    if(currentTimeCount > rulerEnd) {
+    if(scanTypeRulerEnd < timeWidth && currentTimeCount > scanTypeRulerEnd) {
         m_bscanImageItem->set_scroll_window(true);
         m_scanTypeRuler->move_to_value(currentTimeCount);
         emit update_ruler(currentTimeCount);
