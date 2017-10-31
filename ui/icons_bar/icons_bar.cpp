@@ -1,7 +1,6 @@
 #include "icons_bar.h"
 #include "ui_icons_bar.h"
 #include <source/scan.h>
-#include <QDebug>
 
 IconsBar::IconsBar(QWidget *parent) :
     QWidget(parent),

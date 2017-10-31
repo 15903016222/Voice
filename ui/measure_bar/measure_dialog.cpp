@@ -12,8 +12,6 @@
 
 #include <QKeyEvent>
 
-#include <QDebug>
-
 MeasureDialog::MeasureDialog(QWidget *parent, Measure::Type type) :
     QDialog(parent),
     ui(new Ui::MeasureDialog)

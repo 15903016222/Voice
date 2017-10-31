@@ -9,8 +9,6 @@
 #include "ut_advanced_menu.h"
 #include "ui_base_menu.h"
 
-#include <QDebug>
-
 namespace DplUtSettingMenu {
 
 UtAdvancedMenu::UtAdvancedMenu(QWidget *parent) :

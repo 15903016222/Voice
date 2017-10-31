@@ -9,7 +9,6 @@
 #include "ui_base_menu.h"
 #include "probe_dialog.h"
 #include "wedge_dialog.h"
-#include <QDebug>
 
 namespace DplProbeMenu {
 

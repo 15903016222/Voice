@@ -10,7 +10,6 @@
 
 #include <QKeyEvent>
 #include <QScrollBar>
-#include <QDebug>
 
 MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),

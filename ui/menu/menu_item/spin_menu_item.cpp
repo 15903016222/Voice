@@ -10,7 +10,6 @@
 
 #include <qmath.h>
 #include <QKeyEvent>
-#include <QDebug>
 
 SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) :
     MenuItem(parent),

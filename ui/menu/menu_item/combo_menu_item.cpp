@@ -8,7 +8,6 @@
 #include "combo_menu_item.h"
 #include "ui_combo_menu_item.h"
 
-#include <QDebug>
 #include <QListView>
 
 ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
