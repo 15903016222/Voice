@@ -95,6 +95,12 @@ public:
     int scale_factor(void) const;
 
     /**
+     * @brief set_scale_factor      设置采样点压缩系数
+     * @param val                   压缩系数
+     */
+    void set_scale_factor(int val);
+
+    /**
      * @brief gain  获取增益
      * @return      返回增益值， 单位(dB)
      */
@@ -365,11 +371,6 @@ public slots:
      */
     void set_gain(float gain);
 
-    /**
-     * @brief set_scale_factor      设置采样点压缩系数
-     * @param val                   压缩系数
-     */
-    void set_scale_factor(int val);
 
     /**
      * @brief set_point_qty 设置压缩后的采样点数
@@ -379,6 +380,7 @@ public slots:
 
 signals:
     void work_time_changed();
+    void scale_factor_changed(int);
 
 private:
     GroupPrivate *d;

@@ -40,8 +40,7 @@ int main(int argc, char *argv[])
     }
 
 #if PHASCAN
-//    QApplication::setOverrideCursor(Qt::BlankCursor);       // 隐藏鼠标
-    w.setCursor(Qt::BlankCursor);                           // 隐藏鼠标
+//    w.setCursor(Qt::BlankCursor);                           // 隐藏鼠标
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 #elif PHASCAN_II
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
@@ -51,8 +50,9 @@ int main(int argc, char *argv[])
 
     DplDevice::Device::instance()->start();
 
+    splash.finish(&w);
+
     qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 
-    splash.finish(&w);
     return a.exec();
 }

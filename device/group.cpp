@@ -25,8 +25,7 @@ Group::Group(int index, QObject *parent) : QObject(parent),
     m_fpgaGroup(new DplFpga::Group(index)),
     m_focallawer(new DplFocallaw::Focallawer),
     m_sample(new DplUt::Sample(m_fpgaGroup)),
-    m_pulser(new DplUt::Pulser(m_sample, m_focallawer)),
-    m_receiver(new DplUt::Receiver(m_fpgaGroup)),
+    m_transceiver(new DplUt::Transceiver(m_fpgaGroup)),
     m_gateA(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_A)),
     m_gateB(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_B, Qt::green)),
     m_gateI(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_I, Qt::darkCyan)),
@@ -36,7 +35,6 @@ Group::Group(int index, QObject *parent) : QObject(parent),
     init_gates();
 
     init_sample();
-    init_pulser();
 
     init_source();
 
@@ -131,7 +129,7 @@ void Group::deploy_beams() const
     int beamIndex = Device::instance()->first_beam_index(this);
 
 //    DplFpga::Fpga::instance()->show_info();
-//    m_fpgaGroup->show_info();
+    m_fpgaGroup->show_info();
 
     fpgaBeam.set_total_beam_qty( Device::instance()->beam_qty() );
     fpgaBeam.set_group_id(index());
@@ -170,23 +168,16 @@ void Group::deploy_beams() const
     }
 }
 
-void Group::update_sample()
-{
-    m_fpgaGroup->set_sample_start((m_focallawer->wedge()->delay() + m_sample->start())/DplFpga::Fpga::SAMPLE_PRECISION);
-    m_fpgaGroup->set_sample_range((m_focallawer->wedge()->delay() + m_sample->start() + m_sample->range())/DplFpga::Fpga::SAMPLE_PRECISION);
-}
-
-void Group::update_pulser()
-{
-    m_fpgaGroup->set_rx_time((m_pulser->txrx_time() + 50)/DplFpga::Fpga::SAMPLE_PRECISION);
-    m_fpgaGroup->set_idle_time((DplUt::GlobalPulser::instance()->beam_cycle() - m_pulser->txrx_time())/DplFpga::Fpga::SAMPLE_PRECISION);
-}
-
 void Group::update_source()
 {
     DplSource::Source::instance()->edit_group(m_fpgaGroup->index(),
                                               m_focallawer->beam_qty(),
                                               m_sample->point_qty());
+}
+
+void Group::do_wedge_delay_changed(int delay)
+{
+    m_fpgaGroup->set_wedge_delay(delay / DplFpga::Fpga::SAMPLE_PRECISION);
 }
 
 void Group::init_gate(DplGate::Gate *gate)
@@ -214,17 +205,6 @@ void Group::init_sample()
             static_cast<DplFpga::Group *>(m_fpgaGroup.data()),
             SLOT(set_point_qty(int)));
 
-    /* 关联Group */
-    connect(sample,
-            SIGNAL(start_changed(float)),
-            this,
-            SLOT(update_sample()));
-
-    connect(sample,
-            SIGNAL(range_changed(float)),
-            this,
-            SLOT(update_sample()));
-
     /* 关联Beams */
     connect(sample,
             SIGNAL(point_qty_changed(int)),
@@ -235,22 +215,7 @@ void Group::init_sample()
     connect(static_cast<DplFocallaw::Wedge *>(m_focallawer->wedge().data()),
             SIGNAL(delay_changed(int)),
             this,
-            SLOT(update_sample()));
-
-    update_sample();
-}
-
-void Group::init_pulser()
-{
-    connect(static_cast<DplUt::Pulser *>(m_pulser.data()),
-            SIGNAL(txrx_time_changed()),
-            this,
-            SLOT(update_pulser()));
-
-    connect(DplUt::GlobalPulser::instance(),
-            SIGNAL(prf_changed()),
-            this,
-            SLOT(update_pulser()));
+            SLOT(do_wedge_delay_changed(int)));
 }
 
 void Group::init_source()

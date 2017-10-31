@@ -68,29 +68,29 @@ void ReceiverMenu::do_receiverItem_changed(double val)
 
 void ReceiverMenu::do_filterItem_changed(int index)
 {
-    DplUt::ReceiverPointer receiver = m_group->receiver();
+    DplUt::TransceiverPointer transceiver = m_group->transceiver();
 
     switch (index) {
     case 0:
-        receiver->set_filter(0);
+        transceiver->set_filter(0);
         break;
     case 1:
-        receiver->set_filter(m_group->focallawer()->probe()->freq()*1000);
+        transceiver->set_filter(m_group->focallawer()->probe()->freq()*1000);
         break;
     case 2:
-        receiver->set_filter(1000);
+        transceiver->set_filter(1000);
         break;
     case 3:
-        receiver->set_filter(2500);
+        transceiver->set_filter(2500);
         break;
     case 4:
-        receiver->set_filter(5000);
+        transceiver->set_filter(5000);
         break;
     case 5:
-        receiver->set_filter(7500);
+        transceiver->set_filter(7500);
         break;
     case 6:
-        receiver->set_filter(20000);
+        transceiver->set_filter(20000);
         break;
     default:
         break;
@@ -99,29 +99,29 @@ void ReceiverMenu::do_filterItem_changed(int index)
 
 void ReceiverMenu::do_rectifierItem_changed(int index)
 {
-    if ( m_group->pulser()->tx_rx_mode() == DplUt::Pulser::TOFD ) {
-        m_group->receiver()->set_rectifier(static_cast<DplFpga::Group::Rectifier>(index));
+    if ( m_group->transceiver()->mode() == DplUt::Transceiver::TOFD ) {
+        m_group->transceiver()->set_rectifier(static_cast<DplFpga::Group::Rectifier>(index));
     } else {
-        m_group->receiver()->set_rectifier(static_cast<DplFpga::Group::Rectifier>(index+1));
+        m_group->transceiver()->set_rectifier(static_cast<DplFpga::Group::Rectifier>(index+1));
     }
 }
 
 void ReceiverMenu::do_videoFilterItem_changed(int index)
 {
-    m_group->receiver()->set_video_filter(!index);
+    m_group->transceiver()->set_video_filter(!index);
 }
 
 void ReceiverMenu::do_averagingItem_changed(int index)
 {
-    m_group->receiver()->set_averaging(static_cast<DplFpga::Group::Averaging>(index));
+    m_group->transceiver()->set_averaging(static_cast<DplFpga::Group::Averaging>(index));
 }
 
 void ReceiverMenu::update(const DplDevice::GroupPointer &grp)
 {
     /* disconnect */
     if (m_group) {
-        disconnect(static_cast<DplUt::Pulser*>(m_group->pulser().data()),
-                   SIGNAL(txrx_mode_changed(TxRxMode)),
+        disconnect(static_cast<DplUt::Transceiver *>(m_group->transceiver().data()),
+                   SIGNAL(mode_changed(DplUt::Transceiver::Mode)),
                    this,
                    SLOT(update_rectifierItem()));
     }
@@ -130,14 +130,14 @@ void ReceiverMenu::update(const DplDevice::GroupPointer &grp)
     update_filterItem();
     update_receiverItem();
 
-    connect(static_cast<DplUt::Pulser*>(m_group->pulser().data()),
-            SIGNAL(txrx_mode_changed(TxRxMode)),
+    connect(static_cast<DplUt::Transceiver *>(m_group->transceiver().data()),
+            SIGNAL(mode_changed(DplUt::Transceiver::Mode)),
             this,
             SLOT(update_rectifierItem()));
     update_rectifierItem();
 
-    m_videoFilterItem->set_current_index(!m_group->receiver()->video_filter());
-    m_averagingItem->set_current_index(m_group->receiver()->averaging());
+    m_videoFilterItem->set_current_index(!m_group->transceiver()->video_filter());
+    m_averagingItem->set_current_index(m_group->transceiver()->averaging());
 }
 
 void ReceiverMenu::update_filterItem()
@@ -179,7 +179,7 @@ void ReceiverMenu::update_rectifierItem()
                this,
                SLOT(do_rectifierItem_changed(int)));
     m_rectifierItem->set(QStringList());
-    if ( m_group->pulser()->tx_rx_mode() == DplUt::Pulser::TOFD ) {
+    if ( m_group->transceiver()->mode() == DplUt::Transceiver::TOFD ) {
         m_rectifierItem->add_item(tr("RF"));
     }
     m_rectifierItem->add_item(tr("HW+"));
@@ -190,10 +190,10 @@ void ReceiverMenu::update_rectifierItem()
             this,
             SLOT(do_rectifierItem_changed(int)));
 
-    if ( m_group->pulser()->tx_rx_mode() == DplUt::Pulser::TOFD ) {
-        m_rectifierItem->set_current_index(m_group->receiver()->rectifier());
+    if ( m_group->transceiver()->mode() == DplUt::Transceiver::TOFD ) {
+        m_rectifierItem->set_current_index(m_group->transceiver()->rectifier());
     } else {
-        m_rectifierItem->set_current_index(m_group->receiver()->rectifier()-1);
+        m_rectifierItem->set_current_index(m_group->transceiver()->rectifier()-1);
     }
 }
 
