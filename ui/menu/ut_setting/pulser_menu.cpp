@@ -99,7 +99,7 @@ void PulserMenu::update_voltageItem()
 
 void PulserMenu::do_txrxModeItem_changed(int index)
 {
-    m_group->pulser()->set_tx_rx_mode(static_cast<DplUt::Pulser::TxRxMode>(index));
+    m_group->transceiver()->set_mode(static_cast<DplUt::Transceiver::Mode>(index));
 }
 
 void PulserMenu::do_pulserItem_changed(double val)
@@ -131,7 +131,7 @@ void PulserMenu::do_voltageItem_changed(int index)
 
 void PulserMenu::do_pwItem_changed(double val)
 {
-    m_group->pulser()->set_pw(val);
+    m_group->transceiver()->set_pw(val);
 }
 
 void PulserMenu::do_prfItem_changed(int index)
@@ -156,7 +156,7 @@ void PulserMenu::update(const DplDevice::GroupPointer &group)
     update_txrxModeItem();
     m_pulserItem->set_value(m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>()->pulser_index());
     update_voltageItem();
-    m_pwItem->set_value(m_group->pulser()->pw());
+    m_pwItem->set_value(m_group->transceiver()->pw());
     m_prfItem->set_current_index(DplUt::GlobalPulser::instance()->prf_mode());
     update_userDefItem();
 }
@@ -180,7 +180,7 @@ void PulserMenu::update_txrxModeItem()
     if (m_group->mode() != DplDevice::Group::PA) {
         m_txrxModeItem->add_item(tr("TOFD"));
     }
-    m_txrxModeItem->set_current_index(m_group->pulser()->tx_rx_mode());
+    m_txrxModeItem->set_current_index(m_group->transceiver()->mode());
 
     connect(m_txrxModeItem,
             SIGNAL(value_changed(int)),

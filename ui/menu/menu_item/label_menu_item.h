@@ -52,9 +52,6 @@ signals:
      */
     void clicked();
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *e);
-
 private:
     Ui::LabelMenuItem *ui;
 

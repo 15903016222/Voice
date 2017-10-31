@@ -85,11 +85,11 @@ void GlobalPulser::connect_group(const DplDevice::Group *grp)
             SIGNAL(focallawed()),
             d,
             SLOT(update_acquisition_rate()));
-    connect(static_cast<Pulser *>(grp->pulser().data()),
-            SIGNAL(txrx_time_changed()),
+    connect(static_cast<Transceiver *>(grp->transceiver().data()),
+            SIGNAL(work_time_changed()),
             d,
             SLOT(update_acquisition_rate()));
-    connect(static_cast<Pulser *>(grp->pulser().data()),
+    connect(static_cast<Transceiver *>(grp->transceiver().data()),
             SIGNAL(pw_changed(float)),
             d,
             SLOT(update_acquisition_rate()));

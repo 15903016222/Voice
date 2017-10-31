@@ -1,5 +1,4 @@
 #include "mode_radio_button.h"
-#include <QDebug>
 
 #define W_SIZE (100) //(177)
 #define H_SIZE (54)  //(96)

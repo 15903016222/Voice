@@ -99,35 +99,10 @@ signals:
     void point_qty_changed(int qty);
 
 private:
-    float m_start;              // 采样起点(ns)
-    float m_range;              // 采样范围(ns)
     SamplePrivate *d;
 };
 
 typedef QSharedPointer<Sample> SamplePointer;
-
-inline float Sample::start() const
-{
-    return m_start;
-}
-
-inline void Sample::set_start(float start)
-{
-    if ( !qFuzzyCompare(start, m_start) ) {
-        m_start = start;
-        emit start_changed(start);
-    }
-}
-
-inline float Sample::range() const
-{
-    return m_range;
-}
-
-inline int Sample::scale_factor() const
-{
-    return range()/precision()/point_qty();
-}
 
 }
 #endif // __DPLUT_SAMPLE_H__

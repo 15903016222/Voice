@@ -182,6 +182,11 @@ public:
      */
     bool is_running() const;
 
+    /**
+     * @brief deploy    下发所有配置参数
+     */
+    void deploy() const;
+
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
     void beam_qty_changed();

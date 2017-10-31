@@ -17,7 +17,6 @@ win32 {
 }
 unix {
     DEVICE = pcunix
-    LIBS += -lX11 -lXtst
 
     linux-arm-g++ {
     DEVICE = phascan

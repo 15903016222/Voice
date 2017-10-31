@@ -10,7 +10,6 @@
 
 #include <qmath.h>
 #include <QKeyEvent>
-#include <QDebug>
 
 SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) :
     MenuItem(parent),
@@ -123,6 +122,13 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
     } else if (e->type() == QEvent::FocusOut) {
         set_focus_out();
         return true;
+    } else if (e->type() == QEvent::Wheel) {
+        QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(e);
+        if (wheelEvent->delta() > 0) {
+            add();
+        } else if(wheelEvent->delta() < 0) {
+            sub();
+        }
     }
 
     return QWidget::eventFilter(obj, e);

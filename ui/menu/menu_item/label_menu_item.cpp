@@ -13,7 +13,9 @@ LabelMenuItem::LabelMenuItem(QWidget *parent, const QString &title, const QStrin
     ui(new Ui::LabelMenuItem)
 {
     ui->setupUi(this);
-    ui->nameLabel->installEventFilter(this);
+    connect(ui->pushButton,
+            SIGNAL(clicked()),
+            this, SIGNAL(clicked()));
     set_title(title);
     set_text(text);
 }
@@ -25,22 +27,8 @@ LabelMenuItem::~LabelMenuItem()
 
 void LabelMenuItem::set_title(const QString &title)
 {
-    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
-    msg += title;
-    msg += "</font>";
-    msg += "</p>";
-    ui->nameLabel->setText(msg);
+    ui->pushButton->setText(title);
     m_title = title;
-}
-
-bool LabelMenuItem::eventFilter(QObject *obj, QEvent *e)
-{
-    if (e->type() == QEvent::MouseButtonRelease) {
-        emit clicked();
-        return true;
-    }
-
-    return QWidget::eventFilter(obj, e);
 }
 
 void LabelMenuItem::set_text(const QString &text)

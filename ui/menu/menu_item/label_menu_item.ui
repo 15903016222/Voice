@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>65</width>
+    <width>101</width>
     <height>70</height>
    </rect>
   </property>
@@ -30,37 +30,30 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="nameLabel">
+    <widget class="QPushButton" name="pushButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>14</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true">QLabel{
-	font: 14pt &quot;Arial&quot;;
+      <string notr="true">QPushButton{
+	background-position: center;
+	font: 16pt &quot;Arial&quot;;
 	background-color:rgba(0, 130, 195);
 	border: 0px solid black;
 	color: rgb(255, 255, 0);
 	border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), 	stop:0.559322 rgba(255, 255, 255, 255));
 	border-right:1px solid qlineargradient(spread:reflect, x1:0.5, y1:0.028, x2:0.5, y2:1, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(0, 0, 0, 255));
-}</string>
+}
+</string>
      </property>
      <property name="text">
-      <string/>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::RichText</enum>
+      <string>PushButton</string>
      </property>
     </widget>
    </item>
