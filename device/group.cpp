@@ -53,6 +53,13 @@ Group::Mode Group::mode()
 
 void Group::set_mode(Group::Mode mode)
 {
+    if (PA == mode || UT == mode) {
+        m_fpgaGroup->set_mode(DplFpga::Group::PA);
+    } else if (UT1 == mode) {
+        m_fpgaGroup->set_mode(DplFpga::Group::UT1);
+    } else if (UT2 == mode) {
+        m_fpgaGroup->set_mode(DplFpga::Group::UT2);
+    }
     d->set_mode(mode);
 }
 
