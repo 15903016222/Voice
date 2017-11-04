@@ -2,24 +2,23 @@
 #define __S_SCAN_IMAGE_H__
 
 #include <QImage>
-#include <source/beams.h>
-#include <source/source.h>
+#include <device/group.h>
+
+class SscanImagePrivate;
 class SscanImage : public QImage
 {
 public:
-    explicit SscanImage(const QSize &size);
+    explicit SscanImage(const DplDevice::GroupPointer &group, const QSize &size);
     ~SscanImage();
 
     void draw_beams(const DplSource::BeamsPointer &beams);
 
 protected:
-    void init_mark();
+    void draw_linear(const DplSource::BeamsPointer &beams);
+    quint8 get_gray(const quint8 *raw, int beamSize, int x, int y);
 
 private:
-    int *m_beamMark;
-    int *m_pointMark;
-
-    int m_pointQty;
+    SscanImagePrivate *d;
 };
 
 #endif // __S_SCAN_IMAGE_H__
