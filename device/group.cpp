@@ -117,6 +117,11 @@ const DplSource::BeamsPointer &Group::current_beams() const
     return d->beams();
 }
 
+void Group::set_current_beam(int index)
+{
+    d->set_current_beam_index(index);
+}
+
 const DplSource::BeamPointer &Group::current_beam() const
 {
     return d->beam();
