@@ -4,8 +4,7 @@
 #include <QGraphicsItem>
 #include <QReadWriteLock>
 #include <device/device.h>
-
-class FFTCalculator;
+#include <ui/display/fft_calculator.h>
 
 class FFTItem : public QGraphicsObject
 {
@@ -14,8 +13,18 @@ public:
     explicit FFTItem(QGraphicsItem *parent = 0);
     ~FFTItem();
 
+    /**
+     * @brief boundingRect 返回FFTItem的矩形边界
+     * @return
+     */
     QRectF boundingRect() const;
 
+    /**
+     * @brief paint     进行FFT波形绘制
+     * @param painter
+     * @param option
+     * @param widget
+     */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     /**
@@ -42,13 +51,23 @@ signals:
     void wave_changed();
 
 private slots:
+
+    /**
+     * @brief do_wave_changed 处理波形改变后的数据
+     */
     void do_wave_changed();
 
 private:
     QSize           m_size;
     QReadWriteLock  m_locker;
     FFTCalculator   *m_fftCalculator;
-    QPainterPath    m_path;
+    QPainterPath    m_wavePath;
+
+    /**
+     * @brief paint_value   画FFT后的结果数据
+     * @param painter       painter
+     */
+    void paint_value(QPainter *painter);
 
 };
 

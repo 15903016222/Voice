@@ -6,6 +6,10 @@
 
 #define PI 3.1415926535897931
 
+static const double g_defaultReal = 128.0;
+static const double g_defaultImg  = 0.0;
+static const double g_totalMhz    = 50.0;
+
 FFTCalculator::FFTCalculator()
 {
     memset(&m_fftResult, 0, sizeof(S_FFT_result));
@@ -14,8 +18,7 @@ FFTCalculator::FFTCalculator()
     memset(&m_data ,0 ,sizeof(S_Complex) * s_NUM);
     memset(&m_returnData ,100 , sizeof(unsigned char) * s_NUM);
 
-    for(int i = 0; i < s_NUM; ++i)
-    {
+    for(int i = 0; i < s_NUM; ++i) {
        m_wn[i].real = cos(2 * PI / s_NUM * i);
        m_wn[i].img  = -1 * sin(2 * PI / s_NUM * i);
     }
@@ -28,6 +31,8 @@ FFTCalculator::~FFTCalculator()
 
 bool FFTCalculator::execute(int len, unsigned char *data, int targetDataLen)
 {
+    memset(m_returnData, 0 , sizeof(unsigned char) * s_NUM);
+
     if(NULL == data) {
         return false;
     }
@@ -52,34 +57,30 @@ const FFTCalculator::S_FFT_result &FFTCalculator::get_result() const
 
 void FFTCalculator::init_data(unsigned char *data)
 {
-    qDebug() << "[" << __FUNCTION__ << "]";
-
     for(int i = 0; i < FFTCalculator::s_NUM; ++i) {
         if(i < m_dataLen) {
             m_data[i].real = data[i];
-            m_data[i].img  = 0.0;
+            m_data[i].img  = g_defaultImg;
         } else {
-            m_data[i].real = 128.0;
-            m_data[i].img  = 0.0;
+            m_data[i].real = g_defaultReal;
+            m_data[i].img  = g_defaultImg;
         }
     }
 }
 
 void FFTCalculator::complex_data()
 {
-    qDebug() << "[" << __FUNCTION__ << "]";
-
     int i,j,k,l;
     S_Complex up,down,product;
     double log2n = log2(s_NUM);
 
     for(i = 0; i < log2n; ++i) {
-        /*一级蝶形运算*/
+        /* 一级蝶形运算 */
         l = 1 << i;
         for(j = 0 ;j < s_NUM ;j += 2 * l) {
-            /*一组蝶形运算*/
+            /* 一组蝶形运算 */
             for(k = 0 ;k < l ;k++) {
-                /*一个蝶形运算*/
+                /* 一个蝶形运算 */
                 fft_mul(m_data[j + k + l] ,m_wn[s_NUM * k / 2 / l], product);
                 fft_add(m_data[j + k] ,product , up);
                 fft_sub(m_data[j + k] ,product , down);
@@ -92,8 +93,6 @@ void FFTCalculator::complex_data()
 
 void FFTCalculator::rearrange_data()
 {
-    qDebug() << "[" << __FUNCTION__ << "]";
-
     S_Complex temp;
     unsigned short j = 0;
     unsigned short k = 0;
@@ -113,7 +112,7 @@ void FFTCalculator::rearrange_data()
         }
 
         if(j > i) {
-            temp 		= m_data[i];
+            temp        = m_data[i];
             m_data[i] 	= m_data[j];
             m_data[j] 	= temp;
         }
@@ -122,18 +121,14 @@ void FFTCalculator::rearrange_data()
 
 void FFTCalculator::calculate_result(int targetDataLen)
 {
-    qDebug() << "[" << __FUNCTION__ << "]";
-
     double  max = 0;
     int     peakPoint = 0;
     double  temp;
     m_returnData[0] = 0; /* 丢掉直流部分 */
 
-    for(int i = 1; i < targetDataLen; ++i)
-    {
+    for(int i = 1; i < targetDataLen; ++i) {
         if((m_data[i].img < 0.0001)
             && (m_data[i].img > -0.0001) ) {
-
             temp = m_data[i].real;
         } else {
             temp = sqrt(pow(m_data[i].real, 2) + pow(m_data[i].img, 2));
@@ -170,37 +165,29 @@ void FFTCalculator::calculate_result(int targetDataLen)
     int db20maxPoint = m_dataLen;
 
 
-    for(int i = peakPoint; i > 0; --i)
-    {
-        if(data_db6 > m_returnData[i])
-        {
+    for(int i = peakPoint; 0 < i; --i) {
+        if(data_db6 > m_returnData[i]) {
             db6minPoint = i;
             break;
         }
     }
 
-    for(int i = db6minPoint; i > 0; --i)
-    {
-        if(data_db20 > m_returnData[i])
-        {
+    for(int i = db6minPoint; i > 0; --i) {
+        if(data_db20 > m_returnData[i]) {
             db20minPoint = i;
             break;
         }
     }
 
-    for(int i = peakPoint; i < targetDataLen; ++i)
-    {
-        if(data_db6 > m_returnData[i])
-        {
+    for(int i = peakPoint; i < targetDataLen; ++i) {
+        if(data_db6 > m_returnData[i]) {
             db6maxPoint = i;
             break;
         }
     }
 
-    for(int i = db6maxPoint; i < targetDataLen; ++i)
-    {
-        if(data_db20 > m_returnData[i])
-        {
+    for(int i = db6maxPoint; i < targetDataLen; ++i) {
+        if(data_db20 > m_returnData[i]) {
             db20maxPoint = i;
             break;
         }
@@ -212,10 +199,11 @@ void FFTCalculator::calculate_result(int targetDataLen)
     db20maxPoint    /= ratio;
     db20minPoint    /= ratio;
     peakPoint       /= ratio;
-    double hzPerPoint = 50.0 / 1024.0;
+    double hzPerPoint = g_totalMhz / s_NUM;
 
+    m_fftResult.peakFrequency           = hzPerPoint * peakPoint;
     m_fftResult.centerFrequency6db      = hzPerPoint * (db6minPoint + db6maxPoint) / 2.0;
-    m_fftResult.centerFrequency20db     = hzPerPoint* (db20minPoint + db20maxPoint) / 2.0;
+    m_fftResult.centerFrequency20db     = hzPerPoint * (db20minPoint + db20maxPoint) / 2.0;
     m_fftResult.min6dbFrequency         = hzPerPoint * db6minPoint;
     m_fftResult.min20dbFrequency        = hzPerPoint * db20minPoint;
     m_fftResult.max6dbFrequency         = hzPerPoint * db6maxPoint;

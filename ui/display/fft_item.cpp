@@ -29,10 +29,13 @@ void FFTItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     Q_UNUSED(widget);
 
     QReadLocker l(&m_locker);
-    painter->fillRect(this->boundingRect(),QColor(Qt::black));
-    painter->setPen(QColor(Qt::blue));
-    painter->drawPath(m_path);
 
+    painter->fillRect(this->boundingRect(),QColor(Qt::black));
+
+    paint_value(painter);
+
+    painter->setPen(QColor(Qt::blue));
+    painter->drawPath(m_wavePath);
 }
 
 inline const QSize &FFTItem::size() const
@@ -50,10 +53,6 @@ void FFTItem::set_size(const QSize &size)
 void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
 {
     QReadLocker l(&m_locker);
-    qDebug() << "[FFTItem::draw]"
-             << " m_size w = " << m_size.width()
-             << " h = " << m_size.height()
-             << " range = " << group->sample()->range();
 
     if(m_size.width() < 0
         || m_size.height() < 0) {
@@ -64,18 +63,12 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
     int gateStart = group->gate_a()->start() * ratio;
     int gateWidth = group->gate_a()->width() * ratio;
 
-    qDebug() << "[FFTItem::draw]"
-             << " a start = " << group->gate_a()->start()
-             << " a width = " << group->gate_a()->width()
-             << " ratio = " << ratio
-             << " gateStart = " << gateStart
-             << " gateWidth = " << gateWidth;
-
     if(gateStart < 0
         || gateStart > m_size.width()
         || gateWidth < 0
         || gateWidth > m_size.width()) {
-        m_path.lineTo(QPointF(0.0, 0.0));
+        QPainterPath path;
+        m_wavePath = path;
         emit wave_changed();
         return;
     }
@@ -84,11 +77,6 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
 #if 0
     int beginPos = wave.size() * gateStart / m_size.width();
     int dataLen = wave.size() * gateWidth / m_size.width();
-
-    qDebug() << "[FFTItem::draw]"
-             << " wave size = " << wave.size()
-             << " beginPos = " << beginPos
-             << " dataLen = " << dataLen;
 
     const char *data = wave.data();
     data += beginPos;
@@ -104,16 +92,41 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
     float xRatio = m_size.width() / 1.0 / ( wave.size() - 1);     // n个点，分为n-1段
     float yRatio = m_size.height() / 255.0;
 
+    QPainterPath path;
+    path.moveTo(-m_size.width() / 2.0, -m_size.height() / 2.0);
 
+    for (int i = 0; i < tmpShowWidth; ++i) {
+        path.lineTo(i * xRatio - m_size.width() / 2.0,
+                    m_size.height() / 2.0 - yRatio * fftResult.data[i]);
+    }
+
+    m_wavePath = path;
     emit wave_changed();
 
 
 #else
+
+#if 0
     int tmpGateWidth = 473;
     int tmpShowWidth = 605;
     int pointQty     = 638;
-
     int dataLen = pointQty * tmpGateWidth / tmpShowWidth;
+#else
+    int tmpGateWidth = 473.0;
+
+    int tmpShowWidth = m_size.width();
+    if(tmpShowWidth != 625) {
+        tmpGateWidth =  tmpGateWidth * 780 / 625;
+    }
+    int pointQty     = 638;
+    int dataLen = pointQty * tmpGateWidth / tmpShowWidth;
+#endif
+
+    qDebug() << "[" << __FUNCTION__ << "]"
+             << " m_size w = " << m_size.width()
+             << " h = " << m_size.height()
+             <<  " wave size = " << wave.size()
+              << " dataLen = " << dataLen;
 
     QFile file(tr("/home/tt/TT/data.txt"));
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -135,49 +148,97 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
         return;
     }
 
-    const FFTCalculator::S_FFT_result &fftResult = m_fftCalculator->get_result();
-
-    float xRatio = tmpShowWidth / 1.0 / ( pointQty - 1);     // n个点，分为n-1段
+//    float xRatio = tmpShowWidth / 1.0 / (pointQty - 1);     // n个点，分为n-1段
+    float xRatio = 1.0;
     float yRatio = m_size.height() / 255.0;
 
-    int drawPoints = tmpShowWidth;
-
-    qDebug() << "[FFTItem::draw] "
-             << " xRatio = " << xRatio
-             << " yRatio = " << yRatio;
-
-    static int once = 0;
-    if(once == 0) {
-        FILE *fpt = NULL;
-        fpt = fopen("/home/tt/TT/ret_qt.txt","w");
-
-        for(i = 0 ;i < 1024 ;i++)
-        {
-            fprintf(fpt,"%d\n", fftResult.data[i]);
-            qDebug() << " ret = " << fftResult.data[i];
-        }
-
-        fclose(fpt);
-
-        ++once;
-    }
-
     QPainterPath path;
+    path.moveTo(-m_size.width() / 2.0, -m_size.height() / 2.0);
 
-    for (int i = 0; i < drawPoints; ++i) {
+    const FFTCalculator::S_FFT_result &fftResult = m_fftCalculator->get_result();
+
+    for (int i = 0; i < tmpShowWidth; ++i) {
         path.lineTo(i * xRatio - m_size.width() / 2.0,
                     m_size.height() / 2.0 - yRatio * fftResult.data[i]);
     }
 
-    m_path = path;
+    m_wavePath = path;
     emit wave_changed();
 
 #endif
-
 
 }
 
 void FFTItem::do_wave_changed()
 {
     update();
+}
+
+
+void FFTItem::paint_value(QPainter *painter)
+{
+    QFont font("Arial", 8, QFont::Normal);
+    painter->setFont(font);
+    painter->setPen(QColor(Qt::white));
+
+    double height = 10;
+    double margin = 80;
+    double width = (m_size.width() - 2 * margin) / 7.0;
+    double offsetY = -m_size.height() / 2.0;
+    double offsetX = -m_size.width() / 2.0;
+
+    const FFTCalculator::S_FFT_result &fftResult = m_fftCalculator->get_result();
+
+    painter->drawText(QRect(margin + offsetX,
+                            height + offsetY,
+                            width,
+                            5 * height),
+                      tr("\n-6db\n\n-20db"));
+
+    painter->drawText(QRect(margin + offsetX + width,
+                            height + offsetY,
+                            width,
+                            5 * height),
+                      QString("Lower\n%1 Mhz\n\n%2 Mhz")
+                      .arg(QString::number(fftResult.min6dbFrequency,'f',2))
+                      .arg(QString::number(fftResult.min20dbFrequency,'f',2)));
+
+    painter->drawText(QRect(margin + offsetX + 2 * width,
+                            height + offsetY,
+                            width,
+                            5 * height),
+                      QString("Higher\n%1 Mhz\n\n%2 Mhz")
+                      .arg(QString::number(fftResult.max6dbFrequency,'f',2))
+                      .arg(QString::number(fftResult.max20dbFrequency,'f',2)));
+
+    painter->drawText(QRect(margin + offsetX + 3 * width,
+                            height + offsetY,
+                            width,
+                            5 * height),
+                      QString("Center\n%1 Mhz\n\n%2 Mhz")
+                      .arg(QString::number(fftResult.centerFrequency6db,'f',2))
+                      .arg(QString::number(fftResult.centerFrequency20db,'f',2)));
+
+    painter->drawText(QRect(margin + offsetX + 4 * width,
+                            height + offsetY,
+                            width,
+                            5 * height),
+                      QString("Bandwidth\n%1 Mhz\n\n%2 Mhz")
+                      .arg(QString::number(fftResult.bandWidth6db,'f',2))
+                      .arg(QString::number(fftResult.bandWidth20db,'f',2)));
+
+    painter->drawText(QRect(margin + offsetX + 5 * width,
+                            height + offsetY,
+                            width,
+                            5 * height),
+                      QString("Bandwidth\n%1%\n\n%2%")
+                      .arg(QString::number(fftResult.bandWidth6dbPercent,'f',2))
+                      .arg(QString::number(fftResult.bandWidth20dbPercent,'f',2)));
+
+    painter->drawText(QRect(margin + offsetX + 6 * width,
+                            height + offsetY,
+                            width,
+                            5 * height),
+                      QString("MAX: %1 Mhz").arg(QString::number(fftResult.peakFrequency,'f',2)));
+
 }
