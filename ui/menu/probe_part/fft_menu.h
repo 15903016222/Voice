@@ -12,6 +12,9 @@ public:
     explicit FftMenu(QWidget *parent);
     ~FftMenu();
 
+private slots:
+    void do_switchItem_changed(int val);
+
 private:
     SpinMenuItem *m_gainItem;
     SpinMenuItem *m_startItem;

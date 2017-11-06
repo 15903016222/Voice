@@ -25,7 +25,12 @@ SOURCES += \
     $$PWD/encoder_image_item.cpp \
     $$PWD/test_stub.cpp \
     $$PWD/time_image_item.cpp \
-    $$PWD/base_cursor_item.cpp
+    $$PWD/base_cursor_item.cpp \
+    $$PWD/fft_display.cpp \
+    $$PWD/fft_hdisplay.cpp \
+    $$PWD/fft_scene.cpp \
+    $$PWD/fft_item.cpp \
+    $$PWD/fft_calculator.cpp
 
 
 HEADERS += \
@@ -55,10 +60,16 @@ HEADERS += \
     $$PWD/encoder_image_item.h \
     $$PWD/test_stub.h \
     $$PWD/time_image_item.h \
-    $$PWD/base_cursor_item.h
+    $$PWD/base_cursor_item.h \
+    $$PWD/fft_display.h \
+    $$PWD/fft_hdisplay.h \
+    $$PWD/fft_scene.h \
+    $$PWD/fft_item.h \
+    $$PWD/fft_calculator.h
 
 
 FORMS += \
     $$PWD/a_scan_display.ui \
     $$PWD/scan_display.ui \
-    $$PWD/b_scan_display.ui
+    $$PWD/b_scan_display.ui \
+    $$PWD/fft_display.ui
