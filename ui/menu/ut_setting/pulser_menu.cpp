@@ -53,7 +53,7 @@ PulserMenu::PulserMenu(QWidget *parent) :
             this,
             SLOT(do_pulserItem_changed(double)));
 
-    m_pwItem->set(30, 1000, 1);
+    m_pwItem->set(30, 1000, 1, 2.5);
     connect(m_pwItem,
             SIGNAL(value_changed(double)),
             this,

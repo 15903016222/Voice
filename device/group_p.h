@@ -29,6 +29,8 @@ public:
 
     const DplSource::BeamPointer &beam() const;
 
+    void set_current_beam_index(int index);
+
 protected slots:
     void do_source_data_event();
 
@@ -40,6 +42,7 @@ private:
     DplSource::Source *m_source;    // 数据源
     DplSource::BeamsPointer m_beams;
     DplSource::BeamPointer m_beam;
+    int m_index;                    // 当前beam号
 };
 
 inline Group::Mode GroupPrivate::mode() const
@@ -89,6 +92,11 @@ inline const DplSource::BeamsPointer &GroupPrivate::beams() const
 inline const DplSource::BeamPointer &GroupPrivate::beam() const
 {
     return m_beam;
+}
+
+inline void GroupPrivate::set_current_beam_index(int index)
+{
+    m_index = index;
 }
 
 }

@@ -38,6 +38,13 @@ FFTDisplay::FFTDisplay(const DplDevice::GroupPointer &group,
 
 FFTDisplay::~FFTDisplay()
 {
+    QWriteLocker l(&m_locker);
+    disconnect(static_cast<DplDevice::Group *> (m_group.data()),
+            SIGNAL(data_event(DplSource::BeamsPointer)),
+            this, SLOT(do_data_event(DplSource::BeamsPointer)));
+
+    delete m_view;
+    delete m_fftScene;
     delete ui;
 }
 
@@ -57,6 +64,7 @@ void FFTDisplay::do_view_size_changed(const QSize &size)
 
 void FFTDisplay::do_data_event(const DplSource::BeamsPointer &beamsPointer)
 {
+    QWriteLocker l(&m_locker);
     m_fftItem->draw(beamsPointer->get(0)->wave(), m_group);
     emit update_ruler();
 }

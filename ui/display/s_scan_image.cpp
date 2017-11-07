@@ -1,58 +1,63 @@
 #include "s_scan_image.h"
-#include <QThread>
+#include "s_scan_image_p.h"
+#include <QColor>
+#include <qmath.h>
 
-SscanImage::SscanImage(const QSize &size) :
+SscanImage::SscanImage(const DplDevice::GroupPointer &group, const QSize &size) :
     QImage(size, QImage::Format_Indexed8),
-    m_beamMark(new int[size.width()*size.height()]),
-    m_pointMark(new int[size.width()*size.height()]),
-    m_pointQty(0)
+//    QImage(size, QImage::Format_RGB16),
+    d(new SscanImagePrivate(group))
 {
+    fill(0);
 }
 
 SscanImage::~SscanImage()
 {
-    delete m_beamMark;
-    delete m_pointMark;
+    delete d;
 }
 
 void SscanImage::draw_beams(const DplSource::BeamsPointer &beams)
 {
-    const quint8 *rawData = (quint8 *)beams->raw_data();
     int beamSize = beams->size() / beams->beam_qty();
 
-    if (m_pointQty != beams->point_qty()) {
-        m_pointQty = beams->point_qty();
-        init_mark();
+    if (d->m_pointQty != beams->point_qty()
+            || d->m_beamQty != beams->beam_qty()) {
+        d->m_pointQty = beams->point_qty();
+        d->m_beamQty = beams->beam_qty();
+
+        DplFocallaw::PaProbePointer probe = d->m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
+        if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
+            d->init_linear_matrix(d->m_beamQty, d->m_pointQty, beamSize, width(), height(), bytesPerLine());
+        } else {
+            d->init_sector_pointSet(width(), height(), bytesPerLine());
+        }
     }
 
-    int w = width();
-    int h = height();
-    int pos = 0;
-    quint8 *buf = NULL;
+    quint8 *imageBits = bits();
+    const quint8 *rawData = (quint8 *)beams->raw_data();
 
-    for (int i = 0; i < h; ++i) {
-        buf = scanLine(i);
-        for (int j = 0; j < w; ++j) {
-            pos = i*w + j;
-            if (m_beamMark[pos] >= 0) {
-                buf[j] = rawData[beamSize*m_beamMark[pos] + m_pointMark[pos]];
-            }
-        }
+    for (int i = 0; i < d->m_drawPointQty; ++i) {
+        imageBits[d->m_pointSet[i].pos] = d->m_pointSet[i].rate1*rawData[d->m_pointSet[i].index1]
+                + d->m_pointSet[i].rate2 * rawData[d->m_pointSet[i].index2]
+                + d->m_pointSet[i].rate3 * rawData[d->m_pointSet[i].index3]
+                + d->m_pointSet[i].rate4 * rawData[d->m_pointSet[i].index4];
     }
 }
 
-
-void SscanImage::init_mark()
+void SscanImage::draw_linear(const DplSource::BeamsPointer &beams)
 {
-    int w = width();
-    int h = height();
 
-    float yRatio = m_pointQty * 1.0 / h;
+}
 
-    for (int i = 0; i < h; ++i) {
-        for (int j = 0; j < w; ++j) {
-            m_beamMark[i*w + j] = 0;
-            m_pointMark[i*w + j] = yRatio * i + 0.5;
-        }
+quint8 SscanImage::get_gray(const quint8 *raw, int beamSize, int x, int y)
+{
+    if (x >= d->m_beamQty) {
+        x = d->m_beamQty - 1;
     }
+
+    if (y >= d->m_pointQty) {
+        y = d->m_pointQty - 1;
+    }
+
+    return raw[x*beamSize + y];
 }

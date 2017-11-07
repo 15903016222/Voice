@@ -20,21 +20,21 @@ QPainterPath WaveItem::draw(const QByteArray &wave, bool rf, int w, int h)
 {
     QPainterPath path;
 
-    float xRatio = w / 1.0 / ( wave.size() - 1);     // n个点，分为n-1段
-    float yRatio = h / 255.0;
+    double xRatio = static_cast<double>(w) / ( wave.size() - 1);     // n个点，分为n-1段
+    double yRatio = h / 255.0;
 
     int drawPoints = wave.size();
 
     if (rf) {
         for (int i = 0; i < drawPoints; ++i) {
-            path.lineTo( i*xRatio + 0.5,
-                         ((uint)(128-(qint8)(wave.at(i)))) * yRatio - 0.5 );
+            path.lineTo( i*xRatio,
+                         ((uint)(128-(qint8)(wave.at(i)))) * yRatio);
 
         }
     } else {
         for (int i = 0; i < drawPoints; ++i) {
-            path.lineTo( i*xRatio + 0.5,
-                         ((quint8)(255-wave.at(i))) * yRatio + 0.5);
+            path.lineTo( i*xRatio,
+                         ((quint8)(255-wave.at(i))) * yRatio);
         }
     }
 

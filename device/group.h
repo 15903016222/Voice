@@ -140,6 +140,12 @@ public:
     const DplSource::BeamsPointer &current_beams() const;
 
     /**
+     * @brief set_current_beam  设置当前beam
+     * @param index             beam号
+     */
+    void set_current_beam(int index);
+
+    /**
      * @brief current_beam  获取数据源的当前Beam
      * @return              Beam
      */

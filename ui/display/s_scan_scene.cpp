@@ -34,7 +34,7 @@ void SscanScene::set_size(const QSize &size)
         delete m_image;
         m_image = NULL;
     }
-    m_image = new SscanImage(size);
+    m_image = new SscanImage(DplDevice::Device::instance()->current_group(), size);
     m_image->setColorTable(m_palette->colors());
 }
 

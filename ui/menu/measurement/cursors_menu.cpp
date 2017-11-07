@@ -18,7 +18,7 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
     m_smItem(new SpinMenuItem(this, "S(m)", "s")),
     m_irItem(new SpinMenuItem(this, "I(r)", "mm")),
     m_imItem(new SpinMenuItem(this, "I(m)", "mm")),
-    m_angelItem(new SpinMenuItem(this, tr("Angle"), "\260"))
+    m_angelItem(new SpinMenuItem(this))
 {
     ui->layout0->addWidget(m_selectionItem);
     /* Selection menu item */
@@ -102,7 +102,9 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
             this, SLOT(update_imItem()));
 
     /* Angle menu item */
-    m_angelItem->set(25, 75, 0);
+    m_angelItem->set(0, 10, 0);
+    connect(m_angelItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_angleItem_changed(double)));
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
@@ -319,6 +321,24 @@ void CursorsMenu::update_imItem()
     m_imItem->set_value(m_cursor->index_measurement());
 }
 
+void CursorsMenu::update_beamItem()
+{
+    DplFocallaw::FocallawerPointer focallawer = m_group->focallawer();
+
+    if (focallawer->probe()->is_pa()) {
+        DplFocallaw::PaProbePointer probe = focallawer->probe().staticCast<DplFocallaw::PaProbe>();
+        if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
+            m_angelItem->set_title("VPA");
+            m_angelItem->set(0, focallawer->beam_qty()-1, 0);
+        } else {
+            DplFocallaw::SectorialScanCnfPointer scanCnf = probe->scan_configure().staticCast<DplFocallaw::SectorialScanCnf>();
+            m_angelItem->set_title(tr("Angle"));
+            m_angelItem->set_suffix("\260");
+            m_angelItem->set(scanCnf->first_angle(), scanCnf->last_angle(), 1, scanCnf->angle_step());
+        }
+    }
+}
+
 void CursorsMenu::update(const DplDevice::GroupPointer &grp)
 {
     if (m_group) {
@@ -340,6 +360,9 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
         disconnect(static_cast<DplUt::Sample *>(m_group->sample().data()),
                    SIGNAL(range_changed(float)),
                    this, SLOT(update_umItem()));
+        disconnect(static_cast<DplFocallaw::Focallawer*>(m_group->focallawer().data()),
+                   SIGNAL(beam_qty_changed(int)),
+                   this, SLOT(update_beamItem()));
     }
 
     m_group = grp;
@@ -355,6 +378,7 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
     update_smItem();
     update_irItem();
     update_imItem();
+    update_beamItem();
 
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
@@ -374,6 +398,9 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
             this, SLOT(update_umItem()));
+    connect(static_cast<DplFocallaw::Focallawer*>(m_group->focallawer().data()),
+            SIGNAL(beam_qty_changed(int)),
+            this, SLOT(update_beamItem()));
 }
 
 void CursorsMenu::do_selectionItem_changed(int index)
@@ -437,6 +464,11 @@ void CursorsMenu::do_irItem_changed(double val)
 void CursorsMenu::do_imItem_changed(double val)
 {
     m_cursor->set_index_measurement(val);
+}
+
+void CursorsMenu::do_angleItem_changed(double val)
+{
+    m_group->set_current_beam(val);
 }
 
 }

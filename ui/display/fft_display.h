@@ -38,6 +38,8 @@ protected:
     FFTScene *m_fftScene;
     FFTItem  *m_fftItem;
 
+    QReadWriteLock m_locker;
+
     Ui::FFTDisplay *ui;
 
     virtual void update_bottom_ruler() = 0;
