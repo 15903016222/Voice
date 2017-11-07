@@ -61,7 +61,6 @@ void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
                       m_gate->width() * ratio(), GATE_HEIGHT/2);
     painter->drawLine(0, 0,
                       m_gate->width() * ratio(), 0);
-    qDebug() << "[GateItem::paint]" << " width = " << m_gate->width() * ratio();
 }
 
 void GateItem::set_offset(qreal offset)

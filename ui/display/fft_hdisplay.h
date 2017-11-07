@@ -9,8 +9,8 @@ public:
     FFTHDisplay(const DplDevice::GroupPointer &group,
                 QWidget *parent = 0);
 
-private:
-    void update_bottom_ruler();
+protected :
+    virtual void update_bottom_ruler();
 };
 
 #endif // __FFT_H_DISPLAY_H__

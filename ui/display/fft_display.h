@@ -22,10 +22,13 @@ public:
                         QWidget *parent = 0);
     ~FFTDisplay();
 
+signals:
+    void update_ruler();
+
 protected slots:
     void do_view_size_changed(const QSize &size);
     void do_data_event(const DplSource::BeamsPointer &beamsPointer);
-
+    void do_update_ruler();
 
 protected:
     DplDevice::GroupPointer m_group;
@@ -37,6 +40,7 @@ protected:
 
     Ui::FFTDisplay *ui;
 
+    virtual void update_bottom_ruler() = 0;
 
 };
 

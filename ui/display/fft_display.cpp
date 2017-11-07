@@ -29,6 +29,10 @@ FFTDisplay::FFTDisplay(const DplDevice::GroupPointer &group,
 
     connect(m_view, SIGNAL(size_changed(QSize)),
             this, SLOT(do_view_size_changed(QSize)));
+
+    connect(this, SIGNAL(update_ruler()), this, SLOT(do_update_ruler()));
+
+    connect(m_fftItem, SIGNAL(wave_changed()), this, SLOT(do_update_ruler()));
 }
 
 
@@ -54,4 +58,10 @@ void FFTDisplay::do_view_size_changed(const QSize &size)
 void FFTDisplay::do_data_event(const DplSource::BeamsPointer &beamsPointer)
 {
     m_fftItem->draw(beamsPointer->get(0)->wave(), m_group);
+    emit update_ruler();
+}
+
+void FFTDisplay::do_update_ruler()
+{
+    update_bottom_ruler();
 }

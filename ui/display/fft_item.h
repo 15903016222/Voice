@@ -47,6 +47,12 @@ public:
      */
     void draw(const QByteArray &wave, const DplDevice::GroupPointer &group);
 
+    /**
+     * @brief get_Mhz_ratio 获取每像素代表多少频率
+     * @return
+     */
+    double get_Mhz_ratio();
+
 signals:
     void wave_changed();
 

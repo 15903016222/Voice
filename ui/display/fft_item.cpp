@@ -74,29 +74,30 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
     }
 
 
-#if 0
+#if 1
     int beginPos = wave.size() * gateStart / m_size.width();
     int dataLen = wave.size() * gateWidth / m_size.width();
 
     const char *data = wave.data();
     data += beginPos;
 
-
-    if(!m_fftCalculator->execute(dataLen, (unsigned char*)data, m_size.width())) {
+    /* 计算FPGA采用频率 */
+    double dataHz = 1.0 / (DplDevice::Device::instance()->current_group()->sample()->precision() / pow(1000.0, 3));
+    double dataMHz = dataHz / 1000000.0;
+    if(!m_fftCalculator->execute(dataLen, (unsigned char*)data, m_size.width(), dataMHz)) {
         emit wave_changed();
         return;
     }
 
     const FFTCalculator::S_FFT_result &fftResult = m_fftCalculator->get_result();
 
-    float xRatio = m_size.width() / 1.0 / ( wave.size() - 1);     // n个点，分为n-1段
     float yRatio = m_size.height() / 255.0;
 
     QPainterPath path;
     path.moveTo(-m_size.width() / 2.0, -m_size.height() / 2.0);
 
-    for (int i = 0; i < tmpShowWidth; ++i) {
-        path.lineTo(i * xRatio - m_size.width() / 2.0,
+    for (int i = 0; i < m_size.width(); ++i) {
+        path.lineTo(i - m_size.width() / 2.0,
                     m_size.height() / 2.0 - yRatio * fftResult.data[i]);
     }
 
@@ -126,7 +127,7 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
              << " m_size w = " << m_size.width()
              << " h = " << m_size.height()
              <<  " wave size = " << wave.size()
-              << " dataLen = " << dataLen;
+             << " dataLen = " << dataLen;
 
     QFile file(tr("/home/tt/TT/data.txt"));
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -143,13 +144,15 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
         ++i;
     }
 
-    if(!m_fftCalculator->execute(dataLen, mydata, tmpShowWidth)) {
+    /* 计算FPGA采用频率 */
+    double dataHz = 1.0 / (DplDevice::Device::instance()->current_group()->sample()->precision() / pow(1000.0, 3));
+    double dataMHz = dataHz / 1000000.0;
+
+    if(!m_fftCalculator->execute(dataLen, mydata, tmpShowWidth, dataMHz)) {
         emit wave_changed();
         return;
     }
 
-//    float xRatio = tmpShowWidth / 1.0 / (pointQty - 1);     // n个点，分为n-1段
-    float xRatio = 1.0;
     float yRatio = m_size.height() / 255.0;
 
     QPainterPath path;
@@ -158,7 +161,7 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
     const FFTCalculator::S_FFT_result &fftResult = m_fftCalculator->get_result();
 
     for (int i = 0; i < tmpShowWidth; ++i) {
-        path.lineTo(i * xRatio - m_size.width() / 2.0,
+        path.lineTo(i - m_size.width() / 2.0,
                     m_size.height() / 2.0 - yRatio * fftResult.data[i]);
     }
 
@@ -166,7 +169,11 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
     emit wave_changed();
 
 #endif
+}
 
+double FFTItem::get_Mhz_ratio()
+{
+    return m_fftCalculator->get_result().MhzRatio;
 }
 
 void FFTItem::do_wave_changed()

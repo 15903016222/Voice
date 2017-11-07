@@ -8,9 +8,12 @@
 
 static const double g_defaultReal = 128.0;
 static const double g_defaultImg  = 0.0;
-static const double g_totalMhz    = 50.0;
+static const double g_totalMhz    = 100.0;
 
-FFTCalculator::FFTCalculator()
+FFTCalculator::FFTCalculator():
+    m_dataLen(0.0),
+    m_MHzRatio(0.0)
+
 {
     memset(&m_fftResult, 0, sizeof(S_FFT_result));
    /* 初始化变换核*/
@@ -29,7 +32,7 @@ FFTCalculator::~FFTCalculator()
 
 }
 
-bool FFTCalculator::execute(int len, unsigned char *data, int targetDataLen)
+bool FFTCalculator::execute(int len, unsigned char *data, int targetDataLen, double dataMHz)
 {
     memset(m_returnData, 0 , sizeof(unsigned char) * s_NUM);
 
@@ -38,6 +41,7 @@ bool FFTCalculator::execute(int len, unsigned char *data, int targetDataLen)
     }
 
     m_dataLen = len;
+    m_MHzRatio = dataMHz / (double)s_NUM;
 
     init_data(data);
 
@@ -193,26 +197,19 @@ void FFTCalculator::calculate_result(int targetDataLen)
         }
     }
 
-    double ratio    = targetDataLen / (double)s_NUM;
-    db6maxPoint     /= ratio;
-    db6minPoint     /= ratio;
-    db20maxPoint    /= ratio;
-    db20minPoint    /= ratio;
-    peakPoint       /= ratio;
-    double hzPerPoint = g_totalMhz / s_NUM;
-
-    m_fftResult.peakFrequency           = hzPerPoint * peakPoint;
-    m_fftResult.centerFrequency6db      = hzPerPoint * (db6minPoint + db6maxPoint) / 2.0;
-    m_fftResult.centerFrequency20db     = hzPerPoint * (db20minPoint + db20maxPoint) / 2.0;
-    m_fftResult.min6dbFrequency         = hzPerPoint * db6minPoint;
-    m_fftResult.min20dbFrequency        = hzPerPoint * db20minPoint;
-    m_fftResult.max6dbFrequency         = hzPerPoint * db6maxPoint;
-    m_fftResult.max20dbFrequency        = hzPerPoint * db20maxPoint;
-    m_fftResult.bandWidth6db            = hzPerPoint * (db6maxPoint - db6minPoint);
-    m_fftResult.bandWidth20db           = hzPerPoint * (db20maxPoint - db20minPoint);
+    m_fftResult.peakFrequency           = m_MHzRatio * peakPoint;
+    m_fftResult.centerFrequency6db      = m_MHzRatio * (db6minPoint + db6maxPoint) / 2.0;
+    m_fftResult.centerFrequency20db     = m_MHzRatio * (db20minPoint + db20maxPoint) / 2.0;
+    m_fftResult.min6dbFrequency         = m_MHzRatio * db6minPoint;
+    m_fftResult.min20dbFrequency        = m_MHzRatio * db20minPoint;
+    m_fftResult.max6dbFrequency         = m_MHzRatio * db6maxPoint;
+    m_fftResult.max20dbFrequency        = m_MHzRatio * db20maxPoint;
+    m_fftResult.bandWidth6db            = m_MHzRatio * (db6maxPoint - db6minPoint);
+    m_fftResult.bandWidth20db           = m_MHzRatio * (db20maxPoint - db20minPoint);
     m_fftResult.bandWidth6dbPercent     = (db6maxPoint > db6minPoint) ? peakPoint * 100.0 / (db6maxPoint - db6minPoint) : 0;
     m_fftResult.bandWidth20dbPercent    = (db20maxPoint > db20minPoint) ? peakPoint * 100.0 / (db20maxPoint - db20minPoint) : 0;
     m_fftResult.data                    = m_returnData;
+    m_fftResult.MhzRatio                = m_MHzRatio;
 
 }
 
