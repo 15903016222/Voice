@@ -61,10 +61,6 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     update(DplDevice::Device::instance()->current_group());
 }
 
-SelectionMenu::~SelectionMenu()
-{
-}
-
 void SelectionMenu::do_probeItem_clicked()
 {
     ProbeDialog probeDialog;

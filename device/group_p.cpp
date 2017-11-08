@@ -10,7 +10,8 @@ GroupPrivate::GroupPrivate(Group *parent) :
     m_mode(Group::PA),
     m_utUnit(Group::SoundPath),
     m_currentAngle(M_PI/6),
-    m_source(DplSource::Source::instance())
+    m_source(DplSource::Source::instance()),
+    m_index(0)
 {
 
 }
@@ -18,7 +19,7 @@ GroupPrivate::GroupPrivate(Group *parent) :
 void GroupPrivate::do_source_data_event()
 {
     m_beams = m_source->current_beams(q->index());
-    m_beam = m_beams->get(0);
+    m_beam = m_beams->get(m_index);
     emit q->data_event(m_beams);
 }
 

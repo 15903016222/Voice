@@ -34,6 +34,7 @@ protected slots:
     void update_umItem();
     void update_irItem();
     void update_imItem();
+    void update_beamItem();
 
 private slots:
     void update(const DplDevice::GroupPointer &grp);
@@ -46,6 +47,7 @@ private slots:
     void do_umItem_changed(double val);
     void do_irItem_changed(double val);
     void do_imItem_changed(double val);
+    void do_angleItem_changed(double val);
 
 private:
     ComboMenuItem *m_selectionItem;

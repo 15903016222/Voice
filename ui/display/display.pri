@@ -26,6 +26,7 @@ SOURCES += \
     $$PWD/test_stub.cpp \
     $$PWD/time_image_item.cpp \
     $$PWD/base_cursor_item.cpp \
+    $$PWD/s_scan_image_p.cpp \
     $$PWD/vdisplay_cursor_item.cpp \
     $$PWD/hdisplay_cursor_item.cpp
 
@@ -58,6 +59,7 @@ HEADERS += \
     $$PWD/test_stub.h \
     $$PWD/time_image_item.h \
     $$PWD/base_cursor_item.h \
+    $$PWD/s_scan_image_p.h \
     $$PWD/vdisplay_cursor_item.h \
     $$PWD/hdisplay_cursor_item.h
 

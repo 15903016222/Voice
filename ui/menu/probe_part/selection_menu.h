@@ -18,7 +18,6 @@ class SelectionMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit SelectionMenu(QWidget *parent);
-    ~SelectionMenu();
 
 private slots:
     void do_probeItem_clicked();

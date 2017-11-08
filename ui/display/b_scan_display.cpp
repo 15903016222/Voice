@@ -45,6 +45,11 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
 
     init_scan_env();
 
+    m_bscanScene->addItem(m_uReferneceCursorItem);
+    m_bscanScene->addItem(m_uMeasurementCursorItem);
+    m_bscanScene->addItem(m_sReferneceCursorItem);
+    m_bscanScene->addItem(m_sMeasurementCursorItem);
+
     init_ruler();
 
     connect(m_bscanView, SIGNAL(size_changed(QSize)),
@@ -130,8 +135,6 @@ void BscanDisplay::init_ruler()
 
 void BscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
-    qDebug("[%s:%s] debug here.", "BscanDisplay", __FUNCTION__);
-
     if(m_bscanScene == NULL
             || m_bscanView == NULL
             || m_bscanImageItem == NULL) {
@@ -405,11 +408,6 @@ void BscanDisplay::init_scan_env()
 
     m_bscanScene->addItem(m_bscanImageItem);
 
-    m_bscanScene->addItem(m_uReferneceCursorItem);
-    m_bscanScene->addItem(m_uMeasurementCursorItem);
-    m_bscanScene->addItem(m_sReferneceCursorItem);
-    m_bscanScene->addItem(m_sMeasurementCursorItem);
-
     if (m_orientation == Qt::Horizontal) {
 
         QSize newSize(m_bscanView->height(), m_bscanView->width());
@@ -434,8 +432,6 @@ void BscanDisplay::init_scan_env()
 
 void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 {
-    qDebug("[%s:%s] debug here.", "BscanDisplay", __FUNCTION__);
-
     double currentTimeCount = TestStub::instance()->get_time();
 
     DplSource::Scan *scan = DplSource::Scan::instance();
@@ -467,8 +463,6 @@ void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 
 void BscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
 {
-    qDebug("[%s:%s] debug here.", __FUNCTION__, "draw_encoder_beams");
-
     if(m_bscanImageItem->redraw_beams(beams)) {
         BscanEncoderImageItem *imageItem = static_cast<BscanEncoderImageItem*> (m_bscanImageItem);
         if(imageItem) {
