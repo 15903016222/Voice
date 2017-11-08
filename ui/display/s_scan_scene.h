@@ -45,6 +45,7 @@ private:
     QReadWriteLock m_rwLock;
     DplDisplay::PaletteColorPointer m_palette;
     DplSource::BeamsPointer m_beams;
+    QPixmap m_pixmap;
 };
 
 inline void SscanScene::set_palette(const DplDisplay::PaletteColorPointer &palette)

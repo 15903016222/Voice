@@ -35,7 +35,6 @@ public:
     void init_linear_pointSet(int w, int h, int bytesPerLine);
     void CalcLinearScanNew(int width, int height, int bytesPerLine);
     void init_sector_pointSet(int w, int h, int bytesPerLine);
-    void refresh_config(int width, int height, int beam_no_mx);
 
     /**
      * @brief init_linear_matrix    初始化线扫插值表
@@ -47,6 +46,8 @@ public:
      * @param destBytesPerLine      目标图像每行字节数
      */
     void init_linear_matrix(int srcWidth, int srcHeight, int srcBytesPerColumn, int destWidth, int destHeight, int destBytesPerLine);
+
+    void init_sectorial_matrix(int destWidth, int destHeight);
 
     /* attributions */
     DplDevice::GroupPointer m_group;

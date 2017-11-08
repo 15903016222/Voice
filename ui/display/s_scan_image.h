@@ -13,9 +13,7 @@ public:
 
     void draw_beams(const DplSource::BeamsPointer &beams);
 
-protected:
-    void draw_linear(const DplSource::BeamsPointer &beams);
-    quint8 get_gray(const quint8 *raw, int beamSize, int x, int y);
+    void draw_sector(const DplSource::BeamsPointer &beams);
 
 private:
     SscanImagePrivate *d;

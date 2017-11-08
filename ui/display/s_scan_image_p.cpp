@@ -11,49 +11,6 @@ SscanImagePrivate::SscanImagePrivate(const DplDevice::GroupPointer &group) :
 
 }
 
-void SscanImagePrivate::init_linear_pointSet(int w, int h, int bytesPerLine)
-{
-    if (m_pointSet) {
-        delete m_pointSet;
-        m_drawPointQty = 0;
-    }
-
-    DplFocallaw::PaProbePointer probe = m_focallawer->probe().staticCast<DplFocallaw::PaProbe>();
-    DplFocallaw::LinearScanCnfPointer scanCnf = probe->scan_configure().staticCast<DplFocallaw::LinearScanCnf>();
-
-    float angle = 0;// Dpl::degree2pi(scanCnf->angle()); // 折射角度
-    int l = h / qFabs(qCos(angle));
-    int xWidth = w - h * qFabs(qTan(angle));
-    if (xWidth < 0) {
-        return;
-    }
-    float xRatio = m_beamQty * 1.0 / xWidth;
-    float yRatio = m_pointQty * 1.0 / l;
-    int xBegin = 0;
-    int xEnd = 0;
-    int y = 0;
-
-    m_pointSet = new PointInfo[l*xWidth];
-
-    int point;
-    for (int i = 0; i < l; ++i) {
-        if (angle < 0) {
-            xBegin = w - xWidth - i*qFabs(qSin(angle));
-        } else {
-            xBegin = i * qSin(angle);
-        }
-        xEnd = xBegin + xWidth;
-        y = i * qFabs(qCos(angle));
-        point = yRatio * i;
-        for (int j = xBegin; j < xEnd; ++j) {
-            m_pointSet[m_drawPointQty].pos = y*bytesPerLine + j;
-            m_pointSet[m_drawPointQty].beam = xRatio * (j - xBegin);
-            m_pointSet[m_drawPointQty].point = point;
-            ++m_drawPointQty;
-        }
-    }
-}
-
 void SscanImagePrivate::CalcLinearScanNew(int width, int height, int bytesPerLine)
 {
     if (m_pointSet) {
@@ -345,37 +302,6 @@ void SscanImagePrivate::init_sector_pointSet(int width, int height, int bytesPer
     //    }
 }
 
-void SscanImagePrivate::refresh_config(int width, int height, int beam_no_mx)
-{
-    m_angleZoom = (uchar *)malloc(width * height);
-    m_draw = (uchar *)malloc(width * height);
-    m_drawRate = (uchar *)malloc(width * height);
-    m_dataNo = (int *)malloc(width * height*sizeof(int));
-    memset(m_angleZoom,0,width * height);
-    memset(m_draw,0,width * height);
-    memset(m_drawRate,0,width * height);
-    memset(m_dataNo,0,width * height*sizeof(int));
-
-    double tmpDataNo  ;
-    double tmpDrawRate ;
-    int offset;
-    for(int i= 0;i< height;i++){
-        tmpDataNo = ((double)i)/ height ;
-        for(int j= 0 ;j< width;j++){
-            offset  = j + i * width ;
-
-            m_draw[offset] = 255;
-            tmpDrawRate = (double) (((double)j / width ) *  (beam_no_mx) );
-
-            m_angleZoom[offset] = (uchar)tmpDrawRate ;
-            tmpDrawRate =  tmpDrawRate - (int)tmpDrawRate  ;
-
-            m_drawRate[offset] = (unsigned char)( tmpDrawRate * 32 ) ;
-            m_dataNo[offset] = (int) (m_pointQty * tmpDataNo );
-        }
-    }
-}
-
 void SscanImagePrivate::init_linear_matrix(int srcWidth, int srcHeight, int srcBytesPerColumn, int destWidth, int destHeight, int destBytesPerLine)
 {
     /**
@@ -440,4 +366,122 @@ void SscanImagePrivate::init_linear_matrix(int srcWidth, int srcHeight, int srcB
             ++m_drawPointQty;
         }
     }
+}
+
+void SscanImagePrivate::init_sectorial_matrix(int destWidth, int destHeight)
+{
+//    DplFocallaw::PaProbePointer probe = m_focallawer->probe().staticCast<DplFocallaw::PaProbe>();
+//    DplFocallaw::SectorialScanCnfPointer scanCnf = probe->scan_configure().staticCast<DplFocallaw::SectorialScanCnf>();
+//    DplUt::SamplePointer sample = m_group->sample();
+
+//    float angleStart = Dpl::degree2pi(scanCnf->first_angle());
+//    float angleStop = Dpl::degree2pi(scanCnf->last_angle());
+//    float angleStep = Dpl::degree2pi(scanCnf->angle_step());
+
+//    if (m_pointSet) {
+//        delete m_pointSet;
+//        m_pointSet = NULL;
+//    }
+//    m_pointSet = new PointInfo[destHeight*destWidth];
+//    m_drawPointQty = 0;
+
+//    float r = sample->start() + sample->range();
+
+//    float realStartX = 0.0;     // 真实开始X值
+//    float realStopX = 0.0;      // 真实结束X值
+//    float realStartY= 0.0;      // 真实开始Y值
+//    float realStopY = 0.0;      // 真实结束Y值
+
+//    int beamQty = m_focallawer->beam_qty();
+//    float exitPoint[beamQty] = {0.0};
+
+//    if (angleStart * angleStop <= 0) {
+//        realStartX = exitPoint[0] + r * qSin(angleStart);
+//        realStopX  = exitPoint[beamQty - 1] + r * qSin(angleStop);
+//        realStopY  = r;
+//        if (qFabs(angleStart) > qFabs(angleStop)) {
+//            realStartY = sample->start() * qCos(angleStart);
+//        } else {
+//            realStartY = sample->start() * qCos(angleStop);
+//        }
+//    } else if( angleStart < 0 && angleStop < 0) {
+//        realStartX = exitPoint[0] + r * qSin(angleStart);
+//        realStopX  = exitPoint[beamQty -1] + sample->start() * qSin(angleStop);
+//        realStartY = sample->start() * qCos(angleStart)  ;
+//        realStopY  = r * qCos(angleStop) ;
+//    } else { //( _nAngleStart > 0 && _nAngleStop > 0)
+//        realStartX = exitPoint[0] + sample->start() * qSin(angleStart) ;
+//        realStopX  = exitPoint[beamQty - 1] + r * qSin(angleStop);
+//        realStartY = sample->start() * qCos(angleStop)  ;
+//        realStopY  = r * qCos(angleStart)  ;
+//    }
+
+//    float widthRatio = (realStopX - realStartX) / (destWidth);
+//    float heightRatio = (realStopY - realStopY) / (destHeight);
+//    if (qFuzzyIsNull(widthRatio) || qFuzzyIsNull(heightRatio)) {
+//        return;
+//    }
+
+//    /**
+//     * formula
+//     * f(srcX+u, srcY+v) = (1-u)(1-v)f(srcX, srcY)
+//     *                   + (1-u)vf(srcX, srcY+1)
+//     *                   + u(1-v)f(srcX+1, srcY)
+//     *                   + uvf(srcX+1, srcY+1)
+//     */
+
+//    /**
+//     * u = (atan2(y,x)-thetamin)*(thetamax-thetamin)
+//     * v = (sqrt(x^2+y^2)-rmin)*(rmax-rmin)
+//     */
+
+//    float angle[beamQty] = {0.0};
+//    for (int i = 0; i < beamQty; ++i) {
+//        angle[i] = angleStart + i*angleStep;
+//    }
+
+////#include <QMatrix2x2>
+
+////    QPointF po;
+//    float xo[beamQty-1] = {0.0};    //
+//    float yo[beamQty-1] = {0.0};
+//    for (int i = 0; i < beamQty-1; ++i) {
+//        xo[i] = (exitPoint[i+1]*qTan(angle[i]) - exitPoint[i]*qTan(angle[i+1]))
+//                / (qTan(angle[i]) - qTan(angle[i+1]));
+//        yo[i] = (exitPoint[i+1] - exitPoint[i])
+//                / (qTan(angle[i]) - qTan(angle[i+1]));
+//    }
+
+//    float realCurrentY = 0.0;
+//    float realCrurrentX = 0.0;
+//    int beam = 0;
+
+//    float junction[beamQty] = {0.0};
+//    float tmp = 0.0;
+
+
+
+
+//    for (int i = 0; i < destHeight; ++i) {
+//        realCurrentY = realStartX + heightRatio*i;
+
+//        for (int k = 0; k < beamQty; ++k) {
+//            junction[k] = exitPoint[k] + qTan(angle[k]) * realCurrentY;
+//        }
+
+//        beam = 0;
+//        for (int j = 0; j < destWidth; ++j) {
+//            realCrurrentX = realStartX + widthRatio*j;
+
+//            for (; beam < beamQty; ++beam) {
+//                if (realCrurrentX > junction[beamQty-1]
+//                        || realCrurrentX < junction[0]) {
+//                    /* 当前点不在范围内 */
+//                    break;
+//                }
+
+
+//            }
+//        }
+//    }
 }
