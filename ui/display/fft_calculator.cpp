@@ -16,7 +16,7 @@ FFTCalculator::FFTCalculator():
 
 {
     memset(&m_fftResult, 0, sizeof(S_FFT_result));
-   /* 初始化变换核*/
+    /* 初始化变换核*/
     memset(&m_wn ,0 ,sizeof(S_Complex) * s_NUM);
     memset(&m_data ,0 ,sizeof(S_Complex) * s_NUM);
     memset(&m_returnData ,100 , sizeof(unsigned char) * s_NUM);
@@ -135,6 +135,7 @@ void FFTCalculator::calculate_result(int targetDataLen)
             && (m_data[i].img > -0.0001) ) {
             temp = m_data[i].real;
         } else {
+            /* 计算幅值 */
             temp = sqrt(pow(m_data[i].real, 2) + pow(m_data[i].img, 2));
         }
 

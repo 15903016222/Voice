@@ -75,6 +75,8 @@ private:
      */
     void paint_value(QPainter *painter);
 
+    void verify_from_file();
+
 };
 
 #endif // __FFT_ITEM_H__
