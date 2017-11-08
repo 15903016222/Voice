@@ -53,6 +53,13 @@ Group::Mode Group::mode()
 
 void Group::set_mode(Group::Mode mode)
 {
+    if (PA == mode || UT == mode) {
+        m_fpgaGroup->set_mode(DplFpga::Group::PA);
+    } else if (UT1 == mode) {
+        m_fpgaGroup->set_mode(DplFpga::Group::UT1);
+    } else if (UT2 == mode) {
+        m_fpgaGroup->set_mode(DplFpga::Group::UT2);
+    }
     d->set_mode(mode);
 }
 
@@ -108,6 +115,11 @@ const DplGate::GatePointer &Group::gate(DplFpga::Group::GateType type) const
 const DplSource::BeamsPointer &Group::current_beams() const
 {
     return d->beams();
+}
+
+void Group::set_current_beam(int index)
+{
+    d->set_current_beam_index(index);
 }
 
 const DplSource::BeamPointer &Group::current_beam() const
