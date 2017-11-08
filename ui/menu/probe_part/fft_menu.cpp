@@ -37,6 +37,7 @@ FftMenu::FftMenu(QWidget *parent) :
 
     /* Switch menu item */
     m_switchItem->set(s_onOff);
+    m_switchItem->set_current_index(1); /* 0:On, 1:Off */
 
     init_connection();
 }
@@ -52,16 +53,20 @@ void FftMenu::do_switchItem_changed(int val)
     if(val) {
         displayPointer->set_layout(DplDisplay::Display::A, displayPointer->grps());
     } else {
-//        if((DplDevice::Device::instance()->current_group()->transceiver()->rectifier()/* == DplFpga::Group::Rectifier*/)
-//                && (1 == DplDevice::Device::instance()->current_group()->sample()->range() / 10 / DplDevice::Device::instance()->current_group()->current_beam()->point_qty())) {
-
+        /* TODO */
+#if 0
+        if(m_currentGroupPointer->transceiver()->rectifier() == DplFpga::Group::RF
+                && (1 == (m_currentGroupPointer->sample()->range() / 10.0 / m_currentGroupPointer->current_beam()->point_qty()))) {
             displayPointer->set_layout(DplDisplay::Display::AFFT, displayPointer->grps());
-//        } else {
-//            QMessageBox::warning(this, tr("Warning"), "Range is too large Or Not RF mode.");
-//            disconnect(m_switchItem, SIGNAL(value_changed(int)), this, SLOT(do_switchItem_changed(int)));
-//            m_switchItem->set_current_index(!val);
-//            connect(m_switchItem, SIGNAL(value_changed(int)), this, SLOT(do_switchItem_changed(int)));
-//        }
+        } else {
+            QMessageBox::warning(this, tr("Warning"), "Range is too large Or Not RF mode.");
+            disconnect(m_switchItem, SIGNAL(value_changed(int)), this, SLOT(do_switchItem_changed(int)));
+            m_switchItem->set_current_index(!val);
+            connect(m_switchItem, SIGNAL(value_changed(int)), this, SLOT(do_switchItem_changed(int)));
+        }
+#else
+        displayPointer->set_layout(DplDisplay::Display::AFFT, displayPointer->grps());
+#endif
     }
 }
 
