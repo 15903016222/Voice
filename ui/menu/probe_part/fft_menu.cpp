@@ -134,6 +134,7 @@ void FftMenu::do_gainItem_changed(double gain)
     m_currentGroupPointer->sample()->set_gain(gain);
     connect(static_cast<DplUt::Sample *> (m_currentGroupPointer->sample().data()), SIGNAL(gain_changed(float)),
             this, SLOT(do_gain_changed(float)));
+    emit gain_changed(gain);
 }
 
 
@@ -148,8 +149,10 @@ void FftMenu::do_gain_changed(float val)
 
 void FftMenu::init_connection()
 {
-    /* FFT Switch连接 */
-    connect(m_switchItem, SIGNAL(value_changed(int)), this, SLOT(do_switchItem_changed(int)));
+    /* Gain item连接 */
+    connect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
+    connect(static_cast<DplUt::Sample *> (m_currentGroupPointer->sample().data()), SIGNAL(gain_changed(float)),
+            this, SLOT(do_gain_changed(float)));
 
     /* Gate start、end连接 */
     connect(static_cast<DplGate::Gate *>(m_currentGroupPointer->gate_a().data()), SIGNAL(width_changed(float)),
@@ -161,14 +164,12 @@ void FftMenu::init_connection()
     connect(m_startItem, SIGNAL(value_changed(double)), this, SLOT(do_startItem_value_changed(double)));
     connect(m_widthItem, SIGNAL(value_changed(double)), this, SLOT(do_widthItem_value_changed(double)));
 
+    /* FFT Switch item连接 */
+    connect(m_switchItem, SIGNAL(value_changed(int)), this, SLOT(do_switchItem_changed(int)));
+
     /* 当前组连接 */
     connect(DplDevice::Device::instance(), SIGNAL(current_group_changed(DplDevice::GroupPointer)),
             this, SLOT(do_current_group_changed(DplDevice::GroupPointer)));
-
-    /* Gain item连接 */
-    connect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
-    connect(static_cast<DplUt::Sample *> (m_currentGroupPointer->sample().data()), SIGNAL(gain_changed(float)),
-            this, SLOT(do_gain_changed(float)));
 }
 
 }

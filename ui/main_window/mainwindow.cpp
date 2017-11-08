@@ -6,6 +6,7 @@
 #include "../display/display_widget.h"
 #include "../menu/ut_setting/general_menu.h"
 #include "../menu/preference/preference_menu.h"
+#include "../menu/probe_part/fft_menu.h"
 
 #include <QDebug>
 #include <QResizeEvent>
@@ -63,6 +64,8 @@ MainWindow::MainWindow(QWidget *parent) :
     DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(m_subMenu->get_menu(MainMenu::UTSettings_General));
     connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
     connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
+    DplProbeMenu::FftMenu *fftMenu = dynamic_cast<DplProbeMenu::FftMenu *>(m_subMenu->get_menu(MainMenu::ProbePart_FFT));
+    connect(fftMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
 
     DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
     connect(preferenceMenu, SIGNAL(opacity_changed(double)),

@@ -62,6 +62,9 @@ private slots:
      */
     void do_gain_changed(float val);
 
+signals:
+    void gain_changed(double val);
+
 private:
     SpinMenuItem *m_gainItem;
     SpinMenuItem *m_startItem;

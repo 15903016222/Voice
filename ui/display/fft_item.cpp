@@ -28,7 +28,7 @@ void FFTItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    QReadLocker l(&m_locker);
+    QWriteLocker l(&m_locker);
 
     painter->fillRect(this->boundingRect(),QColor(Qt::black));
 
@@ -52,7 +52,7 @@ void FFTItem::set_size(const QSize &size)
 
 void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
 {
-    QReadLocker l(&m_locker);
+    QWriteLocker l(&m_locker);
 
     if(m_size.width() < 0
         || m_size.height() < 0) {
@@ -73,14 +73,13 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
         return;
     }
 
-#if 1
     int beginPos = wave.size() * gateStart / m_size.width();
     int dataLen = wave.size() * gateWidth / m_size.width();
 
     const char *data = wave.data();
     data += beginPos;
 
-    /* 计算FPGA采用频率 */
+    /* 计算FPGA采样频率 */
     double dataHz = 1.0 / (DplDevice::Device::instance()->current_group()->sample()->precision() / pow(1000.0, 3));
     double dataMHz = dataHz / 1000000.0;
     if(!m_fftCalculator->execute(dataLen, (unsigned char*)data, m_size.width(), dataMHz)) {
@@ -101,9 +100,6 @@ void FFTItem::draw(const QByteArray &wave, const DplDevice::GroupPointer &group)
 
     m_wavePath = path;
     emit wave_changed();
-#else
-    verify_from_file();
-#endif
 }
 
 double FFTItem::get_Mhz_ratio()
@@ -185,61 +181,4 @@ void FFTItem::paint_value(QPainter *painter)
 
 }
 
-void FFTItem::verify_from_file()
-{
 
-#if 0
-    int tmpGateWidth = 473;
-    int tmpShowWidth = 605;
-    int pointQty     = 638;
-    int dataLen = pointQty * tmpGateWidth / tmpShowWidth;
-#else
-    int tmpGateWidth = 473.0;
-
-    int tmpShowWidth = m_size.width();
-    if(tmpShowWidth != 625) {
-        tmpGateWidth =  tmpGateWidth * 780 / 625;
-    }
-    int pointQty     = 638;
-    int dataLen = pointQty * tmpGateWidth / tmpShowWidth;
-#endif
-
-    QFile file(tr("/home/tt/TT/data.txt"));
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << " open file failed!!!";
-        return;
-    }
-
-    unsigned char mydata[1024];
-    QString byteArray;
-    int i = 0;
-    while(!file.atEnd()) {
-        byteArray = file.readLine();
-        mydata[i] = byteArray.toDouble();
-        ++i;
-    }
-
-    /* 计算FPGA采用频率 */
-    double dataHz = 1.0 / (DplDevice::Device::instance()->current_group()->sample()->precision() / pow(1000.0, 3));
-    double dataMHz = dataHz / 1000000.0;
-
-    if(!m_fftCalculator->execute(dataLen, mydata, tmpShowWidth, dataMHz)) {
-        emit wave_changed();
-        return;
-    }
-
-    float yRatio = m_size.height() / 255.0;
-
-    QPainterPath path;
-    path.moveTo(-m_size.width() / 2.0, -m_size.height() / 2.0);
-
-    const FFTCalculator::S_FFT_result &fftResult = m_fftCalculator->get_result();
-
-    for (int i = 0; i < tmpShowWidth; ++i) {
-        path.lineTo(i - m_size.width() / 2.0,
-                    m_size.height() / 2.0 - yRatio * fftResult.data[i]);
-    }
-
-    m_wavePath = path;
-    emit wave_changed();
-}
