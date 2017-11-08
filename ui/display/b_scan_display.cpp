@@ -61,6 +61,8 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
 
     connect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
     connect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
+
+    TestStub::instance()->update_time(0.0);
 }
 
 
@@ -266,9 +268,6 @@ void BscanDisplay::init_scan_env()
 void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 {
     double currentTimeCount = TestStub::instance()->get_time();
-
-    qDebug() << "[" << __FUNCTION__ << "]"
-             << " current time  = " << currentTimeCount;
 
     DplSource::Scan *scan = DplSource::Scan::instance();
     DplSource::AxisPointer scanAxis = scan->scan_axis();
