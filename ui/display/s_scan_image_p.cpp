@@ -1,5 +1,10 @@
 #include "s_scan_image_p.h"
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QtConcurrent/QtConcurrent>
+#else
 #include <QtConcurrentRun>
+#endif
 
 SscanImagePrivate::SscanImagePrivate(SscanImage *parent, const DplDevice::GroupPointer &group, const DplDisplay::PaletteColorPointer palette) :
     m_group(group),
