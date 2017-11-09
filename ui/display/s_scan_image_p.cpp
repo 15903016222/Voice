@@ -1,30 +1,39 @@
 #include "s_scan_image_p.h"
+#include <QtConcurrentRun>
 
 SscanImagePrivate::SscanImagePrivate(SscanImage *parent, const DplDevice::GroupPointer &group, const DplDisplay::PaletteColorPointer palette) :
     m_group(group),
-    m_pointSet(NULL),
+    m_pointSet(new PointInfo[parent->width()*parent->height()]),
     m_drawPointQty(0),
     m_palette(palette),
     q(parent)
 {
     connect(static_cast<DplFocallaw::Focallawer *>(m_group->focallawer().data()),
             SIGNAL(focallawed()),
-            this, SLOT(init_matrix()));
+            this, SLOT(do_init_matrix()));
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(point_qty_changed(int)),
-            this, SLOT(init_matrix()));
+            this, SLOT(do_init_matrix()));
     init_matrix();
+}
+
+SscanImagePrivate::~SscanImagePrivate()
+{
+    QWriteLocker l(&m_rwLock);
+    if (m_pointSet) {
+        delete m_pointSet;
+        m_drawPointQty = 0;
+    }
+}
+
+void SscanImagePrivate::do_init_matrix()
+{
+    QtConcurrent::run(this,&SscanImagePrivate::init_matrix);
 }
 
 void SscanImagePrivate::init_matrix()
 {
     QWriteLocker l(&m_rwLock);
-
-    if (m_pointSet) {
-        delete m_pointSet;
-        m_pointSet = NULL;
-    }
-    m_pointSet = new PointInfo[q->width()*q->height()];
     m_drawPointQty = 0;
 
     DplFocallaw::PaProbePointer probe = m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();

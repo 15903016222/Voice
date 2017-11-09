@@ -32,9 +32,12 @@ class SscanImagePrivate : public QObject
 {
     Q_OBJECT
 public:
-    SscanImagePrivate(SscanImage *parent, const DplDevice::GroupPointer &group, const DplDisplay::PaletteColorPointer palette);
+    explicit SscanImagePrivate(SscanImage *parent, const DplDevice::GroupPointer &group, const DplDisplay::PaletteColorPointer palette);
+    ~SscanImagePrivate();
 
 public slots:
+    void do_init_matrix();
+
     /**
      * @brief init_matrix   初始化插值表
      */
