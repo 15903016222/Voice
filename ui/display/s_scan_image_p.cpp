@@ -124,8 +124,9 @@ void SscanImagePrivate::init_sectorial_matrix(int srcWidth, int srcHeight, int s
     int beamQty = srcWidth;
     int pointQty = srcHeight;
     float inPoint[beamQty];                 // 入射点X值
+    QList<DplFocallaw::BeamPointer> beams = m_group->focallawer()->beams();
     for (int i = 0; i < beamQty; ++i) {
-        inPoint[i] = 0.0;
+        inPoint[i] = beams[i]->field_distance();
     }
 
     /* 计算真实的坐标点 */
