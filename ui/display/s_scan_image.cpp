@@ -1,7 +1,10 @@
-#include "s_scan_image.h"
+/**
+ * @file s_scan_image.cpp
+ * @brief 画S-Scan图像类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-11-09
+ */
 #include "s_scan_image_p.h"
-#include <QColor>
-#include <qmath.h>
 
 SscanImage::SscanImage(const DplDevice::GroupPointer &group, const QSize &size, const DplDisplay::PaletteColorPointer palette) :
     QImage(size, QImage::Format_RGB32),

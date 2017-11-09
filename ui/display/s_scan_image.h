@@ -1,3 +1,9 @@
+/**
+ * @file s_scan_image.h
+ * @brief 画S-Scan图像类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-11-09
+ */
 #ifndef __S_SCAN_IMAGE_H__
 #define __S_SCAN_IMAGE_H__
 

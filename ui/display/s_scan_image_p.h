@@ -4,9 +4,6 @@
 #include "s_scan_image.h"
 #include <QReadWriteLock>
 
-#define COLOR_STEP  4     /*    4  8  16  32  64*/
-#define COLOR_SHIFT 2      /*    2  3   4   5   6*/
-
 struct PointInfo
 {
     int beam;
