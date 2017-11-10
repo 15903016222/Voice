@@ -26,9 +26,13 @@ protected:
     Ui::ScanDisplay *ui;
     DplDevice::GroupPointer m_group;
 
+protected slots:
+    void update_rules();
+
 private:
     ScanView *m_view;
     SscanScene *m_scene;
+    DplDisplay::SscanPointer m_sScan;
 };
 
 #endif // __S_SCAN_DISPLAY_H__
