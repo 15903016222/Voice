@@ -9,6 +9,8 @@
 #define __SYSTEM_MENU_H__
 
 #include"../base_menu.h"
+#include <QTimer>
+#include <QDateTime>
 
 namespace DplPreferenceMenu {
 
@@ -35,6 +37,11 @@ private slots:
     void show_date_dialog();
     void show_resetconfig_dialog();
     void show_info_dialog();
+    void do_time_out();
+
+private:
+    QTimer  *m_timer;
+    void set_date_time(const QDateTime &dateTime);
 };
 
 }

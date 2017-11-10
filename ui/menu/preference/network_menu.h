@@ -10,6 +10,8 @@
 
 #include "../base_menu.h"
 
+class NetworkManager;
+
 namespace DplPreferenceMenu {
 
 class NetworkMenu : public BaseMenu
@@ -29,6 +31,9 @@ private:
 private slots:
     void show_ip_address_dialog();
     void show_subnet_mask_dialog();
+
+private:
+    NetworkManager  *m_networkManager;
 };
 
 }

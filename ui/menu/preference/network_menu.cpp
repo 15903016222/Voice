@@ -8,13 +8,17 @@
 #include "network_menu.h"
 #include "ui_base_menu.h"
 #include "networkdialog.h"
+#include "network_manager.h"
+
+#include <QMessageBox>
 
 namespace DplPreferenceMenu {
 
 NetworkMenu::NetworkMenu(QWidget *parent) :
     BaseMenu(parent),
     m_ipItem(new LabelMenuItem(this, tr("IP Address"), "192.168.1.2")),
-    m_maskItem(new LabelMenuItem(this, tr("Subnet Mask"), "255.255.255.0"))
+    m_maskItem(new LabelMenuItem(this, tr("Subnet Mask"), "255.255.255.0")),
+    m_networkManager(new NetworkManager)
 {
     ui->layout0->addWidget(m_ipItem);
     ui->layout1->addWidget(m_maskItem);
@@ -24,10 +28,20 @@ NetworkMenu::NetworkMenu(QWidget *parent) :
 
     /* Subnet Mask menu item */
     connect(m_maskItem, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
+
+    QString ip;
+    m_networkManager->get_local_ip_address(ip);
+    m_ipItem->set_text(ip);
+
+    QString mask;
+    m_networkManager->get_subnet_mask(mask);
+    m_maskItem->set_text(mask);
+
 }
 
 NetworkMenu::~NetworkMenu()
 {
+
 }
 
 void NetworkMenu::show_ip_address_dialog()
@@ -40,7 +54,14 @@ void NetworkMenu::show_ip_address_dialog()
     dialog.set_spinbox_value(str);
 
     if (dialog.exec() == NetworkDialog::Accepted) {
-        m_ipItem->set_text(dialog.get_text());
+
+        if(m_networkManager->set_ip_address(dialog.get_text())) {
+            m_ipItem->set_text(dialog.get_text());
+            QMessageBox::information(this, tr("Info"), tr("Done!"));
+        } else {
+            m_ipItem->set_text(str);
+            QMessageBox::warning(this, tr("Warning"), tr("Failed!"));
+        }
     } else {
         m_ipItem->set_text(str);
     }
@@ -49,8 +70,6 @@ void NetworkMenu::show_ip_address_dialog()
 void NetworkMenu::show_subnet_mask_dialog()
 {
     NetworkDialog dialog;
-//    QMap<QString, QString> map;
-//    map.insert("Subnet Mask Set", m_maskItem->get_title());
     QString title = m_maskItem->title();
     QString str = m_maskItem->text();
 
@@ -58,7 +77,14 @@ void NetworkMenu::show_subnet_mask_dialog()
     dialog.set_spinbox_value(str);
 
     if (dialog.exec() == NetworkDialog::Accepted) {
-        m_maskItem->set_text(dialog.get_text());
+
+        if(m_networkManager->set_subnet_mask(dialog.get_text())) {
+            m_maskItem->set_text(dialog.get_text());
+            QMessageBox::information(this, tr("Info"), tr("Done!"));
+        } else {
+            m_maskItem->set_text(str);
+            QMessageBox::warning(this, tr("Warning"), tr("Failed!"));
+        }
     } else {
         m_maskItem->set_text(str);
     }
