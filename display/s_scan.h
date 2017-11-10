@@ -1,3 +1,9 @@
+/**
+ * @file s_scan.h
+ * @brief S-Scan信息类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-11-10
+ */
 #ifndef __S_SCAN_H__
 #define __S_SCAN_H__
 

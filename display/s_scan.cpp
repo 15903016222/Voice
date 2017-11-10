@@ -1,3 +1,9 @@
+/**
+ * @file s_scan.cpp
+ * @brief S-Scan信息类
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-11-10
+ */
 #include "s_scan.h"
 
 namespace DplDisplay {
@@ -20,6 +26,7 @@ Sscan::Sscan(const DplFocallaw::FocallawerPointer &focallawer,
     connect(static_cast<DplUt::Sample *>(m_sample.data()),
             SIGNAL(range_changed(float)),
             this, SLOT(update_xy()));
+    update_xy();
 }
 
 void Sscan::update_xy()
