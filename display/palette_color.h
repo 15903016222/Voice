@@ -29,7 +29,10 @@ public:
      */
     QColor color(quint8 index) const;
 
-
+    /**
+     * @brief colors    获取颜色向量表
+     * @return          向量表
+     */
     const QVector<QRgb> &colors() const;
 
     /**
@@ -56,11 +59,7 @@ typedef QSharedPointer<PaletteColor> PaletteColorPointer;
 
 inline QColor PaletteColor::color(quint8 index) const
 {
-//    if (index < m_colorVector.size()) {
-        return QColor(m_colors[index]);
-//    } else {
-//        return QColorPointer(new QColor(Qt::black));
-        //    }
+    return QColor(m_colors[index]);
 }
 
 inline const QVector<QRgb> &PaletteColor::colors() const
