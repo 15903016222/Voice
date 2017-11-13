@@ -8,10 +8,10 @@
 #include <QVBoxLayout>
 #include <QDebug>
 
-using namespace Ui::Dialog;
+//using namespace Ui::Dialog;
 
 SysInfoDialog::SysInfoDialog(QWidget *parent) :
-    QDialog(parent)
+    BaseDialog(parent)
 {
     QPalette palette;
     palette.setColor(QPalette::Background, QColor(255, 255, 255));
@@ -37,10 +37,11 @@ SysInfoDialog::SysInfoDialog(QWidget *parent) :
                 "}"
                 "th {"
                 "text-align:left;"
-                "background:#CCCCFF;"
+                "background:#ffffff;"
                 "}"
                 "td {"
                 "text-align:left;"
+                "background:#ffffff;"
                 "}"
                 "h3 {"
                 "text-align:center;"
@@ -68,7 +69,7 @@ SysInfoDialog::SysInfoDialog(QWidget *parent) :
 //            .arg(QString::number((double)(dev->run_count()), 'f', 0))
 //            .arg(QString::number((double)(dev->run_time()), 'f', 0));
 
-    QLabel *infoTitleLabel = new QLabel(QString("<h3>%1</3>").arg(tr("System Infomation")));
+    QLabel *infoTitleLabel = new QLabel(QString("<h3 style=\"color:#FFFFFF\" >%1</3>").arg(tr("System Infomation")));
     QLabel *infoLabel = new QLabel(info);
     infoLabel->setAlignment(Qt::AlignLeft);
     infoLabel->setWordWrap(true);
@@ -76,11 +77,14 @@ SysInfoDialog::SysInfoDialog(QWidget *parent) :
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     QPushButton *closeButton = buttonBox->button(QDialogButtonBox::Close);
-//    QTC_CHECK(closeButton);
+    closeButton->setMinimumHeight(35);
+
     buttonBox->addButton(closeButton, QDialogButtonBox::ButtonRole(QDialogButtonBox::RejectRole | QDialogButtonBox::AcceptRole));
     connect(buttonBox , SIGNAL(rejected()), this, SLOT(reject()));
 
     layout->addWidget(infoTitleLabel, 0, Qt::AlignCenter);
     layout->addWidget(infoLabel);
     layout->addWidget(buttonBox, 0, Qt::AlignRight);
+
+    closeButton->setFocus();
 }

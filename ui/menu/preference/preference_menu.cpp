@@ -11,6 +11,8 @@
 
 namespace DplPreferenceMenu {
 
+
+
 PreferenceMenu::PreferenceMenu(QWidget *parent) :
     BaseMenu(parent),
     m_brightItem(new SpinMenuItem(this, tr("Bright"), "%")),

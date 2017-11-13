@@ -10,9 +10,9 @@
 
 #include "../base_menu.h"
 
-class NetworkManager;
-
 namespace DplPreferenceMenu {
+
+class NetworkManager;
 
 class NetworkMenu : public BaseMenu
 {

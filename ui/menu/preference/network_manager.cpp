@@ -13,6 +13,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+namespace DplPreferenceMenu {
+
 static const QString s_cardName        = "usb0";
 static const QString s_interfaces      = "/etc/network/interfaces";
 static const QString s_ip_address_tag  = "address ";
@@ -194,3 +196,6 @@ bool NetworkManager::set_config_file_by_tag(const QString &tag, const QString &i
     configFile.close();
     return ret;
 }
+
+}
+

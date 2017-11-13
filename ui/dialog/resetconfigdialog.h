@@ -2,12 +2,13 @@
 #define RESETCONFIGDIALOG_H
 
 #include <QDialog>
+#include <ui/dialog/base_dialog.h>
 
 namespace Ui {
 class ResetConfigDialog;
 }
 
-class ResetConfigDialog : public QDialog
+class ResetConfigDialog : public BaseDialog
 {
     Q_OBJECT
 

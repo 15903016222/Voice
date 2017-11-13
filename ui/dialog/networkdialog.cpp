@@ -4,7 +4,7 @@
 #include <QKeyEvent>
 
 NetworkDialog::NetworkDialog(QWidget *parent) :
-    QDialog(parent),
+    BaseDialog(parent),
     ui(new Ui::NetworkDialog)
 {
     ui->setupUi(this);

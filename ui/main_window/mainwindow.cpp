@@ -136,7 +136,6 @@ void MainWindow::update_translator(QString string)
 //    ui->widgetTopLeft->retranslate_top_menu_ui();
 //    firstSecondMenu->retranslate_main_menu_ui(string);
 //    commonMenuWidget->retranslate_common_menu_ui();
-
 }
 
 void MainWindow::show_hidden_Menu()

@@ -8,15 +8,27 @@
 #include "system_menu.h"
 #include "ui_base_menu.h"
 #include "datetimesetdialog.h"
+#include "file_dialog.h"
 #include "resetconfigdialog.h"
 #include "sysinfo_dialog.h"
+#include "dpl_message_box.h"
+#include "base_dialog.h"
 #include <device/device.h>
+
 
 #include <time.h>
 #include <sys/time.h>
 #include <QMessageBox>
+#include <QDateTime>
 
 namespace DplPreferenceMenu {
+
+
+static const QString s_usbPath =  "/opt/usbStorage/";
+static const QString s_fileType = "*.cert";
+
+static const QString s_updatePath =  "/home/tt/TT/";
+static const QString s_updateFileType = "*";
 
 SystemMenu::SystemMenu(QWidget *parent) :
     BaseMenu(parent),
@@ -41,6 +53,12 @@ SystemMenu::SystemMenu(QWidget *parent) :
     /* Time */
     connect(m_timeItem, SIGNAL(clicked()), this, SLOT(show_time_dialog()));
 
+    /* Cert Import */
+    connect(m_certItem, SIGNAL(clicked()), this, SLOT(show_cert_import_dialog()));
+
+    /* Update */
+    connect(m_updateItem, SIGNAL(clicked()), this, SLOT(show_update_dialog()));
+
     /* Reset Configuration */
     connect(m_resetCfgItem, SIGNAL(clicked()), this, SLOT(show_resetconfig_dialog()));
 
@@ -48,7 +66,10 @@ SystemMenu::SystemMenu(QWidget *parent) :
     connect(m_infoItem, SIGNAL(clicked()), this, SLOT(show_info_dialog()));
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(do_time_out()));
+
+    init_date_time();
     m_timer->start(1000);
+
 }
 
 SystemMenu::~SystemMenu()
@@ -65,10 +86,15 @@ void SystemMenu::show_time_dialog()
     timeDialog.set_time_value(m_timeItem->text());
 
     if (timeDialog.exec() == DateTimeSetDialog::Accepted) {
-        m_timeItem->set_text(timeDialog.get_time());
-
         QDateTime dateTime = QDateTime::fromString(m_dateItem->text() + tr(" ") + timeDialog.get_time(), "yyyy-MM-dd hh:mm:ss");
-        set_date_time(dateTime);
+        if(set_date_time(dateTime)) {
+            m_timeItem->set_text(timeDialog.get_time());
+            DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Done!"));
+            messageBox.exec();
+        } else {
+            DplMessageBox messageBox(QMessageBox::Information, tr("Warning"), tr("Failed!"));
+            messageBox.exec();
+        }
     }
 }
 
@@ -82,49 +108,93 @@ void SystemMenu::show_date_dialog()
     dateDialog.set_date_value(m_dateItem->text());
 
     if (dateDialog.exec() == DateTimeSetDialog::Accepted) {
-        m_dateItem->set_text(dateDialog.get_date());
-
-        QString dateTimeString = dateDialog.get_date() + tr(" ") + QDateTime::currentDateTime().time().toString("hh:mm:ss:zzz");
+        uint currentDate = DplDevice::Device::instance()->date_time();
+        QDateTime cruuentDateTime = QDateTime::fromTime_t(currentDate);
+        QString dateTimeString = dateDialog.get_date() + tr(" ") + cruuentDateTime.toString("hh:mm:ss:zzz");
         QDateTime dateTime = QDateTime::fromString(dateTimeString, "yyyy-MM-dd hh:mm:ss:zzz");
-        set_date_time(dateTime);
+        if(set_date_time(dateTime)) {
+            m_dateItem->set_text(dateDialog.get_date());
+            DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Done!"));
+            messageBox.exec();
+        } else {
+            DplMessageBox messageBox(QMessageBox::Information, tr("Warning"), tr("Failed!"));
+            messageBox.exec();
+        }
+    }
+}
+
+void SystemMenu::show_cert_import_dialog()
+{
+    FileDialog::S_FileDialogParameters parameters;
+    parameters.title            = tr("Cert Import");
+    parameters.filePath         = s_usbPath;
+    parameters.nameFilters      = QStringList(s_fileType);
+    parameters.okButtonText     = tr("Import");
+    parameters.cancelButtonText = tr("Cancel");
+
+    FileDialog importDialog(parameters);
+    if(importDialog.exec() == QDialog::Accepted) {
+        if(DplDevice::Device::instance()->import_cert(importDialog.get_selected_file_name())) {
+            DplMessageBox messageBox(QMessageBox::Information, tr("Import"), tr("Done!"));
+            messageBox.exec();
+        } else {
+            DplMessageBox messageBox(QMessageBox::Warning, tr("Warning"), tr("Failed!"));
+            messageBox.exec();
+        }
+    }
+}
+
+void SystemMenu::show_update_dialog()
+{
+    FileDialog::S_FileDialogParameters parameters;
+    parameters.title            = tr("Update");
+    parameters.filePath         = s_updatePath;
+    parameters.nameFilters      = QStringList(s_updateFileType);
+    parameters.okButtonText     = tr("Update");
+    parameters.cancelButtonText = tr("Cancel");
+
+    FileDialog importDialog(parameters);
+    if(importDialog.exec() == QDialog::Accepted) {
+        /* TODO: */
     }
 }
 
 void SystemMenu::show_resetconfig_dialog()
 {
-    ResetConfigDialog resetConfigDialog;
-    resetConfigDialog.exec();
+    DplMessageBox messageBox(QMessageBox::Question, tr("Reset"), tr("Reset Config ?"));
+    if(messageBox.exec() == QDialog::Accepted) {
+        /* TODO: */
+    }
 }
 
 void SystemMenu::show_info_dialog()
 {
-    Ui::Dialog::SysInfoDialog infoDialog;
+    SysInfoDialog infoDialog;
     infoDialog.exec();
 }
 
 void SystemMenu::do_time_out()
 {
-    QString time = QTime::currentTime().toString(tr("hh:mm:ss"));
-    m_timeItem->set_text(time);
+    time_t dateTime = DplDevice::Device::instance()->date_time();
+    QDateTime currentDateTime = QDateTime::fromTime_t(dateTime);
+    m_timeItem->set_text(currentDateTime.toString("hh:mm:ss"));
 }
 
-void SystemMenu::set_date_time(const QDateTime &dateTime)
+bool SystemMenu::set_date_time(const QDateTime &dateTime)
 {
-    DplDevice::Device::instance()->set_date_time(dateTime);
-
-    /* 更新系统时间 */
-    struct timeval tv;
-    struct timezone tz;
-    if(0 == gettimeofday(&tv, &tz)) {
-        tv.tv_sec   = dateTime.toTime_t();
-        tv.tv_usec  = 0;
-        if(0 == settimeofday(&tv, &tz)) {
-            system("hwclock -w");   /* 系统时间同步到硬件时钟 */
-            QMessageBox::information(this, tr("Info"), tr("Done!"));
-            return;
-        }
+    if(DplDevice::Device::instance()->set_date_time(dateTime)) {
+        return true;
+    } else {
+        return false;
     }
-    QMessageBox::warning(this, tr("Warning"), tr("Failed!"));
+}
+
+void SystemMenu::init_date_time()
+{
+    time_t dateTime = DplDevice::Device::instance()->date_time();
+    QDateTime currentDateTime = QDateTime::fromTime_t(dateTime);
+    m_dateItem->set_text(currentDateTime.toString("yyyy-MM-dd"));
+    m_timeItem->set_text(currentDateTime.toString("hh:mm:ss"));
 }
 
 }

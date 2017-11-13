@@ -54,7 +54,9 @@ StatusBar::~StatusBar()
 
 void StatusBar::do_timeout()
 {
-    ui->timeLabel->setText(QDateTime::currentDateTime().toString("MM-dd hh:mm:ss"));
+    time_t dateTime = DplDevice::Device::instance()->date_time();
+    QDateTime currentDateTime = QDateTime::fromTime_t(dateTime);
+    ui->timeLabel->setText(currentDateTime.toString("MM-dd hh:mm:ss"));
 }
 
 void StatusBar::do_current_group_changed(const DplDevice::GroupPointer &grp)

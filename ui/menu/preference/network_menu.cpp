@@ -10,7 +10,7 @@
 #include "networkdialog.h"
 #include "network_manager.h"
 
-#include <QMessageBox>
+#include "dpl_message_box.h"
 
 namespace DplPreferenceMenu {
 
@@ -57,10 +57,12 @@ void NetworkMenu::show_ip_address_dialog()
 
         if(m_networkManager->set_ip_address(dialog.get_text())) {
             m_ipItem->set_text(dialog.get_text());
-            QMessageBox::information(this, tr("Info"), tr("Done!"));
+            DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Done!"));
+            messageBox.exec();
         } else {
             m_ipItem->set_text(str);
-            QMessageBox::warning(this, tr("Warning"), tr("Failed!"));
+            DplMessageBox messageBox(QMessageBox::Warning, tr("Warning"), tr("Failed!"));
+            messageBox.exec();
         }
     } else {
         m_ipItem->set_text(str);
@@ -80,10 +82,12 @@ void NetworkMenu::show_subnet_mask_dialog()
 
         if(m_networkManager->set_subnet_mask(dialog.get_text())) {
             m_maskItem->set_text(dialog.get_text());
-            QMessageBox::information(this, tr("Info"), tr("Done!"));
+            DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Done!"));
+            messageBox.exec();
         } else {
             m_maskItem->set_text(str);
-            QMessageBox::warning(this, tr("Warning"), tr("Failed!"));
+            DplMessageBox messageBox(QMessageBox::Warning, tr("Warning"), tr("Failed!"));
+            messageBox.exec();
         }
     } else {
         m_maskItem->set_text(str);
