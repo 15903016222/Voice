@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QReadWriteLock>
 
+#include <device/group.h>
 #include <display/palette_color.h>
 #include <source/beams.h>
 
@@ -12,7 +13,7 @@ class SscanScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit SscanScene(const DplDisplay::PaletteColorPointer &palette, QObject *parent = 0);
+    explicit SscanScene(const DplDevice::GroupPointer &grp, const DplDisplay::PaletteColorPointer &palette);
     ~SscanScene();
 
     /**
@@ -46,6 +47,7 @@ private:
     DplDisplay::PaletteColorPointer m_palette;
     DplSource::BeamsPointer m_beams;
     QPixmap m_pixmap;
+    DplDevice::GroupPointer m_group;
 };
 
 inline void SscanScene::set_palette(const DplDisplay::PaletteColorPointer &palette)

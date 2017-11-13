@@ -13,11 +13,11 @@ SscanImagePrivate::SscanImagePrivate(SscanImage *parent, const DplDevice::GroupP
     m_palette(palette),
     q(parent)
 {
-    connect(static_cast<DplFocallaw::Focallawer *>(m_group->focallawer().data()),
-            SIGNAL(focallawed()),
-            this, SLOT(do_init_matrix()));
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(point_qty_changed(int)),
+            this, SLOT(do_init_matrix()));
+    connect(static_cast<DplDisplay::Sscan *>(m_group->s_scan().data()),
+            SIGNAL(xy_changed()),
             this, SLOT(do_init_matrix()));
     init_matrix();
 }
@@ -118,9 +118,9 @@ void SscanImagePrivate::init_sectorial_matrix(int srcWidth, int srcHeight, int s
     DplFocallaw::PaProbePointer probe = m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
     DplFocallaw::SectorialScanCnfPointer scanCnf = probe->scan_configure().staticCast<DplFocallaw::SectorialScanCnf>();
     DplUt::SamplePointer sample = m_group->sample();
+    DplDisplay::SscanPointer sScan = m_group->s_scan();
 
     float angleStart = Dpl::degree2pi(scanCnf->first_angle());
-    float angleStop = Dpl::degree2pi(scanCnf->last_angle());
     float angleStep = Dpl::degree2pi(scanCnf->angle_step());
 
     float sampleStart = sample->start();
@@ -134,35 +134,9 @@ void SscanImagePrivate::init_sectorial_matrix(int srcWidth, int srcHeight, int s
         inPoint[i] = beams[i]->field_distance();
     }
 
-    /* 计算真实的坐标点 */
-    float realStartX = 0.0;     // 真实开始X值
-    float realStopX = 0.0;      // 真实结束X值
-    float realStartY= 0.0;      // 真实开始Y值
-    float realStopY = 0.0;      // 真实结束Y值
-    if (angleStart * angleStop <= 0) {
-        realStartX = inPoint[0] + sampleStop * qSin(angleStart);
-        realStopX  = inPoint[beamQty - 1] + sampleStop * qSin(angleStop);
-        realStopY  = sampleStop;
-        if (qFabs(angleStart) > qFabs(angleStop)) {
-            realStartY = sample->start() * qCos(angleStart);
-        } else {
-            realStartY = sample->start() * qCos(angleStop);
-        }
-    } else if( angleStart < 0 && angleStop < 0) {
-        realStartX = inPoint[0] + sampleStop * qSin(angleStart);
-        realStopX  = inPoint[beamQty -1] + sample->start() * qSin(angleStop);
-        realStartY = sample->start() * qCos(angleStart);
-        realStopY  = sampleStop * qCos(angleStop);
-    } else { //( _nAngleStart > 0 && _nAngleStop > 0)
-        realStartX = inPoint[0] + sample->start() * qSin(angleStart) ;
-        realStopX  = inPoint[beamQty - 1] + sampleStop * qSin(angleStop);
-        realStartY = sample->start() * qCos(angleStop);
-        realStopY  = sampleStop * qCos(angleStart);
-    }
-
     /* 计算真实长宽与显示的长宽的比例系数 */
-    float widthRatio = (realStopX - realStartX) / (destWidth);
-    float heightRatio = (realStopY - realStartY) / (destHeight);
+    float widthRatio = sScan->width() / (destWidth);
+    float heightRatio = sScan->height() / (destHeight);
     if (qFuzzyIsNull(widthRatio) || qFuzzyIsNull(heightRatio)) {
         return;
     }
@@ -196,7 +170,7 @@ void SscanImagePrivate::init_sectorial_matrix(int srcWidth, int srcHeight, int s
     float curAngle = 0;
 
     for (int i = 0; i < destHeight; ++i) {
-        curPoint.set_y(realStartY + heightRatio*i);
+        curPoint.set_y(sScan->start_y() + heightRatio*i);
 
         /* 计算经过当前点与X轴平等的直线与各beam线的交叉点位置 */
         for (int k = 0; k < beamQty; ++k) {
@@ -207,7 +181,7 @@ void SscanImagePrivate::init_sectorial_matrix(int srcWidth, int srcHeight, int s
 
         curBeam = 0;
         for (int j = 0; j < destWidth; ++j) {
-            curPoint.set_x(realStartX + widthRatio*j);
+            curPoint.set_x(sScan->start_x() + widthRatio*j);
 
             for (; curBeam < beamQty-1; ++curBeam) {
                 if (curPoint.x() > juncPoint[beamQty-1].x()

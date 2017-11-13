@@ -15,6 +15,7 @@
 #include <gate/gate.h>
 #include <measure/cursor.h>
 #include <source/beams.h>
+#include <display/s_scan.h>
 
 namespace DplDevice {
 
@@ -163,6 +164,12 @@ public:
      */
     const DplMeasure::CursorPointer &cursor() const;
 
+    /**
+     * @brief sscan 获取Sscan对象
+     * @return      Sscan对象
+     */
+    const DplDisplay::SscanPointer &s_scan() const;
+
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
@@ -194,6 +201,7 @@ private:
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
     DplMeasure::CursorPointer m_cursor;
+    DplDisplay::SscanPointer m_sScan;
     GroupPrivate *d;
 
 private:
@@ -253,6 +261,11 @@ inline const DplFocallaw::FocallawerPointer &Group::focallawer() const
 inline const DplMeasure::CursorPointer &Group::cursor() const
 {
     return m_cursor;
+}
+
+inline const DplDisplay::SscanPointer &Group::s_scan() const
+{
+    return m_sScan;
 }
 
 }

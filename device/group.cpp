@@ -30,6 +30,7 @@ Group::Group(int index, QObject *parent) : QObject(parent),
     m_gateB(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_B, Qt::green)),
     m_gateI(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_I, Qt::darkCyan)),
     m_cursor(new DplMeasure::Cursor()),
+    m_sScan(new DplDisplay::Sscan(m_focallawer, m_sample)),
     d(new GroupPrivate(this))
 {
     init_gates();
