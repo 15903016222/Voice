@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /* gain menu item */
     ui->gainMenuItem->set_title(tr("Gain"));
     ui->gainMenuItem->set_unit(tr("dB"));
-    ui->gainMenuItem->set(0, 90, 1, 0.1);
+    ui->gainMenuItem->set(0, 110, 1, 0.1);
     ui->gainMenuItem->set_suffix("(0.0)");
     ui->gainMenuItem->set_value(group->sample()->gain());
 
