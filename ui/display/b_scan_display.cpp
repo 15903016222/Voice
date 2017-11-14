@@ -78,6 +78,9 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
             Qt::DirectConnection);
 
     connect(this, SIGNAL(cursor_visible_changed(bool)), this, SLOT(do_cursor_visible_changed(bool)));
+
+    TestStub::instance()->update_time(0.0);
+
 }
 
 
