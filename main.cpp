@@ -18,7 +18,12 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setApplicationName(QLatin1String("Mercury"));
 //    a.setApplicationVersion();
+
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+#else
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
+#endif
 
     QSplashScreen splash(QPixmap("/opt/mercury/image/splash.png"));
     splash.show();
