@@ -8,10 +8,10 @@
 #include "preference_menu.h"
 #include "ui_base_menu.h"
 #include <device/device.h>
+#include <QDebug>
+#include <QSettings>
 
 namespace DplPreferenceMenu {
-
-
 
 PreferenceMenu::PreferenceMenu(QWidget *parent) :
     BaseMenu(parent),
@@ -53,6 +53,8 @@ PreferenceMenu::PreferenceMenu(QWidget *parent) :
     /* Gate Mode */
     m_gatemodeItem->set(s_onOff);
 
+    connect(m_gatemodeItem, SIGNAL(value_changed(int)), this, SLOT(do_gatemodeItem_value_changed(int)));
+
     /* Deploy */
     connect(m_deployItem,
             SIGNAL(clicked()),
@@ -71,6 +73,37 @@ void PreferenceMenu::set_brightness(double value)
 void PreferenceMenu::do_deployItem_changed()
 {
     DplDevice::Device::instance()->deploy();
+}
+
+void PreferenceMenu::do_gatemodeItem_value_changed(int val)
+{
+    qDebug() << "[PreferenceMenu::do_gatemodeItem_value_changed] " << val;
+
+    bool flag = true;
+    if(val) {
+        flag = false;
+    }
+
+    const QVector<DplDevice::GroupPointer>  &groupVect = DplDevice::Device::instance()->groups();
+    DplDevice::GroupPointer groupPointer;
+    DplGate::GatePointer gateA;
+    DplGate::GatePointer gateB;
+    DplGate::GatePointer gateI;
+    for(int i = 0; i < groupVect.size(); ++i) {
+        groupPointer = groupVect.at(i);
+        if(groupPointer.isNull()) {
+            continue;
+        }
+
+        gateA = groupPointer->gate_a();
+        gateB = groupPointer->gate_b();
+        gateI = groupPointer->gate_i();
+
+        gateA->set_visible(flag);
+        gateB->set_visible(flag);
+        gateI->set_visible(flag);
+
+    }
 }
 
 }

@@ -36,6 +36,7 @@ signals:
 private slots:
     void set_brightness(double value);
     void do_deployItem_changed();
+    void do_gatemodeItem_value_changed(int val);
 };
 
 }
