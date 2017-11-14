@@ -35,6 +35,42 @@ void GlobalTransceiver::set_voltage(bool pa, GlobalTransceiver::Voltage v)
     }
 }
 
+DplFpga::Fpga::DampingType GlobalTransceiver::tx_damping(GlobalTransceiver::UtChannel channel) const
+{
+    if (channel == UT_1) {
+        return DplFpga::Fpga::instance()->ut1_tx_damping();
+    } else {
+        return DplFpga::Fpga::instance()->ut2_tx_damping();
+    }
+}
+
+void GlobalTransceiver::set_tx_damping(GlobalTransceiver::UtChannel channel, DplFpga::Fpga::DampingType type)
+{
+    if (channel == UT_1) {
+        DplFpga::Fpga::instance()->set_ut1_tx_damping(type);
+    } else {
+        DplFpga::Fpga::instance()->set_ut2_tx_damping(type);
+    }
+}
+
+DplFpga::Fpga::DampingType GlobalTransceiver::rx_damping(GlobalTransceiver::UtChannel channel) const
+{
+    if (channel == UT_1) {
+        return DplFpga::Fpga::instance()->ut1_rx_damping();
+    } else {
+        return DplFpga::Fpga::instance()->ut2_rx_damping();
+    }
+}
+
+void GlobalTransceiver::set_rx_damping(GlobalTransceiver::UtChannel channel, DplFpga::Fpga::DampingType type)
+{
+    if (channel == UT_1) {
+        DplFpga::Fpga::instance()->set_ut1_rx_damping(type);
+    } else {
+        DplFpga::Fpga::instance()->set_ut2_rx_damping(type);
+    }
+}
+
 GlobalTransceiver::PrfMode GlobalTransceiver::prf_mode() const
 {
     return d->m_prfMode;

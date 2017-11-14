@@ -8,6 +8,7 @@
 #ifndef __GLOBAL_TRANSCEIVER_H__
 #define __GLOBAL_TRANSCEIVER_H__
 
+#include <fpga/fpga.h>
 #include <device/group.h>
 
 namespace DplUt {
@@ -44,6 +45,39 @@ public:
      * @param v             电压类型
      */
     void set_voltage(bool pa, Voltage v);
+
+    enum UtChannel {
+        UT_1 = 1,
+        UT_2
+    };
+
+    /**
+     * @brief tx_damping    获取指定UT发射通道的阻尼
+     * @param channel       指定通道
+     * @return              阻尼类型
+     */
+    DplFpga::Fpga::DampingType tx_damping(UtChannel channel) const;
+
+    /**
+     * @brief set_tx_damping    设置指定UT发射通道的阻尼
+     * @param channel           指定UT通道
+     * @param type              阻尼类型
+     */
+    void set_tx_damping(UtChannel channel, DplFpga::Fpga::DampingType type);
+
+    /**
+     * @brief rx_damping    获取指定UT接收通道的阻尼
+     * @param channel       指定通道
+     * @return              阻尼类型
+     */
+    DplFpga::Fpga::DampingType rx_damping(UtChannel channel) const;
+
+    /**
+     * @brief set_rx_damping    设置指定UT接收通道的阻尼
+     * @param channel           指定通道
+     * @param type              阻尼类型
+     */
+    void set_rx_damping(UtChannel channel, DplFpga::Fpga::DampingType type);
 
     enum PrfMode {
         MAX,

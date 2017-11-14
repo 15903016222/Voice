@@ -38,7 +38,7 @@ public:
     /* attributions */
     GlobalTransceiver::Voltage m_paVoltage;
     GlobalTransceiver::Voltage m_utVoltage;
-    GlobalTransceiver::PrfMode m_prfMode;        // 脉冲重复频率模式
+    GlobalTransceiver::PrfMode m_prfMode;   // 脉冲重复频率模式
     int m_acqRate;                          // 采集率
 
 public slots:

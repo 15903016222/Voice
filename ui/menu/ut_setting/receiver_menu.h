@@ -25,11 +25,13 @@ protected slots:
     void do_rectifierItem_changed(int index);
     void do_videoFilterItem_changed(int index);
     void do_averagingItem_changed(int index);
+    void do_dampingItem_changed(int index);
 
     void update(const DplDevice::GroupPointer &grp);
     void update_filterItem();
     void update_receiverItem();
     void update_rectifierItem();
+    void update_dampingItem();
 
 private:
     SpinMenuItem *m_receiverItem;
@@ -37,6 +39,7 @@ private:
     ComboMenuItem *m_rectifierItem;
     ComboMenuItem *m_videoFilterItem;
     ComboMenuItem *m_averagingItem;
+    ComboMenuItem *m_dampingItem;
 
     DplDevice::GroupPointer m_group;
 };
