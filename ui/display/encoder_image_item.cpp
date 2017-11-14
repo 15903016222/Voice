@@ -73,9 +73,6 @@ void EncoderImageItem::draw_vertical_beam()
 
 bool EncoderImageItem::redraw_vertical_beam()
 {
-    QTime time;
-    time.restart();
-
     if(!m_redrawFlag) {
         return false;
     }
@@ -115,9 +112,7 @@ bool EncoderImageItem::redraw_vertical_beam()
             m_currentX  = currentStart;
             lastBeamsPointer = DplSource::Source::instance()->beams(m_group->index(), currentEnd, m_maxBeamInfo.y);
             set_move_x(currentEnd, m_maxBeamInfo.y);
-
         } else {
-
             /* currentEnd 大于等于 m_maxBeamInfo.x */
             m_currentX = currentStart;
             lastBeamsPointer = DplSource::Source::instance()->beams(m_group->index(), m_maxBeamInfo.x, m_maxBeamInfo.y);
@@ -153,9 +148,6 @@ bool EncoderImageItem::redraw_vertical_beam()
     }
 
     m_redrawFlag = false;
-
-    qDebug("TimeImageItem:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
-
     return true;
 }
 

@@ -588,9 +588,6 @@ void BscanDisplay::update_sound_path_ruler()
 
 void BscanDisplay::do_view_size_changed(const QSize &size)
 {
-    QTime time;
-    time.restart();
-
     disconnect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)));
@@ -634,7 +631,5 @@ void BscanDisplay::do_view_size_changed(const QSize &size)
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)),
             Qt::DirectConnection);
-
-    qDebug("BscanDisplay:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
 

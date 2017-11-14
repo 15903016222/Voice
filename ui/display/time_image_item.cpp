@@ -40,9 +40,6 @@ void TimeImageItem::draw_vertical_beam()
 
 bool TimeImageItem::redraw_vertical_beam()
 {
-    QTime time;
-    time.restart();
-
     if(m_beamsPointer.isNull() ) {
         return false;
     }
@@ -146,8 +143,6 @@ bool TimeImageItem::redraw_vertical_beam()
     m_beamsShowedCount = tmpBeamsShowedCount;
     m_currentTimeCount = m_pendingTimeCount;
     m_redrawFlag       = false;
-
-    qDebug("TimeImageItem:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 
     return true;
 }
