@@ -151,7 +151,17 @@ void PulserMenu::do_userDevItem_changed(double val)
 
 void PulserMenu::update(const DplDevice::GroupPointer &group)
 {
+    if (m_group) {
+        disconnect(static_cast<DplDevice::Group *>(m_group.data()),
+                   SIGNAL(mode_changed(DplDevice::Group::Mode)),
+                   this, SLOT(update_txrxModeItem()));
+    }
+
     m_group = group;
+
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(mode_changed(DplDevice::Group::Mode)),
+            this, SLOT(update_txrxModeItem()));
 
     update_txrxModeItem();
     m_pulserItem->set_value(m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>()->pulser_index());
@@ -174,6 +184,7 @@ void PulserMenu::update_txrxModeItem()
             this,
             SLOT(do_txrxModeItem_changed(int)));
 
+    m_txrxModeItem->set(QStringList());
     m_txrxModeItem->add_item(tr("PE"));
     m_txrxModeItem->add_item(tr("PC"));
     m_txrxModeItem->add_item(tr("TT"));
