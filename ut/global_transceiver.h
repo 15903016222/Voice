@@ -65,20 +65,6 @@ public:
      */
     void set_tx_damping(UtChannel channel, DplFpga::Fpga::DampingType type);
 
-    /**
-     * @brief rx_damping    获取指定UT接收通道的阻尼
-     * @param channel       指定通道
-     * @return              阻尼类型
-     */
-    DplFpga::Fpga::DampingType rx_damping(UtChannel channel) const;
-
-    /**
-     * @brief set_rx_damping    设置指定UT接收通道的阻尼
-     * @param channel           指定通道
-     * @param type              阻尼类型
-     */
-    void set_rx_damping(UtChannel channel, DplFpga::Fpga::DampingType type);
-
     enum PrfMode {
         MAX,
         MAX_HALF,
