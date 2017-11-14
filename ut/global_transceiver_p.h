@@ -5,17 +5,17 @@
  * @date 2017-09-28
  */
 
-#include "global_pulser.h"
+#include "global_transceiver.h"
 #include <global.h>
 #include <device/device.h>
 
 namespace DplUt {
 
-class GlobalPulserPrivate : public QObject
+class GlobalTransceiverPrivate : public QObject
 {
     Q_OBJECT
 public:
-    GlobalPulserPrivate(GlobalPulser *parent);
+    GlobalTransceiverPrivate(GlobalTransceiver *parent);
 
     /**
      * @brief pa_max_power  PA最大输出功率
@@ -36,19 +36,19 @@ public:
     int max_acquisition_rate() const;
 
     /* attributions */
-    GlobalPulser::Voltage m_paVoltage;
-    GlobalPulser::Voltage m_utVoltage;
-    GlobalPulser::PrfMode m_prfMode;        // 脉冲重复频率模式
+    GlobalTransceiver::Voltage m_paVoltage;
+    GlobalTransceiver::Voltage m_utVoltage;
+    GlobalTransceiver::PrfMode m_prfMode;   // 脉冲重复频率模式
     int m_acqRate;                          // 采集率
 
 public slots:
     void update_acquisition_rate();
 
 private:
-    GlobalPulser *q;
+    GlobalTransceiver *q;
 };
 
-inline float GlobalPulserPrivate::pa_max_power() const
+inline float GlobalTransceiverPrivate::pa_max_power() const
 {
     return 1.0;
 }

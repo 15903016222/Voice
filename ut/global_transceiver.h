@@ -1,28 +1,29 @@
 /**
- * @file global_pulser.h
+ * @file global_transceiver.h
  * @brief 全局的脉冲发生器类
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @date 2017-09-28
  */
 
-#ifndef __GLOBAL_PULSER_H__
-#define __GLOBAL_PULSER_H__
+#ifndef __GLOBAL_TRANSCEIVER_H__
+#define __GLOBAL_TRANSCEIVER_H__
 
+#include <fpga/fpga.h>
 #include <device/group.h>
 
 namespace DplUt {
 
-class GlobalPulserPrivate;
-class GlobalPulser : public QObject
+class GlobalTransceiverPrivate;
+class GlobalTransceiver : public QObject
 {
-    friend class GlobalPulserPrivate;
+    friend class GlobalTransceiverPrivate;
     Q_OBJECT
 public:
     /**
      * @brief instance  获取GlobalPulser单例对象
      * @return          返回对象指针
      */
-    static GlobalPulser *instance();
+    static GlobalTransceiver *instance();
 
     enum Voltage {
         V50     = 50,
@@ -44,6 +45,39 @@ public:
      * @param v             电压类型
      */
     void set_voltage(bool pa, Voltage v);
+
+    enum UtChannel {
+        UT_1 = 1,
+        UT_2
+    };
+
+    /**
+     * @brief tx_damping    获取指定UT发射通道的阻尼
+     * @param channel       指定通道
+     * @return              阻尼类型
+     */
+    DplFpga::Fpga::DampingType tx_damping(UtChannel channel) const;
+
+    /**
+     * @brief set_tx_damping    设置指定UT发射通道的阻尼
+     * @param channel           指定UT通道
+     * @param type              阻尼类型
+     */
+    void set_tx_damping(UtChannel channel, DplFpga::Fpga::DampingType type);
+
+    /**
+     * @brief rx_damping    获取指定UT接收通道的阻尼
+     * @param channel       指定通道
+     * @return              阻尼类型
+     */
+    DplFpga::Fpga::DampingType rx_damping(UtChannel channel) const;
+
+    /**
+     * @brief set_rx_damping    设置指定UT接收通道的阻尼
+     * @param channel           指定通道
+     * @param type              阻尼类型
+     */
+    void set_rx_damping(UtChannel channel, DplFpga::Fpga::DampingType type);
 
     enum PrfMode {
         MAX,
@@ -102,17 +136,17 @@ public:
     void connect_group(const DplDevice::Group *grp);
 
 signals:
-    void voltage_changed(bool, DplUt::GlobalPulser::Voltage);
+    void voltage_changed(bool, DplUt::GlobalTransceiver::Voltage);
     void prf_changed();
 
 protected:
-    explicit GlobalPulser();
-    ~GlobalPulser();
+    explicit GlobalTransceiver();
+    ~GlobalTransceiver();
 
 private:
-    GlobalPulserPrivate *d;
+    GlobalTransceiverPrivate *d;
 };
 
 }
 
-#endif /* end of __GLOBAL_PULSER_H__ */
+#endif /* end of __GLOBAL_TRANSCEIVER_H__ */

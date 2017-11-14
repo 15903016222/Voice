@@ -8,6 +8,8 @@
 #include "receiver_menu.h"
 #include "ui_base_menu.h"
 
+#include <ut/global_transceiver.h>
+
 namespace DplUtSettingMenu {
 
 ReceiverMenu::ReceiverMenu(QWidget *parent) :
@@ -16,13 +18,15 @@ ReceiverMenu::ReceiverMenu(QWidget *parent) :
     m_filterItem(new ComboMenuItem(this, tr("Filter"))),
     m_rectifierItem(new ComboMenuItem(this, tr("Rectifier"))),
     m_videoFilterItem(new ComboMenuItem(this, tr("Video Filter"))),
-    m_averagingItem(new ComboMenuItem(this, tr("Averaging")))
+    m_averagingItem(new ComboMenuItem(this, tr("Averaging"))),
+    m_dampingItem(new ComboMenuItem(this, tr("Damping")))
 {
     ui->layout0->addWidget(m_receiverItem);
     ui->layout1->addWidget(m_filterItem);
     ui->layout2->addWidget(m_rectifierItem);
     ui->layout3->addWidget(m_videoFilterItem);
     ui->layout4->addWidget(m_averagingItem);
+    ui->layout5->addWidget(m_dampingItem);
 
     m_receiverItem->set(1, 113, 0);
     connect(m_receiverItem,
@@ -50,6 +54,13 @@ ReceiverMenu::ReceiverMenu(QWidget *parent) :
             SIGNAL(value_changed(int)),
             this,
             SLOT(do_averagingItem_changed(int)));
+
+    m_dampingItem->add_item(tr("50Ω"));
+    m_dampingItem->add_item(tr("500Ω"));
+    connect(m_dampingItem,
+            SIGNAL(value_changed(int)),
+            this,
+            SLOT(do_dampingItem_changed(int)));
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
@@ -116,6 +127,25 @@ void ReceiverMenu::do_averagingItem_changed(int index)
     m_group->transceiver()->set_averaging(static_cast<DplFpga::Group::Averaging>(index));
 }
 
+void ReceiverMenu::do_dampingItem_changed(int index)
+{
+    if (m_group->mode() == DplDevice::Group::PA
+            || m_group->mode() == DplDevice::Group::UT) {
+        return;
+    }
+
+    DplUt::GlobalTransceiver::UtChannel channel = DplUt::GlobalTransceiver::UT_1;
+    if (m_group->mode() == DplDevice::Group::UT2) {
+        channel = DplUt::GlobalTransceiver::UT_2;
+    }
+
+    if (index == 0) {
+        DplUt::GlobalTransceiver::instance()->set_rx_damping(channel, DplFpga::Fpga::R50);
+    } else if (index == 1) {
+        DplUt::GlobalTransceiver::instance()->set_rx_damping(channel, DplFpga::Fpga::R500);
+    }
+}
+
 void ReceiverMenu::update(const DplDevice::GroupPointer &grp)
 {
     /* disconnect */
@@ -124,6 +154,10 @@ void ReceiverMenu::update(const DplDevice::GroupPointer &grp)
                    SIGNAL(mode_changed(DplUt::Transceiver::Mode)),
                    this,
                    SLOT(update_rectifierItem()));
+        disconnect(static_cast<DplDevice::Group *>(m_group.data()),
+                   SIGNAL(mode_changed(DplDevice::Group::Mode)),
+                   this,
+                   SLOT(update_dampingItem()));
     }
 
     m_group = grp;
@@ -138,6 +172,12 @@ void ReceiverMenu::update(const DplDevice::GroupPointer &grp)
 
     m_videoFilterItem->set_current_index(!m_group->transceiver()->video_filter());
     m_averagingItem->set_current_index(m_group->transceiver()->averaging());
+
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(mode_changed(DplDevice::Group::Mode)),
+            this,
+            SLOT(update_dampingItem()));
+    update_dampingItem();
 }
 
 void ReceiverMenu::update_filterItem()
@@ -195,6 +235,30 @@ void ReceiverMenu::update_rectifierItem()
     } else {
         m_rectifierItem->set_current_index(m_group->transceiver()->rectifier()-1);
     }
+}
+
+void ReceiverMenu::update_dampingItem()
+{
+    if (m_group->mode() == DplDevice::Group::PA
+            || m_group->mode() == DplDevice::Group::UT) {
+        m_dampingItem->hide();
+        return;
+    }
+
+    DplFpga::Fpga::DampingType dampingType = DplFpga::Fpga::R50;
+    if (m_group->mode() == DplDevice::Group::UT1) {
+        dampingType = DplUt::GlobalTransceiver::instance()->rx_damping(DplUt::GlobalTransceiver::UT_1);
+    } else {
+        dampingType = DplUt::GlobalTransceiver::instance()->rx_damping(DplUt::GlobalTransceiver::UT_2);
+    }
+
+    if (dampingType == DplFpga::Fpga::R50) {
+        m_dampingItem->set_current_index(0);
+    } else if (dampingType == DplFpga::Fpga::R500) {
+        m_dampingItem->set_current_index(1);
+    }
+
+    m_dampingItem->show();
 }
 
 }

@@ -5,7 +5,8 @@
  * @date 2017-10-28
  */
 #include "transceiver.h"
-#include "global_pulser.h"
+#include "global_transceiver.h"
+#include <fpga/fpga.h>
 
 namespace DplUt {
 
@@ -48,10 +49,35 @@ Transceiver::Mode Transceiver::mode() const
 
 void Transceiver::set_mode(Transceiver::Mode mode)
 {
-    if (d->m_mode != mode) {
-        d->m_mode = mode;
-        emit mode_changed(d->m_mode);
+    if (d->m_mode == mode) {
+        return;
     }
+
+    if (d->m_mode == TOFD) {
+        set_rectifier(DplFpga::Group::FULL_WAVE);
+    }
+
+    d->m_mode = mode;
+
+    if (d->m_mode == PE) {
+        if ( d->m_fpgaGrp->mode() == DplFpga::Group::UT1 ) {
+            DplFpga::Fpga::instance()->set_ut1_twin(false);
+        } else if ( d->m_fpgaGrp->mode() == DplFpga::Group::UT2 ) {
+            DplFpga::Fpga::instance()->set_ut2_twin(false);
+        }
+    } else {
+        if (d->m_mode == TOFD) {
+            set_video_filter(false);
+        }
+        if (d->m_fpgaGrp->mode() == DplFpga::Group::UT1) {
+            DplFpga::Fpga::instance()->set_ut1_twin(true);
+        } else if (d->m_fpgaGrp->mode() == DplFpga::Group::UT2) {
+            DplFpga::Fpga::instance()->set_ut2_twin(true);
+        }
+    }
+
+    emit mode_changed(d->m_mode);
+
 }
 
 float Transceiver::pw() const

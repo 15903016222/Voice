@@ -1,5 +1,5 @@
 #include "sample_p.h"
-#include "global_pulser.h"
+#include "global_transceiver.h"
 
 namespace DplUt {
 
@@ -9,7 +9,7 @@ SamplePrivate::SamplePrivate(const DplFpga::GroupPointer &fpgaGrp)  : QObject(),
     m_dBRef(0),
     m_autoset(true)
 {
-    connect(DplUt::GlobalPulser::instance(),
+    connect(DplUt::GlobalTransceiver::instance(),
             SIGNAL(prf_changed()),
             this,
             SLOT(do_prf_changed()));
@@ -32,7 +32,7 @@ int SamplePrivate::auto_point_qty(int maxPointQty) const
 
 void SamplePrivate::do_prf_changed()
 {
-    m_fpgaGrp->set_sample_cycle(DplUt::GlobalPulser::instance()->beam_cycle()/DplFpga::Fpga::SAMPLE_PRECISION);
+    m_fpgaGrp->set_sample_cycle(DplUt::GlobalTransceiver::instance()->beam_cycle()/DplFpga::Fpga::SAMPLE_PRECISION);
 }
 
 }
