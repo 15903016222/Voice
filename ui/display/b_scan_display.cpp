@@ -256,13 +256,13 @@ void BscanDisplay::do_value_changed(double value)
     if(send == NULL) {
         return;
     } else if(send == m_sReferneceCursorItem) {
-        m_cursorPointer->set_scan_reference(Tool::cnf_to_display(m_group, value));
+        m_cursorPointer->set_scan_reference(Tool::display_to_cnf(m_group, value));
     } else if(send == m_sMeasurementCursorItem) {
-        m_cursorPointer->set_scan_measurement(Tool::cnf_to_display(m_group, value));
+        m_cursorPointer->set_scan_measurement(Tool::display_to_cnf(m_group, value));
     } else if(send == m_uReferneceCursorItem) {
-        m_cursorPointer->set_ultrasound_reference(Tool::cnf_to_display(m_group, value));
+        m_cursorPointer->set_ultrasound_reference(Tool::display_to_cnf(m_group, value));
     } else if(send == m_uMeasurementCursorItem) {
-        m_cursorPointer->set_ultrasound_measurement(Tool::cnf_to_display(m_group, value));
+        m_cursorPointer->set_ultrasound_measurement(Tool::display_to_cnf(m_group, value));
     }
 }
 
