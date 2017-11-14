@@ -8,7 +8,7 @@
 #include "pulser_menu.h"
 #include "ui_base_menu.h"
 
-#include <ut/global_pulser.h>
+#include <ut/global_transceiver.h>
 
 namespace DplUtSettingMenu {
 
@@ -59,7 +59,7 @@ PulserMenu::PulserMenu(QWidget *parent) :
             this,
             SLOT(do_pwItem_changed(double)));
 
-    connect(DplUt::GlobalPulser::instance(),
+    connect(DplUt::GlobalTransceiver::instance(),
             SIGNAL(prf_changed()),
             this,
             SLOT(update_userDefItem()));
@@ -78,18 +78,18 @@ PulserMenu::PulserMenu(QWidget *parent) :
 
 void PulserMenu::update_voltageItem()
 {
-    switch (DplUt::GlobalPulser::instance()->voltage(
+    switch (DplUt::GlobalTransceiver::instance()->voltage(
                 m_group->focallawer()->probe()->is_pa())) {
-    case DplUt::GlobalPulser::V50:
+    case DplUt::GlobalTransceiver::V50:
         m_voltageItem->set_current_index(0);
         break;
-    case DplUt::GlobalPulser::V100:
+    case DplUt::GlobalTransceiver::V100:
         m_voltageItem->set_current_index(1);
         break;
-    case DplUt::GlobalPulser::V200:
+    case DplUt::GlobalTransceiver::V200:
         m_voltageItem->set_current_index(2);
         break;
-    case DplUt::GlobalPulser::V400:
+    case DplUt::GlobalTransceiver::V400:
         m_voltageItem->set_current_index(3);
         break;
     default:
@@ -110,21 +110,21 @@ void PulserMenu::do_pulserItem_changed(double val)
 
 void PulserMenu::do_voltageItem_changed(int index)
 {
-    DplUt::GlobalPulser::Voltage v = DplUt::GlobalPulser::V50;
+    DplUt::GlobalTransceiver::Voltage v = DplUt::GlobalTransceiver::V50;
     switch (index) {
     case 1:
-        v = DplUt::GlobalPulser::V100;
+        v = DplUt::GlobalTransceiver::V100;
         break;
     case 2:
-        v = DplUt::GlobalPulser::V200;
+        v = DplUt::GlobalTransceiver::V200;
         break;
     case 3:
-        v = DplUt::GlobalPulser::V400;
+        v = DplUt::GlobalTransceiver::V400;
         break;
     default:
         break;
     }
-    DplUt::GlobalPulser::instance()->set_voltage(
+    DplUt::GlobalTransceiver::instance()->set_voltage(
                 m_group->focallawer()->probe()->is_pa(),
                 v);
 }
@@ -136,17 +136,17 @@ void PulserMenu::do_pwItem_changed(double val)
 
 void PulserMenu::do_prfItem_changed(int index)
 {
-    if (index == DplUt::GlobalPulser::USER_DEF) {
+    if (index == DplUt::GlobalTransceiver::USER_DEF) {
         m_userDefItem->show();
     } else {
         m_userDefItem->hide();
     }
-    DplUt::GlobalPulser::instance()->set_prf_mode(static_cast<DplUt::GlobalPulser::PrfMode>(index));
+    DplUt::GlobalTransceiver::instance()->set_prf_mode(static_cast<DplUt::GlobalTransceiver::PrfMode>(index));
 }
 
 void PulserMenu::do_userDevItem_changed(double val)
 {
-    DplUt::GlobalPulser::instance()->set_acquisition_rate(val);
+    DplUt::GlobalTransceiver::instance()->set_acquisition_rate(val);
 }
 
 void PulserMenu::update(const DplDevice::GroupPointer &group)
@@ -167,14 +167,14 @@ void PulserMenu::update(const DplDevice::GroupPointer &group)
     m_pulserItem->set_value(m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>()->pulser_index());
     update_voltageItem();
     m_pwItem->set_value(m_group->transceiver()->pw());
-    m_prfItem->set_current_index(DplUt::GlobalPulser::instance()->prf_mode());
+    m_prfItem->set_current_index(DplUt::GlobalTransceiver::instance()->prf_mode());
     update_userDefItem();
 }
 
 void PulserMenu::update_userDefItem()
 {
-    m_userDefItem->set_range(1, DplUt::GlobalPulser::instance()->max_acquisition_rate());
-    m_userDefItem->set_value(DplUt::GlobalPulser::instance()->acquisition_rate());
+    m_userDefItem->set_range(1, DplUt::GlobalTransceiver::instance()->max_acquisition_rate());
+    m_userDefItem->set_value(DplUt::GlobalTransceiver::instance()->acquisition_rate());
 }
 
 void PulserMenu::update_txrxModeItem()

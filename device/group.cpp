@@ -11,7 +11,7 @@
 #include "device.h"
 
 #include <global.h>
-#include <ut/global_pulser.h>
+#include <ut/global_transceiver.h>
 #include <fpga/fpga.h>
 
 #include <QReadWriteLock>
@@ -39,7 +39,7 @@ Group::Group(int index, QObject *parent) : QObject(parent),
 
     init_source();
 
-    DplUt::GlobalPulser::instance()->connect_group(this);
+    DplUt::GlobalTransceiver::instance()->connect_group(this);
 }
 
 Group::~Group()

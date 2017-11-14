@@ -5,7 +5,7 @@
  * @date 2017-10-28
  */
 #include "transceiver.h"
-#include "global_pulser.h"
+#include "global_transceiver.h"
 #include <fpga/fpga.h>
 
 namespace DplUt {

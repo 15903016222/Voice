@@ -5,17 +5,17 @@
  * @date 2017-09-28
  */
 
-#include "global_pulser_p.h"
+#include "global_transceiver_p.h"
 
 namespace DplUt {
 
-GlobalPulser *GlobalPulser::instance()
+GlobalTransceiver *GlobalTransceiver::instance()
 {
-    static GlobalPulser *s_globalPulser = new GlobalPulser();
+    static GlobalTransceiver *s_globalPulser = new GlobalTransceiver();
     return s_globalPulser;
 }
 
-GlobalPulser::Voltage GlobalPulser::voltage(bool pa) const
+GlobalTransceiver::Voltage GlobalTransceiver::voltage(bool pa) const
 {
     if (pa) {
         return d->m_paVoltage;
@@ -23,7 +23,7 @@ GlobalPulser::Voltage GlobalPulser::voltage(bool pa) const
     return d->m_utVoltage;
 }
 
-void GlobalPulser::set_voltage(bool pa, GlobalPulser::Voltage v)
+void GlobalTransceiver::set_voltage(bool pa, GlobalTransceiver::Voltage v)
 {
     if (pa && d->m_paVoltage != v) {
         d->m_paVoltage = v;
@@ -35,12 +35,12 @@ void GlobalPulser::set_voltage(bool pa, GlobalPulser::Voltage v)
     }
 }
 
-GlobalPulser::PrfMode GlobalPulser::prf_mode() const
+GlobalTransceiver::PrfMode GlobalTransceiver::prf_mode() const
 {
     return d->m_prfMode;
 }
 
-void GlobalPulser::set_prf_mode(GlobalPulser::PrfMode mode)
+void GlobalTransceiver::set_prf_mode(GlobalTransceiver::PrfMode mode)
 {
     if (d->m_prfMode != mode) {
         d->m_prfMode = mode;
@@ -48,22 +48,22 @@ void GlobalPulser::set_prf_mode(GlobalPulser::PrfMode mode)
     }
 }
 
-uint GlobalPulser::prf() const
+uint GlobalTransceiver::prf() const
 {
     return DplDevice::Device::instance()->beam_qty() * acquisition_rate();
 }
 
-int GlobalPulser::acquisition_rate() const
+int GlobalTransceiver::acquisition_rate() const
 {
     return d->m_acqRate;
 }
 
-int GlobalPulser::max_acquisition_rate() const
+int GlobalTransceiver::max_acquisition_rate() const
 {
     return d->max_acquisition_rate();
 }
 
-bool GlobalPulser::set_acquisition_rate(int val)
+bool GlobalTransceiver::set_acquisition_rate(int val)
 {
     if (USER_DEF == d->m_prfMode && d->m_acqRate != val) {
         d->m_acqRate = val;
@@ -74,12 +74,12 @@ bool GlobalPulser::set_acquisition_rate(int val)
     }
 }
 
-float GlobalPulser::beam_cycle() const
+float GlobalTransceiver::beam_cycle() const
 {
     return Dpl::s_to_ns(1.0)/prf() - DplFpga::Fpga::LOADING_TIME * DplFpga::Fpga::SAMPLE_PRECISION;
 }
 
-void GlobalPulser::connect_group(const DplDevice::Group *grp)
+void GlobalTransceiver::connect_group(const DplDevice::Group *grp)
 {
     connect(static_cast<DplFocallaw::Focallawer *>(grp->focallawer().data()),
             SIGNAL(focallawed()),
@@ -99,8 +99,8 @@ void GlobalPulser::connect_group(const DplDevice::Group *grp)
             SLOT(update_acquisition_rate()));
 }
 
-GlobalPulser::GlobalPulser() : QObject(),
-    d(new GlobalPulserPrivate(this))
+GlobalTransceiver::GlobalTransceiver() : QObject(),
+    d(new GlobalTransceiverPrivate(this))
 {
     connect(DplDevice::Device::instance(),
             SIGNAL(beam_qty_changed()),
@@ -108,7 +108,7 @@ GlobalPulser::GlobalPulser() : QObject(),
             SIGNAL(prf_changed()));
 }
 
-GlobalPulser::~GlobalPulser()
+GlobalTransceiver::~GlobalTransceiver()
 {
     delete d;
 }

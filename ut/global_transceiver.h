@@ -1,28 +1,28 @@
 /**
- * @file global_pulser.h
+ * @file global_transceiver.h
  * @brief 全局的脉冲发生器类
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @date 2017-09-28
  */
 
-#ifndef __GLOBAL_PULSER_H__
-#define __GLOBAL_PULSER_H__
+#ifndef __GLOBAL_TRANSCEIVER_H__
+#define __GLOBAL_TRANSCEIVER_H__
 
 #include <device/group.h>
 
 namespace DplUt {
 
-class GlobalPulserPrivate;
-class GlobalPulser : public QObject
+class GlobalTransceiverPrivate;
+class GlobalTransceiver : public QObject
 {
-    friend class GlobalPulserPrivate;
+    friend class GlobalTransceiverPrivate;
     Q_OBJECT
 public:
     /**
      * @brief instance  获取GlobalPulser单例对象
      * @return          返回对象指针
      */
-    static GlobalPulser *instance();
+    static GlobalTransceiver *instance();
 
     enum Voltage {
         V50     = 50,
@@ -102,17 +102,17 @@ public:
     void connect_group(const DplDevice::Group *grp);
 
 signals:
-    void voltage_changed(bool, DplUt::GlobalPulser::Voltage);
+    void voltage_changed(bool, DplUt::GlobalTransceiver::Voltage);
     void prf_changed();
 
 protected:
-    explicit GlobalPulser();
-    ~GlobalPulser();
+    explicit GlobalTransceiver();
+    ~GlobalTransceiver();
 
 private:
-    GlobalPulserPrivate *d;
+    GlobalTransceiverPrivate *d;
 };
 
 }
 
-#endif /* end of __GLOBAL_PULSER_H__ */
+#endif /* end of __GLOBAL_TRANSCEIVER_H__ */
