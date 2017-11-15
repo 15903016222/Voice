@@ -40,7 +40,6 @@ void SscanScene::set_size(const QSize &size)
 
 void SscanScene::set_beams(const DplSource::BeamsPointer &beams)
 {
-    QWriteLocker l(&m_rwLock);
     if (m_image) {
         m_image->draw_beams(beams);
         m_pixmap = QPixmap::fromImage(*m_image);
@@ -50,6 +49,5 @@ void SscanScene::set_beams(const DplSource::BeamsPointer &beams)
 
 void SscanScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
-    QReadLocker l(&m_rwLock);
     painter->drawPixmap(rect, m_pixmap, m_pixmap.rect());
 }
