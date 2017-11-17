@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <device/group.h>
+#include "vpa_item.h"
 
 namespace Ui {
 class ScanDisplay;
@@ -28,10 +29,12 @@ protected:
 
 protected slots:
     void update_rules();
+    void do_view_size_changed(const QSize &size);
 
 private:
     ScanView *m_view;
     SscanScene *m_scene;
+    VpaItem *m_vpaItem;
     DplDisplay::SscanPointer m_sScan;
 };
 
