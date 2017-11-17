@@ -11,11 +11,10 @@
 
 
 class ScanView;
-class BWaveItem;
+class BscanScene;
 class ScrollRulerWidget;
 class QLabel;
 class BaseCursorItem;
-class BscanScene;
 
 namespace Ui {
 class BscanDisplay;

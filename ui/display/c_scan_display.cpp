@@ -252,10 +252,6 @@ void CscanDisplay::do_refresh_scan_env()
 
 void CscanDisplay::do_view_size_changed(const QSize &size)
 {
-    QTime time;
-    time.restart();
-
-
     disconnect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)));
@@ -281,8 +277,6 @@ void CscanDisplay::do_view_size_changed(const QSize &size)
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)),
             Qt::DirectConnection);
-
-    qDebug("CscanDisplay:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 }
 
 
@@ -335,6 +329,15 @@ bool CscanDisplay::focallaw_mode_changed()
 void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 {
     double currentTimeCount = TestStub::instance()->get_time();
+    DplSource::Scan *scan = DplSource::Scan::instance();
+    DplSource::AxisPointer axis = scan->scan_axis();
+    double timeWidth = (axis->end() - axis->start()) / scan->speed();
+
+    if(currentTimeCount > timeWidth) {
+        return;
+    }
+
+
     double rulerEnd;
     if(m_orientation == Qt::Horizontal) {
         rulerEnd = m_view->height() / (SECOND / (double)DplSource::Source::instance()->interval());
@@ -346,7 +349,7 @@ void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
         m_cscanImageItem->set_beams(beams);
     }
 
-    if(currentTimeCount > rulerEnd) {
+    if(rulerEnd < timeWidth && currentTimeCount > rulerEnd) {
         m_cscanImageItem->set_scroll_window(true);
         m_scanTypeRuler->move_to_value(currentTimeCount);
         emit update_ruler(currentTimeCount);
