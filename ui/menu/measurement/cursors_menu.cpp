@@ -110,7 +110,25 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
             this,
             SLOT(update(DplDevice::GroupPointer)));
+
     update(DplDevice::Device::instance()->current_group());
+
+    DplMeasure::CursorPointer cursorPointer = m_group->cursor();
+    DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(cursorPointer.data());
+
+    if(NULL != cursor) {
+        connect(cursor, SIGNAL(scan_measurement_changed(double)),
+                this, SLOT(do_scan_measurement_changed(double)));
+
+        connect(cursor, SIGNAL(scan_reference_changed(double)),
+                this, SLOT(do_scan_reference_changed(double)));
+
+        connect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
+                this, SLOT(do_ultrasound_measurement_changed(double)));
+
+        connect(cursor, SIGNAL(ultrasound_reference_changed(double)),
+                this, SLOT(do_ultrasound_reference_changed(double)));
+    }
 }
 
 void CursorsMenu::show_scan()
@@ -363,6 +381,23 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
         disconnect(static_cast<DplFocallaw::Focallawer*>(m_group->focallawer().data()),
                    SIGNAL(beam_qty_changed(int)),
                    this, SLOT(update_beamItem()));
+
+        DplMeasure::CursorPointer cursorPointer = grp->cursor();
+        DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(cursorPointer.data());
+
+        if(NULL != cursor) {
+            disconnect(cursor, SIGNAL(scan_measurement_changed(double)),
+                    this, SLOT(do_scan_measurement_changed(double)));
+
+            disconnect(cursor, SIGNAL(scan_reference_changed(double)),
+                    this, SLOT(do_scan_reference_changed(double)));
+
+            disconnect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
+                    this, SLOT(do_ultrasound_measurement_changed(double)));
+
+            disconnect(cursor, SIGNAL(ultrasound_reference_changed(double)),
+                    this, SLOT(do_ultrasound_reference_changed(double)));
+        }
     }
 
     m_group = grp;
@@ -401,6 +436,23 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
     connect(static_cast<DplFocallaw::Focallawer*>(m_group->focallawer().data()),
             SIGNAL(beam_qty_changed(int)),
             this, SLOT(update_beamItem()));
+
+    DplMeasure::CursorPointer cursorPointer = m_group->cursor();
+    DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(cursorPointer.data());
+
+    if(NULL != cursor) {
+        connect(cursor, SIGNAL(scan_measurement_changed(double)),
+                this, SLOT(do_scan_measurement_changed(double)));
+
+        connect(cursor, SIGNAL(scan_reference_changed(double)),
+                this, SLOT(do_scan_reference_changed(double)));
+
+        connect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
+                this, SLOT(do_ultrasound_measurement_changed(double)));
+
+        connect(cursor, SIGNAL(ultrasound_reference_changed(double)),
+                this, SLOT(do_ultrasound_reference_changed(double)));
+    }
 }
 
 void CursorsMenu::do_selectionItem_changed(int index)
@@ -438,22 +490,42 @@ void CursorsMenu::do_mItem_changed(double val)
 
 void CursorsMenu::do_srItem_changed(double val)
 {
+    DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(m_cursor.data());
+    disconnect(cursor, SIGNAL(scan_reference_changed(double)),
+            this, SLOT(do_scan_reference_changed(double)));
     m_cursor->set_scan_reference(val);
+    connect(cursor, SIGNAL(scan_reference_changed(double)),
+            this, SLOT(do_scan_reference_changed(double)));
 }
 
 void CursorsMenu::do_smItem_changed(double val)
 {
+    DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(m_cursor.data());
+    disconnect(cursor, SIGNAL(scan_measurement_changed(double)),
+            this, SLOT(do_scan_measurement_changed(double)));
     m_cursor->set_scan_measurement(val);
+    connect(cursor, SIGNAL(scan_measurement_changed(double)),
+            this, SLOT(do_scan_measurement_changed(double)));
 }
 
 void CursorsMenu::do_urItem_changed(double val)
 {
+    DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(m_cursor.data());
+    disconnect(cursor, SIGNAL(ultrasound_reference_changed(double)),
+            this, SLOT(do_ultrasound_reference_changed(double)));
     m_cursor->set_ultrasound_reference(Tool::display_to_cnf(m_group, val));
+    connect(cursor, SIGNAL(ultrasound_reference_changed(double)),
+            this, SLOT(do_ultrasound_reference_changed(double)));
 }
 
 void CursorsMenu::do_umItem_changed(double val)
 {
+    DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(m_cursor.data());
+    disconnect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
+            this, SLOT(do_ultrasound_measurement_changed(double)));
     m_cursor->set_ultrasound_measurement(Tool::display_to_cnf(m_group, val));
+    connect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
+            this, SLOT(do_ultrasound_measurement_changed(double)));
 }
 
 void CursorsMenu::do_irItem_changed(double val)
@@ -469,6 +541,55 @@ void CursorsMenu::do_imItem_changed(double val)
 void CursorsMenu::do_angleItem_changed(double val)
 {
     m_group->set_current_beam(val);
+}
+
+void CursorsMenu::do_ultrasound_reference_changed(double value)
+{
+    /* U(r) menu item */
+    disconnect(m_urItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_urItem_changed(double)));
+
+    m_urItem->set_value(Tool::cnf_to_display(m_group, value));
+
+    connect(m_urItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_urItem_changed(double)));
+
+}
+
+void CursorsMenu::do_ultrasound_measurement_changed(double value)
+{
+    /* U(m) menu item */
+    disconnect(m_umItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_umItem_changed(double)));
+
+    m_umItem->set_value(Tool::cnf_to_display(m_group, value));
+
+    connect(m_umItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_umItem_changed(double)));
+}
+
+void CursorsMenu::do_scan_reference_changed(double value)
+{
+    /* S(r) menu item */
+    disconnect(m_srItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_srItem_changed(double)));
+
+    m_srItem->set_value(Tool::cnf_to_display(m_group, value));
+
+    connect(m_srItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_srItem_changed(double)));
+}
+
+void CursorsMenu::do_scan_measurement_changed(double value)
+{
+    /* S(m) menu item */
+    disconnect(m_smItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_smItem_changed(double)));
+
+    m_smItem->set_value(Tool::cnf_to_display(m_group, value));
+
+    connect(m_smItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_smItem_changed(double)));
 }
 
 }

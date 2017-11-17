@@ -22,6 +22,7 @@ bool ScrollRulerWidget::set_range(double start, double end)
         m_offsetPix     = 0;
         m_moveTotalUnit = 0;
         m_maxEnd        = -1.0;
+        m_targetValue   = end;
         return true;
     }
 
@@ -43,17 +44,29 @@ void ScrollRulerWidget::set_show_range(double start, double end)
         m_moveTotalUnit = end - m_end;
     }
 
-    if(m_stepUnit == 0) {
-        init_step_unit();
-    }
+    init_step_unit();
+
     int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start)) + 0.5;    /* 要偏移的像素点*/
     m_unitNum = movePix / m_stepUnit;             /* 要偏移多少个10 * m_pixelPerUnit */
     m_offsetPix = movePix % m_stepUnit;           /* 画标尺时真正偏移的像素点 */
 
 }
 
+void ScrollRulerWidget::get_show_range(double &start, double &end)
+{
+    start = m_start + m_moveTotalUnit;
+    end   = m_end + m_moveTotalUnit;
+}
+
 
 bool ScrollRulerWidget::move_to_value(double targetValue)
+{
+    m_targetValue = targetValue;
+    return true;
+}
+
+
+void ScrollRulerWidget::cal_offset_info(double targetValue)
 {
     if(targetValue > m_maxEnd) {
 
@@ -77,14 +90,9 @@ bool ScrollRulerWidget::move_to_value(double targetValue)
         m_moveTotalUnit = 0.0;  /* 不偏移 */
     }
 
-    if(m_stepUnit == 0) {
-        init_step_unit();
-    }
     int movePix = m_moveTotalUnit * (y_axis_length() / (m_end - m_start)) + 0.5;    /* 要偏移的像素点*/
     m_unitNum = movePix / m_stepUnit;             /* 要偏移多少个10 * m_pixelPerUnit */
     m_offsetPix = movePix % m_stepUnit;           /* 画标尺时真正偏移的像素点 */
-
-    return true;
 }
 
 
@@ -171,8 +179,11 @@ void ScrollRulerWidget::paintEvent(QPaintEvent *e)
         painter.setTransform(form);
     }
 
-    painter.setPen(QColor(Qt::black));
+    /* 最大步进 */
+    m_stepUnit = (int)(10 * interval * m_pixelPerUnit + 0.5);
+    cal_offset_info(m_targetValue);
 
+    painter.setPen(QColor(Qt::black));
     painter.drawText(length/2, 19, m_unitName);
 
     /* 最大步进 */
@@ -270,22 +281,6 @@ void ScrollRulerWidget::paintEvent(QPaintEvent *e)
 }
 
 
-void ScrollRulerWidget::resizeEvent(QResizeEvent *event)
-{
-    if(m_moveTotalUnit > 0.01) {
-
-        /* 计算旧size与新size间差值，得出时间差值 */
-        double differentValue;
-        if (RulerWidget::BOTTOM == m_type) {
-            differentValue = (event->oldSize().width() - event->size().width()) * ((m_end - m_start) / (double)y_axis_length());
-        } else {
-            differentValue = (event->oldSize().height() - event->size().height()) * ((m_end - m_start) / (double)y_axis_length());
-        }
-
-        m_moveTotalUnit += differentValue;
-    }
-}
-
 void ScrollRulerWidget::init_step_unit()
 {
     double interval = 0.0;                              // 单位/刻度
@@ -330,4 +325,6 @@ void ScrollRulerWidget::init_step_unit()
     /* 最大步进 */
     m_stepUnit = (int)(10 * interval * pixelPerUnit + 0.5);
 }
+
+
 

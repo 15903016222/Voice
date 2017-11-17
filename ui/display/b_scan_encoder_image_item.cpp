@@ -10,7 +10,7 @@
 
 BscanEncoderImageItem::BscanEncoderImageItem(const DplDisplay::PaletteColorPointer &palette,
                                      const DplDevice::GroupPointer &grp,
-                                     QObject *parent) :
+                                     QGraphicsObject *parent) :
     EncoderImageItem(palette, grp, parent)
 {
     set_driving(DplSource::Scan::instance()->scan_axis()->driving());
@@ -68,8 +68,6 @@ bool BscanEncoderImageItem::need_refresh(const DplSource::BeamsPointer &beams)
 
 void BscanEncoderImageItem::set_vertical_image_data(int beamsShowedCount, const BaseImageItem::S_CommonProperties &commonProperties, BaseImageItem::E_BEAM_TYPE type, const DplSource::BeamsPointer &beamsPointer)
 {
-#if 1
-
     DplSource::BeamPointer beamPointer = beamsPointer->get(0);
     if(beamPointer.isNull()) {
         return;
@@ -111,24 +109,6 @@ void BscanEncoderImageItem::set_vertical_image_data(int beamsShowedCount, const 
             }
         }
     }
-
-#else
-
-    m_image->fill(0);
-   for(int i = 0; i < m_image->height(); ++i) {
-       quint8 *line    = (quint8*) m_image->scanLine(i);
-
-       if((i == 0) || (i == (m_image->height() - 1))) {
-           for(int k = 0; k < m_image->width(); ++k) {
-               line[k] = 155;
-           }
-       } else {
-           line[0] = 155;
-           line[m_image->width() - 1] = 155;
-       }
-   }
-
-#endif
 }
 
 

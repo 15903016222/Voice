@@ -87,6 +87,7 @@ QVariant GateItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
         // value is the new position.
         QPointF newPos = value.toPointF();
         QRectF rect = scene()->sceneRect();
+
         if (!rect.contains(newPos)) {
             // Keep the item inside the scene rect.
             newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
