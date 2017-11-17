@@ -13,9 +13,13 @@
 #include "menu_item/combo_menu_item.h"
 #include "menu_item/label_menu_item.h"
 
+#include <QVector>
+
 namespace Ui {
 class BaseMenu;
 }
+
+class QVBoxLayout;
 
 class BaseMenu : public QWidget
 {
@@ -24,9 +28,26 @@ public:
     explicit BaseMenu(QWidget *parent = 0);
     virtual ~BaseMenu();
 
+    /**
+     * @brief set_focus 设置子菜单获取焦点
+     */
+    void set_focus();
+
+protected:
+    bool eventFilter(QObject *object, QEvent *event);
+
 protected:
     static QStringList s_onOff;
     Ui::BaseMenu *ui;
+
+    bool    m_initItemListFlag;
+    QVector<MenuItem *> m_menuItemVect;
+    int     m_currentItem;
+
+    void insert_item_to_list(QVBoxLayout *layout);
+    void set_focus_out();
+    void set_previous_item();
+    void set_next_item();
 };
 
 

@@ -8,5 +8,6 @@
 #include "menu_item.h"
 
 MenuItem::MenuItem(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_isEditing(false)
 {}

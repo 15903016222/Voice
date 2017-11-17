@@ -10,11 +10,11 @@
 
 #include <qmath.h>
 #include <QKeyEvent>
+#include <QDebug>
 
 SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) :
     MenuItem(parent),
     ui(new Ui::SpinMenuItem),
-    m_title(title),
     m_unit(unit),
     m_value(0),
     m_min(0),
@@ -27,6 +27,7 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
     ui->nameLabel->installEventFilter(this);
     ui->lineEdit->installEventFilter(this);
 
+    m_title = title;
     update_title();
     update_value();
 
@@ -70,6 +71,57 @@ void SpinMenuItem::set_step(double step)
     update_title();
 }
 
+void SpinMenuItem::set_selected(bool flag)
+{
+    QString msg;
+    if(flag) {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
+        msg += "<strong>";
+        msg += m_title;
+        msg += "</strong>";
+    } else {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
+        msg += m_title;
+        msg += "</font>";
+    }
+
+    if (!ui->lineEdit->hasFocus()) {
+        if (!m_unit.isEmpty()) {
+            msg += "<br/>(";
+            msg += m_unit;
+            msg += ")";
+        }
+    } else {
+        msg += "<br/>";
+        if (!m_unit.isEmpty()) {
+            msg += "(";
+            msg += m_unit;
+            msg += ") ";
+        }
+        msg += "&Delta;";
+        msg += QString::number(m_step, 'f', m_decimals);
+    }
+
+    msg += "</p>";
+
+    qDebug() << "[SpinMenuItem::set_selected]" << msg;
+
+    ui->nameLabel->setText(msg);
+}
+
+void SpinMenuItem::set_edit(bool flag)
+{
+    qDebug() << "[SpinMenuItem::set_edit] " << flag;
+
+    if(flag) {
+        set_focus();
+    } else {
+        set_focus_out();
+    }
+
+    m_isEditing = flag;
+}
+
 void SpinMenuItem::set_value(double value)
 {
     if (qFuzzyCompare(m_value, value)) {
@@ -89,12 +141,26 @@ void SpinMenuItem::set_value(double value)
 
 bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 {
+    qDebug() <<  "[SpinMenuItem::eventFilter] "
+              <<  "event type " << e->type()
+               << " object name " << obj->objectName();
+
     if (e->type() == QEvent::MouseButtonRelease) {
         if (ui->lineEdit->hasFocus()) {
             update_spin_step();
         } else {
             set_focus();
         }
+        return true;
+    }
+
+    if(QWidget::focusWidget()) {
+        qDebug() << "[SpinMenuItem::eventFilter] focus widget = "
+                 << QWidget::focusWidget()->objectName();
+    }
+
+    if(e->type() == QEvent::FocusIn) {
+        qDebug() << "[SpinMenuItem::eventFilter] focusIn " << " object : " << obj->objectName();
         return true;
     }
 

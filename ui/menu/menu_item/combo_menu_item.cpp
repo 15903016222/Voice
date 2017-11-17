@@ -9,11 +9,13 @@
 #include "ui_combo_menu_item.h"
 
 #include <QListView>
+#include <QDebug>
 
 ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
     MenuItem(parent),
     ui(new Ui::ComboMenuItem),
     m_displayMode(ALL)
+
 {
     ui->setupUi(this);
 
@@ -39,6 +41,7 @@ ComboMenuItem::~ComboMenuItem()
 
 void ComboMenuItem::set_title(const QString &title)
 {
+    m_title = title;
     QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
     msg += title;
     msg += "</font>";
@@ -94,6 +97,38 @@ void ComboMenuItem::set_dispay_mode(ComboMenuItem::DisplayMode mode)
 {
     m_displayMode = mode;
     set_label_text(ui->comboBox->currentText());
+}
+
+void ComboMenuItem::set_selected(bool flag)
+{
+    QString msg;
+    if(flag) {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
+        msg += "<strong>";
+        msg += m_title;
+        msg += "</strong>";
+        msg += "</font>";
+        msg += "</p>";
+        ui->nameLabel->setText(msg);
+    } else {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
+        msg += m_title;
+        msg += "</font>";
+        msg += "</p>";
+        ui->nameLabel->setText(msg);
+    }
+}
+
+void ComboMenuItem::set_edit(bool flag)
+{
+    qDebug() << "[ComboMenuItem::set_edit] " << flag;
+
+    if(flag) {
+        ui->comboBox->showPopup();
+    } else {
+        ui->comboBox->hidePopup();
+    }
+    m_isEditing = flag;
 }
 
 void ComboMenuItem::set_label_text(QString text)

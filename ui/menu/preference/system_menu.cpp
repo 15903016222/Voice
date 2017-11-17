@@ -87,6 +87,7 @@ void SystemMenu::show_info_dialog()
 {
     Ui::Dialog::SysInfoDialog infoDialog;
     infoDialog.exec();
+    this->set_focus();
 }
 
 }
