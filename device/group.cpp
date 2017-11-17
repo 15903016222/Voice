@@ -121,11 +121,17 @@ const DplSource::BeamsPointer &Group::current_beams() const
 void Group::set_current_beam(int index)
 {
     d->set_current_beam_index(index);
+    emit current_beam_changed(index);
 }
 
 const DplSource::BeamPointer &Group::current_beam() const
 {
     return d->beam();
+}
+
+int Group::current_beam_index() const
+{
+    return d->current_beam_index();
 }
 
 void Group::deploy() const

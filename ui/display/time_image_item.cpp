@@ -2,7 +2,7 @@
 
 #include <source/source.h>
 
-TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+TimeImageItem::TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QGraphicsObject *parent)
     : BaseImageItem(palette, grp, parent)
 {
 
@@ -22,8 +22,10 @@ void TimeImageItem::draw_vertical_beam()
     /* 系统一共有多少帧 */
     int totalFrameCount = STORE_BUFFER_SIZE / m_beamsPointer->size();
 
-    DplSource::BeamsPointer beamsPointer = DplSource::Source::instance()->beams(m_group->index(),
-                                                                                pendingFrameCount % totalFrameCount);
+   // DplSource::BeamsPointer beamsPointer = DplSource::Source::instance()->beams(m_group->index(),
+     //                                                                           pendingFrameCount % totalFrameCount);
+    DplSource::BeamsPointer beamsPointer  = m_beamsPointer;
+
     if(m_scrolling) {
         /* 整个显示区域画满beam，开始滚动显示后续的beam */
         scroll_vertical_image(commonProperties, beamsPointer);
@@ -38,9 +40,6 @@ void TimeImageItem::draw_vertical_beam()
 
 bool TimeImageItem::redraw_vertical_beam()
 {
-    QTime time;
-    time.restart();
-
     if(m_beamsPointer.isNull() ) {
         return false;
     }
@@ -145,8 +144,6 @@ bool TimeImageItem::redraw_vertical_beam()
     m_currentTimeCount = m_pendingTimeCount;
     m_redrawFlag       = false;
 
-    qDebug("TimeImageItem:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
-
     return true;
 }
 
@@ -161,7 +158,6 @@ void TimeImageItem::draw_vertical_image(int beamsShowedCount,
         int offset =  commonProperties.pixCount - commonProperties.align;
         QImage tmp = m_image->copy(offset, 0, m_image->width(), m_image->height());
         m_image->swap(tmp);
-
         set_vertical_image_data(beamsShowedCount, commonProperties, LAST_BEAM, beamsPointer);
 
     } else {

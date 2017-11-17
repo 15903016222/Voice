@@ -8,7 +8,7 @@ class BscanTimeImageItem : public TimeImageItem
 public:
     explicit BscanTimeImageItem(const DplDisplay::PaletteColorPointer &palette,
                                 const DplDevice::GroupPointer &grp,
-                                QObject *parent = 0);
+                                QGraphicsObject *parent = 0);
 
     virtual bool need_refresh(const DplSource::BeamsPointer &beams);
 

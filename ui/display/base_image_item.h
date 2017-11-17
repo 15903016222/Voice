@@ -17,6 +17,7 @@ static const double DEFAULT_PIX_PER_BEAM = 1.0;                  /* 默认每条
 static const double FLOAT_ZERO  = 0.0000001;
 static const double SECOND      = 1000.0;
 
+
 struct S_BEAM_INFO{
     int x;
     int y;
@@ -49,7 +50,8 @@ public:
         int beginShowIndex;             /* 从第beginShowIndex帧开始重画 */
     };
 
-    explicit BaseImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    explicit BaseImageItem(const DplDisplay::PaletteColorPointer &palette,
+                           const DplDevice::GroupPointer &grp, QGraphicsObject *parent = 0);
     ~BaseImageItem();
 
     bool set_pix_per_beam(double ratio);

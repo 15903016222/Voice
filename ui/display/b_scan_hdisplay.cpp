@@ -19,7 +19,5 @@ void BscanHDisplay::init_ruler()
     m_scanTypeRuler->set_direction(RulerWidget::Down);
 
     update_scan_type_ruler(m_bscanView->size());
-
     update_sound_path_ruler();
-
 }

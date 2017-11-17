@@ -13,24 +13,26 @@
 
 #include <QDebug>
 
-static const int GATE_HEIGHT = 4;
+static const int DEFAULT_WIDTH  = 4;
+static const int DEFAULT_HEIGHT = 4;
 
-VpaItem::VpaItem(const DplUt::SamplePointer &sample, QGraphicsItem *parent) : QGraphicsObject(parent),
-    m_sample(sample),
-    m_ratio(1),
+VpaItem::VpaItem(const DplDevice::GroupPointer &group) : QGraphicsObject(),
     m_movingFlag(false),
-    m_offset(0.0)
+    m_group(group)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges); // 启动itemChanged()
     setZValue(1);
+
+    connect(static_cast<DplDevice::Group *>(group.data()),
+            SIGNAL(current_beam_changed(int)),
+            this, SLOT(update_pos()));
 }
 
 QRectF VpaItem::boundingRect() const
 {
-//    qreal adjust = 0.5;
-//    return QRectF(0, -GATE_HEIGHT/2 - 10,
-//                  m_gate->width() * ratio(), GATE_HEIGHT + 20);
+    return QRectF(-DEFAULT_WIDTH/2 - 10, 0,
+                  DEFAULT_WIDTH + 20, 500);
 }
 
 void VpaItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -38,18 +40,11 @@ void VpaItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     Q_UNUSED(widget);
     Q_UNUSED(option);
 
-//    painter->setPen(m_gate->color());
-//    painter->drawLine(0, -GATE_HEIGHT/2, 0, GATE_HEIGHT/2);
-//    painter->drawLine(m_gate->width() * ratio(), -GATE_HEIGHT/2,
-//                      m_gate->width() * ratio(), GATE_HEIGHT/2);
-//    painter->drawLine(0, 0,
-//                      m_gate->width() * ratio(), 0);
-}
-
-void VpaItem::set_offset(qreal offset)
-{
-    m_offset = offset;
-    update_pos();
+    painter->setPen(Qt::black);
+    if (scene()) {
+        painter->drawLine(0, 0,
+                          0, scene()->sceneRect().height());
+    }
 }
 
 void VpaItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -70,11 +65,14 @@ QVariant VpaItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVa
         // value is the new position.
         QPointF newPos = value.toPointF();
         QRectF rect = scene()->sceneRect();
-        if (!rect.contains(newPos)) {
-            // Keep the item inside the scene rect.
-            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
-            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
-        }
+
+        float step = rect.width() / m_group->focallawer()->beam_qty();
+
+        int x = (newPos.x() - rect.left()) / step + 0.5;
+        qDebug("%s[%d]: %d",__func__, __LINE__, x);
+
+        newPos.setX(rect.left() + x*step);
+        newPos.setY(rect.top());
 
         return newPos;
     }
@@ -88,12 +86,21 @@ void VpaItem::do_visible_changed(bool flag)
 
 void VpaItem::update_pos()
 {
-    if (is_moving()) {
+    if ( is_moving()
+         ||m_group->mode() != DplDevice::Group::PA
+         || !scene() || scene()->views().isEmpty()) {
         return;
     }
 
-//    if (scene() && !scene()->views().isEmpty()) {
-//        setPos(scene()->sceneRect().left() + (m_gate->start() - m_sample->start()  + m_offset )* ratio(),
-//               scene()->sceneRect().bottom() - scene()->sceneRect().height() * m_gate->height() / 100);
-//    }
+    DplFocallaw::PaProbePointer probe = m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
+
+    if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear
+            && m_group->focallawer()->beam_qty() > 1) {
+            setPos(scene()->sceneRect().left()+scene()->sceneRect().width() * m_group->current_beam_index() / (m_group->focallawer()->beam_qty()-1),
+                   scene()->sceneRect().top());
+    } else if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Sectorial) {
+//        m_group->s_scan()->
+        resetTransform();
+        setTransform(QTransform().rotate(-30), true);
+    }
 }
