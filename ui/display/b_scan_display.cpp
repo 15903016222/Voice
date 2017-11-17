@@ -133,6 +133,14 @@ void BscanDisplay::init_ruler()
     ui->rightRuler->set_range(0, 100);
     ui->rightRuler->set_unit("(%)");
     ui->rightRuler->update();
+
+    if(m_orientation == Qt::Vertical) {
+        m_soundPathRuler = ui->leftRuler;
+        m_scanTypeRuler  = ui->bottomRuler;
+    } else {
+        m_soundPathRuler = ui->bottomRuler;
+        m_scanTypeRuler  = ui->leftRuler;
+    }
 }
 
 
