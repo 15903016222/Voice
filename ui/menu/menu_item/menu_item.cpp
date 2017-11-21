@@ -7,7 +7,19 @@
  */
 #include "menu_item.h"
 
+#include <ui/menu/base_menu.h>
+
 MenuItem::MenuItem(QWidget *parent) :
     QWidget(parent),
-    m_isEditing(false)
+    m_isEditing(false),
+    m_selected(false),
+    m_parent(parent)
 {}
+
+void MenuItem::set_parent_focus_in(QObject *object)
+{
+    BaseMenu *parentItem = static_cast<BaseMenu*> (m_parent);
+    if(parentItem) {
+        parentItem->set_focus(object);
+    }
+}

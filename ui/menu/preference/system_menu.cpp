@@ -12,6 +12,8 @@
 #include "sysinfo_dialog.h"
 
 #include <QDate>
+#include <QDebug>
+#include <QMouseEvent>
 
 namespace DplPreferenceMenu {
 
@@ -51,7 +53,7 @@ SystemMenu::~SystemMenu()
 
 void SystemMenu::show_time_dialog()
 {
-    DateTimeSetDialog timeDialog;
+    DateTimeSetDialog timeDialog(this);
     QMap<QString, QString> map;
     map.insert("Time Set", m_timeItem->title());
 
@@ -65,7 +67,7 @@ void SystemMenu::show_time_dialog()
 
 void SystemMenu::show_date_dialog()
 {
-    DateTimeSetDialog dateDialog;
+    DateTimeSetDialog dateDialog(this);
     QMap<QString, QString> map;
     map.insert("Date Set", m_dateItem->title());
 
@@ -87,7 +89,6 @@ void SystemMenu::show_info_dialog()
 {
     Ui::Dialog::SysInfoDialog infoDialog;
     infoDialog.exec();
-    this->set_focus();
 }
 
 }

@@ -89,9 +89,12 @@ bool SubMenu::eventFilter(QObject *object, QEvent *event)
     if(event->type() == QEvent::KeyRelease) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*> (event);
         if(keyEvent->key() == Qt::Key_Escape) {
-            qDebug() << "[SubMenu::eventFilter]" << " emit sub_menu_focus_out.";
             emit sub_menu_focus_out();
+        } else if(keyEvent->key() == Qt::Key_Return) {
+            m_curMenu->set_selected_item_focus_in();
         }
+    } else if(event->type() == QEvent::WindowUnblocked) {
+        m_curMenu->set_selected_item_focus_in();
     }
 
     return QWidget::eventFilter(object, event);
@@ -121,7 +124,6 @@ void SubMenu::set_opacity_main_menu(double value)
 
 void SubMenu::do_sub_menu_keyreturn()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " set focus.";
     m_curMenu->set_focus();
 }
 
