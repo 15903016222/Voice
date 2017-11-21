@@ -32,9 +32,13 @@ public slots:
     void show_velocity_calibration(bool flag);
     void show_delay_calibration(bool flag);
 
+protected slots:
+    void do_timeout();
 
 private:
     Ui::IconsBar *ui;
+
+    QTimer *m_timer;
 };
 
 #endif // __ICONS_BAR_H__
