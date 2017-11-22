@@ -88,8 +88,14 @@ bool SubMenu::eventFilter(QObject *object, QEvent *event)
 {
     if(event->type() == QEvent::KeyRelease) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*> (event);
+
         if(keyEvent->key() == Qt::Key_Escape) {
-            emit sub_menu_focus_out();
+            if(m_curMenu->has_editing()) {
+                m_curMenu->set_all_item_no_edit();
+                return true;
+            } else {
+                emit sub_menu_focus_out();
+            }
         } else if(keyEvent->key() == Qt::Key_Return) {
             m_curMenu->set_selected_item_focus_in();
         }

@@ -47,6 +47,7 @@ bool BaseMenu::eventFilter(QObject *object, QEvent *event)
         m_menuItemVect.at(m_currentItem)->set_selected(true);
     } else if(event->type() == QEvent::KeyPress){
         QKeyEvent *keyEvent = static_cast<QKeyEvent*> (event);
+
         if(keyEvent->key() == Qt::Key_Up) {
             if(!m_menuItemVect.at(m_currentItem)->is_editing()) {
                 set_previous_item();
@@ -62,11 +63,20 @@ bool BaseMenu::eventFilter(QObject *object, QEvent *event)
                 m_menuItemVect.at(m_currentItem)->set_selected(true);
                 return true;
             }
+        } else if(keyEvent->key() == Qt::Key_Escape) {
+            m_menuItemVect.at(m_currentItem)->setFocus();
+            m_menuItemVect.at(m_currentItem)->set_selected(true);
+            return true;
         }
     } else if(event->type() == QEvent::KeyRelease){
         QKeyEvent *keyEvent = static_cast<QKeyEvent*> (event);
         if(keyEvent->key() == Qt::Key_Escape) {
-            set_focus_out();
+            if(!m_menuItemVect.at(m_currentItem)->is_editing()) {
+                set_focus_out();
+            } else {
+                m_menuItemVect.at(m_currentItem)->set_edit(false);
+                return true;
+            }
         } else if(keyEvent->key() == Qt::Key_Return) {
             if(m_menuItemVect.at(m_currentItem)->is_editing()) {
                 m_menuItemVect.at(m_currentItem)->set_edit(false);
@@ -243,5 +253,25 @@ bool BaseMenu::set_selected_item_focus_in()
     }
 
     return false;
+}
+
+bool BaseMenu::has_editing()
+{
+    update_item_vector();
+
+    for(int i = 0; i < m_menuItemVect.size(); ++i) {
+        if(m_menuItemVect.at(i)->is_editing()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void BaseMenu::set_all_item_no_edit()
+{
+    update_item_vector();
+    for(int i = 0; i < m_menuItemVect.size(); ++i) {
+        m_menuItemVect.at(i)->set_edit(false);
+    }
 }
 

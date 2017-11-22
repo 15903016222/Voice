@@ -104,6 +104,7 @@ void SpinMenuItem::set_selected(bool flag)
     }
 
     msg += "</p>";
+
     m_selected = flag;
     ui->nameLabel->setText(msg);
 }
@@ -191,9 +192,17 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 
 void SpinMenuItem::update_title()
 {
-    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
-    msg += m_title;
-    msg += "</font>";
+    QString msg;
+    if(m_selected) {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
+        msg += "<strong>";
+        msg += m_title;
+        msg += "</strong>";
+    } else {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
+        msg += m_title;
+        msg += "</font>";
+    }
 
     if (!ui->lineEdit->hasFocus()) {
         if (!m_unit.isEmpty()) {

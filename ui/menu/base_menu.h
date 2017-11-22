@@ -45,6 +45,17 @@ public:
      */
     bool set_selected_item_focus_in();
 
+    /**
+     * @brief has_editing 是否有item正在编辑
+     * @return true：有item正在编辑；false:没有item正在编辑；
+     */
+    bool has_editing();
+
+    /**
+     * @brief set_all_item_no_edit 设置所有item为非编辑状态
+     */
+    void set_all_item_no_edit();
+
 protected:
     bool eventFilter(QObject *object, QEvent *event);
 
