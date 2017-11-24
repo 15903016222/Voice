@@ -17,8 +17,6 @@
 #include <qmath.h>
 #include <QThread>
 
-#include <QDebug>
-
 AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
                            Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),
@@ -37,8 +35,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
 
     connect(m_view, SIGNAL(size_changed(QSize)),
             this, SLOT(do_view_size_changed(QSize)));
-
-    qDebug() << "view Rect: " << m_view->rect();
 
     m_view->setScene(m_scene);
 

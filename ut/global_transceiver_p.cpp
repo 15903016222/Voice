@@ -5,16 +5,16 @@
  * @date 2017-09-28
  */
 
-#include "global_pulser_p.h"
+#include "global_transceiver_p.h"
 
 #include <source/source.h>
 
 namespace DplUt {
 
-GlobalPulserPrivate::GlobalPulserPrivate(GlobalPulser *parent) : QObject(),
-    m_paVoltage(GlobalPulser::V50),
-    m_utVoltage(GlobalPulser::V50),
-    m_prfMode(GlobalPulser::OPTIMUM),
+GlobalTransceiverPrivate::GlobalTransceiverPrivate(GlobalTransceiver *parent) : QObject(),
+    m_paVoltage(GlobalTransceiver::V50),
+    m_utVoltage(GlobalTransceiver::V100),
+    m_prfMode(GlobalTransceiver::OPTIMUM),
     m_acqRate(60),
     q(parent)
 {
@@ -24,7 +24,7 @@ GlobalPulserPrivate::GlobalPulserPrivate(GlobalPulser *parent) : QObject(),
             SLOT(update_acquisition_rate()));
 }
 
-int GlobalPulserPrivate::max_txrx_time() const
+int GlobalTransceiverPrivate::max_txrx_time() const
 {
     int max = 1;
     foreach (DplDevice::GroupPointer grp, DplDevice::Device::instance()->groups()) {
@@ -35,7 +35,7 @@ int GlobalPulserPrivate::max_txrx_time() const
     return max;
 }
 
-int GlobalPulserPrivate::max_acquisition_rate() const
+int GlobalTransceiverPrivate::max_acquisition_rate() const
 {
     DplDevice::Device *dev = DplDevice::Device::instance();
 
@@ -98,16 +98,16 @@ int GlobalPulserPrivate::max_acquisition_rate() const
     return  (result)<1 ? 1: result;
 }
 
-void GlobalPulserPrivate::update_acquisition_rate()
+void GlobalTransceiverPrivate::update_acquisition_rate()
 {
-    if (GlobalPulser::USER_DEF == m_prfMode) {
+    if (GlobalTransceiver::USER_DEF == m_prfMode) {
         return;
     }
 
     int rate = max_acquisition_rate();
-    if (GlobalPulser::MAX_HALF == m_prfMode && rate > 1) {
+    if (GlobalTransceiver::MAX_HALF == m_prfMode && rate > 1) {
         rate /= 2;
-    } else if (GlobalPulser::OPTIMUM == m_prfMode && rate > 60) {
+    } else if (GlobalTransceiver::OPTIMUM == m_prfMode && rate > 60) {
         rate = 60;
     }
 

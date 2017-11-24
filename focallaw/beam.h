@@ -75,6 +75,12 @@ public:
      */
     int aperture() const;
 
+    /**
+     * @brief field_distance
+     * @return          中心阵元的声束在样块的入射点到楔块的前边缘下边的距离，曲面的是圆弧聚离
+     */
+    float field_distance();
+
 protected:
     friend class FocallawerPrivate;
     BeamPrivate *data() { return d_ptr; }

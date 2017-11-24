@@ -8,7 +8,7 @@
 #include "pulser_menu.h"
 #include "ui_base_menu.h"
 
-#include <ut/global_pulser.h>
+#include <ut/global_transceiver.h>
 
 namespace DplUtSettingMenu {
 
@@ -29,14 +29,6 @@ PulserMenu::PulserMenu(QWidget *parent) :
     ui->layout5->addWidget(m_userDefItem);
 
     m_userDefItem->hide();
-
-    m_voltageItem->add_item("50V");
-    m_voltageItem->add_item("100V");
-    m_voltageItem->add_item("200V");
-    connect(m_voltageItem,
-            SIGNAL(value_changed(int)),
-            this,
-            SLOT(do_voltageItem_changed(int)));
 
     m_prfItem->add_item(tr("Auto Max"));
     m_prfItem->add_item(tr("Max/2"));
@@ -59,7 +51,7 @@ PulserMenu::PulserMenu(QWidget *parent) :
             this,
             SLOT(do_pwItem_changed(double)));
 
-    connect(DplUt::GlobalPulser::instance(),
+    connect(DplUt::GlobalTransceiver::instance(),
             SIGNAL(prf_changed()),
             this,
             SLOT(update_userDefItem()));
@@ -76,27 +68,6 @@ PulserMenu::PulserMenu(QWidget *parent) :
     update(DplDevice::Device::instance()->current_group());
 }
 
-void PulserMenu::update_voltageItem()
-{
-    switch (DplUt::GlobalPulser::instance()->voltage(
-                m_group->focallawer()->probe()->is_pa())) {
-    case DplUt::GlobalPulser::V50:
-        m_voltageItem->set_current_index(0);
-        break;
-    case DplUt::GlobalPulser::V100:
-        m_voltageItem->set_current_index(1);
-        break;
-    case DplUt::GlobalPulser::V200:
-        m_voltageItem->set_current_index(2);
-        break;
-    case DplUt::GlobalPulser::V400:
-        m_voltageItem->set_current_index(3);
-        break;
-    default:
-        break;
-    }
-}
-
 void PulserMenu::do_txrxModeItem_changed(int index)
 {
     m_group->transceiver()->set_mode(static_cast<DplUt::Transceiver::Mode>(index));
@@ -110,23 +81,22 @@ void PulserMenu::do_pulserItem_changed(double val)
 
 void PulserMenu::do_voltageItem_changed(int index)
 {
-    DplUt::GlobalPulser::Voltage v = DplUt::GlobalPulser::V50;
-    switch (index) {
-    case 1:
-        v = DplUt::GlobalPulser::V100;
-        break;
-    case 2:
-        v = DplUt::GlobalPulser::V200;
-        break;
-    case 3:
-        v = DplUt::GlobalPulser::V400;
-        break;
-    default:
-        break;
+    if (m_group->mode() == DplDevice::Group::UT
+            || m_group->mode() == DplDevice::Group::PA) {
+        if (index == 1) {
+            DplUt::GlobalTransceiver::instance()->set_pa_voltage(DplUt::GlobalTransceiver::V100);
+        } else {
+            DplUt::GlobalTransceiver::instance()->set_pa_voltage(DplUt::GlobalTransceiver::V50);
+        }
+    } else {
+        if (index == 2) {
+            DplUt::GlobalTransceiver::instance()->set_ut_voltage(DplUt::GlobalTransceiver::V400);
+        } else if (index == 1) {
+            DplUt::GlobalTransceiver::instance()->set_ut_voltage(DplUt::GlobalTransceiver::V200);
+        } else {
+            DplUt::GlobalTransceiver::instance()->set_ut_voltage(DplUt::GlobalTransceiver::V100);
+        }
     }
-    DplUt::GlobalPulser::instance()->set_voltage(
-                m_group->focallawer()->probe()->is_pa(),
-                v);
 }
 
 void PulserMenu::do_pwItem_changed(double val)
@@ -136,35 +106,48 @@ void PulserMenu::do_pwItem_changed(double val)
 
 void PulserMenu::do_prfItem_changed(int index)
 {
-    if (index == DplUt::GlobalPulser::USER_DEF) {
+    if (index == DplUt::GlobalTransceiver::USER_DEF) {
         m_userDefItem->show();
     } else {
         m_userDefItem->hide();
     }
-    DplUt::GlobalPulser::instance()->set_prf_mode(static_cast<DplUt::GlobalPulser::PrfMode>(index));
+    DplUt::GlobalTransceiver::instance()->set_prf_mode(static_cast<DplUt::GlobalTransceiver::PrfMode>(index));
 }
 
 void PulserMenu::do_userDevItem_changed(double val)
 {
-    DplUt::GlobalPulser::instance()->set_acquisition_rate(val);
+    DplUt::GlobalTransceiver::instance()->set_acquisition_rate(val);
 }
 
 void PulserMenu::update(const DplDevice::GroupPointer &group)
 {
+    if (m_group) {
+        disconnect(static_cast<DplDevice::Group *>(m_group.data()),
+                   SIGNAL(mode_changed(DplDevice::Group::Mode)),
+                   this, SLOT(update_txrxModeItem()));
+    }
+
     m_group = group;
+
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(mode_changed(DplDevice::Group::Mode)),
+            this, SLOT(update_txrxModeItem()));
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(mode_changed(DplDevice::Group::Mode)),
+            this, SLOT(update_voltageItem()));
 
     update_txrxModeItem();
     m_pulserItem->set_value(m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>()->pulser_index());
     update_voltageItem();
     m_pwItem->set_value(m_group->transceiver()->pw());
-    m_prfItem->set_current_index(DplUt::GlobalPulser::instance()->prf_mode());
+    m_prfItem->set_current_index(DplUt::GlobalTransceiver::instance()->prf_mode());
     update_userDefItem();
 }
 
 void PulserMenu::update_userDefItem()
 {
-    m_userDefItem->set_range(1, DplUt::GlobalPulser::instance()->max_acquisition_rate());
-    m_userDefItem->set_value(DplUt::GlobalPulser::instance()->acquisition_rate());
+    m_userDefItem->set_range(1, DplUt::GlobalTransceiver::instance()->max_acquisition_rate());
+    m_userDefItem->set_value(DplUt::GlobalTransceiver::instance()->acquisition_rate());
 }
 
 void PulserMenu::update_txrxModeItem()
@@ -174,6 +157,7 @@ void PulserMenu::update_txrxModeItem()
             this,
             SLOT(do_txrxModeItem_changed(int)));
 
+    m_txrxModeItem->set(QStringList());
     m_txrxModeItem->add_item(tr("PE"));
     m_txrxModeItem->add_item(tr("PC"));
     m_txrxModeItem->add_item(tr("TT"));
@@ -189,5 +173,41 @@ void PulserMenu::update_txrxModeItem()
 
 }
 
+void PulserMenu::update_voltageItem()
+{
+    disconnect(m_voltageItem,
+               SIGNAL(value_changed(int)),
+               this,
+               SLOT(do_voltageItem_changed(int)));
+
+    m_voltageItem->set(QStringList());
+
+    if (m_group->mode() == DplDevice::Group::UT
+            || m_group->mode() == DplDevice::Group::PA) {
+        m_voltageItem->add_item("50V");
+        m_voltageItem->add_item("100V");
+        if (DplUt::GlobalTransceiver::instance()->pa_voltage() == DplUt::GlobalTransceiver::V100) {
+            m_voltageItem->set_current_index(1);
+        } else {
+            m_voltageItem->set_current_index(0);
+        }
+    } else {
+        m_voltageItem->add_item("100V");
+        m_voltageItem->add_item("200V");
+        m_voltageItem->add_item("400V");
+        if (DplUt::GlobalTransceiver::instance()->ut_voltage() == DplUt::GlobalTransceiver::V400) {
+            m_voltageItem->set_current_index(2);
+        } else if (DplUt::GlobalTransceiver::instance()->ut_voltage() == DplUt::GlobalTransceiver::V200 ) {
+            m_voltageItem->set_current_index(1);
+        } else {
+            m_voltageItem->set_current_index(0);
+        }
+    }
+
+    connect(m_voltageItem,
+            SIGNAL(value_changed(int)),
+            this,
+            SLOT(do_voltageItem_changed(int)));
+}
 
 }

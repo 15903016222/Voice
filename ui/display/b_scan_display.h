@@ -2,9 +2,13 @@
 #define __B_SCAN_DISPLAY_H_
 
 #include <QWidget>
-#include <ui/display/base_image_item.h>
-#include <device/device.h>
 #include <QSemaphore>
+
+#include <ui/display/base_image_item.h>
+#include <ui/display/base_cursor_item.h>
+#include <device/device.h>
+#include <mcu/mcu.h>
+
 
 class ScanView;
 class BscanScene;
@@ -28,6 +32,7 @@ signals:
     void update_ruler(double value);
     void update_label(const QString &time);
     void refresh_scan_env();
+    void cursor_visible_changed(bool flag);
 
 protected slots:
 
@@ -38,6 +43,39 @@ protected slots:
     void do_refresh_scan_env();
     void do_update_ruler(double x);
 
+    void do_mcu_key_event(Mcu::KeyType type);
+    void do_cursor_visible_changed(bool flag);
+
+    /**
+     * @brief do_ultrasound_reference_changed 处理引用光标在超声轴位置变化
+     * @param value         位置值（ns）
+     */
+    void do_ultrasound_reference_changed(double value);
+
+    /**
+     * @brief do_ultrasound_measurement_changed 处理测量光标在超声轴位置变化
+     * @param value         位置值（ns）
+     */
+    void do_ultrasound_measurement_changed(double value);
+
+    /**
+     * @brief do_scan_reference_changed 处理引用光标在扫查轴位置变化
+     * @param value         位置（mm）
+     */
+    void do_scan_reference_changed(double value);
+
+    /**
+     * @brief do_scan_measurement_changed   处理测量光标在扫擦轴位置变化
+     * @param value     位置（mm）
+     */
+    void do_scan_measurement_changed(double value);
+
+    /**
+     * @brief do_value_changed  处理光标拖动后，数值变化处理
+     * @param value             变化后的数值
+     */
+    void do_value_changed(double value);
+
 protected:
     Ui::BscanDisplay *ui;
 
@@ -47,18 +85,25 @@ protected:
 
     ScanView         *m_bscanView;
     BscanScene       *m_bscanScene;
+
     BaseImageItem    *m_bscanImageItem;
-    BaseCursorItem   *m_baseCursorItem;
+    BaseCursorItem   *m_sReferneceCursorItem;
+    BaseCursorItem   *m_sMeasurementCursorItem;
+    BaseCursorItem   *m_uReferneceCursorItem;
+    BaseCursorItem   *m_uMeasurementCursorItem;
+    DplSource::BeamsPointer m_beamsPointer;
 
     DplSource::Axis::Driving      m_driving;                /* 扫查类型：encoder_x/y / timer*/
 
-    QLabel           *m_timeShowLabel;
     Qt::Orientation  m_orientation;
     QSemaphore       m_refreshSemaphore;    /* 切换时间扫查或编码器扫查时，刷新信号量 */
 
-    DplSource::AxisPointer      m_axisPointer;
-    DplSource::EncoderPointer   m_encoderPointer;
+    volatile bool m_cursorVisible;
 
+    DplMeasure::CursorPointer   m_cursorPointer;
+
+    void init_cursor();
+    void init_cursor_connection();
     void init_ruler();
     void update_scan_type_ruler(const QSize &size);
     void wait_for_refresh_finished();
@@ -66,6 +111,9 @@ protected:
 
     void draw_timer_beams(const DplSource::BeamsPointer &beams);
     void draw_encoder_beams(const DplSource::BeamsPointer &beams);
+
+    void cal_cursor_info(double value, BaseCursorItem::S_CURSOR_INFO &cursorInfo);
+    void update_cursor_info();
 };
 
 #endif // __B_SCAN_DISPLAY_H_

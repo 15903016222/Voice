@@ -11,7 +11,7 @@
 #include "device.h"
 
 #include <global.h>
-#include <ut/global_pulser.h>
+#include <ut/global_transceiver.h>
 #include <fpga/fpga.h>
 
 #include <QReadWriteLock>
@@ -30,6 +30,7 @@ Group::Group(int index, QObject *parent) : QObject(parent),
     m_gateB(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_B, Qt::green)),
     m_gateI(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_I, Qt::darkCyan)),
     m_cursor(new DplMeasure::Cursor()),
+    m_sScan(new DplDisplay::Sscan(m_focallawer, m_sample)),
     d(new GroupPrivate(this))
 {
     init_gates();
@@ -38,7 +39,7 @@ Group::Group(int index, QObject *parent) : QObject(parent),
 
     init_source();
 
-    DplUt::GlobalPulser::instance()->connect_group(this);
+    DplUt::GlobalTransceiver::instance()->connect_group(this);
 }
 
 Group::~Group()
@@ -120,11 +121,17 @@ const DplSource::BeamsPointer &Group::current_beams() const
 void Group::set_current_beam(int index)
 {
     d->set_current_beam_index(index);
+    emit current_beam_changed(index);
 }
 
 const DplSource::BeamPointer &Group::current_beam() const
 {
     return d->beam();
+}
+
+int Group::current_beam_index() const
+{
+    return d->current_beam_index();
 }
 
 void Group::deploy() const

@@ -4,7 +4,7 @@
 #include <source/source.h>
 #include <source/beams.h>
 
-EncoderImageItem::EncoderImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent)
+EncoderImageItem::EncoderImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QGraphicsObject *parent)
     : BaseImageItem(palette, grp, parent)
 {
 
@@ -73,9 +73,6 @@ void EncoderImageItem::draw_vertical_beam()
 
 bool EncoderImageItem::redraw_vertical_beam()
 {
-    QTime time;
-    time.restart();
-
     if(!m_redrawFlag) {
         return false;
     }
@@ -115,9 +112,7 @@ bool EncoderImageItem::redraw_vertical_beam()
             m_currentX  = currentStart;
             lastBeamsPointer = DplSource::Source::instance()->beams(m_group->index(), currentEnd, m_maxBeamInfo.y);
             set_move_x(currentEnd, m_maxBeamInfo.y);
-
         } else {
-
             /* currentEnd 大于等于 m_maxBeamInfo.x */
             m_currentX = currentStart;
             lastBeamsPointer = DplSource::Source::instance()->beams(m_group->index(), m_maxBeamInfo.x, m_maxBeamInfo.y);
@@ -153,9 +148,6 @@ bool EncoderImageItem::redraw_vertical_beam()
     }
 
     m_redrawFlag = false;
-
-    qDebug("TimeImageItem:%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
-
     return true;
 }
 
@@ -266,6 +258,8 @@ void EncoderImageItem::set_one_vertical_beam(double x, const BaseImageItem::S_Co
 
 void EncoderImageItem::set_scroll_env(const BaseImageItem::S_CommonProperties &commonProperties)
 {
+    Q_UNUSED(commonProperties);
+
     double scanStart        = DplSource::Scan::instance()->scan_axis()->start();
     double scanEnd          = DplSource::Scan::instance()->scan_axis()->end();
     double scanResolution   = DplSource::Scan::instance()->scan_axis()->resolution();

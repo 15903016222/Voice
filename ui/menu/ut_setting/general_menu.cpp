@@ -70,7 +70,19 @@ GeneralMenu::~GeneralMenu()
 
 void GeneralMenu::update(const DplDevice::GroupPointer &group)
 {
+    if (m_group) {
+        disconnect(static_cast<DplDevice::Group *>(group.data()),
+                   SIGNAL(mode_changed(DplDevice::Group::Mode)),
+                   this,
+                   SLOT(update_gain_item()));
+    }
+
     m_group = group;
+
+    connect(static_cast<DplDevice::Group *>(group.data()),
+            SIGNAL(mode_changed(DplDevice::Group::Mode)),
+            this,
+            SLOT(update_gain_item()));
 
     update_gain_item();
     update_start_item();
@@ -118,7 +130,12 @@ void GeneralMenu::do_utUnitItem_changed(int index)
 
 void GeneralMenu::update_gain_item()
 {
-    m_gainItem->set(0, 90, 1, 0.1);
+    if (m_group->mode() == DplDevice::Group::UT1
+            || m_group->mode() == DplDevice::Group::UT2) {
+        m_gainItem->set(0, 110, 1, 0.1);
+    } else {
+        m_gainItem->set(0, 80, 1, 0.1);
+    }
     m_gainItem->set_value(m_group->sample()->gain());
 }
 

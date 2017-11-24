@@ -15,6 +15,7 @@
 #include <gate/gate.h>
 #include <measure/cursor.h>
 #include <source/beams.h>
+#include <display/s_scan.h>
 
 namespace DplDevice {
 
@@ -152,6 +153,12 @@ public:
     const DplSource::BeamPointer &current_beam() const;
 
     /**
+     * @brief current_beam_index    获取当前Beam的索引号
+     * @return                      索引号
+     */
+    int current_beam_index() const;
+
+    /**
      * @brief get_focallawer    获取聚焦法则计算器
      * @return                  聚焦法则计算器
      */
@@ -163,10 +170,17 @@ public:
      */
     const DplMeasure::CursorPointer &cursor() const;
 
+    /**
+     * @brief sscan 获取Sscan对象
+     * @return      Sscan对象
+     */
+    const DplDisplay::SscanPointer &s_scan() const;
+
 signals:
     void mode_changed(DplDevice::Group::Mode mode);
     void ut_unit_changed(DplDevice::Group::UtUnit type);
     void current_angle_changed(double val);
+    void current_beam_changed(int);
     void probe_changed(DplFocallaw::ProbePointer probePtr);
     void data_event(const DplSource::BeamsPointer &beams);
 
@@ -194,6 +208,7 @@ private:
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
     DplMeasure::CursorPointer m_cursor;
+    DplDisplay::SscanPointer m_sScan;
     GroupPrivate *d;
 
 private:
@@ -253,6 +268,11 @@ inline const DplFocallaw::FocallawerPointer &Group::focallawer() const
 inline const DplMeasure::CursorPointer &Group::cursor() const
 {
     return m_cursor;
+}
+
+inline const DplDisplay::SscanPointer &Group::s_scan() const
+{
+    return m_sScan;
 }
 
 }
