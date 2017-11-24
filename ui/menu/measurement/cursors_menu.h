@@ -49,6 +49,30 @@ private slots:
     void do_imItem_changed(double val);
     void do_angleItem_changed(double val);
 
+    /**
+     * @brief do_ultrasound_reference_changed 处理引用光标在超声轴位置变化
+     * @param value         位置值（ns）
+     */
+    void do_ultrasound_reference_changed(double value);
+
+    /**
+     * @brief do_ultrasound_measurement_changed 处理测量光标在超声轴位置变化
+     * @param value         位置值（ns）
+     */
+    void do_ultrasound_measurement_changed(double value);
+
+    /**
+     * @brief do_scan_reference_changed 处理引用光标在扫查轴位置变化
+     * @param value         位置（mm）
+     */
+    void do_scan_reference_changed(double value);
+
+    /**
+     * @brief do_scan_measurement_changed   处理测量光标在扫擦轴位置变化
+     * @param value     位置（mm）
+     */
+    void do_scan_measurement_changed(double value);
+
 private:
     ComboMenuItem *m_selectionItem;
 

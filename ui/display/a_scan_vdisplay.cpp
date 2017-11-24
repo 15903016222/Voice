@@ -72,4 +72,6 @@ void AscanVDisplay::update_left_ruler()
     ui->leftRulerWidget->set_range(start, end);
 
     ui->leftRulerWidget->update();
+
+    qDebug("%s[%d]: start(%f) end(%f) precision(%f)",__func__, __LINE__, start, end, m_group->sample()->precision());
 }

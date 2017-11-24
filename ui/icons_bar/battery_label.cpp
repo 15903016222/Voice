@@ -6,7 +6,7 @@ BatteryLabel::BatteryLabel(QWidget *parent)
       m_status(Mcu::BATTERY_NO_WORK),
       m_quantity(0)
 {
-
+    set_status(m_status);
 }
 
 void BatteryLabel::set_status(Mcu::BatteryStatus status)

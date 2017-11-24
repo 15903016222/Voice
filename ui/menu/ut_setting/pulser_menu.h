@@ -19,9 +19,6 @@ class PulserMenu : public BaseMenu
 public:
     explicit PulserMenu(QWidget *parent);
 
-protected:
-    void update_voltageItem();
-
 protected slots:
     void do_txrxModeItem_changed(int index);
     void do_pulserItem_changed(double val);
@@ -33,6 +30,7 @@ protected slots:
     void update(const DplDevice::GroupPointer &group);
     void update_userDefItem();
     void update_txrxModeItem();
+    void update_voltageItem();
 
 private:
     ComboMenuItem *m_txrxModeItem;

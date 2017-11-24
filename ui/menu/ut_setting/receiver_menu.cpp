@@ -56,7 +56,7 @@ ReceiverMenu::ReceiverMenu(QWidget *parent) :
             SLOT(do_averagingItem_changed(int)));
 
     m_dampingItem->add_item(tr("50Ω"));
-    m_dampingItem->add_item(tr("500Ω"));
+    m_dampingItem->add_item(tr("200Ω"));
     connect(m_dampingItem,
             SIGNAL(value_changed(int)),
             this,
@@ -140,9 +140,9 @@ void ReceiverMenu::do_dampingItem_changed(int index)
     }
 
     if (index == 0) {
-        DplUt::GlobalTransceiver::instance()->set_rx_damping(channel, DplFpga::Fpga::R50);
+        DplUt::GlobalTransceiver::instance()->set_tx_damping(channel, DplFpga::Fpga::R50);
     } else if (index == 1) {
-        DplUt::GlobalTransceiver::instance()->set_rx_damping(channel, DplFpga::Fpga::R500);
+        DplUt::GlobalTransceiver::instance()->set_tx_damping(channel, DplFpga::Fpga::R200);
     }
 }
 
@@ -247,14 +247,14 @@ void ReceiverMenu::update_dampingItem()
 
     DplFpga::Fpga::DampingType dampingType = DplFpga::Fpga::R50;
     if (m_group->mode() == DplDevice::Group::UT1) {
-        dampingType = DplUt::GlobalTransceiver::instance()->rx_damping(DplUt::GlobalTransceiver::UT_1);
+        dampingType = DplUt::GlobalTransceiver::instance()->tx_damping(DplUt::GlobalTransceiver::UT_1);
     } else {
-        dampingType = DplUt::GlobalTransceiver::instance()->rx_damping(DplUt::GlobalTransceiver::UT_2);
+        dampingType = DplUt::GlobalTransceiver::instance()->tx_damping(DplUt::GlobalTransceiver::UT_2);
     }
 
     if (dampingType == DplFpga::Fpga::R50) {
         m_dampingItem->set_current_index(0);
-    } else if (dampingType == DplFpga::Fpga::R500) {
+    } else if (dampingType == DplFpga::Fpga::R200) {
         m_dampingItem->set_current_index(1);
     }
 

@@ -13,7 +13,7 @@ namespace DplUt {
 
 GlobalTransceiverPrivate::GlobalTransceiverPrivate(GlobalTransceiver *parent) : QObject(),
     m_paVoltage(GlobalTransceiver::V50),
-    m_utVoltage(GlobalTransceiver::V50),
+    m_utVoltage(GlobalTransceiver::V100),
     m_prfMode(GlobalTransceiver::OPTIMUM),
     m_acqRate(60),
     q(parent)

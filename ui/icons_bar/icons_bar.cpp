@@ -1,23 +1,35 @@
 #include "icons_bar.h"
 #include "ui_icons_bar.h"
 #include <source/scan.h>
+#include <QTimer>
 
 IconsBar::IconsBar(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::IconsBar)
+    ui(new Ui::IconsBar),
+    m_timer(new QTimer)
 {
     Mcu *mcu = Mcu::instance();
     ui->setupUi(this);
 
-    connect(ui->keyboardPushButton, SIGNAL(clicked(bool)), this, SIGNAL(keyboard_event()));
-    connect(mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)), this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
-    connect(mcu, SIGNAL(battery_quantity_event(int, int)), this, SLOT(do_battery_quantity_event(int, int)));
-    connect(mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)), this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
+    connect(ui->keyboardPushButton, SIGNAL(clicked(bool)),
+            this, SIGNAL(keyboard_event()));
+    connect(mcu, SIGNAL(battery_status_event(int, Mcu::BatteryStatus)),
+            this, SLOT(do_battery_status_event(int, Mcu::BatteryStatus)));
+    connect(mcu, SIGNAL(battery_quantity_event(int, int)),
+            this, SLOT(do_battery_quantity_event(int, int)));
+    connect(mcu, SIGNAL(temperature_event(Mcu::TemperatureType, int)),
+            this, SLOT(do_temperature_event(Mcu::TemperatureType, int)));
     connect(static_cast<DplSource::Axis *>(DplSource::Scan::instance()->scan_axis().data()),
             SIGNAL(driving_changed(DplSource::Axis::Driving)),
             this,
             SLOT(do_driving_changed()));
     do_driving_changed();
+
+    connect(m_timer,
+            SIGNAL(timeout()),
+            this,
+            SLOT(do_timeout()));
+    m_timer->start(1000);
 }
 
 IconsBar::~IconsBar()
@@ -128,4 +140,14 @@ void IconsBar::show_delay_calibration(bool flag)
 
     palette.setBrush(QPalette::WindowText, brush);
     ui->wLabel->setPalette(palette);
+}
+
+void IconsBar::do_timeout()
+{
+    Mcu *mcu = Mcu::instance();
+    mcu->query_first_battery();
+    mcu->query_first_battery_status();
+    mcu->query_second_battery();
+    mcu->query_second_battery_status();
+    mcu->query_core_temp();
 }

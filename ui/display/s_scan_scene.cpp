@@ -50,6 +50,5 @@ void SscanScene::set_beams(const DplSource::BeamsPointer &beams)
 
 void SscanScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
-    QReadLocker l(&m_rwLock);
     painter->drawPixmap(rect, m_pixmap, m_pixmap.rect());
 }

@@ -33,18 +33,28 @@ public:
     };
 
     /**
-     * @brief voltage   获取PA/UT输出电压
-     * @param pa        PA标志
-     * @return          返回电压类型
+     * @brief pa_voltage    获取PA发射电压
+     * @return              电压类型
      */
-    Voltage voltage(bool pa) const;
+    Voltage pa_voltage() const;
 
     /**
-     * @brief set_voltage   设置PA/UT输出电压
-     * @param pa            PA标志
-     * @param v             电压类型
+     * @brief set_pa_voltage    设置PA发射电压
+     * @param v                 电压类型
      */
-    void set_voltage(bool pa, Voltage v);
+    void set_pa_voltage(Voltage v);
+
+    /**
+     * @brief ut_voltage    获取UT发射电压
+     * @return              电压类型
+     */
+    Voltage ut_voltage() const;
+
+    /**
+     * @brief set_ut_voltage    设置UT发射电压
+     * @param v                 电压类型
+     */
+    void set_ut_voltage(Voltage v);
 
     enum UtChannel {
         UT_1 = 1,
@@ -64,20 +74,6 @@ public:
      * @param type              阻尼类型
      */
     void set_tx_damping(UtChannel channel, DplFpga::Fpga::DampingType type);
-
-    /**
-     * @brief rx_damping    获取指定UT接收通道的阻尼
-     * @param channel       指定通道
-     * @return              阻尼类型
-     */
-    DplFpga::Fpga::DampingType rx_damping(UtChannel channel) const;
-
-    /**
-     * @brief set_rx_damping    设置指定UT接收通道的阻尼
-     * @param channel           指定通道
-     * @param type              阻尼类型
-     */
-    void set_rx_damping(UtChannel channel, DplFpga::Fpga::DampingType type);
 
     enum PrfMode {
         MAX,
@@ -136,7 +132,8 @@ public:
     void connect_group(const DplDevice::Group *grp);
 
 signals:
-    void voltage_changed(bool, DplUt::GlobalTransceiver::Voltage);
+    void pa_voltage_changed(DplUt::GlobalTransceiver::Voltage);
+    void ut_voltage_changed(DplUt::GlobalTransceiver::Voltage);
     void prf_changed();
 
 protected:

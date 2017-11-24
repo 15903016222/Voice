@@ -29,9 +29,7 @@ StatusBar::StatusBar(QWidget *parent) :
     connect(m_scan, SIGNAL(mode_changed(DplSource::Scan::Mode)),
             this, SLOT(do_scan_mode_changed(DplSource::Scan::Mode)));
 
-    TestStub::instance();
-
-    connect(this, SIGNAL(encoder_text_changed()),
+     connect(this, SIGNAL(encoder_text_changed()),
             this, SLOT(do_encoder_text_changed()),
             Qt::QueuedConnection);
 
@@ -92,15 +90,16 @@ void StatusBar::do_data_event(const DplSource::BeamsPointer &beams)
     DplSource::AxisPointer indexAxis = m_scan->index_axis();
     DplSource::BeamPointer beam = beams->get(0);
 
-    m_timeCount += 0.02;
-    TestStub::instance()->update_time(m_timeCount);
-
     if (scanAxis->driving() == DplSource::Axis::TIMER) {
         m_scanEncStr += tr(" 0.0 s");
+        m_timeCount = TestStub::instance()->get_time() + 0.02;
+        TestStub::instance()->update_time(m_timeCount);
     } else if (scanAxis->driving() == DplSource::Axis::ENCODER_X) {
         m_scanEncStr += QString::number(beam->encoder_x()/ m_scan->encoder_x()->resolution(), 'f', 2) + " mm";
+        m_timeCount = 0.0;
     } else {
         m_scanEncStr += QString::number(beam->encoder_y()/ m_scan->encoder_y()->resolution(), 'f', 2) + "mm";
+        m_timeCount = 0.0;
     }
 
     if (indexAxis->driving() == DplSource::Axis::ENCODER_X) {

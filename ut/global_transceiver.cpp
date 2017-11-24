@@ -15,24 +15,48 @@ GlobalTransceiver *GlobalTransceiver::instance()
     return s_globalPulser;
 }
 
-GlobalTransceiver::Voltage GlobalTransceiver::voltage(bool pa) const
+GlobalTransceiver::Voltage GlobalTransceiver::pa_voltage() const
 {
-    if (pa) {
-        return d->m_paVoltage;
+    return d->m_paVoltage;
+}
+
+void GlobalTransceiver::set_pa_voltage(GlobalTransceiver::Voltage v)
+{
+    if (d->m_paVoltage == v) {
+        return;
     }
+
+    d->m_paVoltage = v;
+    d->update_acquisition_rate();
+    if (v == V50) {
+        DplFpga::Fpga::instance()->set_pa_voltage(DplFpga::Fpga::VOLTAGE_LOW);
+    } else if (v == V100) {
+        DplFpga::Fpga::instance()->set_pa_voltage(DplFpga::Fpga::VOLTAGE_MIDDLE);
+    }
+
+    emit pa_voltage_changed(v);
+}
+
+GlobalTransceiver::Voltage GlobalTransceiver::ut_voltage() const
+{
     return d->m_utVoltage;
 }
 
-void GlobalTransceiver::set_voltage(bool pa, GlobalTransceiver::Voltage v)
+void GlobalTransceiver::set_ut_voltage(GlobalTransceiver::Voltage v)
 {
-    if (pa && d->m_paVoltage != v) {
-        d->m_paVoltage = v;
-        d->update_acquisition_rate();
-        emit voltage_changed(true, v);
-    } else if(!pa && d->m_utVoltage != v) {
-        d->m_utVoltage = v;
-        emit voltage_changed(false, v);
+    if (d->m_utVoltage == v) {
+        return;
     }
+
+    d->m_utVoltage = v;
+    if (v == V100) {
+        DplFpga::Fpga::instance()->set_ut_voltage(DplFpga::Fpga::VOLTAGE_LOW);
+    } else if (v == V200) {
+        DplFpga::Fpga::instance()->set_ut_voltage(DplFpga::Fpga::VOLTAGE_MIDDLE);
+    } else if (v == V400) {
+        DplFpga::Fpga::instance()->set_ut_voltage(DplFpga::Fpga::VOLTAGE_HIGHT);
+    }
+    emit ut_voltage_changed(v);
 }
 
 DplFpga::Fpga::DampingType GlobalTransceiver::tx_damping(GlobalTransceiver::UtChannel channel) const
@@ -50,24 +74,6 @@ void GlobalTransceiver::set_tx_damping(GlobalTransceiver::UtChannel channel, Dpl
         DplFpga::Fpga::instance()->set_ut1_tx_damping(type);
     } else {
         DplFpga::Fpga::instance()->set_ut2_tx_damping(type);
-    }
-}
-
-DplFpga::Fpga::DampingType GlobalTransceiver::rx_damping(GlobalTransceiver::UtChannel channel) const
-{
-    if (channel == UT_1) {
-        return DplFpga::Fpga::instance()->ut1_rx_damping();
-    } else {
-        return DplFpga::Fpga::instance()->ut2_rx_damping();
-    }
-}
-
-void GlobalTransceiver::set_rx_damping(GlobalTransceiver::UtChannel channel, DplFpga::Fpga::DampingType type)
-{
-    if (channel == UT_1) {
-        DplFpga::Fpga::instance()->set_ut1_rx_damping(type);
-    } else {
-        DplFpga::Fpga::instance()->set_ut2_rx_damping(type);
     }
 }
 

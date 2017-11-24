@@ -6,7 +6,8 @@
 class TimeImageItem : public BaseImageItem
 {
 public:
-    explicit TimeImageItem(const DplDisplay::PaletteColorPointer &palette, const DplDevice::GroupPointer &grp, QObject *parent = 0);
+    explicit TimeImageItem(const DplDisplay::PaletteColorPointer &palette,
+                           const DplDevice::GroupPointer &grp, QGraphicsObject *parent = 0);
 
 protected:
 
