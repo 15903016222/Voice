@@ -18,7 +18,7 @@ MenuItem::MenuItem(QWidget *parent) :
 
 void MenuItem::set_parent_focus_in(QObject *object)
 {
-    BaseMenu *parentItem = static_cast<BaseMenu*> (m_parent);
+    BaseMenu *parentItem = qobject_cast<BaseMenu*> (m_parent);
     if(parentItem) {
         parentItem->set_focus(object);
     }

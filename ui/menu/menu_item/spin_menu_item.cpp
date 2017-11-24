@@ -161,6 +161,7 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
             update_value();
             set_focus_out();
             set_selected(true);
+
             set_parent_focus_in(this);
             return true;
             break;
