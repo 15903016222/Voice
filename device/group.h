@@ -13,6 +13,7 @@
 #include <ut/sample.h>
 #include <ut/transceiver.h>
 #include <gate/gate.h>
+#include <sizing/tcgs.h>
 #include <measure/cursor.h>
 #include <source/beams.h>
 #include <display/s_scan.h>
@@ -135,6 +136,12 @@ public:
     const DplGate::GatePointer &gate_i() const;
 
     /**
+     * @brief tcgs  获取Tcgs对象
+     * @return      Tcgs对象
+     */
+    const DplSizing::TcgsPointer &tcgs() const;
+
+    /**
      * @brief current_beams 获取数据源当前Beam组
      * @return              返回数据源Beam组
      */
@@ -207,6 +214,7 @@ private:
     DplGate::GatePointer m_gateA;
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
+    DplSizing::TcgsPointer m_tcgs;
     DplMeasure::CursorPointer m_cursor;
     DplDisplay::SscanPointer m_sScan;
     GroupPrivate *d;
@@ -258,6 +266,11 @@ inline const DplGate::GatePointer &Group::gate_b() const
 inline const DplGate::GatePointer &Group::gate_i() const
 {
     return m_gateI;
+}
+
+inline const DplSizing::TcgsPointer &Group::tcgs() const
+{
+    return m_tcgs;
 }
 
 inline const DplFocallaw::FocallawerPointer &Group::focallawer() const

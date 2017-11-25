@@ -5,8 +5,8 @@
  * @version 0.1
  * @date 2016-11-04
  */
-#ifndef __GROUP_H__
-#define __GROUP_H__
+#ifndef __DPLFPGA_GROUP_H__
+#define __DPLFPGA_GROUP_H__
 
 #include "fpga_global.h"
 #include <QSharedPointer>
@@ -134,20 +134,37 @@ public:
     int sum_gain(void) const;
     bool set_sum_gain(int gain, bool deploy = false);
 
-
-
     /**
      * @brief point_qty 获取压缩后的采样点数
      * @return          采样点数
      */
     int point_qty(void) const;
 
-
+    /**
+     * @brief tcg_point_qty 获取TCG点数
+     * @return              点数
+     */
     int tcg_point_qty(void) const;
-    bool set_tcg_point_qty(int qty, bool deploy = false);
 
+    /**
+     * @brief set_tcg_point_qty 设置TCG点数
+     * @param qty               点数
+     * @return                  设置成功返回true,失败返回false
+     */
+    bool set_tcg_point_qty(int qty);
+
+    /**
+     * @brief tcg   获取Tcg使能状态
+     * @return      true为开启,false为关闭
+     */
     bool tcg(void) const;
-    bool enable_tcg(bool flag, bool deploy = false);
+
+    /**
+     * @brief enable_tcg    使能Tcg
+     * @param flag          true为开启,false为关闭
+     * @return              设置成功返回true,失败返回false
+     */
+    bool enable_tcg(bool flag);
 
     /**
      * @brief rx_time   获取接收工作时间
@@ -389,4 +406,4 @@ private:
 typedef QSharedPointer<Group> GroupPointer;
 
 }
-#endif // __GROUP_H__
+#endif // __DPLFPGA_GROUP_H__

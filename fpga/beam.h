@@ -6,11 +6,11 @@
  * @date 2016-11-04
  */
 
-#ifndef __BEAM_H__
-#define __BEAM_H__
+#ifndef __DPLFPGA_BEAM_H__
+#define __DPLFPGA_BEAM_H__
 
 #include "fpga_global.h"
-#include <QObject>
+#include <QSharedPointer>
 
 namespace DplFpga {
 
@@ -210,6 +210,8 @@ private:
     BeamPrivate *d_ptr;
 };
 
+typedef QSharedPointer<Beam> BeamPointer;
+
 }
 
-#endif // __BEAM_H__
+#endif // __DPLFPGA_BEAM_H__
