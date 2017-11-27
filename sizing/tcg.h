@@ -41,6 +41,13 @@ public:
      */
     float gain(int point) const;
 
+    /**
+     * @brief amplitude 获取指定点的幅度
+     * @param point     点索引号(从0开始)
+     * @return          幅度
+     */
+    float amplitude(int point) const;
+
 protected:
     /**
      * @brief set_index 设置Tcg序列号

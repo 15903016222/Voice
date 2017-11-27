@@ -1,5 +1,6 @@
 #include "tcg.h"
 #include <fpga/tcg.h>
+#include <qmath.h>
 
 namespace DplSizing {
 
@@ -36,6 +37,14 @@ int Tcg::position(int point) const
 float Tcg::gain(int point) const
 {
     return d->m_tcg->gain(point);
+}
+
+float Tcg::amplitude(int point) const
+{
+    if (point == 0) {
+        return 80000.0;
+    }
+    return (80000.0)/ qPow(10, d->m_tcg->gain(point)/20);
 }
 
 void Tcg::set_index(int index)

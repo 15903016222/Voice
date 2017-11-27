@@ -123,6 +123,12 @@ public:
      */
     bool set_gain(float val);
 
+    /**
+     * @brief amplitude 获取当前Tcg的当前点幅度
+     * @return          幅度
+     */
+    float amplitude() const;
+
 signals:
     void changed();
     void current_point_changed();

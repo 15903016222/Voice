@@ -153,4 +153,9 @@ bool Tcgs::set_gain(float val)
     }
 }
 
+float Tcgs::amplitude() const
+{
+    return d->m_tcgs[d->m_currentTcg]->amplitude(d->m_currentPoint);
+}
+
 }
