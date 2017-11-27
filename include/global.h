@@ -58,6 +58,14 @@ static inline T s_to_ns(T val) { return val * S_TO_NS; }
 
 template <typename T>
 /**
+ * @brief ms_to_us  毫秒换算成微秒
+ * @param val       毫秒
+ * @return          微秒
+ */
+static inline T ms_to_us(T val) { return val * MS_TO_US; }
+
+template <typename T>
+/**
  * @brief ms_to_ns  毫秒换算成纳秒
  * @param val       毫秒值
  * @return          纳秒值
