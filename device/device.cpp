@@ -165,12 +165,12 @@ const GroupPointer &Device::current_group() const
     return d->m_curGroup;
 }
 
-int Device::first_beam_index(const Group *grp) const
+int Device::first_beam_index(int groupID) const
 {
     Q_D(const Device);
 
     int index = 0;
-    for (int i = 0; i < grp->index(); ++i) {
+    for (int i = 0; i < groupID; ++i) {
         index += d->m_groups[i]->focallawer()->beam_qty();
     }
 

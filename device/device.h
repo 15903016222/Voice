@@ -155,6 +155,13 @@ public:
     int first_beam_index(const Group *grp) const;
 
     /**
+     * @brief first_beam_index  获取指定组中的第一条Beam在所有Beam中的序号
+     * @param groupID           组ID号
+     * @return                  序号
+     */
+    int first_beam_index(int groupID) const;
+
+    /**
      * @brief beam_qty  获取beam的总数
      * @return          返回beam的总数
      */
@@ -209,6 +216,11 @@ private:
 inline bool Device::set_date_time(const QDateTime &t)
 {
     return set_date_time(t.toTime_t());
+}
+
+inline int Device::first_beam_index(const Group *grp) const
+{
+    return first_beam_index(grp->index());
 }
 
 inline const DplDisplay::DisplayPointer &Device::display() const
