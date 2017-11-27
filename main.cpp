@@ -5,6 +5,7 @@
 #include <QFontDatabase>
 #include <QSplashScreen>
 #include <QTime>
+#include <configuration/configuration.h>
 
 #if (PHASCAN | PHASCAN_II)
 static const char *FONT_FILE = "/opt/mercury/font/Arial.ttf";
@@ -15,6 +16,8 @@ static const char *FONT_FILE = "Arial.ttf";
 
 int main(int argc, char *argv[])
 {
+    Config::Configuration config;
+
     QApplication a(argc, argv);
     a.setApplicationName(QLatin1String("Mercury"));
 //    a.setApplicationVersion();
