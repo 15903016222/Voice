@@ -21,13 +21,12 @@ public:
 
 protected slots:
     void update(int index);
-    void do_switchItem_changed(int index);
+    void do_groupItem_changed(int index);
     void do_fstConditionItem_changed(int index);
     void do_operationItem_changed(int index);
     void do_sndConditionItem_changed(int index);
 
 protected:
-    void update_switchItem();
     void update_groupItem();
     void update_fstConditionItem();
     void update_operatorItem();
@@ -35,13 +34,12 @@ protected:
 
 private:
     ComboMenuItem *m_alarmItem;
-    ComboMenuItem *m_switchItem;
     ComboMenuItem *m_groupItem;
     ComboMenuItem *m_fstConditionItem;
     ComboMenuItem *m_operatorItem;
     ComboMenuItem *m_sndConditionItem;
 
-    DplFpga::AlarmOutput *m_alarmOutput;
+    DplFpga::AlarmOutput *m_alarm;
 };
 
 }

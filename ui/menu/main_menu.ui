@@ -63,7 +63,7 @@ QPushButton{
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../main_window.qrc">
+      <iconset>
        <normaloff>://resource/up.png</normaloff>://resource/up.png</iconset>
      </property>
     </widget>
@@ -185,7 +185,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -245,7 +245,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -262,6 +262,11 @@ QTreeWidget::branch{
       <item>
        <property name="text">
         <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Analog</string>
        </property>
       </item>
       <item>
@@ -298,7 +303,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -341,7 +346,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -394,7 +399,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -442,7 +447,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -490,7 +495,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -533,7 +538,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -586,7 +591,7 @@ QTreeWidget::branch{
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="../main_window.qrc">
+       <iconset>
         <normaloff>://resource/triangle_up.png</normaloff>
         <normalon>://resource/triangle_down.png</normalon>://resource/triangle_up.png</iconset>
       </property>
@@ -626,15 +631,13 @@ QTreeWidget::branch{
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../main_window.qrc">
+      <iconset>
        <normaloff>://resource/down.png</normaloff>://resource/down.png</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../main_window.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

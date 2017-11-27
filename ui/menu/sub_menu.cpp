@@ -17,6 +17,7 @@
 #include "gate_curves/gate_menu.h"
 #include "gate_curves/alarm_menu.h"
 #include "gate_curves/output_menu.h"
+#include "gate_curves/analog_menu.h"
 #include "gate_curves/dac_menu.h"
 #include "gate_curves/tcg_menu.h"
 
@@ -112,6 +113,7 @@ void SubMenu::create_menus()
     add_menu(MainMenu::GateCurves_Gate,         new DplGateCurvesMenu::GateMenu(this));
     add_menu(MainMenu::GateCurves_Alarm,        new DplGateCurvesMenu::AlarmMenu(this));
     add_menu(MainMenu::GateCurves_Output,       new DplGateCurvesMenu::OutputMenu(this));
+    add_menu(MainMenu::GateCurves_Analog,       new DplGateCurvesMenu::AnalogMenu(this));
     add_menu(MainMenu::GateCurves_DAC,          new DplGateCurvesMenu::DacMenu(this));
     add_menu(MainMenu::GateCurves_TCG,          new DplGateCurvesMenu::TcgMenu(this));
 
