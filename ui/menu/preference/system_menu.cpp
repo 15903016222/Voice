@@ -131,6 +131,7 @@ void SystemMenu::show_cert_import_dialog()
     parameters.nameFilters      = QStringList(s_fileType);
     parameters.okButtonText     = tr("Import");
     parameters.cancelButtonText = tr("Cancel");
+    parameters.operation        = FileDialog::CertImport;
 
     FileDialog importDialog(parameters);
     if(importDialog.exec() == QDialog::Accepted) {
@@ -152,10 +153,15 @@ void SystemMenu::show_update_dialog()
     parameters.nameFilters      = QStringList(s_updateFileType);
     parameters.okButtonText     = tr("Update");
     parameters.cancelButtonText = tr("Cancel");
+    parameters.operation        = FileDialog::Update;
 
     FileDialog importDialog(parameters);
     if(importDialog.exec() == QDialog::Accepted) {
-        /* TODO: */
+        if(importDialog.get_file_type() == FileDialog::FPGA) {
+            /* TODO: */
+        } else if(importDialog.get_file_type() == FileDialog::System) {
+            /* TODO: */
+        }
     }
 }
 

@@ -23,6 +23,17 @@ FileDialog::FileDialog(const S_FileDialogParameters &dialogParameters, QWidget *
     init_file_list(dialogParameters.filePath, dialogParameters.nameFilters);
 
     ui->okPushButton->setFocus();
+
+    ui->fileNameLineEdit->setFocusPolicy(Qt::NoFocus);
+
+    m_fileType = (E_FileType)ui->fileTypeComboBox->currentIndex();
+
+    if(dialogParameters.operation == CertImport) {
+        ui->fileTypeComboBox->hide();
+        ui->fileTypeLabel->hide();
+    }
+
+    connect(ui->fileTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_currentIndexChanged(int)));
 }
 
 FileDialog::~FileDialog()
@@ -69,6 +80,11 @@ void FileDialog::do_fileListWidget_currentItenChanged(QListWidgetItem *current, 
 
     ui->fileNameLineEdit->setText(m_fileInfoList.at(ui->fileListWidget->currentIndex().row()).fileName());
     m_selectedFile = m_fileInfoList.at(ui->fileListWidget->currentIndex().row()).filePath();
+}
+
+void FileDialog::slot_currentIndexChanged(int index)
+{
+    m_fileType = (E_FileType)index;
 }
 
 void FileDialog::init_file_list(const QString &filePath, const QStringList &nameFilters)

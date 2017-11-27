@@ -14,7 +14,6 @@ BaseDialog::BaseDialog(QWidget *parent) :
 
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);       /* 设置窗口背景透明 */
-
 }
 
 BaseDialog::~BaseDialog()
