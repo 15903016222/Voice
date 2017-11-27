@@ -18,19 +18,46 @@ class FPGASHARED_EXPORT AlarmOutput
 public:
     AlarmOutput(FpgaPrivate *fpgaPrivate, int index);
 
-    bool is_valid() const;
-    bool set_valid(bool flag);
+    /**
+     * @brief enable    获取开启状态
+     * @return          true为开启,false为关闭
+     */
+    bool enable() const;
+
+    /**
+     * @brief set_enable    设置开启状态
+     * @param flag          true为开启,false为关闭
+     * @return              设置成功返回true,否则为false
+     */
+    bool set_enable(bool flag);
 
     quint16 logic_group() const;
     bool set_logic_group(quint16 groups);
 
+    /**
+     * @brief The Operator enum 操作类型
+     */
     enum Operator {
         AND,
         OR
     };
-    Operator op(void);
+
+    /**
+     * @brief op    获取操作类型
+     * @return      操作类型
+     */
+    Operator op(void) const;
+
+    /**
+     * @brief set_op    设置操作类型
+     * @param op        操作类型
+     * @return          设置成功返回true,失败为false
+     */
     bool set_op(Operator op);
 
+    /**
+     * @brief The Condition enum    报警条件类型
+     */
     enum Condition {
         CONDITION_NONE,
         CONDITION_GATE_A        = 0b0001,
@@ -42,10 +69,47 @@ public:
         CONDITION_MAX_THICKNESS = 0b0111,
         CONDITION_MIN_THICKNESS = 0b1000
     };
-    Condition condition(int index);
-    bool set_condition(int index, Condition cond);
 
+    /**
+     * @brief first_condition   获取报警条件1类型
+     * @return                  条件类型
+     */
+    Condition first_condition() const;
+
+    /**
+     * @brief second_condition  获取报警条件2类型
+     * @return                  条件类型
+     */
+    Condition second_condition() const;
+
+    /**
+     * @brief set_condition 设置报警条件类型
+     * @param fstCond       条件1
+     * @param sndCond       条件2
+     * @return              设置成功返回true,失败返回false
+     */
+    bool set_condition(Condition fstCond, Condition sndCond);
+
+    /**
+     * @brief set_condition 设置报警条件类型
+     * @param fstCond       条件1
+     * @param op            操作类型
+     * @param sndCond       条件2
+     * @return              设置成功返回true,失败返回false
+     */
+    bool set_condition(Condition fstCond, Operator op, Condition sndCond);
+
+    /**
+     * @brief count 获取触发条件计数器
+     * @return      数
+     */
     quint32 count() const;
+
+    /**
+     * @brief set_count 设置触发条件计数器
+     * @param count     数
+     * @return          成功返回true,失败返回false
+     */
     bool set_count(quint32 count);
 
     /**
