@@ -1,5 +1,5 @@
-#ifndef FPGA_GLOBAL_H
-#define FPGA_GLOBAL_H
+#ifndef __FPGA_GLOBAL_H__
+#define __FPGA_GLOBAL_H__
 
 #include <QtCore/qglobal.h>
 
@@ -9,4 +9,4 @@
 #  define FPGASHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // FPGA_GLOBAL_H
+#endif // __FPGA_GLOBAL_H__

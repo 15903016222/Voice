@@ -29,6 +29,7 @@ Group::Group(int index, QObject *parent) : QObject(parent),
     m_gateA(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_A)),
     m_gateB(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_B, Qt::green)),
     m_gateI(new DplGate::Gate(m_fpgaGroup, DplFpga::Group::GATE_I, Qt::darkCyan)),
+    m_tcgs(new DplSizing::Tcgs(m_fpgaGroup, m_focallawer)),
     m_cursor(new DplMeasure::Cursor()),
     m_sScan(new DplDisplay::Sscan(m_focallawer, m_sample)),
     d(new GroupPrivate(this))
@@ -176,10 +177,10 @@ void Group::deploy_beams() const
         for (int i = 0; i < aperture; ++i) {
             fpgaBeam.set_rx_delay(startRxChannel+i, focallawerBeam->rxdelay().at(i));
             fpgaBeam.set_tx_delay(startTxChannel+i, focallawerBeam->txdelay().at(i));
-//            qDebug("%s[%d]: %d - delay(%d)",__func__, __LINE__, i, focallawerBeam->rxdelay().at(i));
-//                fpgaBeam.set_rx_delay(startRxChannel+k, 0);
-//                fpgaBeam.set_tx_delay(startTxChannel+k, 0);
-//                qDebug("%s[%d]: enablet(0x%x) rx(%f) tx(%f)",__func__, __LINE__, (startRxChannel+i)&0x1f, focallawerBeamPtr->rxdelay().at(k), focallawerBeamPtr->txdelay().at(k));
+//            qDebug("%s[%d]: channel(%d) rxdelay(%f) txdelay(%f)",__func__, __LINE__,
+//                   startRxChannel+i,
+//                   focallawerBeam->rxdelay().at(i),
+//                   focallawerBeam->txdelay().at(i));
         }
 
 //        fpgaBeam.show_info();
