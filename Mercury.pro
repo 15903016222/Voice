@@ -59,6 +59,8 @@ include(ut/ut.pri)
 
 include(gate/gate.pri)
 
+include(sizing/sizing.pri)
+
 include(display/display.pri)
 
 include(measure/measure.pri)

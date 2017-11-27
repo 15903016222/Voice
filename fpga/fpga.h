@@ -5,8 +5,8 @@
  * @version 0.1
  * @date 2016-11-04
  */
-#ifndef __FPGA_H__
-#define __FPGA_H__
+#ifndef __DPLFPGA_FPGA_H__
+#define __DPLFPGA_FPGA_H__
 
 #include "group.h"
 #include "beam.h"
@@ -14,14 +14,7 @@
 #include "alarm_output.h"
 #include "alarm_analog.h"
 
-#include <QMutex>
-#include <QReadWriteLock>
-#include <QSharedPointer>
-
 namespace DplFpga {
-
-typedef QSharedPointer<Beam> BeamPointer;
-typedef QSharedPointer<Tcg> TcgPointer;
 
 class FpgaPrivate;
 class FPGASHARED_EXPORT Fpga
@@ -37,6 +30,16 @@ public:
      * @brief LOADING_TIME  FPGA在每次聚焦时的寄存器设置时间(单位，采样精度)
      */
     static const int LOADING_TIME;
+
+    /**
+     * @brief MAX_BEAMS_NUM 最大Beam数
+     */
+    static const int MAX_BEAMS_NUM;
+
+    /**
+     * @brief MAX_TCGS_NUM  最大TCG数
+     */
+    static const int MAX_TCGS_NUM;
 
     /**
      * @brief instance  获取Fpga对象
@@ -143,10 +146,30 @@ public:
      */
     bool set_encoder_y_mode(EncoderMode type);
 
-    /* UT双晶状态 */
+    /**
+     * @brief ut1_twin  获取UT1通道的双晶状态
+     * @return          开启返回true，关闭返回false
+     */
     bool ut1_twin() const;
+
+    /**
+     * @brief set_ut1_twin  设置UT1通道的双晶状态
+     * @param enable        true为开启，关闭为false
+     * @return              设置成功返回true，失败返回false
+     */
     bool set_ut1_twin(bool enable);
+
+    /**
+     * @brief ut2_twin  设置UT2通道的双晶状态
+     * @return          开启返回true，关闭返回false
+     */
     bool ut2_twin() const;
+
+    /**
+     * @brief set_ut2_twin  设置UT2通道的双晶状态
+     * @param enable        true为开启，false为关闭
+     * @return              设置成功返回true，失败返回false
+     */
     bool set_ut2_twin(bool enable);
 
     /**
@@ -158,13 +181,57 @@ public:
         R200 = 0b10,
         R500 = 0b11
     };
+
+    /**
+     * @brief ut1_tx_damping    获取UT1发射通道阻尼
+     * @return                  阻尼类型
+     */
     DampingType ut1_tx_damping() const;
+
+    /**
+     * @brief set_ut1_tx_damping    设置UT1发射通道阻尼
+     * @param type                  阻尼类型
+     * @return                      设置成功返回true，失败返回false
+     */
     bool set_ut1_tx_damping(DampingType type);
+
+    /**
+     * @brief ut2_tx_damping    获取UT2发射通道阻尼
+     * @return                  阻尼类型
+     */
     DampingType ut2_tx_damping() const;
+
+    /**
+     * @brief set_ut2_tx_damping    设置UT2发射通道阻尼
+     * @param type                  阻尼类型
+     * @return                      设置成功返回true，失败返回false
+     */
     bool set_ut2_tx_damping(DampingType type);
+
+    /**
+     * @brief ut1_rx_damping    获取UT1接收通道阻尼
+     * @return                  阻尼类型
+     */
     DampingType ut1_rx_damping() const;
+
+    /**
+     * @brief set_ut1_rx_damping    设置UT1接收通道阻尼
+     * @param type                  阻尼类型
+     * @return                      设置成功返回true，失败返回false
+     */
     bool set_ut1_rx_damping(DampingType type);
+
+    /**
+     * @brief ut2_rx_damping    获取UT2接收通道阻尼
+     * @return                  阻尼类型
+     */
     DampingType ut2_rx_damping() const;
+
+    /**
+     * @brief set_ut2_rx_damping    设置UT2接收通道阻尼
+     * @param type                  阻尼类型
+     * @return                      设置成功返回true，失败返回false
+     */
     bool set_ut2_rx_damping(DampingType type);
 
     /**
@@ -252,16 +319,6 @@ public:
 
     void show_info() const;
 
-    static const int MAX_GROUPS_NUM;
-    static const int MAX_BEAMS_NUM;
-    static const int MAX_TCGS_NUM;
-
-    /** Tcg **/
-    int tcgs() const;
-    bool create_tcg();
-    bool remove_tcg();
-    const TcgPointer &get_tcg(int index) const;
-
     /**
      * @brief deploy    下发FPGA配置参数
      * @return          成功返回true，失败返回false
@@ -274,11 +331,8 @@ protected:
 
 private:
     FpgaPrivate *d_ptr;
-
-    QList<TcgPointer> m_tcgs;
-    mutable QReadWriteLock m_tcgsLock;
 };
 
 }
 
-#endif // __FPGA_H__
+#endif // __DPLFPGA_FPGA_H__

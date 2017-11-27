@@ -4,6 +4,7 @@ SOURCES += \
     $$PWD/a_scan_display.cpp \
     $$PWD/a_scan_vdisplay.cpp \
     $$PWD/gate_item.cpp \
+    $$PWD/tcg_item.cpp \
     $$PWD/a_scan_scene.cpp \
     $$PWD/scan_view.cpp \
     $$PWD/wave_item.cpp \
@@ -27,7 +28,7 @@ SOURCES += \
     $$PWD/time_image_item.cpp \
     $$PWD/base_cursor_item.cpp \
     $$PWD/s_scan_image_p.cpp \
-	$$PWD/vpa_item.cpp \
+    $$PWD/vpa_item.cpp \
     $$PWD/vdisplay_cursor_item.cpp \
     $$PWD/hdisplay_cursor_item.cpp   \
     $$PWD/fft_display.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     $$PWD/a_scan_display.h \
     $$PWD/a_scan_vdisplay.h \
     $$PWD/gate_item.h \
+    $$PWD/tcg_item.h \
     $$PWD/a_scan_scene.h \
     $$PWD/scan_view.h \
     $$PWD/wave_item.h \
@@ -66,7 +68,7 @@ HEADERS += \
     $$PWD/time_image_item.h \
     $$PWD/base_cursor_item.h \
     $$PWD/s_scan_image_p.h \
-	$$PWD/vpa_item.h \
+    $$PWD/vpa_item.h \
     $$PWD/vdisplay_cursor_item.h \
     $$PWD/hdisplay_cursor_item.h \
     $$PWD/fft_display.h \
