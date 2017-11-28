@@ -31,9 +31,7 @@ public:
 
 protected slots:
     void do_data_event();
-
     void do_view_size_changed(const QSize &size);
-
     void update_gates();
 
 protected:

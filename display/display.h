@@ -67,6 +67,8 @@ public:
         A7      = 700,
         /* Eight */
         A8      = 800,
+        /* A FFT */
+        AFFT
     };
 
     /**

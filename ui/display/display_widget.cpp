@@ -7,12 +7,12 @@
 #include "display_widget.h"
 #include "a_scan_vdisplay.h"
 #include "a_scan_hdisplay.h"
-#include "c_scan_vdisplay.h"
 #include "s_scan_display.h"
 #include "b_scan_vdisplay.h"
 #include "b_scan_hdisplay.h"
 #include "c_scan_hdisplay.h"
 #include "c_scan_vdisplay.h"
+#include "fft_hdisplay.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -56,6 +56,7 @@ typedef SingleLayout<CscanHDisplay> CLayoutH;
 typedef SingleLayout<SscanDisplay>  SLayout;
 typedef SingleLayout<BscanVDisplay> BLayoutV;
 typedef SingleLayout<BscanHDisplay> BLayoutH;
+typedef SingleLayout<FFTHDisplay>   FFTLayoutH;
 
 class ASLayout : public HLayout
 {
@@ -121,6 +122,17 @@ public:
 };
 
 
+class AFFTLayout : public VLayout
+{
+public:
+    AFFTLayout(int grp, QWidget *parent) : VLayout(parent)
+    {
+        addLayout(new ALayoutH(grp), 1);
+        addLayout(new FFTLayoutH(grp), 1);
+    }
+};
+
+
 DisplayWidget::DisplayWidget(const DplDisplay::DisplayPointer &display,
                              QWidget *parent) :
     QWidget(parent),
@@ -176,6 +188,9 @@ void DisplayWidget::set_layout(DplDisplay::Display::Layout mode, const QVector<i
         break;
     case DplDisplay::Display::ASC:
         l = new ASCLayout(grps.first(), w);
+        break;
+    case DplDisplay::Display::AFFT:
+        l = new AFFTLayout(grps.first(), w);
         break;
     default:
         break;

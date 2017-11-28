@@ -35,7 +35,12 @@ SOURCES += \
     $$PWD/s_scan_image_p.cpp \
     $$PWD/vpa_item.cpp \
     $$PWD/vdisplay_cursor_item.cpp \
-    $$PWD/hdisplay_cursor_item.cpp 
+    $$PWD/hdisplay_cursor_item.cpp   \
+    $$PWD/fft_display.cpp \
+    $$PWD/fft_hdisplay.cpp \
+    $$PWD/fft_scene.cpp \
+    $$PWD/fft_item.cpp \
+    $$PWD/fft_calculator.cpp
 
 
 HEADERS += \
@@ -76,10 +81,16 @@ HEADERS += \
     $$PWD/s_scan_image_p.h \
     $$PWD/vpa_item.h \
     $$PWD/vdisplay_cursor_item.h \
-    $$PWD/hdisplay_cursor_item.h
+    $$PWD/hdisplay_cursor_item.h \
+    $$PWD/fft_display.h \
+    $$PWD/fft_hdisplay.h \
+    $$PWD/fft_scene.h \
+    $$PWD/fft_item.h \
+    $$PWD/fft_calculator.h
 
 
 FORMS += \
     $$PWD/a_scan_display.ui \
     $$PWD/scan_display.ui \
-    $$PWD/b_scan_display.ui
+    $$PWD/b_scan_display.ui \
+    $$PWD/fft_display.ui

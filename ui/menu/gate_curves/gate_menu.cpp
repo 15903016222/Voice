@@ -163,6 +163,9 @@ void GateMenu::do_gateItem_changed(int val)
         disconnect(static_cast<DplGate::Gate *>(m_gate.data()),
                    SIGNAL(height_changed(int)),
                    this, SLOT(update_thresholdItem()));
+        disconnect(static_cast<DplGate::Gate *>(m_gate.data()),
+                   SIGNAL(width_changed(float)),
+                   this, SLOT(update_widhtItem()));
     }
 
     m_gate = m_group->gate(static_cast<DplFpga::Group::GateType>(val));
@@ -173,6 +176,9 @@ void GateMenu::do_gateItem_changed(int val)
     connect(static_cast<DplGate::Gate *>(m_gate.data()),
                SIGNAL(height_changed(int)),
                this, SLOT(update_thresholdItem()));
+    connect(static_cast<DplGate::Gate *>(m_gate.data()),
+               SIGNAL(width_changed(float)),
+               this, SLOT(update_widhtItem()));
     update_items();
 }
 
