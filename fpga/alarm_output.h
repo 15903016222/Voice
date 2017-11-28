@@ -138,6 +138,11 @@ public:
      */
     bool set_hold_time(int time);
 
+    /**
+     * @brief init  初始化配置信息
+     */
+    void init();
+
 private:
     FpgaPrivate *m_fpgaPrivate;
     int m_index;
