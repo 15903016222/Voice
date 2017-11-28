@@ -50,11 +50,11 @@ bool BaseMenu::eventFilter(QObject *object, QEvent *event)
 
         if(keyEvent->key() == Qt::Key_Up) {
             if(!m_menuItemVect.at(m_currentItem)->is_editing()) {
-                set_previous_item();
+                set_next_item();
             }
         } else if(keyEvent->key() == Qt::Key_Down) {
             if(!m_menuItemVect.at(m_currentItem)->is_editing()) {
-                set_next_item();
+                set_previous_item();
             }
         } else if(keyEvent->key() == Qt::Key_Return) {
             /* spin_menu_item控件，通过飞梭调节数值 */
