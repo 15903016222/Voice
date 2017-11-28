@@ -33,6 +33,8 @@ OutputMenu::OutputMenu(QWidget *parent) :
     m_outputItem->add_item(tr("Alarm 1"));
     m_outputItem->add_item(tr("Alarm 2"));
     m_outputItem->add_item(tr("Alarm 3"));
+    connect(m_outputItem, SIGNAL(value_changed(int)),
+            this, SLOT(update(int)));
 
     m_soundItem->add_item(tr("Off No Sound"));
     m_soundItem->add_item(tr("300Hz Audio Output at 300Hz"));

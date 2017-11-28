@@ -86,6 +86,7 @@ void AlarmMenu::update(int index)
 
 void AlarmMenu::do_groupItem_changed(int index)
 {
+    qDebug("%s[%d]: index(%d)",__func__, __LINE__, index);
     m_alarm->set_logic_group(index);
 }
 
