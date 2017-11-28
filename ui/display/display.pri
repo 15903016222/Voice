@@ -13,6 +13,11 @@ SOURCES += \
     $$PWD/display_widget.cpp \
     $$PWD/s_scan_scene.cpp \
     $$PWD/c_scan_display.cpp \
+    $$PWD/c_scan_hdisplay.cpp \
+    $$PWD/c_scan_vdisplay.cpp \
+    $$PWD/c_scan_time_image_item.cpp \
+    $$PWD/c_scan_encoder_image_item.cpp \
+    $$PWD/c_scan_data.cpp \
     $$PWD/c_scan_scene.cpp \
     $$PWD/b_scan_display.cpp \
     $$PWD/b_scan_scene.cpp \
@@ -48,6 +53,12 @@ HEADERS += \
     $$PWD/display_widget.h \
     $$PWD/s_scan_scene.h \
     $$PWD/c_scan_display.h \
+    $$PWD/c_scan_hdisplay.h \
+    $$PWD/c_scan_vdisplay.h \
+    $$PWD/c_scan_hdisplay.h \
+    $$PWD/c_scan_time_image_item.h \
+    $$PWD/c_scan_encoder_image_item.h \
+    $$PWD/c_scan_data.h \
     $$PWD/c_scan_scene.h \
     $$PWD/b_scan_display.h \
     $$PWD/b_scan_scene.h \

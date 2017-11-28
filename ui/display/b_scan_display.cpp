@@ -448,9 +448,9 @@ void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
     double scanTypeRulerEnd;
     double beamQtyPerSecond = SECOND / (double)DplSource::Source::instance()->interval();
     if(m_orientation == Qt::Horizontal) {
-        scanTypeRulerEnd = m_bscanScene->height() / beamQtyPerSecond;
+        scanTypeRulerEnd = m_scanTypeRuler->height() / beamQtyPerSecond;
     } else {
-        scanTypeRulerEnd = m_bscanScene->width() / beamQtyPerSecond;
+        scanTypeRulerEnd = m_scanTypeRuler->width() / beamQtyPerSecond;
     }
 
     if(!m_bscanImageItem->redraw_beams(beams)) {

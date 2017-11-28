@@ -55,6 +55,7 @@ void LawConfigMenu::do_lawTypeItem_changed(int index)
     if (index == m_scanScnPtr->mode()) {
         return;
     }
+
     if (index == DplFocallaw::ScanCnf::Linear) {
         DplFocallaw::LinearScanCnfPointer scanCnfPtr(new DplFocallaw::LinearScanCnf(m_probePtr->element_qty()));
         m_probePtr->set_scan_configure(scanCnfPtr.staticCast<DplFocallaw::ScanCnf>());
