@@ -3,12 +3,13 @@
 
 #include <QDialog>
 #include <QMap>
+#include <ui/dialog/base_dialog.h>
 
 namespace Ui {
 class NetworkDialog;
 }
 
-class NetworkDialog : public QDialog
+class NetworkDialog : public BaseDialog
 {
     Q_OBJECT
 

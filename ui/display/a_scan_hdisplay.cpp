@@ -41,6 +41,7 @@ AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
 
 AscanHDisplay::~AscanHDisplay()
 {
+
 }
 
 void AscanHDisplay::update_bottom_ruler()

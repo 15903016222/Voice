@@ -9,7 +9,10 @@ SOURCES += \
     $$PWD/datetimesetdialog.cpp \
     $$PWD/filemanagerdialog.cpp \
     $$PWD/about_dialog.cpp \
-    $$PWD/sysinfo_dialog.cpp
+    $$PWD/sysinfo_dialog.cpp \
+    $$PWD/base_dialog.cpp \
+    $$PWD/dpl_message_box.cpp \
+    $$PWD/file_dialog.cpp
 
 
 HEADERS += \
@@ -20,7 +23,10 @@ HEADERS += \
     $$PWD/datetimesetdialog.h \
     $$PWD/filemanagerdialog.h \
     $$PWD/about_dialog.h \
-    $$PWD/sysinfo_dialog.h
+    $$PWD/sysinfo_dialog.h \
+    $$PWD/base_dialog.h \
+    $$PWD/dpl_message_box.h \
+    $$PWD/file_dialog.h
 
 FORMS += \
     $$PWD/inputpanelcontext.ui \
@@ -28,4 +34,7 @@ FORMS += \
     $$PWD/resetconfigdialog.ui \
     $$PWD/networkdialog.ui \
     $$PWD/datetimesetdialog.ui \
-    $$PWD/filemanagerdialog.ui
+    $$PWD/filemanagerdialog.ui \
+    $$PWD/base_dialog.ui \
+    $$PWD/dpl_message_box.ui \
+    $$PWD/file_dialog.ui

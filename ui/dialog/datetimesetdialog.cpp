@@ -4,7 +4,7 @@
 #include <QKeyEvent>
 
 DateTimeSetDialog::DateTimeSetDialog(QWidget *parent) :
-    QDialog(parent),
+    BaseDialog(parent),
     ui(new Ui::DateTimeSetDialog)
 {
     ui->setupUi(this);

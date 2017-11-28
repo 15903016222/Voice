@@ -10,6 +10,7 @@
 
 #include <QKeyEvent>
 #include <QScrollBar>
+#include <QDebug>
 
 MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),
@@ -126,6 +127,10 @@ void MainMenu::do_keyreturn_event(const QModelIndex &index)
 
     if (nextIndex.isValid()) {
         ui->treeWidget->setCurrentIndex(nextIndex);
+    } else {
+        if(index.parent().isValid()) {
+            emit sub_menu_keyreturn();
+        }
     }
 }
 
@@ -148,6 +153,11 @@ void MainMenu::do_change_arrow()
         ui->pushButton_up->show();
         ui->pushButton_down->show();
     }
+}
+
+void MainMenu::do_sub_menu_focus_out()
+{
+    ui->treeWidget->setFocus();
 }
 
 void MainMenu::on_treeWidget_clicked(const QModelIndex &index)

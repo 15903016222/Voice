@@ -23,7 +23,6 @@ public:
 protected:
     void update_items();
     void update_switchItem();
-    void update_widhtItem();
     void update_synchroItem();
     void update_measureModeItem();
 
@@ -51,6 +50,8 @@ protected slots:
     void update_startItem();
 
     void update_thresholdItem();
+
+    void update_widhtItem();
 
 private:
     ComboMenuItem *m_gateItem;

@@ -82,5 +82,8 @@
         <file>resource/display_mode/601.png</file>
         <file>resource/display_mode/700.png</file>
         <file>resource/display_mode/800.png</file>
+        <file>resource/messageBox/alert.png</file>
+        <file>resource/messageBox/info.png</file>
+        <file>resource/messageBox/question.png</file>
     </qresource>
 </RCC>

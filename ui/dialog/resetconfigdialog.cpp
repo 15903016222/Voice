@@ -2,7 +2,7 @@
 #include "ui_resetconfigdialog.h"
 
 ResetConfigDialog::ResetConfigDialog(QWidget *parent) :
-    QDialog(parent),
+    BaseDialog(parent),
     ui(new Ui::ResetConfigDialog)
 {
     ui->setupUi(this);

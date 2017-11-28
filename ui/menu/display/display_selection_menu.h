@@ -25,13 +25,18 @@ public:
 
 protected slots:
     void do_displayItem_clicked();
+    void do_cSourceItem_changed(int index);
+    void do_thicknessSourceItem_changed(int index);
+    void do_minThickness_value_changed(double value);
+    void do_maxThickness_value_changed(double value);
     void do_mcu_key_event(Mcu::KeyType type);
 
 private:
     LabelMenuItem *m_displayItem;
     ComboMenuItem *m_cSourceItem;
-    SpinMenuItem *m_minThicknessItem;
-    SpinMenuItem *m_maxThicknessItem;
+    ComboMenuItem *m_thicknessSourceItem;
+    SpinMenuItem  *m_minThicknessItem;
+    SpinMenuItem  *m_maxThicknessItem;
     ComboMenuItem *m_dataCompressionItem;
 };
 

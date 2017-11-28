@@ -73,13 +73,24 @@ public:
      */
     double get_value() const;
 
+    /**
+     * @brief set_selected  设置当前Item是否选中
+     * @param flag  true：选中；false：不选中
+     */
+    virtual void set_selected(bool flag);
+
+    /**
+     * @brief set_edit  设置当前Item进行编辑状态
+     * @param flag  true：编辑状态；false：非编辑
+     */
+    virtual void set_edit(bool flag);
+
 public slots:
     /**
      * @brief set_value 设置数值
      * @param value     数值
      */
     void set_value(double value);
-
 
     void check_number_validity(const QString &text);
 
@@ -96,7 +107,6 @@ protected:
 private:
     Ui::SpinMenuItem *ui;
 
-    QString m_title;
     QString m_unit;
 
     QString m_suffix;

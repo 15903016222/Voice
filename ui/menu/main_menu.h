@@ -28,6 +28,7 @@ public:
         GateCurves_Gate         = 0x10,
         GateCurves_Alarm,
         GateCurves_Output,
+        GateCurves_Analog,
         GateCurves_DAC,
         GateCurves_TCG,
         Display_Selection       = 0x20,
@@ -68,6 +69,10 @@ public:
 
 signals:
     void click(MainMenu::Type type);
+    void sub_menu_keyreturn();
+
+public slots:
+    void do_sub_menu_focus_out();
 
 private slots:
     void on_pushButton_up_clicked();

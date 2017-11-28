@@ -21,9 +21,16 @@ public:
 
     BaseMenu *get_menu(MainMenu::Type type);
 
+signals:
+    void sub_menu_focus_out();
+
+protected:
+    bool eventFilter(QObject *object, QEvent *event);
+
 public slots:
     void set_menu(MainMenu::Type type);
     void set_opacity_main_menu(double value);
+    void do_sub_menu_keyreturn();
 
 private:
     BaseMenu *m_curMenu;
