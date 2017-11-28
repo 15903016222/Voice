@@ -20,17 +20,20 @@ public:
     explicit AnalogMenu(QWidget *parent);
 
 protected slots:
+    void do_switchItem_changed(int index);
     void do_groupItem_changed(int index);
     void do_dataItem_changed(int index);
 
     void update(int index);
 
 protected:
+    void update_switchItem();
     void update_groupItem();
     void update_dataItem();
 
 private:
     ComboMenuItem *m_analogItem;
+    ComboMenuItem *m_switchItem;
     ComboMenuItem *m_groupItem;
     ComboMenuItem *m_dataItem;
 
