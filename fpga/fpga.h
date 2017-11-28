@@ -323,7 +323,7 @@ public:
      * @brief deploy    下发FPGA配置参数
      * @return          成功返回true，失败返回false
      */
-    bool deploy() const;
+    bool deploy();
 
 protected:
     Fpga();

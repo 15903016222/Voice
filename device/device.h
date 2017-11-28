@@ -192,7 +192,7 @@ public:
     /**
      * @brief deploy    下发所有配置参数
      */
-    void deploy() const;
+    void deploy();
 
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);

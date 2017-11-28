@@ -201,7 +201,7 @@ bool Device::is_running() const
     return !DplFpga::Fpga::instance()->is_freeze();
 }
 
-void Device::deploy() const
+void Device::deploy()
 {
     Q_D(const Device);
 
