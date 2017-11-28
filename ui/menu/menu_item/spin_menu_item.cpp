@@ -10,11 +10,12 @@
 
 #include <qmath.h>
 #include <QKeyEvent>
+#include <QDebug>
+
 
 SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) :
     MenuItem(parent),
     ui(new Ui::SpinMenuItem),
-    m_title(title),
     m_unit(unit),
     m_value(0),
     m_min(0),
@@ -27,6 +28,7 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
     ui->nameLabel->installEventFilter(this);
     ui->lineEdit->installEventFilter(this);
 
+    m_title = title;
     update_title();
     update_value();
 
@@ -70,6 +72,54 @@ void SpinMenuItem::set_step(double step)
     update_title();
 }
 
+void SpinMenuItem::set_selected(bool flag)
+{
+    QString msg;
+    if(flag) {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
+        msg += "<strong>";
+        msg += m_title;
+        msg += "</strong>";
+    } else {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
+        msg += m_title;
+        msg += "</font>";
+    }
+
+    if (!ui->lineEdit->hasFocus()) {
+        if (!m_unit.isEmpty()) {
+            msg += "<br/>(";
+            msg += m_unit;
+            msg += ")";
+        }
+    } else {
+        msg += "<br/>";
+        if (!m_unit.isEmpty()) {
+            msg += "(";
+            msg += m_unit;
+            msg += ") ";
+        }
+        msg += "&Delta;";
+        msg += QString::number(m_step, 'f', m_decimals);
+    }
+
+    msg += "</p>";
+
+    m_selected = flag;
+    ui->nameLabel->setText(msg);
+}
+
+void SpinMenuItem::set_edit(bool flag)
+{
+    if(flag) {
+        set_focus();
+    } else {
+        set_focus_out();
+    }
+
+    m_isEditing = flag;
+}
+
 void SpinMenuItem::set_value(double value)
 {
     if (qFuzzyCompare(m_value, value)) {
@@ -93,6 +143,7 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         if (ui->lineEdit->hasFocus()) {
             update_spin_step();
         } else {
+            set_selected(true);
             set_focus();
         }
         return true;
@@ -106,10 +157,15 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         case Qt::Key_Cancel:
         case Qt::Key_Enter:
         case Qt::Key_Return:
+        {
             update_value();
             set_focus_out();
+            set_selected(true);
+
+            set_parent_focus_in(this);
             return true;
             break;
+        }
         case Qt::Key_Up:
             add();
             break;
@@ -120,8 +176,9 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
             break;
         }
     } else if (e->type() == QEvent::FocusOut) {
-        set_focus_out();
-        return true;
+        if(obj->objectName() == ui->lineEdit->objectName()) {
+            set_focus_out();
+        }
     } else if (e->type() == QEvent::Wheel) {
         QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(e);
         if (wheelEvent->delta() > 0) {
@@ -136,9 +193,17 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 
 void SpinMenuItem::update_title()
 {
-    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
-    msg += m_title;
-    msg += "</font>";
+    QString msg;
+    if(m_selected) {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
+        msg += "<strong>";
+        msg += m_title;
+        msg += "</strong>";
+    } else {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
+        msg += m_title;
+        msg += "</font>";
+    }
 
     if (!ui->lineEdit->hasFocus()) {
         if (!m_unit.isEmpty()) {
@@ -200,6 +265,7 @@ void SpinMenuItem::set_focus_out()
                                 "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1,stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 130, 195, 255));}");
     update_title();
 }
+
 
 void SpinMenuItem::update_value()
 {

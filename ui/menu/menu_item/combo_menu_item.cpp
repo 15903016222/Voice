@@ -9,11 +9,14 @@
 #include "ui_combo_menu_item.h"
 
 #include <QListView>
+#include <QDebug>
+#include <QKeyEvent>
 
 ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
     MenuItem(parent),
     ui(new Ui::ComboMenuItem),
     m_displayMode(ALL)
+
 {
     ui->setupUi(this);
 
@@ -39,6 +42,7 @@ ComboMenuItem::~ComboMenuItem()
 
 void ComboMenuItem::set_title(const QString &title)
 {
+    m_title = title;
     QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
     msg += title;
     msg += "</font>";
@@ -59,11 +63,27 @@ void ComboMenuItem::add_items(const QStringList &texts)
 bool ComboMenuItem::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::MouseButtonRelease) {
+        this->setFocusPolicy(Qt::WheelFocus);
+        this->setFocus();
         ui->comboBox->showPopup();
+        set_selected(true);
+        m_isEditing = true;
         return true;
     } else if (e->type() == QEvent::Hide) {
         ui->comboBox->hidePopup();
+        m_isEditing = false;
         return true;
+    } else if(e->type() == QEvent::Leave) {
+        set_selected(false);
+        return true;
+    } else if(e->type() == QEvent::KeyRelease) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*> (e);
+        if(keyEvent) {
+            if(keyEvent->key() == Qt::Key_Return) {
+                set_parent_focus_in(this);
+                return true;
+            }
+        }
     }
 
     return QWidget::eventFilter(obj, e);
@@ -96,6 +116,37 @@ void ComboMenuItem::set_dispay_mode(ComboMenuItem::DisplayMode mode)
     set_label_text(ui->comboBox->currentText());
 }
 
+void ComboMenuItem::set_selected(bool flag)
+{
+    QString msg;
+    if(flag) {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
+        msg += "<strong>";
+        msg += m_title;
+        msg += "</strong>";
+        msg += "</font>";
+        msg += "</p>";
+        ui->nameLabel->setText(msg);
+    } else {
+        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
+        msg += m_title;
+        msg += "</font>";
+        msg += "</p>";
+        ui->nameLabel->setText(msg);
+    }
+    m_selected = flag;
+}
+
+void ComboMenuItem::set_edit(bool flag)
+{
+    if(flag) {
+        ui->comboBox->showPopup();
+    } else {
+        ui->comboBox->hidePopup();
+    }
+    m_isEditing = flag;
+}
+
 void ComboMenuItem::set_label_text(QString text)
 {
     switch (m_displayMode) {
@@ -112,3 +163,4 @@ void ComboMenuItem::set_label_text(QString text)
         break;
     }
 }
+

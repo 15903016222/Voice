@@ -62,6 +62,10 @@
 #include "preference/preference_menu.h"
 #include "preference/system_menu.h"
 
+#include <QDebug>
+#include <QEvent>
+#include <QKeyEvent>
+
 SubMenu::SubMenu(QWidget *parent) :
     QWidget(parent),
     m_curMenu(NULL)
@@ -81,15 +85,39 @@ SubMenu::~SubMenu()
 {
 }
 
+bool SubMenu::eventFilter(QObject *object, QEvent *event)
+{
+    if(event->type() == QEvent::KeyRelease) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*> (event);
+
+        if(keyEvent->key() == Qt::Key_Escape) {
+            if(m_curMenu->has_editing()) {
+                m_curMenu->set_all_item_no_edit();
+                return true;
+            } else {
+                emit sub_menu_focus_out();
+            }
+        } else if(keyEvent->key() == Qt::Key_Return) {
+            m_curMenu->set_selected_item_focus_in();
+        }
+    } else if(event->type() == QEvent::WindowUnblocked) {
+        m_curMenu->set_selected_item_focus_in();
+    }
+
+    return QWidget::eventFilter(object, event);
+}
+
 void SubMenu::set_menu(MainMenu::Type type)
 {
     if (m_curMenu) {
         m_curMenu->hide();
+        m_curMenu->removeEventFilter(this);
     }
 
     m_curMenu = get_menu(type);
 
     if(m_curMenu) {
+        m_curMenu->installEventFilter(this);
         m_curMenu->show();
     }
 }
@@ -99,6 +127,11 @@ void SubMenu::set_opacity_main_menu(double value)
     QGraphicsOpacityEffect opacityEffect;
     opacityEffect.setOpacity(value / 100);
     this->setGraphicsEffect(&opacityEffect);
+}
+
+void SubMenu::do_sub_menu_keyreturn()
+{
+    m_curMenu->set_focus();
 }
 
 void SubMenu::create_menus()
