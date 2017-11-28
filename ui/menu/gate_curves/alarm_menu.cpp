@@ -32,9 +32,9 @@ AlarmMenu::AlarmMenu(QWidget *parent) :
     connect(m_alarmItem, SIGNAL(value_changed(int)),
             this, SLOT(update(int)));
 
+    m_groupItem->add_item(tr("None"));
     m_groupItem->add_item(tr("Group1"));
     m_groupItem->add_item(tr("All"));
-    m_groupItem->add_item(tr("None"));
 
     m_operatorItem->add_item(tr("And"));
     m_operatorItem->add_item(tr("Or"));
@@ -58,8 +58,8 @@ AlarmMenu::AlarmMenu(QWidget *parent) :
 
 void AlarmMenu::update(int index)
 {
-    //    disconnect(m_groupItem, SIGNAL(value_changed(int)),
-    //            this, SLOT(do_))
+    disconnect(m_groupItem, SIGNAL(value_changed(int)),
+               this, SLOT(do_groupItem_changed(int)));
     disconnect(m_fstConditionItem, SIGNAL(value_changed(int)),
                this, SLOT(do_fstConditionItem_changed(int)));
     disconnect(m_operatorItem, SIGNAL(value_changed(int)),
@@ -74,8 +74,8 @@ void AlarmMenu::update(int index)
     update_operatorItem();
     update_sndConditionItem();
 
-    //    connect(m_groupItem, SIGNAL(value_changed(int)),
-    //            this, SLOT(do_))
+    connect(m_groupItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_groupItem_changed(int)));
     connect(m_fstConditionItem, SIGNAL(value_changed(int)),
             this, SLOT(do_fstConditionItem_changed(int)));
     connect(m_operatorItem, SIGNAL(value_changed(int)),
@@ -86,6 +86,7 @@ void AlarmMenu::update(int index)
 
 void AlarmMenu::do_groupItem_changed(int index)
 {
+    qDebug("%s[%d]: index(%d)",__func__, __LINE__, index);
     m_alarm->set_logic_group(index);
 }
 

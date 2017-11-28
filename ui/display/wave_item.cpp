@@ -34,7 +34,7 @@ QPainterPath WaveItem::draw(const QByteArray &wave, bool rf, int w, int h)
     } else {
         for (int i = 0; i < drawPoints; ++i) {
             path.lineTo( i*xRatio,
-                         ((quint8)(255-wave.at(i))) * yRatio);
+                         ((quint8)(255-wave.at(i))) * yRatio+0.5);
         }
     }
 

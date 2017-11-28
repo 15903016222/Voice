@@ -24,6 +24,8 @@ AnalogMenu::AnalogMenu(QWidget *parent) : BaseMenu(parent),
 
     m_analogItem->add_item(tr("Analog 1"));
     m_analogItem->add_item(tr("Analog 2"));
+    connect(m_analogItem, SIGNAL(value_changed(int)),
+            this, SLOT(update(int)));
 
     m_dataItem->add_item(tr("None"));
     m_dataItem->add_item("A%");
