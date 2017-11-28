@@ -5,12 +5,13 @@
 #include <QMap>
 #include <QDate>
 #include <QTime>
+#include <ui/dialog/base_dialog.h>
 
 namespace Ui {
 class DateTimeSetDialog;
 }
 
-class DateTimeSetDialog : public QDialog
+class DateTimeSetDialog : public BaseDialog
 {
     Q_OBJECT
 

@@ -3,10 +3,12 @@
 
 #include <QDialog>
 
-namespace Ui {
-namespace Dialog {
+#include <ui/dialog/base_dialog.h>
 
-class SysInfoDialog : public QDialog
+//namespace Ui {
+//namespace Dialog {
+
+class SysInfoDialog : public BaseDialog
 {
     Q_OBJECT
 
@@ -14,6 +16,6 @@ public:
     explicit SysInfoDialog(QWidget *parent = 0);
 };
 
-}   // namespace Dialog
-}   // namespace Ui
+//}   // namespace Dialog
+//}   // namespace Ui
 #endif // SYSTEMINFODIALOG_H

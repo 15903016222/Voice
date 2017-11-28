@@ -12,6 +12,8 @@
 
 namespace DplPreferenceMenu {
 
+class NetworkManager;
+
 class NetworkMenu : public BaseMenu
 {
     Q_OBJECT
@@ -29,6 +31,9 @@ private:
 private slots:
     void show_ip_address_dialog();
     void show_subnet_mask_dialog();
+
+private:
+    NetworkManager  *m_networkManager;
 };
 
 }
