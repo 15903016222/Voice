@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <device/device.h>
+#include <QReadWriteLock>
 
 class ScanView;
 class FFTScene;

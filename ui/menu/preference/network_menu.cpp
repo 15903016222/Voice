@@ -29,14 +29,8 @@ NetworkMenu::NetworkMenu(QWidget *parent) :
     /* Subnet Mask menu item */
     connect(m_maskItem, SIGNAL(clicked()), this, SLOT(show_subnet_mask_dialog()));
 
-    QString ip;
-    m_networkManager->get_local_ip_address(ip);
-    m_ipItem->set_text(ip);
-
-    QString mask;
-    m_networkManager->get_subnet_mask(mask);
-    m_maskItem->set_text(mask);
-
+    m_ipItem->set_text(m_networkManager->ip_str());
+    m_maskItem->set_text(m_networkManager->mask_str());
 }
 
 NetworkMenu::~NetworkMenu()
@@ -55,7 +49,7 @@ void NetworkMenu::show_ip_address_dialog()
 
     if (dialog.exec() == NetworkDialog::Accepted) {
 
-        if(m_networkManager->set_ip_address(dialog.get_text())) {
+        if(m_networkManager->set_ip(dialog.get_text())) {
             m_ipItem->set_text(dialog.get_text());
             DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Done!"));
             messageBox.exec();
@@ -80,7 +74,7 @@ void NetworkMenu::show_subnet_mask_dialog()
 
     if (dialog.exec() == NetworkDialog::Accepted) {
 
-        if(m_networkManager->set_subnet_mask(dialog.get_text())) {
+        if(m_networkManager->set_mask(dialog.get_text())) {
             m_maskItem->set_text(dialog.get_text());
             DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Done!"));
             messageBox.exec();
