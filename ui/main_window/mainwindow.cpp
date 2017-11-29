@@ -16,7 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    load_style_sheet("/opt/mercury/qss/main.qss");
+
     ui->setupUi(this);
+
     ui->gainMenuItem->show();
     ui->angleMenuItem->show();
 
@@ -88,6 +91,15 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::load_style_sheet(const QString &fileName)
+{
+    QFile file(fileName);
+    if(file.open(QFile::ReadOnly)) {
+        qApp->setStyleSheet(file.readAll());
+        file.close();
+    }
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *e)

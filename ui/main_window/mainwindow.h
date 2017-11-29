@@ -23,6 +23,8 @@ public:
     ~MainWindow();
 
 protected:
+    void load_style_sheet(const QString &fileName);
+
     void mousePressEvent(QMouseEvent *e);
     void keyPressEvent(QKeyEvent *event);
 
