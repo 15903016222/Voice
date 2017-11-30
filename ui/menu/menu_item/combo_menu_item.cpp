@@ -17,8 +17,7 @@ ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
     m_menu(new QMenu(this)),
     m_action(NULL),
     m_pushBtn(new QPushButton(title, this)),
-    m_label(new QLabel(this)),
-    m_displayMode(ALL)
+    m_label(new QLabel(this))
 {    
     m_pushBtn->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     m_label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -53,6 +52,10 @@ void ComboMenuItem::add_item(const QString &text, const QString &toolTip)
 {
     QAction *action = new QAction(text, this);
     action->setToolTip(toolTip);
+    if (!m_action) {
+        m_action = action;
+        m_label->setText(m_action->text());
+    }
     m_menu->addAction(action);
 }
 
@@ -80,11 +83,6 @@ int ComboMenuItem::current_index() const
 QString ComboMenuItem::current_text() const
 {
     return m_action->text();
-}
-
-void ComboMenuItem::set_dispay_mode(ComboMenuItem::DisplayMode mode)
-{
-    m_displayMode = mode;
 }
 
 void ComboMenuItem::set_selected(bool flag)

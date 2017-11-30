@@ -106,8 +106,6 @@ private:
     QAction *m_action;
     QPushButton *m_pushBtn;
     QLabel *m_label;
-
-    int m_displayMode;
 };
 
 inline void ComboMenuItem::set(const QStringList &texts)

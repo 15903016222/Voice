@@ -32,11 +32,8 @@ TofdMenu::TofdMenu(QWidget *parent) :
     ui->layout4->addWidget(m_depthCalibrationItem);
 
     /* Select menu item */
-    QStringList selectList;
-    selectList.append(tr("TOFD Settings"));
-    selectList.append(tr("TOFD Analysis"));
-    m_selectItem->set(selectList);
-    m_selectItem->set_dispay_mode(ComboMenuItem::SUFFIX);
+    m_selectItem->add_item(tr("Settings"));
+    m_selectItem->add_item(tr("Analysis"));
     connect(m_selectItem, SIGNAL(value_changed(int)),
             this, SLOT(do_selectItem_changed(int)));
 
