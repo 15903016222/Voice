@@ -14,7 +14,7 @@ TofdMenu::TofdMenu(QWidget *parent) :
     m_straighteningItem(new ComboMenuItem(this, tr("Straightening"))),
     m_removeLateralItem(new ComboMenuItem(this, tr("Remove Lateral"))),
     m_refPositionItem(new SpinMenuItem(this, tr("Ref.Position"), "mm")),
-    m_depthCalibrationItem(new ComboMenuItem(this, tr("Depth Calibration")))
+    m_depthCalibrationItem(new ComboMenuItem(this, tr("Depth\nCalibration")))
 {
     ui->layout0->addWidget(m_selectItem);
 

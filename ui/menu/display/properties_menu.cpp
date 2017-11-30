@@ -13,10 +13,10 @@ PropertiesMenu::PropertiesMenu(QWidget *parent) :
     m_colorItem(new LabelMenuItem(this, tr("Color"))),
     m_envelopItem(new ComboMenuItem(this, tr("Envelope"))),
     m_peakHoldingItem(new ComboMenuItem(this, tr("Peak Holding"))),
-    m_referenceholdingItem(new ComboMenuItem(this, tr("Reference<br>Holding"))),
+    m_referenceholdingItem(new ComboMenuItem(this, tr("Reference\nHolding"))),
     m_compressionItem(new ComboMenuItem(this, tr("Compression"))),
     m_ratioItem(new ComboMenuItem(this, tr("Ratio"))),
-    m_cScanModeItem(new ComboMenuItem(this, tr("C-Scan<br>Mode")))
+    m_cScanModeItem(new ComboMenuItem(this, tr("C-Scan\nMode")))
 {
     ui->layout0->addWidget(m_scanItem);
 
