@@ -1,5 +1,4 @@
 FORMS += \
-    $$PWD/label_menu_item.ui \
     $$PWD/spin_menu_item.ui
 
 HEADERS += \

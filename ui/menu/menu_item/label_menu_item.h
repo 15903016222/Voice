@@ -10,9 +10,8 @@
 
 #include "menu_item.h"
 
-namespace Ui {
-class LabelMenuItem;
-}
+class QPushButton;
+class QLabel;
 
 class LabelMenuItem : public MenuItem
 {
@@ -26,7 +25,7 @@ public:
      * @brief get_title 获取标题
      * @return          标题
      */
-    const QString &title() const;
+    QString title() const;
 
     /**
      * @brief set_title 设置标题
@@ -38,7 +37,7 @@ public:
      * @brief text  获取显示文本
      * @return      字符串
      */
-    const QString &text() const;
+    QString text() const;
 
     /**
      * @brief set_text  设置显示文本
@@ -64,23 +63,10 @@ signals:
      */
     void clicked();
 
-protected:
-    bool eventFilter(QObject *object, QEvent *event);
-
 private:
-    Ui::LabelMenuItem *ui;
-
+    QPushButton *m_pushBtn;
+    QLabel *m_label;
     QString m_text;
 };
-
-inline const QString &LabelMenuItem::title() const
-{
-    return m_title;
-}
-
-inline const QString &LabelMenuItem::text() const
-{
-    return m_text;
-}
 
 #endif // __LABEL_MENU_ITEM_H__
