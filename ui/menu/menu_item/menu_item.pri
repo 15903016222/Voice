@@ -1,5 +1,4 @@
 FORMS += \
-    $$PWD/combo_menu_item.ui \
     $$PWD/label_menu_item.ui \
     $$PWD/spin_menu_item.ui
 
