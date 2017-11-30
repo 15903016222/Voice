@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    load_style_sheet("/opt/mercury/qss/main.qss");
+    load_style_sheet("/opt/mercury/qss/default.qss");
 
     ui->setupUi(this);
 

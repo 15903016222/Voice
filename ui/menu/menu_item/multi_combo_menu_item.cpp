@@ -11,12 +11,15 @@ MultiComboMenuItem::MultiComboMenuItem(const QString &title, QWidget *parent) : 
 {
     m_pushBtn->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     m_label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    m_label->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
 
     QVBoxLayout *vbox = new QVBoxLayout(this);
     vbox->setContentsMargins(0, 0, 0, 0);
     vbox->setSpacing(0);
     vbox->addWidget(m_pushBtn, 2);
     vbox->addWidget(m_label, 1);
+
+    m_menu->setMinimumWidth(width());
 
     connect(m_pushBtn, SIGNAL(clicked(bool)),
             this, SLOT(do_pushBtn_clicked()));
