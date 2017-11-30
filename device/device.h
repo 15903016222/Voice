@@ -196,6 +196,7 @@ public:
 
 signals:
     void current_group_changed(const DplDevice::GroupPointer &group);
+    void group_qty_changed(int);
     void beam_qty_changed();
 
 public slots:
