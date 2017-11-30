@@ -118,6 +118,7 @@ double Measure::gate_adBa(const DplDevice::GroupPointer &group)
 /*  AdBr: 闸门 A 内峰值幅度与参考信号幅度之差(dB)  */
 double Measure::gate_adBr(const DplDevice::GroupPointer &group)
 {
+    Q_UNUSED(group);
     qDebug()<<__FILE__<<__func__<<"umimplemented";
     return 10.0;
 }

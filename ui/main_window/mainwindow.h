@@ -33,8 +33,6 @@ signals:
 protected slots:
     void do_key_event(Mcu::KeyType type);
 
-    void update_translator(QString string);
-
     void do_keyboard_event();
 
     void do_rotary_event(Mcu::RotaryType type);

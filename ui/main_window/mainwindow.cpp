@@ -143,19 +143,6 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     }
 }
 
-void MainWindow::update_translator(QString string)
-{
-//    if(string == "Chinese") {
-//        translator->load(":/file/translator/phascanII_UI_Chinese.qm");
-//    } else if(string == "English") {
-//        translator->load(":/file/translator/phascanII_UI_English.qm");
-//    }
-//    ui->retranslateUi(this);
-//    ui->widgetTopLeft->retranslate_top_menu_ui();
-//    firstSecondMenu->retranslate_main_menu_ui(string);
-//    commonMenuWidget->retranslate_common_menu_ui();
-}
-
 void MainWindow::show_hidden_Menu()
 {
     if(m_subMenu->isHidden()) {
