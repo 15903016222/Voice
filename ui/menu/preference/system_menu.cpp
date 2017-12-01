@@ -15,11 +15,11 @@
 #include "base_dialog.h"
 #include <device/device.h>
 
-
 #include <time.h>
 #include <sys/time.h>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QCalendarWidget>
 
 namespace DplPreferenceMenu {
 

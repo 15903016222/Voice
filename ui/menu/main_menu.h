@@ -71,9 +71,6 @@ signals:
     void click(MainMenu::Type type);
     void sub_menu_keyreturn();
 
-public slots:
-    void do_sub_menu_focus_out();
-
 private slots:
     void on_pushButton_up_clicked();
 
