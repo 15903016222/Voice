@@ -22,13 +22,15 @@ public:
     inline  bool is_editing() { return m_isEditing; }
 
 protected:
+    void update_layout(QWidget *w1, QWidget *w2);
+
     QString m_title;
     bool    m_isEditing;
     bool    m_selected;
     QWidget *m_parent;
 
 
-    void set_parent_focus_in(QObject *object);
+    void set_parent_focus_in(QObject *object) {}
 };
 
 #endif // __MENU_ITEM_H__

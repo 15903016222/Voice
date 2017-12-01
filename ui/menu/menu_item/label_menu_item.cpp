@@ -16,15 +16,8 @@ LabelMenuItem::LabelMenuItem(QWidget *parent, const QString &title, const QStrin
     m_pushBtn(new QPushButton(title, this)),
     m_label(new QLabel(text, this))
 {
-    m_pushBtn->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    m_label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    update_layout(m_pushBtn, m_label);
     m_label->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-
-    QVBoxLayout *vbox = new QVBoxLayout(this);
-    vbox->setContentsMargins(0, 0, 0, 0);
-    vbox->setSpacing(0);
-    vbox->addWidget(m_pushBtn, 2);
-    vbox->addWidget(m_label, 1);
 
     connect(m_pushBtn, SIGNAL(clicked()),
             this, SIGNAL(clicked()));
