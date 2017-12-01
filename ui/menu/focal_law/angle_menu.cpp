@@ -1,5 +1,5 @@
 #include "angle_menu.h"
-#include "ui_base_menu.h"
+
 
 #include <global.h>
 
@@ -11,9 +11,9 @@ AngleMenu::AngleMenu(QWidget *parent) :
     m_maxAngleItem(new SpinMenuItem(this, tr("Max"), DEGREE_STR)),
     m_angleStepItem(new SpinMenuItem(this, tr("Step"),DEGREE_STR))
 {
-    ui->layout0->addWidget(m_minAngleItem);
-    ui->layout1->addWidget(m_maxAngleItem);
-    ui->layout2->addWidget(m_angleStepItem);
+    m_layout0->addWidget(m_minAngleItem);
+    m_layout1->addWidget(m_maxAngleItem);
+    m_layout2->addWidget(m_angleStepItem);
 
     /* Min.Angle Menu Item */
     m_minAngleItem->set(-89, 89, 0);

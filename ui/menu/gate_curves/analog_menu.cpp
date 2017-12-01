@@ -6,7 +6,7 @@
  * @date 2016-12-16
  */
 #include "analog_menu.h"
-#include "ui_base_menu.h"
+
 #include <fpga/fpga.h>
 
 namespace DplGateCurvesMenu {
@@ -17,10 +17,10 @@ AnalogMenu::AnalogMenu(QWidget *parent) : BaseMenu(parent),
     m_groupItem(new ComboMenuItem(this, tr("Group"))),
     m_dataItem(new ComboMenuItem(this, tr("Data")))
 {
-    ui->layout0->addWidget(m_analogItem);
-    ui->layout1->addWidget(m_switchItem);
-    ui->layout2->addWidget(m_groupItem);
-    ui->layout3->addWidget(m_dataItem);
+    m_layout0->addWidget(m_analogItem);
+    m_layout1->addWidget(m_switchItem);
+    m_layout2->addWidget(m_groupItem);
+    m_layout3->addWidget(m_dataItem);
 
     m_groupItem->add_item(tr("Group 1"));
     m_groupItem->add_item(tr("All"));

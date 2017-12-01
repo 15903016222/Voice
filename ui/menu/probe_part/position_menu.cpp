@@ -6,7 +6,7 @@
  * @date 2016-12-19
  */
 #include "position_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplProbeMenu {
 
@@ -16,9 +16,9 @@ PositionMenu::PositionMenu(QWidget *parent) :
     m_indexOffsetItem(new SpinMenuItem(this, tr("Index Offset"), "mm")),
     m_skewItem(new ComboMenuItem(this, tr("Skew")))
 {
-    ui->layout0->addWidget(m_scanOffsetItem);
-    ui->layout1->addWidget(m_indexOffsetItem);
-    ui->layout2->addWidget(m_skewItem);
+    m_layout0->addWidget(m_scanOffsetItem);
+    m_layout1->addWidget(m_indexOffsetItem);
+    m_layout2->addWidget(m_skewItem);
 
     /* Scan Offset menu item */
     m_scanOffsetItem->set(-10000, 10000, 1);

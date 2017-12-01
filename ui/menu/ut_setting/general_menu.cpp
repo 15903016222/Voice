@@ -9,8 +9,6 @@
 #include <global.h>
 #include <ui/tool/tool.h>
 
-#include "ui_base_menu.h"
-
 #include <qmath.h>
 
 namespace DplUtSettingMenu {
@@ -24,12 +22,12 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
     m_wedgeDelayItem(new SpinMenuItem(this, tr("Wedge Delay"), US_STR)),
     m_utUnitItem(new ComboMenuItem(this, tr("UT Unit")))
 {
-    ui->layout0->addWidget(m_gainItem);
-    ui->layout1->addWidget(m_startItem);
-    ui->layout2->addWidget(m_rangeItem);
-    ui->layout3->addWidget(m_velocityItem);
-    ui->layout4->addWidget(m_wedgeDelayItem);
-    ui->layout5->addWidget(m_utUnitItem);
+    m_layout0->addWidget(m_gainItem);
+    m_layout1->addWidget(m_startItem);
+    m_layout2->addWidget(m_rangeItem);
+    m_layout3->addWidget(m_velocityItem);
+    m_layout4->addWidget(m_wedgeDelayItem);
+    m_layout5->addWidget(m_utUnitItem);
 
     /* Gain Item */
     connect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));

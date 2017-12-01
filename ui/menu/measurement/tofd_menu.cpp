@@ -1,5 +1,5 @@
 #include "tofd_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplMeasurementMenu {
 
@@ -16,20 +16,20 @@ TofdMenu::TofdMenu(QWidget *parent) :
     m_refPositionItem(new SpinMenuItem(this, tr("Ref.Position"), "mm")),
     m_depthCalibrationItem(new ComboMenuItem(this, tr("Depth\nCalibration")))
 {
-    ui->layout0->addWidget(m_selectItem);
+    m_layout0->addWidget(m_selectItem);
 
     /* Setting */
-    ui->layout1->addWidget(m_wedgeItem);
-    ui->layout2->addWidget(m_layerDepthItem);
-    ui->layout3->addWidget(m_tofdCalItem);
-    ui->layout4->addWidget(m_startItem);
-    ui->layout5->addWidget(m_rangeItem);
+    m_layout1->addWidget(m_wedgeItem);
+    m_layout2->addWidget(m_layerDepthItem);
+    m_layout3->addWidget(m_tofdCalItem);
+    m_layout4->addWidget(m_startItem);
+    m_layout5->addWidget(m_rangeItem);
 
     /* Analysis */
-    ui->layout1->addWidget(m_straighteningItem);
-    ui->layout2->addWidget(m_removeLateralItem);
-    ui->layout3->addWidget(m_refPositionItem);
-    ui->layout4->addWidget(m_depthCalibrationItem);
+    m_layout1->addWidget(m_straighteningItem);
+    m_layout2->addWidget(m_removeLateralItem);
+    m_layout3->addWidget(m_refPositionItem);
+    m_layout4->addWidget(m_depthCalibrationItem);
 
     /* Select menu item */
     m_selectItem->add_item(tr("Settings"));

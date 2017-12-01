@@ -6,7 +6,7 @@
  * @date 2016-12-16
  */
 #include "color_setting_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplDisplayMenu {
 
@@ -16,9 +16,9 @@ ColorSettingMenu::ColorSettingMenu(QWidget *parent) :
     m_depthItem(new LabelMenuItem(this, tr("Depth"))),
     m_tofdItem(new LabelMenuItem(this, tr("TOFD")))
 {
-    ui->layout0->addWidget(m_amplitudeItem);
-    ui->layout1->addWidget(m_depthItem);
-    ui->layout2->addWidget(m_tofdItem);
+    m_layout0->addWidget(m_amplitudeItem);
+    m_layout1->addWidget(m_depthItem);
+    m_layout2->addWidget(m_tofdItem);
 }
 
 ColorSettingMenu::~ColorSettingMenu()

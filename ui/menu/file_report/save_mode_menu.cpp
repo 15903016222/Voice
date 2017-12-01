@@ -1,5 +1,5 @@
 #include "save_mode_menu.h"
-#include "ui_base_menu.h"
+
 #include "inputpanelcontext.h"
 
 namespace DplFileReportMenu {
@@ -11,10 +11,10 @@ SaveModeMenu::SaveModeMenu(QWidget *parent) :
     m_saveDataItem(new LabelMenuItem(this, tr("Save Data"))),
     m_fileNameItem(new LabelMenuItem(this, tr("File Name")))
 {
-    ui->layout0->addWidget(m_storageItem);
-    ui->layout1->addWidget(m_saveModeItem);
-    ui->layout2->addWidget(m_saveDataItem);
-    ui->layout3->addWidget(m_fileNameItem);
+    m_layout0->addWidget(m_storageItem);
+    m_layout1->addWidget(m_saveModeItem);
+    m_layout2->addWidget(m_saveDataItem);
+    m_layout3->addWidget(m_fileNameItem);
 
     /* Storage Menu Item */   
     QStringList storageList;

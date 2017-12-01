@@ -6,7 +6,7 @@
  * @date 2016-12-16
  */
 #include "output_menu.h"
-#include "ui_base_menu.h"
+
 #include <fpga/fpga.h>
 #include <global.h>
 
@@ -21,12 +21,12 @@ OutputMenu::OutputMenu(QWidget *parent) :
     m_holdTimeItem(new SpinMenuItem(this, tr("Hold Time"), "ms")),
     m_switchItem(new ComboMenuItem(this, tr("Switch")))
 {
-    ui->layout0->addWidget(m_outputItem);
-    ui->layout1->addWidget(m_switchItem);
-    ui->layout2->addWidget(m_countItem);
-    ui->layout3->addWidget(m_soundItem);
-    ui->layout4->addWidget(m_delayItem);
-    ui->layout5->addWidget(m_holdTimeItem);
+    m_layout0->addWidget(m_outputItem);
+    m_layout1->addWidget(m_switchItem);
+    m_layout2->addWidget(m_countItem);
+    m_layout3->addWidget(m_soundItem);
+    m_layout4->addWidget(m_delayItem);
+    m_layout5->addWidget(m_holdTimeItem);
 
     m_countItem->set(1, 100, 0);
 

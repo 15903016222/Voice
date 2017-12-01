@@ -1,6 +1,5 @@
 FORMS += \
-    $$PWD/main_menu.ui \
-    $$PWD/base_menu.ui
+    $$PWD/main_menu.ui
 
 HEADERS += \
     $$PWD/main_menu.h \

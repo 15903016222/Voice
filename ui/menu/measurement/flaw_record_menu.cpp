@@ -1,5 +1,5 @@
 #include "flaw_record_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplMeasurementMenu {
 
@@ -12,11 +12,11 @@ FlawRecordMenu::FlawRecordMenu(QWidget *parent) :
     m_exportRecordItem(new LabelMenuItem(this, tr("Export Record")))
 
 {
-    ui->layout0->addWidget(m_addDeleteItem);
-    ui->layout1->addWidget(m_flawImageItem);
-    ui->layout2->addWidget(m_commentItem);
-    ui->layout3->addWidget(m_displayTableItem);
-    ui->layout4->addWidget(m_exportRecordItem);
+    m_layout0->addWidget(m_addDeleteItem);
+    m_layout1->addWidget(m_flawImageItem);
+    m_layout2->addWidget(m_commentItem);
+    m_layout3->addWidget(m_displayTableItem);
+    m_layout4->addWidget(m_exportRecordItem);
 
     /* Flaw Image menu item */
     m_flawImageItem->set(s_onOff);

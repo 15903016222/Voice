@@ -7,7 +7,7 @@
  */
 #include "display_selection_menu.h"
 #include "display_select_dialog.h"
-#include "ui_base_menu.h"
+
 
 #include <ui/display/test_stub.h>
 
@@ -22,12 +22,12 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     m_maxThicknessItem(new SpinMenuItem(this, tr("Max.Thickness"), "mm")),
     m_dataCompressionItem(new ComboMenuItem(this, tr("Data\nCompression")))
 {
-    ui->layout0->addWidget(m_displayItem);
-    ui->layout1->addWidget(m_cSourceItem);
-    ui->layout2->addWidget(m_thicknessSourceItem);
-    ui->layout3->addWidget(m_minThicknessItem);
-    ui->layout4->addWidget(m_maxThicknessItem);
-    ui->layout5->addWidget(m_dataCompressionItem);
+    m_layout0->addWidget(m_displayItem);
+    m_layout1->addWidget(m_cSourceItem);
+    m_layout2->addWidget(m_thicknessSourceItem);
+    m_layout3->addWidget(m_minThicknessItem);
+    m_layout4->addWidget(m_maxThicknessItem);
+    m_layout5->addWidget(m_dataCompressionItem);
 
     QStringList cScanSourceList;
 

@@ -1,5 +1,5 @@
 #include "report_menu.h"
-#include "ui_base_menu.h"
+
 #include "inputpanelcontext.h"
 
 namespace DplFileReportMenu {
@@ -13,12 +13,12 @@ ReportMenu::ReportMenu(QWidget *parent) :
     m_partNumberItem(new LabelMenuItem(this, tr("Part Number"))),
     m_createItem(new LabelMenuItem(this, tr("Create")))
 {   
-    ui->layout0->addWidget(m_templateItem);
-    ui->layout1->addWidget(m_reportNameItem);
-    ui->layout2->addWidget(m_customerItem);
-    ui->layout3->addWidget(m_partNameItem);
-    ui->layout4->addWidget(m_partNumberItem);
-    ui->layout5->addWidget(m_createItem);
+    m_layout0->addWidget(m_templateItem);
+    m_layout1->addWidget(m_reportNameItem);
+    m_layout2->addWidget(m_customerItem);
+    m_layout3->addWidget(m_partNameItem);
+    m_layout4->addWidget(m_partNumberItem);
+    m_layout5->addWidget(m_createItem);
 
 
     /* Report Name menu item */

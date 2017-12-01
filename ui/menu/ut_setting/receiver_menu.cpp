@@ -6,7 +6,7 @@
  * @date 2016-12-16
  */
 #include "receiver_menu.h"
-#include "ui_base_menu.h"
+
 
 #include <ut/global_transceiver.h>
 
@@ -21,12 +21,12 @@ ReceiverMenu::ReceiverMenu(QWidget *parent) :
     m_averagingItem(new ComboMenuItem(this, tr("Averaging"))),
     m_dampingItem(new ComboMenuItem(this, tr("Damping")))
 {
-    ui->layout0->addWidget(m_receiverItem);
-    ui->layout1->addWidget(m_filterItem);
-    ui->layout2->addWidget(m_rectifierItem);
-    ui->layout3->addWidget(m_videoFilterItem);
-    ui->layout4->addWidget(m_averagingItem);
-    ui->layout5->addWidget(m_dampingItem);
+    m_layout0->addWidget(m_receiverItem);
+    m_layout1->addWidget(m_filterItem);
+    m_layout2->addWidget(m_rectifierItem);
+    m_layout3->addWidget(m_videoFilterItem);
+    m_layout4->addWidget(m_averagingItem);
+    m_layout5->addWidget(m_dampingItem);
 
     m_receiverItem->set(1, 113, 0);
     connect(m_receiverItem,

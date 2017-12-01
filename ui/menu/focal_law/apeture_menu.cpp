@@ -1,5 +1,5 @@
 #include "apeture_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplFocalLawMenu {
 
@@ -10,10 +10,10 @@ ApetureMenu::ApetureMenu(QWidget *parent) :
     m_lastElementItem(new SpinMenuItem(this, tr("Last Element"))),
     m_elementStep(new SpinMenuItem(this, tr("Element Step")))
 {
-    ui->layout0->addWidget(m_apetureItem);
-    ui->layout1->addWidget(m_firstElementItem);
-    ui->layout2->addWidget(m_lastElementItem);
-    ui->layout3->addWidget(m_elementStep);
+    m_layout0->addWidget(m_apetureItem);
+    m_layout1->addWidget(m_firstElementItem);
+    m_layout2->addWidget(m_lastElementItem);
+    m_layout3->addWidget(m_elementStep);
 
     /* Apeture Menu Item */
     m_apetureItem->set_decimals(0);

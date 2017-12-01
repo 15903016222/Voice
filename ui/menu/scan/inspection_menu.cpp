@@ -1,5 +1,5 @@
 #include "inspection_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplScanMenu {
 
@@ -16,8 +16,8 @@ InspectionMenu::InspectionMenu(QWidget *parent) :
     m_encX(m_scan->encoder_x()),
     m_encY(m_scan->encoder_y())
 {
-    ui->layout0->addWidget(m_typeItem);
-    ui->layout1->addWidget(m_scanItem);
+    m_layout0->addWidget(m_typeItem);
+    m_layout1->addWidget(m_scanItem);
 
     /* Type menu item */
     m_typeItem->add_item(tr("One Line"));
@@ -66,16 +66,16 @@ void InspectionMenu::do_typeItem_changed(int pos)
 
     if (pos == 0) {
         scanStringList.append(tr("Time"));
-        ui->layout2->addWidget(m_maxScanSpeedItem);
+        m_layout2->addWidget(m_maxScanSpeedItem);
         m_maxScanSpeedItem->show();
     } else {
-        ui->layout2->addWidget(m_indexItem);
-        ui->layout3->addWidget(m_maxScanSpeedItem);
+        m_layout2->addWidget(m_indexItem);
+        m_layout3->addWidget(m_maxScanSpeedItem);
         m_indexItem->show();
         m_maxScanSpeedItem->show();
 
         if (pos == 2) {
-            ui->layout4->addWidget(m_maxScanSpeedRPMItem);
+            m_layout4->addWidget(m_maxScanSpeedRPMItem);
             m_maxScanSpeedRPMItem->show();
         }
     }

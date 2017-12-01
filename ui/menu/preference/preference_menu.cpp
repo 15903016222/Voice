@@ -6,7 +6,7 @@
  * @date 2016-12-21
  */
 #include "preference_menu.h"
-#include "ui_base_menu.h"
+
 #include <device/device.h>
 #include <QDebug>
 #include <QSettings>
@@ -22,12 +22,12 @@ PreferenceMenu::PreferenceMenu(QWidget *parent) :
     m_gatemodeItem(new ComboMenuItem(this, tr("Gate Mode"))),
     m_deployItem(new LabelMenuItem(this, tr("Deploy")))
 {
-    ui->layout0->addWidget(m_brightItem);
-    ui->layout1->addWidget(m_opacityItem);
-    ui->layout2->addWidget(m_languageItem);
-    ui->layout3->addWidget(m_startingPageItem);
-    ui->layout4->addWidget(m_gatemodeItem);
-    ui->layout5->addWidget(m_deployItem);
+    m_layout0->addWidget(m_brightItem);
+    m_layout1->addWidget(m_opacityItem);
+    m_layout2->addWidget(m_languageItem);
+    m_layout3->addWidget(m_startingPageItem);
+    m_layout4->addWidget(m_gatemodeItem);
+    m_layout5->addWidget(m_deployItem);
 
     m_mcu = Mcu::instance();
 

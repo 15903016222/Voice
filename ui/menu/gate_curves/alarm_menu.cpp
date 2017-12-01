@@ -6,7 +6,7 @@
  * @date 2016-12-16
  */
 #include "alarm_menu.h"
-#include "ui_base_menu.h"
+
 #include <fpga/fpga.h>
 #include <device/device.h>
 
@@ -21,11 +21,11 @@ AlarmMenu::AlarmMenu(QWidget *parent) :
     m_sndConditionItem(new ComboMenuItem(this, tr("Condition2"))),
     m_alarm(NULL)
 {
-    ui->layout0->addWidget(m_alarmItem);
-    ui->layout1->addWidget(m_groupItem);
-    ui->layout2->addWidget(m_fstConditionItem);
-    ui->layout3->addWidget(m_operatorItem);
-    ui->layout4->addWidget(m_sndConditionItem);
+    m_layout0->addWidget(m_alarmItem);
+    m_layout1->addWidget(m_groupItem);
+    m_layout2->addWidget(m_fstConditionItem);
+    m_layout3->addWidget(m_operatorItem);
+    m_layout4->addWidget(m_sndConditionItem);
 
     m_alarmItem->add_item(tr("Alarm 1"));
     m_alarmItem->add_item(tr("Alarm 2"));

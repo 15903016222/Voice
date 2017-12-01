@@ -13,12 +13,8 @@
 #include "menu_item/combo_menu_item.h"
 #include "menu_item/label_menu_item.h"
 
-#include <QVector>
-#include <mcu/mcu.h>
-
-namespace Ui {
-class BaseMenu;
-}
+#include <QWidget>
+#include <QLayout>
 
 class QVBoxLayout;
 
@@ -31,7 +27,15 @@ public:
 
 protected:
     static QStringList s_onOff;
-    Ui::BaseMenu *ui;
+
+    QVBoxLayout *create_layout();
+
+    QVBoxLayout *m_layout0;
+    QVBoxLayout *m_layout1;
+    QVBoxLayout *m_layout2;
+    QVBoxLayout *m_layout3;
+    QVBoxLayout *m_layout4;
+    QVBoxLayout *m_layout5;
 };
 
 

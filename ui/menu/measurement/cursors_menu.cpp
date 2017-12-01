@@ -1,6 +1,6 @@
 #include "cursors_menu.h"
 
-#include "ui_base_menu.h"
+
 #include <global.h>
 #include <ui/tool/tool.h>
 #include <source/scan.h>
@@ -20,7 +20,7 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
     m_imItem(new SpinMenuItem(this, "I(m)", "mm")),
     m_angelItem(new SpinMenuItem(this))
 {
-    ui->layout0->addWidget(m_selectionItem);
+    m_layout0->addWidget(m_selectionItem);
     /* Selection menu item */
     m_selectionItem->add_item(tr("A-Scan"));
     m_selectionItem->add_item(tr("B-Scan"));
@@ -133,7 +133,7 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
 
 void CursorsMenu::show_scan()
 {
-    ui->layout0->addWidget(m_selectionItem);
+    m_layout0->addWidget(m_selectionItem);
     m_selectionItem->show();
     switch (m_selectionItem->current_index()) {
     case 0:
@@ -159,10 +159,10 @@ void CursorsMenu::show_scan()
 
 void CursorsMenu::show_a_scan()
 {
-    ui->layout1->addWidget(m_rItem);
-    ui->layout2->addWidget(m_mItem);
-    ui->layout3->addWidget(m_urItem);
-    ui->layout4->addWidget(m_umItem);
+    m_layout1->addWidget(m_rItem);
+    m_layout2->addWidget(m_mItem);
+    m_layout3->addWidget(m_urItem);
+    m_layout4->addWidget(m_umItem);
     m_rItem->show();
     m_mItem->show();
     m_urItem->show();
@@ -171,10 +171,10 @@ void CursorsMenu::show_a_scan()
 
 void CursorsMenu::hide_a_scan()
 {
-    ui->layout1->removeWidget(m_rItem);
-    ui->layout2->removeWidget(m_mItem);
-    ui->layout3->removeWidget(m_urItem);
-    ui->layout4->removeWidget(m_umItem);
+    m_layout1->removeWidget(m_rItem);
+    m_layout2->removeWidget(m_mItem);
+    m_layout3->removeWidget(m_urItem);
+    m_layout4->removeWidget(m_umItem);
     m_rItem->hide();
     m_mItem->hide();
     m_urItem->hide();
@@ -183,10 +183,10 @@ void CursorsMenu::hide_a_scan()
 
 void CursorsMenu::show_b_scan()
 {
-    ui->layout1->addWidget(m_srItem);
-    ui->layout2->addWidget(m_smItem);
-    ui->layout3->addWidget(m_urItem);
-    ui->layout4->addWidget(m_umItem);
+    m_layout1->addWidget(m_srItem);
+    m_layout2->addWidget(m_smItem);
+    m_layout3->addWidget(m_urItem);
+    m_layout4->addWidget(m_umItem);
     m_srItem->show();
     m_smItem->show();
     m_urItem->show();
@@ -195,10 +195,10 @@ void CursorsMenu::show_b_scan()
 
 void CursorsMenu::hide_b_scan()
 {
-    ui->layout1->removeWidget(m_srItem);
-    ui->layout2->removeWidget(m_smItem);
-    ui->layout3->removeWidget(m_urItem);
-    ui->layout4->removeWidget(m_umItem);
+    m_layout1->removeWidget(m_srItem);
+    m_layout2->removeWidget(m_smItem);
+    m_layout3->removeWidget(m_urItem);
+    m_layout4->removeWidget(m_umItem);
     m_srItem->hide();
     m_smItem->hide();
     m_urItem->hide();
@@ -207,10 +207,10 @@ void CursorsMenu::hide_b_scan()
 
 void CursorsMenu::show_c_scan()
 {
-    ui->layout1->addWidget(m_srItem);
-    ui->layout2->addWidget(m_smItem);
-    ui->layout3->addWidget(m_irItem);
-    ui->layout4->addWidget(m_imItem);
+    m_layout1->addWidget(m_srItem);
+    m_layout2->addWidget(m_smItem);
+    m_layout3->addWidget(m_irItem);
+    m_layout4->addWidget(m_imItem);
     m_srItem->show();
     m_smItem->show();
     m_irItem->show();
@@ -219,10 +219,10 @@ void CursorsMenu::show_c_scan()
 
 void CursorsMenu::hide_c_scan()
 {
-    ui->layout1->removeWidget(m_srItem);
-    ui->layout2->removeWidget(m_smItem);
-    ui->layout3->removeWidget(m_irItem);
-    ui->layout4->removeWidget(m_imItem);
+    m_layout1->removeWidget(m_srItem);
+    m_layout2->removeWidget(m_smItem);
+    m_layout3->removeWidget(m_irItem);
+    m_layout4->removeWidget(m_imItem);
     m_srItem->hide();
     m_smItem->hide();
     m_irItem->hide();
@@ -231,11 +231,11 @@ void CursorsMenu::hide_c_scan()
 
 void CursorsMenu::show_s_scan()
 {
-    ui->layout1->addWidget(m_angelItem);
-    ui->layout2->addWidget(m_urItem);
-    ui->layout3->addWidget(m_umItem);
-    ui->layout4->addWidget(m_irItem);
-    ui->layout5->addWidget(m_imItem);
+    m_layout1->addWidget(m_angelItem);
+    m_layout2->addWidget(m_urItem);
+    m_layout3->addWidget(m_umItem);
+    m_layout4->addWidget(m_irItem);
+    m_layout5->addWidget(m_imItem);
     m_angelItem->show();
     m_urItem->show();
     m_umItem->show();
@@ -245,11 +245,11 @@ void CursorsMenu::show_s_scan()
 
 void CursorsMenu::hide_s_scan()
 {
-    ui->layout1->removeWidget(m_angelItem);
-    ui->layout2->removeWidget(m_urItem);
-    ui->layout3->removeWidget(m_umItem);
-    ui->layout4->removeWidget(m_irItem);
-    ui->layout5->removeWidget(m_imItem);
+    m_layout1->removeWidget(m_angelItem);
+    m_layout2->removeWidget(m_urItem);
+    m_layout3->removeWidget(m_umItem);
+    m_layout4->removeWidget(m_irItem);
+    m_layout5->removeWidget(m_imItem);
     m_angelItem->hide();
     m_urItem->hide();
     m_umItem->hide();
