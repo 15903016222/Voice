@@ -6,14 +6,14 @@
  * @date 2016-12-16
  */
 #include "spin_menu_item.h"
-#include "ui_spin_menu_item.h"
 
 #include <qmath.h>
 #include <QKeyEvent>
-#include <QDebug>
+#include <QLabel>
+#include <QLineEdit>
+#include <QDoubleValidator>
 
-SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) :
-    MenuItem(parent),
+SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) : MenuItem(parent),
     m_nameLabel(new QLabel),
     m_lineEdit(new QLineEdit),
     m_unit(unit),
