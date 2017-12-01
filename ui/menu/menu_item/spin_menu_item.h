@@ -10,9 +10,8 @@
 
 #include "menu_item.h"
 
-namespace Ui {
-class SpinMenuItem;
-}
+class QLabel;
+class QLineEdit;
 
 class SpinMenuItem : public MenuItem
 {
@@ -92,6 +91,7 @@ public slots:
      */
     void set_value(double value);
 
+protected slots:
     void check_number_validity(const QString &text);
 
 signals:
@@ -104,8 +104,18 @@ signals:
 protected:
     bool eventFilter(QObject *obj, QEvent *e);
 
+    void update_title();
+    void update_spin_step();
+    void set_focus();
+    void set_focus_out();
+
+    void update_value();
+    void add();
+    void sub();
+
 private:
-    Ui::SpinMenuItem *ui;
+    QLabel *m_nameLabel;
+    QLineEdit *m_lineEdit;
 
     QString m_unit;
 
@@ -117,15 +127,6 @@ private:
     double m_step;
     double m_baseStep;
     int m_decimals;
-
-    void update_title();
-    void update_spin_step();
-    void set_focus();
-    void set_focus_out();
-
-    void update_value();
-    void add();
-    void sub();
 };
 
 inline void SpinMenuItem::set_title(const QString &title)

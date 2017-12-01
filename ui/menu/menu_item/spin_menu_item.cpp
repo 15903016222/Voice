@@ -12,10 +12,10 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-
 SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) :
     MenuItem(parent),
-    ui(new Ui::SpinMenuItem),
+    m_nameLabel(new QLabel),
+    m_lineEdit(new QLineEdit),
     m_unit(unit),
     m_value(0),
     m_min(0),
@@ -23,22 +23,25 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
     m_step(1),
     m_decimals(0)
 {
-    ui->setupUi(this);
+    m_nameLabel->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    m_lineEdit->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    update_layout(m_nameLabel, m_lineEdit);
 
-    ui->nameLabel->installEventFilter(this);
-    ui->lineEdit->installEventFilter(this);
+    m_nameLabel->installEventFilter(this);
+    m_lineEdit->installEventFilter(this);
 
     m_title = title;
     update_title();
     update_value();
 
-    connect(ui->lineEdit, SIGNAL(textEdited(QString)),
+    set_focus_out();
+
+    connect(m_lineEdit, SIGNAL(textEdited(QString)),
             this, SLOT(check_number_validity(QString)));
 }
 
 SpinMenuItem::~SpinMenuItem()
 {
-    delete ui;
 }
 
 void SpinMenuItem::set_range(double min, double max)
@@ -60,7 +63,7 @@ void SpinMenuItem::set_decimals(int prec)
     m_step = m_baseStep;
 
     QDoubleValidator *validator = new QDoubleValidator(m_min, m_max, prec, this);
-    ui->lineEdit->setValidator(validator);
+    m_lineEdit->setValidator(validator);
 
     update_value();
 }
@@ -74,49 +77,11 @@ void SpinMenuItem::set_step(double step)
 
 void SpinMenuItem::set_selected(bool flag)
 {
-    QString msg;
-    if(flag) {
-        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
-        msg += "<strong>";
-        msg += m_title;
-        msg += "</strong>";
-    } else {
-        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
-        msg += m_title;
-        msg += "</font>";
-    }
-
-    if (!ui->lineEdit->hasFocus()) {
-        if (!m_unit.isEmpty()) {
-            msg += "<br/>(";
-            msg += m_unit;
-            msg += ")";
-        }
-    } else {
-        msg += "<br/>";
-        if (!m_unit.isEmpty()) {
-            msg += "(";
-            msg += m_unit;
-            msg += ") ";
-        }
-        msg += "&Delta;";
-        msg += QString::number(m_step, 'f', m_decimals);
-    }
-
-    msg += "</p>";
-
     m_selected = flag;
-    ui->nameLabel->setText(msg);
 }
 
 void SpinMenuItem::set_edit(bool flag)
 {
-    if(flag) {
-        set_focus();
-    } else {
-        set_focus_out();
-    }
-
     m_isEditing = flag;
 }
 
@@ -140,7 +105,7 @@ void SpinMenuItem::set_value(double value)
 bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::MouseButtonRelease) {
-        if (ui->lineEdit->hasFocus()) {
+        if (m_lineEdit->hasFocus()) {
             update_spin_step();
         } else {
             set_selected(true);
@@ -176,7 +141,7 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
             break;
         }
     } else if (e->type() == QEvent::FocusOut) {
-        if(obj->objectName() == ui->lineEdit->objectName()) {
+        if(obj->objectName() == m_lineEdit->objectName()) {
             set_focus_out();
         }
     } else if (e->type() == QEvent::Wheel) {
@@ -193,38 +158,20 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 
 void SpinMenuItem::update_title()
 {
-    QString msg;
-    if(m_selected) {
-        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
-        msg += "<strong>";
-        msg += m_title;
-        msg += "</strong>";
-    } else {
-        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
-        msg += m_title;
-        msg += "</font>";
+    QString msg = m_title;
+
+    if (!m_unit.isEmpty()) {
+        msg += "<br/>(";
+        msg += m_unit;
+        msg += ") ";
     }
 
-    if (!ui->lineEdit->hasFocus()) {
-        if (!m_unit.isEmpty()) {
-            msg += "<br/>(";
-            msg += m_unit;
-            msg += ")";
-        }
-    } else {
-        msg += "<br/>";
-        if (!m_unit.isEmpty()) {
-            msg += "(";
-            msg += m_unit;
-            msg += ") ";
-        }
+    if (m_lineEdit->hasFocus()) {
         msg += "&Delta;";
         msg += QString::number(m_step, 'f', m_decimals);
     }
 
-    msg += "</p>";
-
-    ui->nameLabel->setText(msg);
+    m_nameLabel->setText(msg);
 }
 
 void SpinMenuItem::update_spin_step()
@@ -240,36 +187,24 @@ void SpinMenuItem::update_spin_step()
 
 void SpinMenuItem::set_focus()
 {
-    ui->lineEdit->setStyleSheet("QLineEdit{\nselection-color:black; selection-background-color: rgba(255,255,255,255);\n}");
-    ui->lineEdit->setFocusPolicy(Qt::WheelFocus);
-    ui->lineEdit->setFocus();
-    ui->lineEdit->setReadOnly(false);
+    m_lineEdit->setFocusPolicy(Qt::WheelFocus);
+    m_lineEdit->setFocus();
+    m_lineEdit->setReadOnly(false);
     update_title();
 }
 
 void SpinMenuItem::set_focus_out()
 {
-    ui->lineEdit->setFocusPolicy(Qt::NoFocus);
-    ui->lineEdit->clearFocus();
-    ui->lineEdit->setReadOnly(true);
-    ui->lineEdit->setStyleSheet("QLineEdit{"
-                                "color: rgb(255, 255, 255);"
-                                "border-top:0px;"
-                                "border-bottom:0px;"
-                                "font: 14pt 'Arial';"
-                                "color: white;"
-                                "selection-color: white;"
-                                "selection-background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));color: rgb(255, 255, 255);"
-                                "background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));"
-                                "border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 130, 195, 255));"
-                                "border-right:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1,stop:0.158192 rgba(0, 0, 0, 255), stop:0.757062 rgba(0, 130, 195, 255));}");
+    m_lineEdit->setFocusPolicy(Qt::NoFocus);
+    m_lineEdit->clearFocus();
+    m_lineEdit->setReadOnly(true);
     update_title();
 }
 
 
 void SpinMenuItem::update_value()
 {
-    ui->lineEdit->setText(QString::number(m_value, 'f', m_decimals) + m_suffix);
+    m_lineEdit->setText(QString::number(m_value, 'f', m_decimals) + m_suffix);
 }
 
 void SpinMenuItem::add()
@@ -309,8 +244,8 @@ void SpinMenuItem::sub()
 void SpinMenuItem::check_number_validity(const QString &text)
 {
     if(text.toDouble() > m_max || text.toDouble() < m_min) {
-        ui->lineEdit->backspace();
-        QString value = ui->lineEdit->text();
+        m_lineEdit->backspace();
+        QString value = m_lineEdit->text();
         m_value = value.toDouble();
     } else {
         m_value = text.toDouble();

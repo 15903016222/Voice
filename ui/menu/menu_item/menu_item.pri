@@ -1,5 +1,4 @@
-FORMS += \
-    $$PWD/spin_menu_item.ui
+FORMS +=
 
 HEADERS += \
     $$PWD/combo_menu_item.h \
