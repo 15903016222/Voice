@@ -9,13 +9,15 @@
 
 #include <qmath.h>
 #include <QKeyEvent>
-#include <QLabel>
+#include <QPushButton>
 #include <QLineEdit>
 #include <QDoubleValidator>
+#include <QTextCodec>
 
 SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) : MenuItem(parent),
-    m_nameLabel(new QLabel),
-    m_lineEdit(new QLineEdit),
+    m_pushBtn(new QPushButton(this)),
+    m_lineEdit(new QLineEdit(this)),
+    m_title(title),
     m_unit(unit),
     m_value(0),
     m_min(0),
@@ -23,19 +25,19 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
     m_step(1),
     m_decimals(0)
 {
-    m_nameLabel->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    m_pushBtn->setFocusPolicy(Qt::NoFocus);
     m_lineEdit->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-    update_layout(m_nameLabel, m_lineEdit);
+    update_layout(m_pushBtn, m_lineEdit);
 
-    m_nameLabel->installEventFilter(this);
     m_lineEdit->installEventFilter(this);
 
-    m_title = title;
     update_title();
     update_value();
 
     set_focus_out();
 
+    connect(m_pushBtn, SIGNAL(clicked(bool)),
+            this, SLOT(do_pushBtn_clicked()));
     connect(m_lineEdit, SIGNAL(textEdited(QString)),
             this, SLOT(check_number_validity(QString)));
 }
@@ -104,16 +106,6 @@ void SpinMenuItem::set_value(double value)
 
 bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 {
-    if (e->type() == QEvent::MouseButtonRelease) {
-        if (m_lineEdit->hasFocus()) {
-            update_spin_step();
-        } else {
-            set_selected(true);
-            set_focus();
-        }
-        return true;
-    }
-
     if (e->type() == QEvent::KeyRelease) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
         switch (keyEvent->key()) {
@@ -161,17 +153,18 @@ void SpinMenuItem::update_title()
     QString msg = m_title;
 
     if (!m_unit.isEmpty()) {
-        msg += "<br/>(";
-        msg += m_unit;
-        msg += ") ";
+        msg += "\n(" + m_unit + ")";
     }
 
     if (m_lineEdit->hasFocus()) {
-        msg += "&Delta;";
-        msg += QString::number(m_step, 'f', m_decimals);
+        if (m_unit.isEmpty()) {
+            msg += "\n";
+        }
+
+        msg += QString::fromUtf8("Δ") + QString::number(m_step, 'f', m_decimals);
     }
 
-    m_nameLabel->setText(msg);
+    m_pushBtn->setText(msg);
 }
 
 void SpinMenuItem::update_spin_step()
@@ -249,5 +242,14 @@ void SpinMenuItem::check_number_validity(const QString &text)
         m_value = value.toDouble();
     } else {
         m_value = text.toDouble();
+    }
+}
+
+void SpinMenuItem::do_pushBtn_clicked()
+{
+    if (m_lineEdit->hasFocus()) {
+        update_spin_step();
+    } else {
+        set_focus();
     }
 }

@@ -18,6 +18,7 @@ LabelMenuItem::LabelMenuItem(QWidget *parent, const QString &title, const QStrin
 {
     update_layout(m_pushBtn, m_label);
     m_label->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    m_pushBtn->setFocusPolicy(Qt::NoFocus);
 
     connect(m_pushBtn, SIGNAL(clicked()),
             this, SIGNAL(clicked()));

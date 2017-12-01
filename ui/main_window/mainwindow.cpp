@@ -8,6 +8,8 @@
 #include "../menu/preference/preference_menu.h"
 #include "../menu/probe_part/fft_menu.h"
 
+#include <global.h>
+
 #include <QDebug>
 #include <QResizeEvent>
 #include <QFontDatabase>
@@ -35,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* angle menu item */
     ui->angleMenuItem->set_title(tr("Angle"));
-    ui->angleMenuItem->set_unit(tr("&#176;"));
+    ui->angleMenuItem->set_unit(DEGREE_STR);
     ui->angleMenuItem->set(0, 180, 1);
 
     /* Mcu */

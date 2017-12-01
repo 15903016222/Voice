@@ -21,6 +21,7 @@ ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
 {    
     update_layout(m_pushBtn, m_label);
     m_label->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    m_pushBtn->setFocusPolicy(Qt::NoFocus);
 
     m_menu->setMinimumWidth(width());
 
@@ -37,7 +38,6 @@ ComboMenuItem::~ComboMenuItem()
 void ComboMenuItem::set_title(const QString &title)
 {
     m_pushBtn->setText(title);
-    m_title = title;
 }
 
 void ComboMenuItem::add_item(const QString &text, const QString &toolTip)

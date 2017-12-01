@@ -1,13 +1,15 @@
 #include "angle_menu.h"
 #include "ui_base_menu.h"
 
+#include <global.h>
+
 namespace DplFocalLawMenu {
 
 AngleMenu::AngleMenu(QWidget *parent) :
     BaseMenu(parent),
-    m_minAngleItem(new SpinMenuItem(this, tr("Min"), tr("&#176;"))),
-    m_maxAngleItem(new SpinMenuItem(this, tr("Max"), tr("&#176;"))),
-    m_angleStepItem(new SpinMenuItem(this, tr("Step"),tr("&#176;")))
+    m_minAngleItem(new SpinMenuItem(this, tr("Min"), DEGREE_STR)),
+    m_maxAngleItem(new SpinMenuItem(this, tr("Max"), DEGREE_STR)),
+    m_angleStepItem(new SpinMenuItem(this, tr("Step"),DEGREE_STR))
 {
     ui->layout0->addWidget(m_minAngleItem);
     ui->layout1->addWidget(m_maxAngleItem);

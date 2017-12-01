@@ -3,8 +3,9 @@
 
 namespace Dpl {
 
-#define US_STR      ("&micro;s")
+#define US_STR      QString::fromUtf8("μs")
 #define MM_STR      ("mm")
+#define DEGREE_STR  QString::fromUtf8("°")
 
 #define US_TO_NS    (1000)
 #define S_TO_US     (1000000)

@@ -12,6 +12,7 @@ MultiComboMenuItem::MultiComboMenuItem(const QString &title, QWidget *parent) : 
 {
     update_layout(m_pushBtn, m_label);
     m_label->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    m_pushBtn->setFocusPolicy(Qt::NoFocus);
 
     m_menu->setMinimumWidth(width());
 

@@ -10,7 +10,7 @@
 
 #include "menu_item.h"
 
-class QLabel;
+class QPushButton;
 class QLineEdit;
 
 class SpinMenuItem : public MenuItem
@@ -93,6 +93,7 @@ public slots:
 
 protected slots:
     void check_number_validity(const QString &text);
+    void do_pushBtn_clicked();
 
 signals:
     /**
@@ -114,13 +115,13 @@ protected:
     void sub();
 
 private:
-    QLabel *m_nameLabel;
+    QPushButton *m_pushBtn;
     QLineEdit *m_lineEdit;
-
-    QString m_unit;
 
     QString m_suffix;
 
+    QString m_title;
+    QString m_unit;
     double m_value;
     double m_min;
     double m_max;

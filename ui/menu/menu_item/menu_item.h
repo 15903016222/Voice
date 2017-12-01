@@ -9,7 +9,6 @@
 #define __MENU_ITEM_H__
 
 #include <QWidget>
-#include <QString>
 
 class MenuItem : public QWidget
 {
@@ -24,7 +23,6 @@ public:
 protected:
     void update_layout(QWidget *w1, QWidget *w2);
 
-    QString m_title;
     bool    m_isEditing;
     bool    m_selected;
     QWidget *m_parent;

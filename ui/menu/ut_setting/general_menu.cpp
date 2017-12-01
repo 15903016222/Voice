@@ -17,11 +17,11 @@ namespace DplUtSettingMenu {
 
 GeneralMenu::GeneralMenu(QWidget *parent) :
     BaseMenu(parent),
-    m_gainItem(new SpinMenuItem(this, tr("Gain"), tr("dB"))),
+    m_gainItem(new SpinMenuItem(this, tr("Gain"), "dB")),
     m_startItem(new SpinMenuItem(this, tr("Start"))),
     m_rangeItem(new SpinMenuItem(this, tr("Range"))),
-    m_velocityItem(new SpinMenuItem(this, tr("Velocity"), tr("m/s"))),
-    m_wedgeDelayItem(new SpinMenuItem(this, tr("Wedge Delay"), tr("&micro;s"))),
+    m_velocityItem(new SpinMenuItem(this, tr("Velocity"), "m/s")),
+    m_wedgeDelayItem(new SpinMenuItem(this, tr("Wedge Delay"), US_STR)),
     m_utUnitItem(new ComboMenuItem(this, tr("UT Unit")))
 {
     ui->layout0->addWidget(m_gainItem);
