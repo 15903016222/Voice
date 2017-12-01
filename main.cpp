@@ -16,8 +16,6 @@ static const char *FONT_FILE = "Arial.ttf";
 
 int main(int argc, char *argv[])
 {
-    Config::Configuration config;
-
     QApplication a(argc, argv);
     a.setApplicationName(QLatin1String("Mercury"));
 //    a.setApplicationVersion();
@@ -62,6 +60,16 @@ int main(int argc, char *argv[])
     splash.finish(&w);
 
     qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
+
+    time.restart();
+    Config::Configuration config;
+    config.save_config("/home/tt/TT/config");
+    qDebug("%s[%d]: Save Config Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
+
+    time.restart();
+    Config::Configuration loadConfig;
+    loadConfig.load_config("/home/tt/TT/config");
+    qDebug("%s[%d]: Load Config Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 
     return a.exec();
 }
