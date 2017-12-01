@@ -79,7 +79,6 @@ MainWindow::MainWindow(QWidget *parent) :
             m_subMenu, SLOT(set_opacity_main_menu(double)));
 
     connect(m_mainMenu, SIGNAL(click(MainMenu::Type)), m_subMenu, SLOT(set_menu(MainMenu::Type)));
-    connect(m_mainMenu, SIGNAL(sub_menu_keyreturn()), m_subMenu, SLOT(do_sub_menu_keyreturn()));
 
     connect(m_subMenu, SIGNAL(sub_menu_focus_out()), m_mainMenu, SLOT(do_sub_menu_focus_out()));
 

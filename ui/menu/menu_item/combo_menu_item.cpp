@@ -77,16 +77,6 @@ QString ComboMenuItem::current_text() const
     return m_action->text();
 }
 
-void ComboMenuItem::set_selected(bool flag)
-{
-    m_selected = flag;
-}
-
-void ComboMenuItem::set_edit(bool flag)
-{
-    m_isEditing = flag;
-}
-
 void ComboMenuItem::clear()
 {
     QList<QAction *> actions = m_menu->actions();

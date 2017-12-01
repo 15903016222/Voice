@@ -44,9 +44,6 @@ public:
      */
     void set_value(int value);
 
-    void set_selected(bool flag) {}
-    void set_edit(bool flag) {}
-
 signals:
     void triggered(int, bool);
 

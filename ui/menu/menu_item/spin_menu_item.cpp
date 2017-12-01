@@ -77,16 +77,6 @@ void SpinMenuItem::set_step(double step)
     update_title();
 }
 
-void SpinMenuItem::set_selected(bool flag)
-{
-    m_selected = flag;
-}
-
-void SpinMenuItem::set_edit(bool flag)
-{
-    m_isEditing = flag;
-}
-
 void SpinMenuItem::set_value(double value)
 {
     if (qFuzzyCompare(m_value, value)) {
@@ -117,9 +107,6 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         {
             update_value();
             set_focus_out();
-            set_selected(true);
-
-            set_parent_focus_in(this);
             return true;
             break;
         }

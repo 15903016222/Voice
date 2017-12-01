@@ -9,11 +9,7 @@
 
 #include <QVBoxLayout>
 
-MenuItem::MenuItem(QWidget *parent) :
-    QWidget(parent),
-    m_isEditing(false),
-    m_selected(false),
-    m_parent(parent)
+MenuItem::MenuItem(QWidget *parent) : QWidget(parent)
 {}
 
 void MenuItem::update_layout(QWidget *w1, QWidget *w2)

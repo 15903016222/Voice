@@ -48,12 +48,3 @@ void LabelMenuItem::set_text(const QString &text)
     m_label->setText(text);
 }
 
-void LabelMenuItem::set_selected(bool flag)
-{
-    m_selected = flag;
-}
-
-void LabelMenuItem::set_edit(bool flag)
-{
-    Q_UNUSED(flag);
-}
