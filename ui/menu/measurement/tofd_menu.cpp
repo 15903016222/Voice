@@ -14,7 +14,7 @@ TofdMenu::TofdMenu(QWidget *parent) :
     m_straighteningItem(new ComboMenuItem(this, tr("Straightening"))),
     m_removeLateralItem(new ComboMenuItem(this, tr("Remove Lateral"))),
     m_refPositionItem(new SpinMenuItem(this, tr("Ref.Position"), "mm")),
-    m_depthCalibrationItem(new ComboMenuItem(this, tr("Depth Calibration")))
+    m_depthCalibrationItem(new ComboMenuItem(this, tr("Depth\nCalibration")))
 {
     ui->layout0->addWidget(m_selectItem);
 
@@ -32,11 +32,8 @@ TofdMenu::TofdMenu(QWidget *parent) :
     ui->layout4->addWidget(m_depthCalibrationItem);
 
     /* Select menu item */
-    QStringList selectList;
-    selectList.append(tr("TOFD Settings"));
-    selectList.append(tr("TOFD Analysis"));
-    m_selectItem->set(selectList);
-    m_selectItem->set_dispay_mode(ComboMenuItem::SUFFIX);
+    m_selectItem->add_item(tr("Settings"));
+    m_selectItem->add_item(tr("Analysis"));
     connect(m_selectItem, SIGNAL(value_changed(int)),
             this, SLOT(do_selectItem_changed(int)));
 

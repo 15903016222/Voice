@@ -102,6 +102,8 @@ bool Device::add_group()
 
     deploy_beams();
 
+    emit group_qty_changed(d->m_groups.count());
+
     emit current_group_changed(d->m_curGroup);
     return true;
 }
@@ -122,6 +124,8 @@ bool Device::remove_group(int id)
     }
 
     d->m_curGroup = d->m_groups.last();
+
+    emit group_qty_changed(d->m_groups.count());
     emit current_group_changed(d->m_curGroup);
 
     return true;
@@ -201,7 +205,7 @@ bool Device::is_running() const
     return !DplFpga::Fpga::instance()->is_freeze();
 }
 
-void Device::deploy() const
+void Device::deploy()
 {
     Q_D(const Device);
 

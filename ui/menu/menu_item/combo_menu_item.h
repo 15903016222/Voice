@@ -10,9 +10,10 @@
 
 #include "menu_item.h"
 
-namespace Ui {
-class ComboMenuItem;
-}
+class QMenu;
+class QAction;
+class QPushButton;
+class QLabel;
 
 class ComboMenuItem : public MenuItem
 {
@@ -29,9 +30,10 @@ public:
 
     /**
      * @brief add_item  添加显示项字符串
-     * @param text      项字符串
+     * @param text      项显示字符串
+     * @param tooTip    项提示字符串
      */
-    void add_item(const QString &text);
+    void add_item(const QString &text, const QString &toolTip = "");
 
     /**
      * @brief add_items 添加显示项字符串列表
@@ -76,30 +78,28 @@ public:
     void set_dispay_mode(DisplayMode mode);
 
     /**
-     * @brief set_selected  设置当前Item是否选中
-     * @param flag  true：选中；false：不选中
+     * @brief clear 清除所有项
      */
-    virtual void set_selected(bool flag);
-
-    /**
-     * @brief set_edit  设置当前Item进行编辑状态
-     * @param flag  true：编辑状态；false：非编辑
-     */
-    virtual void set_edit(bool flag);
+    void clear();
 
 signals:    
     void value_changed(int index);
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *e);
+protected slots:
+    void do_pushBtn_clicked(bool checked);
+    void do_triggered(QAction *action);
 
 private:
-    Ui::ComboMenuItem *ui;
-
-    int m_displayMode;
-
-private slots:
-    void set_label_text(QString text);
+    QMenu *m_menu;
+    QAction *m_action;
+    QPushButton *m_pushBtn;
+    QLabel *m_label;
 };
+
+inline void ComboMenuItem::set(const QStringList &texts)
+{
+    clear();
+    add_items(texts);
+}
 
 #endif // __COMBO_MENU_ITEM_H__

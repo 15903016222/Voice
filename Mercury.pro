@@ -27,6 +27,9 @@ unix {
     }
 }
 
+QMAKE_CXXFLAGS += -Wfatal-errors -Wall -Wextra #-Werror
+QMAKE_CXXFLAGS_RELEASE += -O2
+
 CONFIG += $$DEVICE
 DEFINES += $$upper($$DEVICE)
 

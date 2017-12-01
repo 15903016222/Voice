@@ -40,11 +40,11 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     groupList.append(tr("Remove"));
     m_groupItem->set(groupList);
 
-    m_modeItem->add_item(tr("UT (PA Connector)"));
-    m_modeItem->add_item(tr("PA (Phassed Array)"));
-    m_modeItem->add_item(tr("UT1 (Conventional UT)"));
-    m_modeItem->add_item(tr("UT2 (Conventional UT)"));
-    m_modeItem->set_dispay_mode(ComboMenuItem::PREFIX);
+    m_modeItem->add_item("UT", tr("PA Connector"));
+    m_modeItem->add_item("PA", tr("Phassed Array"));
+    m_modeItem->add_item("UT1", tr("Conventional UT"));
+    m_modeItem->add_item("UT2", tr("Conventional UT"));
+
     connect(m_modeItem, SIGNAL(value_changed(int)),
             this, SLOT(do_groupModeItem_changed(int)));
 

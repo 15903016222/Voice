@@ -155,11 +155,6 @@ void MainMenu::do_change_arrow()
     }
 }
 
-void MainMenu::do_sub_menu_focus_out()
-{
-    ui->treeWidget->setFocus();
-}
-
 void MainMenu::on_treeWidget_clicked(const QModelIndex &index)
 {
     do_keyreturn_event(index);

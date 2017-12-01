@@ -8,6 +8,8 @@
 #include "../menu/preference/preference_menu.h"
 #include "../menu/probe_part/fft_menu.h"
 
+#include <global.h>
+
 #include <QDebug>
 #include <QResizeEvent>
 #include <QFontDatabase>
@@ -16,7 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    load_style_sheet("/opt/mercury/qss/default.qss");
+
     ui->setupUi(this);
+
     ui->gainMenuItem->show();
     ui->angleMenuItem->show();
 
@@ -32,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* angle menu item */
     ui->angleMenuItem->set_title(tr("Angle"));
-    ui->angleMenuItem->set_unit(tr("&#176;"));
+    ui->angleMenuItem->set_unit(DEGREE_STR);
     ui->angleMenuItem->set(0, 180, 1);
 
     /* Mcu */
@@ -73,10 +78,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(preferenceMenu, SIGNAL(opacity_changed(double)),
             m_subMenu, SLOT(set_opacity_main_menu(double)));
 
-    connect(m_mainMenu, SIGNAL(click(MainMenu::Type)), m_subMenu, SLOT(set_menu(MainMenu::Type)));
-    connect(m_mainMenu, SIGNAL(sub_menu_keyreturn()), m_subMenu, SLOT(do_sub_menu_keyreturn()));
-
-    connect(m_subMenu, SIGNAL(sub_menu_focus_out()), m_mainMenu, SLOT(do_sub_menu_focus_out()));
+    connect(m_mainMenu, SIGNAL(click(MainMenu::Type)),
+            m_subMenu, SLOT(set_menu(MainMenu::Type)));
 
     pVirtualKeyboard = new VirtualKeyboard;
     pVirtualKeyboard->hide();
@@ -88,6 +91,15 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::load_style_sheet(const QString &fileName)
+{
+    QFile file(fileName);
+    if(file.open(QFile::ReadOnly)) {
+        qApp->setStyleSheet(file.readAll());
+        file.close();
+    }
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
@@ -129,19 +141,6 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     default:
         break;
     }
-}
-
-void MainWindow::update_translator(QString string)
-{
-//    if(string == "Chinese") {
-//        translator->load(":/file/translator/phascanII_UI_Chinese.qm");
-//    } else if(string == "English") {
-//        translator->load(":/file/translator/phascanII_UI_English.qm");
-//    }
-//    ui->retranslateUi(this);
-//    ui->widgetTopLeft->retranslate_top_menu_ui();
-//    firstSecondMenu->retranslate_main_menu_ui(string);
-//    commonMenuWidget->retranslate_common_menu_ui();
 }
 
 void MainWindow::show_hidden_Menu()

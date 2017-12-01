@@ -16,11 +16,11 @@ namespace DplDisplayMenu {
 SelectionMenu::SelectionMenu(QWidget *parent) :
     BaseMenu(parent),
     m_displayItem(new LabelMenuItem(this, tr("Display"), "A")),
-    m_cSourceItem(new ComboMenuItem(this, tr("C Scan<br>Source"))),
-    m_thicknessSourceItem(new ComboMenuItem(this, tr("Thickness<br>Source"))),
+    m_cSourceItem(new ComboMenuItem(this, tr("C Scan\nSource"))),
+    m_thicknessSourceItem(new ComboMenuItem(this, tr("Thickness\nSource"))),
     m_minThicknessItem(new SpinMenuItem(this, tr("Min.Thickness"), "mm")),
     m_maxThicknessItem(new SpinMenuItem(this, tr("Max.Thickness"), "mm")),
-    m_dataCompressionItem(new ComboMenuItem(this, tr("Data<br>Compression")))
+    m_dataCompressionItem(new ComboMenuItem(this, tr("Data\nCompression")))
 {
     ui->layout0->addWidget(m_displayItem);
     ui->layout1->addWidget(m_cSourceItem);

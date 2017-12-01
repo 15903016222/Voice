@@ -12,9 +12,8 @@
 #include <measure.h>
 #include <QReadWriteLock>
 
-namespace Ui {
-class MeasureWidget;
-}
+class QPushButton;
+class QLabel;
 
 class MeasureWidget : public QWidget
 {
@@ -49,15 +48,17 @@ signals:
     void calculated(const QString &text);
 
 protected:
-    bool eventFilter(QObject *object, QEvent *event);
-    void update_name_label();
+    void update_title();
 
 protected slots:
+    void do_pushBtn_clicked();
     void do_current_group_changed(const DplDevice::GroupPointer &grp);
     void do_data_event();
 
 private:
-    Ui::MeasureWidget *ui;
+    QPushButton *m_pushBtn;
+    QLabel *m_label;
+
     QString m_title;
     QString m_unit;
     Measure::Type m_type;
@@ -78,7 +79,7 @@ inline QString MeasureWidget::title() const
 inline void MeasureWidget::set_title(const QString &name)
 {
     m_title = name;
-    update_name_label();
+    update_title();
 }
 
 inline QString MeasureWidget::unit() const
@@ -89,7 +90,7 @@ inline QString MeasureWidget::unit() const
 inline void MeasureWidget::set_unit(const QString &unit)
 {
     m_unit = unit;
-    update_name_label();
+    update_title();
 }
 
 

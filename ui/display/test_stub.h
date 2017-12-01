@@ -33,7 +33,7 @@ public:
 
     static TestStub *instance();
     inline TestStub::C_SCAN_SOURCE get_source() { return m_source; }
-    inline void set_source(TestStub::C_SCAN_SOURCE source) { qDebug() << " select = " << source; m_source = source;}
+    inline void set_source(TestStub::C_SCAN_SOURCE source) { m_source = source;}
 
     inline TestStub::THICKNESS_SOURCE get_thickness_source() { return m_thicknessSource; }
     inline void set_thickness_source(TestStub::THICKNESS_SOURCE source) { m_thicknessSource = source; }

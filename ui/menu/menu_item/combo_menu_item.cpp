@@ -6,161 +6,102 @@
  * @date 2016-12-16
  */
 #include "combo_menu_item.h"
-#include "ui_combo_menu_item.h"
 
-#include <QListView>
-#include <QDebug>
-#include <QKeyEvent>
+#include <QPushButton>
+#include <QMenu>
+#include <QLabel>
+#include <QVBoxLayout>
 
 ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
     MenuItem(parent),
-    ui(new Ui::ComboMenuItem),
-    m_displayMode(ALL)
+    m_menu(new QMenu(this)),
+    m_action(NULL),
+    m_pushBtn(new QPushButton(title, this)),
+    m_label(new QLabel(this))
+{    
+    update_layout(m_pushBtn, m_label);
+    m_label->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    m_pushBtn->setFocusPolicy(Qt::NoFocus);
 
-{
-    ui->setupUi(this);
+    m_menu->setMinimumWidth(width());
 
-    ui->nameLabel->installEventFilter(this);
-    ui->label->installEventFilter(this);
-
-    ui->comboBox->hide();
-    ui->label->show();
-    ui->comboBox->setView(new QListView());
-    ui->comboBox->setMinimumWidth(ui->comboBox->width());
-    ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-
-    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(value_changed(int)));
-    connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(set_label_text(QString)));
-
-    set_title(title);
+    connect(m_pushBtn, SIGNAL(clicked(bool)),
+            this, SLOT(do_pushBtn_clicked(bool)));
+    connect(m_menu, SIGNAL(triggered(QAction*)),
+            this, SLOT(do_triggered(QAction*)));
 }
 
 ComboMenuItem::~ComboMenuItem()
 {
-    delete ui;
 }
 
 void ComboMenuItem::set_title(const QString &title)
 {
-    m_title = title;
-    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
-    msg += title;
-    msg += "</font>";
-    msg += "</p>";
-    ui->nameLabel->setText(msg);
+    m_pushBtn->setText(title);
 }
 
-void ComboMenuItem::add_item(const QString &text)
+void ComboMenuItem::add_item(const QString &text, const QString &toolTip)
 {
-    ui->comboBox->addItem(text);
+    QAction *action = new QAction(text, this);
+    action->setToolTip(toolTip);
+    if (!m_action) {
+        m_action = action;
+        m_label->setText(m_action->text());
+    }
+    m_menu->addAction(action);
 }
 
 void ComboMenuItem::add_items(const QStringList &texts)
 {
-    ui->comboBox->addItems(texts);
-}
-
-bool ComboMenuItem::eventFilter(QObject *obj, QEvent *e)
-{
-    if (e->type() == QEvent::MouseButtonRelease) {
-        this->setFocusPolicy(Qt::WheelFocus);
-        this->setFocus();
-        ui->comboBox->showPopup();
-        set_selected(true);
-        m_isEditing = true;
-        return true;
-    } else if (e->type() == QEvent::Hide) {
-        ui->comboBox->hidePopup();
-        m_isEditing = false;
-        return true;
-    } else if(e->type() == QEvent::Leave) {
-        set_selected(false);
-        return true;
-    } else if(e->type() == QEvent::KeyRelease) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent*> (e);
-        if(keyEvent) {
-            if(keyEvent->key() == Qt::Key_Return) {
-                set_parent_focus_in(this);
-                return true;
-            }
-        }
+    for (int i = 0; i < texts.count(); ++i) {
+        add_item(texts[i], "Hello world");
     }
-
-    return QWidget::eventFilter(obj, e);
-}
-
-void ComboMenuItem::set(const QStringList &texts)
-{
-    ui->comboBox->clear();
-    ui->comboBox->addItems(texts);
 }
 
 void ComboMenuItem::set_current_index(int index)
 {
-    ui->comboBox->setCurrentIndex(index);
+    QAction *action = m_menu->actions().at(index);
+    if (action) {
+        m_action = action;
+        m_label->setText(m_action->text());
+    }
 }
 
 int ComboMenuItem::current_index() const
 {
-    return ui->comboBox->currentIndex();
+    return m_menu->actions().indexOf(m_action);
 }
 
 QString ComboMenuItem::current_text() const
 {
-    return ui->comboBox->currentText();
+    return m_action->text();
 }
 
-void ComboMenuItem::set_dispay_mode(ComboMenuItem::DisplayMode mode)
+void ComboMenuItem::clear()
 {
-    m_displayMode = mode;
-    set_label_text(ui->comboBox->currentText());
-}
-
-void ComboMenuItem::set_selected(bool flag)
-{
-    QString msg;
-    if(flag) {
-        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
-        msg += "<strong>";
-        msg += m_title;
-        msg += "</strong>";
-        msg += "</font>";
-        msg += "</p>";
-        ui->nameLabel->setText(msg);
-    } else {
-        msg = QString("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=yellow>");
-        msg += m_title;
-        msg += "</font>";
-        msg += "</p>";
-        ui->nameLabel->setText(msg);
-    }
-    m_selected = flag;
-}
-
-void ComboMenuItem::set_edit(bool flag)
-{
-    if(flag) {
-        ui->comboBox->showPopup();
-    } else {
-        ui->comboBox->hidePopup();
-    }
-    m_isEditing = flag;
-}
-
-void ComboMenuItem::set_label_text(QString text)
-{
-    switch (m_displayMode) {
-    case ALL:
-        ui->label->setText(text);
-        break;
-    case PREFIX:
-        ui->label->setText(text.left(text.indexOf(" ")));
-        break;
-    case SUFFIX:
-        ui->label->setText(text.right(text.length() - text.indexOf(" ") - 1));
-        break;
-    default:
-        break;
+    QList<QAction *> actions = m_menu->actions();
+    foreach (QAction *act, actions) {
+        delete act;
     }
 }
 
+void ComboMenuItem::do_pushBtn_clicked(bool checked)
+{
+    Q_UNUSED(checked);
+
+    m_menu->show();
+    m_menu->hide();
+    QPoint point = mapToGlobal(QPoint(0,0));
+    point.setY(point.y() - m_menu->height());
+    if (m_action) {
+        m_menu->setActiveAction(m_action);
+    }
+    m_menu->exec(point);
+}
+
+void ComboMenuItem::do_triggered(QAction *action)
+{
+    m_action = action;
+    m_label->setText(m_action->text());
+    emit value_changed(current_index());
+}

@@ -10,7 +10,7 @@ FormatMenu::FormatMenu(QWidget *parent) :
     m_scanInfoItem(new ComboMenuItem(this, tr("Scan"))),
     m_encoderInfoItem(new ComboMenuItem(this, tr("Encoder"))),
     m_dacTcgInfoItem(new ComboMenuItem(this, tr("DAC/TCG"))),
-    m_flawRecordTableItem(new ComboMenuItem(this, tr("Flaw Record Table")))
+    m_flawRecordTableItem(new ComboMenuItem(this, tr("Flaw Record\nTable")))
 {
     ui->layout0->addWidget(m_probeWedgeItem);
     ui->layout1->addWidget(m_inspectionInfoItem);

@@ -5,19 +5,33 @@
  * @date 2017-10-19
  */
 #include "measure_widget.h"
-#include "ui_measure_widget.h"
 #include <device/device.h>
+#include <QPushButton>
+#include <QLabel>
+#include <QVBoxLayout>
 
-MeasureWidget::MeasureWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::MeasureWidget)
+MeasureWidget::MeasureWidget(QWidget *parent) : QWidget(parent),
+    m_pushBtn(new QPushButton),
+    m_label(new QLabel)
 {
-    ui->setupUi(this);
-    ui->nameLabel->installEventFilter(this);
+    m_label->setFocusPolicy(Qt::NoFocus);
+    m_pushBtn->setFocusPolicy(Qt::NoFocus);
+    m_label->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+    m_pushBtn->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    m_label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+
+    QVBoxLayout *vbox = new QVBoxLayout(this);
+    vbox->setContentsMargins(0, 0, 0, 0);
+    vbox->setSpacing(0);
+    vbox->addWidget(m_pushBtn, 2);
+    vbox->addWidget(m_label, 1);
+
+    connect(m_pushBtn, SIGNAL(clicked(bool)),
+            this, SLOT(do_pushBtn_clicked()));
 
     connect(this,
             SIGNAL(calculated(QString)),
-            ui->valueLabel,
+            m_label,
             SLOT(setText(QString)), Qt::QueuedConnection);
 
     connect(DplDevice::Device::instance(),
@@ -25,12 +39,10 @@ MeasureWidget::MeasureWidget(QWidget *parent) :
             this,
             SLOT(do_current_group_changed(DplDevice::GroupPointer)));
     do_current_group_changed(DplDevice::Device::instance()->current_group());
-
 }
 
 MeasureWidget::~MeasureWidget()
 {
-    delete ui;
 }
 
 void MeasureWidget::set_type(Measure::Type type)
@@ -41,38 +53,30 @@ void MeasureWidget::set_type(Measure::Type type)
 
 QString MeasureWidget::value() const
 {
-    return ui->valueLabel->text();
+    return m_label->text();
 }
 
 void MeasureWidget::set_value(const QString &value)
 {
-    ui->valueLabel->setText(value);
+    m_label->setText(value);
 }
 
-bool MeasureWidget::eventFilter(QObject *object, QEvent *event)
+void MeasureWidget::update_title()
 {
-    if (object == ui->nameLabel
-            && event->type() == QEvent::MouseButtonPress) {
-        emit clicked(this);
-        return true;
-    } else {
-        return QWidget::eventFilter(object, event);
-    }
-}
-
-void MeasureWidget::update_name_label()
-{
-    QString msg("<p align=\"center\"><font style='font-size:16pt' face='Arial' color=white>");
-    msg += m_title;
-    msg += "</font>";
+    QString msg = m_title;
 
     if ( !m_unit.isEmpty() ){
-        msg += "<br/><font style='font-size:12pt' face='Arial' color=white>(";
+        msg += "\n(";
         msg += m_unit;
-        msg += ")</font>";
+        msg += ")";
     }
 
-    ui->nameLabel->setText(msg);
+    m_pushBtn->setText(msg);
+}
+
+void MeasureWidget::do_pushBtn_clicked()
+{
+    emit clicked(this);
 }
 
 void MeasureWidget::do_current_group_changed(const DplDevice::GroupPointer &grp)

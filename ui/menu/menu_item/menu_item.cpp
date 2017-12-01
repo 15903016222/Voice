@@ -7,19 +7,19 @@
  */
 #include "menu_item.h"
 
-#include <ui/menu/base_menu.h>
+#include <QVBoxLayout>
 
-MenuItem::MenuItem(QWidget *parent) :
-    QWidget(parent),
-    m_isEditing(false),
-    m_selected(false),
-    m_parent(parent)
+MenuItem::MenuItem(QWidget *parent) : QWidget(parent)
 {}
 
-void MenuItem::set_parent_focus_in(QObject *object)
+void MenuItem::update_layout(QWidget *w1, QWidget *w2)
 {
-    BaseMenu *parentItem = qobject_cast<BaseMenu*> (m_parent);
-    if(parentItem) {
-        parentItem->set_focus(object);
-    }
+    w1->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    w2->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+
+    QVBoxLayout *vbox = new QVBoxLayout(this);
+    vbox->setContentsMargins(0, 0, 0, 0);
+    vbox->setSpacing(0);
+    vbox->addWidget(w1, 2);
+    vbox->addWidget(w2, 1);
 }

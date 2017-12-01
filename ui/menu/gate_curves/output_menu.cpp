@@ -36,12 +36,11 @@ OutputMenu::OutputMenu(QWidget *parent) :
     connect(m_outputItem, SIGNAL(value_changed(int)),
             this, SLOT(update(int)));
 
-    m_soundItem->add_item(tr("Off No Sound"));
-    m_soundItem->add_item(tr("300Hz Audio Output at 300Hz"));
-    m_soundItem->add_item(tr("600Hz Audio Output at 600Hz"));
-    m_soundItem->add_item(tr("1000Hz Audio Output at 1000Hz"));
-    m_soundItem->add_item(tr("5000Hz Audio Output at 5000Hz"));
-    m_soundItem->set_dispay_mode(ComboMenuItem::PREFIX);
+    m_soundItem->add_item(tr("Off"));
+    m_soundItem->add_item("300Hz", tr("Audio Output at 300Hz"));
+    m_soundItem->add_item("600Hz", tr("Audio Output at 600Hz"));
+    m_soundItem->add_item("1000Hz", tr("Audio Output at 1000Hz"));
+    m_soundItem->add_item("5000Hz", tr("Audio Output at 5000Hz"));
 
     m_delayItem->set(0, 5000, 2);
     m_holdTimeItem->set(0, 5000, 2);

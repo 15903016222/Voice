@@ -23,6 +23,8 @@ public:
     ~MainWindow();
 
 protected:
+    void load_style_sheet(const QString &fileName);
+
     void mousePressEvent(QMouseEvent *e);
     void keyPressEvent(QKeyEvent *event);
 
@@ -30,8 +32,6 @@ signals:
 
 protected slots:
     void do_key_event(Mcu::KeyType type);
-
-    void update_translator(QString string);
 
     void do_keyboard_event();
 
