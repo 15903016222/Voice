@@ -40,18 +40,12 @@ protected slots:
 private:
     Ui::MainWindow *ui;
 
-    QTranslator *translator;
-    QGraphicsOpacityEffect *effect;
-
-    VirtualKeyboard *pVirtualKeyboard;
+    VirtualKeyboard *m_virtualKeyboard;
 
     MainMenu *m_mainMenu;
     SubMenu *m_subMenu;
 
-    bool m_hiddenCommonMenuFlag;
     void show_hidden_Menu();
-    void resizeEvent(QResizeEvent *event);
-
 };
 
 #endif // MAINWINDOW_H

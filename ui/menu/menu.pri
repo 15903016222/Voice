@@ -1,5 +1,4 @@
-FORMS += \
-    $$PWD/main_menu.ui
+FORMS +=
 
 HEADERS += \
     $$PWD/sub_menu.h \

@@ -59,7 +59,17 @@ public:
 
     explicit MainMenu(QWidget *parent = 0);
 
+    /**
+     * @brief show  显示MainMenu
+     */
     void show();
+
+public slots:
+    /**
+     * @brief set_opacity   设置透明度
+     * @param val           透明度(%)
+     */
+    void set_opacity(double val);
 
 signals:
     void type_changed(MainMenu::Type type);

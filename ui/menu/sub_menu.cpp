@@ -67,8 +67,7 @@
 #include <QKeyEvent>
 #include <QGraphicsOpacityEffect>
 
-SubMenu::SubMenu(QWidget *parent) :
-    QWidget(parent),
+SubMenu::SubMenu(QWidget *parent) : QWidget(parent),
     m_curMenu(NULL)
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);

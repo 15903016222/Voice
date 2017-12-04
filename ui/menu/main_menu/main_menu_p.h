@@ -4,12 +4,14 @@
 #include "main_menu.h"
 #include <QListWidget>
 #include <QSpacerItem>
+#include <QGraphicsOpacityEffect>
 
 class MainMenuPrivate : public QObject
 {
     Q_OBJECT
 public:
     MainMenuPrivate(MainMenu *parent);
+    void set_opacity(double val);
 
     /* attribution */
     QListWidget *m_mainMenu;
@@ -27,12 +29,14 @@ public:
     QSpacerItem *m_bottomSpaceItem;
 
 public slots:
-    void do_subMenu_itemClicked();
+    void do_subMenu_pressed();
 
 protected slots:
     void do_currentRowChanged(int row);
 
 protected:
+    void set_menu_height(QListWidget *menu, int height);
+
     void init_menu();
     void init_mainMenu();
     void init_utSettingMenu();
@@ -45,4 +49,11 @@ protected:
     void init_fileReportMenu();
     void init_preferenceMenu();
 };
+
+inline void MainMenuPrivate::set_menu_height(QListWidget *menu, int height)
+{
+    menu->setGraphicsEffect(new QGraphicsOpacityEffect(menu));
+    menu->setMinimumHeight(height);
+    menu->setMaximumHeight(height);
+}
 #endif // __MAIN_MENU_P_H__

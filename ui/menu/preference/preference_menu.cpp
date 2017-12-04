@@ -39,7 +39,7 @@ PreferenceMenu::PreferenceMenu(QWidget *parent) :
 
     /* Opacity menu item */
     m_opacityItem->set(20, 100, 0);
-    m_opacityItem->set_value(80);
+    m_opacityItem->set_value(85);
     connect(m_opacityItem, SIGNAL(value_changed(double)),
             this, SIGNAL(opacity_changed(double)));
 

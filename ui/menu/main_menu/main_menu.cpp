@@ -10,6 +10,7 @@
 
 #include <QVBoxLayout>
 #include <QKeyEvent>
+#include <QGraphicsOpacityEffect>
 
 MainMenu::MainMenu(QWidget *parent) : QWidget(parent),
     d(new MainMenuPrivate(this))
@@ -42,19 +43,21 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent),
     subLayout->addWidget(d->m_fileReportMenu);
     subLayout->addWidget(d->m_preferenceMenu);
     subLayout->addSpacerItem(d->m_bottomSpaceItem);
-//    setSpacing(0);
-//    QVBoxLayout *layout = new QVBoxLayout(this);
-//    layout->setContentsMargins(0, 0, 0, 0);
 
-//    connect(this, SIGNAL(currentRowChanged(int)),
-    //            this, SLOT(do_currentRowChanged(int)));
+    d->set_opacity(85);
 }
 
 void MainMenu::show()
 {
+    d->m_mainMenu->show();
+    d->m_curSubMenu->show();
     QWidget::show();
     d->m_mainMenu->setFocus();
+}
 
+void MainMenu::set_opacity(double val)
+{
+    d->set_opacity(val);
 }
 
 void MainMenu::keyPressEvent(QKeyEvent *e)
@@ -64,7 +67,7 @@ void MainMenu::keyPressEvent(QKeyEvent *e)
             d->m_curSubMenu->setCurrentRow(0);
             d->m_curSubMenu->setFocus();
         } else if (d->m_curSubMenu->hasFocus()) {
-            d->do_subMenu_itemClicked();
+            d->do_subMenu_pressed();
         }
         return;
     } else if(e->key() == Qt::Key_Back || e->key() == Qt::Key_Escape) {
