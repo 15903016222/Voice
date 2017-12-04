@@ -65,6 +65,7 @@
 #include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QGraphicsOpacityEffect>
 
 SubMenu::SubMenu(QWidget *parent) :
     QWidget(parent),

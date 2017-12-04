@@ -8,17 +8,12 @@
 #ifndef __MAIN_MENU_H__
 #define __MAIN_MENU_H__
 
-#include <QTreeWidget>
-#include <QGraphicsOpacityEffect>
+#include <QWidget>
 
-namespace Ui {
-class MainMenu;
-}
-
+class MainMenuPrivate;
 class MainMenu : public QWidget
 {
     Q_OBJECT
-
 public:
     enum Type {
         UTSettings_General      = 0x00,
@@ -62,39 +57,16 @@ public:
     };
 
     explicit MainMenu(QWidget *parent = 0);
-    ~MainMenu();
 
     void show();
-    void do_change_arrow();
 
 signals:
-    void click(MainMenu::Type type);
-    void sub_menu_keyreturn();
 
-private slots:
-    void on_pushButton_up_clicked();
-
-    void on_pushButton_down_clicked();
-
-    void on_treeWidget_clicked(const QModelIndex &index);
-
-    void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-
-    void set_opacity_main_menu(double value);
+protected:
+    void keyPressEvent(QKeyEvent *e);
 
 private:
-    Ui::MainMenu *ui;
-
-    QGraphicsOpacityEffect *m_opacityEffect;
-
-    bool eventFilter(QObject *object, QEvent *event);
-
-    bool do_keypress_event(QKeyEvent *e);
-    bool do_keyrelease_event(QKeyEvent *e);
-
-    void do_keyescape_event(const QModelIndex &index);
-    void do_keyreturn_event(const QModelIndex &index);
-    void resizeEvent(QResizeEvent *event);
+    MainMenuPrivate *d;
 };
 
 #endif // __MAIN_MENU_H__

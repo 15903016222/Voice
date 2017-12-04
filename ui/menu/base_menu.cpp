@@ -33,10 +33,6 @@ BaseMenu::BaseMenu(QWidget *parent) : QWidget(parent)
     hide();
 }
 
-BaseMenu::~BaseMenu()
-{
-}
-
 QVBoxLayout *BaseMenu::create_layout()
 {
     QWidget *w = new QWidget(this);

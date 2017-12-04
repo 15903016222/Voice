@@ -23,7 +23,6 @@ class BaseMenu : public QWidget
     Q_OBJECT
 public:
     explicit BaseMenu(QWidget *parent = 0);
-    virtual ~BaseMenu();
 
 protected:
     static QStringList s_onOff;

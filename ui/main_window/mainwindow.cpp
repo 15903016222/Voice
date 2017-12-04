@@ -50,13 +50,12 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Main Menu */
     m_mainMenu = new MainMenu(this);
     m_mainMenu->hide();
-    ui->mainMenuLayout->addWidget(m_mainMenu);
+//    ui->mainMenuLayout->addWidget(m_mainMenu);
 //    m_mainMenu->move(0, height() - m_mainMenu->height());
 //    m_mainMenu->move(0, 176);
 
     /* Sub Menu */
     m_subMenu = new SubMenu(this);
-    m_subMenu->hide();
     ui->subMenuLayout->addWidget(m_subMenu);
 #if PHASCAN_II
     show_hidden_Menu();
@@ -145,12 +144,11 @@ void MainWindow::do_key_event(Mcu::KeyType type)
 
 void MainWindow::show_hidden_Menu()
 {
-    if(m_subMenu->isHidden()) {
-        m_subMenu->show();
+    if(m_mainMenu->isHidden()) {
+        m_mainMenu->move(QPoint(0, height()-m_subMenu->height()-m_mainMenu->height()-5));
         m_mainMenu->show();
     } else {
         m_mainMenu->hide();
-        m_subMenu->hide();
     }
 }
 
@@ -193,5 +191,4 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         m_mainMenu->resize(mainMenuWidth, mainMenuHeight);
         m_subMenu->resize(subMenuWidth, subMenuHeight);
     }
-    m_mainMenu->do_change_arrow();
 }
