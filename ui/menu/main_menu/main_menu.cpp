@@ -25,8 +25,9 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent),
 
     topLayout->setContentsMargins(0, 0, 0, 0);
     topLayout->setSpacing(0);
-    topLayout->addWidget(d->m_mainMenu);
-    topLayout->addLayout(subLayout);
+    d->m_mainMenu->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    topLayout->addWidget(d->m_mainMenu,2);
+    topLayout->addLayout(subLayout, 1);
 
     subLayout->setContentsMargins(0, 0, 0, 0);
     subLayout->setSpacing(0);
@@ -58,15 +59,23 @@ void MainMenu::show()
 
 void MainMenu::keyPressEvent(QKeyEvent *e)
 {
-    if (e->key() == Qt::Key_Return
-            && d->m_mainMenu->hasFocus()) {
-        d->m_curSubMenu->setFocus();
+    if (e->key() == Qt::Key_Return) {
+        if (d->m_mainMenu->hasFocus()) {
+            d->m_curSubMenu->setCurrentRow(0);
+            d->m_curSubMenu->setFocus();
+        } else if (d->m_curSubMenu->hasFocus()) {
+            d->do_subMenu_itemClicked();
+        }
+        return;
     } else if(e->key() == Qt::Key_Back || e->key() == Qt::Key_Escape) {
         if(d->m_curSubMenu->hasFocus()) {
+            d->m_curSubMenu->setCurrentRow(-1);
             d->m_mainMenu->setFocus();
         } else if(d->m_mainMenu->hasFocus()) {
             hide();
         }
+        return;
     }
+    QWidget::keyPressEvent(e);
 }
 

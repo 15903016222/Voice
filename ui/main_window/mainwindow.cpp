@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(preferenceMenu, SIGNAL(opacity_changed(double)),
             m_subMenu, SLOT(set_opacity_main_menu(double)));
 
-    connect(m_mainMenu, SIGNAL(click(MainMenu::Type)),
+    connect(m_mainMenu, SIGNAL(type_changed(MainMenu::Type)),
             m_subMenu, SLOT(set_menu(MainMenu::Type)));
 
     pVirtualKeyboard = new VirtualKeyboard;

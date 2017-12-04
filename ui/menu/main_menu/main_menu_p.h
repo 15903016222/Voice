@@ -1,6 +1,7 @@
 #ifndef __MAIN_MENU_P_H__
 #define __MAIN_MENU_P_H__
 
+#include "main_menu.h"
 #include <QListWidget>
 #include <QSpacerItem>
 
@@ -8,7 +9,7 @@ class MainMenuPrivate : public QObject
 {
     Q_OBJECT
 public:
-    MainMenuPrivate(QWidget *parent);
+    MainMenuPrivate(MainMenu *parent);
 
     /* attribution */
     QListWidget *m_mainMenu;
@@ -24,6 +25,9 @@ public:
     QListWidget *m_curSubMenu;
     QSpacerItem *m_topSpaceItem;
     QSpacerItem *m_bottomSpaceItem;
+
+public slots:
+    void do_subMenu_itemClicked();
 
 protected slots:
     void do_currentRowChanged(int row);

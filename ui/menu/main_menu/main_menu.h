@@ -13,6 +13,7 @@
 class MainMenuPrivate;
 class MainMenu : public QWidget
 {
+    friend class MainMenuPrivate;
     Q_OBJECT
 public:
     enum Type {
@@ -61,6 +62,7 @@ public:
     void show();
 
 signals:
+    void type_changed(MainMenu::Type type);
 
 protected:
     void keyPressEvent(QKeyEvent *e);

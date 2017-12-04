@@ -1,8 +1,8 @@
 #include "main_menu_p.h"
 
-#define ITEM_HEIHT (44.44)
+#define ITEM_HEIHT (44.444)
 
-MainMenuPrivate::MainMenuPrivate(QWidget *parent) : QObject(parent),
+MainMenuPrivate::MainMenuPrivate(MainMenu *parent) : QObject(parent),
     m_mainMenu(new QListWidget(parent)),
     m_utSettingMenu(new QListWidget(parent)),
     m_gateCurvesMenu(new QListWidget(parent)),
@@ -43,9 +43,15 @@ void MainMenuPrivate::do_currentRowChanged(int row)
         m_curSubMenu = m_preferenceMenu;
     }
 
-    m_topSpaceItem->changeSize(20, row*44, QSizePolicy::Expanding, QSizePolicy::Fixed);
-    m_bottomSpaceItem->changeSize(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    m_topSpaceItem->changeSize(20, ITEM_HEIHT*row, QSizePolicy::Expanding, QSizePolicy::Maximum);
+
+    m_curSubMenu->setCurrentRow(-1);
     m_curSubMenu->show();
+}
+
+void MainMenuPrivate::do_subMenu_itemClicked()
+{
+    emit static_cast<MainMenu *>(parent())->type_changed(static_cast<MainMenu::Type>(m_mainMenu->currentRow()<<4|m_curSubMenu->currentRow()));
 }
 
 void MainMenuPrivate::init_menu()
@@ -69,8 +75,6 @@ void MainMenuPrivate::init_mainMenu()
     m_mainMenu->setMinimumWidth(130);
     m_mainMenu->setMaximumWidth(130);
     m_mainMenu->setMinimumHeight(400);
-    connect(m_mainMenu, SIGNAL(currentRowChanged(int)),
-            this, SLOT(do_currentRowChanged(int)));
     new QListWidgetItem(tr("Ut Settings"), m_mainMenu);
     new QListWidgetItem(tr("Gate/Curves"), m_mainMenu);
     new QListWidgetItem(tr("Display"), m_mainMenu);
@@ -80,6 +84,9 @@ void MainMenuPrivate::init_mainMenu()
     new QListWidgetItem(tr("Measurement"), m_mainMenu);
     new QListWidgetItem(tr("File/Report"), m_mainMenu);
     new QListWidgetItem(tr("Preference"), m_mainMenu);
+
+    connect(m_mainMenu, SIGNAL(currentRowChanged(int)),
+                                                                  this, SLOT(do_currentRowChanged(int)));
     m_mainMenu->setCurrentRow(0);
 }
 
@@ -91,7 +98,9 @@ void MainMenuPrivate::init_utSettingMenu()
     new QListWidgetItem(tr("Pulser"), m_utSettingMenu);
     new QListWidgetItem(tr("Receiver"), m_utSettingMenu);
     new QListWidgetItem(tr("Advanced"), m_utSettingMenu);
-    m_utSettingMenu->setCurrentRow(0);
+
+    connect(m_utSettingMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
 
 void MainMenuPrivate::init_gateCurevesMenu()
@@ -105,7 +114,9 @@ void MainMenuPrivate::init_gateCurevesMenu()
     new QListWidgetItem(tr("Analog"), m_gateCurvesMenu);
     new QListWidgetItem("DAC", m_gateCurvesMenu);
     new QListWidgetItem("TCG", m_gateCurvesMenu);
-    m_gateCurvesMenu->setCurrentRow(0);
+
+    connect(m_gateCurvesMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
 
 void MainMenuPrivate::init_displayMenu()
@@ -116,7 +127,9 @@ void MainMenuPrivate::init_displayMenu()
     new QListWidgetItem(tr("Selection"), m_displayMenu);
     new QListWidgetItem(tr("Color"), m_displayMenu);
     new QListWidgetItem(tr("Properties"), m_displayMenu);
-    m_displayMenu->setCurrentRow(0);
+
+    connect(m_displayMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
 
 void MainMenuPrivate::init_probePartMenu()
@@ -129,7 +142,9 @@ void MainMenuPrivate::init_probePartMenu()
     new QListWidgetItem("FFT", m_probePartMenu);
     new QListWidgetItem(tr("Part"), m_probePartMenu);
     new QListWidgetItem(tr("Advanced"), m_probePartMenu);
-    m_probePartMenu->setCurrentRow(0);
+
+    connect(m_probePartMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
 
 void MainMenuPrivate::init_focallawMenu()
@@ -141,7 +156,9 @@ void MainMenuPrivate::init_focallawMenu()
     new QListWidgetItem(tr("Angle"), m_focallawMenu);
     new QListWidgetItem(tr("Apeture"), m_focallawMenu);
     new QListWidgetItem(tr("Focal Point"), m_focallawMenu);
-    m_focallawMenu->setCurrentRow(0);
+
+    connect(m_focallawMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
 
 void MainMenuPrivate::init_scanMenu()
@@ -153,7 +170,9 @@ void MainMenuPrivate::init_scanMenu()
     new QListWidgetItem(tr("Encoder"), m_scanMenu);
     new QListWidgetItem(tr("Area"), m_scanMenu);
     new QListWidgetItem(tr("Start"), m_scanMenu);
-    m_scanMenu->setCurrentRow(0);
+
+    connect(m_scanMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
 
 void MainMenuPrivate::init_measureMenu()
@@ -164,7 +183,9 @@ void MainMenuPrivate::init_measureMenu()
     new QListWidgetItem(tr("Cursors"), m_measureMenu);
     new QListWidgetItem("TOFD", m_measureMenu);
     new QListWidgetItem(tr("Flaw Record"), m_measureMenu);
-    m_measureMenu->setCurrentRow(0);
+
+    connect(m_measureMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
 
 void MainMenuPrivate::init_fileReportMenu()
@@ -177,7 +198,9 @@ void MainMenuPrivate::init_fileReportMenu()
     new QListWidgetItem(tr("Report"), m_fileReportMenu);
     new QListWidgetItem(tr("Format"), m_fileReportMenu);
     new QListWidgetItem(tr("User Field"), m_fileReportMenu);
-    m_fileReportMenu->setCurrentRow(0);
+
+    connect(m_fileReportMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
 
 void MainMenuPrivate::init_preferenceMenu()
@@ -188,5 +211,7 @@ void MainMenuPrivate::init_preferenceMenu()
     new QListWidgetItem(tr("Preference"), m_preferenceMenu);
     new QListWidgetItem(tr("System"), m_preferenceMenu);
     new QListWidgetItem(tr("Network"), m_preferenceMenu);
-    m_preferenceMenu->setCurrentRow(0);
+
+    connect(m_preferenceMenu, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(do_subMenu_itemClicked()));
 }
