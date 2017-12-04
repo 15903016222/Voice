@@ -7,7 +7,7 @@
  */
 
 #include "ut_advanced_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplUtSettingMenu {
 
@@ -20,12 +20,12 @@ UtAdvancedMenu::UtAdvancedMenu(QWidget *parent) :
     m_pointQtyItem(new ComboMenuItem(this, tr("Point Qty."))),
     m_userDefItem(new SpinMenuItem(this, tr("User Def.")))
 {
-    ui->layout0->addWidget(m_eightPercentItem);
-    ui->layout1->addWidget(m_dbRefItem);
-    ui->layout2->addWidget(m_sumGainItem);
-    ui->layout3->addWidget(m_scaleFactorItem);
-    ui->layout4->addWidget(m_pointQtyItem);
-    ui->layout5->addWidget(m_userDefItem);
+    m_layout0->addWidget(m_eightPercentItem);
+    m_layout1->addWidget(m_dbRefItem);
+    m_layout2->addWidget(m_sumGainItem);
+    m_layout3->addWidget(m_scaleFactorItem);
+    m_layout4->addWidget(m_pointQtyItem);
+    m_layout5->addWidget(m_userDefItem);
     m_userDefItem->hide();
 
     connect(m_eightPercentItem,

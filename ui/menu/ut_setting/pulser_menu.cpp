@@ -6,7 +6,6 @@
  * @date 2016-12-14
  */
 #include "pulser_menu.h"
-#include "ui_base_menu.h"
 
 #include <ut/global_transceiver.h>
 
@@ -21,12 +20,12 @@ PulserMenu::PulserMenu(QWidget *parent) :
     m_prfItem(new ComboMenuItem(this, tr("PRF"))),
     m_userDefItem(new SpinMenuItem(this, tr("User Def.")))
 {
-    ui->layout0->addWidget(m_txrxModeItem);
-    ui->layout1->addWidget(m_pulserItem);
-    ui->layout2->addWidget(m_voltageItem);
-    ui->layout3->addWidget(m_pwItem);
-    ui->layout4->addWidget(m_prfItem);
-    ui->layout5->addWidget(m_userDefItem);
+    m_layout0->addWidget(m_txrxModeItem);
+    m_layout1->addWidget(m_pulserItem);
+    m_layout2->addWidget(m_voltageItem);
+    m_layout3->addWidget(m_pwItem);
+    m_layout4->addWidget(m_prfItem);
+    m_layout5->addWidget(m_userDefItem);
 
     m_userDefItem->hide();
 

@@ -1,5 +1,5 @@
 #include "properties_menu.h"
-#include "ui_base_menu.h"
+
 
 #include <QColorDialog>
 #include <device/device.h>
@@ -18,20 +18,20 @@ PropertiesMenu::PropertiesMenu(QWidget *parent) :
     m_ratioItem(new ComboMenuItem(this, tr("Ratio"))),
     m_cScanModeItem(new ComboMenuItem(this, tr("C-Scan\nMode")))
 {
-    ui->layout0->addWidget(m_scanItem);
+    m_layout0->addWidget(m_scanItem);
 
     /* A-Scan */
-    ui->layout1->addWidget(m_colorItem);
-    ui->layout2->addWidget(m_envelopItem);
-    ui->layout3->addWidget(m_peakHoldingItem);
-    ui->layout4->addWidget(m_referenceholdingItem);
+    m_layout1->addWidget(m_colorItem);
+    m_layout2->addWidget(m_envelopItem);
+    m_layout3->addWidget(m_peakHoldingItem);
+    m_layout4->addWidget(m_referenceholdingItem);
 
     /* B-Scan */
-    ui->layout1->addWidget(m_compressionItem);
+    m_layout1->addWidget(m_compressionItem);
 
     /* C-Scan */
-    ui->layout1->addWidget(m_ratioItem);
-    ui->layout2->addWidget(m_cScanModeItem);
+    m_layout1->addWidget(m_ratioItem);
+    m_layout2->addWidget(m_cScanModeItem);
 
     m_scanItem->add_item(tr("A-Scan"));
     m_scanItem->add_item(tr("B-Scan"));

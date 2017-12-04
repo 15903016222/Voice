@@ -1,5 +1,5 @@
 #include "area_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplScanMenu {
 
@@ -14,12 +14,12 @@ AreaMenu::AreaMenu(QWidget *parent) :
     m_scanAxis(DplSource::Scan::instance()->scan_axis()),
     m_indexAxis(DplSource::Scan::instance()->index_axis())
 {
-    ui->layout0->addWidget(m_scanStartItem);
-    ui->layout1->addWidget(m_scanEndItem);
-    ui->layout2->addWidget(m_scanResolutionItem);
-    ui->layout3->addWidget(m_indexStartItem);
-    ui->layout4->addWidget(m_indexEndItem);
-    ui->layout5->addWidget(m_indexResolutionItem);
+    m_layout0->addWidget(m_scanStartItem);
+    m_layout1->addWidget(m_scanEndItem);
+    m_layout2->addWidget(m_scanResolutionItem);
+    m_layout3->addWidget(m_indexStartItem);
+    m_layout4->addWidget(m_indexEndItem);
+    m_layout5->addWidget(m_indexResolutionItem);
 
     /* Scan Start Menu Item */
     m_scanStartItem->set(0, 10000, 2, 0.01);

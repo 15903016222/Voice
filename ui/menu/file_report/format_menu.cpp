@@ -1,5 +1,5 @@
 #include "format_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplFileReportMenu {
 
@@ -12,12 +12,12 @@ FormatMenu::FormatMenu(QWidget *parent) :
     m_dacTcgInfoItem(new ComboMenuItem(this, tr("DAC/TCG"))),
     m_flawRecordTableItem(new ComboMenuItem(this, tr("Flaw Record\nTable")))
 {
-    ui->layout0->addWidget(m_probeWedgeItem);
-    ui->layout1->addWidget(m_inspectionInfoItem);
-    ui->layout2->addWidget(m_scanInfoItem);
-    ui->layout3->addWidget(m_encoderInfoItem);
-    ui->layout4->addWidget(m_dacTcgInfoItem);
-    ui->layout5->addWidget(m_flawRecordTableItem);
+    m_layout0->addWidget(m_probeWedgeItem);
+    m_layout1->addWidget(m_inspectionInfoItem);
+    m_layout2->addWidget(m_scanInfoItem);
+    m_layout3->addWidget(m_encoderInfoItem);
+    m_layout4->addWidget(m_dacTcgInfoItem);
+    m_layout5->addWidget(m_flawRecordTableItem);
 
     /* Probe/Wedge Info Menu Item */
     m_probeWedgeItem->set(s_onOff);

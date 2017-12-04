@@ -10,7 +10,7 @@
 #include <global.h>
 #include <device/device.h>
 #include <ui/tool/tool.h>
-#include "ui_base_menu.h"
+
 
 namespace DplGateCurvesMenu {
 
@@ -26,15 +26,15 @@ GateMenu::GateMenu(QWidget *parent) :
     m_measureModeItem(new ComboMenuItem(this, tr("Measure"))),
     m_modeItem(new ComboMenuItem(this, tr("Mode")))
 {
-    ui->layout0->addWidget(m_gateItem);
-    ui->layout1->addWidget(m_switchItem);
-    ui->layout2->addWidget(m_paramsItem);
-    ui->layout3->addWidget(m_startItem);
-    ui->layout4->addWidget(m_widthItem);
-    ui->layout5->addWidget(m_thresholdItem);
-    ui->layout3->addWidget(m_synchroItem);
-    ui->layout4->addWidget(m_measureModeItem);
-    ui->layout5->addWidget(m_modeItem);
+    m_layout0->addWidget(m_gateItem);
+    m_layout1->addWidget(m_switchItem);
+    m_layout2->addWidget(m_paramsItem);
+    m_layout3->addWidget(m_startItem);
+    m_layout4->addWidget(m_widthItem);
+    m_layout5->addWidget(m_thresholdItem);
+    m_layout3->addWidget(m_synchroItem);
+    m_layout4->addWidget(m_measureModeItem);
+    m_layout5->addWidget(m_modeItem);
 
     m_gateItem->add_item(tr("A"));
     m_gateItem->add_item(tr("B"));

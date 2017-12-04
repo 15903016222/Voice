@@ -1,5 +1,5 @@
 #include "part_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplProbeMenu {
 
@@ -11,11 +11,11 @@ PartMenu::PartMenu(QWidget *parent) :
     m_materialItem(new ComboMenuItem(this, tr("Material"))),
     m_overlayItem(new ComboMenuItem(this, tr("Overlay")))
 {
-    ui->layout0->addWidget(m_geometryItem);
-    ui->layout1->addWidget(m_thicknessItem);
-    ui->layout2->addWidget(m_diameterItem);
-    ui->layout3->addWidget(m_materialItem);
-    ui->layout4->addWidget(m_overlayItem);
+    m_layout0->addWidget(m_geometryItem);
+    m_layout1->addWidget(m_thicknessItem);
+    m_layout2->addWidget(m_diameterItem);
+    m_layout3->addWidget(m_materialItem);
+    m_layout4->addWidget(m_overlayItem);
 
     /* Geometry menu item */
     QStringList geometrys;

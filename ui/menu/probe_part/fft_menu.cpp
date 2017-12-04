@@ -1,5 +1,5 @@
 #include "fft_menu.h"
-#include "ui_base_menu.h"
+
 #include <device/device.h>
 #include <QMessageBox>
 #include <source/source.h>
@@ -16,10 +16,10 @@ FftMenu::FftMenu(QWidget *parent) :
     m_switchItem(new ComboMenuItem(this, tr("Switch"))),
     m_currentGroupPointer(DplDevice::Device::instance()->current_group())
 {
-    ui->layout0->addWidget(m_gainItem);
-    ui->layout1->addWidget(m_startItem);
-    ui->layout2->addWidget(m_widthItem);
-    ui->layout3->addWidget(m_switchItem);
+    m_layout0->addWidget(m_gainItem);
+    m_layout1->addWidget(m_startItem);
+    m_layout2->addWidget(m_widthItem);
+    m_layout3->addWidget(m_switchItem);
 
     /* Gain */
     m_gainItem->set(0, 90, 1, 0.1);

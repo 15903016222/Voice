@@ -6,7 +6,7 @@
  * @date 2016-12-19
  */
 #include "selection_menu.h"
-#include "ui_base_menu.h"
+
 #include "probe_dialog.h"
 #include "wedge_dialog.h"
 
@@ -20,11 +20,11 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     m_wedgeItem(new LabelMenuItem(this, tr("Wedge"))),
     m_autoDetectItem(new ComboMenuItem(this, tr("Auto Detect")))
 {
-    ui->layout0->addWidget(m_groupItem);
-    ui->layout1->addWidget(m_modeItem);
-    ui->layout2->addWidget(m_probeItem);
-    ui->layout3->addWidget(m_wedgeItem);
-    ui->layout4->addWidget(m_autoDetectItem);
+    m_layout0->addWidget(m_groupItem);
+    m_layout1->addWidget(m_modeItem);
+    m_layout2->addWidget(m_probeItem);
+    m_layout3->addWidget(m_wedgeItem);
+    m_layout4->addWidget(m_autoDetectItem);
 
     QStringList groupList;
 

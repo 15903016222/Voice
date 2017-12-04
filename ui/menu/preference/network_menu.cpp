@@ -6,7 +6,7 @@
  * @date 2016-12-21
  */
 #include "network_menu.h"
-#include "ui_base_menu.h"
+
 #include "networkdialog.h"
 #include "network_manager.h"
 
@@ -20,8 +20,8 @@ NetworkMenu::NetworkMenu(QWidget *parent) :
     m_maskItem(new LabelMenuItem(this, tr("Subnet Mask"), "255.255.255.0")),
     m_networkManager(new NetworkManager)
 {
-    ui->layout0->addWidget(m_ipItem);
-    ui->layout1->addWidget(m_maskItem);
+    m_layout0->addWidget(m_ipItem);
+    m_layout1->addWidget(m_maskItem);
 
     /* IP Address menu item */
     connect(m_ipItem, SIGNAL(clicked()), this, SLOT(show_ip_address_dialog()));

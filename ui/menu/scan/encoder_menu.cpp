@@ -1,5 +1,5 @@
 #include "encoder_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplScanMenu {
 
@@ -13,12 +13,12 @@ EncoderMenu::EncoderMenu(QWidget *parent) :
     m_presetItem(new LabelMenuItem(this, tr("Preset"))),
     m_enc(DplSource::Scan::instance()->encoder_x())
 {
-    ui->layout0->addWidget(m_encoderItem);
-    ui->layout1->addWidget(m_encoderTypeItem);
-    ui->layout2->addWidget(m_resolutionItem);
-    ui->layout3->addWidget(m_polarityItem);
-    ui->layout4->addWidget(m_originItem);
-    ui->layout5->addWidget(m_presetItem);
+    m_layout0->addWidget(m_encoderItem);
+    m_layout1->addWidget(m_encoderTypeItem);
+    m_layout2->addWidget(m_resolutionItem);
+    m_layout3->addWidget(m_polarityItem);
+    m_layout4->addWidget(m_originItem);
+    m_layout5->addWidget(m_presetItem);
 
     /* Encoder Menu Item */
     m_encoderItem->add_item(tr("Encoder 1"));

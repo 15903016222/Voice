@@ -1,5 +1,5 @@
 #include "law_config_menu.h"
-#include "ui_base_menu.h"
+
 
 #include "device/device.h"
 
@@ -12,10 +12,10 @@ LawConfigMenu::LawConfigMenu(QWidget *parent) :
     m_receiverItem(new SpinMenuItem(this, tr("Receiver"), "1-113")),
     m_waveTypeItem(new ComboMenuItem(this, tr("Wave Type")))
 {
-    ui->layout0->addWidget(m_lawTypeItem);
-    ui->layout1->addWidget(m_pulseItem);
-    ui->layout2->addWidget(m_receiverItem);
-    ui->layout3->addWidget(m_waveTypeItem);
+    m_layout0->addWidget(m_lawTypeItem);
+    m_layout1->addWidget(m_pulseItem);
+    m_layout2->addWidget(m_receiverItem);
+    m_layout3->addWidget(m_waveTypeItem);
 
     /* Law Type Menu Item */
     QStringList lawTypes;

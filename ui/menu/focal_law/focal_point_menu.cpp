@@ -1,5 +1,5 @@
 #include "focal_point_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplFocalLawMenu {
 
@@ -11,11 +11,11 @@ FocalPointMenu::FocalPointMenu(QWidget *parent) :
     m_offsetStartItem(new SpinMenuItem(this, tr("Offset Start"), tr("mm"))),
     m_offsetEndItem(new SpinMenuItem(this, tr("Offset End"), tr("mm")))
 {
-    ui->layout0->addWidget(m_typeItem);
-    ui->layout1->addWidget(m_positionStartItem);
-    ui->layout2->addWidget(m_positionEndItem);
-    ui->layout3->addWidget(m_offsetStartItem);
-    ui->layout4->addWidget(m_offsetEndItem);
+    m_layout0->addWidget(m_typeItem);
+    m_layout1->addWidget(m_positionStartItem);
+    m_layout2->addWidget(m_positionEndItem);
+    m_layout3->addWidget(m_offsetStartItem);
+    m_layout4->addWidget(m_offsetEndItem);
 
     /* Type Menu Item */
     QStringList types;

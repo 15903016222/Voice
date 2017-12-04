@@ -6,7 +6,7 @@
  * @date 2016-12-21
  */
 #include "system_menu.h"
-#include "ui_base_menu.h"
+
 #include "datetimesetdialog.h"
 #include "file_dialog.h"
 #include "resetconfigdialog.h"
@@ -40,12 +40,12 @@ SystemMenu::SystemMenu(QWidget *parent) :
     m_infoItem(new LabelMenuItem(this, tr("Infomation"))),
     m_timer(new QTimer)
 {
-    ui->layout0->addWidget(m_timeItem);
-    ui->layout1->addWidget(m_dateItem);
-    ui->layout2->addWidget(m_certItem);
-    ui->layout3->addWidget(m_updateItem);
-    ui->layout4->addWidget(m_resetCfgItem);
-    ui->layout5->addWidget(m_infoItem);
+    m_layout0->addWidget(m_timeItem);
+    m_layout1->addWidget(m_dateItem);
+    m_layout2->addWidget(m_certItem);
+    m_layout3->addWidget(m_updateItem);
+    m_layout4->addWidget(m_resetCfgItem);
+    m_layout5->addWidget(m_infoItem);
 
     /* Date */
     connect(m_dateItem, SIGNAL(clicked()), this, SLOT(show_date_dialog()));

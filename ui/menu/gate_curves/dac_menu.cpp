@@ -6,7 +6,7 @@
  * @date 2016-12-16
  */
 #include "dac_menu.h"
-#include "ui_base_menu.h"
+
 
 namespace DplGateCurvesMenu {
 
@@ -23,20 +23,20 @@ DacMenu::DacMenu(QWidget *parent) :
     m_addPointItem(new LabelMenuItem(this, tr("Add Point"))),
     m_deletePointItem(new LabelMenuItem(this, tr("Delete Point")))
 {
-    ui->layout0->addWidget(m_modeItem);
+    m_layout0->addWidget(m_modeItem);
 
     /* Setting */
-    ui->layout1->addWidget(m_curveNoItem);
-    ui->layout2->addWidget(m_curveXItem);
-    ui->layout3->addWidget(m_dbOffsetItem);
-    ui->layout4->addWidget(m_refGainItem);
-    ui->layout5->addWidget(m_switchItem);
+    m_layout1->addWidget(m_curveNoItem);
+    m_layout2->addWidget(m_curveXItem);
+    m_layout3->addWidget(m_dbOffsetItem);
+    m_layout4->addWidget(m_refGainItem);
+    m_layout5->addWidget(m_switchItem);
 
     /* Edit */
-    ui->layout1->addWidget(m_pointItem);
-    ui->layout2->addWidget(m_positionItem);
-    ui->layout3->addWidget(m_addPointItem);
-    ui->layout4->addWidget(m_deletePointItem);
+    m_layout1->addWidget(m_pointItem);
+    m_layout2->addWidget(m_positionItem);
+    m_layout3->addWidget(m_addPointItem);
+    m_layout4->addWidget(m_deletePointItem);
 
     QStringList modeList;
     QStringList curveXList;
