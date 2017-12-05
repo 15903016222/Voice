@@ -35,6 +35,7 @@ protected:
     QVBoxLayout *m_layout3;
     QVBoxLayout *m_layout4;
     QVBoxLayout *m_layout5;
+    QVBoxLayout *m_layout6;
 };
 
 

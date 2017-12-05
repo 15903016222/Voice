@@ -126,7 +126,6 @@ void MainMenuPrivate::init_gateCurevesMenu()
     m_gateCurvesMenu->hide();
     new QListWidgetItem(tr("Gate"), m_gateCurvesMenu);
     new QListWidgetItem(tr("Alarm"), m_gateCurvesMenu);
-    new QListWidgetItem(tr("Output"), m_gateCurvesMenu);
     new QListWidgetItem(tr("Analog"), m_gateCurvesMenu);
     new QListWidgetItem("DAC", m_gateCurvesMenu);
     new QListWidgetItem("TCG", m_gateCurvesMenu);

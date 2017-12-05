@@ -23,7 +23,6 @@ public:
         UTSettings_Advanced,
         GateCurves_Gate         = 0x10,
         GateCurves_Alarm,
-        GateCurves_Output,
         GateCurves_Analog,
         GateCurves_DAC,
         GateCurves_TCG,
