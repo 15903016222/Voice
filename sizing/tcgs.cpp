@@ -38,6 +38,11 @@ TcgPointer Tcgs::tcg(int index) const
     return d->m_tcgs.value(index);
 }
 
+TcgPointer Tcgs::current_tcg() const
+{
+    return d->m_tcgs[d->m_currentTcg];
+}
+
 int Tcgs::point_count() const
 {
     return d->m_pointQty;
@@ -49,6 +54,9 @@ bool Tcgs::add_point()
         return false;
     }
 
+    int prePosition = d->m_tcgs[d->m_currentTcg]->position(d->m_pointQty-1);
+    float preGain = d->m_tcgs[d->m_currentTcg]->gain(d->m_pointQty-1);
+
     d->m_pointQty += 1;
     if (! d->m_fpgaGrp->set_tcg_point_qty(d->m_pointQty)) {
         d->m_pointQty -= 1;
@@ -56,6 +64,10 @@ bool Tcgs::add_point()
     }
 
     d->m_currentPoint = d->m_pointQty-1;
+
+    set_position(prePosition + 2000);
+    set_gain(preGain);
+
     emit current_point_changed();
     return true;
 }
@@ -121,7 +133,6 @@ int Tcgs::position() const
 
 bool Tcgs::set_position(int val)
 {
-    qDebug("%s[%d]: val(%d) point(%d)",__func__, __LINE__, val, d->m_currentPoint);
     if (d->m_allFlag) {
         foreach (DplSizing::TcgPointer tcg, d->m_tcgs) {
             if ( !tcg->set_position(d->m_currentPoint, val) ) {

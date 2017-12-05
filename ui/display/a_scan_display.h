@@ -19,6 +19,7 @@ class ScanView;
 class AscanScene;
 class WaveItem;
 class GateItem;
+class TcgItem;
 
 class AscanDisplay : public QWidget
 {
@@ -45,6 +46,7 @@ private:
     GateItem *m_gateAItem;
     GateItem *m_gateBItem;
     GateItem *m_gateIItem;
+    TcgItem *m_tcgItem;
     Qt::Orientation m_orientation;
 };
 

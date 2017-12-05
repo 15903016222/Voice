@@ -44,9 +44,21 @@ public:
     /**
      * @brief amplitude 获取指定点的幅度
      * @param point     点索引号(从0开始)
-     * @return          幅度
+     * @return          幅度(%)
      */
     float amplitude(int point) const;
+
+    /**
+     * @brief ref_amplitude 获取参考幅度
+     * @return              幅度(%)
+     */
+    float ref_amplitude() const;
+
+    /**
+     * @brief set_ref_amplitude 设置参考幅度
+     * @param refAmplitude      幅度(%)
+     */
+    void set_ref_amplitude(float refAmplitude) const;
 
 protected:
     /**
@@ -69,7 +81,7 @@ protected:
      * @param val       增益(dB)
      * @return          设置成功返回true,失败返回false
      */
-    bool set_gain(int point, int val);
+    bool set_gain(int point, float val);
 
     /**
      * @brief deploy    下发配置信息

@@ -30,18 +30,6 @@ public:
 signals:
     void painter_path_changed();
 
-public slots:
-    /**
-     * @brief set_wave  设置要显示的波形数据
-     * @param beam      波形数据
-     * @param rf        是否为射频数据
-     */
-    void set_wave(const QByteArray &beam, bool rf=false);
-    void update();
-
-protected:
-    QPainterPath draw(const QByteArray &wave, bool rf, int w, int h);
-
 private:
     DplSizing::TcgsPointer m_tcgs;
     DplUt::SamplePointer m_sample;

@@ -61,6 +61,9 @@ TcgMenu::TcgMenu(QWidget *parent) :
             this, SLOT(do_switchItem_changed(int)));
 
     /* Edit */    
+    m_positionItem->set_step(0.01);
+    m_positionItem->set_decimals(2);
+
     m_gainItem->set(0, 40, 1, 0.1);
     connect(m_gainItem,
             SIGNAL(value_changed(double)),
@@ -116,6 +119,11 @@ void TcgMenu::do_switchItem_changed(int pos)
 
 void TcgMenu::do_pointItem_changed(int val)
 {
+    if (val == 0) {
+        m_gainItem->setDisabled(true);
+    } else {
+        m_gainItem->setDisabled(false);
+    }
     m_group->tcgs()->set_current_point(val);
 }
 
@@ -241,9 +249,8 @@ void TcgMenu::update_positionItem()
         m_positionItem->set_unit("mm");
     }
 
-    m_positionItem->set(Tool::cnf_to_display(m_group, 0),
-                        Tool::cnf_to_display(m_group, 9*1000*1000),
-                        2, 0.01);
+    m_positionItem->set_range(Tool::cnf_to_display(m_group, m_group->sample()->start()),
+                        Tool::cnf_to_display(m_group, m_group->sample()->start()+m_group->sample()->range()));
 
     m_positionItem->set_value(Tool::cnf_to_display(m_group,
                                                    m_group->tcgs()->position()));

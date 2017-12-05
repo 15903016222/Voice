@@ -13,6 +13,7 @@
 #include "a_scan_scene.h"
 #include "wave_item.h"
 #include "gate_item.h"
+#include "tcg_item.h"
 
 #include <qmath.h>
 #include <QThread>
@@ -28,6 +29,7 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
     m_gateAItem(new GateItem(group->sample(), group->gate_a())),
     m_gateBItem(new GateItem(group->sample(), group->gate_b())),
     m_gateIItem(new GateItem(group->sample(), group->gate_i())),
+    m_tcgItem(new TcgItem(group->tcgs(), group->sample())),
     m_orientation(orientation)
 {  
     ui->setupUi(this);
@@ -43,6 +45,9 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
     m_scene->addItem(m_gateAItem);
     m_scene->addItem(m_gateBItem);
     m_scene->addItem(m_gateIItem);
+
+    m_scene->addItem(m_tcgItem);
+    m_tcgItem->show();
 
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
@@ -95,10 +100,12 @@ void AscanDisplay::do_view_size_changed(const QSize &size)
         m_scene->setSceneRect(-size.width()/2, -size.height()/2,
                                    size.width(), size.height());
         m_waveItem->set_size(size);
+        m_tcgItem->set_size(size);
     } else {
         m_scene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
                                    size.height(), size.width());
         m_waveItem->set_size(QSize(size.height(), size.width()));
+        m_tcgItem->set_size(QSize(size.height(), size.width()));
     }
 
     update_gates();
