@@ -38,13 +38,13 @@ protected slots:
     void update_gainItem();
 
 private:
+    ComboMenuItem *m_switchItem;
     ComboMenuItem *m_modeItem;
 
     /* Setting */
     SpinMenuItem *m_curveNoItem;
     ComboMenuItem *m_curveXItem;
     SpinMenuItem *m_dbOffsetItem;
-    ComboMenuItem *m_switchItem;
 
     /* Edit */
     ComboMenuItem *m_pointItem;
