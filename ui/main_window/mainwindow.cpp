@@ -53,6 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_subMenu = new SubMenu(this);
     m_mainMenu->hide();
     ui->subMenuLayout->addWidget(m_subMenu);
+    connect(m_mainMenu, SIGNAL(type_changed(MainMenu::Type)),
+            m_subMenu, SLOT(set_menu(MainMenu::Type)));
 
     DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(m_subMenu->get_menu(MainMenu::UTSettings_General));
     connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
@@ -63,9 +65,6 @@ MainWindow::MainWindow(QWidget *parent) :
     DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
     connect(preferenceMenu, SIGNAL(opacity_changed(double)),
             m_mainMenu, SLOT(set_opacity(double)));
-
-    connect(m_mainMenu, SIGNAL(type_changed(MainMenu::Type)),
-            m_subMenu, SLOT(set_menu(MainMenu::Type)));
 
     /* virtual keyboard */
     m_virtualKeyboard->hide();
@@ -132,7 +131,10 @@ void MainWindow::do_key_event(Mcu::KeyType type)
 void MainWindow::show_hidden_Menu()
 {
     if(m_mainMenu->isHidden()) {
-        m_mainMenu->move(QPoint(0, height()-m_subMenu->height()-m_mainMenu->height()-15));
+        m_mainMenu->setGeometry(0,
+                                ui->measureBar->height()+ui->statusBar->height()+15,
+                                m_mainMenu->width(),
+                                height() - ui->measureBar->height() - ui->statusBar->height() - m_subMenu->height()-15);
         m_mainMenu->show();
     } else {
         m_mainMenu->hide();

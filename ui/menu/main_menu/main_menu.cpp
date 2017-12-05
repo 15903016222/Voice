@@ -17,10 +17,7 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent),
 {
     setFocusPolicy(Qt::WheelFocus);
 
-    setMinimumHeight(d->m_mainMenu->height());
-    setMaximumHeight(d->m_mainMenu->height());
-    setMinimumWidth(260);
-
+    setMinimumWidth(230);
     QHBoxLayout *topLayout = new QHBoxLayout(this);
     QVBoxLayout *subLayout = new QVBoxLayout();
 
@@ -28,7 +25,7 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent),
     topLayout->setSpacing(0);
     d->m_mainMenu->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     topLayout->addWidget(d->m_mainMenu,2);
-    topLayout->addLayout(subLayout, 1);
+    topLayout->addLayout(subLayout,1);
 
     subLayout->setContentsMargins(0, 0, 0, 0);
     subLayout->setSpacing(0);
@@ -42,7 +39,6 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent),
     subLayout->addWidget(d->m_measureMenu);
     subLayout->addWidget(d->m_fileReportMenu);
     subLayout->addWidget(d->m_preferenceMenu);
-    subLayout->addSpacerItem(d->m_bottomSpaceItem);
 
     d->set_opacity(85);
 }

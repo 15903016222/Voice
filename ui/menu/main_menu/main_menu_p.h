@@ -26,7 +26,6 @@ public:
     QListWidget *m_preferenceMenu;
     QListWidget *m_curSubMenu;
     QSpacerItem *m_topSpaceItem;
-    QSpacerItem *m_bottomSpaceItem;
 
 public slots:
     void do_subMenu_pressed();
@@ -35,7 +34,7 @@ protected slots:
     void do_currentRowChanged(int row);
 
 protected:
-    void set_menu_height(QListWidget *menu, int height);
+    void set_common(QListWidget *menu);
 
     void init_menu();
     void init_mainMenu();
@@ -50,10 +49,8 @@ protected:
     void init_preferenceMenu();
 };
 
-inline void MainMenuPrivate::set_menu_height(QListWidget *menu, int height)
+inline void MainMenuPrivate::set_common(QListWidget *menu)
 {
     menu->setGraphicsEffect(new QGraphicsOpacityEffect(menu));
-    menu->setMinimumHeight(height);
-    menu->setMaximumHeight(height);
 }
 #endif // __MAIN_MENU_P_H__
