@@ -131,7 +131,8 @@ public:
 
 signals:
     void enabled_changed(bool enabled);
-    void changed();
+    void position_changed();
+    void gain_changed();
     void current_point_changed();
 
 private:

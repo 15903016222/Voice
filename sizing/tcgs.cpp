@@ -148,10 +148,12 @@ bool Tcgs::set_position(int val)
                 return false;
             }
         }
-        return true;
-    } else {
-        return d->m_tcgs[d->m_currentTcg]->set_position(d->m_currentPoint, val);
+    } else if (!d->m_tcgs[d->m_currentTcg]->set_position(d->m_currentPoint, val)) {
+        return false;
     }
+
+    emit position_changed();
+    return true;
 }
 
 float Tcgs::gain() const
@@ -167,10 +169,12 @@ bool Tcgs::set_gain(float val)
                 return false;
             }
         }
-        return true;
-    } else {
-        return d->m_tcgs[d->m_currentTcg]->set_gain(d->m_currentPoint, val);
+    } else if (!d->m_tcgs[d->m_currentTcg]->set_gain(d->m_currentPoint, val)) {
+        return false;
     }
+
+    emit gain_changed();
+    return true;
 }
 
 float Tcgs::amplitude() const

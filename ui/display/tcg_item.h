@@ -32,11 +32,20 @@ signals:
 
 protected slots:
     void set_visible(bool flag);
+    void do_tcgs_changed();
+
+protected:
+    QPainterPath lines_path(const DplSizing::TcgPointer &tcg) const;
+    QPainterPath points_path(const DplSizing::TcgPointer &tcg) const;
+
+    float x_ratio() const;
+    float y_ration() const;
 
 private:
     DplSizing::TcgsPointer m_tcgs;
     DplUt::SamplePointer m_sample;
-    QPainterPath m_path;
+    QPainterPath m_linesPath;
+    QPainterPath m_pointsPath;
     QSize m_size;
 };
 
@@ -49,6 +58,16 @@ inline void TcgItem::set_size(const QSize &size)
 {
     m_size = size;
     update();
+}
+
+inline float TcgItem::x_ratio() const
+{
+    return m_size.width() / m_sample->range();
+}
+
+inline float TcgItem::y_ration() const
+{
+    return m_size.height() / 100.0;
 }
 
 #endif // __TCG_ITEM_H__
