@@ -96,6 +96,10 @@ void SpinMenuItem::set_value(double value)
 
 bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
 {
+    if (!isEnabled()) {
+        return false;
+    }
+
     if (e->type() == QEvent::KeyRelease) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
         switch (keyEvent->key()) {
