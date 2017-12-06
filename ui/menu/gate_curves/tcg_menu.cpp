@@ -14,7 +14,7 @@ namespace DplGateCurvesMenu {
 
 TcgMenu::TcgMenu(QWidget *parent) :
     BaseMenu(parent),
-    m_switchItem(new ComboMenuItem(this, tr("Switch"))),
+    m_switchItem(new ComboMenuItem(this, tr("Tcg"))),
     m_modeItem(new ComboMenuItem(this, tr("Mode"))),
     m_curveNoItem(new SpinMenuItem(this, tr("Curve No."))),
     m_curveXItem(new ComboMenuItem(this, tr("Curve X"))),
@@ -119,11 +119,6 @@ void TcgMenu::do_switchItem_changed(int pos)
 
 void TcgMenu::do_pointItem_changed(int val)
 {
-    if (val == 0) {
-        m_gainItem->setDisabled(true);
-    } else {
-        m_gainItem->setDisabled(false);
-    }
     m_group->tcgs()->set_current_point(val);
 }
 
@@ -169,10 +164,6 @@ void TcgMenu::update(const DplDevice::GroupPointer &group)
                    SLOT(update_positionItem()));
 
         disconnect(static_cast<DplSizing::Tcgs *>(m_group->tcgs().data()),
-                   SIGNAL(changed()),
-                   this,
-                   SLOT(update_pointItem()));
-        disconnect(static_cast<DplSizing::Tcgs *>(m_group->tcgs().data()),
                    SIGNAL(current_point_changed()),
                    this,
                    SLOT(update_positionItem()));
@@ -183,6 +174,10 @@ void TcgMenu::update(const DplDevice::GroupPointer &group)
     }
 
     m_group = group;
+    update_switchItem();
+    update_pointItem();
+    update_positionItem();
+    update_gainItem();
 
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(current_beam_changed(int)),
@@ -196,10 +191,6 @@ void TcgMenu::update(const DplDevice::GroupPointer &group)
             SLOT(update_positionItem()));
 
     connect(static_cast<DplSizing::Tcgs *>(m_group->tcgs().data()),
-            SIGNAL(changed()),
-            this,
-            SLOT(update_pointItem()));
-    connect(static_cast<DplSizing::Tcgs *>(m_group->tcgs().data()),
             SIGNAL(current_point_changed()),
             this,
             SLOT(update_positionItem()));
@@ -208,8 +199,6 @@ void TcgMenu::update(const DplDevice::GroupPointer &group)
             this,
             SLOT(update_gainItem()));
 
-    update_switchItem();
-    update_pointItem();
 }
 
 void TcgMenu::update_switchItem()
@@ -263,6 +252,11 @@ void TcgMenu::update_positionItem()
 
 void TcgMenu::update_gainItem()
 {
+    if (m_group->tcgs()->current_point_index() == 0) {
+        m_gainItem->setDisabled(true);
+    } else {
+        m_gainItem->setDisabled(false);
+    }
     m_gainItem->set_value(m_group->tcgs()->gain());
 }
 
