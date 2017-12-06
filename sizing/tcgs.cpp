@@ -25,7 +25,16 @@ bool Tcgs::enable() const
 
 bool Tcgs::set_enable(bool flag)
 {
-    return d->m_fpgaGrp->enable_tcg(flag);
+    if (flag == d->m_fpgaGrp->tcg()) {
+        return false;
+    }
+
+    if (d->m_fpgaGrp->enable_tcg(flag)) {
+        emit enabled_changed(flag);
+        return true;
+    }
+
+    return false;
 }
 
 int Tcgs::count() const

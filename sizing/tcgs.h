@@ -130,6 +130,7 @@ public:
     float amplitude() const;
 
 signals:
+    void enabled_changed(bool enabled);
     void changed();
     void current_point_changed();
 
