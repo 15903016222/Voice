@@ -47,7 +47,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
     m_scene->addItem(m_gateIItem);
 
     m_scene->addItem(m_tcgItem);
-    m_tcgItem->show();
 
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),

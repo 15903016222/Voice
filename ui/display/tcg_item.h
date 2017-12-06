@@ -30,6 +30,9 @@ public:
 signals:
     void painter_path_changed();
 
+protected slots:
+    void set_visible(bool flag);
+
 private:
     DplSizing::TcgsPointer m_tcgs;
     DplUt::SamplePointer m_sample;
