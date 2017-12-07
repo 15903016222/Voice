@@ -57,7 +57,7 @@ inline const QSize &TcgItem::size() const
 inline void TcgItem::set_size(const QSize &size)
 {
     m_size = size;
-    update();
+    do_tcgs_changed();
 }
 
 inline float TcgItem::x_ratio() const

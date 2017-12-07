@@ -16,6 +16,10 @@ TcgItem::TcgItem(const DplSizing::TcgsPointer &tcgs, const DplUt::SamplePointer 
             this,
             SLOT(do_tcgs_changed()));
     connect(static_cast<DplSizing::Tcgs *>(m_tcgs.data()),
+            SIGNAL(current_point_changed()),
+            this,
+            SLOT(do_tcgs_changed()));
+    connect(static_cast<DplSizing::Tcgs *>(m_tcgs.data()),
             SIGNAL(enabled_changed(bool)),
             this,
             SLOT(set_visible(bool)));
@@ -72,6 +76,11 @@ QPainterPath TcgItem::lines_path(const DplSizing::TcgPointer &tcg) const
     for (int i = 1; i < m_tcgs->point_count(); ++i) {
         path.lineTo( x_ratio() * (tcg->position(i)-m_sample->start()) + 3,
                     m_size.height() - y_ration() * tcg->amplitude(i) - 3);
+    }
+
+    if (m_tcgs->point_count() > 1) {
+        path.lineTo(m_size.width(),
+                    m_size.height() - y_ration() * tcg->amplitude(m_tcgs->point_count()-1) - 3);
     }
 
     return path;
