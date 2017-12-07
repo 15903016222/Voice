@@ -39,6 +39,8 @@ GateItem::GateItem(const DplUt::SamplePointer &sample, const DplGate::GatePointe
             SIGNAL(start_changed(float)),
             this,
             SLOT(update_pos()));
+    connect(this, SIGNAL(pos_changed()),
+            this, SLOT(update_pos()), Qt::QueuedConnection);
 
     do_visible_changed(m_gate->is_visible());
 }
@@ -61,12 +63,6 @@ void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
                       m_gate->width() * ratio(), GATE_HEIGHT/2);
     painter->drawLine(0, 0,
                       m_gate->width() * ratio(), 0);
-}
-
-void GateItem::set_offset(qreal offset)
-{
-    m_offset = offset;
-    update_pos();
 }
 
 void GateItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

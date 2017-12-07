@@ -56,6 +56,9 @@ public:
      */
     void set_offset(qreal offset);
 
+signals:
+    void pos_changed();
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -78,7 +81,7 @@ private:
 inline void GateItem::set_ratio(qreal ratio)
 {
     m_ratio = ratio;
-    update_pos();
+    emit pos_changed();
 }
 
 inline float GateItem::ratio() const
@@ -89,6 +92,14 @@ inline float GateItem::ratio() const
 inline bool GateItem::is_moving() const
 {
     return m_movingFlag;
+}
+
+inline void GateItem::set_offset(qreal offset)
+{
+    if (!qFuzzyCompare(m_offset, offset)) {
+        m_offset = offset;
+        emit pos_changed();
+    }
 }
 
 #endif // __GATE_ITEM_H__
