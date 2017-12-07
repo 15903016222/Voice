@@ -238,7 +238,7 @@ void TcgMenu::update_positionItem()
         m_positionItem->set_unit("mm");
     }
 
-    m_positionItem->set_range(Tool::cnf_to_display(m_group, m_group->sample()->start()),
+    m_positionItem->set_range(Tool::cnf_to_display(m_group, 20.0),
                         Tool::cnf_to_display(m_group, m_group->sample()->start()+m_group->sample()->range()));
 
     m_positionItem->set_value(Tool::cnf_to_display(m_group,

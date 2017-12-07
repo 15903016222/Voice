@@ -19,6 +19,7 @@ public:
 Tcg::Tcg(int index) :
     d(new TcgPrivate(index))
 {
+    set_position(0, 20);
 }
 
 Tcg::~Tcg()
