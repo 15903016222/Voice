@@ -23,7 +23,6 @@ class BaseMenu : public QWidget
     Q_OBJECT
 public:
     explicit BaseMenu(QWidget *parent = 0);
-    virtual ~BaseMenu();
 
 protected:
     static QStringList s_onOff;
@@ -36,6 +35,7 @@ protected:
     QVBoxLayout *m_layout3;
     QVBoxLayout *m_layout4;
     QVBoxLayout *m_layout5;
+    QVBoxLayout *m_layout6;
 };
 
 

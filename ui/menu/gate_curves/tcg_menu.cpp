@@ -14,31 +14,31 @@ namespace DplGateCurvesMenu {
 
 TcgMenu::TcgMenu(QWidget *parent) :
     BaseMenu(parent),
+    m_switchItem(new ComboMenuItem(this, tr("Tcg"))),
     m_modeItem(new ComboMenuItem(this, tr("Mode"))),
     m_curveNoItem(new SpinMenuItem(this, tr("Curve No."))),
     m_curveXItem(new ComboMenuItem(this, tr("Curve X"))),
     m_dbOffsetItem(new SpinMenuItem(this, tr("dB Offset"), tr("dB"))),
-    m_switchItem(new ComboMenuItem(this, tr("Switch"))),
     m_pointItem(new ComboMenuItem(this, tr("Point"))),
     m_positionItem(new SpinMenuItem(this, tr("Position"))),
     m_gainItem(new SpinMenuItem(this, tr("Gain"), tr("dB"))),
     m_addPointItem(new LabelMenuItem(this, tr("Add Point"))),
     m_deletePointItem(new LabelMenuItem(this, tr("Delete Point")))
 {
-    m_layout0->addWidget(m_modeItem);
+    m_layout0->addWidget(m_switchItem);
+    m_layout1->addWidget(m_modeItem);
 
     /* Setting */
-    m_layout1->addWidget(m_curveNoItem);
-    m_layout2->addWidget(m_curveXItem);
-    m_layout3->addWidget(m_dbOffsetItem);
-    m_layout4->addWidget(m_switchItem);
+    m_layout2->addWidget(m_curveNoItem);
+    m_layout3->addWidget(m_curveXItem);
+    m_layout4->addWidget(m_dbOffsetItem);
 
     /* Edit */
-    m_layout1->addWidget(m_pointItem);
-    m_layout2->addWidget(m_positionItem);
-    m_layout3->addWidget(m_gainItem);
-    m_layout4->addWidget(m_addPointItem);
-    m_layout5->addWidget(m_deletePointItem);
+    m_layout2->addWidget(m_pointItem);
+    m_layout3->addWidget(m_positionItem);
+    m_layout4->addWidget(m_gainItem);
+    m_layout5->addWidget(m_addPointItem);
+    m_layout6->addWidget(m_deletePointItem);
 
     m_modeItem->add_item(tr("Settings"));
     m_modeItem->add_item(tr("Edit"));
@@ -61,6 +61,9 @@ TcgMenu::TcgMenu(QWidget *parent) :
             this, SLOT(do_switchItem_changed(int)));
 
     /* Edit */    
+    m_positionItem->set_step(0.01);
+    m_positionItem->set_decimals(2);
+
     m_gainItem->set(0, 40, 1, 0.1);
     connect(m_gainItem,
             SIGNAL(value_changed(double)),
@@ -86,16 +89,27 @@ TcgMenu::TcgMenu(QWidget *parent) :
 
 void TcgMenu::do_modeItem_changed(int pos)
 {
-    m_curveNoItem->setVisible(!pos);
-    m_curveXItem->setVisible(!pos);
-    m_dbOffsetItem->setVisible(!pos);
-    m_switchItem->setVisible(!pos);
+    if (pos == 0) {
+        m_pointItem->hide();
+        m_positionItem->hide();
+        m_gainItem->hide();
+        m_addPointItem->hide();
+        m_deletePointItem->hide();
 
-    m_pointItem->setVisible(!!pos);
-    m_positionItem->setVisible(!!pos);
-    m_gainItem->setVisible(!!pos);
-    m_addPointItem->setVisible(!!pos);
-    m_deletePointItem->setVisible(!!pos);
+        m_curveNoItem->show();
+        m_curveXItem->show();
+        m_dbOffsetItem->show();
+    } else {
+        m_curveNoItem->hide();
+        m_curveXItem->hide();
+        m_dbOffsetItem->hide();
+
+        m_pointItem->show();
+        m_positionItem->show();
+        m_gainItem->show();
+        m_addPointItem->show();
+        m_deletePointItem->show();
+    }
 }
 
 void TcgMenu::do_switchItem_changed(int pos)
@@ -150,10 +164,6 @@ void TcgMenu::update(const DplDevice::GroupPointer &group)
                    SLOT(update_positionItem()));
 
         disconnect(static_cast<DplSizing::Tcgs *>(m_group->tcgs().data()),
-                   SIGNAL(changed()),
-                   this,
-                   SLOT(update_pointItem()));
-        disconnect(static_cast<DplSizing::Tcgs *>(m_group->tcgs().data()),
                    SIGNAL(current_point_changed()),
                    this,
                    SLOT(update_positionItem()));
@@ -164,6 +174,10 @@ void TcgMenu::update(const DplDevice::GroupPointer &group)
     }
 
     m_group = group;
+    update_switchItem();
+    update_pointItem();
+    update_positionItem();
+    update_gainItem();
 
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(current_beam_changed(int)),
@@ -177,10 +191,6 @@ void TcgMenu::update(const DplDevice::GroupPointer &group)
             SLOT(update_positionItem()));
 
     connect(static_cast<DplSizing::Tcgs *>(m_group->tcgs().data()),
-            SIGNAL(changed()),
-            this,
-            SLOT(update_pointItem()));
-    connect(static_cast<DplSizing::Tcgs *>(m_group->tcgs().data()),
             SIGNAL(current_point_changed()),
             this,
             SLOT(update_positionItem()));
@@ -189,8 +199,6 @@ void TcgMenu::update(const DplDevice::GroupPointer &group)
             this,
             SLOT(update_gainItem()));
 
-    update_switchItem();
-    update_pointItem();
 }
 
 void TcgMenu::update_switchItem()
@@ -230,9 +238,8 @@ void TcgMenu::update_positionItem()
         m_positionItem->set_unit("mm");
     }
 
-    m_positionItem->set(Tool::cnf_to_display(m_group, 0),
-                        Tool::cnf_to_display(m_group, 9*1000*1000),
-                        2, 0.01);
+    m_positionItem->set_range(Tool::cnf_to_display(m_group, 20.0),
+                        Tool::cnf_to_display(m_group, m_group->sample()->start()+m_group->sample()->range()));
 
     m_positionItem->set_value(Tool::cnf_to_display(m_group,
                                                    m_group->tcgs()->position()));
@@ -245,6 +252,11 @@ void TcgMenu::update_positionItem()
 
 void TcgMenu::update_gainItem()
 {
+    if (m_group->tcgs()->current_point_index() == 0) {
+        m_gainItem->setDisabled(true);
+    } else {
+        m_gainItem->setDisabled(false);
+    }
     m_gainItem->set_value(m_group->tcgs()->gain());
 }
 

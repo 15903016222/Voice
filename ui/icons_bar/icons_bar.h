@@ -3,6 +3,7 @@
 
 #include "mcu/mcu.h"
 
+#include <device/group.h>
 #include <QWidget>
 
 namespace Ui {
@@ -20,7 +21,9 @@ public:
 signals:
     void keyboard_event();
 
-public slots:
+protected slots:
+    void do_group_changed(const DplDevice::GroupPointer &group);
+
     void do_temperature_event(Mcu::TemperatureType type, int value);
     void do_battery_status_event(int index, Mcu::BatteryStatus status);
     void do_battery_quantity_event(int index, int value);
@@ -32,13 +35,12 @@ public slots:
     void show_velocity_calibration(bool flag);
     void show_delay_calibration(bool flag);
 
-protected slots:
     void do_timeout();
 
 private:
     Ui::IconsBar *ui;
-
     QTimer *m_timer;
+    DplDevice::GroupPointer m_group;
 };
 
 #endif // __ICONS_BAR_H__

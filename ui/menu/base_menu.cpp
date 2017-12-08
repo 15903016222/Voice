@@ -25,16 +25,13 @@ BaseMenu::BaseMenu(QWidget *parent) : QWidget(parent)
     m_layout3 = create_layout();
     m_layout4 = create_layout();
     m_layout5 = create_layout();
+    m_layout6 = create_layout();
 
     if (s_onOff.isEmpty()) {
         s_onOff.append(tr("On"));
         s_onOff.append(tr("Off"));
     }
     hide();
-}
-
-BaseMenu::~BaseMenu()
-{
 }
 
 QVBoxLayout *BaseMenu::create_layout()

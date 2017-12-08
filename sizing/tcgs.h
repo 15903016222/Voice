@@ -1,6 +1,6 @@
 /**
  * @file tcgs.h
- * @brief Tcg组
+ * @brief Tcg(Time-corrected Gain)组
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @date 2017-11-20
  */
@@ -130,7 +130,9 @@ public:
     float amplitude() const;
 
 signals:
-    void changed();
+    void enabled_changed(bool enabled);
+    void position_changed();
+    void gain_changed();
     void current_point_changed();
 
 private:

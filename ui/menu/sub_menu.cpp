@@ -16,7 +16,6 @@
 /* Gate/Curves */
 #include "gate_curves/gate_menu.h"
 #include "gate_curves/alarm_menu.h"
-#include "gate_curves/output_menu.h"
 #include "gate_curves/analog_menu.h"
 #include "gate_curves/dac_menu.h"
 #include "gate_curves/tcg_menu.h"
@@ -65,9 +64,9 @@
 #include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QGraphicsOpacityEffect>
 
-SubMenu::SubMenu(QWidget *parent) :
-    QWidget(parent),
+SubMenu::SubMenu(QWidget *parent) : QWidget(parent),
     m_curMenu(NULL)
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
@@ -118,7 +117,6 @@ void SubMenu::create_menus()
     /* Gate/Curves */
     add_menu(MainMenu::GateCurves_Gate,         new DplGateCurvesMenu::GateMenu(this));
     add_menu(MainMenu::GateCurves_Alarm,        new DplGateCurvesMenu::AlarmMenu(this));
-    add_menu(MainMenu::GateCurves_Output,       new DplGateCurvesMenu::OutputMenu(this));
     add_menu(MainMenu::GateCurves_Analog,       new DplGateCurvesMenu::AnalogMenu(this));
     add_menu(MainMenu::GateCurves_DAC,          new DplGateCurvesMenu::DacMenu(this));
     add_menu(MainMenu::GateCurves_TCG,          new DplGateCurvesMenu::TcgMenu(this));

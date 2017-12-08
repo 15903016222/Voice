@@ -8,7 +8,7 @@
 #ifndef __SUB_MENU_H__
 #define __SUB_MENU_H__
 
-#include "main_menu.h"
+#include "main_menu/main_menu.h"
 #include "base_menu.h"
 #include <QLayout>
 

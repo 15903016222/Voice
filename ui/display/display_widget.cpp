@@ -5,14 +5,14 @@
  * @date 2017-07-19
  */
 #include "display_widget.h"
-#include "a_scan_vdisplay.h"
-#include "a_scan_hdisplay.h"
-#include "s_scan_display.h"
-#include "b_scan_vdisplay.h"
-#include "b_scan_hdisplay.h"
-#include "c_scan_hdisplay.h"
-#include "c_scan_vdisplay.h"
-#include "fft_hdisplay.h"
+#include "a_scan/a_scan_vdisplay.h"
+#include "a_scan/a_scan_hdisplay.h"
+#include "s_scan/s_scan_display.h"
+#include "b_scan/b_scan_vdisplay.h"
+#include "b_scan/b_scan_hdisplay.h"
+#include "c_scan/c_scan_hdisplay.h"
+#include "c_scan/c_scan_vdisplay.h"
+#include "fft/fft_hdisplay.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>

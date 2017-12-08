@@ -1,6 +1,7 @@
 #include "icons_bar.h"
 #include "ui_icons_bar.h"
 #include <source/scan.h>
+#include <device/device.h>
 #include <QTimer>
 
 IconsBar::IconsBar(QWidget *parent) :
@@ -25,6 +26,12 @@ IconsBar::IconsBar(QWidget *parent) :
             SLOT(do_driving_changed()));
     do_driving_changed();
 
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this,
+            SLOT(do_group_changed(DplDevice::GroupPointer)));
+    do_group_changed(DplDevice::Device::instance()->current_group());
+
     connect(m_timer,
             SIGNAL(timeout()),
             this,
@@ -35,6 +42,22 @@ IconsBar::IconsBar(QWidget *parent) :
 IconsBar::~IconsBar()
 {
     delete ui;
+}
+
+void IconsBar::do_group_changed(const DplDevice::GroupPointer &group)
+{
+    if (m_group) {
+        disconnect(static_cast<DplSizing::Tcgs*>(m_group->tcgs().data()),
+                   SIGNAL(enabled_changed(bool)),
+                   this,
+                   SLOT(show_tcg(bool)));
+    }
+    m_group = group;
+    connect(static_cast<DplSizing::Tcgs*>(m_group->tcgs().data()),
+            SIGNAL(enabled_changed(bool)),
+            this,
+            SLOT(show_tcg(bool)));
+    show_tcg(m_group->tcgs()->enable());
 }
 
 void IconsBar::do_temperature_event(Mcu::TemperatureType type, int value)
@@ -74,7 +97,8 @@ void IconsBar::do_driving_changed()
 {
     if ( DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::TIMER ) {
         ui->encoderLabel->setPixmap(QPixmap("://resource/clock.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
-    } else {
+    } else if (DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::ENCODER_X
+               || DplSource::Scan::instance()->scan_axis()->driving() == DplSource::Axis::ENCODER_Y){
         ui->encoderLabel->setPixmap(QPixmap("://resource/gear.png").scaled(ui->encoderLabel->width(), ui->encoderLabel->height()));
     }
 }

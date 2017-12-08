@@ -19,7 +19,11 @@ public:
     explicit DacMenu(QWidget *parent);
     ~DacMenu();
 
+protected slots:
+    void do_modeItem_changed(int pos);
+
 private:
+    ComboMenuItem *m_switchItem;
     ComboMenuItem *m_modeItem;
 
     /* Setting */
@@ -27,7 +31,6 @@ private:
     ComboMenuItem *m_curveXItem;
     SpinMenuItem *m_dbOffsetItem;
     SpinMenuItem *m_refGainItem;
-    ComboMenuItem *m_switchItem;
 
     /* Edit */
     ComboMenuItem *m_pointItem;
@@ -35,13 +38,6 @@ private:
     LabelMenuItem *m_addPointItem;
     LabelMenuItem *m_deletePointItem;
 
-    void show_setting();
-    void hide_setting();
-    void show_edit();
-    void hide_edit();
-
-private slots:
-    void do_modeItem_changed(int pos);
 };
 
 }

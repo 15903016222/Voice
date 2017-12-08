@@ -56,13 +56,9 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget_1" native="true">
+    <widget class="QWidget" name="topWidget" native="true">
      <property name="styleSheet">
-      <string notr="true">QWidget#widget_1
-{
-	background-color: rgba(0, 130, 195);
-    border-left:1px solid qlineargradient(spread:reflect, x1:0.49435, y1:0.068, x2:0.50565, y2:0.75, stop:0.158192 rgba(0, 130, 195, 255), stop:0.559322 rgba(255, 255, 255, 255));
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,1">
       <property name="spacing">
@@ -148,7 +144,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget_2" native="true">
+    <widget class="QWidget" name="bottomWidget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
        <horstretch>0</horstretch>
@@ -156,11 +152,7 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">QWidget#widget_2
-{
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0.158192 rgba(0, 0, 0, 255), stop:0.559322 rgba(0, 130, 195, 255));
-	border-left:1px solid qlineargradient(spread:pad, x1:0.5, y1:0.15, x2:0.5, y2:1, stop:0.158192 rgba(255, 255, 255, 255), stop:0.757062 rgba(0, 130, 195, 255));
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,5">
       <property name="spacing">

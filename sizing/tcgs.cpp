@@ -1,6 +1,6 @@
 /**
  * @file tcgs.cpp
- * @brief Tcg组
+ * @brief Tcg(Time-corrected Gain)组
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @date 2017-11-20
  */
@@ -25,7 +25,16 @@ bool Tcgs::enable() const
 
 bool Tcgs::set_enable(bool flag)
 {
-    return d->m_fpgaGrp->enable_tcg(flag);
+    if (flag == d->m_fpgaGrp->tcg()) {
+        return false;
+    }
+
+    if (d->m_fpgaGrp->enable_tcg(flag)) {
+        emit enabled_changed(flag);
+        return true;
+    }
+
+    return false;
 }
 
 int Tcgs::count() const
@@ -36,6 +45,11 @@ int Tcgs::count() const
 TcgPointer Tcgs::tcg(int index) const
 {
     return d->m_tcgs.value(index);
+}
+
+TcgPointer Tcgs::current_tcg() const
+{
+    return d->m_tcgs[d->m_currentTcg];
 }
 
 int Tcgs::point_count() const
@@ -49,6 +63,9 @@ bool Tcgs::add_point()
         return false;
     }
 
+    int prePosition = d->m_tcgs[d->m_currentTcg]->position(d->m_pointQty-1);
+    float preGain = d->m_tcgs[d->m_currentTcg]->gain(d->m_pointQty-1);
+
     d->m_pointQty += 1;
     if (! d->m_fpgaGrp->set_tcg_point_qty(d->m_pointQty)) {
         d->m_pointQty -= 1;
@@ -56,6 +73,10 @@ bool Tcgs::add_point()
     }
 
     d->m_currentPoint = d->m_pointQty-1;
+
+    set_position(prePosition + 2000);
+    set_gain(preGain);
+
     emit current_point_changed();
     return true;
 }
@@ -121,17 +142,18 @@ int Tcgs::position() const
 
 bool Tcgs::set_position(int val)
 {
-    qDebug("%s[%d]: val(%d) point(%d)",__func__, __LINE__, val, d->m_currentPoint);
     if (d->m_allFlag) {
         foreach (DplSizing::TcgPointer tcg, d->m_tcgs) {
             if ( !tcg->set_position(d->m_currentPoint, val) ) {
                 return false;
             }
         }
-        return true;
-    } else {
-        return d->m_tcgs[d->m_currentTcg]->set_position(d->m_currentPoint, val);
+    } else if (!d->m_tcgs[d->m_currentTcg]->set_position(d->m_currentPoint, val)) {
+        return false;
     }
+
+    emit position_changed();
+    return true;
 }
 
 float Tcgs::gain() const
@@ -147,10 +169,12 @@ bool Tcgs::set_gain(float val)
                 return false;
             }
         }
-        return true;
-    } else {
-        return d->m_tcgs[d->m_currentTcg]->set_gain(d->m_currentPoint, val);
+    } else if (!d->m_tcgs[d->m_currentTcg]->set_gain(d->m_currentPoint, val)) {
+        return false;
     }
+
+    emit gain_changed();
+    return true;
 }
 
 float Tcgs::amplitude() const

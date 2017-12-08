@@ -210,6 +210,7 @@ void Group::init_gate(DplGate::Gate *gate)
 
 void Group::init_gates()
 {
+    m_gateA->set_visible(true);
     init_gate(m_gateA.data());
     init_gate(m_gateB.data());
     init_gate(m_gateI.data());
