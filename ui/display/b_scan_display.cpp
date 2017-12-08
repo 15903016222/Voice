@@ -21,7 +21,6 @@
 
 #include <measure/cursor.h>
 #include <ui/tool/tool.h>
-#include <ui/display/gate_item.h>
 
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),

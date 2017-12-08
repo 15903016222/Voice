@@ -9,7 +9,7 @@
 #include "a_scan_display.h"
 #include "ui_a_scan_display.h"
 
-#include "scan_view.h"
+#include "../scan_view.h"
 #include "a_scan_scene.h"
 #include "wave_item.h"
 #include "gate_item.h"

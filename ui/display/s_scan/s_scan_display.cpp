@@ -1,7 +1,7 @@
 #include "s_scan_display.h"
 #include "ui_scan_display.h"
 
-#include "scan_view.h"
+#include "../scan_view.h"
 #include "s_scan_scene.h"
 #include <global.h>
 #include <device/device.h>

@@ -15,7 +15,6 @@ class SscanScene;
 class SscanDisplay : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
     ~SscanDisplay();
