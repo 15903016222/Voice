@@ -14,6 +14,7 @@
 #include <ut/transceiver.h>
 #include <gate/gate.h>
 #include <sizing/tcgs.h>
+#include <sizing/dacs.h>
 #include <measure/cursor.h>
 #include <source/beams.h>
 #include <display/s_scan.h>
@@ -215,6 +216,7 @@ private:
     DplGate::GatePointer m_gateB;
     DplGate::GatePointer m_gateI;
     DplSizing::TcgsPointer m_tcgs;
+    DplSizing::Dacs *m_dacs;
     DplMeasure::CursorPointer m_cursor;
     DplDisplay::SscanPointer m_sScan;
     GroupPrivate *d;

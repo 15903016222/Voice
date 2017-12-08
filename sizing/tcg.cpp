@@ -1,3 +1,9 @@
+/**
+ * @file tcg.cpp
+ * @brief The Time-Corrected Gain
+ * @author Jake Yang <yanghuanjie@cndoppler.cn>
+ * @date 2017-12-07
+ */
 #include "tcg.h"
 #include <fpga/tcg.h>
 #include <qmath.h>

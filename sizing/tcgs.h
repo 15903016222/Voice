@@ -1,6 +1,6 @@
 /**
  * @file tcgs.h
- * @brief Tcg组
+ * @brief Tcg(Time-corrected Gain)组
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
  * @date 2017-11-20
  */
