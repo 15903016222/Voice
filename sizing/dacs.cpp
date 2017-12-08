@@ -11,9 +11,8 @@ namespace DplSizing {
 
 class DacsPrivate : public QObject
 {
-    Q_OBJECT
 public:
-    DacsPrivate(QObject *parent) : QObject(parent),
+    DacsPrivate() :
         m_enabled(false),
         m_curTcg(0),
         m_curPoint(0),
@@ -35,9 +34,14 @@ public:
 };
 
 Dacs::Dacs(QObject *parent) : QObject(parent),
-    d(new DacsPrivate(this))
+    d(new DacsPrivate())
 {
 
+}
+
+Dacs::~Dacs()
+{
+    delete d;
 }
 
 bool Dacs::enabled() const

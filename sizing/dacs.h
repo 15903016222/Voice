@@ -17,6 +17,7 @@ class Dacs : public QObject
     Q_OBJECT
 public:
     explicit Dacs(QObject *parent);
+    ~Dacs();
 
     /**
      * @brief enabled   获取使能状态
