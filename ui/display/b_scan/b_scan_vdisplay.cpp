@@ -2,7 +2,7 @@
 #include "ui_b_scan_display.h"
 #include "source/source.h"
 #include "source/scan.h"
-#include "scan_view.h"
+#include "../scan_view.h"
 
 BscanVDisplay::BscanVDisplay(const DplDevice::GroupPointer &grp, QWidget *parent)
     : BscanDisplay(grp, Qt::Vertical, parent)

@@ -9,10 +9,10 @@
 #include "device/device.h"
 #include "fpga/fpga.h"
 
-#include "scan_view.h"
+#include "../scan_view.h"
 #include "global.h"
 #include "b_scan_scene.h"
-#include "scroll_ruler_widget.h"
+#include "../scroll_ruler_widget.h"
 #include "b_scan_encoder_image_item.h"
 #include "b_scan_time_image_item.h"
 

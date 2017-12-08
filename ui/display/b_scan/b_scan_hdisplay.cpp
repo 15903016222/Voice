@@ -1,6 +1,6 @@
 #include "b_scan_hdisplay.h"
 #include "ui_b_scan_display.h"
-#include "scan_view.h"
+#include "../scan_view.h"
 #include "source/scan.h"
 
 BscanHDisplay::BscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent)

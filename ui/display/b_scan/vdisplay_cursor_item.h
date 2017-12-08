@@ -1,12 +1,12 @@
-#ifndef __H_DISPLAY_CURSOR_ITEM_H__
-#define __H_DISPLAY_CURSOR_ITEM_H__
+#ifndef __V_DISPLAY_CURSOR_ITEM_H__
+#define __V_DISPLAY_CURSOR_ITEM_H__
 
-#include "base_cursor_item.h"
+#include "../base_cursor_item.h"
 
-class HDisplayCursorItem : public BaseCursorItem
+class VDisplayCursorItem : public BaseCursorItem
 {
 public:
-    explicit HDisplayCursorItem(Qt::Orientation cursorOrientation,
+    explicit VDisplayCursorItem(Qt::Orientation cursorOrientation,
                     E_CURSOR_TYPE cursorType,
                     QGraphicsItem *parent = 0);
 
@@ -19,4 +19,4 @@ protected:
 
 };
 
-#endif // __H_DISPLAY_CURSOR_ITEM_H__
+#endif // __V_DISPLAY_CURSOR_ITEM_H__
