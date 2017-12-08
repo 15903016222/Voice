@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QFile>
 #include <source/source.h>
-#include <ui/display/fft_calculator.h>
+#include "fft_calculator.h"
 
 FFTItem::FFTItem(QGraphicsItem *parent)
     : QGraphicsObject(parent),

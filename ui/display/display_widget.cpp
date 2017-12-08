@@ -12,7 +12,7 @@
 #include "b_scan/b_scan_hdisplay.h"
 #include "c_scan/c_scan_hdisplay.h"
 #include "c_scan/c_scan_vdisplay.h"
-#include "fft_hdisplay.h"
+#include "fft/fft_hdisplay.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>

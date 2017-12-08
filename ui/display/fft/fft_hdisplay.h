@@ -1,7 +1,7 @@
 #ifndef __FFT_H_DISPLAY_H__
 #define __FFT_H_DISPLAY_H__
 
-#include <ui/display/fft_display.h>
+#include "fft_display.h"
 
 class FFTHDisplay : public FFTDisplay
 {

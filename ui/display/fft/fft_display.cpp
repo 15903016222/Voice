@@ -1,6 +1,6 @@
 #include "fft_display.h"
 #include "ui_fft_display.h"
-#include "scan_view.h"
+#include "../scan_view.h"
 #include "fft_scene.h"
 #include "fft_item.h"
 

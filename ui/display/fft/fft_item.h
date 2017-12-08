@@ -4,7 +4,7 @@
 #include <QGraphicsItem>
 #include <QReadWriteLock>
 #include <device/device.h>
-#include <ui/display/fft_calculator.h>
+#include "fft_calculator.h"
 
 class FFTItem : public QGraphicsObject
 {
