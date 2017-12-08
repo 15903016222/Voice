@@ -1,11 +1,11 @@
 #include "c_scan_display.h"
 #include "ui_scan_display.h"
 
-#include "base_image_item.h"
+#include "../base_image_item.h"
 #include "c_scan_encoder_image_item.h"
 #include "c_scan_time_image_item.h"
-#include "scroll_ruler_widget.h"
-#include "scan_view.h"
+#include "../scroll_ruler_widget.h"
+#include "../scan_view.h"
 #include "c_scan_scene.h"
 
 #include <device/device.h>

@@ -3,7 +3,7 @@
 
 #include <source/source.h>
 #include <device/group.h>
-#include "test_stub.h"
+#include "../test_stub.h"
 
 class CScanData
 {

@@ -1,7 +1,7 @@
 #ifndef __C_SCAN_TIME_IMAGE_ITEM_H__
 #define __C_SCAN_TIME_IMAGE_ITEM_H__
 
-#include "time_image_item.h"
+#include "../time_image_item.h"
 #include "c_scan_data.h"
 
 class CscanTimeImageItem : public TimeImageItem

@@ -1,7 +1,7 @@
 #ifndef __C_SCAN_ENCODER_IMAGE_ITEM_H__
 #define __C_SCAN_ENCODER_IMAGE_ITEM_H__
 
-#include "encoder_image_item.h"
+#include "../encoder_image_item.h"
 #include "c_scan_data.h"
 
 class CscanEncoderImageItem : public EncoderImageItem
