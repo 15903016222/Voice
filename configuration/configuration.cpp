@@ -7,6 +7,9 @@
 #include "preference_config.h"
 #include "group_config.h"
 
+#include <device/device.h>
+#include <device/group.h>
+
 namespace Config {
 
 QString Configuration::s_defaultConfigFilePath = "/home/tt/TT/config";
@@ -139,7 +142,6 @@ bool Configuration::save_config(const QString &configFilePath)
     return true;
 }
 
-
 void Configuration::deal_object(const msgpack::v2::object &object)
 {
     if(object.is_nil()) {
@@ -164,10 +166,7 @@ void Configuration::deal_object(const msgpack::v2::object &object)
             }
             firstItem++;
         }
-        return;
     }
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " want to do.... other object type = " << object.type;
 }
 
 }

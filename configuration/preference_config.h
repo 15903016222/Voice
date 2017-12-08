@@ -11,7 +11,7 @@ class PreferenceConfig : public BaseItemConfig
 public:
     PreferenceConfig(msgpack::packer<msgpack::sbuffer> *m_packer);
     virtual void pack();
-    virtual void unpack(const msgpack::v2::object &obj);
+    virtual bool unpack(const msgpack::v2::object &obj);
 };
 
 }

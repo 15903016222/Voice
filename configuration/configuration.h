@@ -12,22 +12,14 @@ class ConfigurationPrivate;
 
 namespace Config_Group {
 
-enum E_Group{
-        Gate_Curves,
-        UT,
-        Focallaw,
-        Probe_Part,
-        Scan,
-        Measurement
-    };
-
-    enum E_Gate_Curves {
+    enum E_Group {
+        General,
         Gate,
-        Alarm,
-        Output,
-        Analog,
-        DAC,
-        TCG,
+        UT,
+        Focallawer,
+        TCGS,
+        Cursor,
+        Scan
     };
 
     enum E_Gate {
@@ -42,27 +34,111 @@ enum E_Group{
         Gate_Color,
     };
 
-    enum E_TCG{
-        TCG_Index,
-        TCG_Position,
-        TCG_Gain,
-        TCG_Amplitude,
+    enum E_UT {
+        UT_Sample,
+        UT_Transceiver
     };
 
-    enum E_UT{
-        General,
-        Pulser,
-        Receiver,
-        Advanced,
+    enum E_Transceiver {
+        Transceiver_Mode,
+        Transceiver_PW,
+        Transceiver_Filter,
+        Transceiver_Rectifier,
+        Transceiver_VideoFilter,
+        Transceiver_Averaging
     };
+
+    enum E_Sample {
+        Sample_Precision,
+        Sample_Gain,
+        Sample_Start,
+        Sample_Range,
+        Sample_PointQty,
+        Sample_AutoSet
+    };
+
+    enum E_Focallawer {
+        Probe,
+        Wedge,
+        Specimen,
+        FocusCnf
+    };
+
+    enum E_Probe {
+        Probe_PA,
+        Probe_FileName,
+        Probe_Serial,
+        Probe_Model,
+        Probe_Type,
+        Probe_Freq,
+        Probe_PulserIndex,
+        Probe_ReceiverInex,
+    };
+
+   enum E_Wedge {
+        Wedge_FileName,
+        Wedge_Serial,
+        Wedge_Model,
+        Wedge_Angle,
+        Wedge_RootAngle,
+        Wedge_Velocity,
+        Wedge_PrimaryOffset,
+        Wedge_SecondaryOffset,
+        Wedge_FirstElementHeight,
+        Wedge_Length,
+        Wedge_Width,
+        Wedge_Height,
+        Wedge_Orientation,
+        Wedge_delay
+    };
+
+   enum E_Specimen{
+       Specimen_Type,
+       Specimen_WaveType,
+       Specimen_Velocity
+    };
+
+   enum E_FocusCnf {
+        FocusCnf_Mode
+    };
+
+   enum E_TCGS {
+       TCGS_Enable,
+       TCGS_CurrentTcg,
+       TCGS_Gain,
+       TCGS_Point,
+       TCGS_CurrentPoint,
+   };
+
+   enum E_Point {
+       Point_Index,
+       Point_Position
+   };
+
+   enum E_Cursor {
+       Cursor_AmplitudeMeasurement,
+       Cursor_UltrasoundReference,
+       Cursor_UltrasoundMeasurement,
+       Cursor_ScanReference,
+       Cursor_ScanMeasurement,
+       Cursor_IndexReference,
+       Cursor_IndexMeasurement,
+       Cursor_Visible
+   };
+
+   enum E_Scan {
+       Scan_StartX,
+       Scan_StopX,
+       Scan_StartY,
+       Scan_StopY,
+       Scan_Width,
+       Scan_Height
+   };
 
     enum E_General {
-        General_Gain,
-        General_Start,
-        General_Range,
-        General_Velocity,
-        General_WedgeDelay,
+        General_Mode,
         General_UTUnit,
+        General_CurrentAngle
     };
 }
 
@@ -104,7 +180,6 @@ private:
     static QString              s_defaultConfigFilePath;
 
     void deal_object(const msgpack::object &object);
-
 
     Q_DISABLE_COPY(Configuration)
 };

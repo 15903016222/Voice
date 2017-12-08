@@ -24,14 +24,14 @@ void PreferenceConfig::pack()
     m_packer->pack(itemMap);
 }
 
-void PreferenceConfig::unpack(const msgpack::v2::object &obj)
+bool PreferenceConfig::unpack(const msgpack::v2::object &obj)
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " enter.";
+    qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " enter.";
 
     try {
         if(obj.type != msgpack::type::MAP) {
-            qDebug() << "[" << __FUNCTION__ << "]" << " object type is not MAP!";
-            return;
+            qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " object type is not MAP!";
+            return false;
         }
 
         MetaItem itemMap;
@@ -42,27 +42,27 @@ void PreferenceConfig::unpack(const msgpack::v2::object &obj)
             switch (it->first) {
             case Config_Preference::Bright:
             {
-                qDebug() << "[" << __FUNCTION__ << "]" << " Bright = " << it->second.as<int>();
+                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Bright = " << it->second.as<int>();
                 break;
             }
             case Config_Preference::Opacity:
             {
-                qDebug() << "[" << __FUNCTION__ << "]" << " Opacity = " << it->second.as<int>();
+                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Opacity = " << it->second.as<int>();
                 break;
             }
             case Config_Preference::Language:
             {
-                qDebug() << "[" << __FUNCTION__ << "]" << " Language = " << it->second.as<int>();
+                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Language = " << it->second.as<int>();
                 break;
             }
             case Config_Preference::StartingPage:
             {
-                qDebug() << "[" << __FUNCTION__ << "]" << " StartingPage = " << it->second.as<bool>();
+                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " StartingPage = " << it->second.as<bool>();
                 break;
             }
             case Config_Preference::GateMode:
             {
-                qDebug() << "[" << __FUNCTION__ << "]" << " GateMode = " << it->second.as<bool>();
+                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " GateMode = " << it->second.as<bool>();
                 break;
             }
             default:
@@ -72,8 +72,10 @@ void PreferenceConfig::unpack(const msgpack::v2::object &obj)
             ++it;
         }
     } catch(...) {
-        qDebug() << "[" << __FUNCTION__ << "]" << " convert MetaItem catch execption!";
+        qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " convert MetaItem catch execption!";
+        return false;
     }
+    return true;
 }
 
 }

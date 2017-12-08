@@ -15,7 +15,7 @@ public:
     BaseItemConfig(msgpack::packer<msgpack::sbuffer> *packer);
 
     virtual void pack() = 0;
-    virtual void unpack(const msgpack::object &obj) = 0;
+    virtual bool unpack(const msgpack::object &obj) = 0;
 
 protected:
     msgpack::packer<msgpack::sbuffer> *m_packer;
