@@ -3,9 +3,6 @@
 
 namespace Config {
 
-std::string g_string("doppler");
-msgpack::zone g_zone;
-
 GroupConfig::GroupConfig(msgpack::packer<msgpack::sbuffer> *packer)
     : BaseItemConfig(packer)
 {
@@ -44,10 +41,10 @@ bool GroupConfig::unpack(const msgpack::v2::object &obj)
             return false;
         }
 
-        std::map<int, SubItemMap> groupMap;
+        MetaItem groupMap;
         obj.convert(groupMap);
 
-        std::map<int, SubItemMap>::iterator it = groupMap.begin();
+        std::map<int, msgpack::object>::iterator it = groupMap.begin();
 
         qDebug() << "["<< __FUNCTION__ << "]" << " groupMap size  = " << groupMap.size();
 
@@ -82,11 +79,13 @@ bool GroupConfig::unpack(const msgpack::v2::object &obj)
 
             qDebug() << "[" << __FUNCTION__ << "]" << " group index  = " << it->first;
 
-            SubItemMap::iterator subIt = it->second.begin();
-            while(subIt != it->second.end()) {
-                unpack_group_item_config(subIt->first, subIt->second);
-                ++subIt;
+            if(it->second.type == msgpack::type::MAP) {
+                msgpack::object_kv *currentKV = it->second.via.map.ptr;
+                for(int i = 0; i < it->second.via.map.size; ++i) {
+                    unpack_group_item_config(currentKV[i].key.as<int>(), currentKV[i].val);
+                }
             }
+
             qDebug() << "=============end group " << it->first << "==============\n";
             ++it;
         }
@@ -105,20 +104,18 @@ void GroupConfig::pack_group_child_item_config(const DplDevice::GroupPointer &gr
     if(groupPointer.isNull()) {
         /* key */
         m_packer->pack_int(1);
-
-        SubItemMap childItemMap;
-
-        MetaItem gateMetaItem;
-        childItemMap.insert(SubItemMap::value_type((int)Config_Group::Gate, gateMetaItem));
-
-        MetaItem utMetaItem;
-        childItemMap.insert(SubItemMap::value_type((int)Config_Group::UT, utMetaItem));
-
-        MetaItem focallawMetaItem;
-        childItemMap.insert(SubItemMap::value_type((int)Config_Group::Focallawer, focallawMetaItem));
-
         /* value */
-        m_packer->pack(childItemMap);
+        m_packer->pack_map(3);
+
+        m_packer->pack((int)Config_Group::Gate);
+        m_packer->pack(222);
+
+        m_packer->pack((int)Config_Group::UT);
+        m_packer->pack(222);
+
+        m_packer->pack((int)Config_Group::Focallawer);
+        m_packer->pack(222);
+
         return;
     }
 #endif
@@ -126,60 +123,26 @@ void GroupConfig::pack_group_child_item_config(const DplDevice::GroupPointer &gr
     /* key */
     m_packer->pack_int(groupPointer->index());
 
-    SubItemMap childItemMap;
+     /* values */
+    m_packer->pack_map((int)Config_Group::GroupItemNum);
 
-//    MetaItem generalMetaItem = pack_group_general_config(groupPointer);
-//    childItemMap.insert(SubItemMap::value_type((int)Config_Group::General, generalMetaItem));
+    pack_group_general_config(groupPointer);
 
-//    MetaItem gateMetaItem = pack_group_gate_config(groupPointer);
-//    childItemMap.insert(SubItemMap::value_type((int)Config_Group::Gate, gateMetaItem));
+    pack_group_gate_config(groupPointer);
 
-    MetaItem utMetaItem = pack_group_ut_config(groupPointer);
-    childItemMap.insert(SubItemMap::value_type((int)Config_Group::UT, utMetaItem));
+    pack_group_ut_config(groupPointer);
 
+    pack_group_focallawer_config(groupPointer);
 
-    MetaItem test = pack_group_focallawertest_config(groupPointer);
-    childItemMap.insert(SubItemMap::value_type((int)Config_Group::Focallawer, test));
+    pack_group_tcgs_config(groupPointer);
 
-    {
-        std::string mystring("1");
-        msgpack::zone ttttzone;
-        ttttzone.allocate_align(mystring.size());
-        msgpack::object myobject(mystring, ttttzone);
-        qDebug() << "[" << __FUNCTION__ << "]" << " except type = " << myobject.type;
-    }
+    pack_group_cursor_config(groupPointer);
 
-//    std::string mystring("88888888111111");
-//    MetaItem test;
-//    msgpack::zone zonetest;
-//    zonetest.allocate<std::string>();
-//    test.insert(MetaItem::value_type(11, msgpack::object(mystring, zonetest)));
-//    qDebug() << "[" << __FUNCTION__ << "]" << " type  = " << test.at(11).type;
+    pack_group_scan_config(groupPointer);
 
-//    qDebug() << "[" << __FUNCTION__ << "]" << " debug ... 1";
-
-//    childItemMap.insert(SubItemMap::value_type((int)Config_Group::Focallawer, test));
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " debug ... 2";
-
-//    MetaItem focallawerMetaItem = pack_group_focallawer_config(groupPointer);
-//    childItemMap.insert(SubItemMap::value_type((int)Config_Group::Focallawer, focallawerMetaItem));
-
-//    MetaItem tcgsMetaItem = pack_group_tcgs_config(groupPointer);
-//    childItemMap.insert(SubItemMap::value_type((int)Config_Group::TCGS, tcgsMetaItem));
-
-//    MetaItem cursorMetaItem = pack_group_cursor_config(groupPointer);
-//    childItemMap.insert(SubItemMap::value_type((int)Config_Group::Cursor, cursorMetaItem));
-
-//    MetaItem scanMetaItem = pack_group_scan_config(groupPointer);
-//    childItemMap.insert(SubItemMap::value_type((int)Config_Group::Scan, scanMetaItem));
-
-    /* value */
-    m_packer->pack(childItemMap);
-    qDebug() << "[" << __FUNCTION__ << "]" << " debug ... 3";
 }
 
-MetaItem GroupConfig::pack_group_general_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_group_general_config(const DplDevice::GroupPointer &groupPointer)
 {
     MetaItem generalItemMap;
     msgpack::zone zone;
@@ -190,127 +153,76 @@ MetaItem GroupConfig::pack_group_general_config(const DplDevice::GroupPointer &g
                                                msgpack::object((int)groupPointer->ut_unit(), zone)));
     generalItemMap.insert(MetaItem::value_type((int)Config_Group::General_CurrentAngle,
                                                 msgpack::object(groupPointer->current_angle(), zone)));
-    return generalItemMap;
+    /* key */
+    m_packer->pack((int)Config_Group::General);
+    /* value */
+    m_packer->pack(generalItemMap);
 }
 
-MetaItem GroupConfig::pack_group_gate_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_group_gate_config(const DplDevice::GroupPointer &groupPointer)
 {
     MetaItem gateMap;
-    msgpack::zone zoneA, zoneB, zoneI;
-    MetaItem  gateItemMapA = pack_gate_config(gateItemMapA, zoneA, groupPointer, DplFpga::Group::GATE_A);
-    MetaItem  gateItemMapB = pack_gate_config(gateItemMapB, zoneB, groupPointer, DplFpga::Group::GATE_B);
-    MetaItem  gateItemMapI = pack_gate_config(gateItemMapI, zoneI, groupPointer, DplFpga::Group::GATE_I);
+
+    MetaItem  gateItemMapA = pack_gate_config(groupPointer, DplFpga::Group::GATE_A);
+    MetaItem  gateItemMapB = pack_gate_config(groupPointer, DplFpga::Group::GATE_B);
+    MetaItem  gateItemMapI = pack_gate_config(groupPointer, DplFpga::Group::GATE_I);
 
     msgpack::zone zone;
     gateMap.insert(MetaItem::value_type((int)DplFpga::Group::GATE_A, msgpack::object(gateItemMapA, zone)));
     gateMap.insert(MetaItem::value_type((int)DplFpga::Group::GATE_B, msgpack::object(gateItemMapB, zone)));
     gateMap.insert(MetaItem::value_type((int)DplFpga::Group::GATE_I, msgpack::object(gateItemMapI, zone)));
 
-    return gateMap;
+    /* key */
+    m_packer->pack((int)Config_Group::Gate);
+    /* value */
+    m_packer->pack(gateMap);
 }
 
-MetaItem GroupConfig::pack_group_ut_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_group_ut_config(const DplDevice::GroupPointer &groupPointer)
 {
-    MetaItem utItemMap;
+    /* key */
+    m_packer->pack((int)Config_Group::UT);
+    m_packer->pack_map((int)Config_Group::UT_ItemNum);
 
-    MetaItem sampleItemMap      = pack_ut_sample_config(groupPointer);;
-    MetaItem transceiverItemMap = pack_ut_transceiver_config(groupPointer);
+    pack_ut_sample_config(groupPointer);
 
-    msgpack::zone zone;
-    utItemMap.insert(MetaItem::value_type((int)Config_Group::UT_Sample,
-                                          msgpack::object(sampleItemMap, zone)));
-    utItemMap.insert(MetaItem::value_type((int)Config_Group::UT_Transceiver,
-                                          msgpack::object(transceiverItemMap, zone)));
-    return utItemMap;
+    pack_ut_transceiver_config(groupPointer);
 }
 
-
-MetaItem GroupConfig::pack_group_focallawertest_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_group_focallawer_config(const DplDevice::GroupPointer &groupPointer)
 {
-    MetaItem utItemMap;
+    m_packer->pack((int)Config_Group::Focallawer);
 
-    MetaItem sampleItemMap = pack_focallawer_probetest_config(g_zone, groupPointer);
-    qDebug() << "[" << __FUNCTION__ << "]" << " debug ... 1";
-    MetaItem transceiverItemMap = pack_focallawer_wedgetest_config(groupPointer);
-    qDebug() << "[" << __FUNCTION__ << "]" << " debug ... 2";
+    m_packer->pack_map((int)Config_Group::Focallawer_ItemNum);
 
-    msgpack::zone zone;
-    utItemMap.insert(MetaItem::value_type((int)Config_Group::Probe,
-                                          msgpack::object(sampleItemMap, zone)));
-    utItemMap.insert(MetaItem::value_type((int)Config_Group::Wedge,
-                                          msgpack::object(transceiverItemMap, zone)));
-    qDebug() << "[" << __FUNCTION__ << "]" << " debug ... 3";
-    return utItemMap;
+    pack_focallawer_probe_config(groupPointer);
+
+    pack_focallawer_wedge_config(groupPointer);
+
+    pack_focallawer_specimen_config(groupPointer);
+
+    pack_focallawer_focusCnf_config(groupPointer);
 }
 
-MetaItem GroupConfig::pack_focallawer_probetest_config(msgpack::zone &zone2, const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_group_tcgs_config(const DplDevice::GroupPointer &groupPointer)
 {
-    MetaItem probeItemMap;
-
-    const DplFocallaw::ProbePointer &probe = groupPointer->focallawer()->probe();
-
-    msgpack::zone zone1;
-    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_PA,
-                                              msgpack::object(probe->is_pa(), zone1)));
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " debug ... 1";
-    std::string oo = "hello";
-    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_FileName,
-                                              msgpack::object(oo, zone1)));
-    qDebug() << "[" << __FUNCTION__ << "]" << " debug ... 2";
-    return probeItemMap;
+    m_packer->pack((int)Config_Group::TCGS);
+    m_packer->pack(22222);
 }
 
-MetaItem GroupConfig::pack_focallawer_wedgetest_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_group_cursor_config(const DplDevice::GroupPointer &groupPointer)
 {
-    MetaItem probeItemMap;
-    return probeItemMap;
+    m_packer->pack((int)Config_Group::Cursor);
+    m_packer->pack(22222);
 }
 
-
-MetaItem GroupConfig::pack_group_focallawer_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_group_scan_config(const DplDevice::GroupPointer &groupPointer)
 {
-    MetaItem  focallawerItemMap;
-
-    msgpack::zone zone2;
-    MetaItem probeItemMap    = pack_focallawer_probe_config(zone2, groupPointer);;
-    MetaItem wedgeItemMap    = pack_focallawer_wedge_config(groupPointer);
-    MetaItem specimenItemMap = pack_focallawer_specimen_config(groupPointer);
-    MetaItem focusCnfItemMap = pack_focallawer_focusCnf_config(groupPointer);
-
-    msgpack::zone zone;
-
-    focallawerItemMap.insert(MetaItem::value_type((int)Config_Group::Probe,
-                                          msgpack::object(probeItemMap, zone)));
-    focallawerItemMap.insert(MetaItem::value_type((int)Config_Group::Wedge,
-                                          msgpack::object(wedgeItemMap, zone)));
-    focallawerItemMap.insert(MetaItem::value_type((int)Config_Group::Specimen,
-                                          msgpack::object(specimenItemMap, zone)));
-    focallawerItemMap.insert(MetaItem::value_type((int)Config_Group::FocusCnf,
-                                          msgpack::object(focusCnfItemMap, zone)));
-
-    return focallawerItemMap;
+    m_packer->pack((int)Config_Group::Scan);
+    m_packer->pack(22222);
 }
 
-MetaItem GroupConfig::pack_group_tcgs_config(const DplDevice::GroupPointer &groupPointer)
-{
-    MetaItem  tcgsItemMap;
-    return tcgsItemMap;
-}
-
-MetaItem GroupConfig::pack_group_cursor_config(const DplDevice::GroupPointer &groupPointer)
-{
-    MetaItem  cursorItemMap;
-    return cursorItemMap;
-}
-
-MetaItem GroupConfig::pack_group_scan_config(const DplDevice::GroupPointer &groupPointer)
-{
-    MetaItem  scanItemMap;
-    return scanItemMap;
-}
-
-MetaItem GroupConfig::pack_gate_config(MetaItem &gateItemMap1, msgpack::zone &zone1, const DplDevice::GroupPointer &groupPointer, DplFpga::Group::GateType type)
+MetaItem GroupConfig::pack_gate_config(const DplDevice::GroupPointer &groupPointer, DplFpga::Group::GateType type)
 {
     const DplGate::GatePointer &gatePointer = groupPointer->gate(type);
 
@@ -335,16 +247,10 @@ MetaItem GroupConfig::pack_gate_config(MetaItem &gateItemMap1, msgpack::zone &zo
     return gateItemMap;
 }
 
-MetaItem  GroupConfig::pack_tcgs_config(MetaItem &tcgsItemMap1, msgpack::zone &zone1, const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_ut_sample_config(const DplDevice::GroupPointer &groupPointer)
 {
-    const DplSizing::TcgsPointer &tcgsPointer = groupPointer->tcgs();
-    MetaItem tcgsItemMap;
-    msgpack::zone zone;
-    tcgsItemMap.insert(MetaItem::value_type((int)Config_Group::TCGS, msgpack::object(tcgsPointer->count(), zone)));
-}
+    m_packer->pack((int)Config_Group::UT_Sample);
 
-MetaItem GroupConfig::pack_ut_sample_config(const DplDevice::GroupPointer &groupPointer)
-{
     MetaItem  sampleItemMap;
     const DplUt::SamplePointer &samplePointer = groupPointer->sample();
     msgpack::zone zone;
@@ -361,6 +267,8 @@ MetaItem GroupConfig::pack_ut_sample_config(const DplDevice::GroupPointer &group
     sampleItemMap.insert(MetaItem::value_type((int)Config_Group::Sample_AutoSet,
                                               msgpack::object(samplePointer->is_auto_set_point_qty(), zone)));
 
+    m_packer->pack(sampleItemMap);
+
     qDebug("precision = %f, gain = %f, start = %f, range = %f, point_qty = %d, is_auto_set_point_qty = %d, ",
            samplePointer->precision(),
            samplePointer->gain(),
@@ -368,12 +276,12 @@ MetaItem GroupConfig::pack_ut_sample_config(const DplDevice::GroupPointer &group
            samplePointer->range(),
            samplePointer->point_qty(),
            (int)samplePointer->is_auto_set_point_qty());
-
-    return sampleItemMap;
 }
 
-MetaItem GroupConfig::pack_ut_transceiver_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_ut_transceiver_config(const DplDevice::GroupPointer &groupPointer)
 {
+    m_packer->pack((int)Config_Group::UT_Transceiver);
+
     MetaItem  transceiverItemMap;
     const DplUt::TransceiverPointer &tPointer = groupPointer->transceiver();
 
@@ -391,6 +299,8 @@ MetaItem GroupConfig::pack_ut_transceiver_config(const DplDevice::GroupPointer &
     transceiverItemMap.insert(MetaItem::value_type((int)Config_Group::Transceiver_Averaging,
                                               msgpack::object((int)tPointer->averaging(), zone)));
 
+    m_packer->pack(transceiverItemMap);
+
     qDebug("[%s] Mode = %d, PW = %f, Filter = %d, "
            "Rectifier = %d, VideoFilter = %d, Averaging = %d",
            __FUNCTION__,
@@ -400,92 +310,152 @@ MetaItem GroupConfig::pack_ut_transceiver_config(const DplDevice::GroupPointer &
            tPointer->rectifier(),
            (int)tPointer->video_filter(),
            tPointer->averaging());
-
-    return transceiverItemMap;
 }
 
-MetaItem GroupConfig::pack_focallawer_probe_config(msgpack::zone &zone2, const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_focallawer_probe_config(const DplDevice::GroupPointer &groupPointer)
 {
-    MetaItem probeItemMap;
+    m_packer->pack((int)Config_Group::Probe);
+
+    m_packer->pack_map((int)Config_Group::Probe_ItemNum);
 
     const DplFocallaw::ProbePointer &probe = groupPointer->focallawer()->probe();
 
-    msgpack::zone zone1;
-    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_PA,
-                                              msgpack::object(probe->is_pa(), zone1)));
-    std::string test("helloworld!");
+    m_packer->pack((int)Config_Group::Probe_PA);
+    m_packer->pack(probe->is_pa());
 
-    msgpack::object object = msgpack::object(test, zone2);
-    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_FileName,
-                                              object));
-//    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_Serial,
-//                                              msgpack::object(probe->serial().toStdString(), zone)));
-//    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_Model,
-//                                              msgpack::object(probe->model().toStdString(), zone)));
-//    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_Type,
-//                                              msgpack::object((int)probe->type(), zone)));
-//    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_Freq,
-//                                              msgpack::object(probe->freq(), zone)));
-//    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_PulserIndex,
-//                                              msgpack::object(probe->pulser_index(), zone)));
-//    probeItemMap.insert(MetaItem::value_type((int)Config_Group::Probe_ReceiverInex,
-//                                              msgpack::object(probe->receiver_index(), zone)));
+    m_packer->pack((int)Config_Group::Probe_FileName);
+    std::string fileName = "Probe_FileName";    /* TODO */
+    m_packer->pack(fileName);
 
-//    qDebug("[%s] pa = %d, filename = %s, serial = %s, "
-//           "model = %s, type = %d, freq = %f, pulserIndex = %d, rreceiverIndex = %d",
-//           __FUNCTION__,
-//           (int)probe->is_pa(),
-//           "probeFileName",
-//           probe->serial().toStdString().c_str(),
-//           probe->model().toStdString().c_str(),
-//           (int)probe->type(),
-//           probe->freq(),
-//           probe->pulser_index(),
-//           probe->receiver_index());
+    m_packer->pack((int)Config_Group::Probe_Serial);
+    m_packer->pack(probe->serial().toStdString());
 
-    return probeItemMap;
+    m_packer->pack((int)Config_Group::Probe_Model);
+    m_packer->pack(probe->model().toStdString());
+
+    m_packer->pack((int)Config_Group::Probe_Type);
+    m_packer->pack((int)probe->type());
+
+    m_packer->pack((int)Config_Group::Probe_Freq);
+    m_packer->pack(probe->freq());
+
+    m_packer->pack((int)Config_Group::Probe_PulserIndex);
+    m_packer->pack(probe->pulser_index());
+
+    m_packer->pack((int)Config_Group::Probe_ReceiverInex);
+    m_packer->pack(probe->receiver_index());
+
+    qDebug("[%s] pa = %d, filename = %s, serial = %s, "
+           "model = %s, type = %d, freq = %f, pulserIndex = %d, rreceiverIndex = %d",
+           __FUNCTION__,
+           (int)probe->is_pa(),
+           fileName.c_str(),
+           probe->serial().toStdString().c_str(),
+           probe->model().toStdString().c_str(),
+           (int)probe->type(),
+           probe->freq(),
+           probe->pulser_index(),
+           probe->receiver_index());
 }
 
-MetaItem GroupConfig::pack_focallawer_wedge_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_focallawer_wedge_config(const DplDevice::GroupPointer &groupPointer)
 {
-//        FileName
-//        Serial
-//        Model
-//        Angle
-//        RootAngle
-//        Velocity
-//        PrimaryOffset
-//        SecondaryOffset
-//        FirstElementHeight
-//        Length
-//        Width
-//        Height
-//        Orientation
-//        delay
-    MetaItem probeItemMap;
+    const DplFocallaw::WedgePointer &wedgePointer = groupPointer->focallawer()->wedge();
 
-    return probeItemMap;
+    m_packer->pack((int)Config_Group::Wedge);
+
+//    m_packer->pack_map((int)Config_Group::Wedge_ItemNum);
+    m_packer->pack_map(15);
+
+
+    m_packer->pack((int)Config_Group::Wedge_FileName);
+    std::string fileName = "wedgeFileName";     /* TODO */
+    m_packer->pack(fileName);
+
+    m_packer->pack((int)Config_Group::Wedge_Serial);
+    m_packer->pack(wedgePointer->serial().toStdString());
+
+    m_packer->pack((int)Config_Group::Wedge_Model);
+    m_packer->pack(wedgePointer->model().toStdString());
+
+    m_packer->pack((int)Config_Group::Wedge_Angle);
+    m_packer->pack(wedgePointer->angle());
+
+    m_packer->pack((int)Config_Group::Wedge_RootAngle);
+    m_packer->pack(wedgePointer->roof_angle());
+
+    m_packer->pack((int)Config_Group::Wedge_Velocity);
+    m_packer->pack(wedgePointer->velocity());
+
+    m_packer->pack((int)Config_Group::Wedge_PrimaryOffset);
+    m_packer->pack(wedgePointer->primary_offset());
+
+    m_packer->pack((int)Config_Group::Wedge_SecondaryOffset);
+    m_packer->pack(wedgePointer->secondary_offset());
+
+    m_packer->pack((int)Config_Group::Wedge_FirstElementHeight);
+    m_packer->pack(wedgePointer->first_element_height());
+
+    m_packer->pack((int)Config_Group::Wedge_Length);
+    m_packer->pack(wedgePointer->length());
+
+    m_packer->pack((int)Config_Group::Wedge_Width);
+    m_packer->pack(wedgePointer->width());
+
+    m_packer->pack((int)Config_Group::Wedge_Height);
+    m_packer->pack(wedgePointer->height());
+
+    m_packer->pack((int)Config_Group::Wedge_Orientation);
+    m_packer->pack((int)wedgePointer->orientation());
+
+//    m_packer->pack((int)Config_Group::Wedge_delay);
+//    m_packer->pack(wedgePointer->delay());
+
+    m_packer->pack(13);
+    m_packer->pack(1111/*wedgePointer->delay()*/);
+
+    m_packer->pack(2222);
+    m_packer->pack(2222);
+
+    qDebug("[%s] ",
+           __FUNCTION__);
 }
 
-MetaItem GroupConfig::pack_focallawer_specimen_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_focallawer_specimen_config(const DplDevice::GroupPointer &groupPointer)
 {
-//    Type
-//    WaveType
-//    Velocity
-    MetaItem probeItemMap;
 
-    return probeItemMap;
+    const DplFocallaw::SpecimenPointer &specimenPointer = groupPointer->focallawer()->specimen();
+
+    m_packer->pack((int)Config_Group::Specimen);
+
+#if 0
+    m_packer->pack_map((int)Config_Group::Specimen_ItemNum);
+
+    m_packer->pack((int)Config_Group::Specimen_Type);
+    m_packer->pack((int)specimenPointer->type());
+
+    m_packer->pack((int)Config_Group::Specimen_WaveType);
+    m_packer->pack((int)specimenPointer->wave_type());
+
+    m_packer->pack((int)Config_Group::Specimen_Velocity);
+    m_packer->pack(specimenPointer->velocity());
+#else
+   m_packer->pack(999);
+#endif
+
+    qDebug("[%s] ",
+           __FUNCTION__);
+
 }
 
-MetaItem GroupConfig::pack_focallawer_focusCnf_config(const DplDevice::GroupPointer &groupPointer)
+void GroupConfig::pack_focallawer_focusCnf_config(const DplDevice::GroupPointer &groupPointer)
 {
-//        Mode
-    MetaItem focusCnfItemMap;
-
-    return focusCnfItemMap;
+    //Mode
+    m_packer->pack((int)Config_Group::FocusCnf);
+    m_packer->pack(2222);
 }
 
-void GroupConfig::unpack_group_item_config(int key, MetaItem &item)
+void GroupConfig::unpack_group_item_config(int key, msgpack::object &item)
 {
     switch (key) {
         case Config_Group::General:
@@ -529,74 +499,153 @@ void GroupConfig::unpack_group_item_config(int key, MetaItem &item)
     qDebug();
 }
 
-void GroupConfig::unpack_group_general_config(MetaItem &item)
+void GroupConfig::unpack_group_general_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.size();
+    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
+
+    if(item.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " group general item type is not MAP.";
+        return;
+    }
+
+    MetaItem generalItem;
+    try {
+        item.convert(generalItem);
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << "convert group general item catch exception!";
+    }
 
     qDebug("[GroupConfig::unpack_gate_config] gate mode = %d, UTUnit = %d, currentAngle = %f",
-           item.at(Config_Group::General_Mode).as<int>(),
-           item.at(Config_Group::General_UTUnit).as<int>(),
-           item.at(Config_Group::General_CurrentAngle).as<float>());
+           generalItem.at(Config_Group::General_Mode).as<int>(),
+           generalItem.at(Config_Group::General_UTUnit).as<int>(),
+           generalItem.at(Config_Group::General_CurrentAngle).as<float>());
 }
 
-void GroupConfig::unpack_group_gate_config(MetaItem &item)
+void GroupConfig::unpack_group_gate_config(msgpack::object &item)
 {
-    MetaItem::iterator it = item.begin();
-    while(it != item.end()) {
-        unpack_gate_config(it->second);
-        ++it;
+    if(item.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " group gate item type is not MAP.";
+        return;
+    }
+
+    MetaItem gateItem;
+    try {
+        item.convert(gateItem);
+
+        MetaItem::iterator it = gateItem.begin();
+        while(it != gateItem.end()) {
+            unpack_gate_config(it->second);
+            ++it;
+        }
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << "convert group gate item catch exception!";
     }
 }
 
-void GroupConfig::unpack_group_ut_config(const MetaItem &item)
+void GroupConfig::unpack_group_ut_config(msgpack::object &item)
 {
+    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
 
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.size();
-    MetaItem::const_iterator it = item.begin();
-    while(it != item.end()) {
+    if(item.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " group ut item type is not MAP.";
+        return;
+    }
 
-        switch (it->first) {
-        case Config_Group::UT_Sample:
-        {
-            unpack_sampe_config(it->second);
-            break;
-        }
-        case Config_Group::UT_Transceiver:
-        {
-            unpack_transceiver_config(it->second);
-            break;
-        }
-        default:
-            break;
+    MetaItem utItem;
+    try {
+        item.convert(utItem);
+
+        MetaItem::const_iterator it = utItem.begin();
+        while(it != utItem.end()) {
+
+            switch (it->first) {
+            case Config_Group::UT_Sample:
+            {
+                unpack_sampe_config(it->second);
+                break;
+            }
+            case Config_Group::UT_Transceiver:
+            {
+                unpack_transceiver_config(it->second);
+                break;
+            }
+            default:
+                break;
+            }
+
+            ++it;
         }
 
-        ++it;
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << "convert group ut item catch exception!";
     }
 }
 
-void GroupConfig::unpack_group_focallawer_config(const MetaItem &item)
+void GroupConfig::unpack_group_focallawer_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.size();
-    MetaItem::const_iterator it = item.begin();
-    while(it != item.end()) {
-        qDebug() << " val type = " << it->second.type;
-        ++it;
+    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
+
+    if(item.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " group focallawer item type is not MAP.";
+        return;
+    }
+
+    MetaItem focallawerItem;
+    try {
+        item.convert(focallawerItem);
+
+        MetaItem::const_iterator it = focallawerItem.begin();
+        while(it != focallawerItem.end()) {
+            qDebug() << " val type = " << it->second.type;
+
+            switch (it->first) {
+            case Config_Group::Probe:
+            {
+                unpack_focallawer_probe_config(it->second);
+                break;
+            }
+            case Config_Group::Wedge:
+            {
+                unpack_focallawer_wedge_config(it->second);
+                break;
+            }
+            case Config_Group::Specimen:
+            {
+                unpack_focallawer_specimen_config(it->second);
+                break;
+            }
+            case Config_Group::FocusCnf:
+            {
+                unpack_focallawer_focusCnf_config(it->second);
+                break;
+            }
+            default:
+                break;
+            }
+
+            ++it;
+        }
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << "convert group focallawer item catch exception!";
     }
 }
 
-void GroupConfig::unpack_group_tcgs_config(const MetaItem &item)
+void GroupConfig::unpack_group_tcgs_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.size();
+    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
+    qDebug() << "["<< __FUNCTION__ << "]" << " value = " << item.as<int>();
 }
 
-void GroupConfig::unpack_group_scan_config(const MetaItem &item)
+void GroupConfig::unpack_group_scan_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.size();
+    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
+    qDebug() << "["<< __FUNCTION__ << "]" << " value = " << item.as<int>();
 }
 
-void GroupConfig::unpack_group_cursor_config(const MetaItem &item)
+void GroupConfig::unpack_group_cursor_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter.";
+    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
+    qDebug() << "["<< __FUNCTION__ << "]" << " value = " << item.as<int>();
 }
 
 void GroupConfig::unpack_gate_config(msgpack::v2::object &obj)
@@ -656,6 +705,7 @@ void GroupConfig::unpack_sampe_config(const msgpack::v2::object &obj)
             obj.convert(itemMap);
 
             DplUt::SamplePointer sample= m_groupPointer->sample();
+            /* TODO */
 //            sample->set_precision();
             sample->set_gain(itemMap.at(Config_Group::Sample_Gain).as<float>());
             sample->set_start(itemMap.at(Config_Group::Sample_Start).as<float>());
@@ -672,7 +722,6 @@ void GroupConfig::unpack_sampe_config(const msgpack::v2::object &obj)
                    itemMap.at(Config_Group::Sample_Range).as<float>(),
                    itemMap.at(Config_Group::Sample_PointQty).as<int>(),
                    (int)itemMap.at(Config_Group::Sample_AutoSet).as<bool>());
-
         } catch (...) {
             qDebug() << "[" << __FUNCTION__ << "]" << " convert sample item catch exception!";
         }
@@ -703,7 +752,6 @@ void GroupConfig::unpack_transceiver_config(const msgpack::v2::object &obj)
                    itemMap.at(Config_Group::Transceiver_Rectifier).as<int>(),
                    (int)itemMap.at(Config_Group::Transceiver_VideoFilter).as<bool>(),
                    itemMap.at(Config_Group::Transceiver_Averaging).as<int>());
-
         } catch (...) {
             qDebug() << "[" << __FUNCTION__ << "]" << " convert transceiver item catch exception!";
         }
@@ -712,21 +760,95 @@ void GroupConfig::unpack_transceiver_config(const msgpack::v2::object &obj)
 
 void GroupConfig::unpack_focallawer_probe_config(const msgpack::v2::object &obj)
 {
+    if(obj.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " focallawer_probe item type is not MAP.";
+        return;
+    }
 
+    MetaItem probeItem;
+
+    try {
+        obj.convert(probeItem);
+
+        DplFocallaw::ProbePointer probePointer = m_groupPointer->focallawer()->probe();
+
+//        probePointer->set_freq((DplUt::Transceiver::Mode)itemMap.at(Config_Group::Transceiver_Mode).as<int>());
+//        probePointer->set_pw(itemMap.at(Config_Group::Transceiver_PW).as<float>());
+//        probePointer->set_filter(itemMap.at(Config_Group::Transceiver_Filter).as<int>());
+//        probePointer->set_rectifier((DplFpga::Group::Rectifier)itemMap.at(Config_Group::Transceiver_Rectifier).as<int>());
+//        probePointer->set_video_filter(itemMap.at(Config_Group::Transceiver_VideoFilter).as<bool>());
+//        probePointer->set_averaging((DplFpga::Group::Averaging)itemMap.at(Config_Group::Transceiver_Averaging).as<int>());
+
+
+        qDebug("[%s] PA = %d, fileName = %s, Serial = %s, "
+               "Model = %s, Type = %d, Freq = %f, "
+               "PulserIndex = %d, ReceiverInex = %d",
+               __FUNCTION__,
+               (int)probeItem.at(Config_Group::Probe_PA).as<bool>(),
+               probeItem.at(Config_Group::Probe_FileName).as<std::string>().c_str(),
+               probeItem.at(Config_Group::Probe_Serial).as<std::string>().c_str(),
+               probeItem.at(Config_Group::Probe_Model).as<std::string>().c_str(),
+               probeItem.at(Config_Group::Probe_Type).as<int>(),
+               probeItem.at(Config_Group::Probe_Freq).as<double>(),
+               probeItem.at(Config_Group::Probe_PulserIndex).as<uint>(),
+               probeItem.at(Config_Group::Probe_ReceiverInex).as<uint>());
+
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << " convert probe item catch exception!";
+    }
 }
 
 void GroupConfig::unpack_focallawer_wedge_config(const msgpack::v2::object &obj)
 {
+    if(obj.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " focallawer_wedge item type is not MAP.";
+        return;
+    }
+
+    MetaItem wedgeItem;
+
+    try {
+        obj.convert(wedgeItem);
+
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << " convert wedge item catch exception!";
+    }
 
 }
 
 void GroupConfig::unpack_focallawer_specimen_config(const msgpack::v2::object &obj)
 {
+    if(obj.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " focallawer_specimen item type is not MAP.";
+        return;
+    }
+
+    MetaItem specimenItem;
+
+    try {
+        obj.convert(specimenItem);
+
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << " convert specimen item catch exception!";
+    }
 
 }
 
 void GroupConfig::unpack_focallawer_focusCnf_config(const msgpack::v2::object &obj)
 {
+    if(obj.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " focallawer_focusCnf item type is not MAP.";
+        return;
+    }
+
+    MetaItem focusCnfItem;
+
+    try {
+        obj.convert(focusCnfItem);
+
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << " convert focusCnf item catch exception!";
+    }
 
 }
 

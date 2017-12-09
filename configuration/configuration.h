@@ -19,7 +19,8 @@ namespace Config_Group {
         Focallawer,
         TCGS,
         Cursor,
-        Scan
+        Scan,
+        GroupItemNum
     };
 
     enum E_Gate {
@@ -31,12 +32,13 @@ namespace Config_Group {
         Gate_Synchro,
         Gate_Measure,
         Gate_Mode,
-        Gate_Color,
+        Gate_Color
     };
 
     enum E_UT {
         UT_Sample,
-        UT_Transceiver
+        UT_Transceiver,
+        UT_ItemNum
     };
 
     enum E_Transceiver {
@@ -54,14 +56,16 @@ namespace Config_Group {
         Sample_Start,
         Sample_Range,
         Sample_PointQty,
-        Sample_AutoSet
+        Sample_AutoSet,
+        Sample_ItemNum
     };
 
     enum E_Focallawer {
         Probe,
         Wedge,
         Specimen,
-        FocusCnf
+        FocusCnf,
+        Focallawer_ItemNum
     };
 
     enum E_Probe {
@@ -73,6 +77,7 @@ namespace Config_Group {
         Probe_Freq,
         Probe_PulserIndex,
         Probe_ReceiverInex,
+        Probe_ItemNum
     };
 
    enum E_Wedge {
@@ -89,13 +94,15 @@ namespace Config_Group {
         Wedge_Width,
         Wedge_Height,
         Wedge_Orientation,
-        Wedge_delay
+        Wedge_delay,
+        Wedge_ItemNum
     };
 
    enum E_Specimen{
        Specimen_Type,
        Specimen_WaveType,
-       Specimen_Velocity
+       Specimen_Velocity,
+       Specimen_ItemNum
     };
 
    enum E_FocusCnf {
@@ -107,7 +114,7 @@ namespace Config_Group {
        TCGS_CurrentTcg,
        TCGS_Gain,
        TCGS_Point,
-       TCGS_CurrentPoint,
+       TCGS_CurrentPoint
    };
 
    enum E_Point {
@@ -146,7 +153,7 @@ namespace Config_Group {
 enum E_MainConfig {
     Preference,
     Group,
-    WaveData,
+    WaveData
 };
 
 namespace Config_Preference {
@@ -155,7 +162,7 @@ namespace Config_Preference {
         Opacity,
         Language,
         StartingPage,
-        GateMode,
+        GateMode
     };
 }
 
