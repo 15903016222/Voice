@@ -12,7 +12,6 @@
 #include "../scan_view.h"
 #include "global.h"
 #include "b_scan_scene.h"
-#include "../scroll_ruler_widget.h"
 #include "b_scan_encoder_image_item.h"
 #include "b_scan_time_image_item.h"
 
@@ -127,8 +126,6 @@ void BscanDisplay::init_ruler()
             this,
             SLOT(update_sound_path_ruler()));
 
-    ui->rightRuler->set_type(RulerWidget::RIGHT);
-    ui->rightRuler->set_direction(RulerWidget::Down);
     ui->rightRuler->set_range(0, 100);
     ui->rightRuler->set_unit("(%)");
     ui->rightRuler->update();
@@ -235,7 +232,7 @@ void BscanDisplay::do_ultrasound_measurement_changed(double value)
 void BscanDisplay::do_scan_reference_changed(double value)
 {
     BaseCursorItem::S_CURSOR_INFO cursorInfo;
-    m_scanTypeRuler->get_show_range(cursorInfo.start, cursorInfo.end);
+    m_scanTypeRuler->set_range(cursorInfo.start, cursorInfo.end);
     cursorInfo.currentValue = value;
     m_sReferneceCursorItem->set_cursor_info(cursorInfo);
 }
@@ -243,7 +240,7 @@ void BscanDisplay::do_scan_reference_changed(double value)
 void BscanDisplay::do_scan_measurement_changed(double value)
 {
     BaseCursorItem::S_CURSOR_INFO cursorInfo;
-    m_scanTypeRuler->get_show_range(cursorInfo.start, cursorInfo.end);
+    m_scanTypeRuler->set_range(cursorInfo.start, cursorInfo.end);
     cursorInfo.currentValue = value;
     m_sMeasurementCursorItem->set_cursor_info(cursorInfo);
 }
@@ -346,18 +343,16 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
             /* 若显示区域大于beam数，则计算每条beam占多少pix */
             double pixCount = width / beamCount;
             m_scanTypeRuler->set_range(scanStart, scanEnd);
-            m_scanTypeRuler->set_max_end(scanEnd);
             m_bscanImageItem->set_pix_per_beam(pixCount);
             m_bscanImageItem->set_scroll_window(false);
-            m_scanTypeRuler->set_show_range(scanStart, scanEnd);
+            m_scanTypeRuler->set_range(scanStart, scanEnd);
 
         } else {
             /* 若显示区域小于beam数，则计算每条beam占一个pix */
             m_scanTypeRuler->set_range(scanStart, scanStart + width);
-            m_scanTypeRuler->set_max_end(scanEnd);
             m_bscanImageItem->set_pix_per_beam(DEFAULT_PIX_PER_BEAM);
             m_bscanImageItem->set_scroll_window(true);
-            m_scanTypeRuler->set_show_range(scanStart, scanStart + width);
+            m_scanTypeRuler->set_range(scanStart, scanStart + width);
         }
 
         m_scanTypeRuler->set_unit("(mm)");
@@ -380,7 +375,6 @@ void BscanDisplay::update_scan_type_ruler(const QSize &size)
             m_scanTypeRuler->set_range(0.0, timeWidth);
         } else {
             m_scanTypeRuler->set_range(0.0, scanTypeRulerEnd);
-            m_scanTypeRuler->set_max_end(timeWidth);
         }
 
         m_scanTypeRuler->set_unit("(s)");
@@ -458,7 +452,6 @@ void BscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 
     if(scanTypeRulerEnd < timeWidth && currentTimeCount > scanTypeRulerEnd) {
         m_bscanImageItem->set_scroll_window(true);
-        m_scanTypeRuler->move_to_value(currentTimeCount);
         emit update_ruler(currentTimeCount);
     }
 }
@@ -468,7 +461,7 @@ void BscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
     if(m_bscanImageItem->redraw_beams(beams)) {
         BscanEncoderImageItem *imageItem = static_cast<BscanEncoderImageItem*> (m_bscanImageItem);
         if(imageItem) {
-            m_scanTypeRuler->set_show_range(imageItem->show_start(), imageItem->show_end());
+            m_scanTypeRuler->set_range(imageItem->show_start(), imageItem->show_end());
         }
     }
 
@@ -481,7 +474,6 @@ void BscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
     }
 
     m_bscanImageItem->set_beams(beams);
-    m_scanTypeRuler->move_to_value(x);
     emit update_ruler(x);
 }
 
@@ -562,18 +554,18 @@ void BscanDisplay::update_sound_path_ruler()
 
     if (DplDevice::Group::Time == unit) {
         m_soundPathRuler->set_unit("(us)");
-        m_soundPathRuler->set_backgroup_color(QColor("#F9CCE2"));
+        m_soundPathRuler->set_background_color(QColor("#F9CCE2"));
     } else {
         ui->leftRuler->set_unit("(mm)");
         start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         start /= 2;
         end   *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         end /= 2;
-        m_soundPathRuler->set_backgroup_color(QColor("#f29cb1"));
+        m_soundPathRuler->set_background_color(QColor("#f29cb1"));
         if (DplDevice::Group::TruePath == unit) {
             start *= qCos(m_group->current_angle());
             end   *= qCos(m_group->current_angle());
-            m_soundPathRuler->set_backgroup_color(QColor("#ff00ff"));
+            m_soundPathRuler->set_background_color(QColor("#ff00ff"));
         }
     }
 

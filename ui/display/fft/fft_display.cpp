@@ -20,8 +20,6 @@ FFTDisplay::FFTDisplay(const DplDevice::GroupPointer &group,
     m_view->setScene(m_fftScene);
     m_fftScene->addItem(m_fftItem);
 
-    ui->leftRulerWidget->set_type(RulerWidget::LEFT);
-
     connect(static_cast<DplDevice::Group *> (m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(do_data_event(DplSource::BeamsPointer)),

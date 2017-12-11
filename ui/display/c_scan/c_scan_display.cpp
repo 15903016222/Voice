@@ -4,7 +4,6 @@
 #include "../base_image_item.h"
 #include "c_scan_encoder_image_item.h"
 #include "c_scan_time_image_item.h"
-#include "../scroll_ruler_widget.h"
 #include "../scan_view.h"
 #include "c_scan_scene.h"
 
@@ -117,8 +116,6 @@ void CscanDisplay::init_ruler()
         m_lawTypeRuler  = ui->bottomRulerWidget;
     }
 
-    ui->rightRulerWidget->set_type(RulerWidget::RIGHT);
-    ui->rightRulerWidget->set_direction(RulerWidget::Down);
     ui->rightRulerWidget->set_range(0, 100);
     ui->rightRulerWidget->set_unit("(%)");
     ui->rightRulerWidget->update();
@@ -155,18 +152,16 @@ void CscanDisplay::update_scan_type_ruler(const QSize &size)
             /* 若显示区域大于beam数，则计算每条beam占多少pix */
             double pixCount = width / beamCount;
             m_scanTypeRuler->set_range(scanStart, scanEnd);
-            m_scanTypeRuler->set_max_end(scanEnd);
             m_cscanImageItem->set_pix_per_beam(pixCount);
             m_cscanImageItem->set_scroll_window(false);
-            m_scanTypeRuler->set_show_range(scanStart, scanEnd);
+            m_scanTypeRuler->set_range(scanStart, scanEnd);
 
         } else {
             /* 若显示区域小于beam数，则计算每条beam占一个pix */
             m_scanTypeRuler->set_range(scanStart, scanStart + width);
-            m_scanTypeRuler->set_max_end(scanEnd);
             m_cscanImageItem->set_pix_per_beam(DEFAULT_PIX_PER_BEAM);
             m_cscanImageItem->set_scroll_window(true);
-            m_scanTypeRuler->set_show_range(scanStart, scanStart + width);
+            m_scanTypeRuler->set_range(scanStart, scanStart + width);
         }
 
         m_scanTypeRuler->set_unit("(mm)");
@@ -351,7 +346,6 @@ void CscanDisplay::draw_timer_beams(const DplSource::BeamsPointer &beams)
 
     if(rulerEnd < timeWidth && currentTimeCount > rulerEnd) {
         m_cscanImageItem->set_scroll_window(true);
-        m_scanTypeRuler->move_to_value(currentTimeCount);
         emit update_ruler(currentTimeCount);
     }
 }
@@ -363,7 +357,7 @@ void CscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
 
         CscanEncoderImageItem *imageItem = static_cast<CscanEncoderImageItem*> (m_cscanImageItem);
         if(imageItem) {
-            m_scanTypeRuler->set_show_range(imageItem->show_start(), imageItem->show_end());
+            m_scanTypeRuler->set_range(imageItem->show_start(), imageItem->show_end());
         }
     }
 
@@ -376,6 +370,5 @@ void CscanDisplay::draw_encoder_beams(const DplSource::BeamsPointer &beams)
     }
 
     m_cscanImageItem->set_beams(beams);
-    m_scanTypeRuler->move_to_value(x);
     emit update_ruler(x);
 }

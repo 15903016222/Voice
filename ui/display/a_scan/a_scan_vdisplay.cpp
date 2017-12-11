@@ -34,7 +34,7 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group,
 
     ui->bottomRulerWidget->set_range(0, 100);
     ui->bottomRulerWidget->set_unit("(%)");
-    ui->bottomRulerWidget->set_backgroup_color(QColor("#ffff7f"));
+    ui->bottomRulerWidget->set_background_color(QColor("#ffff7f"));
 }
 
 AscanVDisplay::~AscanVDisplay()
@@ -55,18 +55,18 @@ void AscanVDisplay::update_left_ruler()
 
     if (DplDevice::Group::Time == unit) {
         ui->leftRulerWidget->set_unit("(us)");
-        ui->leftRulerWidget->set_backgroup_color(QColor("#F9CCE2"));
+        ui->leftRulerWidget->set_background_color(QColor("#F9CCE2"));
     } else{
         ui->leftRulerWidget->set_unit("(mm)");
         start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         start /= 2;
         end   *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         end /= 2;
-        ui->leftRulerWidget->set_backgroup_color(QColor("#f29cb1"));
+        ui->leftRulerWidget->set_background_color(QColor("#f29cb1"));
         if (DplDevice::Group::TruePath == unit) {
             start *= qCos(m_group->current_angle());
             end   *= qCos(m_group->current_angle());
-            ui->leftRulerWidget->set_backgroup_color(QColor("#ff00ff"));
+            ui->leftRulerWidget->set_background_color(QColor("#ff00ff"));
         }
     }
     ui->leftRulerWidget->set_range(start, end);

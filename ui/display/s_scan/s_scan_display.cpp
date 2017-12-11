@@ -34,11 +34,6 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     m_scene->addItem(m_vpaItem);
     m_vpaItem->update_pos();
 
-    ui->leftRulerWidget->set_type(RulerWidget::LEFT);
-
-    ui->rightRulerWidget->set_type(RulerWidget::RIGHT);
-    ui->rightRulerWidget->set_direction(RulerWidget::Down);
-
     ui->colorBarWidget->set_palette(DplDevice::Device::instance()->display()->palette());
 
     connect(static_cast<DplDevice::Group *>(grp.data()),

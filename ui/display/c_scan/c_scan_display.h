@@ -12,7 +12,7 @@ class ScanDisplay;
 class ScanView;
 class CscanScene;
 class BaseImageItem;
-class ScrollRulerWidget;
+class Ruler;
 
 class CscanDisplay : public QWidget
 {
@@ -39,8 +39,8 @@ protected:
     BaseImageItem           *m_cscanImageItem;
 
     Qt::Orientation     m_orientation;
-    ScrollRulerWidget   *m_scanTypeRuler;       /* 时间扫查（s）/编码器扫擦（mm） */
-    ScrollRulerWidget   *m_lawTypeRuler;    /* 一维扫查：该标尺为度数（扫查类型：扇扫）或阵元数（扫查方式：线性）；
+    Ruler   *m_scanTypeRuler;       /* 时间扫查（s）/编码器扫擦（mm） */
+    Ruler   *m_lawTypeRuler;    /* 一维扫查：该标尺为度数（扫查类型：扇扫）或阵元数（扫查方式：线性）；
                                              二维扫查，该标尺为步进轴 */
 
     QSemaphore             m_refreshSemaphore;

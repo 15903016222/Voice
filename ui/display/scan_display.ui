@@ -49,7 +49,7 @@ color: rgb(255, 255, 255);</string>
       <number>0</number>
      </property>
      <item>
-      <widget class="ScrollRulerWidget" name="leftRulerWidget" native="true">
+      <widget class="Ruler" name="leftRulerWidget" native="true">
        <property name="minimumSize">
         <size>
          <width>20</width>
@@ -75,7 +75,7 @@ color: rgb(255, 255, 255);</string>
       </widget>
      </item>
      <item>
-      <widget class="RulerWidget" name="rightRulerWidget" native="true">
+      <widget class="Ruler" name="rightRulerWidget" native="true">
        <property name="minimumSize">
         <size>
          <width>20</width>
@@ -102,7 +102,7 @@ color: rgb(255, 255, 255);</string>
       </widget>
      </item>
      <item>
-      <widget class="ScrollRulerWidget" name="bottomRulerWidget" native="true">
+      <widget class="Ruler" name="bottomRulerWidget" native="true">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -127,21 +127,15 @@ color: rgb(255, 255, 255);</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>RulerWidget</class>
-   <extends>QWidget</extends>
-   <header>ui/display/ruler_widget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ColorBar</class>
    <extends>QWidget</extends>
    <header>ui/display/color_bar.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ScrollRulerWidget</class>
+   <class>Ruler</class>
    <extends>QWidget</extends>
-   <header>ui/display/scroll_ruler_widget.h</header>
+   <header>ui/display/ruler/ruler.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

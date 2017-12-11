@@ -12,7 +12,7 @@
 
 class ScanView;
 class BscanScene;
-class ScrollRulerWidget;
+class Ruler;
 class QLabel;
 class BaseCursorItem;
 
@@ -80,8 +80,8 @@ protected:
     Ui::BscanDisplay *ui;
 
     DplDevice::GroupPointer m_group;
-    ScrollRulerWidget      *m_scanTypeRuler;
-    ScrollRulerWidget      *m_soundPathRuler;
+    Ruler      *m_scanTypeRuler;
+    Ruler      *m_soundPathRuler;
 
     ScanView         *m_bscanView;
     BscanScene       *m_bscanScene;

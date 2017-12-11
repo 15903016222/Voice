@@ -56,8 +56,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
         m_view->rotate(90);
     }
 
-    ui->leftRulerWidget->set_type(RulerWidget::LEFT);
-
     /* source setting */    
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),

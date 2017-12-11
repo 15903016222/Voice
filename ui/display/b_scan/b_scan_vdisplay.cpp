@@ -13,9 +13,6 @@ BscanVDisplay::BscanVDisplay(const DplDevice::GroupPointer &grp, QWidget *parent
 
 void BscanVDisplay::init_ruler()
 {
-    m_soundPathRuler->set_type(RulerWidget::LEFT);
-    m_soundPathRuler->set_direction(RulerWidget::Up);
-
     update_scan_type_ruler(m_bscanView->size());
 
     update_sound_path_ruler();
