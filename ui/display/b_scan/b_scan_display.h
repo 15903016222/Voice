@@ -1,7 +1,8 @@
 #ifndef __B_SCAN_DISPLAY_H_
 #define __B_SCAN_DISPLAY_H_
 
-#include <QWidget>
+#include "../scan_display.h"
+
 #include <QSemaphore>
 
 #include <ui/display/base_image_item.h>
@@ -16,11 +17,7 @@ class Ruler;
 class QLabel;
 class BaseCursorItem;
 
-namespace Ui {
-class BscanDisplay;
-}
-
-class BscanDisplay : public QWidget
+class BscanDisplay : public ScanDisplay
 {
     Q_OBJECT
 
@@ -77,8 +74,20 @@ protected slots:
     void do_value_changed(double value);
 
 protected:
-    Ui::BscanDisplay *ui;
+    void init_cursor();
+    void init_cursor_connection();
+    void init_ruler();
+    void update_scan_type_ruler(const QSize &size);
+    void wait_for_refresh_finished();
+    void init_scan_env();
 
+    void draw_timer_beams(const DplSource::BeamsPointer &beams);
+    void draw_encoder_beams(const DplSource::BeamsPointer &beams);
+
+    void cal_cursor_info(double value, BaseCursorItem::S_CURSOR_INFO &cursorInfo);
+    void update_cursor_info();
+
+protected:
     DplDevice::GroupPointer m_group;
     Ruler      *m_scanTypeRuler;
     Ruler      *m_soundPathRuler;
@@ -101,19 +110,6 @@ protected:
     volatile bool m_cursorVisible;
 
     DplMeasure::CursorPointer   m_cursorPointer;
-
-    void init_cursor();
-    void init_cursor_connection();
-    void init_ruler();
-    void update_scan_type_ruler(const QSize &size);
-    void wait_for_refresh_finished();
-    void init_scan_env();
-
-    void draw_timer_beams(const DplSource::BeamsPointer &beams);
-    void draw_encoder_beams(const DplSource::BeamsPointer &beams);
-
-    void cal_cursor_info(double value, BaseCursorItem::S_CURSOR_INFO &cursorInfo);
-    void update_cursor_info();
 };
 
 #endif // __B_SCAN_DISPLAY_H_

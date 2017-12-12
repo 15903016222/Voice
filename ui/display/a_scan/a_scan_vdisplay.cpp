@@ -8,13 +8,18 @@
 #include "a_scan_vdisplay.h"
 
 #include "../ruler/ruler.h"
+#include "../scan_view.h"
 
-#include <qmath.h>
+#include "a_scan_scene.h"
+#include "wave_item.h"
+#include "tcg_item.h"
 
 AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group,
                              QWidget *parent) :
-    AscanDisplay(group, Qt::Vertical, parent)
+    AscanDisplay(group, parent)
 {  
+    m_view->rotate(90);
+
     /* ruler setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
@@ -40,6 +45,16 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group,
 
 AscanVDisplay::~AscanVDisplay()
 {
+}
+
+void AscanVDisplay::do_size_changed(const QSize &size)
+{
+    m_scene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
+                               size.height(), size.width());
+    m_waveItem->set_size(QSize(size.height(), size.width()));
+    m_tcgItem->set_size(QSize(size.height(), size.width()));
+
+    AscanDisplay::do_size_changed(size);
 }
 
 void AscanVDisplay::update_left_ruler()

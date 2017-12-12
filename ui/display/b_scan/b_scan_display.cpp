@@ -1,29 +1,28 @@
 #include "b_scan_display.h"
-#include "ui_b_scan_display.h"
-
-#include <QTimer>
-
-#include "source/beams.h"
-#include "source/scan.h"
-#include "source/source.h"
-#include "device/device.h"
-#include "fpga/fpga.h"
-
-#include "../scan_view.h"
-#include "global.h"
 #include "b_scan_scene.h"
 #include "b_scan_encoder_image_item.h"
 #include "b_scan_time_image_item.h"
-
 #include "hdisplay_cursor_item.h"
 #include "vdisplay_cursor_item.h"
 
+#include "../scan_view.h"
+#include "../color_bar.h"
+#include "../ruler/ruler.h"
+
+#include <global.h>
+#include <source/beams.h>
+#include <source/scan.h>
+#include <source/source.h>
+#include <device/device.h>
+#include <fpga/fpga.h>
 #include <measure/cursor.h>
 #include <ui/tool/tool.h>
 
+#include <QTimer>
+#include <QLabel>
+
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::BscanDisplay),
+    ScanDisplay(parent),
     m_group(grp),
     m_scanTypeRuler(NULL),
     m_soundPathRuler(NULL),
@@ -34,9 +33,7 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     m_cursorVisible(false),
     m_cursorPointer(grp->cursor())
 {
-    ui->setupUi(this);
-
-    ui->bScanWidgetVerticalLayout->addWidget(m_bscanView);
+    m_scanLayout->addWidget(m_bscanView);
     m_bscanView->setScene(m_bscanScene);
 
     init_cursor();
@@ -53,8 +50,8 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     connect(m_bscanView, SIGNAL(size_changed(QSize)),
             this, SLOT(do_view_size_changed(QSize)));
 
-    ui->colorBar->set_palette(DplDevice::Device::instance()->display()->palette());
-    ui->titleLabel->setText(QString("B-Scan|Grp") + QString::number(m_group->index() + 1));
+    m_colorBar->set_palette(DplDevice::Device::instance()->display()->palette());
+    m_titleLabel->setText(QString("B-Scan|Grp") + QString::number(m_group->index() + 1));
 
 
     if(m_orientation == Qt::Horizontal) {
@@ -68,17 +65,19 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
             SLOT(do_data_event(DplSource::BeamsPointer)),
             Qt::DirectConnection);
 
-    connect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
-    connect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
+    connect(this, SIGNAL(refresh_scan_env()),
+            this, SLOT(do_refresh_scan_env()));
+    connect(this, SIGNAL(update_ruler(double)),
+            this, SLOT(do_update_ruler(double)));
 
     connect(Mcu::instance(), SIGNAL(key_event(Mcu::KeyType)),
             this, SLOT(do_mcu_key_event(Mcu::KeyType)),
             Qt::DirectConnection);
 
-    connect(this, SIGNAL(cursor_visible_changed(bool)), this, SLOT(do_cursor_visible_changed(bool)));
+    connect(this, SIGNAL(cursor_visible_changed(bool)),
+            this, SLOT(do_cursor_visible_changed(bool)));
 
     TestStub::instance()->update_time(0.0);
-
 }
 
 
@@ -89,11 +88,11 @@ BscanDisplay::~BscanDisplay()
             this,
             SLOT(do_data_event(DplSource::BeamsPointer)));
 
-    disconnect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
-    disconnect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
+    disconnect(this, SIGNAL(refresh_scan_env()),
+               this, SLOT(do_refresh_scan_env()));
+    disconnect(this, SIGNAL(update_ruler(double)),
+               this, SLOT(do_update_ruler(double)));
 
-
-    delete ui;
     delete m_bscanScene;
     delete m_bscanView;
 
@@ -105,11 +104,11 @@ BscanDisplay::~BscanDisplay()
 void BscanDisplay::init_ruler()
 {
     if(m_orientation == Qt::Vertical) {
-        m_soundPathRuler = ui->leftRuler;
-        m_scanTypeRuler  = ui->bottomRuler;
+        m_soundPathRuler = m_leftRuler;
+        m_scanTypeRuler  = m_bottomRuler;
     } else {
-        m_soundPathRuler = ui->bottomRuler;
-        m_scanTypeRuler  = ui->leftRuler;
+        m_soundPathRuler = m_bottomRuler;
+        m_scanTypeRuler  = m_leftRuler;
     }
 
     /* ruler setting */
@@ -126,9 +125,7 @@ void BscanDisplay::init_ruler()
             this,
             SLOT(update_sound_path_ruler()));
 
-    ui->rightRuler->set_range(0, 100);
-    ui->rightRuler->set_unit("(%)");
-    ui->rightRuler->update();
+    m_rightRuler->set_unit("(%)");
 }
 
 
@@ -556,7 +553,7 @@ void BscanDisplay::update_sound_path_ruler()
         m_soundPathRuler->set_unit("(us)");
         m_soundPathRuler->set_background_color(QColor("#F9CCE2"));
     } else {
-        ui->leftRuler->set_unit("(mm)");
+        m_soundPathRuler->set_unit("(mm)");
         start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         start /= 2;
         end   *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);

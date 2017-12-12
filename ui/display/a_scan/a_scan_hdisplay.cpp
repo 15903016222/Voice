@@ -7,14 +7,15 @@
 
 #include "global.h"
 #include "a_scan_hdisplay.h"
+#include "a_scan_scene.h"
+#include "tcg_item.h"
+#include "wave_item.h"
 
 #include "../ruler/ruler.h"
 
-#include <qmath.h>
-
 AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
                              QWidget *parent) :
-    AscanDisplay(group, Qt::Horizontal, parent)
+    AscanDisplay(group, parent)
 {
     /* ruler setting */
     connect(static_cast<DplDevice::Group *>(m_group.data()),
@@ -42,6 +43,16 @@ AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
 AscanHDisplay::~AscanHDisplay()
 {
 
+}
+
+void AscanHDisplay::do_size_changed(const QSize &size)
+{
+    m_scene->setSceneRect(-size.width()/2, -size.height()/2,
+                               size.width(), size.height());
+    m_waveItem->set_size(size);
+    m_tcgItem->set_size(size);
+
+    AscanDisplay::do_size_changed(size);
 }
 
 void AscanHDisplay::update_bottom_ruler()

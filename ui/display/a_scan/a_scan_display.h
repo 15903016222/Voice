@@ -20,21 +20,18 @@ class TcgItem;
 class AscanDisplay : public ScanDisplay
 {
     Q_OBJECT
-
 public:
-    explicit AscanDisplay(const DplDevice::GroupPointer &group,
-                          Qt::Orientation orientation, QWidget *parent = 0);
+    explicit AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent = 0);
     ~AscanDisplay();
 
 protected slots:
+    virtual void do_size_changed(const QSize &size);
     void do_data_event();
-    void do_view_size_changed(const QSize &size);
     void update_gates();
 
 protected:
     DplDevice::GroupPointer m_group;
 
-private:
     ScanView *m_view;
     AscanScene *m_scene;
     WaveItem *m_waveItem;
@@ -42,7 +39,6 @@ private:
     GateItem *m_gateBItem;
     GateItem *m_gateIItem;
     TcgItem *m_tcgItem;
-    Qt::Orientation m_orientation;
 };
 
 #endif // __A_SCAN_DISPLAY_H__

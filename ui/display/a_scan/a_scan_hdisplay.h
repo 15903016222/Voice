@@ -17,7 +17,8 @@ public:
                            QWidget *parent = 0);
     ~AscanHDisplay();
 
-private slots:
+protected slots:
+    void do_size_changed(const QSize &size);
     void update_bottom_ruler();
 };
 

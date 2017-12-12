@@ -21,8 +21,7 @@
 #include <QLayout>
 #include <QLabel>
 
-AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
-                           Qt::Orientation orientation, QWidget *parent) :
+AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent) :
     ScanDisplay(parent),
     m_group(group),
     m_view(new ScanView),
@@ -31,8 +30,7 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
     m_gateAItem(new GateItem(group->sample(), group->gate_a())),
     m_gateBItem(new GateItem(group->sample(), group->gate_b())),
     m_gateIItem(new GateItem(group->sample(), group->gate_i())),
-    m_tcgItem(new TcgItem(group->tcgs(), group->sample())),
-    m_orientation(orientation)
+    m_tcgItem(new TcgItem(group->tcgs(), group->sample()))
 {  
     m_rightRuler->hide();
     m_colorBar->hide();
@@ -40,7 +38,7 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
     m_scanLayout->addWidget(m_view);
 
     connect(m_view, SIGNAL(size_changed(QSize)),
-            this, SLOT(do_view_size_changed(QSize)));
+            this, SLOT(do_size_changed(QSize)));
 
     m_view->setScene(m_scene);
 
@@ -55,10 +53,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
             this, SLOT(update_gates()));
-
-    if (orientation == Qt::Vertical) {
-        m_view->rotate(90);
-    }
 
     /* source setting */    
     connect(static_cast<DplDevice::Group *>(m_group.data()),
@@ -99,20 +93,9 @@ void AscanDisplay::do_data_event()
     }
 }
 
-void AscanDisplay::do_view_size_changed(const QSize &size)
+void AscanDisplay::do_size_changed(const QSize &size)
 {
-    if (m_orientation == Qt::Horizontal) {
-        m_scene->setSceneRect(-size.width()/2, -size.height()/2,
-                                   size.width(), size.height());
-        m_waveItem->set_size(size);
-        m_tcgItem->set_size(size);
-    } else {
-        m_scene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
-                                   size.height(), size.width());
-        m_waveItem->set_size(QSize(size.height(), size.width()));
-        m_tcgItem->set_size(QSize(size.height(), size.width()));
-    }
-
+    Q_UNUSED(size);
     update_gates();
 }
 

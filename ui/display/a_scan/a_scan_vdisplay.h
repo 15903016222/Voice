@@ -18,9 +18,8 @@ public:
                            QWidget *parent = 0);
     ~AscanVDisplay();
 
-private:
-
-private slots:
+protected slots:
+    void do_size_changed(const QSize &size);
     void update_left_ruler();
 };
 
