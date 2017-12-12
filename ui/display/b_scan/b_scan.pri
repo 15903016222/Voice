@@ -1,5 +1,4 @@
-FORMS += \
-    $$PWD/b_scan_display.ui
+FORMS +=
 
 HEADERS += \
     $$PWD/b_scan_display.h \

@@ -36,7 +36,7 @@ protected slots:
     void do_data_event(const DplSource::BeamsPointer &beams);
     void update_sound_path_ruler();
 
-    void do_view_size_changed(const QSize &size);
+    void do_size_changed(const QSize &size);
     void do_refresh_scan_env();
     void do_update_ruler(double x);
 

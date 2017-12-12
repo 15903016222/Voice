@@ -24,7 +24,7 @@ protected:
 
 protected slots:
     void update_rules();
-    void do_view_size_changed(const QSize &size);
+    void do_size_changed(const QSize &size);
 
 private:
     ScanView *m_view;

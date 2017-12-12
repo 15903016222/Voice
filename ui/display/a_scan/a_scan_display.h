@@ -25,7 +25,7 @@ public:
     ~AscanDisplay();
 
 protected slots:
-    virtual void do_size_changed(const QSize &size);
+    void do_size_changed(const QSize &size);
     void do_data_event();
     void update_gates();
 

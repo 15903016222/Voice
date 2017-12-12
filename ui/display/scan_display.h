@@ -14,9 +14,8 @@ class ScanDisplay : public QWidget
 public:
     explicit ScanDisplay(QWidget *parent = 0);
 
-signals:
-
-public slots:
+protected slots:
+    virtual void do_size_changed(const QSize &size) = 0;
 
 protected:
     QLabel *m_titleLabel;

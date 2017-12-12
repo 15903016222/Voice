@@ -29,7 +29,7 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     update_rules();
 
     connect(m_view, SIGNAL(size_changed(QSize)),
-            this, SLOT(do_view_size_changed(QSize)));
+            this, SLOT(do_size_changed(QSize)));
 
     m_view->setScene(m_scene);
 
@@ -79,7 +79,7 @@ void SscanDisplay::update_rules()
     }
 }
 
-void SscanDisplay::do_view_size_changed(const QSize &size)
+void SscanDisplay::do_size_changed(const QSize &size)
 {
     m_scene->setSceneRect(-size.width()/2, -size.height(),
                           size.width(), size.height());

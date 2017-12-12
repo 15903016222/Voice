@@ -24,7 +24,7 @@ signals:
 public slots:
     void do_data_event(const DplSource::BeamsPointer &beams);
     void do_refresh_scan_env();
-    void do_view_size_changed(const QSize &size);
+    void do_size_changed(const QSize &size);
     void do_update_ruler(double value);
 
 protected:

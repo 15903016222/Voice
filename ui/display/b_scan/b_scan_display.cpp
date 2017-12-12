@@ -48,7 +48,7 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     init_ruler();
 
     connect(m_bscanView, SIGNAL(size_changed(QSize)),
-            this, SLOT(do_view_size_changed(QSize)));
+            this, SLOT(do_size_changed(QSize)));
 
     m_colorBar->set_palette(DplDevice::Device::instance()->display()->palette());
     m_titleLabel->setText(QString("B-Scan|Grp") + QString::number(m_group->index() + 1));
@@ -574,7 +574,7 @@ void BscanDisplay::update_sound_path_ruler()
 }
 
 
-void BscanDisplay::do_view_size_changed(const QSize &size)
+void BscanDisplay::do_size_changed(const QSize &size)
 {
     disconnect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
