@@ -7,6 +7,7 @@
 class ColorBar;
 class Ruler;
 class QLabel;
+class ScanView;
 
 class ScanDisplay : public QWidget
 {
@@ -15,7 +16,7 @@ public:
     explicit ScanDisplay(QWidget *parent = 0);
 
 protected slots:
-    virtual void do_size_changed(const QSize &size) = 0;
+    virtual void resize_event(const QSize &size) = 0;
 
 protected:
     QLabel *m_titleLabel;
@@ -23,7 +24,7 @@ protected:
     Ruler *m_leftRuler;
     Ruler *m_rightRuler;
     Ruler *m_bottomRuler;
-    QLayout *m_scanLayout;
+    ScanView *m_view;
 };
 
 #endif // __SCAN_DISPLAY_H__

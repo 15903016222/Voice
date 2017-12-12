@@ -35,10 +35,8 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
     m_rightRuler->hide();
     m_colorBar->hide();
 
-    m_scanLayout->addWidget(m_view);
-
-    connect(m_view, SIGNAL(size_changed(QSize)),
-            this, SLOT(do_size_changed(QSize)));
+    init_amplitude_ruler();
+    init_ultrasound_ruler();
 
     m_view->setScene(m_scene);
 
@@ -49,6 +47,7 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
     m_scene->addItem(m_gateIItem);
 
     m_scene->addItem(m_tcgItem);
+
 
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
@@ -67,6 +66,42 @@ AscanDisplay::~AscanDisplay()
 {
     delete m_view;
     delete m_scene;
+}
+
+void AscanDisplay::init_amplitude_ruler()
+{
+    Ruler *r = amplitude_ruler();
+
+    if (r == m_leftRuler) {
+        r->set_range(0, 100);
+    } else if (r == m_bottomRuler){
+        r->set_range(100, 0);
+    }
+
+    r->set_prec(0);
+    r->set_unit("(%)");
+    r->set_background_color(Qt::yellow);
+}
+
+void AscanDisplay::init_ultrasound_ruler()
+{
+    Ruler *r = ultrasound_ruler();
+
+    r->set_scroll(true);
+
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
+            this,
+            SLOT(update_ultrasound_ruler()));
+    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
+            SIGNAL(start_changed(float)),
+            this,
+            SLOT(update_ultrasound_ruler()));
+    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
+            SIGNAL(range_changed(float)),
+            this,
+            SLOT(update_ultrasound_ruler()));
+    update_ultrasound_ruler();
 }
 
 void AscanDisplay::do_data_event()
@@ -93,7 +128,7 @@ void AscanDisplay::do_data_event()
     }
 }
 
-void AscanDisplay::do_size_changed(const QSize &size)
+void AscanDisplay::resize_event(const QSize &size)
 {
     Q_UNUSED(size);
     update_gates();
@@ -104,5 +139,36 @@ void AscanDisplay::update_gates()
     m_gateAItem->set_ratio(m_scene->width()/m_group->sample()->range());
     m_gateBItem->set_ratio(m_scene->width()/m_group->sample()->range());
     m_gateIItem->set_ratio(m_scene->width()/m_group->sample()->range());
+}
+
+void AscanDisplay::update_ultrasound_ruler()
+{
+    double start = m_group->sample()->start();
+    double end = (start + m_group->sample()->range());
+
+    start = Dpl::ns_to_us(start);
+    end = Dpl::ns_to_us(end);
+
+    DplDevice::Group::UtUnit unit = m_group->ut_unit();
+    Ruler *r = ultrasound_ruler();
+
+    if (DplDevice::Group::Time == unit) {
+        r->set_unit("(us)");
+        r->set_background_color(QColor("#F7C8CF"));
+    } else {
+        r->set_unit("(mm)");
+        start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
+        start /= 2;
+        end *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
+        end /= 2;
+        r->set_background_color(QColor("#FFC0CB"));
+        if (DplDevice::Group::TruePath == unit) {
+            start *= qCos(m_group->current_angle());
+            end   *= qCos(m_group->current_angle());
+            r->set_background_color(QColor("#A020F0"));
+        }
+    }
+
+    r->set_range(start, end);
 }
 

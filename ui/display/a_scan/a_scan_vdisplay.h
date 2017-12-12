@@ -9,18 +9,18 @@
 
 #include "a_scan_display.h"
 
-class AscanVWidget;
 class AscanVDisplay : public AscanDisplay
 {
     Q_OBJECT
 public:
     explicit AscanVDisplay(const DplDevice::GroupPointer &group,
                            QWidget *parent = 0);
-    ~AscanVDisplay();
+protected:
+    Ruler *amplitude_ruler();
+    Ruler *ultrasound_ruler();
 
 protected slots:
-    void do_size_changed(const QSize &size);
-    void update_left_ruler();
+    void resize_event(const QSize &size);
 };
 
 #endif // __A_SCAN_DISPLAY_H__

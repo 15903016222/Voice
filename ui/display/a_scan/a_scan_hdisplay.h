@@ -15,11 +15,13 @@ class AscanHDisplay : public AscanDisplay
 public:
     explicit AscanHDisplay(const DplDevice::GroupPointer &group,
                            QWidget *parent = 0);
-    ~AscanHDisplay();
+
+protected:
+    Ruler *amplitude_ruler();
+    Ruler *ultrasound_ruler();
 
 protected slots:
-    void do_size_changed(const QSize &size);
-    void update_bottom_ruler();
+    void resize_event(const QSize &size);
 };
 
 #endif // __A_SCAN_DISPLAY_H__

@@ -1,10 +1,12 @@
 #include "scan_display.h"
-
+#include "scan_view.h"
 #include "color_bar.h"
 #include "ruler/ruler.h"
-#include <QLabel>
+
 #include <ui/common/hbox_layout.h>
 #include <ui/common/vbox_layout.h>
+
+#include <QLabel>
 
 ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     m_titleLabel(new QLabel(this)),
@@ -12,7 +14,7 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     m_leftRuler(new Ruler(Ruler::RIGHT, "", this)),
     m_rightRuler(new Ruler(Ruler::LEFT, "", this)),
     m_bottomRuler(new Ruler(Ruler::TOP, "", this)),
-    m_scanLayout(new VBoxLayout())
+    m_view(new ScanView(this))
 {
     m_titleLabel->setStyleSheet("QLabel{background-color:rgb(0, 90, 130);\ncolor:white;}");
     m_titleLabel->setAlignment(Qt::AlignCenter);
@@ -41,7 +43,7 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     vlayout1->addWidget(m_leftRuler, 1);
     vlayout1->addItem(new QSpacerItem(0, 20, QSizePolicy::Ignored, QSizePolicy::Fixed));
 
-    vlayout2->addLayout(m_scanLayout, 1);
+    vlayout2->addWidget(m_view, 1);
     vlayout2->addWidget(m_bottomRuler);
 
     vlayout3->addWidget(m_colorBar, 1);
@@ -49,4 +51,7 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
 
     vlayout4->addWidget(m_rightRuler, 1);
     vlayout4->addItem(new QSpacerItem(0, 20, QSizePolicy::Ignored, QSizePolicy::Fixed));
+
+    connect(m_view, SIGNAL(size_changed(QSize)),
+            this, SLOT(resize_event(QSize)));
 }
