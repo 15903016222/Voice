@@ -9,10 +9,10 @@
 
 #include <device/device.h>
 
-#include "../scan_display.h"
+#include "../base/scan_display.h"
 
 class ScanView;
-class AscanScene;
+class ScanScene;
 class WaveItem;
 class GateItem;
 class TcgItem;
@@ -41,7 +41,6 @@ protected slots:
 protected:
     DplDevice::GroupPointer m_group;
 
-    AscanScene *m_scene;
     WaveItem *m_waveItem;
     GateItem *m_gateAItem;
     GateItem *m_gateBItem;

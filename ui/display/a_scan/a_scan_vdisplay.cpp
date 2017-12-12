@@ -6,9 +6,11 @@
  */
 #include "a_scan_vdisplay.h"
 
-#include "a_scan_scene.h"
 #include "wave_item.h"
 #include "tcg_item.h"
+
+#include "../base/scan_view.h"
+#include "../base/scan_scene.h"
 
 AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group, QWidget *parent) :
     AscanDisplay(group, parent)
@@ -30,6 +32,7 @@ void AscanVDisplay::resize_event(const QSize &size)
 {
     m_scene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
                                size.height(), size.width());
+
     m_waveItem->set_size(QSize(size.height(), size.width()));
     m_tcgItem->set_size(QSize(size.height(), size.width()));
 

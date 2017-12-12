@@ -11,34 +11,28 @@
 #include "gate_item.h"
 #include "tcg_item.h"
 
-#include "../scan_view.h"
-#include "../color_bar.h"
 #include "../ruler/ruler.h"
+#include "../color_bar/color_bar.h"
 
 #include <global.h>
 
-#include <QThread>
-#include <QLayout>
 #include <QLabel>
+#include <QThread>
 
 AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent) :
     ScanDisplay(parent),
     m_group(group),
-    m_view(new ScanView),
-    m_scene(new AscanScene),
     m_waveItem(new WaveItem(DplDevice::Device::instance()->display()->ascan())),
     m_gateAItem(new GateItem(group->sample(), group->gate_a())),
     m_gateBItem(new GateItem(group->sample(), group->gate_b())),
     m_gateIItem(new GateItem(group->sample(), group->gate_i())),
     m_tcgItem(new TcgItem(group->tcgs(), group->sample()))
 {  
-    m_rightRuler->hide();
+    m_colorRuler->hide();
     m_colorBar->hide();
 
     init_amplitude_ruler();
     init_ultrasound_ruler();
-
-    m_view->setScene(m_scene);
 
     m_scene->addItem(m_waveItem);
 
@@ -64,8 +58,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
 
 AscanDisplay::~AscanDisplay()
 {
-    delete m_view;
-    delete m_scene;
 }
 
 void AscanDisplay::init_amplitude_ruler()
@@ -136,9 +128,9 @@ void AscanDisplay::resize_event(const QSize &size)
 
 void AscanDisplay::update_gates()
 {
-    m_gateAItem->set_ratio(m_scene->width()/m_group->sample()->range());
-    m_gateBItem->set_ratio(m_scene->width()/m_group->sample()->range());
-    m_gateIItem->set_ratio(m_scene->width()/m_group->sample()->range());
+    m_gateAItem->set_ratio(scene_width()/m_group->sample()->range());
+    m_gateBItem->set_ratio(scene_width()/m_group->sample()->range());
+    m_gateIItem->set_ratio(scene_width()/m_group->sample()->range());
 }
 
 void AscanDisplay::update_ultrasound_ruler()

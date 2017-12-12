@@ -26,9 +26,10 @@ Ruler *AscanHDisplay::ultrasound_ruler()
 }
 
 void AscanHDisplay::resize_event(const QSize &size)
-{
+{    
     m_scene->setSceneRect(-size.width()/2, -size.height()/2,
-                               size.width(), size.height());
+                          size.width(), size.height());
+
     m_waveItem->set_size(size);
     m_tcgItem->set_size(size);
 
