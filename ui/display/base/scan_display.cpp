@@ -1,7 +1,9 @@
 #include "scan_display.h"
 #include "scan_view.h"
-#include "color_bar.h"
-#include "ruler/ruler.h"
+#include "scan_scene.h"
+
+#include "../color_bar/color_bar.h"
+#include "../ruler/ruler.h"
 
 #include <ui/common/hbox_layout.h>
 #include <ui/common/vbox_layout.h>
@@ -10,16 +12,21 @@
 
 ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     m_titleLabel(new QLabel(this)),
-    m_colorBar(new ColorBar(this)),
     m_leftRuler(new Ruler(Ruler::RIGHT, "", this)),
-    m_rightRuler(new Ruler(Ruler::LEFT, "", this)),
     m_bottomRuler(new Ruler(Ruler::TOP, "", this)),
-    m_view(new ScanView(this))
+    m_colorRuler(new Ruler(Ruler::LEFT, "", this)),
+    m_colorBar(new ColorBar(this)),
+    m_view(new ScanView(this)),
+    m_scene(new ScanScene(this))
 {
     m_titleLabel->setStyleSheet("QLabel{background-color:rgb(0, 90, 130);\ncolor:white;}");
     m_titleLabel->setAlignment(Qt::AlignCenter);
     m_leftRuler->setMinimumWidth(20);
-    m_rightRuler->setMinimumWidth(20);
+
+    m_colorRuler->setMinimumWidth(20);
+    m_colorRuler->set_unit("(%)");
+    m_colorRuler->set_prec(0);
+
     m_bottomRuler->setMinimumHeight(20);
     m_bottomRuler->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     m_colorBar->setMinimumWidth(5);
@@ -49,9 +56,10 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     vlayout3->addWidget(m_colorBar, 1);
     vlayout3->addItem(new QSpacerItem(0, 20, QSizePolicy::Ignored, QSizePolicy::Fixed));
 
-    vlayout4->addWidget(m_rightRuler, 1);
+    vlayout4->addWidget(m_colorRuler, 1);
     vlayout4->addItem(new QSpacerItem(0, 20, QSizePolicy::Ignored, QSizePolicy::Fixed));
 
+    m_view->setScene(m_scene);
     connect(m_view, SIGNAL(size_changed(QSize)),
             this, SLOT(resize_event(QSize)));
 }
