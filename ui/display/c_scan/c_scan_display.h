@@ -1,20 +1,16 @@
 #ifndef __C_SCAN_DISPLAY_H__
 #define __C_SCAN_DISPLAY_H__
 
-#include <QWidget>
+#include "../scan_display.h"
 #include <device/group.h>
 #include <QSemaphore>
-
-namespace Ui {
-class ScanDisplay;
-}
 
 class ScanView;
 class CscanScene;
 class BaseImageItem;
 class Ruler;
 
-class CscanDisplay : public QWidget
+class CscanDisplay : public ScanDisplay
 {
     Q_OBJECT
 public:
@@ -32,7 +28,6 @@ public slots:
     void do_update_ruler(double value);
 
 protected:
-    Ui::ScanDisplay         *ui;
     DplDevice::GroupPointer m_group;
     ScanView                *m_view;
     CscanScene              *m_scene;

@@ -1,30 +1,28 @@
 #include "c_scan_display.h"
-#include "ui_scan_display.h"
-
-#include "../base_image_item.h"
 #include "c_scan_encoder_image_item.h"
 #include "c_scan_time_image_item.h"
-#include "../scan_view.h"
 #include "c_scan_scene.h"
+
+#include "../base_image_item.h"
+#include "../scan_view.h"
+#include "../color_bar.h"
+#include "../ruler/ruler.h"
 
 #include <device/device.h>
 #include <source/axis.h>
 #include <source/scan.h>
 #include <source/source.h>
-#include <QDebug>
 
-CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ScanDisplay),
+#include <QLabel>
+
+CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation orientation, QWidget *parent) : ScanDisplay(parent),
     m_group(grp),
     m_view(new ScanView),
     m_scene(new CscanScene),
     m_orientation(orientation),
     m_cscanImageItem(NULL)
 {
-    ui->setupUi(this);
-
-    ui->scanLayout->addWidget(m_view);
+    m_scanLayout->addWidget(m_view);
     m_view->setScene(m_scene);
 
     init_scan_env();
@@ -33,8 +31,8 @@ CscanDisplay::CscanDisplay(const DplDevice::GroupPointer &grp, Qt::Orientation o
     connect(m_view, SIGNAL(size_changed(QSize)),
             this, SLOT(do_view_size_changed(QSize)));
 
-    ui->colorBarWidget->set_palette(DplDevice::Device::instance()->display()->palette());
-    ui->titleLabel->setText(QString("C-Scan|Grp%1").arg(m_group->index()+1));
+    m_colorBar->set_palette(DplDevice::Device::instance()->display()->palette());
+    m_titleLabel->setText(QString("C-Scan|Grp%1").arg(m_group->index()+1));
 
     if(m_orientation == Qt::Horizontal) {
         m_view->rotate(-90);
@@ -60,7 +58,6 @@ CscanDisplay::~CscanDisplay()
     disconnect(this, SIGNAL(refresh_scan_env()), this, SLOT(do_refresh_scan_env()));
     disconnect(this, SIGNAL(update_ruler(double)), this, SLOT(do_update_ruler(double)));
 
-    delete ui;
     delete m_view;
     delete m_scene;
 
@@ -109,17 +106,15 @@ void CscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 void CscanDisplay::init_ruler()
 {
     if(m_orientation == Qt::Vertical) {
-        m_scanTypeRuler = ui->bottomRulerWidget;
-        m_lawTypeRuler  = ui->leftRulerWidget;
+        m_scanTypeRuler = m_bottomRuler;
+        m_lawTypeRuler  = m_leftRuler;
     } else {
-        m_scanTypeRuler = ui->leftRulerWidget;
-        m_lawTypeRuler  = ui->bottomRulerWidget;
+        m_scanTypeRuler = m_leftRuler;
+        m_lawTypeRuler  = m_bottomRuler;
     }
 
-    ui->rightRulerWidget->set_range(0, 100);
-    ui->rightRulerWidget->set_unit("(%)");
-    ui->rightRulerWidget->update();
-
+    m_rightRuler->set_range(100, 0);
+    m_rightRuler->set_unit("(%)");
 }
 
 

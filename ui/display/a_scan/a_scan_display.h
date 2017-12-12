@@ -9,11 +9,7 @@
 
 #include <device/device.h>
 
-#include <QWidget>
-
-namespace Ui {
-class AscanDisplay;
-}
+#include "../scan_display.h"
 
 class ScanView;
 class AscanScene;
@@ -21,7 +17,7 @@ class WaveItem;
 class GateItem;
 class TcgItem;
 
-class AscanDisplay : public QWidget
+class AscanDisplay : public ScanDisplay
 {
     Q_OBJECT
 
@@ -36,7 +32,6 @@ protected slots:
     void update_gates();
 
 protected:
-    Ui::AscanDisplay *ui;
     DplDevice::GroupPointer m_group;
 
 private:

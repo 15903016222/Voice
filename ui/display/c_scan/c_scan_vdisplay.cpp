@@ -1,5 +1,4 @@
 #include "c_scan_vdisplay.h"
-#include "ui_scan_display.h"
 #include "../scan_view.h"
 
 CscanVDisplay::CscanVDisplay(const DplDevice::GroupPointer &grp, QWidget *parent)

@@ -1,18 +1,15 @@
 #ifndef __S_SCAN_DISPLAY_H__
 #define __S_SCAN_DISPLAY_H__
 
-#include <QWidget>
+#include "../scan_display.h"
 #include <device/group.h>
 #include "vpa_item.h"
 
-namespace Ui {
-class ScanDisplay;
-}
 
 class ScanView;
 class SscanScene;
 
-class SscanDisplay : public QWidget
+class SscanDisplay : public ScanDisplay
 {
     Q_OBJECT
 public:
@@ -23,7 +20,6 @@ protected slots:
     void do_data_event(const DplSource::BeamsPointer &beams);
 
 protected:
-    Ui::ScanDisplay *ui;
     DplDevice::GroupPointer m_group;
 
 protected slots:

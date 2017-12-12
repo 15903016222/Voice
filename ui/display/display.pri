@@ -7,6 +7,7 @@ include($$PWD/s_scan/s_scan.pri)
 include($$PWD/fft/fft.pri)
 
 SOURCES += \
+    $$PWD/scan_display.cpp \
     $$PWD/scan_view.cpp \
     $$PWD/color_bar.cpp \
     $$PWD/display_widget.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 
 HEADERS += \
+    $$PWD/scan_display.h \
     $$PWD/scan_view.h \
     $$PWD/color_bar.h \
     $$PWD/display_widget.h \
@@ -28,5 +30,4 @@ HEADERS += \
     $$PWD/test_stub.h
 
 
-FORMS += \
-    $$PWD/scan_display.ui
+FORMS +=

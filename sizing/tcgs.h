@@ -42,7 +42,7 @@ public:
 
     /**
      * @brief point_qty 获取点数
-     * @return
+     * @return          点数
      */
     int point_count() const;
 

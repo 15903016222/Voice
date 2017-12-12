@@ -6,11 +6,10 @@
  */
 #include "global.h"
 #include "a_scan_vdisplay.h"
-#include "ui_a_scan_display.h"
+
+#include "../ruler/ruler.h"
 
 #include <qmath.h>
-
-#include <QDebug>
 
 AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group,
                              QWidget *parent) :
@@ -32,9 +31,10 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group,
 
     update_left_ruler();
 
-    ui->bottomRulerWidget->set_range(0, 100);
-    ui->bottomRulerWidget->set_unit("(%)");
-    ui->bottomRulerWidget->set_background_color(QColor("#ffff7f"));
+    m_bottomRuler->set_prec(0);
+    m_bottomRuler->set_range(100, 0);
+    m_bottomRuler->set_unit("(%)");
+    m_bottomRuler->set_background_color(QColor("#ffff7f"));
 }
 
 AscanVDisplay::~AscanVDisplay()
@@ -46,32 +46,28 @@ void AscanVDisplay::update_left_ruler()
     double start = m_group->sample()->start();
     double end = (start + m_group->sample()->range());
 
-    qDebug("%s[%d]: start(%f) end(%f) precision(%f)",__func__, __LINE__, start, end, m_group->sample()->precision());
-
     start = Dpl::ns_to_us(start);
     end = Dpl::ns_to_us(end);
 
     DplDevice::Group::UtUnit unit = m_group->ut_unit();
 
     if (DplDevice::Group::Time == unit) {
-        ui->leftRulerWidget->set_unit("(us)");
-        ui->leftRulerWidget->set_background_color(QColor("#F9CCE2"));
+        m_leftRuler->set_unit("(us)");
+        m_leftRuler->set_background_color(QColor("#F9CCE2"));
     } else{
-        ui->leftRulerWidget->set_unit("(mm)");
+        m_leftRuler->set_unit("(mm)");
         start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         start /= 2;
         end   *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         end /= 2;
-        ui->leftRulerWidget->set_background_color(QColor("#f29cb1"));
+        m_leftRuler->set_background_color(QColor("#f29cb1"));
         if (DplDevice::Group::TruePath == unit) {
             start *= qCos(m_group->current_angle());
             end   *= qCos(m_group->current_angle());
-            ui->leftRulerWidget->set_background_color(QColor("#ff00ff"));
+            m_leftRuler->set_background_color(QColor("#ff00ff"));
         }
     }
-    ui->leftRulerWidget->set_range(start, end);
+    m_leftRuler->set_range(start, end);
 
-    ui->leftRulerWidget->update();
-
-    qDebug("%s[%d]: start(%f) end(%f) precision(%f)",__func__, __LINE__, start, end, m_group->sample()->precision());
+    m_leftRuler->update();
 }

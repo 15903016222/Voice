@@ -19,5 +19,5 @@ HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
 
-include($$PWD/../src/ruler.pri)
-INCLUDEPATH += $$PWD/../src/
+include($$PWD/../ruler.pri)
+INCLUDEPATH += $$PWD/..

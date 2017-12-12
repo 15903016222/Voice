@@ -7,11 +7,10 @@
 
 #include "global.h"
 #include "a_scan_hdisplay.h"
-#include "ui_a_scan_display.h"
+
+#include "../ruler/ruler.h"
 
 #include <qmath.h>
-
-#include <QDebug>
 
 AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
                              QWidget *parent) :
@@ -32,10 +31,12 @@ AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
             SLOT(update_bottom_ruler()));
     update_bottom_ruler();
 
-    ui->leftRulerWidget->set_range(0, 100);
-    ui->leftRulerWidget->set_unit("(%)");
-    ui->leftRulerWidget->set_background_color(QColor("#ffff7f"));
-    ui->leftRulerWidget->update();
+    m_bottomRuler->set_scroll(true);
+
+    m_leftRuler->set_prec(0);
+    m_leftRuler->set_range(100, 0);
+    m_leftRuler->set_unit("(%)");
+    m_leftRuler->set_background_color(QColor("#ffff7f"));
 }
 
 AscanHDisplay::~AscanHDisplay()
@@ -54,23 +55,21 @@ void AscanHDisplay::update_bottom_ruler()
     DplDevice::Group::UtUnit unit = m_group->ut_unit();
 
     if (DplDevice::Group::Time == unit) {
-        ui->bottomRulerWidget->set_unit("(us)");
-        ui->bottomRulerWidget->set_background_color(QColor("#F9CCE2"));
+        m_bottomRuler->set_unit("(us)");
+        m_bottomRuler->set_background_color(QColor("#F9CCE2"));
     } else {
-        ui->bottomRulerWidget->set_unit("(mm)");
+        m_bottomRuler->set_unit("(mm)");
         start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         start /= 2;
         end *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         end /= 2;
-        ui->bottomRulerWidget->set_background_color(QColor("#f29cb1"));
+        m_bottomRuler->set_background_color(QColor("#f29cb1"));
         if (DplDevice::Group::TruePath == unit) {
             start *= qCos(m_group->current_angle());
             end   *= qCos(m_group->current_angle());
-            ui->bottomRulerWidget->set_background_color(QColor("#ff00ff"));
+            m_bottomRuler->set_background_color(QColor("#ff00ff"));
         }
     }
 
-    ui->bottomRulerWidget->set_range(start, end);
-
-    ui->bottomRulerWidget->update();
+    m_bottomRuler->set_range(start, end);
 }

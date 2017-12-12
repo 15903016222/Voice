@@ -9,8 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_rightRuler(new Ruler(Ruler::LEFT, "mm", this)),
     m_bottomRuler(new Ruler(Ruler::TOP, "mm", this))
 {
-    m_rightRuler->setMaximumWidth(30);
-    m_leftRuler->setMaximumWidth(30);
+    m_rightRuler->set_scroll(true);
+    m_rightRuler->setMaximumWidth(20);
+    m_leftRuler->set_scroll(true);
+    m_leftRuler->setMaximumWidth(20);
 
     ui->setupUi(this);
     ui->topHorizontalLayout->addWidget(m_topRuler);

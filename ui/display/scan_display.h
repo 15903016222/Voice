@@ -2,11 +2,12 @@
 #define __SCAN_DISPLAY_H__
 
 #include <QWidget>
+#include <QLayout>
 
 class ColorBar;
 class Ruler;
 class QLabel;
-class QLayout;
+
 class ScanDisplay : public QWidget
 {
     Q_OBJECT
