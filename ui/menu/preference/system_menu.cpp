@@ -14,6 +14,7 @@
 #include "dpl_message_box.h"
 #include "base_dialog.h"
 #include <device/device.h>
+#include <configuration/configuration.h>
 
 #include <time.h>
 #include <sys/time.h>
@@ -170,6 +171,12 @@ void SystemMenu::show_resetconfig_dialog()
     DplMessageBox messageBox(QMessageBox::Question, tr("Reset"), tr("Reset Config ?"));
     if(messageBox.exec() == QDialog::Accepted) {
         /* TODO: */
+        Config::Configuration config;
+        if(config.load_config("/home/tt/TT/reset.cfg")) {
+            DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Done!"));
+            messageBox.exec();
+            return;
+        }
     }
 }
 

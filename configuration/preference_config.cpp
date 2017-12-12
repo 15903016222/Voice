@@ -1,4 +1,5 @@
 #include "preference_config.h"
+#include <mcu/mcu.h>
 
 namespace Config {
 
@@ -15,6 +16,7 @@ void PreferenceConfig::pack()
     /* value */
     MetaItem itemMap;
     msgpack::zone zone;
+
     itemMap.insert(MetaItem::value_type((int)Config_Preference::Bright, msgpack::object(100, zone)));
     itemMap.insert(MetaItem::value_type((int)Config_Preference::Opacity, msgpack::object(80, zone)));
     itemMap.insert(MetaItem::value_type((int)Config_Preference::Language, msgpack::object(3, zone)));
@@ -26,8 +28,6 @@ void PreferenceConfig::pack()
 
 bool PreferenceConfig::unpack(const msgpack::v2::object &obj)
 {
-    qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " enter.";
-
     try {
         if(obj.type != msgpack::type::MAP) {
             qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " object type is not MAP!";

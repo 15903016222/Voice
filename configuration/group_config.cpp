@@ -18,22 +18,17 @@ void GroupConfig::pack()
     /* key */
     m_packer->pack_int((int)Config::Group);
     /* value */
-    m_packer->pack_map(groups.size() + 1);
+    m_packer->pack_map(groups.size());
 
     while(it != groups.end()) {
-
         const DplDevice::GroupPointer groupPointer = (*it);
         pack_group_child_item_config(groupPointer);
         ++it;
     }
-
-    pack_group_child_item_config(DplDevice::GroupPointer());
 }
 
 bool GroupConfig::unpack(const msgpack::v2::object &obj)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter. type = " << obj.type;
-
     try {
 
         if(obj.type != msgpack::type::MAP) {
@@ -46,8 +41,6 @@ bool GroupConfig::unpack(const msgpack::v2::object &obj)
 
         std::map<int, msgpack::object>::iterator it = groupMap.begin();
 
-        qDebug() << "["<< __FUNCTION__ << "]" << " groupMap size  = " << groupMap.size();
-
         DplDevice::Device *device = DplDevice::Device::instance();
         int groupCount = groupMap.size() - device->group_qty();
 
@@ -57,8 +50,6 @@ bool GroupConfig::unpack(const msgpack::v2::object &obj)
                 if(!device->remove_group(device->group_qty() - 1)) {
                     qDebug() << "[" << __FUNCTION__ << "]" << " remove group id = " << device->group_qty() - 1 << " failed!";
                     return false;
-                } else {
-                    qDebug() << "[" << __FUNCTION__ << "]" << " remove group success!";
                 }
             }
         } if(groupCount > 0) {
@@ -67,8 +58,6 @@ bool GroupConfig::unpack(const msgpack::v2::object &obj)
                 if(!device->add_group()) {
                     qDebug() << "[" << __FUNCTION__ << "]" << " remove group id = " << device->group_qty() - 1 << " failed!";
                     return false;
-                } else {
-                    qDebug() << "[" << __FUNCTION__ << "]" << " add group success!";
                 }
             }
         }
@@ -77,16 +66,12 @@ bool GroupConfig::unpack(const msgpack::v2::object &obj)
 
             m_groupPointer = device->get_group(it->first);
 
-            qDebug() << "[" << __FUNCTION__ << "]" << " group index  = " << it->first;
-
             if(it->second.type == msgpack::type::MAP) {
                 msgpack::object_kv *currentKV = it->second.via.map.ptr;
                 for(uint i = 0; i < it->second.via.map.size; ++i) {
                     unpack_group_item_config(currentKV[i].key.as<int>(), currentKV[i].val);
                 }
             }
-
-            qDebug() << "=============end group " << it->first << "==============\n";
             ++it;
         }
     } catch(...) {
@@ -99,30 +84,8 @@ bool GroupConfig::unpack(const msgpack::v2::object &obj)
 
 void GroupConfig::pack_group_child_item_config(const DplDevice::GroupPointer &groupPointer)
 {
-
-#if 1
-    if(groupPointer.isNull()) {
-        /* key */
-        m_packer->pack_int(1);
-        /* value */
-        m_packer->pack_map(3);
-
-        m_packer->pack((int)Config_Group::Gate);
-        m_packer->pack(222);
-
-        m_packer->pack((int)Config_Group::UT);
-        m_packer->pack(222);
-
-        m_packer->pack((int)Config_Group::Focallawer);
-        m_packer->pack(222);
-
-        return;
-    }
-#endif
-
     /* key */
     m_packer->pack_int(groupPointer->index());
-
      /* values */
     m_packer->pack_map((int)Config_Group::GroupItemNum);
 
@@ -139,7 +102,6 @@ void GroupConfig::pack_group_child_item_config(const DplDevice::GroupPointer &gr
     pack_group_cursor_config(groupPointer);
 
     pack_group_scan_config(groupPointer);
-
 }
 
 void GroupConfig::pack_group_general_config(const DplDevice::GroupPointer &groupPointer)
@@ -161,21 +123,19 @@ void GroupConfig::pack_group_general_config(const DplDevice::GroupPointer &group
 
 void GroupConfig::pack_group_gate_config(const DplDevice::GroupPointer &groupPointer)
 {
-    MetaItem gateMap;
-
-    MetaItem  gateItemMapA = pack_gate_config(groupPointer, DplFpga::Group::GATE_A);
-    MetaItem  gateItemMapB = pack_gate_config(groupPointer, DplFpga::Group::GATE_B);
-    MetaItem  gateItemMapI = pack_gate_config(groupPointer, DplFpga::Group::GATE_I);
-
-    msgpack::zone zone;
-    gateMap.insert(MetaItem::value_type((int)DplFpga::Group::GATE_A, msgpack::object(gateItemMapA, zone)));
-    gateMap.insert(MetaItem::value_type((int)DplFpga::Group::GATE_B, msgpack::object(gateItemMapB, zone)));
-    gateMap.insert(MetaItem::value_type((int)DplFpga::Group::GATE_I, msgpack::object(gateItemMapI, zone)));
-
     /* key */
     m_packer->pack((int)Config_Group::Gate);
+
     /* value */
-    m_packer->pack(gateMap);
+    int gateCount = 3;
+    m_packer->pack_map(gateCount);
+
+    pack_gate_config(groupPointer, DplFpga::Group::GATE_A);
+
+    pack_gate_config(groupPointer, DplFpga::Group::GATE_B);
+
+    pack_gate_config(groupPointer, DplFpga::Group::GATE_I);
+
 }
 
 void GroupConfig::pack_group_ut_config(const DplDevice::GroupPointer &groupPointer)
@@ -217,6 +177,9 @@ void GroupConfig::pack_group_tcgs_config(const DplDevice::GroupPointer &groupPoi
 
     m_packer->pack((int)Config_Group::TCGS_CurrentTcgIndex);
     m_packer->pack(tcgs->current_tcg()->index());
+
+    m_packer->pack((int)Config_Group::TCGS_CurrentPointIndex);
+    m_packer->pack(tcgs->current_point_index());
 
     m_packer->pack((int)Config_Group::TCGS_TcgList);
     m_packer->pack_map(tcgs->count());
@@ -285,6 +248,21 @@ void GroupConfig::pack_group_cursor_config(const DplDevice::GroupPointer &groupP
     m_packer->pack((int)Config_Group::Cursor_Visible);
     m_packer->pack(cursor->is_visible());
 
+    qDebug("[%s] amplitude_reference = %f amplitude_measurement = %f, "
+           "ultrasound_reference = %f, ultrasound_measurement = %f, "
+           "scan_reference = %f, scan_measurement = %f, "
+           "index_reference = %f, index_measurement = %f, visible = %d",
+           __FUNCTION__,
+           cursor->amplitude_reference(),
+           cursor->amplitude_measurement(),
+           cursor->ultrasound_reference(),
+           cursor->ultrasound_measurement(),
+           cursor->scan_reference(),
+           cursor->scan_measurement(),
+           cursor->index_reference(),
+           cursor->index_measurement(),
+           (int)cursor->is_visible());
+
 }
 
 void GroupConfig::pack_group_scan_config(const DplDevice::GroupPointer &groupPointer)
@@ -313,31 +291,70 @@ void GroupConfig::pack_group_scan_config(const DplDevice::GroupPointer &groupPoi
     m_packer->pack((int)Config_Group::Scan_Height);
     m_packer->pack(scan->height());
 
+    qDebug("[%s] start_x = %f stop_x = %f, "
+           "start_y = %f, stop_y = %f, width = %f, height = %f",
+           __FUNCTION__,
+           scan->start_x(),
+           scan->stop_x(),
+           scan->start_y(),
+           scan->stop_y(),
+           scan->width(),
+           scan->height());
+
 }
 
-MetaItem GroupConfig::pack_gate_config(const DplDevice::GroupPointer &groupPointer, DplFpga::Group::GateType type)
+void GroupConfig::pack_gate_config(const DplDevice::GroupPointer &groupPointer, DplFpga::Group::GateType type)
 {
     const DplGate::GatePointer &gatePointer = groupPointer->gate(type);
 
-    MetaItem gateItemMap;
-    msgpack::zone zone;
-    gateItemMap.insert(MetaItem::value_type((int)Config_Group::Gate_Type, msgpack::object((int)gatePointer->type(), zone)));
-    gateItemMap.insert(MetaItem::value_type((int)Config_Group::Gate_Start, msgpack::object(gatePointer->start(), zone)));
-    gateItemMap.insert(MetaItem::value_type((int)Config_Group::Gate_Width, msgpack::object(gatePointer->width(), zone)));
-    gateItemMap.insert(MetaItem::value_type((int)Config_Group::Gate_Height, msgpack::object(gatePointer->height(), zone)));
-    gateItemMap.insert(MetaItem::value_type((int)Config_Group::Gate_Synchro, msgpack::object((int)gatePointer->synchro_mode(), zone)));
-    gateItemMap.insert(MetaItem::value_type((int)Config_Group::Gate_Measure, msgpack::object((int)gatePointer->measure_mode(), zone)));
+    m_packer->pack((int)type);
+    m_packer->pack_map((int)Config_Group::Gate_ItemNum);
 
-    std::vector<unsigned char> rgb;
-    rgb.push_back((unsigned char)gatePointer->color().red());
-    rgb.push_back((unsigned char)gatePointer->color().green());
-    rgb.push_back((unsigned char)gatePointer->color().blue());
-    rgb.push_back((unsigned char)gatePointer->color().alpha());
+    m_packer->pack((int)Config_Group::Gate_Type);
+    m_packer->pack((int)gatePointer->type());
 
-    gateItemMap.insert(MetaItem::value_type((int)Config_Group::Gate_Color, msgpack::object(rgb, zone)));
-     /* TODO：闸门模式 */
-//    gateItemMap.insert(MetaItem::value_type((int)Config_Group::Gate_Mode, msgpack::object((int)gatePointer->mode(), zone)));
-    return gateItemMap;
+    m_packer->pack((int)Config_Group::Gate_Switch);
+    m_packer->pack(gatePointer->is_visible());
+
+    m_packer->pack((int)Config_Group::Gate_Start);
+    m_packer->pack(gatePointer->start());
+
+    m_packer->pack((int)Config_Group::Gate_Width);
+    m_packer->pack(gatePointer->width());
+
+    m_packer->pack((int)Config_Group::Gate_Height);
+    m_packer->pack(gatePointer->height());
+
+    m_packer->pack((int)Config_Group::Gate_Synchro);
+    m_packer->pack((int)gatePointer->synchro_mode());
+
+    m_packer->pack((int)Config_Group::Gate_Measure);
+    m_packer->pack((int)gatePointer->measure_mode());
+
+    m_packer->pack((int)Config_Group::Gate_Color);
+
+    std::vector<int> rgb;
+    rgb.push_back(gatePointer->color().red());
+    rgb.push_back(gatePointer->color().green());
+    rgb.push_back(gatePointer->color().blue());
+    rgb.push_back(gatePointer->color().alpha());
+
+    m_packer->pack(rgb);
+
+    qDebug("[%s] gate type = %d is_visible = %d, start = %f, width = %f, height = %d, "
+           "synchro_mode = %d, measure_mode = %d, color(%d, %d, %d, %d)" ,
+           __FUNCTION__,
+           gatePointer->type(),
+           gatePointer->is_visible(),
+           gatePointer->start(),
+           gatePointer->width(),
+           gatePointer->height(),
+           (int)gatePointer->synchro_mode(),
+           (int)gatePointer->measure_mode(),
+           (int)rgb.at(0),
+           (int)rgb.at(1),
+           (int)rgb.at(2),
+           (int)rgb.at(3));
 }
 
 void GroupConfig::pack_ut_sample_config(const DplDevice::GroupPointer &groupPointer)
@@ -362,7 +379,8 @@ void GroupConfig::pack_ut_sample_config(const DplDevice::GroupPointer &groupPoin
 
     m_packer->pack(sampleItemMap);
 
-    qDebug("precision = %f, gain = %f, start = %f, range = %f, point_qty = %d, is_auto_set_point_qty = %d, ",
+    qDebug("[%s] precision = %f, gain = %f, start = %f, range = %f, point_qty = %d, is_auto_set_point_qty = %d, ",
+           __FUNCTION__,
            samplePointer->precision(),
            samplePointer->gain(),
            samplePointer->start(),
@@ -500,6 +518,28 @@ void GroupConfig::pack_focallawer_wedge_config(const DplDevice::GroupPointer &gr
 
     m_packer->pack((int)Config_Group::Wedge_delay);
     m_packer->pack(wedgePointer->delay());
+
+    qDebug("[%s] filename = %s, serial = %s, "
+           "model = %s, angle = %f, roof_angle = %f, velocity = %d, primary_offset = %f",
+           __FUNCTION__,
+           fileName.c_str(),
+           wedgePointer->serial().toStdString().c_str(),
+           wedgePointer->model().toStdString().c_str(),
+           wedgePointer->angle(),
+           wedgePointer->roof_angle(),
+           wedgePointer->velocity(),
+           wedgePointer->primary_offset());
+
+    qDebug("[%s] secondary_offset = %f, first_element_height = %f, length = %f, "
+           "width = %f, height = %f, orientation = %d, delay = %d",
+           __FUNCTION__,
+           wedgePointer->secondary_offset(),
+           wedgePointer->first_element_height(),
+           wedgePointer->length(),
+           wedgePointer->width(),
+           wedgePointer->height(),
+           (int)wedgePointer->orientation(),
+           wedgePointer->delay());
 }
 
 void GroupConfig::pack_focallawer_specimen_config(const DplDevice::GroupPointer &groupPointer)
@@ -518,6 +558,12 @@ void GroupConfig::pack_focallawer_specimen_config(const DplDevice::GroupPointer 
     m_packer->pack((int)Config_Group::Specimen_Velocity);
     m_packer->pack(specimenPointer->velocity());
 
+    qDebug("[%s] type = %d, wave_type = %d, velocity = %d ",
+           __FUNCTION__,
+           (int)specimenPointer->type(),
+           (int)specimenPointer->wave_type(),
+           specimenPointer->velocity());
+
 }
 
 void GroupConfig::pack_focallawer_focusCnf_config(const DplDevice::GroupPointer &groupPointer)
@@ -528,21 +574,12 @@ void GroupConfig::pack_focallawer_focusCnf_config(const DplDevice::GroupPointer 
     m_packer->pack_map((int)Config_Group::FocusCnf_ItemNum);
     m_packer->pack((int)Config_Group::FocusCnf_Mode);
     m_packer->pack((int)pointer->mode());
+
+    qDebug("[%s] mode = %d",
+           __FUNCTION__,
+           (int)pointer->mode());
 }
 
-void GroupConfig::pack_tcg_config(const DplSizing::TcgsPointer &tcgs, int index)
-{
-//    DplSizing::TcgPointer tcg = tcgs->tcg(index);
-//    tcgs->set_current_tcg(index);
-//    tcg->index()
-//    tcg->gain() ;
-
-//    m_packer->pack_map((int)Config_Group::TCGS_ItemNum);
-
-//    m_packer->pack((int)Config_Group::TCGS_Enable);
-//    m_packer->pack(tcg->gain());
-//    m_packer->pack(tcg->position(index));
-}
 
 void GroupConfig::unpack_group_item_config(int key, msgpack::object &item)
 {
@@ -730,6 +767,11 @@ void GroupConfig::unpack_group_tcgs_config(msgpack::object &item)
         DplSizing::TcgsPointer tcgs = m_groupPointer->tcgs();
         bool enable = tcgsItem.at((int)Config_Group::TCGS_Enable).as<bool>();
         int currentIndex = tcgsItem.at((int)Config_Group::TCGS_CurrentTcgIndex).as<int>();
+        int currentPointIndex = tcgsItem.at((int)Config_Group::TCGS_CurrentPointIndex).as<int>();
+
+        qDebug() << "["<< __FUNCTION__ << "]" << " enable = " << enable
+                 << " current index = " << currentIndex
+                 << " current point index = " << currentPointIndex;
 
         try {
 
@@ -772,6 +814,10 @@ void GroupConfig::unpack_group_tcgs_config(msgpack::object &item)
                  }
                 ++it;
             }
+
+            tcgs->set_current_tcg(currentIndex);
+            tcgs->set_current_point(currentPointIndex);
+            tcgs->set_enable(enable);
 
         } catch(...) {
             qDebug() << "[" << __FUNCTION__ << "]" << " convert tcg list catch exception!";
@@ -836,18 +882,20 @@ void GroupConfig::unpack_gate_config(msgpack::v2::object &obj)
 
             DplFpga::Group::GateType gateType = (DplFpga::Group::GateType)gateItem.at(Config_Group::Gate_Type).as<int>();
             DplGate::GatePointer gatePointer = m_groupPointer->gate(gateType);
+
+            gatePointer->set_visible(gateItem.at(Config_Group::Gate_Switch).as<bool>());
             gatePointer->set_start(gateItem.at(Config_Group::Gate_Start).as<float>());
             gatePointer->set_width(gateItem.at(Config_Group::Gate_Width).as<float>());
             gatePointer->set_height(gateItem.at(Config_Group::Gate_Height).as<int>());
             gatePointer->set_measure_mode((DplFpga::Group::MeasureMode)gateItem.at(Config_Group::Gate_Measure).as<int>());
             gatePointer->set_synchro_mode((DplFpga::Group::SynchroMode)gateItem.at(Config_Group::Gate_Synchro).as<int>());
 
-            std::vector<unsigned char> colorVect;
-
+            std::vector<int> colorVect;
             try {
                 gateItem.at(Config_Group::Gate_Color).convert(colorVect);
                 QColor color(colorVect.at(0), colorVect.at(1), colorVect.at(2), colorVect.at(3));
                 gatePointer->set_color(color);
+
             } catch(...) {
                 qDebug() << "["<< __FUNCTION__ << "]" << " convert color vector catch exception!" ;
             }
@@ -858,10 +906,6 @@ void GroupConfig::unpack_gate_config(msgpack::v2::object &obj)
     }
 }
 
-void GroupConfig::unpack_tcg_config(const msgpack::v2::object &obj)
-{
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << " type = " << obj.type;
-}
 
 void GroupConfig::unpack_sampe_config(const msgpack::v2::object &obj)
 {
@@ -1061,8 +1105,6 @@ void GroupConfig::set_tcg_points(DplSizing::TcgsPointer &tcgs, msgpack::object *
                 continue;
             }
         }
-
-        qDebug() << "[" << __FUNCTION__ << "]" << " type = " << points[k].type ;
 
         if(points[k].type == msgpack::type::MAP) {
 

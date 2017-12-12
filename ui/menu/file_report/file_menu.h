@@ -21,6 +21,8 @@ private:
     LabelMenuItem *m_fileManagerItem;
 
 private slots:
+    void do_saveSetupItem_clicked();
+    void do_openItem_clicked();
     void do_fileManagerItem_clicked();
 };
 

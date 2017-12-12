@@ -31,8 +31,8 @@ namespace Config_Group {
         Gate_Height,
         Gate_Synchro,
         Gate_Measure,
-        Gate_Mode,
-        Gate_Color
+        Gate_Color,
+        Gate_ItemNum
     };
 
     enum E_UT {
@@ -113,6 +113,7 @@ namespace Config_Group {
    enum E_TCGS {
        TCGS_Enable,
        TCGS_CurrentTcgIndex,
+       TCGS_CurrentPointIndex,
        TCGS_TcgList,
        TCGS_ItemNum
    };
@@ -190,6 +191,7 @@ private:
     ConfigurationPrivate        *d;
     static Configuration        *s_configuration;
     static QString              s_defaultConfigFilePath;
+    static QString              s_resetConfigFilePath;
 
     void deal_object(const msgpack::object &object);
 

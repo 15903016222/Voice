@@ -1,5 +1,6 @@
 #include "file_menu.h"
-
+#include <configuration/configuration.h>
+#include <QDebug>
 
 namespace DplFileReportMenu {
 
@@ -14,10 +15,24 @@ FileMenu::FileMenu(QWidget *parent) :
     m_layout2->addWidget(m_fileManagerItem);
 
     connect(m_fileManagerItem, SIGNAL(clicked()), this, SLOT(do_fileManagerItem_clicked()));
+    connect(m_saveSetupItem, SIGNAL(clicked()), this, SLOT(do_saveSetupItem_clicked()));
+    connect(m_openItem, SIGNAL(clicked()), this, SLOT(do_openItem_clicked()));
 }
 
 FileMenu::~FileMenu()
 {
+}
+
+void FileMenu::do_saveSetupItem_clicked()
+{
+    qDebug() << "[" << __FUNCTION__ << "]" << " enter.";
+    Config::Configuration config;
+    config.save_config("/home/tt/TT/config");
+}
+
+void FileMenu::do_openItem_clicked()
+{
+
 }
 
 void FileMenu::do_fileManagerItem_clicked()
@@ -26,5 +41,7 @@ void FileMenu::do_fileManagerItem_clicked()
 //    fileManagerDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 //    fileManagerDialog.exec();
 }
+
+
 
 }

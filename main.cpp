@@ -5,7 +5,6 @@
 #include <QFontDatabase>
 #include <QSplashScreen>
 #include <QTime>
-#include <configuration/configuration.h>
 
 #if (PHASCAN | PHASCAN_II)
 static const char *FONT_FILE = "/opt/mercury/font/Arial.ttf";
@@ -60,16 +59,6 @@ int main(int argc, char *argv[])
     splash.finish(&w);
 
     qDebug("%s[%d]: Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
-
-    time.restart();
-    Config::Configuration config;
-    config.save_config("/home/tt/TT/config");
-    qDebug("%s[%d]: Save Config Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
-
-    time.restart();
-    Config::Configuration loadConfig;
-    loadConfig.load_config("/home/tt/TT/config");
-    qDebug("%s[%d]: Load Config Take Time: %d(ms)",__func__, __LINE__, time.elapsed());
 
     return a.exec();
 }

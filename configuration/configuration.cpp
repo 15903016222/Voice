@@ -12,7 +12,8 @@
 
 namespace Config {
 
-QString Configuration::s_defaultConfigFilePath = "/home/tt/TT/config";
+QString Configuration::s_resetConfigFilePath    = "/home/tt/TT/reset.cfg";
+QString Configuration::s_defaultConfigFilePath  = "/home/tt/TT/default.cfg";
 Configuration *Configuration::s_configuration = NULL;
 
 class ConfigurationPrivate {
