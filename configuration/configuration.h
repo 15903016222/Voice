@@ -106,23 +106,26 @@ namespace Config_Group {
     };
 
    enum E_FocusCnf {
-        FocusCnf_Mode
+        FocusCnf_Mode,
+        FocusCnf_ItemNum
     };
 
    enum E_TCGS {
        TCGS_Enable,
-       TCGS_CurrentTcg,
-       TCGS_Gain,
-       TCGS_Point,
-       TCGS_CurrentPoint
+       TCGS_CurrentTcgIndex,
+       TCGS_TcgList,
+       TCGS_ItemNum
    };
 
    enum E_Point {
        Point_Index,
-       Point_Position
+       Point_Position,
+       Point_Gain,
+       Point_ItemNum
    };
 
    enum E_Cursor {
+       Cursor_AmplitudeReference,
        Cursor_AmplitudeMeasurement,
        Cursor_UltrasoundReference,
        Cursor_UltrasoundMeasurement,
@@ -130,7 +133,8 @@ namespace Config_Group {
        Cursor_ScanMeasurement,
        Cursor_IndexReference,
        Cursor_IndexMeasurement,
-       Cursor_Visible
+       Cursor_Visible,
+       Cursor_ItemNum
    };
 
    enum E_Scan {
@@ -139,7 +143,8 @@ namespace Config_Group {
        Scan_StartY,
        Scan_StopY,
        Scan_Width,
-       Scan_Height
+       Scan_Height,
+       Scan_ItemNum
    };
 
     enum E_General {

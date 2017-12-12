@@ -81,7 +81,7 @@ bool GroupConfig::unpack(const msgpack::v2::object &obj)
 
             if(it->second.type == msgpack::type::MAP) {
                 msgpack::object_kv *currentKV = it->second.via.map.ptr;
-                for(int i = 0; i < it->second.via.map.size; ++i) {
+                for(uint i = 0; i < it->second.via.map.size; ++i) {
                     unpack_group_item_config(currentKV[i].key.as<int>(), currentKV[i].val);
                 }
             }
@@ -206,20 +206,113 @@ void GroupConfig::pack_group_focallawer_config(const DplDevice::GroupPointer &gr
 
 void GroupConfig::pack_group_tcgs_config(const DplDevice::GroupPointer &groupPointer)
 {
+    const DplSizing::TcgsPointer &tcgs = groupPointer->tcgs();
+
     m_packer->pack((int)Config_Group::TCGS);
-    m_packer->pack(22222);
+
+    m_packer->pack_map((int)Config_Group::TCGS_ItemNum);
+
+    m_packer->pack((int)Config_Group::TCGS_Enable);
+    m_packer->pack(tcgs->enable());
+
+    m_packer->pack((int)Config_Group::TCGS_CurrentTcgIndex);
+    m_packer->pack(tcgs->current_tcg()->index());
+
+    m_packer->pack((int)Config_Group::TCGS_TcgList);
+    m_packer->pack_map(tcgs->count());
+
+    qDebug() << "[" << __FUNCTION__ << "]" << " enable = " << tcgs->enable()
+             << " Index = " << tcgs->current_tcg()->index();
+
+    for(int i = 0; i < tcgs->count(); ++i) {
+        /* key */
+        m_packer->pack(i);
+        DplSizing::TcgPointer tcg = tcgs->tcg(i);
+        /* value */
+        m_packer->pack_array(tcgs->point_count());
+
+        for(int pointCount = 0; pointCount < tcgs->point_count(); ++pointCount) {
+
+            m_packer->pack_map((int)Config_Group::Point_ItemNum);
+
+            m_packer->pack((int)Config_Group::Point_Index);
+            m_packer->pack(pointCount);
+            m_packer->pack((int)Config_Group::Point_Gain);
+            m_packer->pack(tcg->gain(pointCount));
+            m_packer->pack((int)Config_Group::Point_Position);
+            m_packer->pack(tcg->position(pointCount));
+
+            qDebug("[%s] index = %d, gain = %f, position = %d",
+                   __FUNCTION__,
+                   pointCount,
+                   tcg->gain(pointCount),
+                   tcg->position(pointCount));
+        }
+    }
 }
 
 void GroupConfig::pack_group_cursor_config(const DplDevice::GroupPointer &groupPointer)
 {
     m_packer->pack((int)Config_Group::Cursor);
-    m_packer->pack(22222);
+    const DplMeasure::CursorPointer &cursor = groupPointer->cursor();
+
+    m_packer->pack_map((int)Config_Group::Cursor_ItemNum);
+
+    m_packer->pack((int)Config_Group::Cursor_AmplitudeReference);
+    m_packer->pack(cursor->amplitude_reference());
+
+    m_packer->pack((int)Config_Group::Cursor_AmplitudeMeasurement);
+    m_packer->pack(cursor->amplitude_measurement());
+
+    m_packer->pack((int)Config_Group::Cursor_UltrasoundReference);
+    m_packer->pack(cursor->ultrasound_reference());
+
+    m_packer->pack((int)Config_Group::Cursor_UltrasoundMeasurement);
+    m_packer->pack(cursor->ultrasound_measurement());
+
+    m_packer->pack((int)Config_Group::Cursor_ScanReference);
+    m_packer->pack(cursor->scan_reference());
+
+    m_packer->pack((int)Config_Group::Cursor_ScanMeasurement);
+    m_packer->pack(cursor->scan_measurement());
+
+    m_packer->pack((int)Config_Group::Cursor_IndexReference);
+    m_packer->pack(cursor->index_reference());
+
+    m_packer->pack((int)Config_Group::Cursor_IndexMeasurement);
+    m_packer->pack(cursor->index_measurement());
+
+    m_packer->pack((int)Config_Group::Cursor_Visible);
+    m_packer->pack(cursor->is_visible());
+
 }
 
 void GroupConfig::pack_group_scan_config(const DplDevice::GroupPointer &groupPointer)
 {
     m_packer->pack((int)Config_Group::Scan);
-    m_packer->pack(22222);
+
+    const DplDisplay::SscanPointer &scan = groupPointer->s_scan();
+
+    m_packer->pack_map((int)Config_Group::Scan_ItemNum);
+
+    m_packer->pack((int)Config_Group::Scan_StartX);
+    m_packer->pack(scan->start_x());
+
+    m_packer->pack((int)Config_Group::Scan_StopX);
+    m_packer->pack(scan->stop_x());
+
+    m_packer->pack((int)Config_Group::Scan_StartY);
+    m_packer->pack(scan->start_y());
+
+    m_packer->pack((int)Config_Group::Scan_StopY);
+    m_packer->pack(scan->stop_y());
+
+    m_packer->pack((int)Config_Group::Scan_Width);
+    m_packer->pack(scan->width());
+
+    m_packer->pack((int)Config_Group::Scan_Height);
+    m_packer->pack(scan->height());
+
 }
 
 MetaItem GroupConfig::pack_gate_config(const DplDevice::GroupPointer &groupPointer, DplFpga::Group::GateType type)
@@ -363,13 +456,10 @@ void GroupConfig::pack_focallawer_wedge_config(const DplDevice::GroupPointer &gr
     const DplFocallaw::WedgePointer &wedgePointer = groupPointer->focallawer()->wedge();
 
     m_packer->pack((int)Config_Group::Wedge);
-
-//    m_packer->pack_map((int)Config_Group::Wedge_ItemNum);
-    m_packer->pack_map(15);
-
+    m_packer->pack_map((int)Config_Group::Wedge_ItemNum);
 
     m_packer->pack((int)Config_Group::Wedge_FileName);
-    std::string fileName = "wedgeFileName";     /* TODO */
+    std::string fileName = "wedgeFile";     /* TODO */
     m_packer->pack(fileName);
 
     m_packer->pack((int)Config_Group::Wedge_Serial);
@@ -408,27 +498,15 @@ void GroupConfig::pack_focallawer_wedge_config(const DplDevice::GroupPointer &gr
     m_packer->pack((int)Config_Group::Wedge_Orientation);
     m_packer->pack((int)wedgePointer->orientation());
 
-//    m_packer->pack((int)Config_Group::Wedge_delay);
-//    m_packer->pack(wedgePointer->delay());
-
-    m_packer->pack(13);
-    m_packer->pack(1111/*wedgePointer->delay()*/);
-
-    m_packer->pack(2222);
-    m_packer->pack(2222);
-
-    qDebug("[%s] ",
-           __FUNCTION__);
+    m_packer->pack((int)Config_Group::Wedge_delay);
+    m_packer->pack(wedgePointer->delay());
 }
 
 void GroupConfig::pack_focallawer_specimen_config(const DplDevice::GroupPointer &groupPointer)
 {
-
     const DplFocallaw::SpecimenPointer &specimenPointer = groupPointer->focallawer()->specimen();
 
     m_packer->pack((int)Config_Group::Specimen);
-
-#if 0
     m_packer->pack_map((int)Config_Group::Specimen_ItemNum);
 
     m_packer->pack((int)Config_Group::Specimen_Type);
@@ -439,20 +517,31 @@ void GroupConfig::pack_focallawer_specimen_config(const DplDevice::GroupPointer 
 
     m_packer->pack((int)Config_Group::Specimen_Velocity);
     m_packer->pack(specimenPointer->velocity());
-#else
-   m_packer->pack(999);
-#endif
-
-    qDebug("[%s] ",
-           __FUNCTION__);
 
 }
 
 void GroupConfig::pack_focallawer_focusCnf_config(const DplDevice::GroupPointer &groupPointer)
 {
-    //Mode
+    const DplFocallaw::FocusCnfPointer &pointer = groupPointer->focallawer()->focus_configure();
+
     m_packer->pack((int)Config_Group::FocusCnf);
-    m_packer->pack(2222);
+    m_packer->pack_map((int)Config_Group::FocusCnf_ItemNum);
+    m_packer->pack((int)Config_Group::FocusCnf_Mode);
+    m_packer->pack((int)pointer->mode());
+}
+
+void GroupConfig::pack_tcg_config(const DplSizing::TcgsPointer &tcgs, int index)
+{
+//    DplSizing::TcgPointer tcg = tcgs->tcg(index);
+//    tcgs->set_current_tcg(index);
+//    tcg->index()
+//    tcg->gain() ;
+
+//    m_packer->pack_map((int)Config_Group::TCGS_ItemNum);
+
+//    m_packer->pack((int)Config_Group::TCGS_Enable);
+//    m_packer->pack(tcg->gain());
+//    m_packer->pack(tcg->position(index));
 }
 
 void GroupConfig::unpack_group_item_config(int key, msgpack::object &item)
@@ -501,8 +590,6 @@ void GroupConfig::unpack_group_item_config(int key, msgpack::object &item)
 
 void GroupConfig::unpack_group_general_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
-
     if(item.type != msgpack::type::MAP) {
         qDebug() << "["<< __FUNCTION__ << "]" << " group general item type is not MAP.";
         return;
@@ -544,8 +631,6 @@ void GroupConfig::unpack_group_gate_config(msgpack::object &item)
 
 void GroupConfig::unpack_group_ut_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
-
     if(item.type != msgpack::type::MAP) {
         qDebug() << "["<< __FUNCTION__ << "]" << " group ut item type is not MAP.";
         return;
@@ -632,26 +717,118 @@ void GroupConfig::unpack_group_focallawer_config(msgpack::object &item)
 
 void GroupConfig::unpack_group_tcgs_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
-    qDebug() << "["<< __FUNCTION__ << "]" << " value = " << item.as<int>();
+    if(item.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " group_tcgs item type is not MAP.";
+        return;
+    }
+
+    MetaItem tcgsItem;
+    MetaItem tcg;
+
+    try {
+        item.convert(tcgsItem);
+        DplSizing::TcgsPointer tcgs = m_groupPointer->tcgs();
+        bool enable = tcgsItem.at((int)Config_Group::TCGS_Enable).as<bool>();
+        int currentIndex = tcgsItem.at((int)Config_Group::TCGS_CurrentTcgIndex).as<int>();
+
+        try {
+
+            tcgsItem.at((int)Config_Group::TCGS_TcgList).convert(tcg);
+
+            MetaItem::const_iterator it = tcg.begin();
+
+            while(it != tcg.end()) {
+
+                qDebug() << "["<< __FUNCTION__ << "]" << " index = " << it->first;
+
+                 if(it->first != tcgs->current_tcg()->index()) {
+                     if(!tcgs->set_current_tcg(it->first)) {
+                         qDebug() << "["<< __FUNCTION__ << "]" << " continue = ";
+
+                         ++it;
+                         continue;
+                     }
+                 }
+
+                 if(it->second.type == msgpack::type::ARRAY) {
+
+                     int arraySize = it->second.via.array.size;
+                     msgpack::object *arrayItem = it->second.via.array.ptr;
+                     int pointCount = arraySize - tcgs->point_count();
+                     if(pointCount > 0) {
+                         /* add point */
+                        while(pointCount > 0) {
+                            tcgs->add_point();
+                            --pointCount;
+                        }
+                     } else {
+                         /* delete point */
+                         while(pointCount < 0) {
+                             tcgs->delete_point();
+                             ++pointCount;
+                         }
+                     }
+                     set_tcg_points(tcgs, arrayItem, arraySize);
+                 }
+                ++it;
+            }
+
+        } catch(...) {
+            qDebug() << "[" << __FUNCTION__ << "]" << " convert tcg list catch exception!";
+        }
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << " convert tcgs item catch exception!";
+    }
 }
 
 void GroupConfig::unpack_group_scan_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
-    qDebug() << "["<< __FUNCTION__ << "]" << " value = " << item.as<int>();
+    if(item.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " group_scan item type is not MAP.";
+        return;
+    }
+
+    qDebug() << "["<< __FUNCTION__ << "]" << " object val type = " << item.type;
+
+    MetaItem scanItem;
+
+    try {
+        item.convert(scanItem);
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << " convert scan item catch exception!";
+    }
 }
 
 void GroupConfig::unpack_group_cursor_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
-    qDebug() << "["<< __FUNCTION__ << "]" << " value = " << item.as<int>();
+    if(item.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " group_cursor item type is not MAP.";
+        return;
+    }
+
+    MetaItem cursorItem;
+
+    try {
+        item.convert(cursorItem);
+        DplMeasure::CursorPointer cursor = m_groupPointer->cursor();
+
+        cursor->set_visible(cursorItem.at(Config_Group::Cursor_Visible).as<bool>());
+        cursor->set_amplitude_reference(cursorItem.at(Config_Group::Cursor_AmplitudeReference).as<double>());
+        cursor->set_amplitude_measurement(cursorItem.at(Config_Group::Cursor_AmplitudeMeasurement).as<double>());
+        cursor->set_ultrasound_reference(cursorItem.at(Config_Group::Cursor_UltrasoundReference).as<double>());
+        cursor->set_ultrasound_measurement(cursorItem.at(Config_Group::Cursor_UltrasoundMeasurement).as<double>());
+        cursor->set_scan_reference(cursorItem.at(Config_Group::Cursor_ScanReference).as<double>());
+        cursor->set_scan_measurement(cursorItem.at(Config_Group::Cursor_ScanMeasurement).as<double>());
+        cursor->set_index_reference(cursorItem.at(Config_Group::Cursor_IndexReference).as<double>());
+        cursor->set_index_measurement(cursorItem.at(Config_Group::Cursor_IndexMeasurement).as<double>());
+
+    } catch(...) {
+        qDebug() << "[" << __FUNCTION__ << "]" << " convert cursor item catch exception!";
+    }
 }
 
 void GroupConfig::unpack_gate_config(msgpack::v2::object &obj)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << " type = " << obj.type;
-
     if(obj.type == msgpack::type::MAP) {
        MetaItem gateItem;
        try {
@@ -675,18 +852,7 @@ void GroupConfig::unpack_gate_config(msgpack::v2::object &obj)
                 qDebug() << "["<< __FUNCTION__ << "]" << " convert color vector catch exception!" ;
             }
 
-            qDebug("[GroupConfig::unpack_gate_config] gate type = %d, start = %f, width = %f, height = %d, gateMeasure = %d, synchro = %d",
-                   gateItem.at(Config_Group::Gate_Type).as<int>(),
-                   gateItem.at(Config_Group::Gate_Start).as<float>(),
-                   gateItem.at(Config_Group::Gate_Width).as<float>(),
-                   gateItem.at(Config_Group::Gate_Height).as<int>(),
-                   gateItem.at(Config_Group::Gate_Measure).as<int>(),
-                   gateItem.at(Config_Group::Gate_Synchro).as<int>());
-
-            qDebug() << "red = " << colorVect.at(0) << " green = " << colorVect.at(1)
-                     << " blue = " << colorVect.at(2) << " alpha = " << colorVect.at(3);
-
-        } catch(...) {
+       } catch(...) {
             qDebug() << "["<< __FUNCTION__ << "]" << " convert gateItem catch exception!";
         }
     }
@@ -771,14 +937,15 @@ void GroupConfig::unpack_focallawer_probe_config(const msgpack::v2::object &obj)
         obj.convert(probeItem);
 
         DplFocallaw::ProbePointer probePointer = m_groupPointer->focallawer()->probe();
-
-//        probePointer->set_freq((DplUt::Transceiver::Mode)itemMap.at(Config_Group::Transceiver_Mode).as<int>());
-//        probePointer->set_pw(itemMap.at(Config_Group::Transceiver_PW).as<float>());
-//        probePointer->set_filter(itemMap.at(Config_Group::Transceiver_Filter).as<int>());
-//        probePointer->set_rectifier((DplFpga::Group::Rectifier)itemMap.at(Config_Group::Transceiver_Rectifier).as<int>());
-//        probePointer->set_video_filter(itemMap.at(Config_Group::Transceiver_VideoFilter).as<bool>());
-//        probePointer->set_averaging((DplFpga::Group::Averaging)itemMap.at(Config_Group::Transceiver_Averaging).as<int>());
-
+//TODO
+//        probePointer->set_pa((DplUt::Transceiver::Mode)probeItem.at(Config_Group::Probe_PA).as<bool>());
+//        probePointer->set_file_name(probeItem.at(Config_Group::Probe_FileName).as<std::string>());
+        probePointer->set_serial(QString::fromStdString(probeItem.at(Config_Group::Probe_Serial).as<std::string>()));
+        probePointer->set_model(QString::fromStdString(probeItem.at(Config_Group::Probe_Model).as<std::string>()));
+        probePointer->set_type((DplFocallaw::PaProbe::Type)probeItem.at(Config_Group::Probe_Type).as<int>());
+        probePointer->set_freq(probeItem.at(Config_Group::Probe_Freq).as<double>());
+        probePointer->set_pulser_index(probeItem.at(Config_Group::Probe_PulserIndex).as<uint>());
+        probePointer->set_receiver_index(probeItem.at(Config_Group::Probe_ReceiverInex).as<uint>());
 
         qDebug("[%s] PA = %d, fileName = %s, Serial = %s, "
                "Model = %s, Type = %d, Freq = %f, "
@@ -810,6 +977,29 @@ void GroupConfig::unpack_focallawer_wedge_config(const msgpack::v2::object &obj)
     try {
         obj.convert(wedgeItem);
 
+        DplFocallaw::WedgePointer wedgePointer = m_groupPointer->focallawer()->wedge();
+//TODO
+//        std::string fileName = wedgeItem.at(Config_Group::Wedge_FileName).as<std::string>();
+//        wedgePointer->set_file_name(QString::fromStdString(fileName));
+
+        std::string serial = wedgeItem.at(Config_Group::Wedge_Serial).as<std::string>();
+        wedgePointer->set_serial(QString::fromStdString(serial));
+
+        std::string model = wedgeItem.at(Config_Group::Wedge_Model).as<std::string>();
+        wedgePointer->set_model(QString::fromStdString(model));
+
+        wedgePointer->set_angle(wedgeItem.at(Config_Group::Wedge_Angle).as<float>());
+        wedgePointer->set_root_angle(wedgeItem.at(Config_Group::Wedge_RootAngle).as<float>());
+        wedgePointer->set_velocity(wedgeItem.at(Config_Group::Wedge_Velocity).as<quint32>());
+        wedgePointer->set_primary_offset(wedgeItem.at(Config_Group::Wedge_PrimaryOffset).as<float>());
+        wedgePointer->set_secondary_offset(wedgeItem.at(Config_Group::Wedge_SecondaryOffset).as<float>());
+        wedgePointer->set_first_element_height(wedgeItem.at(Config_Group::Wedge_FirstElementHeight).as<float>());
+        wedgePointer->set_length(wedgeItem.at(Config_Group::Wedge_Length).as<float>());
+        wedgePointer->set_width(wedgeItem.at(Config_Group::Wedge_Width).as<float>());
+        wedgePointer->set_height(wedgeItem.at(Config_Group::Wedge_Height).as<float>());
+        wedgePointer->set_orientation((DplFocallaw::Wedge::Orientation)wedgeItem.at(Config_Group::Wedge_Orientation).as<int>());
+        wedgePointer->set_delay(wedgeItem.at(Config_Group::Wedge_delay).as<int>());
+
     } catch(...) {
         qDebug() << "[" << __FUNCTION__ << "]" << " convert wedge item catch exception!";
     }
@@ -827,6 +1017,12 @@ void GroupConfig::unpack_focallawer_specimen_config(const msgpack::v2::object &o
 
     try {
         obj.convert(specimenItem);
+
+        DplFocallaw::SpecimenPointer specimenPointer = m_groupPointer->focallawer()->specimen();
+
+//        specimenPointer->set_type(specimenItem.at(Config_Group::Specimen_Velocity).as<int>());
+        specimenPointer->set_wave_type((DplFocallaw::Specimen::WaveType)specimenItem.at(Config_Group::Specimen_Type).as<int>());
+        specimenPointer->set_velocity(specimenItem.at(Config_Group::Specimen_Velocity).as<uint>());
 
     } catch(...) {
         qDebug() << "[" << __FUNCTION__ << "]" << " convert specimen item catch exception!";
@@ -846,10 +1042,49 @@ void GroupConfig::unpack_focallawer_focusCnf_config(const msgpack::v2::object &o
     try {
         obj.convert(focusCnfItem);
 
+        DplFocallaw::FocusCnfPointer focusCnfPointer = m_groupPointer->focallawer()->focus_configure();
+        //focusCnfPointer->set_mode((DplFocallaw::FocusCnf::Mode) focusCnfItem.at(Config_Group::FocusCnf_Mode).as<int>());
     } catch(...) {
         qDebug() << "[" << __FUNCTION__ << "]" << " convert focusCnf item catch exception!";
     }
+}
 
+void GroupConfig::set_tcg_points(DplSizing::TcgsPointer &tcgs, msgpack::object *points, int arraySize)
+{
+    qDebug() << "[" << __FUNCTION__ << "]" << " array size  = " << arraySize;
+
+    for(int k = 0; k < arraySize; ++k) {
+
+        if(tcgs->current_point_index() != k) {
+            if(!tcgs->set_current_point(k)) {
+                qDebug() << "[" << __FUNCTION__ << "]" << " faile continue ";
+                continue;
+            }
+        }
+
+        qDebug() << "[" << __FUNCTION__ << "]" << " type = " << points[k].type ;
+
+        if(points[k].type == msgpack::type::MAP) {
+
+            MetaItem pointsItem;
+            try {
+
+               points[k].convert(pointsItem);
+
+               tcgs->set_position(pointsItem.at((int)Config_Group::Point_Position).as<int>());
+               tcgs->set_gain(pointsItem.at((int)Config_Group::Point_Gain).as<float>());
+
+               qDebug("[%s] index = %d, gain = %f, position = %d",
+                      __FUNCTION__,
+                      pointsItem.at((int)Config_Group::Point_Index).as<int>(),
+                      pointsItem.at((int)Config_Group::Point_Gain).as<float>(),
+                      pointsItem.at((int)Config_Group::Point_Position).as<int>());
+
+            } catch (...) {
+                qDebug() << "[" << __FUNCTION__ << "]" << " convert point list catch exception!";
+            }
+        }
+    }
 }
 
 }

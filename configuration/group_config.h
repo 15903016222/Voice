@@ -39,6 +39,8 @@ private:
     void pack_focallawer_focusCnf_config(const DplDevice::GroupPointer &groupPointer);
 
 
+    void pack_tcg_config(const DplSizing::TcgsPointer &tcgs, int index);
+
     void unpack_group_item_config(int key, msgpack::object &item);
     void unpack_group_general_config(msgpack::object &item);
     void unpack_group_gate_config(msgpack::object &item);
@@ -62,6 +64,7 @@ private:
     void pack_focallawer_probetest_config(msgpack::zone &zone2, const DplDevice::GroupPointer &groupPointer);
     void pack_focallawer_wedgetest_config(const DplDevice::GroupPointer &groupPointer);
 
+    void set_tcg_points(DplSizing::TcgsPointer &tcgs, msgpack::object *points, int arraySize);
 
     DplDevice::GroupPointer m_groupPointer;
 };

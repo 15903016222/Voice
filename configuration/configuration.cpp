@@ -78,18 +78,20 @@ bool Configuration::load_config(const QString &configFilePath)
 
     if(QFile::exists(configFilePath)) {
         /* 读取配置文件 */
-        if(!d->m_configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        if(!d->m_configFile.open(QIODevice::ReadOnly)) {
             qDebug() << "[" << __FUNCTION__ << "]" << " open config file failed!";
             return false;
         }
 
-        QByteArray byteArray = d->m_configFile.readAll();
+        QDataStream dataStream(&d->m_configFile);
 
         msgpack::unpacker   unpacker;
-        unpacker.reserve_buffer(byteArray.size());
-        memcpy(unpacker.buffer(), byteArray.data(), byteArray.size());
+        unpacker.reserve_buffer(d->m_configFile.size());
+        dataStream.readRawData(unpacker.buffer(), d->m_configFile.size());
+        unpacker.buffer_consumed(d->m_configFile.size());
 
-        unpacker.buffer_consumed(byteArray.size());
+        qDebug() << "[" << __FUNCTION__ << "]" << " file size = " << d->m_configFile.size();
+
         msgpack::object_handle result;
 
         while(unpacker.next(result)) {
@@ -116,7 +118,7 @@ bool Configuration::save_config(const QString &configFilePath)
     }
 
     d->m_configFile.setFileName(configFilePath);
-    if(!d->m_configFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+    if(!d->m_configFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         qDebug() << "[" << __FUNCTION__ << "]" << " open config file failed!";
         return false;
     }
@@ -134,9 +136,10 @@ bool Configuration::save_config(const QString &configFilePath)
     groupConfig.pack();
     preConfig.pack();
 
-    QTextStream textStream(&d->m_configFile);
-    textStream << QByteArray(buffer.data(), buffer.size());
-    textStream.flush();
+    QDataStream dataStream(&d->m_configFile);
+    dataStream.writeRawData(buffer.data(), buffer.size());
+
+    d->m_configFile.flush();
     d->m_configFile.close();
 
     return true;
@@ -161,6 +164,7 @@ void Configuration::deal_object(const msgpack::v2::object &object)
             try {
                 int key = keyObject.as<int>();
                 d->m_unpackerMap.at(key)->unpack(valueObject);
+
             } catch (...) {
                 qDebug() <<  "[" << __FUNCTION__ << "]" << " convert type cath exception!";
             }
