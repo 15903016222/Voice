@@ -29,9 +29,9 @@ AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
             SIGNAL(range_changed(float)),
             this,
             SLOT(update_bottom_ruler()));
-    update_bottom_ruler();
 
     m_bottomRuler->set_scroll(true);
+    update_bottom_ruler();
 
     m_leftRuler->set_prec(0);
     m_leftRuler->set_range(100, 0);

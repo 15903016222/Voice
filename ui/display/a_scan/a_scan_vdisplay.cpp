@@ -29,10 +29,11 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group,
             this,
             SLOT(update_left_ruler()));
 
+    m_leftRuler->set_scroll(true);
     update_left_ruler();
 
     m_bottomRuler->set_prec(0);
-    m_bottomRuler->set_range(100, 0);
+    m_bottomRuler->set_range(0, 100);
     m_bottomRuler->set_unit("(%)");
     m_bottomRuler->set_background_color(QColor("#ffff7f"));
 }

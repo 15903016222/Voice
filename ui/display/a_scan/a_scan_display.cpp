@@ -5,19 +5,18 @@
  * @date 2017-06-28
  */
 
-#include "global.h"
 #include "a_scan_display.h"
-
-#include "../scan_view.h"
-#include "../color_bar.h"
-#include "../ruler/ruler.h"
-
 #include "a_scan_scene.h"
 #include "wave_item.h"
 #include "gate_item.h"
 #include "tcg_item.h"
 
-#include <qmath.h>
+#include "../scan_view.h"
+#include "../color_bar.h"
+#include "../ruler/ruler.h"
+
+#include <global.h>
+
 #include <QThread>
 #include <QLayout>
 #include <QLabel>
