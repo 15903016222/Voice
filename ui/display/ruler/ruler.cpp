@@ -176,7 +176,7 @@ void Ruler::draw_mark(QPainter &painter, int step, int markHeight, bool showVal)
     if (showVal) {
         /* draw text */
         painter.drawText(fstMarkPos + first_mark(step)*pixelPerMark + 1, markHeight - 2,
-                         QString::number(first_mark_val() + first_mark(step)*unit_per_mark(), 'f', m_prec)+m_unitStr);
+                         QString::number(first_mark_val() + first_mark(step)*unit_per_mark(), 'f', m_prec)+" "+m_unitStr);
 
         for (int i = first_mark(step)+step; i <= mark_qty(); i += step) {
             painter.drawText(fstMarkPos + i*pixelPerMark + 1, markHeight - 2,

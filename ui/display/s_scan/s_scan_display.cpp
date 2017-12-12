@@ -44,6 +44,12 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
             Qt::DirectConnection);
 
     m_titleLabel->setText(QString("S-Scan|Grp%1").arg(m_group->index()+1));
+
+    /* rulers setting */
+    m_leftRuler->set_scroll(true);
+    m_bottomRuler->set_scroll(true);
+    m_rightRuler->set_prec(0);
+    m_rightRuler->set_unit("(%)");
 }
 
 SscanDisplay::~SscanDisplay()
@@ -64,12 +70,12 @@ void SscanDisplay::update_rules()
     if (m_group->ut_unit() == DplDevice::Group::Time) {
         m_leftRuler->set_range(m_sScan->start_y(), m_sScan->stop_y());
         m_bottomRuler->set_range(m_sScan->start_x(), m_sScan->stop_x());
-        m_leftRuler->set_unit("us");
+        m_leftRuler->set_unit("(us)");
     } else {
         m_leftRuler->set_range(Dpl::ns_to_s(m_sScan->start_y()) * Dpl::m_to_mm(m_group->focallawer()->specimen()->velocity()) / 2,
                                        Dpl::ns_to_s(m_sScan->stop_y()) * Dpl::m_to_mm(m_group->focallawer()->specimen()->velocity()) / 2);
         m_bottomRuler->set_range(m_sScan->start_x(), m_sScan->stop_x());
-        m_leftRuler->set_unit("mm");
+        m_leftRuler->set_unit("(mm)");
     }
 }
 
