@@ -19,4 +19,5 @@ include(display/display.pri)
 
 include(tool/tool.pri)
 
+include(wizard/wizard.pri)
 

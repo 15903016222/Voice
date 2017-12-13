@@ -14,6 +14,8 @@ namespace Ui {
 class MainWindow;
 }
 
+class Wizard;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -44,6 +46,7 @@ private:
 
     MainMenu *m_mainMenu;
     SubMenu *m_subMenu;
+    Wizard  *m_wizard;
 
     void show_hidden_Menu();
 };

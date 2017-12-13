@@ -7,6 +7,7 @@
 #include "../menu/ut_setting/general_menu.h"
 #include "../menu/preference/preference_menu.h"
 #include "../menu/probe_part/fft_menu.h"
+#include "../ui/wizard/wizard.h"
 
 #include <global.h>
 
@@ -71,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
 
     ui->displayLayout->addWidget(new DplUi::DisplayWidget(DplDevice::Device::instance()->display(), this));
+
+    m_wizard = new Wizard(this);
 }
 
 MainWindow::~MainWindow()
@@ -114,6 +117,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
         break;
     case Mcu::KEY_BACK:
         VInput::instance()->send(VInput::Key_Esc);
+        break;
+    case Mcu::KEY_CURSOR:
+        m_wizard->show();
         break;
     case Mcu::KEY_FREEZE: {
         if (DplDevice::Device::instance()->is_running()) {
