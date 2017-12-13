@@ -5,8 +5,10 @@
 #include <device/group.h>
 #include <QMutex>
 
+class Ruler;
 class IndexRuler;
 class UtRuler;
+
 class VpaItem;
 class BackgroundItem;
 class SscanImage;
@@ -26,8 +28,10 @@ protected slots:
 
 private:
     DplDevice::GroupPointer m_group;
+
     IndexRuler *m_indexRuler;
     UtRuler *m_utRuler;
+
     BackgroundItem *m_bgItem;
     VpaItem *m_vpaItem;
     DplDisplay::SscanPointer m_sScan;

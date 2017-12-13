@@ -21,14 +21,10 @@ protected slots:
 
 protected:
     QLabel *m_titleLabel;
-    Ruler *m_leftRuler;
-    Ruler *m_bottomRuler;
     Ruler *m_colorRuler;
     ColorBar *m_colorBar;
     QLayout *m_leftLayout;
     QLayout *m_bottomLayout;
-    QLayout *m_colorLayout;
-    QLayout *m_rightLayout;
     ScanView *m_view;
     ScanScene *m_scene;
 };

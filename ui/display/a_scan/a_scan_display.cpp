@@ -28,6 +28,9 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
     m_gateIItem(new GateItem(group->sample(), group->gate_i())),
     m_tcgItem(new TcgItem(group->tcgs(), group->sample()))
 {  
+    m_colorBar->hide();
+    m_colorRuler->hide();
+
     m_scene->addItem(m_waveItem);
 
     m_scene->addItem(m_gateAItem);

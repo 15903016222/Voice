@@ -20,7 +20,6 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group, QWidget *pare
     m_utRuler(new UtRuler(group, Ruler::RIGHT, this))
 {  
     m_view->rotate(90);
-    m_ampRuler->set_range(100, 0);
     m_leftLayout->addWidget(m_utRuler);
     m_bottomLayout->addWidget(m_ampRuler);
 }
