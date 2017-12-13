@@ -85,5 +85,17 @@
         <file>resource/messageBox/alert.png</file>
         <file>resource/messageBox/info.png</file>
         <file>resource/messageBox/question.png</file>
+	<file>resources/wizard/calibration_unselected.png</file>
+        <file>resources/wizard/caribation_selected.png</file>
+        <file>resources/wizard/detect_setting_selected.png</file>
+        <file>resources/wizard/detect_setting_unselected.png</file>
+        <file>resources/wizard/focallow_selected.png</file>
+        <file>resources/wizard/focallow_unselected.png</file>
+        <file>resources/wizard/multi_group_selected.png</file>
+        <file>resources/wizard/multi_group_unselected.png</file>
+        <file>resources/wizard/workpiece_probe_selected.png</file>
+        <file>resources/wizard/workpiece_probe_unselected.png</file>
+        <file>resources/wizard/docs.png</file>
+        <file>resources/wizard/floder.png</file>
     </qresource>
 </RCC>
