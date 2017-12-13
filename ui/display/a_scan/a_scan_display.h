@@ -25,8 +25,8 @@ public:
     ~AscanDisplay();
 
 protected:
-    virtual Ruler *amplitude_ruler() = 0;
-    virtual Ruler *ultrasound_ruler() = 0;
+    virtual Ruler *amplitude_ruler() const = 0;
+    virtual Ruler *ultrasound_ruler() const = 0;
 
     void init_amplitude_ruler();
     void init_ultrasound_ruler();

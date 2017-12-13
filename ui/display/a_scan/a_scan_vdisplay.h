@@ -16,8 +16,8 @@ public:
     explicit AscanVDisplay(const DplDevice::GroupPointer &group,
                            QWidget *parent = 0);
 protected:
-    Ruler *amplitude_ruler();
-    Ruler *ultrasound_ruler();
+    Ruler *amplitude_ruler() const;
+    Ruler *ultrasound_ruler() const;
 
 protected slots:
     void resize_event(const QSize &size);

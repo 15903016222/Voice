@@ -3,6 +3,20 @@
 
 #include <QWidget>
 
+#define CyanColor       "#249292"
+#define DarkBlueColor   "#1D6765"
+#define BlueColor       "#1F6E6C"
+#define PaleGreenColor  "#A8D493"
+#define GreenColor      "#239167"
+#define YellowColor     "#D4DD46"
+#define PalePinkColor   "#EAC8DF"
+#define PinkColor       "#C174B0"
+#define DarkPinkColor   "#EE2180"
+#define PurpleColor     "#976594"
+#define GreyColor       "#999B9E"
+#define PaleGreyColor   "#C7CCCA"
+#define DarkGreyColor   "#6B6B6E"
+
 class Ruler : public QWidget
 {
     Q_OBJECT
@@ -84,8 +98,16 @@ public:
      */
     void set_mark_position(MarkPostion position);
 
+    /**
+     * @brief scroll    获取标尺是否为滚动状态
+     * @return          true为滚动,false为不滚动
+     */
     bool scroll() const;
 
+    /**
+     * @brief set_scroll    设置标尺滚动状态
+     * @param flag          true为滚动,false为不滚动
+     */
     void set_scroll(bool flag);
 
 protected:

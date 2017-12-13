@@ -6,11 +6,11 @@
  */
 
 #include "a_scan_display.h"
-#include "a_scan_scene.h"
 #include "wave_item.h"
 #include "gate_item.h"
 #include "tcg_item.h"
 
+#include "../base/scan_scene.h"
 #include "../ruler/ruler.h"
 #include "../color_bar/color_bar.h"
 
@@ -30,9 +30,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
 {  
     m_colorRuler->hide();
     m_colorBar->hide();
-
-    init_amplitude_ruler();
-    init_ultrasound_ruler();
 
     m_scene->addItem(m_waveItem);
 
@@ -72,14 +69,12 @@ void AscanDisplay::init_amplitude_ruler()
 
     r->set_prec(0);
     r->set_unit("(%)");
-    r->set_background_color(Qt::yellow);
+    r->set_background_color(YellowColor);
 }
 
 void AscanDisplay::init_ultrasound_ruler()
 {
-    Ruler *r = ultrasound_ruler();
-
-    r->set_scroll(true);
+    ultrasound_ruler()->set_scroll(true);
 
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
@@ -128,9 +123,9 @@ void AscanDisplay::resize_event(const QSize &size)
 
 void AscanDisplay::update_gates()
 {
-    m_gateAItem->set_ratio(scene_width()/m_group->sample()->range());
-    m_gateBItem->set_ratio(scene_width()/m_group->sample()->range());
-    m_gateIItem->set_ratio(scene_width()/m_group->sample()->range());
+    m_gateAItem->set_ratio(m_scene->width()/m_group->sample()->range());
+    m_gateBItem->set_ratio(m_scene->width()/m_group->sample()->range());
+    m_gateIItem->set_ratio(m_scene->width()/m_group->sample()->range());
 }
 
 void AscanDisplay::update_ultrasound_ruler()
@@ -146,18 +141,18 @@ void AscanDisplay::update_ultrasound_ruler()
 
     if (DplDevice::Group::Time == unit) {
         r->set_unit("(us)");
-        r->set_background_color(QColor("#F7C8CF"));
+        r->set_background_color(PalePinkColor);
     } else {
         r->set_unit("(mm)");
         start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         start /= 2;
         end *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
         end /= 2;
-        r->set_background_color(QColor("#FFC0CB"));
+        r->set_background_color(PinkColor);
         if (DplDevice::Group::TruePath == unit) {
             start *= qCos(m_group->current_angle());
             end   *= qCos(m_group->current_angle());
-            r->set_background_color(QColor("#A020F0"));
+            r->set_background_color(PurpleColor);
         }
     }
 

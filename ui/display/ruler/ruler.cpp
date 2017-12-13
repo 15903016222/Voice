@@ -6,7 +6,7 @@ static const int MED_MARK_HIGHT = 5;
 static const int MAX_MARK_HIGHT = 18;
 
 Ruler::Ruler(Ruler::MarkPostion position, const QString &unit, QWidget *parent) : QWidget(parent),
-    m_bgColor("#ff88ff"),
+    m_bgColor(PinkColor),
     m_markPos(position),
     m_start(0),
     m_stop(100),

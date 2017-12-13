@@ -16,14 +16,16 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group, QWidget *pare
     AscanDisplay(group, parent)
 {  
     m_view->rotate(90);
+    init_amplitude_ruler();
+    init_ultrasound_ruler();
 }
 
-Ruler *AscanVDisplay::amplitude_ruler()
+Ruler *AscanVDisplay::amplitude_ruler() const
 {
     return m_bottomRuler;
 }
 
-Ruler *AscanVDisplay::ultrasound_ruler()
+Ruler *AscanVDisplay::ultrasound_ruler() const
 {
     return m_leftRuler;
 }

@@ -6,22 +6,27 @@
  */
 
 #include "a_scan_hdisplay.h"
-#include "a_scan_scene.h"
 #include "tcg_item.h"
 #include "wave_item.h"
+
+#include "../base/scan_scene.h"
 
 AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group, QWidget *parent) :
     AscanDisplay(group, parent)
 {
+    init_amplitude_ruler();
+    init_ultrasound_ruler();
 }
 
-Ruler *AscanHDisplay::amplitude_ruler()
+Ruler *AscanHDisplay::amplitude_ruler() const
 {
+    qDebug("%s[%d]: ",__func__, __LINE__);
     return m_leftRuler;
 }
 
-Ruler *AscanHDisplay::ultrasound_ruler()
+Ruler *AscanHDisplay::ultrasound_ruler() const
 {
+    qDebug("%s[%d]: ",__func__, __LINE__);
     return m_bottomRuler;
 }
 
