@@ -21,8 +21,8 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group, QWidget *pare
 {  
     m_view->rotate(90);
     m_ampRuler->set_range(100, 0);
-    m_leftLayout->addWidget(m_ampRuler);
-    m_bottomLayout->addWidget(m_utRuler);
+    m_leftLayout->addWidget(m_utRuler);
+    m_bottomLayout->addWidget(m_ampRuler);
 }
 
 void AscanVDisplay::resize_event(const QSize &size)

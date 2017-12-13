@@ -5,6 +5,7 @@
 
 class AmpRuler : public Ruler
 {
+    Q_OBJECT
 public:
     AmpRuler(MarkPostion position, QWidget *parent);
 };
