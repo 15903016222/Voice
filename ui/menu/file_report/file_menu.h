@@ -20,6 +20,8 @@ private:
     LabelMenuItem *m_openItem;
     LabelMenuItem *m_fileManagerItem;
 
+    bool is_legal(const QString &name);
+
 private slots:
     void do_saveSetupItem_clicked();
     void do_openItem_clicked();

@@ -170,12 +170,13 @@ void SystemMenu::show_resetconfig_dialog()
 {
     DplMessageBox messageBox(QMessageBox::Question, tr("Reset"), tr("Reset Config ?"));
     if(messageBox.exec() == QDialog::Accepted) {
-        /* TODO: */
         Config::Configuration config;
         if(config.load_config("/home/tt/TT/reset.cfg")) {
-            DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Done!"));
+            DplMessageBox messageBox(QMessageBox::Information, tr("Reset"), tr("Reset Success!"));
             messageBox.exec();
-            return;
+        } else {
+            DplMessageBox messageBox(QMessageBox::Warning, tr("Reset"), tr("Reset Failed!"));
+            messageBox.exec();
         }
     }
 }

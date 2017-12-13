@@ -28,7 +28,7 @@ FileDialog::FileDialog(const S_FileDialogParameters &dialogParameters, QWidget *
 
     m_fileType = (E_FileType)ui->fileTypeComboBox->currentIndex();
 
-    if(dialogParameters.operation == CertImport) {
+    if(dialogParameters.operation != Update) {
         ui->fileTypeComboBox->hide();
         ui->fileTypeLabel->hide();
     }

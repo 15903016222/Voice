@@ -351,10 +351,10 @@ void GroupConfig::pack_gate_config(const DplDevice::GroupPointer &groupPointer, 
            gatePointer->height(),
            (int)gatePointer->synchro_mode(),
            (int)gatePointer->measure_mode(),
-           (int)rgb.at(0),
-           (int)rgb.at(1),
-           (int)rgb.at(2),
-           (int)rgb.at(3));
+           rgb.at(0),
+           rgb.at(1),
+           rgb.at(2),
+           rgb.at(3));
 }
 
 void GroupConfig::pack_ut_sample_config(const DplDevice::GroupPointer &groupPointer)
@@ -635,6 +635,11 @@ void GroupConfig::unpack_group_general_config(msgpack::object &item)
     MetaItem generalItem;
     try {
         item.convert(generalItem);
+
+        m_groupPointer->set_current_angle(generalItem.at(Config_Group::General_CurrentAngle).as<double>());
+        m_groupPointer->set_mode((DplDevice::Group::Mode)generalItem.at(Config_Group::General_Mode).as<int>());
+        m_groupPointer->set_ut_unit((DplDevice::Group::UtUnit)generalItem.at(Config_Group::General_UTUnit).as<int>());
+
     } catch(...) {
         qDebug() << "[" << __FUNCTION__ << "]" << "convert group general item catch exception!";
     }
