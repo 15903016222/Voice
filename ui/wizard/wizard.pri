@@ -65,5 +65,5 @@ FORMS += \
     $$PWD/base_open_file_dialog.ui
 
 
-include(main_weld_widget/main_weld_widget.pri)
+include(weld/weld.pri)
 
