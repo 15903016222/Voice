@@ -97,6 +97,8 @@ void GroupConfig::pack_group_child_item_config(const DplDevice::GroupPointer &gr
 
     pack_group_focallawer_config(groupPointer);
 
+    pack_group_dacs_config(groupPointer);
+
     pack_group_tcgs_config(groupPointer);
 
     pack_group_cursor_config(groupPointer);
@@ -115,6 +117,9 @@ void GroupConfig::pack_group_general_config(const DplDevice::GroupPointer &group
                                                msgpack::object((int)groupPointer->ut_unit(), zone)));
     generalItemMap.insert(MetaItem::value_type((int)Config_Group::General_CurrentAngle,
                                                 msgpack::object(groupPointer->current_angle(), zone)));
+
+    generalItemMap.insert(MetaItem::value_type((int)Config_Group::General_CurrentBeamIndex,
+                                                msgpack::object(groupPointer->current_beam_index(), zone)));
     /* key */
     m_packer->pack((int)Config_Group::General);
     /* value */
@@ -162,6 +167,12 @@ void GroupConfig::pack_group_focallawer_config(const DplDevice::GroupPointer &gr
     pack_focallawer_specimen_config(groupPointer);
 
     pack_focallawer_focusCnf_config(groupPointer);
+}
+
+void GroupConfig::pack_group_dacs_config(const DplDevice::GroupPointer &groupPointer)
+{
+    m_packer->pack((int)Config_Group::DACS);
+    m_packer->pack(2222);
 }
 
 void GroupConfig::pack_group_tcgs_config(const DplDevice::GroupPointer &groupPointer)
@@ -435,38 +446,25 @@ void GroupConfig::pack_focallawer_probe_config(const DplDevice::GroupPointer &gr
     m_packer->pack(probe->is_pa());
 
     m_packer->pack((int)Config_Group::Probe_FileName);
+
+#if 0
+    //TODO
+    if(probe->is_pa()) {
+        DplFocallaw::PaProbePointer paPointer = probe.staticCast<DplFocallaw::PaProbe>();
+        m_packer->pack(paPointer->file_name().toStdString());
+    } else {
+        DplFocallaw::UtProbePointer utPointer = probe.staticCast<DplFocallaw::UtProbe>();
+        m_packer->pack(utPointer->file_name().toStdString());
+    }
+#endif
+
     std::string fileName = "Probe_FileName";    /* TODO */
     m_packer->pack(fileName);
 
-    m_packer->pack((int)Config_Group::Probe_Serial);
-    m_packer->pack(probe->serial().toStdString());
-
-    m_packer->pack((int)Config_Group::Probe_Model);
-    m_packer->pack(probe->model().toStdString());
-
-    m_packer->pack((int)Config_Group::Probe_Type);
-    m_packer->pack((int)probe->type());
-
-    m_packer->pack((int)Config_Group::Probe_Freq);
-    m_packer->pack(probe->freq());
-
-    m_packer->pack((int)Config_Group::Probe_PulserIndex);
-    m_packer->pack(probe->pulser_index());
-
-    m_packer->pack((int)Config_Group::Probe_ReceiverInex);
-    m_packer->pack(probe->receiver_index());
-
-    qDebug("[%s] pa = %d, filename = %s, serial = %s, "
-           "model = %s, type = %d, freq = %f, pulserIndex = %d, rreceiverIndex = %d",
+    qDebug("[%s] pa = %d, filename = %s",
            __FUNCTION__,
            (int)probe->is_pa(),
-           fileName.c_str(),
-           probe->serial().toStdString().c_str(),
-           probe->model().toStdString().c_str(),
-           (int)probe->type(),
-           probe->freq(),
-           probe->pulser_index(),
-           probe->receiver_index());
+           fileName.c_str());
 }
 
 void GroupConfig::pack_focallawer_wedge_config(const DplDevice::GroupPointer &groupPointer)
@@ -604,6 +602,11 @@ void GroupConfig::unpack_group_item_config(int key, msgpack::object &item)
             unpack_group_focallawer_config(item);
             break;
         }
+        case Config_Group::DACS:
+        {
+            unpack_group_dacs_config(item);
+            break;
+        }
         case Config_Group::TCGS:
         {
             unpack_group_tcgs_config(item);
@@ -639,12 +642,14 @@ void GroupConfig::unpack_group_general_config(msgpack::object &item)
         m_groupPointer->set_current_angle(generalItem.at(Config_Group::General_CurrentAngle).as<double>());
         m_groupPointer->set_mode((DplDevice::Group::Mode)generalItem.at(Config_Group::General_Mode).as<int>());
         m_groupPointer->set_ut_unit((DplDevice::Group::UtUnit)generalItem.at(Config_Group::General_UTUnit).as<int>());
+        m_groupPointer->set_current_beam(generalItem.at(Config_Group::General_CurrentBeamIndex).as<int>());
 
     } catch(...) {
         qDebug() << "[" << __FUNCTION__ << "]" << "convert group general item catch exception!";
     }
 
-    qDebug("[GroupConfig::unpack_gate_config] gate mode = %d, UTUnit = %d, currentAngle = %f",
+    qDebug("[%s] gate mode = %d, UTUnit = %d, currentAngle = %f",
+           __FUNCTION__,
            generalItem.at(Config_Group::General_Mode).as<int>(),
            generalItem.at(Config_Group::General_UTUnit).as<int>(),
            generalItem.at(Config_Group::General_CurrentAngle).as<float>());
@@ -710,8 +715,6 @@ void GroupConfig::unpack_group_ut_config(msgpack::object &item)
 
 void GroupConfig::unpack_group_focallawer_config(msgpack::object &item)
 {
-    qDebug() << "["<< __FUNCTION__ << "]" << " enter." << item.type;
-
     if(item.type != msgpack::type::MAP) {
         qDebug() << "["<< __FUNCTION__ << "]" << " group focallawer item type is not MAP.";
         return;
@@ -723,7 +726,6 @@ void GroupConfig::unpack_group_focallawer_config(msgpack::object &item)
 
         MetaItem::const_iterator it = focallawerItem.begin();
         while(it != focallawerItem.end()) {
-            qDebug() << " val type = " << it->second.type;
 
             switch (it->first) {
             case Config_Group::Probe:
@@ -754,6 +756,16 @@ void GroupConfig::unpack_group_focallawer_config(msgpack::object &item)
         }
     } catch(...) {
         qDebug() << "[" << __FUNCTION__ << "]" << "convert group focallawer item catch exception!";
+    }
+}
+
+void GroupConfig::unpack_group_dacs_config(msgpack::v2::object &item)
+{
+    qDebug() << "[" << __FUNCTION__ << "]" << " enter .";
+
+    if(item.type != msgpack::type::MAP) {
+        qDebug() << "["<< __FUNCTION__ << "]" << " group_dacs item type is not MAP.";
+        return;
     }
 }
 
@@ -905,6 +917,22 @@ void GroupConfig::unpack_gate_config(msgpack::v2::object &obj)
                 qDebug() << "["<< __FUNCTION__ << "]" << " convert color vector catch exception!" ;
             }
 
+            qDebug("[%s] gate type = %d is_visible = %d, start = %f, width = %f, height = %d, "
+                   "synchro_mode = %d, measure_mode = %d, color(%d, %d, %d, %d)" ,
+                   __FUNCTION__,
+                   (DplFpga::Group::GateType)gateItem.at(Config_Group::Gate_Type).as<int>(),
+                   (int)gateItem.at(Config_Group::Gate_Switch).as<bool>(),
+                   gateItem.at(Config_Group::Gate_Start).as<float>(),
+                   gateItem.at(Config_Group::Gate_Width).as<float>(),
+                   gateItem.at(Config_Group::Gate_Height).as<int>(),
+                   (DplFpga::Group::MeasureMode)gateItem.at(Config_Group::Gate_Measure).as<int>(),
+                   (DplFpga::Group::SynchroMode)gateItem.at(Config_Group::Gate_Synchro).as<int>(),
+                   colorVect.at(0),
+                   colorVect.at(1),
+                   colorVect.at(2),
+                   colorVect.at(3));
+
+
        } catch(...) {
             qDebug() << "["<< __FUNCTION__ << "]" << " convert gateItem catch exception!";
         }
@@ -986,28 +1014,30 @@ void GroupConfig::unpack_focallawer_probe_config(const msgpack::v2::object &obj)
         obj.convert(probeItem);
 
         DplFocallaw::ProbePointer probePointer = m_groupPointer->focallawer()->probe();
-//TODO
-//        probePointer->set_pa((DplUt::Transceiver::Mode)probeItem.at(Config_Group::Probe_PA).as<bool>());
-//        probePointer->set_file_name(probeItem.at(Config_Group::Probe_FileName).as<std::string>());
-        probePointer->set_serial(QString::fromStdString(probeItem.at(Config_Group::Probe_Serial).as<std::string>()));
-        probePointer->set_model(QString::fromStdString(probeItem.at(Config_Group::Probe_Model).as<std::string>()));
-        probePointer->set_type((DplFocallaw::PaProbe::Type)probeItem.at(Config_Group::Probe_Type).as<int>());
-        probePointer->set_freq(probeItem.at(Config_Group::Probe_Freq).as<double>());
-        probePointer->set_pulser_index(probeItem.at(Config_Group::Probe_PulserIndex).as<uint>());
-        probePointer->set_receiver_index(probeItem.at(Config_Group::Probe_ReceiverInex).as<uint>());
+        std::string fileName;
+        fileName = probeItem.at(Config_Group::Probe_FileName).as<std::string>();
 
-        qDebug("[%s] PA = %d, fileName = %s, Serial = %s, "
-               "Model = %s, Type = %d, Freq = %f, "
-               "PulserIndex = %d, ReceiverInex = %d",
+        /* TODO */
+#if 0
+        if((DplUt::Transceiver::Mode)probeItem.at(Config_Group::Probe_PA).as<bool>()) {
+            DplFocallaw::PaProbePointer paPointer = probePointer.staticCast<DplFocallaw::PaProbe>();
+            if(paPointer.isNull()) {
+                return;
+            }
+            paPointer->load(QString::fromStdString(fileName));
+        } else {
+            DplFocallaw::UtProbePointer utPointer = probePointer.staticCast<DplFocallaw::UtProbe>();
+            if(utPointer.isNull()) {
+                return;
+            }
+            utPointer->load(QString::fromStdString(fileName));
+        }
+#endif
+
+        qDebug("[%s] PA = %d, fileName = %s",
                __FUNCTION__,
                (int)probeItem.at(Config_Group::Probe_PA).as<bool>(),
-               probeItem.at(Config_Group::Probe_FileName).as<std::string>().c_str(),
-               probeItem.at(Config_Group::Probe_Serial).as<std::string>().c_str(),
-               probeItem.at(Config_Group::Probe_Model).as<std::string>().c_str(),
-               probeItem.at(Config_Group::Probe_Type).as<int>(),
-               probeItem.at(Config_Group::Probe_Freq).as<double>(),
-               probeItem.at(Config_Group::Probe_PulserIndex).as<uint>(),
-               probeItem.at(Config_Group::Probe_ReceiverInex).as<uint>());
+               probeItem.at(Config_Group::Probe_FileName).as<std::string>().c_str());
 
     } catch(...) {
         qDebug() << "[" << __FUNCTION__ << "]" << " convert probe item catch exception!";
@@ -1068,7 +1098,7 @@ void GroupConfig::unpack_focallawer_specimen_config(const msgpack::v2::object &o
         obj.convert(specimenItem);
 
         DplFocallaw::SpecimenPointer specimenPointer = m_groupPointer->focallawer()->specimen();
-
+//TODO
 //        specimenPointer->set_type(specimenItem.at(Config_Group::Specimen_Velocity).as<int>());
         specimenPointer->set_wave_type((DplFocallaw::Specimen::WaveType)specimenItem.at(Config_Group::Specimen_Type).as<int>());
         specimenPointer->set_velocity(specimenItem.at(Config_Group::Specimen_Velocity).as<uint>());
@@ -1090,7 +1120,6 @@ void GroupConfig::unpack_focallawer_focusCnf_config(const msgpack::v2::object &o
 
     try {
         obj.convert(focusCnfItem);
-
         DplFocallaw::FocusCnfPointer focusCnfPointer = m_groupPointer->focallawer()->focus_configure();
         //focusCnfPointer->set_mode((DplFocallaw::FocusCnf::Mode) focusCnfItem.at(Config_Group::FocusCnf_Mode).as<int>());
     } catch(...) {

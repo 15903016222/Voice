@@ -24,6 +24,7 @@ private:
     void pack_group_gate_config(const DplDevice::GroupPointer &groupPointer);
     void pack_group_ut_config(const DplDevice::GroupPointer &groupPointer);
     void pack_group_focallawer_config(const DplDevice::GroupPointer &groupPointer);
+    void pack_group_dacs_config(const DplDevice::GroupPointer &groupPointer);
     void pack_group_tcgs_config(const DplDevice::GroupPointer &groupPointer);
     void pack_group_cursor_config(const DplDevice::GroupPointer &groupPointer);
     void pack_group_scan_config(const DplDevice::GroupPointer &groupPointer);
@@ -43,6 +44,7 @@ private:
     void unpack_group_gate_config(msgpack::object &item);
     void unpack_group_ut_config(msgpack::object &item);
     void unpack_group_focallawer_config(msgpack::object&item);
+    void unpack_group_dacs_config(msgpack::object &item);
     void unpack_group_tcgs_config(msgpack::object &item);
     void unpack_group_scan_config(msgpack::object &item);
     void unpack_group_cursor_config(msgpack::object&item);

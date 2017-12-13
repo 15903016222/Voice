@@ -8,7 +8,7 @@
 
 namespace DplFileReportMenu {
 
-static const QString g_configFilePath("/home/tt/TT/");
+static const QString g_configFilePath("/opt/mercury/configs/usr/");
 static const QString g_fileType(".cfg");
 
 FileMenu::FileMenu(QWidget *parent) :

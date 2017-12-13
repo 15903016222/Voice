@@ -171,7 +171,7 @@ void SystemMenu::show_resetconfig_dialog()
     DplMessageBox messageBox(QMessageBox::Question, tr("Reset"), tr("Reset Config ?"));
     if(messageBox.exec() == QDialog::Accepted) {
         Config::Configuration config;
-        if(config.load_config("/home/tt/TT/reset.cfg")) {
+        if(config.load_config("/opt/mercury/configs/reset.cfg")) {
             DplMessageBox messageBox(QMessageBox::Information, tr("Reset"), tr("Reset Success!"));
             messageBox.exec();
         } else {

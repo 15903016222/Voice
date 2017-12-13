@@ -17,6 +17,7 @@ namespace Config_Group {
         Gate,
         UT,
         Focallawer,
+        DACS,
         TCGS,
         Cursor,
         Scan,
@@ -71,12 +72,6 @@ namespace Config_Group {
     enum E_Probe {
         Probe_PA,
         Probe_FileName,
-        Probe_Serial,
-        Probe_Model,
-        Probe_Type,
-        Probe_Freq,
-        Probe_PulserIndex,
-        Probe_ReceiverInex,
         Probe_ItemNum
     };
 
@@ -151,7 +146,9 @@ namespace Config_Group {
     enum E_General {
         General_Mode,
         General_UTUnit,
-        General_CurrentAngle
+        General_CurrentAngle,
+        General_CurrentBeamIndex
+
     };
 }
 
