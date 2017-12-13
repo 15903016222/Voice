@@ -1,13 +1,15 @@
 #ifndef __S_SCAN_DISPLAY_H__
 #define __S_SCAN_DISPLAY_H__
 
-#include "../scan_display.h"
+#include "../base/scan_display.h"
 #include <device/group.h>
-#include "vpa_item.h"
+#include <QMutex>
 
-
-class ScanView;
-class SscanScene;
+class IndexRuler;
+class UtRuler;
+class VpaItem;
+class BackgroundItem;
+class SscanImage;
 
 class SscanDisplay : public ScanDisplay
 {
@@ -19,18 +21,19 @@ public:
 protected slots:
     void do_data_event(const DplSource::BeamsPointer &beams);
 
-protected:
-    DplDevice::GroupPointer m_group;
-
 protected slots:
-    void update_rules();
-    void do_size_changed(const QSize &size);
+    void resize_event(const QSize &size);
 
 private:
-    ScanView *m_view;
-    SscanScene *m_scene;
+    DplDevice::GroupPointer m_group;
+    IndexRuler *m_indexRuler;
+    UtRuler *m_utRuler;
+    BackgroundItem *m_bgItem;
     VpaItem *m_vpaItem;
     DplDisplay::SscanPointer m_sScan;
+
+    SscanImage *m_image;
+    QMutex m_imageMutex;
 };
 
 #endif // __S_SCAN_DISPLAY_H__

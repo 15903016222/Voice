@@ -1,10 +1,13 @@
 #include "s_scan_display.h"
-#include "s_scan_scene.h"
+#include "vpa_item.h"
+#include "background_item.h"
+#include "s_scan_image.h"
 
-#include "../scan_display.h"
-#include "../color_bar.h"
-#include "../ruler/ruler.h"
-#include "../scan_view.h"
+#include "../base/scan_view.h"
+#include "../base/scan_scene.h"
+#include "../color_bar/color_bar.h"
+#include "../ruler/index_ruler.h"
+#include "../ruler/ut_ruler.h"
 
 #include <global.h>
 #include <device/device.h>
@@ -13,26 +16,19 @@
 
 SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) : ScanDisplay(parent),
     m_group(grp),
-    m_view(new ScanView),
-    m_scene(new SscanScene(grp, DplDevice::Device::instance()->display()->palette())),
+    m_indexRuler(new IndexRuler(Ruler::TOP, this)),
+    m_utRuler(new UtRuler(grp, Ruler::RIGHT, this)),
+    m_bgItem(new BackgroundItem()),
     m_vpaItem(new VpaItem(grp)),
-    m_sScan(grp->s_scan())
+    m_sScan(grp->s_scan()),
+    m_image(NULL)
 {
-    m_scanLayout->addWidget(m_view);
+    m_leftLayout->addWidget(m_utRuler);
+    m_bottomLayout->addWidget(m_indexRuler);
+
     m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    connect(m_view, SIGNAL(size_changed(QSize)),
-            m_scene, SLOT(set_size(QSize)));
-    connect(static_cast<DplDisplay::Sscan *>(m_sScan.data()),
-            SIGNAL(xy_changed()),
-            this, SLOT(update_rules()));
-    update_rules();
-
-    connect(m_view, SIGNAL(size_changed(QSize)),
-            this, SLOT(do_size_changed(QSize)));
-
-    m_view->setScene(m_scene);
-
+    m_scene->addItem(m_bgItem);
     m_scene->addItem(m_vpaItem);
     m_vpaItem->update_pos();
 
@@ -44,45 +40,39 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
             Qt::DirectConnection);
 
     m_titleLabel->setText(QString("S-Scan|Grp%1").arg(m_group->index()+1));
-
-    /* rulers setting */
-    m_leftRuler->set_scroll(true);
-    m_bottomRuler->set_scroll(true);
-    m_rightRuler->set_prec(0);
-    m_rightRuler->set_unit("(%)");
 }
 
 SscanDisplay::~SscanDisplay()
 {
-    delete m_view;
-    delete m_scene;
+    QMutexLocker l(&m_imageMutex);
+    if (m_image) {
+        delete m_image;
+    }
 }
 
 void SscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
 {
-    m_scene->set_beams(beams);
-}
-
-void SscanDisplay::update_rules()
-{
-    qDebug("%s[%d]: x(%f, %f) y(%f, %f)",__func__, __LINE__, m_sScan->start_x(), m_sScan->stop_x(),
-           m_sScan->start_y(), m_sScan->stop_y());
-    if (m_group->ut_unit() == DplDevice::Group::Time) {
-        m_leftRuler->set_range(m_sScan->start_y(), m_sScan->stop_y());
-        m_bottomRuler->set_range(m_sScan->start_x(), m_sScan->stop_x());
-        m_leftRuler->set_unit("(us)");
-    } else {
-        m_leftRuler->set_range(Dpl::ns_to_s(m_sScan->start_y()) * Dpl::m_to_mm(m_group->focallawer()->specimen()->velocity()) / 2,
-                                       Dpl::ns_to_s(m_sScan->stop_y()) * Dpl::m_to_mm(m_group->focallawer()->specimen()->velocity()) / 2);
-        m_bottomRuler->set_range(m_sScan->start_x(), m_sScan->stop_x());
-        m_leftRuler->set_unit("(mm)");
+    QMutexLocker l(&m_imageMutex);
+    if (!m_image) {
+        return;
     }
+
+    m_image->draw_beams(beams);
+    m_bgItem->draw(*m_image);
 }
 
-void SscanDisplay::do_size_changed(const QSize &size)
+void SscanDisplay::resize_event(const QSize &size)
 {
-    m_scene->setSceneRect(-size.width()/2, -size.height(),
-                          size.width(), size.height());
     m_vpaItem->update_pos();
+    m_bgItem->set_size(size);
+
+    m_scene->setSceneRect(-size.width()/2, -size.height()/2,
+                          size.width(), size.height());
+
+    QMutexLocker l(&m_imageMutex);
+    if (m_image) {
+        delete m_image;
+    }
+    m_image = new SscanImage(m_group, size, DplDevice::Device::instance()->display()->palette());
 }
 
