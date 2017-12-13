@@ -28,9 +28,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
     m_gateIItem(new GateItem(group->sample(), group->gate_i())),
     m_tcgItem(new TcgItem(group->tcgs(), group->sample()))
 {  
-    m_colorRuler->hide();
-    m_colorBar->hide();
-
     m_scene->addItem(m_waveItem);
 
     m_scene->addItem(m_gateAItem);
@@ -55,40 +52,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
 
 AscanDisplay::~AscanDisplay()
 {
-}
-
-void AscanDisplay::init_amplitude_ruler()
-{
-    Ruler *r = amplitude_ruler();
-
-    if (r == m_leftRuler) {
-        r->set_range(0, 100);
-    } else if (r == m_bottomRuler){
-        r->set_range(100, 0);
-    }
-
-    r->set_prec(0);
-    r->set_unit("(%)");
-    r->set_background_color(YellowColor);
-}
-
-void AscanDisplay::init_ultrasound_ruler()
-{
-    ultrasound_ruler()->set_scroll(true);
-
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
-            SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
-            this,
-            SLOT(update_ultrasound_ruler()));
-    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
-            SIGNAL(start_changed(float)),
-            this,
-            SLOT(update_ultrasound_ruler()));
-    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
-            SIGNAL(range_changed(float)),
-            this,
-            SLOT(update_ultrasound_ruler()));
-    update_ultrasound_ruler();
 }
 
 void AscanDisplay::do_data_event()
@@ -127,35 +90,3 @@ void AscanDisplay::update_gates()
     m_gateBItem->set_ratio(m_scene->width()/m_group->sample()->range());
     m_gateIItem->set_ratio(m_scene->width()/m_group->sample()->range());
 }
-
-void AscanDisplay::update_ultrasound_ruler()
-{
-    double start = m_group->sample()->start();
-    double end = (start + m_group->sample()->range());
-
-    start = Dpl::ns_to_us(start);
-    end = Dpl::ns_to_us(end);
-
-    DplDevice::Group::UtUnit unit = m_group->ut_unit();
-    Ruler *r = ultrasound_ruler();
-
-    if (DplDevice::Group::Time == unit) {
-        r->set_unit("(us)");
-        r->set_background_color(PalePinkColor);
-    } else {
-        r->set_unit("(mm)");
-        start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
-        start /= 2;
-        end *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
-        end /= 2;
-        r->set_background_color(PinkColor);
-        if (DplDevice::Group::TruePath == unit) {
-            start *= qCos(m_group->current_angle());
-            end   *= qCos(m_group->current_angle());
-            r->set_background_color(PurpleColor);
-        }
-    }
-
-    r->set_range(start, end);
-}
-

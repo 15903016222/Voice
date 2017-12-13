@@ -16,9 +16,18 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     m_bottomRuler(new Ruler(Ruler::TOP, "", this)),
     m_colorRuler(new Ruler(Ruler::LEFT, "", this)),
     m_colorBar(new ColorBar(this)),
+    m_leftLayout(new VBoxLayout()),
+    m_bottomLayout(new VBoxLayout()),
+    m_colorLayout(new VBoxLayout()),
+    m_rightLayout(new VBoxLayout()),
     m_view(new ScanView(this)),
     m_scene(new ScanScene(this))
 {
+    m_leftRuler->hide();
+    m_bottomRuler->hide();
+    m_colorBar->hide();
+    m_colorRuler->hide();
+
     m_titleLabel->setStyleSheet("QLabel{background-color:rgb(0, 90, 130);\ncolor:white;}");
     m_titleLabel->setAlignment(Qt::AlignCenter);
     m_leftRuler->setMinimumWidth(20);
@@ -47,16 +56,16 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     hlayout->addLayout(vlayout3);
     hlayout->addLayout(vlayout4);
 
-    vlayout1->addWidget(m_leftRuler, 1);
+    vlayout1->addLayout(m_leftLayout, 1);
     vlayout1->addItem(new QSpacerItem(0, 20, QSizePolicy::Ignored, QSizePolicy::Fixed));
 
     vlayout2->addWidget(m_view, 1);
-    vlayout2->addWidget(m_bottomRuler);
+    vlayout2->addLayout(m_bottomLayout);
 
-    vlayout3->addWidget(m_colorBar, 1);
+    vlayout3->addLayout(m_colorLayout, 1);
     vlayout3->addItem(new QSpacerItem(0, 20, QSizePolicy::Ignored, QSizePolicy::Fixed));
 
-    vlayout4->addWidget(m_colorRuler, 1);
+    vlayout4->addLayout(m_rightLayout, 1);
     vlayout4->addItem(new QSpacerItem(0, 20, QSizePolicy::Ignored, QSizePolicy::Fixed));
 
     m_view->setScene(m_scene);

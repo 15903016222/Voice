@@ -10,24 +10,16 @@
 #include "wave_item.h"
 
 #include "../base/scan_scene.h"
+#include "../ruler/amp_ruler.h"
+#include "../ruler/ut_ruler.h"
 
 AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group, QWidget *parent) :
-    AscanDisplay(group, parent)
+    AscanDisplay(group, parent),
+    m_ampRuler(new AmpRuler(Ruler::RIGHT, this)),
+    m_utRuler(new UtRuler(group, Ruler::TOP, this))
 {
-    init_amplitude_ruler();
-    init_ultrasound_ruler();
-}
-
-Ruler *AscanHDisplay::amplitude_ruler() const
-{
-    qDebug("%s[%d]: ",__func__, __LINE__);
-    return m_leftRuler;
-}
-
-Ruler *AscanHDisplay::ultrasound_ruler() const
-{
-    qDebug("%s[%d]: ",__func__, __LINE__);
-    return m_bottomRuler;
+    m_leftLayout->addWidget(m_ampRuler);
+    m_bottomLayout->addWidget(m_utRuler);
 }
 
 void AscanHDisplay::resize_event(const QSize &size)
