@@ -110,6 +110,9 @@ public:
      */
     void set_scroll(bool flag);
 
+signals:
+    void update_requested();
+
 protected:
     void paintEvent(QPaintEvent *e);
 
@@ -179,7 +182,7 @@ inline void Ruler::set_range(double start, double stop)
 {
     m_start = start;
     m_stop = stop;
-    update();
+    emit update_requested();
 }
 
 inline const QColor &Ruler::background_color() const

@@ -21,6 +21,9 @@ Ruler::Ruler(Ruler::MarkPostion position, const QString &unit, QWidget *parent) 
     } else {
         setMinimumHeight(20);
     }
+
+    connect(this, SIGNAL(update_requested()),
+            this, SLOT(update()), Qt::QueuedConnection);
 }
 
 Ruler::Ruler(QWidget *parent) : QWidget(parent),
