@@ -181,14 +181,12 @@ public:
 
     static Configuration *instance();
 
-    bool load_config(const QString &configFilePath = s_defaultConfigFilePath);
-    bool save_config(const QString &configFilePath = s_defaultConfigFilePath);
+    bool load_config(const QString &configFilePath);
+    bool save_config(const QString &configFilePath);
 
 private:
     ConfigurationPrivate        *d;
     static Configuration        *s_configuration;
-    static QString              s_defaultConfigFilePath;
-    static QString              s_resetConfigFilePath;
 
     void deal_object(const msgpack::object &object);
 

@@ -14,6 +14,11 @@
 #include <QResizeEvent>
 #include <QFontDatabase>
 
+#include <QDesktopWidget>
+#include <QDateTime>
+#include <QScreen>
+#include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -123,6 +128,27 @@ void MainWindow::do_key_event(Mcu::KeyType type)
         }
     }
         break;
+    case Mcu::KEY_CURSOR: {
+        QString fileName;
+        QPixmap pix;
+        QPixmap bmp;
+
+        pix = bmp.grabWindow(QApplication::desktop()->winId(), 0, 0,
+                             frameGeometry().width(),
+                             frameGeometry().height());
+
+        fileName= QDateTime::currentDateTime().toString("yyyy-MM-ddHH-mm-ss")  + ".bmp";
+        if(pix.isNull()) {
+            QMessageBox::information(this, "Error", "Failed", QMessageBox::Ok);
+        } else {
+            if(!pix.save("/home/tt/TT/"+fileName,"BMP")) {
+                QMessageBox::information(this, "Right", "Failed", QMessageBox::Ok);
+            } else {
+                QMessageBox::information(this, "Grab", "Success!",QMessageBox::Ok);
+            }
+        }
+        break;
+    }
     default:
         break;
     }

@@ -30,6 +30,7 @@ static const QString s_fileType = "*.cert";
 
 static const QString s_updatePath =  "/home/tt/TT/";
 static const QString s_updateFileType = "*";
+static const QString s_resetFile =  "/opt/mercury/configs/reset.cfg";
 
 SystemMenu::SystemMenu(QWidget *parent) :
     BaseMenu(parent),
@@ -39,7 +40,7 @@ SystemMenu::SystemMenu(QWidget *parent) :
     m_updateItem(new LabelMenuItem(this, tr("Update"))),
     m_resetCfgItem(new LabelMenuItem(this, tr("Reset"))),
     m_infoItem(new LabelMenuItem(this, tr("Infomation"))),
-    m_timer(new QTimer)
+    m_timer(new QTimer(this))
 {
     m_layout0->addWidget(m_timeItem);
     m_layout1->addWidget(m_dateItem);
@@ -171,7 +172,7 @@ void SystemMenu::show_resetconfig_dialog()
     DplMessageBox messageBox(QMessageBox::Question, tr("Reset"), tr("Reset Config ?"));
     if(messageBox.exec() == QDialog::Accepted) {
         Config::Configuration config;
-        if(config.load_config("/opt/mercury/configs/reset.cfg")) {
+        if(config.load_config(s_resetFile)) {
             DplMessageBox messageBox(QMessageBox::Information, tr("Reset"), tr("Reset Success!"));
             messageBox.exec();
         } else {

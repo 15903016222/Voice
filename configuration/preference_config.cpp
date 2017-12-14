@@ -1,5 +1,6 @@
 #include "preference_config.h"
 #include <mcu/mcu.h>
+#include <QDebug>
 
 namespace Config {
 

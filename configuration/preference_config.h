@@ -2,7 +2,6 @@
 #define __PREFERENCE_CONFIG_H__
 
 #include "base_item_config.h"
-#include <QDebug>
 
 namespace Config {
 

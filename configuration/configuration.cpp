@@ -12,8 +12,6 @@
 
 namespace Config {
 
-QString Configuration::s_resetConfigFilePath    = "/home/tt/TT/reset.cfg";
-QString Configuration::s_defaultConfigFilePath  = "/home/tt/TT/default.cfg";
 Configuration *Configuration::s_configuration = NULL;
 
 class ConfigurationPrivate {
@@ -90,8 +88,6 @@ bool Configuration::load_config(const QString &configFilePath)
         unpacker.reserve_buffer(d->m_configFile.size());
         dataStream.readRawData(unpacker.buffer(), d->m_configFile.size());
         unpacker.buffer_consumed(d->m_configFile.size());
-
-        qDebug() << "[" << __FUNCTION__ << "]" << " file size = " << d->m_configFile.size();
 
         msgpack::object_handle result;
 
