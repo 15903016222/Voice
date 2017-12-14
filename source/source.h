@@ -131,6 +131,29 @@ public:
      */
     void start();
 
+    /**
+     * @brief reset 重启
+     */
+    void reset();
+
+    /**
+     * @brief elapsed   消耗时间
+     * @return          时间(s)
+     */
+    double elapsed() const;
+
+    /**
+     * @brief set_prf   设置重复频率
+     * @param prf       频率(Hz)
+     */
+    void set_prf(int prf);
+
+    /**
+     * @brief prf   获取重复频率
+     * @return      频率(Hz)
+     */
+    int prf() const;
+
 public slots:
     /**
      * @brief restart   重新启动数据上传, 会延迟200ms后，启动数据上传
