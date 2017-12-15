@@ -9,13 +9,20 @@ ScanRuler::ScanRuler(const DplDevice::GroupPointer &grp, MarkPostion pos, QWidge
     m_axis(m_scan->scan_axis()),
     m_group(grp)
 {
+    set_background_color(DarkBlueColor);
     set_scroll(true);
-    set_range(0, range());
+
     connect(static_cast<DplDevice::Group *>(grp.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this,
             SLOT(do_data_event(DplSource::BeamsPointer)),
             Qt::DirectConnection);
+
+    connect(static_cast<DplSource::Axis *>(m_axis.data()),
+            SIGNAL(driving_changed(DplSource::Axis::Driving)),
+            this,
+            SLOT(do_driving_changed(DplSource::Axis::Driving)));
+    do_driving_changed(m_axis->driving());
 }
 
 void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
@@ -24,13 +31,16 @@ void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
 
     if (m_axis->driving() == DplSource::Axis::TIMER) {
         val = DplSource::Source::instance()->elapsed();
-        set_unit("(s)");
-    } else if (m_axis->driving() == DplSource::Axis::ENCODER_X) {
-        val = beams->get(0)->encoder_x() / m_scan->encoder_x()->resolution();
-        set_unit("(mm)");
     } else {
-        val = beams->get(0)->encoder_y() / m_scan->encoder_y()->resolution();
-        set_unit("(mm)");
+        if (m_axis->driving() == DplSource::Axis::ENCODER_X) {
+            val = beams->get(0)->encoder_x() / m_scan->encoder_x()->resolution();
+        } else {
+            val = beams->get(0)->encoder_y() / m_scan->encoder_y()->resolution();
+        }
+
+        if (val < m_axis->start() || val > m_axis->end()) {
+            return;
+        }
     }
 
     if (val < start()) {
@@ -40,16 +50,38 @@ void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
     }
 }
 
+void ScanRuler::do_driving_changed(DplSource::Axis::Driving driving)
+{
+    if (driving == DplSource::Axis::TIMER) {
+        set_unit("(s)");
+        set_range(0, range());
+    } else {
+        set_unit("(mm)");
+        set_range(m_axis->start(), m_axis->start() + range());
+    }
+}
+
 double ScanRuler::range() const
 {
-    double range = m_axis->end() - m_axis->start();
     if (m_axis->driving() == DplSource::Axis::TIMER) {
-        range /= m_scan->speed();
-    } else if (m_axis->driving() == DplSource::Axis::ENCODER_X) {
-        range /= m_scan->encoder_x()->resolution();
+        return time_range();
     } else {
-        range /= m_scan->encoder_y()->resolution();
+        return encoder_range();
     }
+}
+
+double ScanRuler::time_range() const
+{
+    if (mark_position() == TOP || mark_position() == BOTTOM) {
+        return width() / DplSource::Source::instance()->prf();
+    } else {
+        return height() / DplSource::Source::instance()->prf();
+    }
+}
+
+double ScanRuler::encoder_range() const
+{
+    double range = (m_axis->end() - m_axis->start()) / m_axis->resolution();
 
     if (mark_position() == TOP || mark_position() == BOTTOM) {
         if (range > width()) {
@@ -60,5 +92,23 @@ double ScanRuler::range() const
             range = height();
         }
     }
-    return range;
+    return range * m_axis->resolution();
+}
+
+void ScanRuler::resizeEvent(QResizeEvent *e)
+{
+    Q_UNUSED(e);
+    if (m_axis->driving() == DplSource::Axis::TIMER) {
+        set_unit("(s)");
+        set_range(0, range());
+    } else {
+        set_unit("(mm)");
+        set_range(m_axis->start(), range());
+    }
+
+    if (start() + range() > stop()) {
+        set_range(stop()-range(), stop());
+    } else {
+        set_range(start(), range());
+    }
 }

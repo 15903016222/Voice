@@ -14,9 +14,14 @@ public:
 
 protected slots:
     void do_data_event(const DplSource::BeamsPointer &beams);
+    void do_driving_changed(DplSource::Axis::Driving driving);
 
 protected:
     double range() const;
+    double time_range() const;
+    double encoder_range() const;
+
+    void resizeEvent(QResizeEvent *e);
 
 private:
     DplSource::Scan *m_scan;
