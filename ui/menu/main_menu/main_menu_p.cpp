@@ -203,7 +203,6 @@ void MainMenuPrivate::init_fileReportMenu()
     set_common(m_fileReportMenu);
     m_fileReportMenu->hide();
     new QListWidgetItem(tr("File"), m_fileReportMenu);
-    new QListWidgetItem(tr("Save Mode"), m_fileReportMenu);
     new QListWidgetItem(tr("Report"), m_fileReportMenu);
     new QListWidgetItem(tr("Format"), m_fileReportMenu);
     new QListWidgetItem(tr("User Field"), m_fileReportMenu);
