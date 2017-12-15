@@ -2,6 +2,7 @@
 #define __RULER_H__
 
 #include <QWidget>
+#include <QReadWriteLock>
 
 #define CyanColor       "#249292"
 #define DarkBlueColor   "#1D6765"
@@ -162,6 +163,7 @@ private:
     MarkPostion m_markPos;
     double m_start;
     double m_stop;
+    mutable QReadWriteLock m_rwLock;
     int m_prec;
     QString m_unitStr;
     double m_pixelPerMark;
@@ -170,16 +172,19 @@ private:
 
 inline double Ruler::start() const
 {
+    QReadLocker l(&m_rwLock);
     return m_start;
 }
 
 inline double Ruler::stop() const
 {
+    QReadLocker l(&m_rwLock);
     return m_stop;
 }
 
 inline void Ruler::set_range(double start, double stop)
 {
+    QWriteLocker l(&m_rwLock);
     m_start = start;
     m_stop = stop;
     emit update_requested();
@@ -242,6 +247,7 @@ inline void Ruler::set_scroll(bool flag)
 
 inline double Ruler::unit_per_mark() const
 {
+    QReadLocker l(&m_rwLock);
     return (m_stop-m_start)/ mark_qty();
 }
 

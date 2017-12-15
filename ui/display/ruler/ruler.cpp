@@ -111,7 +111,7 @@ double Ruler::first_mark_val() const
             return start() - flag*unit_per_mark();
         }
     }
-    return m_start;
+    return start();
 }
 
 int Ruler::first_mark(int step) const
