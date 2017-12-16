@@ -8,6 +8,7 @@
 #define __SCAN_SCENE_H__
 
 #include <QGraphicsScene>
+#include <QReadWriteLock>
 
 class ScanScene : public QGraphicsScene
 {
@@ -28,10 +29,12 @@ protected:
 
 private:
     QPixmap m_pixmap;
+    QReadWriteLock m_rwlock;
 };
 
 inline void ScanScene::drawBackground(const QImage &image)
 {
+    QWriteLocker l(&m_rwlock);
     m_pixmap = QPixmap::fromImage(image);
     emit update_requested();
 }

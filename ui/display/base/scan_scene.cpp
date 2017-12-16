@@ -21,6 +21,7 @@ void ScanScene::update()
 
 void ScanScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
+    QReadLocker l(&m_rwlock);
     if (m_pixmap.isNull()) {
         return;
     }
