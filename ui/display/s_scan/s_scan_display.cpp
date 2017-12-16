@@ -1,6 +1,5 @@
 #include "s_scan_display.h"
 #include "vpa_item.h"
-#include "background_item.h"
 #include "s_scan_image.h"
 
 #include "../base/scan_view.h"
@@ -18,7 +17,6 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     m_group(grp),
     m_indexRuler(new IndexRuler(Ruler::TOP, this)),
     m_utRuler(new UtRuler(grp, Ruler::RIGHT, this)),
-    m_bgItem(new BackgroundItem()),
     m_vpaItem(new VpaItem(grp)),
     m_sScan(grp->s_scan()),
     m_image(NULL)
@@ -28,7 +26,6 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
 
     m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    m_scene->addItem(m_bgItem);
     m_scene->addItem(m_vpaItem);
     m_vpaItem->update_pos();
 
@@ -58,13 +55,13 @@ void SscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
     }
 
     m_image->draw_beams(beams);
-    m_bgItem->draw(*m_image);
+//    m_bgItem->draw(*m_image);
+    m_scene->drawBackground(*m_image);
 }
 
 void SscanDisplay::resize_event(const QSize &size)
 {
     m_vpaItem->update_pos();
-    m_bgItem->set_size(size);
 
     m_scene->setSceneRect(-size.width()/2, -size.height()/2,
                           size.width(), size.height());
