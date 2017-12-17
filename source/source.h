@@ -132,27 +132,22 @@ public:
     void start();
 
     /**
-     * @brief reset 重启
-     */
-    void reset();
-
-    /**
      * @brief elapsed   消耗时间
      * @return          时间(s)
      */
     double elapsed() const;
 
     /**
-     * @brief set_prf   设置重复频率
-     * @param prf       频率(Hz)
+     * @brief set_acquisition_rate  设置采样频率
+     * @param prf                   频率(Hz)
      */
-    void set_prf(int prf);
+    void set_acquisition_rate(int rate);
 
     /**
-     * @brief prf   获取重复频率
-     * @return      频率(Hz)
+     * @brief acquisition_rate  获取采样频率
+     * @return                  频率(Hz)
      */
-    int prf() const;
+    int acquisition_rate() const;
 
 public slots:
     /**
