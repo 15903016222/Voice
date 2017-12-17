@@ -2,6 +2,7 @@
 
 #include <source/source.h>
 #include <source/scan.h>
+#include <ut/global_transceiver.h>
 
 ScanRuler::ScanRuler(const DplDevice::GroupPointer &grp, MarkPostion pos, QWidget *parent):
     Ruler(pos, "(mm)", parent),
@@ -17,6 +18,11 @@ ScanRuler::ScanRuler(const DplDevice::GroupPointer &grp, MarkPostion pos, QWidge
             this,
             SLOT(do_data_event(DplSource::BeamsPointer)),
             Qt::DirectConnection);
+
+    connect(DplUt::GlobalTransceiver::instance(),
+            SIGNAL(prf_changed()),
+            this,
+            SLOT(do_prf_changed()));
 
     connect(static_cast<DplSource::Axis *>(m_axis.data()),
             SIGNAL(driving_changed(DplSource::Axis::Driving)),
@@ -50,6 +56,11 @@ void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
     }
 }
 
+void ScanRuler::do_prf_changed()
+{
+    do_driving_changed(m_axis->driving());
+}
+
 void ScanRuler::do_driving_changed(DplSource::Axis::Driving driving)
 {
     if (driving == DplSource::Axis::TIMER) {
@@ -73,9 +84,9 @@ double ScanRuler::range() const
 double ScanRuler::time_range() const
 {
     if (mark_position() == TOP || mark_position() == BOTTOM) {
-        return width() / DplSource::Source::instance()->prf();
+        return width() / DplSource::Source::instance()->acquisition_rate();
     } else {
-        return height() / DplSource::Source::instance()->prf();
+        return height() / DplSource::Source::instance()->acquisition_rate();
     }
 }
 
@@ -98,14 +109,6 @@ double ScanRuler::encoder_range() const
 void ScanRuler::resizeEvent(QResizeEvent *e)
 {
     Q_UNUSED(e);
-    if (m_axis->driving() == DplSource::Axis::TIMER) {
-        set_unit("(s)");
-        set_range(0, range());
-    } else {
-        set_unit("(mm)");
-        set_range(m_axis->start(), range());
-    }
-
     if (start() + range() > stop()) {
         set_range(stop()-range(), stop());
     } else {

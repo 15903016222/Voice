@@ -14,6 +14,7 @@ public:
 
 protected slots:
     void do_data_event(const DplSource::BeamsPointer &beams);
+    void do_prf_changed();
     void do_driving_changed(DplSource::Axis::Driving driving);
 
 protected:
