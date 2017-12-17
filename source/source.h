@@ -167,6 +167,8 @@ signals:
      */
     void type_changed(Source::Type type);
 
+    void restart_event();
+
 protected:
     explicit Source();
     ~Source();

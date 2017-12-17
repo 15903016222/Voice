@@ -55,7 +55,6 @@ void SscanDisplay::do_data_event(const DplSource::BeamsPointer &beams)
     }
 
     m_image->draw_beams(beams);
-//    m_bgItem->draw(*m_image);
     m_scene->drawBackground(*m_image);
 }
 
