@@ -22,6 +22,7 @@ GlobalTransceiverPrivate::GlobalTransceiverPrivate(GlobalTransceiver *parent) : 
             SIGNAL(beam_qty_changed()),
             this,
             SLOT(update_acquisition_rate()));
+    update_acquisition_rate();
 }
 
 int GlobalTransceiverPrivate::max_txrx_time() const
