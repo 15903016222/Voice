@@ -25,7 +25,6 @@ protected:
     void draw_interpolation(const QByteArray &wave, int line, bool rf);
 
 private:
-    DplDevice::GroupPointer m_group;
     DplDisplay::PaletteColorPointer m_palette;
     quint32 *m_image;
 };

@@ -32,6 +32,11 @@ void BscanImage::draw_wave(const QByteArray &wave, int line, bool rf)
 
 void BscanImage::shift(int lines)
 {
+    if (lines >= max_lines() || lines < 0) {
+        clear();
+        return;
+    }
+
     quint8 buf[byteCount()];
     quint8 *image = bits();
     int offset = qAbs(lines) * bytesPerLine();
@@ -71,7 +76,7 @@ void BscanImage::draw_compress(const QByteArray &wave, int line, bool rf)
     int offset = (height()-line-1) * width();
 
     for(int i = 0; i < width(); ++i) {
-        m_image[offset + i] = m_palette->pixmap(max_amplitude(wave, i*ratio+0.5, (i+1)*ratio+0.5, rf));
+        m_image[offset + i] = m_palette->pixmap(max_amplitude(wave, i*ratio, (i+1)*ratio, rf));
     }
 }
 
