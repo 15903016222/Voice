@@ -3,12 +3,14 @@
 #include <QPainter>
 
 #include <device/device.h>
+#include <source/scan.h>
 
 BscanItem::BscanItem(const DplDevice::GroupPointer &group, QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_size(400, 200),
     m_group(group),
     m_source(DplSource::Source::instance()),
+    m_scanAxis(DplSource::Scan::instance()->scan_axis()),
     m_image(NULL)
 {
     connect(this, SIGNAL(update_requested()),
@@ -79,24 +81,11 @@ void BscanItem::draw()
         return;
     }
 
-    /* Timer */
-    int curIndex = m_source->elapsed() * m_source->acquisition_rate();
-
-    if (curIndex >= m_stopIndex) {
-        m_image->shift(curIndex-m_stopIndex+1);
-        m_stopIndex = curIndex+1;
-        m_startIndex = m_stopIndex - m_image->max_lines();
+    if (m_scanAxis->driving() == DplSource::Axis::TIMER) {
+        draw_time();
+    } else {
+//        draw_encoder();
     }
-
-    if (m_preIndex < m_startIndex) {
-        m_preIndex = m_startIndex;
-    }
-
-    for (int i = m_preIndex; i <= curIndex; ++i) {
-        m_image->draw_wave(m_group->current_beam()->wave(), i-m_startIndex);
-    }
-
-    m_preIndex = curIndex;
 
     m_pixmap = QPixmap::fromImage(*m_image);
 
@@ -117,4 +106,27 @@ void BscanItem::init_index()
     m_preIndex = 0;
     m_startIndex = 0;
     m_stopIndex = m_image->max_lines();
+}
+
+void BscanItem::draw_time()
+{
+    int curIndex = m_source->elapsed() * m_source->acquisition_rate() - 1;
+
+    if (curIndex >= m_stopIndex) {
+        m_image->shift(curIndex-m_stopIndex+1);
+        m_stopIndex = curIndex+1;
+        m_startIndex = m_stopIndex - m_image->max_lines();
+    }
+
+    if (m_preIndex < m_startIndex) {
+        m_preIndex = m_startIndex;
+    }
+
+    DplSource::BeamPointer beam;
+    for (int i = m_preIndex; i <= curIndex; ++i) {
+        beam = m_source->beams(m_group->index(), i)->get(m_group->current_beam_index());
+        m_image->draw_wave(beam->wave(), i-m_startIndex);
+    }
+
+    m_preIndex = curIndex;
 }

@@ -8,6 +8,7 @@
 
 #include <device/group.h>
 #include <source/source.h>
+#include <source/axis.h>
 
 class BscanItem : public QGraphicsObject
 {
@@ -42,12 +43,15 @@ public slots:
 
 protected:
     void init_index();
+    void draw_time();
+    void draw_encoder();
 
 private:
     QSize m_size;
 
     DplDevice::GroupPointer m_group;
     DplSource::Source *m_source;
+    DplSource::AxisPointer m_scanAxis;
 
     QPixmap m_pixmap;
     BscanImage *m_image;
