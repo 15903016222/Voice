@@ -53,7 +53,6 @@
 #include "file_report/file_menu.h"
 #include "file_report/format_menu.h"
 #include "file_report/report_menu.h"
-#include "file_report/save_mode_menu.h"
 #include "file_report/user_field_menu.h"
 
 /* Preference */
@@ -152,7 +151,6 @@ void SubMenu::create_menus()
 
     /* File/Report */
     add_menu(MainMenu::FileReport_File,         new DplFileReportMenu::FileMenu(this));
-    add_menu(MainMenu::FileReport_SaveMode,     new DplFileReportMenu::SaveModeMenu(this));
     add_menu(MainMenu::FileReport_Report,       new DplFileReportMenu::ReportMenu(this));
     add_menu(MainMenu::FileReport_Format,       new DplFileReportMenu::FormatMenu(this));
     add_menu(MainMenu::FileReport_UserField,    new DplFileReportMenu::UserFieldMenu(this));

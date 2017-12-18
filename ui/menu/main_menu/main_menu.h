@@ -46,7 +46,6 @@ public:
         Measurement_TOFD,
         Measurement_FlawRecord,
         FileReport_File         = 0x70,
-        FileReport_SaveMode,
         FileReport_Report,
         FileReport_Format,
         FileReport_UserField,

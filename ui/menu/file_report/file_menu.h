@@ -5,10 +5,13 @@
 
 namespace DplFileReportMenu {
 
+class SaveFileManager;
+
 class FileMenu : public BaseMenu
 {
     Q_OBJECT
 public:
+
     explicit FileMenu(QWidget *parent);
     ~FileMenu();
 
@@ -16,16 +19,22 @@ public:
     void hide();
 
 private:
-    LabelMenuItem *m_saveSetupItem;
     LabelMenuItem *m_openItem;
+    ComboMenuItem *m_storageItem;
+    ComboMenuItem *m_saveModeItem;
+    LabelMenuItem *m_saveDataItem;
+    LabelMenuItem *m_fileNameItem;
     LabelMenuItem *m_fileManagerItem;
 
-    bool is_legal(const QString &name);
+    SaveFileManager *m_saveFileManager;
 
 private slots:
-    void do_saveSetupItem_clicked();
     void do_openItem_clicked();
+    void do_saveModeItem_value_changed(int index);
+    void do_saveDataItem_clicked();
+    void do_fileNameItem_clicked();
     void do_fileManagerItem_clicked();
+
 };
 
 }
