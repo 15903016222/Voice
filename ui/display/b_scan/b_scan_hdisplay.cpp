@@ -17,5 +17,6 @@ void BscanHDisplay::resize_event(const QSize &size)
 {
     m_scene->setSceneRect(-size.width()/2.0, -size.height()/2.0,
                                size.width(), size.height());
+    m_bscanItem->set_size(size);
     BscanDisplay::resize_event(size);
 }
