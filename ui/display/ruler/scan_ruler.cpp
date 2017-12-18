@@ -28,7 +28,35 @@ ScanRuler::ScanRuler(const DplDevice::GroupPointer &grp, MarkPostion pos, QWidge
             SIGNAL(driving_changed(DplSource::Axis::Driving)),
             this,
             SLOT(do_driving_changed(DplSource::Axis::Driving)));
+
     do_driving_changed(m_axis->driving());
+}
+
+double ScanRuler::start()
+{
+    if (mark_position() == Ruler::RIGHT) {
+        return Ruler::stop();
+    } else {
+        return Ruler::start();
+    }
+}
+
+double ScanRuler::stop()
+{
+    if (mark_position() == Ruler::RIGHT) {
+        return Ruler::start();
+    } else {
+        return Ruler::stop();
+    }
+}
+
+void ScanRuler::set_range(double start, double stop)
+{
+    if (mark_position() == Ruler::RIGHT) {
+        Ruler::set_range(stop, start);
+    } else {
+        Ruler::set_range(start, stop);
+    }
 }
 
 void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
@@ -52,7 +80,12 @@ void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
     if (val < start()) {
         set_range(val, val + range());
     } else if (val > stop()) {
-        set_range(val - range(), val);
+        if (m_axis->driving() == DplSource::Axis::TIMER
+                && val-range() < 0) {
+            set_range(0, range());
+        } else {
+            set_range(val - range(), val);
+        }
     }
 }
 
@@ -84,9 +117,9 @@ double ScanRuler::range() const
 double ScanRuler::time_range() const
 {
     if (mark_position() == TOP || mark_position() == BOTTOM) {
-        return width() / DplSource::Source::instance()->acquisition_rate();
+        return 1.0*width() / DplSource::Source::instance()->acquisition_rate();
     } else {
-        return height() / DplSource::Source::instance()->acquisition_rate();
+        return 1.0*height() / DplSource::Source::instance()->acquisition_rate();
     }
 }
 

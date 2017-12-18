@@ -12,6 +12,12 @@ class ScanRuler : public Ruler
 public:
     ScanRuler(const DplDevice::GroupPointer &grp, MarkPostion pos, QWidget *parent);
 
+    double start();
+
+    double stop();
+
+    void set_range(double start, double stop);
+
 protected slots:
     void do_data_event(const DplSource::BeamsPointer &beams);
     void do_prf_changed();
