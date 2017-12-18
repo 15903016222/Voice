@@ -1,21 +1,23 @@
 #include "b_scan_vdisplay.h"
 
-#include "../scan_view.h"
+#include "../base/scan_view.h"
+#include "../base/scan_scene.h"
+#include "../ruler/ut_ruler.h"
+#include "../ruler/scan_ruler.h"
 
-#include <source/source.h>
-#include <source/scan.h>
-
-BscanVDisplay::BscanVDisplay(const DplDevice::GroupPointer &grp, QWidget *parent)
-    : BscanDisplay(grp, Qt::Vertical, parent)
+BscanVDisplay::BscanVDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
+    BscanDisplay(grp, parent),
+    m_utRuler(new UtRuler(grp, Ruler::RIGHT, this)),
+    m_scanRuler(new ScanRuler(grp, Ruler::TOP, this))
 {
-    init_ruler();
+    m_view->rotate(90);
+    m_leftLayout->addWidget(m_utRuler);
+    m_bottomLayout->addWidget(m_scanRuler);
 }
 
-
-void BscanVDisplay::init_ruler()
+void BscanVDisplay::resize_event(const QSize &size)
 {
-    update_scan_type_ruler(m_bscanView->size());
-
-    update_sound_path_ruler();
-
+    m_scene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
+                               size.height(), size.width());
+    BscanDisplay::resize_event(size);
 }

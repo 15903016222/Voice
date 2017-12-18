@@ -151,7 +151,7 @@ public:
 
 public slots:
     /**
-     * @brief restart   重新启动数据上传, 会延迟200ms后，启动数据上传
+     * @brief restart   重新启动数据上传
      */
     void restart();
 
@@ -167,14 +167,14 @@ signals:
      */
     void type_changed(Source::Type type);
 
-    void restart_event();
+    void restarted();
 
 protected:
     explicit Source();
     ~Source();
 
 private:
-    SourcePrivate *d_ptr;
+    SourcePrivate *d;
 };
 
 }
