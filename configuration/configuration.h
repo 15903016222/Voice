@@ -179,9 +179,24 @@ public:
     Configuration();
     ~Configuration();
 
+    /**
+     * @brief instance  获取配置信息实例
+     * @return          返回配置信息类实例指针
+     */
     static Configuration *instance();
 
+    /**
+     * @brief load_config       加载配置文件
+     * @param configFilePath    配置文件路径
+     * @return  true：加载成功；false：加载失败
+     */
     bool load_config(const QString &configFilePath);
+
+    /**
+     * @brief save_config       保存配置文件
+     * @param configFilePath    待保存的配置文件路径
+     * @return  true：保存成功；false：保存失败
+     */
     bool save_config(const QString &configFilePath);
 
 private:
