@@ -50,15 +50,15 @@ public:
 
     /**
      * @brief encoder_x 获取编码器X值
-     * @return          编码器X数据
+     * @return          编码器X(mm)
      */
-    int encoder_x() const;
+    double encoder_x() const;
 
     /**
      * @brief encoder_y 获取编码器Y值
-     * @return          编码器Y数据
+     * @return          编码器Y(mm)
      */
-    int encoder_y() const;
+    double encoder_y() const;
 
     /**
      * @brief The GateType enum 闸门类型
