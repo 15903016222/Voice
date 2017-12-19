@@ -80,9 +80,9 @@ void Ruler::draw_marks(QPainter &painter)
                           -height());
     }
 
-    draw_mark(painter, 1, MIN_MARK_HIGHT);
-    draw_mark(painter, 5, MED_MARK_HIGHT);
-    draw_mark(painter, 10, MAX_MARK_HIGHT, true);
+    draw_mark(painter, 10/m_pixelPerMark, MIN_MARK_HIGHT);
+    draw_mark(painter, 50/m_pixelPerMark, MED_MARK_HIGHT);
+    draw_mark(painter, 100/m_pixelPerMark, MAX_MARK_HIGHT, true);
 
     painter.restore();
 }

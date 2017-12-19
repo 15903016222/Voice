@@ -11,6 +11,7 @@ ScanRuler::ScanRuler(const DplDevice::GroupPointer &grp, MarkPostion pos, QWidge
     m_group(grp)
 {
     set_background_color(DarkBlueColor);
+    set_pixel_per_mark(1);
     set_scroll(true);
 
     connect(static_cast<DplDevice::Group *>(grp.data()),
@@ -21,15 +22,23 @@ ScanRuler::ScanRuler(const DplDevice::GroupPointer &grp, MarkPostion pos, QWidge
 
     connect(DplUt::GlobalTransceiver::instance(),
             SIGNAL(prf_changed()),
-            this,
-            SLOT(do_prf_changed()));
+            this, SLOT(update()));
+
+    connect(static_cast<DplSource::Axis *>(m_axis.data()),
+            SIGNAL(start_changed(float)),
+            this, SLOT(update()));
+
+    connect(static_cast<DplSource::Axis *>(m_axis.data()),
+            SIGNAL(end_changed(float)),
+            this, SLOT(update()));
+
+    connect(static_cast<DplSource::Axis *>(m_axis.data()),
+            SIGNAL(resolution_changed(float)),
+            this, SLOT(update()));
 
     connect(static_cast<DplSource::Axis *>(m_axis.data()),
             SIGNAL(driving_changed(DplSource::Axis::Driving)),
-            this,
-            SLOT(do_driving_changed(DplSource::Axis::Driving)));
-
-    do_driving_changed(m_axis->driving());
+            this, SLOT(update()));
 }
 
 double ScanRuler::start()
@@ -59,6 +68,24 @@ void ScanRuler::set_range(double start, double stop)
     }
 }
 
+void ScanRuler::update()
+{
+    if (m_axis->driving() == DplSource::Axis::TIMER) {
+        set_range(0, range());
+    } else {
+        set_unit("(mm)");
+        set_range(m_axis->start(), m_axis->start() + range());
+        if ( stop() < m_axis->end() ) {
+            set_scroll(true);
+            set_pixel_per_mark(1);
+        } else {
+            set_scroll(false);
+            set_pixel_per_mark(10);
+        }
+    }
+    Ruler::update();
+}
+
 void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
 {
     double val = 0.0;
@@ -67,11 +94,10 @@ void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
         val = DplSource::Source::instance()->elapsed();
     } else {
         if (m_axis->driving() == DplSource::Axis::ENCODER_X) {
-            val = beams->get(0)->encoder_x() / m_scan->encoder_x()->resolution();
+            val = beams->get(0)->encoder_x();
         } else {
-            val = beams->get(0)->encoder_y() / m_scan->encoder_y()->resolution();
+            val = beams->get(0)->encoder_y();
         }
-
         if (val < m_axis->start() || val > m_axis->end()) {
             return;
         }
@@ -80,29 +106,7 @@ void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
     if (val < start()) {
         set_range(val, val + range());
     } else if (val > stop()) {
-        if (m_axis->driving() == DplSource::Axis::TIMER
-                && val-range() < 0) {
-            set_range(0, range());
-        } else {
-            set_range(val - range(), val);
-        }
-    }
-}
-
-void ScanRuler::do_prf_changed()
-{
-    do_driving_changed(m_axis->driving());
-}
-
-void ScanRuler::do_driving_changed(DplSource::Axis::Driving driving)
-{
-    if (driving == DplSource::Axis::TIMER) {
-        set_unit("(s)");
-        set_range(0, range());
-    } else {
-        set_unit("(mm)");
-        set_range(m_axis->start(), m_axis->start() + range());
-    }
+        set_range(val - range(), val);    }
 }
 
 double ScanRuler::range() const
@@ -141,10 +145,6 @@ double ScanRuler::encoder_range() const
 
 void ScanRuler::resizeEvent(QResizeEvent *e)
 {
-    Q_UNUSED(e);
-    if (start() + range() > stop()) {
-        set_range(stop()-range(), stop());
-    } else {
-        set_range(start(), range());
-    }
+    update();
+    Ruler::resizeEvent(e);
 }

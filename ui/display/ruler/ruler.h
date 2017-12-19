@@ -158,6 +158,8 @@ protected:
      */
     double unit_per_mark() const;
 
+    void set_pixel_per_mark(double pixel);
+
 private:
     QColor m_bgColor;
     MarkPostion m_markPos;
@@ -249,6 +251,12 @@ inline double Ruler::unit_per_mark() const
 {
     QReadLocker l(&m_rwLock);
     return (m_stop-m_start)/ mark_qty();
+}
+
+inline void Ruler::set_pixel_per_mark(double pixel)
+{
+    m_pixelPerMark = pixel;
+    update();
 }
 
 #endif // BASE_RULER_H
