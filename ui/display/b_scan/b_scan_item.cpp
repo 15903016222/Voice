@@ -19,6 +19,10 @@ BscanItem::BscanItem(const DplDevice::GroupPointer &group, QGraphicsItem *parent
     connect(m_source, SIGNAL(restarted()),
             this, SLOT(clear()));
 
+    connect(static_cast<DplSource::Axis *>(m_scanAxis.data()),
+            SIGNAL(driving_changed(DplSource::Axis::Driving)),
+            this, SLOT(clear()));
+
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(draw()), Qt::DirectConnection);
@@ -84,7 +88,7 @@ void BscanItem::draw()
     if (m_scanAxis->driving() == DplSource::Axis::TIMER) {
         draw_time();
     } else {
-//        draw_encoder();
+        draw_encoder();
     }
 
     m_pixmap = QPixmap::fromImage(*m_image);
@@ -103,9 +107,15 @@ void BscanItem::clear()
 
 void BscanItem::init_index()
 {
-    m_preIndex = 0;
-    m_startIndex = 0;
-    m_stopIndex = m_image->max_lines();
+    if (m_scanAxis->driving() == DplSource::Axis::TIMER) {
+        m_preIndex = 0;
+        m_startIndex = 0;
+        m_stopIndex = m_image->max_lines();
+    } else {
+        m_startIndex = 0;
+        m_stopIndex = (m_scanAxis->end() - m_scanAxis->start())/m_scanAxis->resolution();
+        m_preIndex = m_startIndex;
+    }
 }
 
 void BscanItem::draw_time()
@@ -125,6 +135,43 @@ void BscanItem::draw_time()
     DplSource::BeamPointer beam;
     for (int i = m_preIndex; i <= curIndex; ++i) {
         beam = m_source->beams(m_group->index(), i)->get(m_group->current_beam_index());
+        m_image->draw_wave(beam->wave(), i-m_startIndex);
+    }
+
+    m_preIndex = curIndex;
+}
+
+void BscanItem::draw_encoder()
+{
+    int curIndex = 0;
+    if (m_scanAxis->driving() == DplSource::Axis::ENCODER_X) {
+        curIndex = (m_group->current_beam()->encoder_x() - m_scanAxis->start()) / m_scanAxis->resolution();
+    } else {
+        curIndex = (m_group->current_beam()->encoder_y() - m_scanAxis->start()) / m_scanAxis->resolution();
+    }
+
+    if (curIndex >= m_stopIndex) {
+        m_image->shift(curIndex-m_stopIndex+1);
+        m_stopIndex = curIndex+1;
+        m_startIndex = m_stopIndex - m_image->max_lines();
+    }
+
+    if (m_preIndex < m_startIndex) {
+        m_preIndex = m_startIndex;
+    }
+
+    DplSource::BeamsPointer beams;
+    DplSource::BeamPointer beam;
+
+    for (int i = m_preIndex; i <= curIndex; ++i) {
+        beams = m_source->beams(m_group->index(), i);
+        if (beams.isNull()) {
+            continue;
+        }
+        beam = beams->get(m_group->current_beam_index());
+        if (beam.isNull()) {
+            continue;
+        }
         m_image->draw_wave(beam->wave(), i-m_startIndex);
     }
 
