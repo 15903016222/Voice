@@ -8,7 +8,7 @@
 class BscanImage : public QImage
 {
 public:
-    BscanImage(const DplDevice::GroupPointer &group, const QSize &size, const DplDisplay::PaletteColorPointer &palette);
+    BscanImage(const QSize &size, const DplDisplay::PaletteColorPointer &palette);
     ~BscanImage();
 
     void draw_wave(const QByteArray &wave, int line, bool rf=false);

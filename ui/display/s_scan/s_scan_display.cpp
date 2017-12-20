@@ -15,7 +15,7 @@
 
 SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) : ScanDisplay(parent),
     m_group(grp),
-    m_indexRuler(new IndexRuler(Ruler::TOP, this)),
+    m_indexRuler(new IndexRuler(grp, Ruler::TOP, this)),
     m_utRuler(new UtRuler(grp, Ruler::RIGHT, this)),
     m_vpaItem(new VpaItem(grp)),
     m_sScan(grp->s_scan()),
@@ -23,8 +23,6 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
 {
     m_leftLayout->addWidget(m_utRuler);
     m_bottomLayout->addWidget(m_indexRuler);
-
-    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     m_scene->addItem(m_vpaItem);
     m_vpaItem->update_pos();

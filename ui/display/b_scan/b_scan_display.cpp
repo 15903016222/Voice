@@ -14,8 +14,6 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     m_group(grp),
     m_bscanItem(new BscanItem(grp))
 {
-    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-
     m_scene->addItem(m_bscanItem);
 
     m_colorBar->set_palette(DplDevice::Device::instance()->display()->palette());

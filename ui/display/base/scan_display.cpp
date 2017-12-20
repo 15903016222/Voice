@@ -23,6 +23,7 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     setFocusPolicy(Qt::NoFocus);
     m_view->setFocusPolicy(Qt::NoFocus);
     m_view->clearFocus();
+    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     m_titleLabel->setStyleSheet("QLabel{background-color:rgb(0, 90, 130);\ncolor:white;}");
     m_titleLabel->setAlignment(Qt::AlignCenter);

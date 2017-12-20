@@ -79,8 +79,7 @@ void BscanItem::set_size(const QSize &size)
         delete m_image;
         m_image = NULL;
     }
-    m_image = new BscanImage(m_group, size,
-                             DplDevice::Device::instance()->display()->palette());
+    m_image = new BscanImage(size, DplDevice::Device::instance()->display()->palette());
     m_size = size;
 
     init_index();

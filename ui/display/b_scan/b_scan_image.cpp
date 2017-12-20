@@ -1,6 +1,6 @@
 #include "b_scan_image.h"
 
-BscanImage::BscanImage(const DplDevice::GroupPointer &group, const QSize &size, const DplDisplay::PaletteColorPointer &palette) :
+BscanImage::BscanImage(const QSize &size, const DplDisplay::PaletteColorPointer &palette) :
     QImage(size, QImage::Format_RGB32),
     m_palette(palette),
     m_image((quint32 *)bits())
