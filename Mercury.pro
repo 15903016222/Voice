@@ -77,3 +77,5 @@ include(fpga/fpga.pri)
 include(source/source.pri)
 
 include(focallaw/focallaw.pri)
+
+include(report/report.pri)

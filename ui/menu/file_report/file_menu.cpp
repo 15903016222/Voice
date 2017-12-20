@@ -1,5 +1,6 @@
 #include "file_menu.h"
 
+#include <report/report.h>
 
 namespace DplFileReportMenu {
 
@@ -25,6 +26,9 @@ void FileMenu::do_fileManagerItem_clicked()
 //    FileManagerDialog fileManagerDialog;
 //    fileManagerDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 //    fileManagerDialog.exec();
+
+      DplReport::Report report;
+      report.save("myTestReport.html");
 }
 
 }
