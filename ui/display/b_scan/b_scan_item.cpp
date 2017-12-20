@@ -150,9 +150,17 @@ void BscanItem::draw_time()
         m_preIndex = m_startIndex;
     }
 
+    DplSource::BeamsPointer beams;
     DplSource::BeamPointer beam;
     for (int i = m_preIndex; i <= curIndex; ++i) {
-        beam = m_source->beams(m_group->index(), i)->get(m_group->current_beam_index());
+        beams = m_source->beams(m_group->index(), i);
+        if (beams.isNull()) {
+            continue;
+        }
+        beam = beams->get(m_group->current_beam_index());
+        if (beam.isNull()) {
+            continue;
+        }
         m_image->draw_wave(beam->wave(), i-m_startIndex);
     }
 

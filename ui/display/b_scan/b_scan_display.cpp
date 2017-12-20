@@ -11,8 +11,8 @@
 
 BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
     ScanDisplay(parent),
-    m_group(grp),
-    m_bscanItem(new BscanItem(grp))
+    m_bscanItem(new BscanItem(grp)),
+    m_group(grp)
 {
     m_scene->addItem(m_bscanItem);
 
