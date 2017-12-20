@@ -58,6 +58,7 @@ private:
     int m_preIndex;
     int m_startIndex;
     int m_stopIndex;
+    double m_ratio;
     QMutex m_mutex;
 };
 

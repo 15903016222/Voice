@@ -32,7 +32,7 @@ void BscanImage::draw_wave(const QByteArray &wave, int line, bool rf)
 
 void BscanImage::shift(int lines)
 {
-    if (lines >= max_lines() || lines < 0) {
+    if (qAbs(lines) >= max_lines()) {
         clear();
         return;
     }
@@ -40,13 +40,13 @@ void BscanImage::shift(int lines)
     quint8 buf[byteCount()];
     quint8 *image = bits();
     int offset = qAbs(lines) * bytesPerLine();
-    qMemCopy(buf, image, byteCount());
+    ::memcpy(buf, image, byteCount());
     if (lines > 0) {
-        qMemSet(image, 0, offset);
-        qMemCopy(image+offset, buf, byteCount()-offset);
+        ::memset(image, 0, offset);
+        ::memcpy(image+offset, buf, byteCount()-offset);
     } else if ( lines < 0) {
-        qMemCopy(image, buf+offset, byteCount()-offset);
-        qMemSet(image+byteCount()-offset, 0, offset);
+        ::memcpy(image, buf+offset, byteCount()-offset);
+        ::memset(image+byteCount()-offset, 0, offset);
     }
 }
 

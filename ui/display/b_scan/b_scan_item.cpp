@@ -23,6 +23,18 @@ BscanItem::BscanItem(const DplDevice::GroupPointer &group, QGraphicsItem *parent
             SIGNAL(driving_changed(DplSource::Axis::Driving)),
             this, SLOT(clear()));
 
+    connect(static_cast<DplSource::Axis *>(m_scanAxis.data()),
+            SIGNAL(start_changed(float)),
+            this, SLOT(clear()));
+
+    connect(static_cast<DplSource::Axis *>(m_scanAxis.data()),
+            SIGNAL(end_changed(float)),
+            this, SLOT(clear()));
+
+    connect(static_cast<DplSource::Axis *>(m_scanAxis.data()),
+            SIGNAL(resolution_changed(float)),
+            this, SLOT(clear()));
+
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),
             this, SLOT(draw()), Qt::DirectConnection);
@@ -70,6 +82,7 @@ void BscanItem::set_size(const QSize &size)
     m_image = new BscanImage(m_group, size,
                              DplDevice::Device::instance()->display()->palette());
     m_size = size;
+
     init_index();
 }
 
@@ -114,6 +127,12 @@ void BscanItem::init_index()
     } else {
         m_startIndex = 0;
         m_stopIndex = (m_scanAxis->end() - m_scanAxis->start())/m_scanAxis->resolution();
+        if (m_image->height() < m_stopIndex) {
+            m_stopIndex = m_image->height();
+            m_ratio = 1.0;
+        } else {
+            m_ratio = 1.0 * m_image->height() / m_stopIndex;
+        }
         m_preIndex = m_startIndex;
     }
 }
@@ -143,27 +162,52 @@ void BscanItem::draw_time()
 
 void BscanItem::draw_encoder()
 {
-    int curIndex = 0;
+    double curX  = 0.0;
+
     if (m_scanAxis->driving() == DplSource::Axis::ENCODER_X) {
-        curIndex = (m_group->current_beam()->encoder_x() - m_scanAxis->start()) / m_scanAxis->resolution();
+        curX = m_group->current_beam()->encoder_x();
     } else {
-        curIndex = (m_group->current_beam()->encoder_y() - m_scanAxis->start()) / m_scanAxis->resolution();
+        curX = m_group->current_beam()->encoder_y();
     }
 
-    if (curIndex >= m_stopIndex) {
+    if (curX > m_scanAxis->end()) {
+        curX = m_scanAxis->end();
+    } else if ( curX < m_scanAxis->start()) {
+        curX = m_scanAxis->start();
+    }
+
+    int curIndex = (curX - m_scanAxis->start()) / m_scanAxis->resolution() + 0.5;
+
+    if (curIndex > m_stopIndex) {
         m_image->shift(curIndex-m_stopIndex+1);
         m_stopIndex = curIndex+1;
         m_startIndex = m_stopIndex - m_image->max_lines();
+    } else if (curIndex < m_startIndex) {
+        m_image->shift(curIndex-m_startIndex);
+        m_startIndex = curIndex;
+        m_stopIndex = m_startIndex + m_image->max_lines();
     }
 
     if (m_preIndex < m_startIndex) {
         m_preIndex = m_startIndex;
+    } else if( m_preIndex > m_stopIndex) {
+        m_preIndex = m_stopIndex;
     }
 
     DplSource::BeamsPointer beams;
     DplSource::BeamPointer beam;
 
-    for (int i = m_preIndex; i <= curIndex; ++i) {
+    int start = 0;
+    int stop = 0;
+    if (m_preIndex < curIndex) {
+        start = m_preIndex;
+        stop = curIndex;
+    } else {
+        start = curIndex;
+        stop = m_preIndex;
+    }
+
+    for (int i = start; i <= stop; ++i) {
         beams = m_source->beams(m_group->index(), i);
         if (beams.isNull()) {
             continue;
@@ -172,7 +216,11 @@ void BscanItem::draw_encoder()
         if (beam.isNull()) {
             continue;
         }
-        m_image->draw_wave(beam->wave(), i-m_startIndex);
+
+        for (int j = (i-m_startIndex)*m_ratio+0.5;
+             j < (i-m_startIndex+1)*m_ratio + 0.5; ++j) {
+            m_image->draw_wave(beam->wave(), j);
+        }
     }
 
     m_preIndex = curIndex;
