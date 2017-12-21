@@ -1,7 +1,8 @@
 #include "fft_hdisplay.h"
 #include "ui_fft_display.h"
-#include "../scan_view.h"
 #include "fft_item.h"
+
+#include "../base/scan_view.h"
 
 FFTHDisplay::FFTHDisplay(const DplDevice::GroupPointer &group,
                          QWidget *parent)

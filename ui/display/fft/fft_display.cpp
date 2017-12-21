@@ -1,8 +1,9 @@
 #include "fft_display.h"
 #include "ui_fft_display.h"
-#include "../scan_view.h"
 #include "fft_scene.h"
 #include "fft_item.h"
+
+#include "../base/scan_view.h"
 
 FFTDisplay::FFTDisplay(const DplDevice::GroupPointer &group,
                        Qt::Orientation orientation,

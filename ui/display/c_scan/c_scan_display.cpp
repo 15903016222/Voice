@@ -1,7 +1,6 @@
 #include "c_scan_display.h"
 #include "c_scan_item.h"
 
-#include "../base_image_item.h"
 #include "../base/scan_view.h"
 #include "../base/scan_scene.h"
 #include "../color_bar/color_bar.h"
