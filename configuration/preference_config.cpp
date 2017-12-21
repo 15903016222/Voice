@@ -43,27 +43,27 @@ bool PreferenceConfig::unpack(const msgpack::v2::object &obj)
             switch (it->first) {
             case Config_Preference::Bright:
             {
-                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Bright = " << it->second.as<int>();
+//                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Bright = " << it->second.as<int>();
                 break;
             }
             case Config_Preference::Opacity:
             {
-                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Opacity = " << it->second.as<int>();
+//                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Opacity = " << it->second.as<int>();
                 break;
             }
             case Config_Preference::Language:
             {
-                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Language = " << it->second.as<int>();
+//                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " Language = " << it->second.as<int>();
                 break;
             }
             case Config_Preference::StartingPage:
             {
-                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " StartingPage = " << it->second.as<bool>();
+//                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " StartingPage = " << it->second.as<bool>();
                 break;
             }
             case Config_Preference::GateMode:
             {
-                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " GateMode = " << it->second.as<bool>();
+//                qDebug() << "[PreferenceConfig:" << __FUNCTION__ << "]" << " GateMode = " << it->second.as<bool>();
                 break;
             }
             default:
