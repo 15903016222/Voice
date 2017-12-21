@@ -150,7 +150,7 @@ public:
 
     /**
      * @brief set_current_beam  设置当前beam
-     * @param index             beam号
+     * @param index             beam号(从0开始)
      */
     void set_current_beam(int index);
 
@@ -162,7 +162,7 @@ public:
 
     /**
      * @brief current_beam_index    获取当前Beam的索引号
-     * @return                      索引号
+     * @return                      索引号(从0开始)
      */
     int current_beam_index() const;
 
@@ -189,7 +189,6 @@ signals:
     void ut_unit_changed(DplDevice::Group::UtUnit type);
     void current_angle_changed(double val);
     void current_beam_changed(int);
-    void probe_changed(DplFocallaw::ProbePointer probePtr);
     void data_event(const DplSource::BeamsPointer &beams);
 
 public slots:
