@@ -11,8 +11,6 @@ ReportLaw::ReportLaw()
 
 bool ReportLaw::save(lua_State *lua)
 {
-    qDebug("[ReportLaw::save]");
-
     m_lua = lua;
 
     if(m_enable) {

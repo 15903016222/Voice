@@ -15,14 +15,6 @@ ReportHeader::ReportHeader()
 bool ReportHeader::save(lua_State *lua)
 {
     m_lua = lua;
-    save_header();
-    return true;
-}
-
-void ReportHeader::save_header()
-{
-    qDebug("[%s]", __FUNCTION__);
-
     set_kv(m_lua, "ReportDate", m_reportDateTime);
     set_kv(m_lua, "InspectionDate", m_inspectionDateTime);
     set_kv(m_lua, "ReportVersion", REPORT_VERSION);
@@ -31,6 +23,7 @@ void ReportHeader::save_header()
     set_kv(m_lua, "SaveMode", m_saveMode);
     set_kv(m_lua, "DeviceType", m_deviceType);
     set_kv(m_lua, "ReportFile", ::basename(m_reportFile.toStdString().c_str()));
+    return true;
 }
 
 }

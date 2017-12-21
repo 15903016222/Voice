@@ -17,8 +17,6 @@ bool ReportUsers::save(lua_State *lua)
 
 void ReportUsers::save_users()
 {
-    qDebug("[%s]", __FUNCTION__);
-
     int i = 0;
     ::lua_pushstring(m_lua, "Users");
     ::lua_createtable(m_lua, 0, 0);

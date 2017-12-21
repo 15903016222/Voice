@@ -20,8 +20,6 @@ public:
     inline void set_inspection_date_time(const QString &inspectionDateTime) { m_inspectionDateTime = inspectionDateTime; }
 
 private:
-    void save_header();
-
     QString m_setupFile;            /* setup file name */
     QString m_saveMode;             /* save mode */
     QString m_deviceType;           /* device type */

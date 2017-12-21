@@ -8,6 +8,7 @@
 #include <device/device.h>
 #include <source/scan.h>
 #include <source/axis.h>
+#include <gate/gate.h>
 
 namespace DplReport {
 
@@ -22,8 +23,6 @@ ReportData::ReportData(Report *report, QObject *parent)
 
 void ReportData::fill(const QString &reportFile)
 {
-    m_report->set_template_file(tr("/home/tt/TT/source/system/Template/Report/Complete.html"));
-
     fill_report_header(reportFile);
 
     fill_report_users();
@@ -188,26 +187,49 @@ void ReportData::fill_report_group_setup(ReportGroup *group)
     setup->set_voltage(tr("TODO"));
     setup->set_wave_type(tr("TODO"));
 
+    const DplGate::GatePointer &gateAPointer = m_currentGroup->gate_a();
     ReportGatePointer gateA = setup->get_gate(ReportGate::Gate_A);
-    gateA->set_enable(true);
-    gateA->set_start(tr("TODO"));
-    gateA->set_synchro(tr("TODO"));
-    gateA->set_width(tr("TODO"));
-    gateA->set_threshold(tr("TODO"));
+    gateA->set_enable(gateAPointer->is_visible());
+    gateA->set_start(QString::number(gateAPointer->start(), 'f', g_precision));
+    /* TODO：synchro 转为
+     * SYNCHRO_PULSER
+     * SYNCHRO_I,
+     * SYNCHRO_A,
+     * SYNCHRO_B
+     */
+    gateA->set_synchro(QString::number(gateAPointer->synchro_mode()));
+    gateA->set_width(QString::number(gateAPointer->width(), 'f', g_precision));
+    gateA->set_threshold(QString::number(gateAPointer->height()));
 
+
+    const DplGate::GatePointer &gateBPointer = m_currentGroup->gate_a();
     ReportGatePointer gateB = setup->get_gate(ReportGate::Gate_B);
-    gateB->set_enable(true);
-    gateB->set_start(tr("TODO"));
-    gateB->set_synchro(tr("TODO"));
-    gateB->set_width(tr("TODO"));
-    gateB->set_threshold(tr("TODO"));
+    gateB->set_enable(gateBPointer->is_visible());
+    gateB->set_start(QString::number(gateBPointer->start(), 'f', g_precision));
+    /* TODO：synchro 转为
+     * SYNCHRO_PULSER
+     * SYNCHRO_I,
+     * SYNCHRO_A,
+     * SYNCHRO_B
+     */
+    gateB->set_synchro(QString::number(gateBPointer->synchro_mode()));
+    gateB->set_width(QString::number(gateBPointer->width(), 'f', g_precision));
+    gateB->set_threshold(QString::number(gateBPointer->height()));
 
-    ReportGatePointer gateI = setup->get_gate(ReportGate::Gate_I);
-    gateI->set_enable(true);
-    gateI->set_start(tr("TODO"));
-    gateI->set_synchro(tr("TODO"));
-    gateI->set_width(tr("TODO"));
-    gateI->set_threshold(tr("TODO"));
+
+    const DplGate::GatePointer &gateIPointer = m_currentGroup->gate_a();
+    ReportGatePointer gateI = setup->get_gate(ReportGate::Gate_A);
+    gateI->set_enable(gateIPointer->is_visible());
+    gateI->set_start(QString::number(gateIPointer->start(), 'f', g_precision));
+    /* TODO：synchro 转为
+     * SYNCHRO_PULSER
+     * SYNCHRO_I,
+     * SYNCHRO_A,
+     * SYNCHRO_B
+     */
+    gateI->set_synchro(QString::number(gateIPointer->synchro_mode()));
+    gateI->set_width(QString::number(gateIPointer->width(), 'f', g_precision));
+    gateI->set_threshold(QString::number(gateIPointer->height()));
 }
 
 void ReportData::fill_report_group_law(ReportGroup *group)
@@ -256,24 +278,51 @@ void ReportData::fill_report_group_scan(ReportGroup *group)
     scan->set_index_stop(QString::number(indexAxis->end(), 'f', g_precision));
 
     scan->set_scan_resolution(QString::number(scanAxis->resolution(), 'f', g_precision));
-    scan->set_scan_speed(tr("TODO"));
+    scan->set_scan_speed(QString::number(DplSource::Scan::instance()->speed(), 'f', g_precision));
     scan->set_scan_start(QString::number(scanAxis->start(), 'f', g_precision));
     scan->set_scan_stop(QString::number(scanAxis->end(), 'f', g_precision));
     scan->set_scan_synchro(tr("TODO"));
 
-    ReportEncoderPointer scanEncoder = scan->get_encoder(ReportEncoder::ScanEncoder);
-    scanEncoder->set_enable(true);
-    scanEncoder->set_name(tr("TODO"));
-    scanEncoder->set_polarity(tr("TODO"));
-    scanEncoder->set_resolution(tr("TODO"));
-    scanEncoder->set_type(tr("TODO"));
+    fill_encoder(scan, ReportEncoder::ScanEncoder);
+    fill_encoder(scan, ReportEncoder::IndexEncoder);
+}
 
-    ReportEncoderPointer indexEncoder = scan->get_encoder(ReportEncoder::IndexEncoder);
-    indexEncoder->set_enable(true);
-    indexEncoder->set_name(tr("TODO"));
-    indexEncoder->set_polarity(tr("TODO"));
-    indexEncoder->set_resolution(tr("TODO"));
-    indexEncoder->set_type(tr("TODO"));
+void ReportData::fill_encoder(ReportScanPointer &scan, int type)
+{
+    DplSource::AxisPointer axis;
+    if((ReportEncoder::E_EncoderType)type == ReportEncoder::ScanEncoder) {
+        axis = DplSource::Scan::instance()->scan_axis();
+    } else if((ReportEncoder::E_EncoderType)type == ReportEncoder::IndexEncoder) {
+        axis = DplSource::Scan::instance()->index_axis();
+    } else {
+        return;
+    }
+
+    ReportEncoderPointer reportEncoder = scan->get_encoder((ReportEncoder::E_EncoderType)type);
+
+    DplSource::EncoderPointer encoder;
+    QString name;
+    if(axis->driving() == DplSource::Axis::ENCODER_X) {
+        encoder = DplSource::Scan::instance()->encoder_x();
+        name = tr("ENCODER_X");
+    } else if(axis->driving() == DplSource::Axis::ENCODER_Y) {
+        encoder = DplSource::Scan::instance()->encoder_y();
+        name = tr("ENCODER_X");
+    } else if(axis->driving() == DplSource::Axis::TIMER) {
+        reportEncoder->set_enable(true);
+        reportEncoder->set_name(tr("TIMER"));
+        return;
+    } else {
+        reportEncoder->set_enable(false);
+        return;
+    }
+
+    reportEncoder->set_enable(encoder->is_enabled());
+    reportEncoder->set_name(name);
+    /* TODO polarity:应转为显示'NORMAL'/'INVERSE' */
+    reportEncoder->set_polarity(QString::number(encoder->polarity()));
+    reportEncoder->set_resolution(QString::number(encoder->resolution(), 'f', g_precision));
+    reportEncoder->set_type(tr("TODO"));
 }
 
 }

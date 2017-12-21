@@ -27,7 +27,6 @@ bool ReportDefects::set_field_name(uint index, const QString &name)
 
 void ReportDefects::save_defects()
 {
-    qDebug("[%s]", __FUNCTION__);
     save_names();
     save_defect();
 }

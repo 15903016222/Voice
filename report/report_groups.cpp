@@ -10,8 +10,6 @@ ReportGroups::ReportGroups()
 
 bool ReportGroups::save(lua_State *lua)
 {
-    qDebug("[ReportGroups::save]");
-
     int i = 0;
     m_lua = lua;
     ::lua_pushstring(lua, "Groups");

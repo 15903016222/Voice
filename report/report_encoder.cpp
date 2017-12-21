@@ -12,25 +12,22 @@ ReportEncoder::ReportEncoder(E_EncoderType encoderType)
 
 bool ReportEncoder::save(lua_State *lua)
 {
-    qDebug("[ReportEncoder::save]");
-
     m_lua = lua;
 
     switch (m_encoderType) {
-    case ScanEncoder:
-    {
-        save_scan_encoder();
-        break;
+        case ScanEncoder:
+        {
+            save_scan_encoder();
+            break;
+        }
+        case IndexEncoder:
+        {
+            save_index_encoder();
+            break;
+        }
+        default:
+            break;
     }
-    case IndexEncoder:
-    {
-        save_index_encoder();
-        break;
-    }
-    default:
-        break;
-    }
-
     return true;
 }
 

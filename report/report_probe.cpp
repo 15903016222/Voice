@@ -10,7 +10,6 @@ ReportProbe::ReportProbe()
 
 bool ReportProbe::save(lua_State *lua)
 {
-    qDebug("[ReportProbe::save]");
     m_lua = lua;
     set_kv(lua, "ProbeModel", m_model);
     set_kv(lua, "ProbeSerial", m_serial);

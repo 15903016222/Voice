@@ -18,8 +18,6 @@ ReportGroup::ReportGroup(int id)
 
 bool ReportGroup::save(lua_State *lua)
 {
-    qDebug("[ReportGroup::save]");
-
     m_lua = lua;
 
     m_probe->save(lua);

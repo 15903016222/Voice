@@ -13,8 +13,6 @@ ReportSetup::ReportSetup()
 
 bool ReportSetup::save(lua_State *lua)
 {
-    qDebug("[ReportSetup::save]");
-
     m_lua = lua;
 
     set_kv(lua, "BeamDelay", m_beamDelay);

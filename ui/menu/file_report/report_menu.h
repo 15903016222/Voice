@@ -13,7 +13,8 @@ public:
     ~ReportMenu();
 
 private:
-    LabelMenuItem *m_templateItem;
+
+    ComboMenuItem *m_templateItem;
     LabelMenuItem *m_reportNameItem;
     LabelMenuItem *m_customerItem;
     LabelMenuItem *m_partNameItem;
@@ -22,6 +23,7 @@ private:
 
 private slots:
     void show_input_dialog();
+    void do_createItem_clicked();
 };
 
 }

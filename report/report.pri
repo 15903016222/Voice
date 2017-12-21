@@ -36,6 +36,8 @@ SOURCES += \
     $$PWD/report_group.cpp \
     $$PWD/report_data.cpp
 
-INCLUDEPATH +=$$PWD/lua5.1
+INCLUDEPATH += $$PWD/lua5.1
 
-LIBS += -L$$PWD/lua5.1 -llua
+LIBLUA = lua-$$DEVICE
+
+LIBS += -L$$PWD/lua5.1 -l$$LIBLUA

@@ -12,8 +12,6 @@ ReportScan::ReportScan()
 
 bool ReportScan::save(lua_State *lua)
 {
-    qDebug("[ReportScan::save]");
-
     m_lua = lua;
 
     set_kv(lua, "ScanStart", m_scanStart);

@@ -45,14 +45,14 @@ bool Report::save(const QString &fileName)
 
     m_lua = ::luaL_newstate();
     if (NULL == m_lua) {
-        qDebug("[%s] loading report library failed.", __FUNCTION__);
+        qDebug("[%s] load report library failed.", __FUNCTION__);
         return false;
     }
 
     ::luaL_openlibs(m_lua);
 
     if (luaL_dofile(m_lua, s_luaFilePath) != 0 ) {
-        qDebug("[%s] loading report library failed[2]", __FUNCTION__);
+        qDebug("[%s] load report library failed nor execute failed.", __FUNCTION__);
         ::lua_close(m_lua);
         return false;
     }
@@ -72,6 +72,7 @@ bool Report::save(const QString &fileName)
     ::lua_pcall(m_lua, 3, 0, 0);
     ::lua_close(m_lua);
 
+    qDebug("[Report::%s] Save Success.", __FUNCTION__);
     return true;
 }
 

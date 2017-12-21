@@ -12,8 +12,6 @@ ReportGate::ReportGate(E_GateType type)
 
 bool ReportGate::save(lua_State *lua)
 {
-    qDebug("[ReportGate::save]");
-
     if(!m_enable) {
         return true;
     }

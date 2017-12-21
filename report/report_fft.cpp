@@ -10,8 +10,6 @@ ReportFFT::ReportFFT()
 
 bool ReportFFT::save(lua_State *lua)
 {
-    qDebug("[ReportFFT::save]");
-
     m_lua = lua;
     set_kv(lua, "PeakFreq", m_peakFreq);
     set_kv(lua, "LowerFreq_6dB", m_lowerFreq6dB);

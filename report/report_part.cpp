@@ -10,8 +10,6 @@ ReportPart::ReportPart()
 
 bool ReportPart::save(lua_State *lua)
 {
-    qDebug("[ReportPart::save]");
-
     m_lua = lua;
     set_kv(lua, "PartMaterial", m_material);
     set_kv(lua, "PartGeometry", m_geometry);

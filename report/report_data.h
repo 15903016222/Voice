@@ -2,6 +2,7 @@
 #define __REPORT_DATA_H__
 
 #include <QObject>
+#include "report_scan.h"
 
 namespace DplDevice {
 class Group;
@@ -12,7 +13,6 @@ namespace DplReport {
 class ReportGroups;
 class ReportGroup;
 class Report;
-
 
 class ReportData : public QObject
 {
@@ -39,6 +39,8 @@ private:
     void fill_report_group_law(ReportGroup *group);
     void fill_report_group_part(ReportGroup *group);
     void fill_report_group_scan(ReportGroup *group);
+
+    void fill_encoder(ReportScanPointer &scan, int type);
 
 };
 
