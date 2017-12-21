@@ -11,17 +11,11 @@ include($$PWD/fft/fft.pri)
 
 SOURCES += \
     $$PWD/display_widget.cpp \
-    $$PWD/base_image_item.cpp \
-    $$PWD/encoder_image_item.cpp \
-    $$PWD/time_image_item.cpp \
     $$PWD/base_cursor_item.cpp \
     $$PWD/test_stub.cpp
 
 
 HEADERS += \
     $$PWD/display_widget.h \
-    $$PWD/base_image_item.h \
-    $$PWD/encoder_image_item.h \
-    $$PWD/time_image_item.h \
     $$PWD/base_cursor_item.h \
     $$PWD/test_stub.h

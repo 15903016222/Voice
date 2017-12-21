@@ -16,7 +16,8 @@ StatusBar::StatusBar(QWidget *parent) :
     ui->setupUi(this);
     ui->indexEncLabel->hide();
 
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(do_timeout()));
+    connect(m_timer, SIGNAL(timeout()),
+            this, SLOT(do_timeout()));
     m_timer->start(1000);
 
     connect(DplDevice::Device::instance(),
@@ -90,15 +91,15 @@ void StatusBar::do_data_event(const DplSource::BeamsPointer &beams)
     if (scanAxis->driving() == DplSource::Axis::TIMER) {
         m_scanEncStr += QString::number(DplSource::Source::instance()->elapsed(), 'f', 1) + "s";
     } else if (scanAxis->driving() == DplSource::Axis::ENCODER_X) {
-        m_scanEncStr += QString::number(beam->encoder_x()/ m_scan->encoder_x()->resolution(), 'f', 2) + " mm";
+        m_scanEncStr += QString::number(beam->encoder_x(), 'f', 2) + " mm";
     } else {
-        m_scanEncStr += QString::number(beam->encoder_y()/ m_scan->encoder_y()->resolution(), 'f', 2) + "mm";
+        m_scanEncStr += QString::number(beam->encoder_y(), 'f', 2) + "mm";
     }
 
     if (indexAxis->driving() == DplSource::Axis::ENCODER_X) {
-        m_indexEncStr = tr("Index:") + QString::number(beam->encoder_x()/m_scan->encoder_x()->resolution(), 'f', 2) + " mm";
+        m_indexEncStr = tr("Index:") + QString::number(beam->encoder_x(), 'f', 2) + " mm";
     } else if (indexAxis->driving() == DplSource::Axis::ENCODER_Y) {
-        m_indexEncStr = tr("Index:") + QString::number(beam->encoder_y()/m_scan->encoder_y()->resolution(), 'f', 2) + " mm";
+        m_indexEncStr = tr("Index:") + QString::number(beam->encoder_y(), 'f', 2) + " mm";
     }
 
     emit encoder_text_changed();
