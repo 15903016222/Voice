@@ -82,7 +82,7 @@
        </widget>
       </item>
       <item>
-       <widget class="SpinMenuItem" name="angleMenuItem" native="true">
+       <widget class="VpaMenuItem" name="vpaMenuItem" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -190,15 +190,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SpinMenuItem</class>
-   <extends>QWidget</extends>
-   <header>../menu/menu_item/base/spin_menu_item.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>GainMenuItem</class>
    <extends>QWidget</extends>
    <header>../menu/menu_item/gain_menu_item.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpaMenuItem</class>
+   <extends>QWidget</extends>
+   <header>../menu/menu_item/vpa_menu_item.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -38,59 +38,22 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_mainMenu, SIGNAL(type_changed(MainMenu::Type)),
             m_subMenu, SLOT(set_menu(MainMenu::Type)));
 
+    qDebug("%s[%d]: ",__func__, __LINE__);
     DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
     connect(preferenceMenu, SIGNAL(opacity_changed(double)),
             m_mainMenu, SLOT(set_opacity(double)));
+    qDebug("%s[%d]: ",__func__, __LINE__);
 
     /* virtual keyboard */
     m_virtualKeyboard->hide();
     connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
 
     ui->displayLayout->addWidget(new DplUi::DisplayWidget(DplDevice::Device::instance()->display(), this));
-
-    connect(DplDevice::Device::instance(),
-            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(update(DplDevice::GroupPointer)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::update(const DplDevice::GroupPointer &group)
-{
-    m_group = group;
-}
-
-void MainWindow::update_angleMenuItem()
-{
-    if (!m_group->focallawer()->probe()->is_pa()) {
-        ui->angleMenuItem->setDisabled(true);
-        return;
-    }
-
-    ui->angleMenuItem->setDisabled(false);
-
-    disconnect(ui->angleMenuItem, SIGNAL(value_changed(double)),
-               this, SLOT(do_angleMenuItem_value_changed(double)));
-
-    DplFocallaw::PaProbePointer probe = m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
-    if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
-        ui->angleMenuItem->set_title("VPA");
-        ui->angleMenuItem->set_unit("");
-        ui->angleMenuItem->set(1, m_group->focallawer()->beam_qty(), 0);
-        ui->angleMenuItem->set_value(m_group->current_beam_index());
-    } else if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Sectorial) {
-        DplFocallaw::SectorialScanCnfPointer cnf = probe->scan_configure().staticCast<DplFocallaw::SectorialScanCnf>();
-        ui->angleMenuItem->set_title(tr("Angle"));
-        ui->angleMenuItem->set_unit(DEGREE_STR);
-        ui->angleMenuItem->set(cnf->first_angle(), cnf->last_angle(), 1);
-        ui->angleMenuItem->set_value(m_group->current_angle());
-    }
-
-    connect(ui->angleMenuItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_angleMenuItem_value_changed(double)));
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
@@ -138,16 +101,6 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
     } else {
         VInput::instance()->send(VInput::Key_Down);
     }
-}
-
-void MainWindow::do_angleMenuItem_value_changed(double val)
-{
-    if (m_group->focallawer()->probe()) {
-
-    }
-    m_group->set_current_angle(val);
-
-    m_group->set_current_beam(val);
 }
 
 void MainWindow::load_style_sheet(const QString &fileName)

@@ -6,8 +6,6 @@
 #include "../menu/main_menu/main_menu.h"
 #include "../menu/sub_menu.h"
 
-#include <device/group.h>
-
 #include <QMainWindow>
 #include <QTranslator>
 #include <QGraphicsOpacityEffect>
@@ -25,16 +23,11 @@ public:
     ~MainWindow();
 
 protected slots:
-    void update(const DplDevice::GroupPointer &group);
-    void update_angleMenuItem();
-
     void do_key_event(Mcu::KeyType type);
 
     void do_keyboard_event();
 
     void do_rotary_event(Mcu::RotaryType type);
-
-    void do_angleMenuItem_value_changed(double val);
 
 protected:
     void load_style_sheet(const QString &fileName);
@@ -51,8 +44,6 @@ private:
 
     MainMenu *m_mainMenu;
     SubMenu *m_subMenu;
-
-    DplDevice::GroupPointer m_group;
 };
 
 #endif // MAINWINDOW_H
