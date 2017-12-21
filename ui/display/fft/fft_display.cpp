@@ -1,8 +1,9 @@
 #include "fft_display.h"
 #include "ui_fft_display.h"
-#include "../scan_view.h"
 #include "fft_scene.h"
 #include "fft_item.h"
+
+#include "../base/scan_view.h"
 
 FFTDisplay::FFTDisplay(const DplDevice::GroupPointer &group,
                        Qt::Orientation orientation,
@@ -19,8 +20,6 @@ FFTDisplay::FFTDisplay(const DplDevice::GroupPointer &group,
     ui->fftVLayout->addWidget(m_view);
     m_view->setScene(m_fftScene);
     m_fftScene->addItem(m_fftItem);
-
-    ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
     connect(static_cast<DplDevice::Group *> (m_group.data()),
             SIGNAL(data_event(DplSource::BeamsPointer)),

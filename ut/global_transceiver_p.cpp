@@ -18,10 +18,15 @@ GlobalTransceiverPrivate::GlobalTransceiverPrivate(GlobalTransceiver *parent) : 
     m_acqRate(60),
     q(parent)
 {
+    connect(parent, SIGNAL(prf_changed()),
+            this, SLOT(do_prf_changed()));
+
     connect(DplDevice::Device::instance(),
             SIGNAL(beam_qty_changed()),
             this,
             SLOT(update_acquisition_rate()));
+
+    update_acquisition_rate();
 }
 
 int GlobalTransceiverPrivate::max_txrx_time() const
@@ -115,6 +120,11 @@ void GlobalTransceiverPrivate::update_acquisition_rate()
         m_acqRate = rate;
         emit q->prf_changed();
     }
+}
+
+void GlobalTransceiverPrivate::do_prf_changed()
+{
+    DplSource::Source::instance()->set_acquisition_rate(m_acqRate);
 }
 
 }

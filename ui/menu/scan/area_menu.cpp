@@ -1,5 +1,5 @@
 #include "area_menu.h"
-
+#include <source/scan.h>
 
 namespace DplScanMenu {
 
@@ -22,13 +22,13 @@ AreaMenu::AreaMenu(QWidget *parent) :
     m_layout5->addWidget(m_indexResolutionItem);
 
     /* Scan Start Menu Item */
-    m_scanStartItem->set(0, 10000, 2, 0.01);
+    m_scanStartItem->set(-10000, 10000, 2, 0.01);
     m_scanStartItem->set_value(m_scanAxis->start());
     connect(m_scanStartItem, SIGNAL(value_changed(double)),
             this, SLOT(do_scanStartItem_changed(double)));
 
     /* Scan End menu item */
-    m_scanEndItem->set(0, 10000, 2, 0.01);
+    m_scanEndItem->set(-10000, 10000, 2, 0.01);
     m_scanEndItem->set_value(m_scanAxis->end());
     connect(m_scanEndItem, SIGNAL(value_changed(double)),
             this, SLOT(do_scanEndItem_changed(double)));
@@ -40,13 +40,13 @@ AreaMenu::AreaMenu(QWidget *parent) :
             this, SLOT(do_scanResolutionItem_changed(double)));
 
     /* Index Start Menu Item */
-    m_indexStartItem->set(0, 10000, 2, 0.01);
+    m_indexStartItem->set(-10000, 10000, 2, 0.01);
     m_indexStartItem->set_value(m_indexAxis->start());
     connect(m_indexStartItem, SIGNAL(value_changed(double)),
             this, SLOT(do_indexStartItem_changed(double)));
 
     /* Index End Menu Item */
-    m_indexEndItem->set(0, 10000, 2, 0.01);
+    m_indexEndItem->set(-10000, 10000, 2, 0.01);
     m_indexEndItem->set_value((m_indexAxis->end()));
     connect(m_indexEndItem, SIGNAL(value_changed(double)),
             this, SLOT(do_indexEndItem_changed(double)));
@@ -56,6 +56,11 @@ AreaMenu::AreaMenu(QWidget *parent) :
     m_indexResolutionItem->set_value((m_indexAxis->resolution()));
     connect(m_indexResolutionItem, SIGNAL(value_changed(double)),
             this, SLOT(do_indexResolutionItem_changed(double)));
+
+    connect(DplSource::Scan::instance(),
+            SIGNAL(mode_changed(DplSource::Scan::Mode)),
+            this, SLOT(do_scan_mode_changed(DplSource::Scan::Mode)));
+    do_scan_mode_changed(DplSource::Scan::instance()->mode());
 }
 
 AreaMenu::~AreaMenu()
@@ -90,6 +95,17 @@ void AreaMenu::do_indexEndItem_changed(double val)
 void AreaMenu::do_indexResolutionItem_changed(double val)
 {
     m_indexAxis->set_resolution(val);
+}
+
+void AreaMenu::do_scan_mode_changed(DplSource::Scan::Mode mode)
+{
+    bool flag = false;
+    if (mode == DplSource::Scan::ONELINE) {
+        flag = true;
+    }
+    m_indexStartItem->setDisabled(flag);
+    m_indexEndItem->setDisabled(flag);
+    m_indexResolutionItem->setDisabled(flag);
 }
 
 }

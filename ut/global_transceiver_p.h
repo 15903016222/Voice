@@ -43,6 +43,7 @@ public:
 
 public slots:
     void update_acquisition_rate();
+    void do_prf_changed();
 
 private:
     GlobalTransceiver *q;

@@ -1,23 +1,26 @@
 #include "c_scan_hdisplay.h"
-#include "ui_scan_display.h"
-#include "../scan_view.h"
-#include "../scroll_ruler_widget.h"
+#include "c_scan_item.h"
 
-CscanHDisplay::CscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent)
-    : CscanDisplay(grp, Qt::Horizontal, parent)
+#include "../base/scan_scene.h"
+#include "../ruler/scan_ruler.h"
+#include "../ruler/index_ruler.h"
+
+CscanHDisplay::CscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
+    CscanDisplay(grp, parent),
+    m_scanRuler(new ScanRuler(grp, Ruler::RIGHT, this)),
+    m_indexRuler(new IndexRuler(grp, Ruler::TOP, this))
 {
-     init_ruler();
+    m_leftLayout->addWidget(m_indexRuler);
+    m_bottomLayout->addWidget(m_scanRuler);
 }
 
-void CscanHDisplay::init_ruler()
+void CscanHDisplay::resize_event(const QSize &size)
 {
-    m_lawTypeRuler->set_type(RulerWidget::BOTTOM);
-    m_lawTypeRuler->set_direction(RulerWidget::Up);
+    m_scene->setSceneRect(-size.width()/2.0, -size.height()/2.0,
+                               size.width(), size.height());
 
-    m_scanTypeRuler->set_type(RulerWidget::LEFT);
-    m_scanTypeRuler->set_direction(RulerWidget::Down);
+    m_cscanItem->set_size(size);
 
-    update_scan_type_ruler(m_view->size());
-
-    update_law_type_ruler();
+    CscanDisplay::resize_event(size);
 }
+

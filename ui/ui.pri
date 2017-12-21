@@ -1,22 +1,24 @@
 RESOURCES += \
     $$PWD/main_window.qrc
 
-include(main_window/main_window.pri)
+include($$PWD/common/common.pri)
 
-include(measure_bar/measure_bar.pri)
+include($$PWD/main_window/main_window.pri)
 
-include(icons_bar/icons_bar.pri)
+include($$PWD/measure_bar/measure_bar.pri)
 
-include(status_bar/status_bar.pri)
+include($$PWD/icons_bar/icons_bar.pri)
 
-include(dialog/dialog.pri)
+include($$PWD/status_bar/status_bar.pri)
 
-include(menu/menu.pri)
+include($$PWD/dialog/dialog.pri)
 
-include(vinput/vinput.pri)
+include($$PWD/menu/menu.pri)
 
-include(display/display.pri)
+include($$PWD/vinput/vinput.pri)
 
-include(tool/tool.pri)
+include($$PWD/display/display.pri)
+
+include($$PWD/tool/tool.pri)
 
 

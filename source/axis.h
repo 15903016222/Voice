@@ -18,15 +18,15 @@ class SOURCESHARED_EXPORT Axis : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(Axis)
 public:
-    explicit Axis(QObject *parent = 0);
-    ~Axis();
-
     enum Driving {
         TIMER,
         ENCODER_X,
         ENCODER_Y,
         NONE
     };
+
+    explicit Axis(Driving driving=Axis::NONE, QObject *parent = 0);
+    ~Axis();
 
     /**
      * @brief driving  获取驱动类型

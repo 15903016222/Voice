@@ -28,7 +28,7 @@ QPainterPath WaveItem::draw(const QByteArray &wave, bool rf, int w, int h)
     if (rf) {
         for (int i = 0; i < drawPoints; ++i) {
             path.lineTo( i*xRatio,
-                         h/2 - (qint8(wave.at(i))) * yRatio);
+                         h - (qAbs(wave.at(i)-128)) * yRatio);
 
         }
     } else {

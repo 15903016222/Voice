@@ -21,6 +21,8 @@ protected slots:
     void do_indexEndItem_changed(double val);
     void do_indexResolutionItem_changed(double val);
 
+    void do_scan_mode_changed(DplSource::Scan::Mode mode);
+
 private:
     SpinMenuItem *m_scanStartItem;
     SpinMenuItem *m_scanEndItem;
