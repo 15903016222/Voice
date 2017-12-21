@@ -8,9 +8,12 @@ class CscanHDisplay : public CscanDisplay
 public:
     explicit CscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
 
-protected:
-    void init_ruler();
+protected slots:
+    void resize_event(const QSize &size);
 
+private:
+    ScanRuler *m_scanRuler;
+    IndexRuler *m_indexRuler;
 };
 
 #endif // __C_SCAN_HDISPLAY_H__

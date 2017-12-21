@@ -95,7 +95,7 @@ public:
     {
         addLayout(new ALayoutH(grp), 1);
         addLayout(new BLayoutH(grp), 2);
-        addLayout(new CLayoutH(grp), 3);
+        addLayout(new CLayoutV(grp), 3);
     }
 };
 

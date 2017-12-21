@@ -149,7 +149,7 @@ void Group::deploy_beams() const
     int beamIndex = Device::instance()->first_beam_index(this);
 
 //    DplFpga::Fpga::instance()->show_info();
-    m_fpgaGroup->show_info();
+//    m_fpgaGroup->show_info();
 
     fpgaBeam.set_total_beam_qty( Device::instance()->beam_qty() );
     fpgaBeam.set_group_id(index());

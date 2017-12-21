@@ -131,9 +131,27 @@ public:
      */
     void start();
 
+    /**
+     * @brief elapsed   消耗时间
+     * @return          时间(s)
+     */
+    double elapsed() const;
+
+    /**
+     * @brief set_acquisition_rate  设置采样频率
+     * @param prf                   频率(Hz)
+     */
+    void set_acquisition_rate(int rate);
+
+    /**
+     * @brief acquisition_rate  获取采样频率
+     * @return                  频率(Hz)
+     */
+    int acquisition_rate() const;
+
 public slots:
     /**
-     * @brief restart   重新启动数据上传, 会延迟200ms后，启动数据上传
+     * @brief restart   重新启动数据上传
      */
     void restart();
 
@@ -149,12 +167,14 @@ signals:
      */
     void type_changed(Source::Type type);
 
+    void restarted();
+
 protected:
     explicit Source();
     ~Source();
 
 private:
-    SourcePrivate *d_ptr;
+    SourcePrivate *d;
 };
 
 }

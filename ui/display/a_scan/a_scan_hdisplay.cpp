@@ -5,73 +5,31 @@
  * @date 2017-06-28
  */
 
-#include "global.h"
 #include "a_scan_hdisplay.h"
-#include "ui_a_scan_display.h"
+#include "tcg_item.h"
+#include "wave_item.h"
 
-#include <qmath.h>
+#include "../base/scan_scene.h"
+#include "../ruler/amp_ruler.h"
+#include "../ruler/ut_ruler.h"
 
-#include <QDebug>
-
-AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group,
-                             QWidget *parent) :
-    AscanDisplay(group, Qt::Horizontal, parent)
+AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group, QWidget *parent) :
+    AscanDisplay(group, parent),
+    m_ampRuler(new AmpRuler(Ruler::RIGHT, this)),
+    m_utRuler(new UtRuler(group, Ruler::TOP, this))
 {
-    /* ruler setting */
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
-            SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
-            this,
-            SLOT(update_bottom_ruler()));
-    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
-            SIGNAL(start_changed(float)),
-            this,
-            SLOT(update_bottom_ruler()));
-    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
-            SIGNAL(range_changed(float)),
-            this,
-            SLOT(update_bottom_ruler()));
-    update_bottom_ruler();
-
-    ui->leftRulerWidget->set_direction(RulerWidget::Down);
-    ui->leftRulerWidget->set_range(0, 100);
-    ui->leftRulerWidget->set_unit("(%)");
-    ui->leftRulerWidget->set_backgroup_color(QColor("#ffff7f"));
-    ui->leftRulerWidget->update();
+    m_ampRuler->set_range(100, 0);
+    m_leftLayout->addWidget(m_ampRuler);
+    m_bottomLayout->addWidget(m_utRuler);
 }
 
-AscanHDisplay::~AscanHDisplay()
-{
+void AscanHDisplay::resize_event(const QSize &size)
+{    
+    m_scene->setSceneRect(-size.width()/2, -size.height()/2,
+                          size.width(), size.height());
 
-}
+    m_waveItem->set_size(size);
+    m_tcgItem->set_size(size);
 
-void AscanHDisplay::update_bottom_ruler()
-{
-    double start = m_group->sample()->start();
-    double end = (start + m_group->sample()->range());
-
-    start = Dpl::ns_to_us(start);
-    end = Dpl::ns_to_us(end);
-
-    DplDevice::Group::UtUnit unit = m_group->ut_unit();
-
-    if (DplDevice::Group::Time == unit) {
-        ui->bottomRulerWidget->set_unit("(us)");
-        ui->bottomRulerWidget->set_backgroup_color(QColor("#F9CCE2"));
-    } else {
-        ui->bottomRulerWidget->set_unit("(mm)");
-        start *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
-        start /= 2;
-        end *= m_group->focallawer()->specimen()->velocity() * Dpl::m_to_mm(1.0) / Dpl::s_to_us(1);
-        end /= 2;
-        ui->bottomRulerWidget->set_backgroup_color(QColor("#f29cb1"));
-        if (DplDevice::Group::TruePath == unit) {
-            start *= qCos(m_group->current_angle());
-            end   *= qCos(m_group->current_angle());
-            ui->bottomRulerWidget->set_backgroup_color(QColor("#ff00ff"));
-        }
-    }
-
-    ui->bottomRulerWidget->set_range(start, end);
-
-    ui->bottomRulerWidget->update();
+    AscanDisplay::resize_event(size);
 }

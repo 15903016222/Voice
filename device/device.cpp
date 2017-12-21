@@ -220,12 +220,16 @@ void Device::deploy_beams()
 {
     Q_D(Device);
 
+    stop();
+
     DplFpga::Fpga::instance()->set_pa_law_qty(beam_qty());
     DplFpga::Fpga::instance()->set_ut_law_qty(beam_qty());
 
     foreach (GroupPointer grp, d->m_groups) {
         grp->deploy_beams();
     }
+
+    start();
 }
 
 Device::Device(QObject *parent) :

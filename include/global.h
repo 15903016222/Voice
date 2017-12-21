@@ -8,6 +8,7 @@ namespace Dpl {
 #define DEGREE_STR  QString::fromUtf8("°")
 
 #define US_TO_NS    (1000)
+#define S_TO_MS     (1000)
 #define S_TO_US     (1000000)
 #define S_TO_NS     (1000000000)
 #define MS_TO_NS    (1000000)
@@ -56,6 +57,14 @@ template <typename T>
  * @return          纳秒值
  */
 static inline T s_to_ns(T val) { return val * S_TO_NS; }
+
+template <typename T>
+/**
+ * @brief ms_to_s   毫秒换算成秒
+ * @param val       毫秒
+ * @return          秒
+ */
+static inline T ms_to_s(T val) { return val/S_TO_MS; }
 
 template <typename T>
 /**
