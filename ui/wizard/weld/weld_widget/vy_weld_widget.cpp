@@ -11,8 +11,6 @@ VYWeldWidget::VYWeldWidget(QSharedPointer<BaseWeldInformation> &weldInfo) : Base
 
 void VYWeldWidget::paint()
 {
-    qDebug() << "[VYWeldWidget::paint]";
-
     DplWeld::BaseWeldWidget::paint();
 
     QPainter painter(this);
@@ -23,7 +21,7 @@ void VYWeldWidget::paint()
 
     VYWeldInformation *tmpInfo = static_cast<VYWeldInformation *> (m_weldInfo.data());
 
-    /**
+    /* *
      * VY画点示意图
      * 1----2
      *      \
@@ -34,7 +32,7 @@ void VYWeldWidget::paint()
      *          |
      *          |
      * 6---------5
-     **/
+     * */
 
     /* point1 */
     QPoint point1(0, top);

@@ -43,7 +43,6 @@ WeldPropertiesWidget::WeldPropertiesWidget(QWidget *parent) :
 
 WeldPropertiesWidget::~WeldPropertiesWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }
 
@@ -56,12 +55,10 @@ void WeldPropertiesWidget::slot_weld_type_changed(int index)
 }
 
 
-
 void WeldPropertiesWidget::slot_weld_info_changed(double value)
 {
     Q_UNUSED(value);
     QMap<QString, double> valueList;
-
     QDoubleSpinBox *current = qobject_cast<QDoubleSpinBox*> (sender());
 
     switch (ui->weldTypeComboBox->currentIndex())
@@ -74,7 +71,6 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
         }
         case DplWeld::V_Weld:
         {
-
             if(current->objectName() == ui->W1DoubleSpinBox->objectName()) {
                 ui->W2DoubleSpinBox->setMaximum(value);
 
@@ -86,7 +82,6 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_W2, ui->W2DoubleSpinBox->value());
             valueList.insert(TAG_H1, ui->H1DoubleSpinBox->value());
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
             break;
         }
         case DplWeld::U_Weld:
@@ -98,33 +93,21 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_H1, ui->H1DoubleSpinBox->value());
             valueList.insert(TAG_R1, ui->R1DoubleSpinBox->value());
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
             break;
         }
         case DplWeld::VY_Weld:
         {
-
             if(current->objectName() == ui->W1DoubleSpinBox->objectName()) {
-
                 ui->W2DoubleSpinBox->setMaximum(value);
-
             } else if(current->objectName() == ui->W2DoubleSpinBox->objectName()) {
-
                 ui->W1DoubleSpinBox->setMinimum(value);
                 ui->W3DoubleSpinBox->setMaximum(value);
-
             } else if(current->objectName() == ui->W3DoubleSpinBox->objectName()) {
-
                 ui->W2DoubleSpinBox->setMinimum(value);
-
             } else if(current->objectName() == ui->H1DoubleSpinBox->objectName()) {
-
                 ui->H2DoubleSpinBox->setMaximum(m_thickness - value);
-
             } else if(current->objectName() == ui->H2DoubleSpinBox->objectName()) {
-
                 ui->H1DoubleSpinBox->setMaximum(m_thickness - value);
-
             }
 
             valueList.insert(TAG_W1, ui->W1DoubleSpinBox->value());
@@ -133,7 +116,6 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_H1, ui->H1DoubleSpinBox->value());
             valueList.insert(TAG_H2, ui->H2DoubleSpinBox->value());
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
             break;
         }
         case DplWeld::VV_Weld:
@@ -146,7 +128,6 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_H1, ui->H1DoubleSpinBox->value());
             valueList.insert(TAG_H2, ui->H2DoubleSpinBox->value());
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
             break;
         }
         case DplWeld::UU_Weld:
@@ -161,7 +142,6 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_R1, ui->R1DoubleSpinBox->value());
             valueList.insert(TAG_R2, ui->R2DoubleSpinBox->value());
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
             break;
         }
         case DplWeld::UV_Weld:
@@ -175,7 +155,6 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_H2, ui->H2DoubleSpinBox->value());
             valueList.insert(TAG_R1, ui->R1DoubleSpinBox->value());
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
             break;
         }
         case DplWeld::TKY_Weld:
@@ -188,28 +167,20 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_Y2, ui->Y2DoubleSpinBox->value());
             valueList.insert(TAG_ANGLE, ui->angleDoubleSpinBox->value());
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
             break;
         }
         default:
             return;
     }
-
     emit weld_info_changed(ui->weldTypeComboBox->currentIndex(), valueList);
-
 }
 
 
 void WeldPropertiesWidget::set_weld_info(const QMap<QString, double> &valueList)
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << m_thickness << " new thickness : " << valueList.value(TAG_THICKNESS);
-
     disconnect(ui->weldTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_weld_type_changed(int)));
-
     ui->weldTypeComboBox->setCurrentIndex(valueList.value(TAG_TYPE));
-
     connect(ui->weldTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_weld_type_changed(int)));
-
     set_value(valueList);
 
     switch ((int)valueList.value(TAG_TYPE))
@@ -260,11 +231,8 @@ void WeldPropertiesWidget::set_weld_info(const QMap<QString, double> &valueList)
 }
 
 
-
-
 void WeldPropertiesWidget::slot_max_W1(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_max_W1]" << value;
     disconnect(ui->W1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
 
     /* 若最大值小于当前值 故应设置W1的最大值、R1的最大值*/
@@ -274,23 +242,19 @@ void WeldPropertiesWidget::slot_max_W1(double value)
 
     ui->W1DoubleSpinBox->setMaximum(value);
     connect(ui->W1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
-
 }
 
 
 void WeldPropertiesWidget::slot_max_W2(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_max_W2]" << value;
     disconnect(ui->W2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
     ui->W2DoubleSpinBox->setMaximum(value);
     connect(ui->W2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
-    qDebug() << "[WeldPropertiesWidget::slotMaxW2] end";
 }
 
 
 void WeldPropertiesWidget::slot_max_W3(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_max_W3]" << value;
     disconnect(ui->W3DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
 
     /* 若最大值小于当前值 故应设置W2的最大值、R2的最大值*/
@@ -299,15 +263,12 @@ void WeldPropertiesWidget::slot_max_W3(double value)
     }
 
     ui->W3DoubleSpinBox->setMaximum(value);
-
     connect(ui->W3DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
 }
 
 
 void WeldPropertiesWidget::slot_min_H1(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_min_H1]"  << value;
-
     disconnect(ui->H1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
 
     if(ui->H1DoubleSpinBox->value() < value) {
@@ -322,8 +283,6 @@ void WeldPropertiesWidget::slot_min_H1(double value)
 
 void WeldPropertiesWidget::slot_min_H2(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_min_H2]"  << value;
-
     disconnect(ui->H2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
 
     if(ui->H2DoubleSpinBox->value() < value) {
@@ -339,12 +298,8 @@ void WeldPropertiesWidget::slot_min_H2(double value)
 
 void WeldPropertiesWidget::slot_min_R1(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_min_R1]"  << value;
-
     disconnect(ui->R1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
-
     ui->R1DoubleSpinBox->setMinimum(value);
-
     connect(ui->R1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
 }
 
@@ -352,20 +307,14 @@ void WeldPropertiesWidget::slot_min_R1(double value)
 
 void WeldPropertiesWidget::slot_min_R2(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_min_R2]"  << value;
-
     disconnect(ui->R2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
-
     ui->R2DoubleSpinBox->setMinimum(value);
-
     connect(ui->R2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
 }
 
 
 void WeldPropertiesWidget::slot_min_X1(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_min_X1]"  << value;
-
     disconnect(ui->X1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
     ui->X1DoubleSpinBox->setMinimum(value);
     connect(ui->X1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
@@ -374,8 +323,6 @@ void WeldPropertiesWidget::slot_min_X1(double value)
 
 void WeldPropertiesWidget::slot_max_Y1(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_max_Y1]"  << value;
-
     disconnect(ui->Y1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
     ui->Y1DoubleSpinBox->setMaximum(value);
     connect(ui->Y1DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
@@ -384,8 +331,6 @@ void WeldPropertiesWidget::slot_max_Y1(double value)
 
 void WeldPropertiesWidget::slot_min_X2(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_min_X2]"  << value;
-
     disconnect(ui->X2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
     ui->X2DoubleSpinBox->setMinimum(value);
     connect(ui->X2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
@@ -393,8 +338,6 @@ void WeldPropertiesWidget::slot_min_X2(double value)
 
 void WeldPropertiesWidget::slot_max_Y2(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_max_Y2]"  << value;
-
     disconnect(ui->Y2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
     ui->Y2DoubleSpinBox->setMaximum(value);
     connect(ui->Y2DoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
@@ -403,8 +346,6 @@ void WeldPropertiesWidget::slot_max_Y2(double value)
 
 void WeldPropertiesWidget::slot_min_angle(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_min_angle]"  << value;
-
     disconnect(ui->angleDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
     ui->angleDoubleSpinBox->setMinimum(value);
     connect(ui->angleDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
@@ -413,8 +354,6 @@ void WeldPropertiesWidget::slot_min_angle(double value)
 
 void WeldPropertiesWidget::slot_max_angle(double value)
 {
-    qDebug() << "[WeldPropertiesWidget::slot_max_angle]"  << value;
-
     disconnect(ui->angleDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
     ui->angleDoubleSpinBox->setMaximum(value);
     connect(ui->angleDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(slot_weld_info_changed(double)));
@@ -425,7 +364,6 @@ void WeldPropertiesWidget::set_thickness(double value)
 {
     m_thickness = value;
 }
-
 
 
 void WeldPropertiesWidget::show_item()
@@ -479,7 +417,6 @@ void WeldPropertiesWidget::show_item()
     }
 
     m_valueList.insert(TAG_THICKNESS, m_thickness);
-
     emit weld_info_changed(ui->weldTypeComboBox->currentIndex(), m_valueList);
 }
 
@@ -528,7 +465,6 @@ void WeldPropertiesWidget::show_i_weld_item(QMap<QString, double> &valueList)
 
 void WeldPropertiesWidget::show_v_weld_item(QMap<QString, double> &valueList)
 {
-
     ui->T1DoubleSpinBox->hide();
     ui->T2DoubleSpinBox->hide();
     ui->X1DoubleSpinBox->hide();
@@ -565,7 +501,6 @@ void WeldPropertiesWidget::show_v_weld_item(QMap<QString, double> &valueList)
     ui->W1DoubleSpinBox->show();
     ui->W1Label->show();
 
-
     ui->formLayout_2->insertRow(1, ui->W1Label, ui->W1DoubleSpinBox);
     ui->formLayout_2->insertRow(2, ui->W2Label, ui->W2DoubleSpinBox);
     ui->formLayout_2->insertRow(3, ui->H1Label, ui->H1DoubleSpinBox);
@@ -574,7 +509,6 @@ void WeldPropertiesWidget::show_v_weld_item(QMap<QString, double> &valueList)
     valueList.insert(TAG_W2, ui->W2DoubleSpinBox->value());
     valueList.insert(TAG_H1, ui->H1DoubleSpinBox->value());
     valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
 }
 
 
@@ -603,7 +537,6 @@ void WeldPropertiesWidget::show_u_weld_item(QMap<QString, double> &valueList)
     ui->H1Label->show();
     ui->R1Label->show();
 
-
     ui->H2DoubleSpinBox->hide();
     ui->H3DoubleSpinBox->hide();
     ui->R2DoubleSpinBox->hide();
@@ -626,7 +559,6 @@ void WeldPropertiesWidget::show_u_weld_item(QMap<QString, double> &valueList)
     valueList.insert(TAG_H1, ui->H1DoubleSpinBox->value());
     valueList.insert(TAG_R1, ui->R1DoubleSpinBox->value());
     valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
 }
 
 
@@ -735,7 +667,6 @@ void WeldPropertiesWidget::show_vv_weld_item(QMap<QString, double> &valueList)
     valueList.insert(TAG_H1, ui->H1DoubleSpinBox->value());
     valueList.insert(TAG_H2, ui->H2DoubleSpinBox->value());
     valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
 }
 
 
@@ -776,7 +707,6 @@ void WeldPropertiesWidget::show_uu_weld_item(QMap<QString, double> &valueList)
 
     ui->W1DoubleSpinBox->show();
     ui->W1Label->show();
-
 
     ui->formLayout_2->insertRow(1, ui->W1Label, ui->W1DoubleSpinBox);
     ui->formLayout_2->insertRow(2, ui->W2Label, ui->W2DoubleSpinBox);
@@ -826,7 +756,6 @@ void WeldPropertiesWidget::show_uv_weld_item(QMap<QString, double> &valueList)
     ui->W3Label->show();
     ui->R1Label->show();
 
-
     ui->H3DoubleSpinBox->hide();
     ui->R2DoubleSpinBox->hide();
     ui->H3Label->hide();
@@ -854,7 +783,6 @@ void WeldPropertiesWidget::show_uv_weld_item(QMap<QString, double> &valueList)
 
 void WeldPropertiesWidget::show_tky_weld_item(QMap<QString, double> &valueList)
 {
-
     ui->H1DoubleSpinBox->hide();
     ui->H2DoubleSpinBox->hide();
     ui->W1DoubleSpinBox->hide();
@@ -872,7 +800,6 @@ void WeldPropertiesWidget::show_tky_weld_item(QMap<QString, double> &valueList)
     ui->R1Label->hide();
     ui->H3Label->hide();
     ui->R2Label->hide();
-
 
     ui->T1DoubleSpinBox->show();
     ui->T2DoubleSpinBox->show();
@@ -907,7 +834,6 @@ void WeldPropertiesWidget::show_tky_weld_item(QMap<QString, double> &valueList)
     valueList.insert(TAG_Y2, ui->Y2DoubleSpinBox->value());
     valueList.insert(TAG_ANGLE, ui->angleDoubleSpinBox->value());
     valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
-
 }
 
 
@@ -1172,7 +1098,6 @@ void WeldPropertiesWidget::set_value(const QMap<QString, double> &valueList)
 }
 
 
-
 void WeldPropertiesWidget::check_vv_weld_properties_limit(const QDoubleSpinBox *current, double value)
 {
     if(current->objectName() == ui->W1DoubleSpinBox->objectName()) {
@@ -1197,13 +1122,9 @@ void WeldPropertiesWidget::check_vv_weld_properties_limit(const QDoubleSpinBox *
         } else {
             ui->W2DoubleSpinBox->setMaximum(ui->W1DoubleSpinBox->value());
         }
-
     } else if(current->objectName() == ui->H1DoubleSpinBox->objectName()) {
-
          ui->H2DoubleSpinBox->setMaximum(m_thickness - value);
-
     } else if(current->objectName() == ui->H2DoubleSpinBox->objectName()) {
-
         ui->H1DoubleSpinBox->setMaximum(m_thickness - value);
     }
 }
@@ -1227,7 +1148,6 @@ void WeldPropertiesWidget::check_u_weld_properties_limit(const QDoubleSpinBox *c
 
         /* 求W2与H1构成的斜边，若斜边小于alue，则设置成R1的最大值。 */
         double hypotenuse = sqrt(pow(ui->W2DoubleSpinBox->value(), 2) + pow(ui->H1DoubleSpinBox->value(), 2));
-        qDebug() << "[" << __FUNCTION__ << "]" << " hypotenuse = " << hypotenuse << " change W1 set max R1 ";
 
         if(hypotenuse < value) {
             ui->R1DoubleSpinBox->setMaximum(hypotenuse);
@@ -1240,7 +1160,6 @@ void WeldPropertiesWidget::check_u_weld_properties_limit(const QDoubleSpinBox *c
         ui->W1DoubleSpinBox->setMinimum(value + 0.01); /* W1 永远要大于 W2，当前精度为两位，故减0.01 */
 
         double hypotenuse = sqrt(pow(ui->W2DoubleSpinBox->value(), 2) + pow(ui->H1DoubleSpinBox->value(), 2));
-        qDebug() << "[" << __FUNCTION__ << "]" << " hypotenuse = " << hypotenuse << " change W2 set max R1 ";
 
         if(hypotenuse < ui->W1DoubleSpinBox->value()) {
             ui->R1DoubleSpinBox->setMaximum(hypotenuse);

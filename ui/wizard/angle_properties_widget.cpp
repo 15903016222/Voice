@@ -13,6 +13,5 @@ AnglePropertiesWidget::AnglePropertiesWidget(QWidget *parent) :
 
 AnglePropertiesWidget::~AnglePropertiesWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }

@@ -13,7 +13,6 @@ CommonSettingWidget::CommonSettingWidget(WizardSetting::E_WIZARD_TYPE type, QWid
 
 CommonSettingWidget::~CommonSettingWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " destructor." << m_type;
 }
 
 void CommonSettingWidget::set_mode(CommonSettingWidget::E_DETECT_MODE mode)

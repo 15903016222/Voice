@@ -8,12 +8,10 @@ EncoderPropertiesWidget::EncoderPropertiesWidget(QWidget *parent) :
     ui(new Ui::EncoderPropertiesWidget)
 {
     ui->setupUi(this);
-
     hide();
 }
 
 EncoderPropertiesWidget::~EncoderPropertiesWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }

@@ -19,19 +19,14 @@ Selector::Selector(QObject *parent) : QObject(parent),
 
 Selector::~Selector()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor.";
 }
 
 
 QWidget *Selector::get_current_widget(WizardSetting::E_WIZARD_TYPE type)
 {
     if(type == m_type && m_currentIndex != -1) {
-
-         qDebug() << "[" << __FUNCTION__ << "]" << "firs: current index = " << m_currentIndex;
         return m_widgetList.at(m_currentIndex);
     }
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " current index = " << m_currentIndex;
 
     clear_widget();
 
@@ -106,7 +101,6 @@ QWidget *Selector::get_pre_widget()
         return NULL;
     } else {
         QWidget *preWidget = m_widgetList.at(++m_currentIndex);
-        qDebug() << "[" << __FUNCTION__ << "]" << " pre widget = " << preWidget;
         return preWidget;
     }
 }
@@ -118,7 +112,6 @@ QWidget *Selector::get_back_widget()
         return NULL;
     } else {
         QWidget *backWidget = m_widgetList.at(--m_currentIndex);
-        qDebug() << "[" << __FUNCTION__ << "]" << " back widget = " << backWidget;
         return backWidget;
     }
 }

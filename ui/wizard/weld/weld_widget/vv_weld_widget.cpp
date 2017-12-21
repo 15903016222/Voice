@@ -9,8 +9,6 @@ VVWeldWidget::VVWeldWidget(QSharedPointer<BaseWeldInformation> &weldInfo) : Base
 
 void VVWeldWidget::paint()
 {
-    qDebug() << "[VVWeldWidget::paint]";
-
     DplWeld::BaseWeldWidget::paint();
 
     QPainter painter(this);

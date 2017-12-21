@@ -11,8 +11,6 @@ VWeldWidget::VWeldWidget(QSharedPointer<BaseWeldInformation> &weldInfo):BaseWeld
 
 void VWeldWidget::paint()
 {
-    qDebug() << "[VWeldWidget::paint]";
-
     DplWeld::BaseWeldWidget::paint();
 
     QPainter painter(this);
@@ -22,9 +20,6 @@ void VWeldWidget::paint()
     int bottom  = this->height() * (((int)TopScale + (int)WeldScale) / 100.0);
 
     VWeldInformation *tmpInfo = static_cast<VWeldInformation *> (m_weldInfo.data());
-
-    qDebug() << "w1 = " << tmpInfo->get_W1() << " w2 = " << tmpInfo->get_W2() << " h1 " << tmpInfo->get_H1()
-             << " w scale = " << tmpInfo->get_width_scale() << " h scale = " << tmpInfo->get_height_scale();
 
     /* point1 */
     QPoint point1(0, top);

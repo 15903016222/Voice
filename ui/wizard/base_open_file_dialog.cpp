@@ -147,7 +147,6 @@ QFileInfoList BaseOpenFileDialog::get_file_list(const QString &path)
 {
     QDir dir(path);
     QFileInfoList fileList = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-
     return fileList;
 }
 
@@ -216,10 +215,7 @@ void BaseOpenFileDialog::paintEvent(QPaintEvent *event)
     QRect rect = this->rect();
     rect.setWidth(rect.width() - 1);
     rect.setHeight(rect.height() - 1);
-    painter.drawRoundedRect(rect, 15, 15);
+    painter.drawRoundedRect(rect, 8, 8);
 
     QWidget::paintEvent(event);
 }
-
-
-

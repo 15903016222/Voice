@@ -27,19 +27,16 @@ CalibrationWidget::CalibrationWidget(WizardSetting::E_WIZARD_TYPE type, bool isS
 
 CalibrationWidget::~CalibrationWidget()
 {
-    qDebug()<< "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }
 
 void CalibrationWidget::on_backBtn_clicked()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "on_backBtn_clicked";
     emit back_clicked();
 }
 
 void CalibrationWidget::on_finishedBtn_clicked()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "on_finishedBtn_clicked";
     emit finished_clicked();
 }
 
@@ -58,15 +55,12 @@ void CalibrationWidget::do_optionComboBox_current_index_changed(int index)
 
 void CalibrationWidget::do_nextGroupBtn_clicked()
 {
-    qDebug() << "[CalibrationWidget::do_nextGroupBtn_clicked]";
     emit next_group_clicked();
 }
 
 
 void CalibrationWidget::do_utDetectSettingWidget_current_mode_changed(int index)
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " index  = " << index;
-
     m_mode = (CommonSettingWidget::E_DETECT_MODE)index;
 
     if(CommonSettingWidget::TOFD == index) {
@@ -95,8 +89,6 @@ void CalibrationWidget::do_utDetectSettingWidget_current_mode_changed(int index)
 
 void CalibrationWidget::initItem()
 {
-
-     qDebug() << "[" << __FUNCTION__ << "]" << " m_type = " << m_type << " mode = " << m_mode;
      /*
       * comboBox默认item
       * 0--Encoder
@@ -109,12 +101,10 @@ void CalibrationWidget::initItem()
       */
 
     if(WizardSetting::SINGLE_DETECT == m_type) {
-
         /* 删除不需要的item */
         ui->optionComboBox->removeItem(4);     /* 删除TCG项 */
         ui->optionComboBox->removeItem(3);     /* 删除ACG项 */
         ui->optionComboBox->removeItem(0);     /* 删除Encoder项 */
-
 
         m_widgetMap.insert(SINGLE_DETECT_SOUND_VELOVITY_PROPERTIES, new SoundVelocityPropertiesWidget(m_type, ui->propertiesWidget));
         m_widgetMap.insert(SINGLE_DETECT_DELAY_PROPERTIES, new DelayPropertiesWidget(m_type, ui->propertiesWidget));
@@ -139,9 +129,7 @@ void CalibrationWidget::initItem()
         } else {
             return;
         }
-
     } else {
-
         /* 删除不需要的item */
         ui->optionComboBox->removeItem(ui->optionComboBox->count() - 1);  /* 删除Angel项 */
 
@@ -153,18 +141,14 @@ void CalibrationWidget::initItem()
         m_widgetMap.insert(PA_DELAY_PROPERTIES, new DelayPropertiesWidget(m_type, ui->propertiesWidget));
         m_widgetMap.insert(PA_ACG_PROPERTIES, new ACGPropertiesWidget(ui->propertiesWidget));
         m_widgetMap.insert(PA_TCG_PROPERTIES, new TCGPropertiesWidget(ui->propertiesWidget));
-
     }
 
     if(m_isSubWidget) {
-
         QPushButton *newGroupBtn = new QPushButton(tr("Next Group"), this);
         newGroupBtn->setSizePolicy(ui->acceptBtn->sizePolicy());
         ui->btnHorizontalLayout->addWidget(newGroupBtn);
         connect(newGroupBtn, SIGNAL(clicked(bool)), this, SLOT(do_nextGroupBtn_clicked()));
-
     }
 
     m_widgetMap.value(m_currentIndex)->show();
-
 }

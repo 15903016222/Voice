@@ -7,16 +7,15 @@ PADetectSettingWidget::PADetectSettingWidget(WizardSetting::E_WIZARD_TYPE type, 
     QWidget(parent),
     ui(new Ui::PADetectSettingWidget)
 {
+    Q_UNUSED(type);
     ui->setupUi(this);
 
     connect(ui->oneLineCheckBox, SIGNAL(pressed()), this, SLOT(do_checkBox_pressed()));
     connect(ui->rasterCheckBox, SIGNAL(pressed()), this, SLOT(do_checkBox_pressed()));
-
 }
 
 PADetectSettingWidget::~PADetectSettingWidget()
 {
-    qDebug()<< "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }
 

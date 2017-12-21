@@ -13,10 +13,7 @@ TKYWeldWidget::TKYWeldWidget(QSharedPointer<BaseWeldInformation> &weldInfo) : Ba
 
 void TKYWeldWidget::paint()
 {
-
     m_pTKYWeldInfo = static_cast<TKYWeldInformation *> (m_weldInfo.data());
-
-    qDebug() << "w PixelPerUnit = " << m_pTKYWeldInfo->get_width_scale() << " h PixelPerUnit = " << m_pTKYWeldInfo->get_height_scale();
 
     QPainter painter(this);
     /* 设置画笔颜色 */
@@ -44,8 +41,7 @@ void TKYWeldWidget::paint()
     if(fabs(m_pTKYWeldInfo->get_angle() - 90.0) < 0.001) {
         /* 等于90度角 */
         paint_right_angle(rectangleBottom, painter);
-    }
-    else {
+    } else {
         /* 小于90或大于180度 */
         paint_other_angle(rectangleBottom, painter);
     }
@@ -60,8 +56,6 @@ void TKYWeldWidget::paint_symbol()
 
 void TKYWeldWidget::paint_right_angle(double rectangleBottom, QPainter &painter)
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " paintRightAngle";
-
     painter.setPen(Qt::DashDotLine);
     /* 四分之一T1，开始画中心线 */
     double center = this->width() / 2.0;
@@ -101,7 +95,6 @@ void TKYWeldWidget::paint_right_angle(double rectangleBottom, QPainter &painter)
 
 void TKYWeldWidget::paint_other_angle(double rectangleBottom, QPainter &painter)
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " paint_other_angle";
     /*
      *___________K1___T2_____K2___X2_____
      *      |\ \  |  \ a   \   |  /|
@@ -162,7 +155,6 @@ void TKYWeldWidget::paint_other_angle(double rectangleBottom, QPainter &painter)
     /* tan(a) = Y1 / K1 */
 
     double K1 = m_pTKYWeldInfo->get_Y1() / tan(radianA);
-    qDebug() << "K1 = " << K1;
 
     QPointF point1(center - (width + (m_pTKYWeldInfo->get_X1() - K1)) * wScale, rectangleBottom);
     QPointF point2(center - width * wScale + K1 * wScale, rectangleBottom + m_pTKYWeldInfo->get_Y1() * hScale);
@@ -186,25 +178,17 @@ void TKYWeldWidget::paint_other_angle(double rectangleBottom, QPainter &painter)
 
         /* 计算最小角度 */
         calculate_min_angle();
-
         /* 计算最小的X1：当X1、Y1构成的直角三角形的一角等于m_info.angle时，X1为最小值 */
         emit min_X1(K1);
-
         /* 计算最大的Y1 ：*/
         emit max_Y1(m_pTKYWeldInfo->get_X1() * tan(radianA));
-
         emit min_X2(0.0);
-
     } else {
-
         emit min_X1(0.0);
-
         /* 计算最大角度 */
         calculate_max_angle();
-
         /* 计算最小的Y2： */
         emit min_X2(fabs(K2));
-
         /* 计算最大的Y2： */
         emit max_Y2(m_pTKYWeldInfo->get_X2() * tan((M_PI / 180.0) * (180.0 - m_pTKYWeldInfo->get_angle())));
     }
@@ -215,9 +199,6 @@ void TKYWeldWidget::calculate_min_angle()
 {
     double minRadian = atan(m_pTKYWeldInfo->get_Y1() / m_pTKYWeldInfo->get_X1());
     double angle = (180.0 / M_PI) * minRadian;
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " min angle = " << angle;
-
     emit min_angle(angle);
 }
 
@@ -226,11 +207,7 @@ void TKYWeldWidget::calculate_max_angle()
 {
     double maxRadian = atan(m_pTKYWeldInfo->get_X2() / m_pTKYWeldInfo->get_Y2());
     double angle = (180.0 / M_PI) * maxRadian + 90.0;
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " max angle = " << angle;
-
     emit max_angle(angle);
 }
-
 
 }

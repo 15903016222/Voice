@@ -10,6 +10,7 @@ MultiGroupWidget::MultiGroupWidget(WizardSetting::E_WIZARD_TYPE type, QWidget *p
     QWidget(parent),
     ui(new Ui::MultiGroupWidget)
 {
+    Q_UNUSED(type);
     ui->setupUi(this);
 
     connect(ui->settingBtn1, SIGNAL(clicked(bool)), this, SLOT(do_settingBtn_clicked()));
@@ -38,21 +39,16 @@ MultiGroupWidget::MultiGroupWidget(WizardSetting::E_WIZARD_TYPE type, QWidget *p
     m_groupNOComboBoxMap.insert(GROUP_6, ui->settingComboBox6);
     m_groupNOComboBoxMap.insert(GROUP_7, ui->settingComboBox7);
     m_groupNOComboBoxMap.insert(GROUP_8, ui->settingComboBox8);
-
-
 }
 
 MultiGroupWidget::~MultiGroupWidget()
 {
-    qDebug()<< "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }
 
 
 void MultiGroupWidget::do_settingBtn_clicked()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "do_settingBtn_clicked";
-
     QPushButton *current = qobject_cast<QPushButton*> (sender());
 
     if(NULL == current) {
@@ -96,8 +92,6 @@ void MultiGroupWidget::do_settingBtn_clicked()
 
 void MultiGroupWidget::do_sub_wizard_setting_next_group()
 {
-    qDebug()<< "[" << __FUNCTION__ << "]" << "do_sub_wizard_setting_next_group";
-
     if(m_currentGroup >= GROUP_8) {
         m_subWizardSetting->hide();
         return;
@@ -133,5 +127,3 @@ void MultiGroupWidget::do_sub_wizard_setting_next_group()
         }
     }
 }
-
-

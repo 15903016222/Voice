@@ -14,7 +14,6 @@ StaticWeldWidget::StaticWeldWidget(QWidget *parent) :
 
 StaticWeldWidget::~StaticWeldWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }
 

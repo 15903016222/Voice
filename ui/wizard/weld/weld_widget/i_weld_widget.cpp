@@ -11,14 +11,10 @@ IWeldWidget::IWeldWidget(QSharedPointer<BaseWeldInformation> &weldInfo):BaseWeld
 
 IWeldWidget::~IWeldWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " I am desconstruction. ";
 }
 
 void IWeldWidget::paint()
 {
-    qDebug() << "[IWeldingLine::paint]" << m_weldInfo->get_width_scale();
-
-
     DplWeld::BaseWeldWidget::paint();
 
     QPainter painter(this);
@@ -49,11 +45,7 @@ void IWeldWidget::paint()
 
 void IWeldWidget::paint_symbol()
 {
-//    QPainter painter(this);
 
-//    painter.setPen(QColor(0, 170, 255));        /* 设置画笔颜色 */
-
-//    painter.drawLine(QPoint(50, 50), QPoint(300, 500));
 }
 
 }

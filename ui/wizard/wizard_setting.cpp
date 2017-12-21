@@ -1,7 +1,5 @@
 #include "wizard_setting.h"
 
-#include <QDebug>
-
 #include "ui_wizard_setting.h"
 #include "step_widget.h"
 #include "selector.h"
@@ -24,7 +22,6 @@ WizardSetting::WizardSetting(QWidget *parent) :
 WizardSetting::~WizardSetting()
 {
     m_widgetSelector->clear_widget();
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor type = " << m_type;
     delete ui;
 }
 
@@ -56,47 +53,33 @@ void WizardSetting::on_backBtn_clicked()
         backWidget->show();
 
         update_step_widget(true, currentWidget);
-
-        qDebug() << "[" << __FUNCTION__ << "]" << " currentWidget = " << currentWidget;
-        qDebug() << "[" << __FUNCTION__ << "]" << " backWidget = " << backWidget;
     }
 }
 
 
 void WizardSetting::on_nextBtn_clicked()
 {
-
     if(m_widgetSelector->is_last_widget()) {
         /* 配置完成 */
         emit finished_wizard_setting(m_type);
         m_widgetSelector->get_current_widget(m_type)->hide();
         ui->settingVerticalLayout->removeWidget(m_widgetSelector->get_current_widget(m_type));
         hide();
-
     } else {
 
         QWidget *currentWidget = m_widgetSelector->get_current_widget(m_type);
         QWidget *preWidget = m_widgetSelector->get_pre_widget();
 
         if(NULL == preWidget) {
-
             emit finished_wizard_setting(m_type);
             ui->verticalLayout_wizardSetting->removeWidget(currentWidget);
             close();
-            qDebug() << "[" << __FUNCTION__ << "]" << " is last widget." ;
-
         } else {
-
             ui->settingVerticalLayout->removeWidget(currentWidget);
             ui->settingVerticalLayout->insertWidget(0, preWidget);
             preWidget->show();
             currentWidget->hide();
-
-
             update_step_widget(false, preWidget);
-
-            qDebug() << "[" << __FUNCTION__ << "]" << " currentWidget = " << currentWidget;
-            qDebug() << "[" << __FUNCTION__ << "]" << " preWidget = " << preWidget;
         }
     }
 }
@@ -212,9 +195,6 @@ void WizardSetting::init_widget()
 
     current->show();
     ui->settingVerticalLayout->insertWidget(0, current);
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " current widget = " << current;
-
 }
 
 

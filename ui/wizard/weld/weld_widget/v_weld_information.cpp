@@ -19,5 +19,4 @@ double VWeldInformation::get_H1()
     return m_dataMap.value(TAG_H1);
 }
 
-
 }

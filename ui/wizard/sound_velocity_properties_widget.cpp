@@ -18,6 +18,5 @@ SoundVelocityPropertiesWidget::SoundVelocityPropertiesWidget(WizardSetting::E_WI
 
 SoundVelocityPropertiesWidget::~SoundVelocityPropertiesWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }

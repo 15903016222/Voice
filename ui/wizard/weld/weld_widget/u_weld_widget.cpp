@@ -14,8 +14,6 @@ UWeldWidget::UWeldWidget(QSharedPointer<BaseWeldInformation> &weldInfo) : BaseWe
 
 void UWeldWidget::paint()
 {
-    qDebug() << "[UWeldingLine::paint]";
-
     DplWeld::BaseWeldWidget::paint();
 
     QPainter painter(this);
@@ -61,8 +59,7 @@ void UWeldWidget::paint_bottom(int bottom, QPainter &painter, QPointF &point4, Q
 {
     if(m_pUWeldInfo->get_H1() <= 0.000001
             || m_pUWeldInfo->get_W1() <= 0.000001
-            || m_pUWeldInfo->get_R1() <= 0.000001 )
-    {
+            || m_pUWeldInfo->get_R1() <= 0.000001 ) {
         return;
     }
 
@@ -90,8 +87,7 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
     double wScale   = m_pUWeldInfo->get_width_scale();
     double hScale   = m_pUWeldInfo->get_height_scale();
 
-    if(height1 <= 0.000001 || width1 <= 0.000001 || radius1 <= 0.000001 )
-    {
+    if(height1 <= 0.000001 || width1 <= 0.000001 || radius1 <= 0.000001 ) {
         return;
     }
 
@@ -122,9 +118,6 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
     /* 求圆心坐标 */
 
     double height = sqrt(pow(radius1, 2) - pow(width2, 2));
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "height = " << height << " circle = " << top + (height1 - height) * hScale;
-
     QPointF circle(this->width() / 2.0, top + (height1 - height) * hScale);
     painter.drawEllipse(circle, 5, 1);
 
@@ -141,9 +134,6 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
     double radianA = atan((height1 - height) / width1);
     double lenA = sqrt(pow(width1, 2) + pow(height1 - height, 2));
 
-    qDebug() << "[" << __FUNCTION__ <<  "]"
-             << " radianA = " << radianA << " value = " << (height1 - height) / width1 << " lenA = " << lenA ;
-
     /* 圆心与相切点、W1点构成直角三角形 */
     /*
     *W1
@@ -157,9 +147,6 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
     /* 求弧度B及直角边 */
     double radianB = asin(radius1 / lenA);
     double lenB    = sqrt(pow(lenA, 2) - pow(radius1, 2));
-
-    qDebug() << "[" << __FUNCTION__ <<  "]"
-             << " radianB = " << radianB << " value = " << height1 / lenA << " lenB = " << lenB ;
 
     /*
     * targetWidth
@@ -177,12 +164,6 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
     double targetHeight = sin(targetRadian) * lenB;
     double targetWidth  = cos(targetRadian) * lenB;
 
-    qDebug() << "[" << __FUNCTION__ <<  "]"
-             << " targetRadian = " << radianA + radianB << " targetHeight = " << targetHeight << " targetWidth = " << targetWidth ;
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "point3 X = " << this->width() / 2.0 - (width1 - targetWidth) * wScale
-             << ", Y = " << top + targetHeight * hScale;
-
     QPointF point3(this->width() / 2.0 - (width1 - targetWidth) * wScale,
                    top + targetHeight * hScale);
 
@@ -196,15 +177,6 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
     /* point6 */
     point6.setX(0);
     point6.setY(bottom);
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "w per = " << wScale << ", h per = " << hScale;
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "point1 : " << point1.x() << point1.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "point2 : " << point2.x() << point2.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "point3 : " << point3.x() << point3.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "point4 : " << point4.x() << point4.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "point6 : " << point6.x() << point6.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "circle : " << circle.x() << circle.y();
 
     /* 1 to 2 line */
     painter.drawLine(point1, point2);
@@ -224,11 +196,10 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
 
     /* 求point3点的角度 */
     double radianValue = ((this->width() / 2.0 - point3.x()) / wScale) / radius1;
-    double tmp1 = this->width() / 2.0 - point3.x();
-    double tmp2 = tmp1 / wScale;
-    double tmp3 = tmp2 / radius1;
+//    double tmp1 = this->width() / 2.0 - point3.x();
+//    double tmp2 = tmp1 / wScale;
+//    double tmp3 = tmp2 / radius1;
 
-    qDebug() << "[" << __FUNCTION__ << "]" <<  " tmp1 = " << tmp1 << " tmp2 = " << tmp2 << " tmp3 = " << tmp3;
 
     double anglePoint3;
     if(radianValue < 1.0) {
@@ -240,9 +211,6 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
 
     /* 求point4点的角度 */
     double anglePoint4 = asin(width2 / radius1) * (180 / M_PI);
-    qDebug() << "[" << __FUNCTION__ << "]" << "method 2 anglePoint3 = " << anglePoint3 << " , anglePoint4 = " << anglePoint4;
-
-
     double circleW = 2 * radius1 * wScale;
     double circleH = 2 * radius1 * hScale;
 
@@ -250,9 +218,6 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
     double beginY = circle.y() - radius1 * hScale;
 
     QRectF beginRect(beginX, beginY, circleW, circleH);
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "circleW = " << circleW << ", circleH = " << circleH
-           << ", beginX = " << beginX << ", begiinY = " << beginY;
 
     painter.drawArc(beginRect,
                     (180.0 + (90.0 - anglePoint3)) * 16,
@@ -270,13 +235,9 @@ void UWeldWidget::paint_common(int top, int bottom, QPainter &painter, QPointF &
     double tmpW1;
 
     calculate_max_W1(tmpW1, point4);
-
     calculate_max_W2(tmpW1);
-
     calculate_min_H1();
-
     calculate_min_R1();
-
 }
 
 
@@ -307,7 +268,6 @@ void UWeldWidget::calculate_max_W1(double &tmpW1, QPointF &point4)
     double tmpRadian = atan(height1 / width2);
     /* 根据A角度弧度、R1为直角边求出斜边W1最大值 */
     tmpW1 = radius1 / cos(tmpRadian);
-    qDebug() << "[" << __FUNCTION__ << "]" << "max W1 = " << tmpW1;
 
     /*W1
      * ___W1-W2___W2__
@@ -327,7 +287,6 @@ void UWeldWidget::calculate_max_W1(double &tmpW1, QPointF &point4)
      */
     double height = sqrt(pow(radius1, 2) - pow(width2, 2));
     double antherMaxW1 = (height * height1) / width2 + width2;
-    qDebug() << "[" << __FUNCTION__ << "]" << "anther max W1 = " << antherMaxW1;
 
     /* 根据求出的tmpW1值，求出当W1最大值时，所求的point3坐标是否大于point4，
      * 若大于，则使用antherMaxW1值作为最大值 */
@@ -380,10 +339,6 @@ void UWeldWidget::calculate_max_W1(double &tmpW1, QPointF &point4)
 
     QPointF tmppoint3(this->width() / 2  - (width1 - tmpTtargetWidth) * wScale,
                       top + tmpTargetHeight * hScale);
-
-    qDebug() << "[" << __FUNCTION__ << "]" << " \n tmppoint3 x = " << tmppoint3.x() << " , y = " << tmppoint3.y()
-              << "\n point4 x = " << point4.x() << " , y = " << point4.y();
-
     if(tmppoint3.x() > point4.x() || tmppoint3.y() > point4.y()) {
 
         if(tmpW1 > antherMaxW1) {
@@ -393,7 +348,6 @@ void UWeldWidget::calculate_max_W1(double &tmpW1, QPointF &point4)
 
 
     if(width1 < tmpW1) {
-        qDebug() << "[" << __FUNCTION__ << "]" << " emit ture max W1 =  " << tmpW1;
         emit max_W1(tmpW1);
     } else {
         qDebug() << "[" << __FUNCTION__ << "]" << " max W1 bigger than m_info.W1, so not change maximun.";
@@ -404,11 +358,7 @@ void UWeldWidget::calculate_max_W1(double &tmpW1, QPointF &point4)
 void UWeldWidget::calculate_max_W2(double tmpW1)
 {
     /* 当W1为最大值时，W2当前值也为最大值，不可改变W2 */
-    qDebug() << "[" << __FUNCTION__ << "]" << "W1 = " << m_pUWeldInfo->get_W1() << ", tmpW1 = "
-             << tmpW1 << " fabs(tmpW1 - m_info.W1) = " << fabs(tmpW1 - m_pUWeldInfo->get_W1());
-
     if(fabs(tmpW1 - m_pUWeldInfo->get_W1()) < EQ_VALUE) {   /* 相等 */
-        qDebug() << "[" << __FUNCTION__ << "]" << " emit max W2 = " << m_pUWeldInfo->get_W2();
         emit max_W2(m_pUWeldInfo->get_W2());
     } else {
         double radianA = atan(m_pUWeldInfo->get_H1() / (m_pUWeldInfo->get_W1() - m_pUWeldInfo->get_W2()));
@@ -416,7 +366,6 @@ void UWeldWidget::calculate_max_W2(double tmpW1)
 
         if(((m_pUWeldInfo->get_W1() - 0.01) > tmpMaxW2)
                 && (tmpMaxW2 > m_pUWeldInfo->get_W2())) {
-            qDebug() << "[" << __FUNCTION__ << "]" << " emit tmpMaxW2 = " << tmpMaxW2;
             emit max_W2(tmpMaxW2);
         }
     }
@@ -442,13 +391,12 @@ void UWeldWidget::calculate_min_H1()
      */
 
     /* 若R1等于W2，则不进行计算 */
-    if(fabs(m_pUWeldInfo->get_R1() - m_pUWeldInfo->get_W2()) < 0.000001)
-    {
+    if(fabs(m_pUWeldInfo->get_R1() - m_pUWeldInfo->get_W2()) < 0.000001) {
         return;
     }
 
-    double tmpminH1 = (m_pUWeldInfo->get_W2() * (m_pUWeldInfo->get_W1() - m_pUWeldInfo->get_W2())) / sqrt(pow(m_pUWeldInfo->get_R1(), 2) - pow(m_pUWeldInfo->get_W2(), 2));
-    qDebug() << "[" << __FUNCTION__ << "]" << " emit min H1 = " << tmpminH1;
+    double tmpminH1 = (m_pUWeldInfo->get_W2() * (m_pUWeldInfo->get_W1() - m_pUWeldInfo->get_W2())) /
+                        sqrt(pow(m_pUWeldInfo->get_R1(), 2) - pow(m_pUWeldInfo->get_W2(), 2));
     emit min_H1(tmpminH1);
 }
 

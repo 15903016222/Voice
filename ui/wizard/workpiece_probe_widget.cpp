@@ -1,13 +1,11 @@
 #include "workpiece_probe_widget.h"
 
-#include <QDebug>
 #include <QKeyEvent>
 #include <QLineEdit>
 
 #include "ui_workpiece_probe_widget.h"
-#include "../wizard/main_weld_widget/main_weld_widget.h"
-
-#include "../menu/probe_part/wedge_dialog.h"   /* 探头 */
+#include "ui/wizard/weld/main_weld_widget.h"
+#include "ui/menu/probe_part/wedge_dialog.h"   /* 探头 */
 #include "base_open_file_dialog.h"
 
 static const int DEFAULT_WELD_INDEX = 4;  /* VV_Weld */
@@ -35,11 +33,9 @@ WorkpieceProbeWidget::WorkpieceProbeWidget(WizardSetting::E_WIZARD_TYPE type, QW
 
 WorkpieceProbeWidget::~WorkpieceProbeWidget()
 {
-    qDebug()<< "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 
     if(WizardSetting::SINGLE_DETECT != m_type) {
-
            delete m_mainWeldWidget;
     }
 }
@@ -49,11 +45,8 @@ void WorkpieceProbeWidget::do_editWeldBtn_clicked()
     QPushButton *current = qobject_cast<QPushButton*> (sender());
 
     if(current->objectName() == ui->editWeldBtn->objectName()) {
-
         m_mainWeldWidget->show_widget(ui->grooveTypeComboBox->currentIndex(), ui->thicknessDoubleSpinBox->value());
-
     } else if(current->objectName() == ui->tkyBtn->objectName()) {
-
         m_mainWeldWidget->show_widget(ui->grooveTypeComboBox->count(), ui->thicknessDoubleSpinBox->value());
     }
 }
@@ -88,6 +81,5 @@ void WorkpieceProbeWidget::on_importCADBtn_clicked()
 {
     BaseOpenFileDialog fileDialog("/home/tt/TT/", this);
     fileDialog.exec();
-    qDebug() << "[" << __FUNCTION__ << "]" << fileDialog.get_selected_file();
 }
 

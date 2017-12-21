@@ -7,12 +7,12 @@ DelayPropertiesWidget::DelayPropertiesWidget(WizardSetting::E_WIZARD_TYPE type, 
     QWidget(parent),
     ui(new Ui::DelayPropertiesWidget)
 {
+    Q_UNUSED(type);
     ui->setupUi(this);
     hide();
 }
 
 DelayPropertiesWidget::~DelayPropertiesWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }

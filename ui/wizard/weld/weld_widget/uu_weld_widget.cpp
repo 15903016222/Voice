@@ -22,8 +22,6 @@ void UUWeldWidget::paint_symbol()
 
 void UUWeldWidget::paint_bottom(int bottom, QPainter &painter, QPointF &point4, QPointF &point8)
 {
-    qDebug() << "[UUWeldingLine::paint_bottom]";
-
     m_pUUWeldInfo = static_cast<UUWeldInformation *> (m_weldInfo.data());
 
     double width1   = m_pUUWeldInfo->get_W1();
@@ -41,8 +39,7 @@ void UUWeldWidget::paint_bottom(int bottom, QPainter &painter, QPointF &point4, 
             || radius1 <= 0.000001
             || height2 <= 0.000001
             || width3 <= 0.000001
-            || radius2 <= 0.000001 )
-    {
+            || radius2 <= 0.000001) {
         return;
     }
 
@@ -89,8 +86,6 @@ void UUWeldWidget::paint_bottom(int bottom, QPainter &painter, QPointF &point4, 
      *                     _|_bottom
      **/
     double height = sqrt(pow(radius2, 2) - pow(width2, 2));
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "height = " << height << " circle = " << bottom - (height2 - height) * hScale;
 
     QPointF circle(this->width() / 2.0, bottom - (height2 - height) * hScale);
     painter.drawEllipse(circle, 5, 1);
@@ -146,24 +141,11 @@ void UUWeldWidget::paint_bottom(int bottom, QPainter &painter, QPointF &point4, 
     double targetHeight = sin(targetRadian) * lenB;
     double targetWidth  = cos(targetRadian) * lenB;
 
-    qDebug() << "[" << __FUNCTION__ << "]" << "point6 X = " << this->width() / 2  - (width3 - targetWidth) * wScale
-             << ", Y = " << bottom - targetHeight * hScale;
-
     /* point6 */
     QPointF point6(this->width() / 2.0  - (width3 - targetWidth) * wScale, bottom - targetHeight * hScale);
 
     /* point7 */
     QPointF point7(this->width() / 2.0 - width3 * wScale, bottom);
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "w per = " << wScale << ", h per = " << hScale;
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "point4 : " << point4.x() << point4.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "point5 : " << point5.x() << point5.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "point6 : " << point6.x() << point6.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "point7 : " << point7.x() << point7.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "point8 : " << point8.x() << point8.y();
-    qDebug() << "[" << __FUNCTION__ << "]" << "circle : " << circle.x() << circle.y();
-
     /* 4 to 5 line */
     painter.drawLine(point4, point5);
     /* 8 to 7 line */
@@ -194,28 +176,20 @@ void UUWeldWidget::paint_bottom(int bottom, QPainter &painter, QPointF &point4, 
      */
     double radianValue = ((this->width() / 2.0 - point6.x()) / wScale) / radius2;
 
-    double tmp1 = this->width() / 2.0 - point6.x();
-    double tmp2 = tmp1 / wScale;
-    double tmp3 = tmp2 / radius1;
-
-    qDebug() << "[" << __FUNCTION__ << "]" <<  " tmp1 = " << tmp1 << " tmp2 = " << tmp2 << " tmp3 = " << tmp3;
+//    double tmp1 = this->width() / 2.0 - point6.x();
+//    double tmp2 = tmp1 / wScale;
+//    double tmp3 = tmp2 / radius1;
 
     double anglePoint6;
-    if(radianValue < 1.0)
-    {
+    if(radianValue < 1.0) {
         anglePoint6 = asin(radianValue) * (180 / M_PI);
-    }
-    else
-    {
+    } else {
         /* 成九十度角 */
         anglePoint6 = 90.0;
     }
 
     /* 求point5点的角度 */
     double anglePoint5 = asin(width2 / radius2) * (180 / M_PI);
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "method 2 anglePoint5 = " << anglePoint5 << " , anglePoint6 = " << anglePoint6;
-
     double circleW = 2 * radius2 * wScale;
     double circleH = 2 * radius2 * hScale;
 
@@ -223,10 +197,6 @@ void UUWeldWidget::paint_bottom(int bottom, QPainter &painter, QPointF &point4, 
     double beginY = circle.y() - radius2 * hScale;
 
     QRectF beginRect(beginX, beginY, circleW, circleH);
-
-    qDebug() << "[" << __FUNCTION__ << "]" << "circleW = " << circleW << ", circleH = " << circleH
-           << ", beginX = " << beginX << ", begiinY = " << beginY;
-
     painter.drawArc(beginRect,
                     (90.0 + anglePoint5) * 16,
                     (anglePoint6 - anglePoint5) * 16);
@@ -236,20 +206,15 @@ void UUWeldWidget::paint_bottom(int bottom, QPainter &painter, QPointF &point4, 
                     (anglePoint6 - anglePoint5) * 16);
 
     /* 计算当前各值的最大值、最小值 */
-    if(width2 < 0.000001)
-    {
+    if(width2 < 0.000001) {
         return;
     }
 
     double tmpW1;
     calculate_max_W3(tmpW1, point6);
-
     calculate_max_W2(tmpW1);
-
     calculate_min_H2();
-
     calculate_min_R2();
-
 }
 
 
@@ -276,7 +241,6 @@ void UUWeldWidget::calculate_max_W3(double &tmpW3, QPointF &point5)
     double tmpRadian = atan(m_pUUWeldInfo->get_H2() / m_pUUWeldInfo->get_W2());
     /* 根据∠A角度弧度、R2为直角边求出斜边W3最大值 */
     tmpW3 = m_pUUWeldInfo->get_R2() / cos(tmpRadian);
-    qDebug() << "[" << __FUNCTION__ << "]" << " max W3 = " << tmpW3;
 
     /*求W1最大值
      * ___W1-W2___W2__
@@ -317,7 +281,6 @@ void UUWeldWidget::calculate_max_W3(double &tmpW3, QPointF &point5)
      */
     double height = sqrt(pow(m_pUUWeldInfo->get_R2(), 2) - pow(m_pUUWeldInfo->get_W2(), 2));
     double antherMaxW3 = (height * m_pUUWeldInfo->get_H2()) / m_pUUWeldInfo->get_W2() + m_pUUWeldInfo->get_W2();
-    qDebug() << "[" << __FUNCTION__ << "]" << " anther max W3 = " << antherMaxW3;
 
     /* 根据求出的tmpW3值，求出当W3最大值时，所求的point6坐标是否大于point5，
      * 若大于，则使用antherMaxW3值作为最大值 */
@@ -374,7 +337,6 @@ void UUWeldWidget::calculate_max_W3(double &tmpW3, QPointF &point5)
 
     QPointF tmppoint6(this->width() / 2.0 - (m_pUUWeldInfo->get_W3() - tmpTtargetWidth) * m_pUUWeldInfo->get_width_scale(),
                       bottom - tmpTargetHeight * m_pUUWeldInfo->get_height_scale());
-    qDebug() << "[" << __FUNCTION__ << "]" << " tmppoint6 x= " << tmppoint6.x() << " , y = " << tmppoint6.y();
 
     if(tmppoint6.x() > point5.x() || tmppoint6.y() < point5.y()) {
 
@@ -384,7 +346,6 @@ void UUWeldWidget::calculate_max_W3(double &tmpW3, QPointF &point5)
     }
 
     if(m_pUUWeldInfo->get_W3() < tmpW3) {
-        qDebug() << "[" << __FUNCTION__ << "]" << " emit ture max W3 =  " << tmpW3;
         emit max_W3(tmpW3);
     } else {
         qDebug() << "[" << __FUNCTION__ << "]" << " max W3 bigger than m_info.W3, so not change maximun.";
@@ -395,13 +356,8 @@ void UUWeldWidget::calculate_max_W3(double &tmpW3, QPointF &point5)
 void UUWeldWidget::calculate_max_W2(double tmpW3)
 {
     /* 当W3为最大值时，W2当前值也为最大值，不可改变W2 */
-    qDebug() << "[" << __FUNCTION__ << "]" << "W3 = "
-             << m_pUUWeldInfo->get_W3() << ", tmpW3 = " << tmpW3 << " fabs(tmpW3 - W3) = " << fabs(tmpW3 - m_pUUWeldInfo->get_W3());
-
     /* 相等 */
     if(fabs(tmpW3 - m_pUUWeldInfo->get_W3()) < EQ_VALUE) {
-
-        qDebug() << "[" << __FUNCTION__ << "]" << " emit max W2 = " << m_pUUWeldInfo->get_W2();
         emit max_W2(m_pUUWeldInfo->get_W2());
     } else {
 
@@ -412,14 +368,11 @@ void UUWeldWidget::calculate_max_W2(double tmpW3)
         double tmpMaxW2 = m_pUUWeldInfo->get_R2() * sin(radianA);
 
         if(tmpMaxW2ForBaseUWeld < tmpMaxW2) {
-
             qDebug() << "[" << __FUNCTION__ << "]" << " max W2 for UU bigger than max W2 for base U, so ingore it.";
             return;
         }
 
         if(((m_pUUWeldInfo->get_W3() - 0.01) > tmpMaxW2) && (tmpMaxW2 > m_pUUWeldInfo->get_W2())) {
-
-            qDebug() << "[" << __FUNCTION__ << "]" << " emit tmpMaxW2 = " << tmpMaxW2;
             emit max_W2(tmpMaxW2);
         }
     }
@@ -448,8 +401,8 @@ void UUWeldWidget::calculate_min_H2()
         return;
     }
 
-    double tmpminH2 = (m_pUUWeldInfo->get_W2() * (m_pUUWeldInfo->get_W3() - m_pUUWeldInfo->get_W2())) / sqrt(pow(m_pUUWeldInfo->get_R2(), 2) - pow(m_pUUWeldInfo->get_W2(), 2));
-    qDebug() << "[" << __FUNCTION__ << "]" << " emit min H2 = " << tmpminH2;
+    double tmpminH2 = (m_pUUWeldInfo->get_W2() * (m_pUUWeldInfo->get_W3() - m_pUUWeldInfo->get_W2())) /
+                        sqrt(pow(m_pUUWeldInfo->get_R2(), 2) - pow(m_pUUWeldInfo->get_W2(), 2));
 
     emit min_H2(tmpminH2);
 }
@@ -478,7 +431,6 @@ void UUWeldWidget::calculate_min_R2()
 
     double radianA = atan(m_pUUWeldInfo->get_H2() / (m_pUUWeldInfo->get_W3() - m_pUUWeldInfo->get_W2()));
     double targetR2 = m_pUUWeldInfo->get_W2() / sin(radianA);
-
     emit min_R2(targetR2);
 }
 

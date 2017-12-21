@@ -1,7 +1,6 @@
 #include "wizard.h"
 #include "ui_wizard.h"
 
-#include <QDebug>
 #include <QFileDialog>
 #include <QKeyEvent>
 
@@ -29,7 +28,6 @@ Wizard::Wizard(QWidget *mainWindow, QWidget *parent) :
 
 Wizard::~Wizard()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }
 
@@ -87,10 +85,7 @@ void Wizard::on_openConfigFileBtn_clicked()
 
 void Wizard::keyPressEvent(QKeyEvent *event)
 {
-    qDebug("%s[%d]: ",__func__, __LINE__);
-
     if (event->key() == Qt::Key_Return) {
-
         if(ui->currentPADetectBtn->hasFocus()) {
             on_currentPADetectBtn_clicked();
         } else if(ui->multiGroupDetectBtn->hasFocus()) {
@@ -106,7 +101,6 @@ void Wizard::keyPressEvent(QKeyEvent *event)
         } else {
             return QWidget::keyPressEvent(event);
         }
-
         return;
     }
     return QWidget::keyPressEvent(event);

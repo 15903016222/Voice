@@ -31,7 +31,6 @@ BaseWeldInformation::BaseWeldInformation(const QMap<QString, double> &valueList)
 
 BaseWeldInformation::~BaseWeldInformation()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " I am desconstruction. ";
 }
 
 
@@ -50,8 +49,7 @@ bool BaseWeldInformation::insert_value_list(const QMap<QString, double> &valueLi
 {
     QMap<QString, double>::const_iterator it = valueList.begin();
 
-    while(it != valueList.end())
-    {
+    while(it != valueList.end()) {
         m_dataMap.insert(it.key(), it.value());
 
         ++it;
@@ -82,9 +80,6 @@ double BaseWeldInformation::get_width_scale()
 
 void BaseWeldInformation::get_pic_path(QString &path)
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << " type = " << (WeldType)m_dataMap.value(TAG_TYPE);
-    qDebug() << "[" << __FUNCTION__ << "]" << " type = " << m_dataMap.value(TAG_TYPE);
-
     path = m_pixMap.value((WeldType)m_dataMap.value(TAG_TYPE));
 }
 

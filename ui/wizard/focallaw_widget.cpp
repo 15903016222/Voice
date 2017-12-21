@@ -7,11 +7,11 @@ FocallawWidget::FocallawWidget(WizardSetting::E_WIZARD_TYPE type, QWidget *paren
     QWidget(parent),
     ui(new Ui::FocallawWidget)
 {
+    Q_UNUSED(type);
     ui->setupUi(this);
 }
 
 FocallawWidget::~FocallawWidget()
 {
-    qDebug()<< "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }

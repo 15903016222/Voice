@@ -2,7 +2,6 @@
 #include "ui_main_weld_widget.h"
 
 #include <QDebug>
-#include <QKeyEvent>
 #include <math.h>
 
 #include "weld_information_factory.h"
@@ -25,12 +24,10 @@ MainWeldWidget::MainWeldWidget(QWidget *parent) :
     connect(ui->finishedBtn, SIGNAL(clicked(bool)), this, SLOT(do_btn_clicked()));
 
     init();
-
 }
 
 MainWeldWidget::~MainWeldWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }
 
@@ -38,9 +35,6 @@ void MainWeldWidget::set_thickness(double value)
 {
     m_verticalSize.defaultSize = value;
     m_verticalSize.currentSize = value;
-
-    S_RulerSize m_horizontalSize;
-    S_RulerSize m_verticalSize;
 }
 
 QSharedPointer<DplWeld::BaseWeldInformation> MainWeldWidget::get_weld_information()
@@ -64,13 +58,11 @@ void MainWeldWidget::show_widget(int weldType, double thickness)
     do_weldProperties_weld_info_changed(weldType, valueList);
 
     show();
-
 }
 
 
 void MainWeldWidget::do_weldProperties_weld_info_changed(int type, const QMap<QString, double> &valueList)
 {
-    qDebug() << "[MainWeldWidget::do_weldProperties_weld_info_changed] " << valueList;
     /*
      * get weld information
     */
@@ -79,14 +71,11 @@ void MainWeldWidget::do_weldProperties_weld_info_changed(int type, const QMap<QS
     /* 增加额外信息 */
     append_value(type, tmpValueList);
 
-    qDebug() << tmpValueList;
-
     if(m_pbaseWeldInformation.isNull() || (m_pbaseWeldInformation->get_type() != type)) {
 
         m_pbaseWeldInformation = DplWeld::WeldInformationFactory::create_weld_information(type, tmpValueList);
 
-        if(m_pbaseWeldWidget != NULL)
-        {
+        if(m_pbaseWeldWidget != NULL) {
             ui->weldVerticalLayout->removeWidget((QWidget*)m_pbaseWeldWidget);
             delete m_pbaseWeldWidget;
             m_pbaseWeldWidget = NULL;
@@ -107,7 +96,6 @@ void MainWeldWidget::do_weldProperties_weld_info_changed(int type, const QMap<QS
         ui->staticWeld->slotWeldTypeChanged(picPath);
 
     } else {
-
         m_pbaseWeldInformation = DplWeld::WeldInformationFactory::create_weld_information(type, tmpValueList);
         m_pbaseWeldWidget->update_weld_information(m_pbaseWeldInformation);
     }
@@ -124,7 +112,7 @@ void MainWeldWidget::do_btn_clicked()
         this->hide();
     } else if(current->objectName() == ui->finishedBtn->objectName()) {
         /* 发送最新的焊缝信息信号 */
-//        qDebug() << "[" << __FUNCTION__ << "]" << " TODO: send signal to which use newest info about weld.";
+        qDebug() << "[" << __FUNCTION__ << "]" << " TODO: send signal to which use newest info about weld.";
         this->hide();
     }
 }
@@ -133,26 +121,14 @@ void MainWeldWidget::do_btn_clicked()
 void MainWeldWidget::config_ruler()
 {
     if(m_pbaseWeldInformation->get_type() == DplWeld::TKY_Weld) {
-
-        qDebug() << "[" << __FUNCTION__ << "]" << "TKY Weld :  V current size = " << m_verticalSize.currentSize;
-
-        ui->leftRuler->set_direction(RulerWidget::Up);
         /* 占比为10% */
         double totalSize = m_verticalSize.currentSize / ((100 - DplWeld::TKYTopScale - DplWeld::TKYBottomScale) / 100.0);
 
         ui->leftRuler->set_range( -totalSize * (DplWeld::TKYTopScale) / 100.0,
                         totalSize * (100.0 - DplWeld::TKYTopScale) / 100.0);
-
-         qDebug() << "[" << __FUNCTION__ << "]" << "start = " << totalSize * (DplWeld::TKYTopScale) / 100.0
-                  << " end = " << totalSize * (100.0 - DplWeld::TKYTopScale) / 100.0;
-
         ui->bottomRuler->set_range(-m_horizontalSize.currentSize, m_horizontalSize.currentSize);
 
     } else {
-
-        qDebug() << "[" << __FUNCTION__ << "]" << "Other Weld :  V current size = " << m_verticalSize.currentSize;
-
-        ui->leftRuler->set_direction(RulerWidget::Down);
         /* 厚度占左标尺的60% */
         double leftRulerSize = m_verticalSize.currentSize / (DplWeld::WeldScale / 100.0);
         ui->leftRuler->set_range(-leftRulerSize * (DplWeld::BottomScale / 100.0),
@@ -219,80 +195,79 @@ void MainWeldWidget::connect_signals(int type)
 void MainWeldWidget::set_default_value(int weldType, QMap<QString, double> &valueList)
 {
     switch (weldType) {
+        case DplWeld::I_Weld:
+        {
+            valueList.insert(TAG_W1, 0.0);
 
-    case DplWeld::I_Weld:
-    {
-        valueList.insert(TAG_W1, 0.0);
-
-        break;
-    }
-    case DplWeld::V_Weld:
-    {
-        valueList.insert(TAG_W1, 2.0);
-        valueList.insert(TAG_W2, 1.0);
-        valueList.insert(TAG_H1, 3.0);
-        break;
-    }
-    case DplWeld::U_Weld:
-    {
-        valueList.insert(TAG_W1, 2.0);
-        valueList.insert(TAG_W2, 1.0);
-        valueList.insert(TAG_H1, 3.0);
-        valueList.insert(TAG_R1, 2.0);
-        break;
-    }
-    case DplWeld::VY_Weld:
-    {
-        valueList.insert(TAG_W1, 5.0);
-        valueList.insert(TAG_W2, 2.0);
-        valueList.insert(TAG_W3, 1.0);
-        valueList.insert(TAG_H1, 2.0);
-        valueList.insert(TAG_H2, 2.0);
-        break;
-    }
-    case DplWeld::VV_Weld:
-    {
-        valueList.insert(TAG_W1, 2.0);
-        valueList.insert(TAG_W2, 1.0);
-        valueList.insert(TAG_W3, 2.0);
-        valueList.insert(TAG_H1, 3.0);
-        valueList.insert(TAG_H2, 3.0);
-        break;
-    }
-    case DplWeld::UU_Weld:
-    {
-        valueList.insert(TAG_W1, 2.0);
-        valueList.insert(TAG_W2, 1.0);
-        valueList.insert(TAG_W3, 2.0);
-        valueList.insert(TAG_H1, 3.0);
-        valueList.insert(TAG_H2, 3.0);
-        valueList.insert(TAG_R1, 2.0);
-        valueList.insert(TAG_R2, 2.0);
-        break;
-    }
-    case DplWeld::UV_Weld:
-    {
-        valueList.insert(TAG_W1, 2.0);
-        valueList.insert(TAG_W2, 1.0);
-        valueList.insert(TAG_W3, 2.0);
-        valueList.insert(TAG_H1, 3.0);
-        valueList.insert(TAG_H2, 3.0);
-        valueList.insert(TAG_R1, 2.0);
-        break;
-    }
-    case DplWeld::TKY_Weld:
-    {
-        valueList.insert(TAG_T1, 30.0);
-        valueList.insert(TAG_T2, 20.0);
-        valueList.insert(TAG_X1, 5.0);
-        valueList.insert(TAG_Y1, 5.0);
-        valueList.insert(TAG_X2, 5.0);
-        valueList.insert(TAG_Y2, 5.0);
-        valueList.insert(TAG_ANGLE, 90.0);
-        break;
-    }
-    default:
-        break;
+            break;
+        }
+        case DplWeld::V_Weld:
+        {
+            valueList.insert(TAG_W1, 2.0);
+            valueList.insert(TAG_W2, 1.0);
+            valueList.insert(TAG_H1, 3.0);
+            break;
+        }
+        case DplWeld::U_Weld:
+        {
+            valueList.insert(TAG_W1, 2.0);
+            valueList.insert(TAG_W2, 1.0);
+            valueList.insert(TAG_H1, 3.0);
+            valueList.insert(TAG_R1, 2.0);
+            break;
+        }
+        case DplWeld::VY_Weld:
+        {
+            valueList.insert(TAG_W1, 5.0);
+            valueList.insert(TAG_W2, 2.0);
+            valueList.insert(TAG_W3, 1.0);
+            valueList.insert(TAG_H1, 2.0);
+            valueList.insert(TAG_H2, 2.0);
+            break;
+        }
+        case DplWeld::VV_Weld:
+        {
+            valueList.insert(TAG_W1, 2.0);
+            valueList.insert(TAG_W2, 1.0);
+            valueList.insert(TAG_W3, 2.0);
+            valueList.insert(TAG_H1, 3.0);
+            valueList.insert(TAG_H2, 3.0);
+            break;
+        }
+        case DplWeld::UU_Weld:
+        {
+            valueList.insert(TAG_W1, 2.0);
+            valueList.insert(TAG_W2, 1.0);
+            valueList.insert(TAG_W3, 2.0);
+            valueList.insert(TAG_H1, 3.0);
+            valueList.insert(TAG_H2, 3.0);
+            valueList.insert(TAG_R1, 2.0);
+            valueList.insert(TAG_R2, 2.0);
+            break;
+        }
+        case DplWeld::UV_Weld:
+        {
+            valueList.insert(TAG_W1, 2.0);
+            valueList.insert(TAG_W2, 1.0);
+            valueList.insert(TAG_W3, 2.0);
+            valueList.insert(TAG_H1, 3.0);
+            valueList.insert(TAG_H2, 3.0);
+            valueList.insert(TAG_R1, 2.0);
+            break;
+        }
+        case DplWeld::TKY_Weld:
+        {
+            valueList.insert(TAG_T1, 30.0);
+            valueList.insert(TAG_T2, 20.0);
+            valueList.insert(TAG_X1, 5.0);
+            valueList.insert(TAG_Y1, 5.0);
+            valueList.insert(TAG_X2, 5.0);
+            valueList.insert(TAG_Y2, 5.0);
+            valueList.insert(TAG_ANGLE, 90.0);
+            break;
+        }
+        default:
+            break;
     }
 
     valueList.insert(TAG_TYPE, weldType);
@@ -306,18 +281,12 @@ void MainWeldWidget::init()
     m_horizontalSize.defaultSize    = DEFAULT_THICKNESS_SIZE;
     m_horizontalSize.currentSize    = DEFAULT_THICKNESS_SIZE;
 
-
-    ui->leftRuler->set_type(RulerWidget::LEFT);
-    ui->leftRuler->set_direction(RulerWidget::Down);
-
     /* 厚度占左标尺的60% */
     double leftRulerSize = m_verticalSize.currentSize / (DplWeld::WeldScale / 100.0);
 
     ui->leftRuler->set_range(-leftRulerSize * (DplWeld::BottomScale / 100.0),
                              leftRulerSize * ((100 - DplWeld::BottomScale) / 100.0));
 
-    ui->bottomRuler->set_type(RulerWidget::BOTTOM);
-    ui->bottomRuler->set_direction(RulerWidget::Down);
     ui->bottomRuler->set_range(-m_horizontalSize.currentSize, m_horizontalSize.currentSize);
 
 
@@ -349,9 +318,7 @@ void MainWeldWidget::append_value_tky(int type, QMap<QString, double> &valueList
 
     /* 相同type，判断是否超过显示最大值，若是，则更改thickness; 否则，初始化thickness */
     if(type == m_pbaseWeldInformation->get_type()) {
-
         /* 垂直标尺长度检测 */
-
         double Y2 = valueList.value(TAG_Y2);
         double tmpWeldHeight = T1 + MAX(Y1, Y2);
 
@@ -396,7 +363,6 @@ void MainWeldWidget::append_value_tky(int type, QMap<QString, double> &valueList
         /* tan(a) = Y1 / K1
          */
         double K1 = Y1 / tan(radianA);
-        qDebug() << "K1 = " << K1;
 
         leftX = m_horizontalSize.currentSize - (width + (X1 - K1));
 
@@ -407,20 +373,11 @@ void MainWeldWidget::append_value_tky(int type, QMap<QString, double> &valueList
 
         rightX = m_horizontalSize.currentSize + (width + K2 + X2);
 
-        qDebug() << "[" << __FUNCTION__ << "]" << " left X = " << leftX
-                 << " right X = " << rightX;
-
         double minLeft  = 2 * m_horizontalSize.currentSize * DplWeld::TKYLeftScale / 100.0;
         double maxRight = 2 * m_horizontalSize.currentSize * (100.0 - DplWeld::TKYRightScale) / 100.0;
 
         /* 缩减后长度 */
         double targetCurrentSize = m_horizontalSize.currentSize / 2.0  - m_horizontalSize.currentSize * DplWeld::TKYRightScale / 100.0;
-
-
-        qDebug() << "[" << __FUNCTION__ << "]" << " min Left = " << minLeft << ", max Right = " << maxRight;
-        qDebug() << "\ntargetCurrentSize = " << targetCurrentSize
-                 << " (width + X1 - K1) =  " << width + X1 - K1
-                 << " (width + K2 + X2) = "<< (width + K2 + X2) << "\n";
 
         if((leftX <= minLeft)
                 || (rightX >= maxRight)) {
@@ -444,7 +401,6 @@ void MainWeldWidget::append_value_tky(int type, QMap<QString, double> &valueList
 
         m_horizontalSize.defaultSize = DEFAULT_THICKNESS_SIZE;
         m_horizontalSize.currentSize = DEFAULT_THICKNESS_SIZE;
-
     }
 
     valueList.insert(TAG_WIDTH_SCALE,ui->bottomRuler->width() / (2 * m_horizontalSize.currentSize));
@@ -473,12 +429,9 @@ void MainWeldWidget::append_value_other(int type, QMap<QString, double> &valueLi
         }
 
         if(tmpWidth >= m_horizontalSize.currentSize) {
-            /*  */
             m_horizontalSize.currentSize += m_horizontalSize.currentSize;
-
         } else if(tmpWidth <= (m_horizontalSize.currentSize / 2.0 )
                   && ((m_horizontalSize.currentSize / 2.0) >= m_horizontalSize.defaultSize)){
-
             m_horizontalSize.currentSize = m_horizontalSize.currentSize / 2.0;
         }
     }
@@ -500,25 +453,15 @@ bool MainWeldWidget::event(QEvent *event)
             m_pbaseWeldInformation->insert_value(TAG_HEIGHT_SCALE,
                                                  ui->leftRuler->height() / \
                                                  (m_verticalSize.currentSize / ((100 - DplWeld::TKYBottomScale - DplWeld::TKYTopScale) / 100.0)));
-
         } else {
 
-        m_pbaseWeldInformation->insert_value(TAG_WIDTH_SCALE,
-                                             ui->bottomRuler->width() / (2 * m_horizontalSize.currentSize));
-        m_pbaseWeldInformation->insert_value(TAG_HEIGHT_SCALE,
-                                             ui->leftRuler->height() / (m_verticalSize.currentSize / (DplWeld::WeldScale / 100.0)));
-
+            m_pbaseWeldInformation->insert_value(TAG_WIDTH_SCALE,
+                                                 ui->bottomRuler->width() / (2 * m_horizontalSize.currentSize));
+            m_pbaseWeldInformation->insert_value(TAG_HEIGHT_SCALE,
+                                                 ui->leftRuler->height() / (m_verticalSize.currentSize / (DplWeld::WeldScale / 100.0)));
         }
     }
 
     return QWidget::event(event);
-}
-
-void MainWeldWidget::keyPressEvent(QKeyEvent *event)
-{
-
-    qDebug() << "[MainWeldWidget::keyPressEvent] key = " << event->key();
-
-    return;
 }
 

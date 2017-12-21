@@ -15,7 +15,6 @@ static QString g_detectSettingOff   = ":/resources/wizard/detect_setting_unselec
 static QString g_multiGroupOn       = ":/resources/wizard/multi_group_selected.png";
 static QString g_multiGroupOff      = ":/resources/wizard/multi_group_unselected.png";
 
-
 StepWidget::StepWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StepWidget)
@@ -28,7 +27,6 @@ StepWidget::StepWidget(QWidget *parent) :
 
 StepWidget::~StepWidget()
 {
-    qDebug() << "[" << __FUNCTION__ << "]" << "destructor";
     delete ui;
 }
 

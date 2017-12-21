@@ -45,7 +45,6 @@ void BaseWeldWidget::paint()
 
     painter.setPen(Qt::DashDotLine);
     painter.drawLine(this->width()/2, 0, this->width()/2, this->height());
-
 }
 
 }

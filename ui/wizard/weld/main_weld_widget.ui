@@ -33,12 +33,12 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="leftVerticalLayout" stretch="1,0">
+    <layout class="QVBoxLayout" name="leftVerticalLayout" stretch="0,0">
      <property name="spacing">
       <number>0</number>
      </property>
      <item>
-      <widget class="RulerWidget" name="leftRuler" native="true">
+      <widget class="Ruler" name="leftRuler" native="true">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -68,7 +68,7 @@
       <layout class="QVBoxLayout" name="weldVerticalLayout"/>
      </item>
      <item>
-      <widget class="RulerWidget" name="bottomRuler" native="true">
+      <widget class="Ruler" name="bottomRuler" native="true">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -138,9 +138,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>RulerWidget</class>
+   <class>Ruler</class>
    <extends>QWidget</extends>
-   <header>ruler_widget.h</header>
+   <header>ui/display/ruler/ruler.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
