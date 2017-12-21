@@ -4,6 +4,8 @@
 #include "../base_menu.h"
 #include <device/group.h>
 
+class GainMenuItem;
+
 namespace DplProbeMenu {
 
 class FftMenu : public BaseMenu
@@ -50,23 +52,8 @@ private slots:
      */
     void do_widthItem_value_changed(double val);
 
-    /**
-     * @brief do_gainItem_changed   处理GainItem数值变化
-     * @param gain                  变化的Gain数值
-     */
-    void do_gainItem_changed(double gain);
-
-    /**
-     * @brief do_gain_changed 处理Gain类数值变化
-     * @param val             变化的Gain值
-     */
-    void do_gain_changed(float val);
-
-signals:
-    void gain_changed(double val);
-
 private:
-    SpinMenuItem *m_gainItem;
+    GainMenuItem *m_gainItem;
     SpinMenuItem *m_startItem;
     SpinMenuItem *m_widthItem;
     ComboMenuItem *m_switchItem;

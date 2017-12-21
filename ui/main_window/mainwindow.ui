@@ -50,7 +50,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="SpinMenuItem" name="gainMenuItem" native="true">
+       <widget class="GainMenuItem" name="gainMenuItem" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -192,7 +192,13 @@
   <customwidget>
    <class>SpinMenuItem</class>
    <extends>QWidget</extends>
-   <header>../menu/menu_item/spin_menu_item.h</header>
+   <header>../menu/menu_item/base/spin_menu_item.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GainMenuItem</class>
+   <extends>QWidget</extends>
+   <header>../menu/menu_item/gain_menu_item.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -23,24 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    ui->gainMenuItem->show();
-    ui->angleMenuItem->show();
-
-    /* Device */
-    DplDevice::GroupPointer group = DplDevice::Device::instance()->get_group(0);
-
-    /* gain menu item */
-    ui->gainMenuItem->set_title(tr("Gain"));
-    ui->gainMenuItem->set_unit(tr("dB"));
-    ui->gainMenuItem->set(0, 110, 1, 0.1);
-    ui->gainMenuItem->set_suffix("(0.0)");
-    ui->gainMenuItem->set_value(group->sample()->gain());
-
-    /* angle menu item */
-    ui->angleMenuItem->set_title(tr("Angle"));
-    ui->angleMenuItem->set_unit(DEGREE_STR);
-    ui->angleMenuItem->set(0, 180, 1);
-
     /* Mcu */
     Mcu *mcu = Mcu::instance();
     connect(mcu, SIGNAL(key_event(Mcu::KeyType)),
@@ -56,12 +38,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_mainMenu, SIGNAL(type_changed(MainMenu::Type)),
             m_subMenu, SLOT(set_menu(MainMenu::Type)));
 
-    DplUtSettingMenu::GeneralMenu *generalMenu = dynamic_cast<DplUtSettingMenu::GeneralMenu *>(m_subMenu->get_menu(MainMenu::UTSettings_General));
-    connect(generalMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
-    connect(ui->gainMenuItem, SIGNAL(value_changed(double)), generalMenu, SLOT(set_gain(double)));
-    DplProbeMenu::FftMenu *fftMenu = dynamic_cast<DplProbeMenu::FftMenu *>(m_subMenu->get_menu(MainMenu::ProbePart_FFT));
-    connect(fftMenu, SIGNAL(gain_changed(double)), ui->gainMenuItem, SLOT(set_value(double)));
-
     DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
     connect(preferenceMenu, SIGNAL(opacity_changed(double)),
             m_mainMenu, SLOT(set_opacity(double)));
@@ -71,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
 
     ui->displayLayout->addWidget(new DplUi::DisplayWidget(DplDevice::Device::instance()->display(), this));
+
+    connect(DplDevice::Device::instance(),
+            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
+            this, SLOT(update(DplDevice::GroupPointer)));
 }
 
 MainWindow::~MainWindow()
@@ -78,29 +58,39 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::load_style_sheet(const QString &fileName)
+void MainWindow::update(const DplDevice::GroupPointer &group)
 {
-    QFile file(fileName);
-    if(file.open(QFile::ReadOnly)) {
-        qApp->setStyleSheet(file.readAll());
-        file.close();
-    }
+    m_group = group;
 }
 
-void MainWindow::mousePressEvent(QMouseEvent *e)
+void MainWindow::update_angleMenuItem()
 {
-    if (e->button() == Qt::RightButton) {
-        show_hidden_Menu();
-    }
-}
-
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    if (event->key() == Qt::Key_Alt) {
-        show_hidden_Menu();
+    if (!m_group->focallawer()->probe()->is_pa()) {
+        ui->angleMenuItem->setDisabled(true);
         return;
     }
-    return QMainWindow::keyPressEvent(event);
+
+    ui->angleMenuItem->setDisabled(false);
+
+    disconnect(ui->angleMenuItem, SIGNAL(value_changed(double)),
+               this, SLOT(do_angleMenuItem_value_changed(double)));
+
+    DplFocallaw::PaProbePointer probe = m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
+    if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
+        ui->angleMenuItem->set_title("VPA");
+        ui->angleMenuItem->set_unit("");
+        ui->angleMenuItem->set(1, m_group->focallawer()->beam_qty(), 0);
+        ui->angleMenuItem->set_value(m_group->current_beam_index());
+    } else if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Sectorial) {
+        DplFocallaw::SectorialScanCnfPointer cnf = probe->scan_configure().staticCast<DplFocallaw::SectorialScanCnf>();
+        ui->angleMenuItem->set_title(tr("Angle"));
+        ui->angleMenuItem->set_unit(DEGREE_STR);
+        ui->angleMenuItem->set(cnf->first_angle(), cnf->last_angle(), 1);
+        ui->angleMenuItem->set_value(m_group->current_angle());
+    }
+
+    connect(ui->angleMenuItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_angleMenuItem_value_changed(double)));
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
@@ -131,19 +121,6 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     }
 }
 
-void MainWindow::show_hidden_Menu()
-{
-    if(m_mainMenu->isHidden()) {
-        m_mainMenu->setGeometry(0,
-                                ui->measureBar->height()+ui->statusBar->height()+15,
-                                m_mainMenu->width(),
-                                height() - ui->measureBar->height() - ui->statusBar->height() - m_subMenu->height()-15);
-        m_mainMenu->show();
-    } else {
-        m_mainMenu->hide();
-    }
-}
-
 void MainWindow::do_keyboard_event()
 {
     if(m_virtualKeyboard->isHidden()) {
@@ -160,5 +137,53 @@ void MainWindow::do_rotary_event(Mcu::RotaryType type)
         VInput::instance()->send(VInput::Key_Up);
     } else {
         VInput::instance()->send(VInput::Key_Down);
+    }
+}
+
+void MainWindow::do_angleMenuItem_value_changed(double val)
+{
+    if (m_group->focallawer()->probe()) {
+
+    }
+    m_group->set_current_angle(val);
+
+    m_group->set_current_beam(val);
+}
+
+void MainWindow::load_style_sheet(const QString &fileName)
+{
+    QFile file(fileName);
+    if(file.open(QFile::ReadOnly)) {
+        qApp->setStyleSheet(file.readAll());
+        file.close();
+    }
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::RightButton) {
+        show_hidden_Menu();
+    }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Alt) {
+        show_hidden_Menu();
+        return;
+    }
+    return QMainWindow::keyPressEvent(event);
+}
+
+void MainWindow::show_hidden_Menu()
+{
+    if(m_mainMenu->isHidden()) {
+        m_mainMenu->setGeometry(0,
+                                ui->measureBar->height()+ui->statusBar->height()+15,
+                                m_mainMenu->width(),
+                                height() - ui->measureBar->height() - ui->statusBar->height() - m_subMenu->height()-15);
+        m_mainMenu->show();
+    } else {
+        m_mainMenu->hide();
     }
 }
