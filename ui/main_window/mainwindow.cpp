@@ -129,6 +129,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
         }
     }
         break;
+    case Mcu::KEY_START:
+        DplSource::Source::instance()->restart();
+        break;
     default:
         break;
     }

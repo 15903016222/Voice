@@ -5,40 +5,31 @@
  * @date 2017-06-28
  */
 
-#include "global.h"
 #include "a_scan_display.h"
-#include "ui_a_scan_display.h"
-
-#include "../scan_view.h"
-#include "a_scan_scene.h"
 #include "wave_item.h"
 #include "gate_item.h"
 #include "tcg_item.h"
 
-#include <qmath.h>
+#include "../base/scan_scene.h"
+#include "../ruler/ruler.h"
+#include "../color_bar/color_bar.h"
+
+#include <global.h>
+
+#include <QLabel>
 #include <QThread>
 
-AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
-                           Qt::Orientation orientation, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AscanDisplay),
+AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent) :
+    ScanDisplay(parent),
     m_group(group),
-    m_view(new ScanView),
-    m_scene(new AscanScene),
     m_waveItem(new WaveItem(DplDevice::Device::instance()->display()->ascan())),
     m_gateAItem(new GateItem(group->sample(), group->gate_a())),
     m_gateBItem(new GateItem(group->sample(), group->gate_b())),
     m_gateIItem(new GateItem(group->sample(), group->gate_i())),
-    m_tcgItem(new TcgItem(group->tcgs(), group->sample())),
-    m_orientation(orientation)
+    m_tcgItem(new TcgItem(group->tcgs(), group->sample()))
 {  
-    ui->setupUi(this);
-    ui->ascanWidgetLayout->addWidget(m_view);
-
-    connect(m_view, SIGNAL(size_changed(QSize)),
-            this, SLOT(do_view_size_changed(QSize)));
-
-    m_view->setScene(m_scene);
+    m_colorBar->hide();
+    m_colorRuler->hide();
 
     m_scene->addItem(m_waveItem);
 
@@ -48,15 +39,10 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
 
     m_scene->addItem(m_tcgItem);
 
+
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
             this, SLOT(update_gates()));
-
-    if (orientation == Qt::Vertical) {
-        m_view->rotate(90);
-    }
-
-    ui->leftRulerWidget->set_type(RulerWidget::LEFT);
 
     /* source setting */    
     connect(static_cast<DplDevice::Group *>(m_group.data()),
@@ -64,14 +50,11 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group,
             this, SLOT(do_data_event()),
             Qt::DirectConnection);
 
-    ui->titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
+    m_titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
 }
 
 AscanDisplay::~AscanDisplay()
 {
-    delete ui;
-    delete m_view;
-    delete m_scene;
 }
 
 void AscanDisplay::do_data_event()
@@ -98,20 +81,9 @@ void AscanDisplay::do_data_event()
     }
 }
 
-void AscanDisplay::do_view_size_changed(const QSize &size)
+void AscanDisplay::resize_event(const QSize &size)
 {
-    if (m_orientation == Qt::Horizontal) {
-        m_scene->setSceneRect(-size.width()/2, -size.height()/2,
-                                   size.width(), size.height());
-        m_waveItem->set_size(size);
-        m_tcgItem->set_size(size);
-    } else {
-        m_scene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
-                                   size.height(), size.width());
-        m_waveItem->set_size(QSize(size.height(), size.width()));
-        m_tcgItem->set_size(QSize(size.height(), size.width()));
-    }
-
+    Q_UNUSED(size);
     update_gates();
 }
 
@@ -121,4 +93,3 @@ void AscanDisplay::update_gates()
     m_gateBItem->set_ratio(m_scene->width()/m_group->sample()->range());
     m_gateIItem->set_ratio(m_scene->width()/m_group->sample()->range());
 }
-

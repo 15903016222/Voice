@@ -9,16 +9,22 @@
 
 #include "a_scan_display.h"
 
+class UtRuler;
+class AmpRuler;
+
 class AscanHDisplay : public AscanDisplay
 {
     Q_OBJECT
 public:
     explicit AscanHDisplay(const DplDevice::GroupPointer &group,
                            QWidget *parent = 0);
-    ~AscanHDisplay();
 
-private slots:
-    void update_bottom_ruler();
+protected slots:
+    void resize_event(const QSize &size);
+
+private:
+    AmpRuler *m_ampRuler;
+    UtRuler *m_utRuler;
 };
 
 #endif // __A_SCAN_DISPLAY_H__

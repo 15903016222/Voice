@@ -1,24 +1,22 @@
 #include "b_scan_hdisplay.h"
-#include "ui_b_scan_display.h"
-#include "../scan_view.h"
-#include "source/scan.h"
 
-BscanHDisplay::BscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent)
-    : BscanDisplay(grp, Qt::Horizontal, parent)
+#include "../base/scan_scene.h"
+#include "../ruler/ut_ruler.h"
+#include "../ruler/scan_ruler.h"
+
+BscanHDisplay::BscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
+    BscanDisplay(grp, parent),
+    m_utRuler(new UtRuler(grp, Ruler::TOP, this)),
+    m_scanRuler(new ScanRuler(grp, Ruler::RIGHT, this))
 {
-    init_ruler();
+    m_leftLayout->addWidget(m_scanRuler);
+    m_bottomLayout->addWidget(m_utRuler);
 }
 
-
-void BscanHDisplay::init_ruler()
+void BscanHDisplay::resize_event(const QSize &size)
 {
-    m_soundPathRuler->set_type(RulerWidget::BOTTOM);
-    m_soundPathRuler->set_direction(RulerWidget::Up);
-
-    m_scanTypeRuler->set_type(RulerWidget::LEFT);
-    m_scanTypeRuler->set_direction(RulerWidget::Down);
-
-    update_scan_type_ruler(m_bscanView->size());
-    update_sound_path_ruler();
-
+    m_scene->setSceneRect(-size.width()/2.0, -size.height()/2.0,
+                               size.width(), size.height());
+    m_bscanItem->set_size(size);
+    BscanDisplay::resize_event(size);
 }

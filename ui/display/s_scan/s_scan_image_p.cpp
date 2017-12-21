@@ -59,13 +59,13 @@ void SscanImagePrivate::init_linear_matrix(int srcWidth, int srcHeight, int srcB
 {
     /**
      * formula
-     * f(srcX+u, srcY+v) = (1-u)(1-v)f(srcX, srcY)
+     * f'(srcX+u, srcY+v) = (1-u)(1-v)f(srcX, srcY)
      *                   + (1-u)vf(srcX, srcY+1)
      *                   + u(1-v)f(srcX+1, srcY)
      *                   + uvf(srcX+1, srcY+1)
      */
-    double widthRatio = static_cast<double>(srcWidth) / destWidth;
-    double heightRatio = static_cast<double>(srcHeight) / destHeight;
+    double widthRatio = (srcWidth-1.0) / (destWidth-1.0);
+    double heightRatio = (srcHeight-1.0) / (destHeight-1.0);
 
     float u = 0.0;
     float v = 0.0;

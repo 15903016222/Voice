@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <device/device.h>
+#include <source/source.h>
 #include <source/scan.h>
 #include <source/encoder.h>
 #include <QReadWriteLock>
@@ -38,8 +39,6 @@ private:
     QString m_scanEncStr;
     QString m_indexEncStr;
     QReadWriteLock m_encStringRWLock;
-
-    double        m_timeCount;
 };
 
 #endif // __STATUS_BAR__

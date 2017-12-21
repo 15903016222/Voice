@@ -218,6 +218,7 @@ void ReceiverMenu::update_rectifierItem()
                SIGNAL(value_changed(int)),
                this,
                SLOT(do_rectifierItem_changed(int)));
+
     m_rectifierItem->set(QStringList());
     if ( m_group->transceiver()->mode() == DplUt::Transceiver::TOFD ) {
         m_rectifierItem->add_item(tr("RF"));
@@ -225,16 +226,17 @@ void ReceiverMenu::update_rectifierItem()
     m_rectifierItem->add_item(tr("HW+"));
     m_rectifierItem->add_item(tr("HW-"));
     m_rectifierItem->add_item(tr("FW"));
-    connect(m_rectifierItem,
-            SIGNAL(value_changed(int)),
-            this,
-            SLOT(do_rectifierItem_changed(int)));
 
     if ( m_group->transceiver()->mode() == DplUt::Transceiver::TOFD ) {
         m_rectifierItem->set_current_index(m_group->transceiver()->rectifier());
     } else {
         m_rectifierItem->set_current_index(m_group->transceiver()->rectifier()-1);
     }
+
+    connect(m_rectifierItem,
+            SIGNAL(value_changed(int)),
+            this,
+            SLOT(do_rectifierItem_changed(int)));
 }
 
 void ReceiverMenu::update_dampingItem()
