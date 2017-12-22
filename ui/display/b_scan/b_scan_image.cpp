@@ -55,13 +55,13 @@ int BscanImage::max_amplitude(const QByteArray &wave, int startPoint, int stopPo
     int ret = wave[startPoint];
     if (rf) {
         ret = abs(ret - 128);
-        for(int i = startPoint + 1; i < stopPoint; ++i) {
+        for(int i = startPoint + 1; i <= stopPoint; ++i) {
             if (qAbs(wave[i] - 128) > ret) {
                 ret = qAbs(wave[i] - 128);
             }
         }
     } else {
-        for (int i = startPoint+1; i < stopPoint; ++i) {
+        for (int i = startPoint+1; i <= stopPoint; ++i) {
             if (wave[i] > ret) {
                 ret = wave[i];
             }
@@ -72,11 +72,12 @@ int BscanImage::max_amplitude(const QByteArray &wave, int startPoint, int stopPo
 
 void BscanImage::draw_compress(const QByteArray &wave, int line, bool rf)
 {
-    double ratio = (wave.size()-1.0) / (width()-1);
+    double ratio = (wave.size()-1.0) / width();
     int offset = (height()-line-1) * width();
 
     for(int i = 0; i < width(); ++i) {
-        m_image[offset + i] = m_palette->pixmap(max_amplitude(wave, i*ratio, (i+1)*ratio, rf));
+        m_image[offset + i] = m_palette->pixmap(
+                    max_amplitude(wave, i*ratio-0.5, (i+1)*ratio+0.5, rf));
     }
 }
 
