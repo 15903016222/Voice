@@ -5,6 +5,7 @@ BscanImage::BscanImage(const QSize &size, const DplDisplay::PaletteColorPointer 
     m_palette(palette),
     m_image((quint32 *)bits())
 {
+    clear();
 }
 
 BscanImage::~BscanImage()
@@ -75,10 +76,12 @@ void BscanImage::draw_compress(const QByteArray &wave, int line, bool rf)
     double ratio = (wave.size()-1.0) / width();
     int offset = (height()-line-1) * width();
 
+    qDebug("%s(%s[%d]): ", __FILE__, __func__, __LINE__);
     for(int i = 0; i < width(); ++i) {
         m_image[offset + i] = m_palette->pixmap(
                     max_amplitude(wave, i*ratio-0.5, (i+1)*ratio+0.5, rf));
     }
+    qDebug("%s(%s[%d]): ", __FILE__, __func__, __LINE__);
 }
 
 void BscanImage::draw_interpolation(const QByteArray &wave, int line, bool rf)

@@ -5,6 +5,7 @@ CscanImage::CscanImage(const QSize &size, const DplDisplay::PaletteColorPointer 
     m_palette(palette),
     m_image((quint32 *)bits())
 {
+    clear();
 }
 
 CscanImage::~CscanImage()
