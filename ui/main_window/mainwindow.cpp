@@ -39,9 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
             m_subMenu, SLOT(set_menu(MainMenu::Type)));
 
     qDebug("%s[%d]: ",__func__, __LINE__);
-    DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
-    connect(preferenceMenu, SIGNAL(opacity_changed(double)),
-            m_mainMenu, SLOT(set_opacity(double)));
+//    DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
+//    connect(preferenceMenu, SIGNAL(opacity_changed(double)),
+//            m_mainMenu, SLOT(set_opacity(double)));
     qDebug("%s[%d]: ",__func__, __LINE__);
 
     /* virtual keyboard */

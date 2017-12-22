@@ -20,8 +20,6 @@ public:
     explicit SubMenu(QWidget *parent = 0);
     ~SubMenu();
 
-    BaseMenu *get_menu(MainMenu::Type type);
-
 public slots:
     void set_menu(MainMenu::Type type);
     void set_opacity_main_menu(double value);
@@ -32,10 +30,5 @@ protected:
 private:
     QStackedLayout *m_layout;
 };
-
-inline BaseMenu *SubMenu::get_menu(MainMenu::Type type)
-{
-    return this->findChild<BaseMenu *>(QString::number(type));
-}
 
 #endif // SUB_MENU_H
