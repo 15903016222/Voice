@@ -79,6 +79,14 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_START:
         DplSource::Source::instance()->restart();
         break;
+    case Mcu::KEY_DB:
+        m_subMenu->set_menu(MainMenu::UTSettings_General);
+        ui->gainMenuItem->set_edit(true);
+        break;
+    case Mcu::KEY_GATE:
+        m_subMenu->set_menu(MainMenu::GateCurves_Gate);
+        m_subMenu->setFocus();
+        break;
     default:
         break;
     }
