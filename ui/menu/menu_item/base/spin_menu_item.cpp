@@ -77,6 +77,14 @@ void SpinMenuItem::set_step(double step)
     update_title();
 }
 
+void SpinMenuItem::set_focus()
+{
+    m_lineEdit->setFocusPolicy(Qt::WheelFocus);
+    m_lineEdit->setFocus();
+    m_lineEdit->setReadOnly(false);
+    update_title();
+}
+
 void SpinMenuItem::set_value(double value)
 {
     if (qFuzzyCompare(m_value, value)) {
@@ -166,14 +174,6 @@ void SpinMenuItem::update_spin_step()
         m_step = m_baseStep;
     }
 
-    update_title();
-}
-
-void SpinMenuItem::set_focus()
-{
-    m_lineEdit->setFocusPolicy(Qt::WheelFocus);
-    m_lineEdit->setFocus();
-    m_lineEdit->setReadOnly(false);
     update_title();
 }
 

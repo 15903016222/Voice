@@ -72,6 +72,8 @@ public:
      */
     double get_value() const;
 
+    void set_focus();
+
 public slots:
     /**
      * @brief set_value 设置数值
@@ -95,7 +97,6 @@ protected:
 
     void update_title();
     void update_spin_step();
-    void set_focus();
     void set_focus_out();
 
     void update_value();
