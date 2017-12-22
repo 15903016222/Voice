@@ -53,7 +53,7 @@ void CscanImage::shift(int lines)
 int CscanImage::max_value(const int *gates, int startBeam, int stopBeam) const
 {
     int ret = gates[startBeam];
-    for (int i = startBeam+1; i < stopBeam; ++i) {
+    for (int i = startBeam+1; i <= stopBeam; ++i) {
         if (gates[i] > ret) {
             ret = gates[i];
         }
@@ -63,12 +63,12 @@ int CscanImage::max_value(const int *gates, int startBeam, int stopBeam) const
 
 void CscanImage::draw_compress(const int *gates, int beamQty, int line)
 {
-    double ratio = (beamQty-1.0) / (width()-1);
+    double ratio = (beamQty-1.0) / width();
     int offset = (height()-line-1) * width();
 
     for(int i = 0; i < width(); ++i) {
-        qDebug("%s[%d]: %d",__func__, __LINE__, max_value(gates, i*ratio, (i+1)*ratio));
-        m_image[offset + i] = m_palette->pixmap(max_value(gates, i*ratio, (i+1)*ratio));
+        m_image[offset + i] = m_palette->pixmap(
+                    max_value(gates, i*ratio+0.5, (i+1)*ratio)-0.5);
     }
 }
 
