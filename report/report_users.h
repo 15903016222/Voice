@@ -1,3 +1,11 @@
+/**
+ * @file    report_users.h
+ * @brief   报表中的用户信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_USERS_H__
 #define __REPORT_USERS_H__
 

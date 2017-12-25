@@ -1,3 +1,11 @@
+/**
+ * @file    report_fft.h
+ * @brief   保存报表中FFT的信息。
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_FFT_H__
 #define __REPORT_FFT_H__
 

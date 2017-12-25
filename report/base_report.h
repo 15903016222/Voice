@@ -1,3 +1,11 @@
+/**
+ * @file    base_report.h
+ * @brief   报表基类
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __BASE_REPORT_H__
 #define __BASE_REPORT_H__
 

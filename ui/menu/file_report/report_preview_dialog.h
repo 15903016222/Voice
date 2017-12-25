@@ -1,3 +1,11 @@
+/**
+ * @file    report_preview_dialog.h
+ * @brief   报表预览窗口，用于报表预览，保存报表。
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_PREVIEW_DIALOG_H__
 #define __REPORT_PREVIEW_DIALOG_H__
 

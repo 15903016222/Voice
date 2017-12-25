@@ -1,3 +1,11 @@
+/**
+ * @file    report_gate.h
+ * @brief   报表中闸门的信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_GATE_H__
 #define __REPORT_GATE_H__
 

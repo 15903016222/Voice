@@ -1,3 +1,11 @@
+/**
+ * @file    report_defects.h
+ * @brief   报表中defects的信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_DEFECTS_H__
 #define __REPORT_DEFECTS_H__
 

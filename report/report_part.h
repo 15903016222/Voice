@@ -1,3 +1,11 @@
+/**
+ * @file    report_part.h
+ * @brief   报表中工件信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_PART_H__
 #define __REPORT_PART_H__
 

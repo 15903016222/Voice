@@ -1,3 +1,11 @@
+/**
+ * @file    report_group.h
+ * @brief   报表中组信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_GROUP_H__
 #define __REPORT_GROUP_H__
 

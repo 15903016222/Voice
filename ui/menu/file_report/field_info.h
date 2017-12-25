@@ -1,3 +1,11 @@
+/**
+ * @file    field_info.h
+ * @brief   域信息类，用于保存当前组域信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __FIELD_INFO_H__
 #define __FIELD_INFO_H__
 

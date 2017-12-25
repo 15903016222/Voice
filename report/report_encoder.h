@@ -1,3 +1,11 @@
+/**
+ * @file    report_encoder.h
+ * @brief   保存报表中encoder的信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_ENCODER_H__
 #define __REPORT_ENCODER_H__
 

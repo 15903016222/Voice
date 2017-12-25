@@ -1,3 +1,11 @@
+/**
+ * @file    report_header.h
+ * @brief   报表中头部的信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_HEADER_H__
 #define __REPORT_HEADER_H__
 

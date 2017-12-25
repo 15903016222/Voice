@@ -1,3 +1,11 @@
+/**
+ * @file    report_scan.h
+ * @brief   报表中scan信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_SCAN_H__
 #define __REPORT_SCAN_H__
 

@@ -1,3 +1,11 @@
+/**
+ * @file    report_setup.h
+ * @brief   报表setup的信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_SETUP_H__
 #define __REPORT_SETUP_H__
 

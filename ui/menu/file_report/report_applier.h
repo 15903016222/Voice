@@ -1,3 +1,11 @@
+/**
+ * @file    report_applier.h
+ * @brief   报表填充器，用于填充报表信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_APPLIER_H__
 #define __REPORT_APPLIER_H__
 

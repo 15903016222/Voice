@@ -1,3 +1,11 @@
+/**
+ * @file    report_probe.h
+ * @brief   报表中探头信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_PROBE_H__
 #define __REPORT_PROBE_H__
 

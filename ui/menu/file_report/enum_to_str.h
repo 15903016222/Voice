@@ -1,3 +1,11 @@
+/**
+ * @file    enum_to_str.h
+ * @brief   报表辅助类，用于枚举转换为字符串；
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __ENUM_TO_STR_H__
 #define __ENUM_TO_STR_H__
 
