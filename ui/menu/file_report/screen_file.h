@@ -1,3 +1,11 @@
+/**
+ * @file    screen_file.h
+ * @brief   保存屏幕图片。
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __SCREEN_FILE_H__
 #define __SCREEN_FILE_H__
 

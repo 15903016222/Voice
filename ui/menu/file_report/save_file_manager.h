@@ -1,3 +1,11 @@
+/**
+ * @file    save_file_manager.h
+ * @brief   文件保存管理器，根据不同存储路径，文件类型进行保存文件。
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __SAVE_FILE_MANAGER_H__
 #define __SAVE_FILE_MANAGER_H__
 

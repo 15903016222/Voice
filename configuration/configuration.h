@@ -1,3 +1,11 @@
+/**
+ * @file    configuration.h
+ * @brief   配置类
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __CONFIG_CONFIGURATION_H__
 #define __CONFIG_CONFIGURATION_H__
 

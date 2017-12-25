@@ -64,9 +64,9 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QGraphicsOpacityEffect>
+#include <QStackedLayout>
 
-SubMenu::SubMenu(QWidget *parent) : QWidget(parent),
-    m_curMenu(NULL)
+SubMenu::SubMenu(QWidget *parent) : QWidget(parent)
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     topLayout->setContentsMargins(0, 0, 0, 0);
@@ -85,17 +85,7 @@ SubMenu::~SubMenu()
 
 void SubMenu::set_menu(MainMenu::Type type)
 {
-    if (m_curMenu) {
-        m_curMenu->hide();
-        m_curMenu->removeEventFilter(this);
-    }
-
-    m_curMenu = get_menu(type);
-
-    if(m_curMenu) {
-        m_curMenu->installEventFilter(this);
-        m_curMenu->show();
-    }
+    m_layout->setCurrentIndex(type);
 }
 
 void SubMenu::set_opacity_main_menu(double value)
@@ -107,56 +97,62 @@ void SubMenu::set_opacity_main_menu(double value)
 
 void SubMenu::create_menus()
 {
+    QStackedLayout *l = new QStackedLayout(this);
+    l->setContentsMargins(0, 0, 0, 0);
+    l->setSpacing(0);
+
+    m_layout = l;
+
     /* UT Setting */
-    add_menu(MainMenu::UTSettings_General,      new DplUtSettingMenu::GeneralMenu(this));
-    add_menu(MainMenu::UTSettings_Pulser,       new DplUtSettingMenu::PulserMenu(this));
-    add_menu(MainMenu::UTSettings_Receiver,     new DplUtSettingMenu::ReceiverMenu(this));
-    add_menu(MainMenu::UTSettings_Advanced,     new DplUtSettingMenu::UtAdvancedMenu(this));
+    l->addWidget(new DplUtSettingMenu::GeneralMenu(this));
+    l->addWidget(new DplUtSettingMenu::PulserMenu(this));
+    l->addWidget(new DplUtSettingMenu::ReceiverMenu(this));
+    l->addWidget(new DplUtSettingMenu::UtAdvancedMenu(this));
 
     /* Gate/Curves */
-    add_menu(MainMenu::GateCurves_Gate,         new DplGateCurvesMenu::GateMenu(this));
-    add_menu(MainMenu::GateCurves_Alarm,        new DplGateCurvesMenu::AlarmMenu(this));
-    add_menu(MainMenu::GateCurves_Analog,       new DplGateCurvesMenu::AnalogMenu(this));
-    add_menu(MainMenu::GateCurves_DAC,          new DplGateCurvesMenu::DacMenu(this));
-    add_menu(MainMenu::GateCurves_TCG,          new DplGateCurvesMenu::TcgMenu(this));
+    l->addWidget(new DplGateCurvesMenu::GateMenu(this));
+    l->addWidget(new DplGateCurvesMenu::AlarmMenu(this));
+    l->addWidget(new DplGateCurvesMenu::AnalogMenu(this));
+    l->addWidget(new DplGateCurvesMenu::DacMenu(this));
+    l->addWidget(new DplGateCurvesMenu::TcgMenu(this));
 
     /* Display */
-    add_menu(MainMenu::Display_Selection,       new DplDisplayMenu::SelectionMenu(this));
-    add_menu(MainMenu::Display_ColorSettings,   new DplDisplayMenu::ColorSettingMenu(this));
-    add_menu(MainMenu::Displsy_Properties,      new DplDisplayMenu::PropertiesMenu(this));
+    l->addWidget(new DplDisplayMenu::SelectionMenu(this));
+    l->addWidget(new DplDisplayMenu::ColorSettingMenu(this));
+    l->addWidget(new DplDisplayMenu::PropertiesMenu(this));
 
     /* Probe/Part */
-    add_menu(MainMenu::ProbePart_Select,        new DplProbeMenu::SelectionMenu(this));
-    add_menu(MainMenu::ProbePart_Position,      new DplProbeMenu::PositionMenu(this));
-    add_menu(MainMenu::ProbePart_FFT,           new DplProbeMenu::FftMenu(this));
-    add_menu(MainMenu::ProbePart_Part,          new DplProbeMenu::PartMenu(this));
-    add_menu(MainMenu::ProbePart_Advanced,      new DplProbeMenu::AdvancedMenu(this));
+    l->addWidget(new DplProbeMenu::SelectionMenu(this));
+    l->addWidget(new DplProbeMenu::PositionMenu(this));
+    l->addWidget(new DplProbeMenu::FftMenu(this));
+    l->addWidget(new DplProbeMenu::PartMenu(this));
+    l->addWidget(new DplProbeMenu::AdvancedMenu(this));
 
     /* Focal Law */
-    add_menu(MainMenu::FocalLaw_LawConfig,      new DplFocalLawMenu::LawConfigMenu(this));
-    add_menu(MainMenu::FocalLaw_Angle,          new DplFocalLawMenu::AngleMenu(this));
-    add_menu(MainMenu::FocalLaw_Apeture,        new DplFocalLawMenu::ApetureMenu(this));
-    add_menu(MainMenu::FacalLaw_FocalPoint,     new DplFocalLawMenu::FocalPointMenu(this));
+    l->addWidget(new DplFocalLawMenu::LawConfigMenu(this));
+    l->addWidget(new DplFocalLawMenu::AngleMenu(this));
+    l->addWidget(new DplFocalLawMenu::ApetureMenu(this));
+    l->addWidget(new DplFocalLawMenu::FocalPointMenu(this));
 
     /* Scan */
-    add_menu(MainMenu::Scan_Inspection,         new DplScanMenu::InspectionMenu(this));
-    add_menu(MainMenu::Scan_Encoder,            new DplScanMenu::EncoderMenu(this));
-    add_menu(MainMenu::Scan_Area,               new DplScanMenu::AreaMenu(this));
-    add_menu(MainMenu::Scan_Start,              new DplScanMenu::StartMenu(this));
+    l->addWidget(new DplScanMenu::InspectionMenu(this));
+    l->addWidget(new DplScanMenu::EncoderMenu(this));
+    l->addWidget(new DplScanMenu::AreaMenu(this));
+    l->addWidget(new DplScanMenu::StartMenu(this));
 
     /* Measurement */
-    add_menu(MainMenu::Measurement_Cursors,     new DplMeasurementMenu::CursorsMenu(this));
-    add_menu(MainMenu::Measurement_TOFD,        new DplMeasurementMenu::TofdMenu(this));
-    add_menu(MainMenu::Measurement_FlawRecord,  new DplMeasurementMenu::FlawRecordMenu(this));
+    l->addWidget(new DplMeasurementMenu::CursorsMenu(this));
+    l->addWidget(new DplMeasurementMenu::TofdMenu(this));
+    l->addWidget(new DplMeasurementMenu::FlawRecordMenu(this));
 
     /* File/Report */
-    add_menu(MainMenu::FileReport_File,         new DplFileReportMenu::FileMenu(this));
-    add_menu(MainMenu::FileReport_Report,       new DplFileReportMenu::ReportMenu(this));
-    add_menu(MainMenu::FileReport_Format,       new DplFileReportMenu::FormatMenu(this));
-    add_menu(MainMenu::FileReport_UserField,    new DplFileReportMenu::UserFieldMenu(this));
+    l->addWidget(new DplFileReportMenu::FileMenu(this));
+    l->addWidget(new DplFileReportMenu::ReportMenu(this));
+    l->addWidget(new DplFileReportMenu::FormatMenu(this));
+    l->addWidget(new DplFileReportMenu::UserFieldMenu(this));
 
     /* Preference */
-    add_menu(MainMenu::Preference_Preference,   new DplPreferenceMenu::PreferenceMenu(this));
-    add_menu(MainMenu::Preference_System,       new DplPreferenceMenu::SystemMenu(this));
-    add_menu(MainMenu::Preference_Network,      new DplPreferenceMenu::NetworkMenu(this));
+    l->addWidget(new DplPreferenceMenu::PreferenceMenu(this));
+    l->addWidget(new DplPreferenceMenu::SystemMenu(this));
+    l->addWidget(new DplPreferenceMenu::NetworkMenu(this));
 }

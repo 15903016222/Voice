@@ -1,3 +1,11 @@
+/**
+ * @file    report_file.h
+ * @brief   报表文件，用于保存报表。
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __REPORT_FILE_H__
 #define __REPORT_FILE_H__
 

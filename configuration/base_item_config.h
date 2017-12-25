@@ -1,3 +1,11 @@
+/**
+ * @file    base_item_config.h
+ * @brief   基本配置项基类
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __BASE_ITEM_CONFIG_H__
 #define __BASE_ITEM_CONFIG_H__
 

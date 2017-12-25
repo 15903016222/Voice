@@ -57,6 +57,12 @@ public:
     BeamsPointer current_beams(int grp) const;
 
     /**
+     * @brief current_beams_index   获取当前Beams帧号
+     * @return                      帧号
+     */
+    int current_beams_index() const;
+
+    /**
      *@brief beams         获取指定帧号的组数据
      *@param grp           组号，从0开始
      *@param frameIndex    帧号，从0开始

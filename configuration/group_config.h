@@ -1,3 +1,11 @@
+/**
+ * @file    group_config.h
+ * @brief   组配置信息
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __GROUP_CONFIG_H__
 #define __GROUP_CONFIG_H__
 

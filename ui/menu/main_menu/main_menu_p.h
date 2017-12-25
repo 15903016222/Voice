@@ -36,7 +36,6 @@ protected slots:
 protected:
     void set_common(QListWidget *menu);
 
-    void init_menu();
     void init_mainMenu();
     void init_utSettingMenu();
     void init_gateCurevesMenu();

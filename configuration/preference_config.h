@@ -1,3 +1,11 @@
+/**
+ * @file    preference_config.h
+ * @brief   参数配置信息类
+ * @author  Jinhua Zhang <zhangjinhua@cndoppler.cn>
+ * @version 0.1
+ * @date    2017-12-25
+ */
+
 #ifndef __PREFERENCE_CONFIG_H__
 #define __PREFERENCE_CONFIG_H__
 
