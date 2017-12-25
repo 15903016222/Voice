@@ -64,14 +64,11 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QGraphicsOpacityEffect>
+
 #include <QStackedLayout>
 
 SubMenu::SubMenu(QWidget *parent) : QWidget(parent)
 {
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
-    topLayout->setContentsMargins(0, 0, 0, 0);
-    topLayout->setSpacing(0);
-
     create_menus();
 
     set_menu(MainMenu::UTSettings_General);
