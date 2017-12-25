@@ -383,15 +383,36 @@ void GroupConfig::pack_focallawer_probe_config(const DplDevice::GroupPointer &gr
         DplFocallaw::UtProbePointer utPointer = probe.staticCast<DplFocallaw::UtProbe>();
         m_packer->pack(utPointer->file_name().toStdString());
     }
-#endif
+#else
+    if(probe->is_pa()) {
+        DplFocallaw::PaProbePointer paPointer = probe.staticCast<DplFocallaw::PaProbe>();
+        if(paPointer->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
+            DplFocallaw::LinearScanCnfPointer linearScan =
+                    paPointer->scan_configure().staticCast<DplFocallaw::LinearScanCnf>();
+            linearScan->angle();
+            linearScan->first_element();
+            linearScan->last_element();
+            linearScan->element_step();
+            linearScan->aperture();
+
+        } else if(paPointer->scan_configure()->mode() ==  DplFocallaw::ScanCnf::Sectorial) {
+            DplFocallaw::SectorialScanCnfPointer sectorialScan =
+                    paPointer->scan_configure().staticCast<DplFocallaw::SectorialScanCnf>();
+            sectorialScan->angle_step();
+            sectorialScan->first_angle();
+            sectorialScan->last_angle();
+            sectorialScan->first_element();
+            sectorialScan->last_angle();
+            sectorialScan->aperture();
+            sectorialScan->element_qty();
+        }
+    } else {
+        DplFocallaw::UtProbePointer utPointer = probe.staticCast<DplFocallaw::UtProbe>();
+    }
 
     std::string fileName = "Probe_FileName";    /* TODO */
     m_packer->pack(fileName);
-
-    qDebug("[%s] pa = %d, filename = %s",
-           __FUNCTION__,
-           (int)probe->is_pa(),
-           fileName.c_str());
+#endif
 }
 
 void GroupConfig::pack_focallawer_wedge_config(const DplDevice::GroupPointer &groupPointer)
