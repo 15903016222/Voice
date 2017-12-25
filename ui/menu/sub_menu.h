@@ -12,14 +12,13 @@
 #include "base_menu.h"
 #include <QLayout>
 
+class QStackedLayout;
 class SubMenu : public QWidget
 {
     Q_OBJECT
 public:
     explicit SubMenu(QWidget *parent = 0);
     ~SubMenu();
-
-    BaseMenu *get_menu(MainMenu::Type type);
 
 public slots:
     void set_menu(MainMenu::Type type);
@@ -28,21 +27,8 @@ public slots:
 protected:
     void create_menus();
 
-    void add_menu(MainMenu::Type type, BaseMenu *menu);
-
 private:
-    BaseMenu *m_curMenu;
+    QStackedLayout *m_layout;
 };
-
-inline BaseMenu *SubMenu::get_menu(MainMenu::Type type)
-{
-    return this->findChild<BaseMenu *>(QString::number(type));
-}
-
-inline void SubMenu::add_menu(MainMenu::Type type, BaseMenu *menu)
-{
-    menu->setObjectName(QString::number(type));
-    layout()->addWidget(menu);
-}
 
 #endif // SUB_MENU_H

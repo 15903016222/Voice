@@ -12,6 +12,8 @@
 
 #include <device/device.h>
 
+class GainMenuItem;
+
 namespace DplUtSettingMenu {
 
 class GeneralMenu : public BaseMenu
@@ -21,16 +23,9 @@ public:
     explicit GeneralMenu(QWidget *parent = 0);
     ~GeneralMenu();
 
-public slots:
-    void set_gain(double gain) { m_gainItem->set_value(gain); }
-
-signals:
-    void gain_changed(double gain);
-
 protected:
 
 protected slots:
-    void do_gainItem_changed(double gain);
     void do_startItem_changed(double value);
     void do_rangeItem_changed(double value);
     void do_velocityItem_changed(double value);
@@ -42,12 +37,11 @@ protected slots:
      */
     void update(const DplDevice::GroupPointer &group);
 
-    void update_gain_item();
     void update_start_item();
     void update_range_item();
 
 private:
-    SpinMenuItem *m_gainItem;
+    GainMenuItem *m_gainItem;
     SpinMenuItem *m_startItem;
     SpinMenuItem *m_rangeItem;
     SpinMenuItem *m_velocityItem;

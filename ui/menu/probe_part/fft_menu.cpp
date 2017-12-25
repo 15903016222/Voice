@@ -1,5 +1,7 @@
 #include "fft_menu.h"
 
+#include "../menu_item/gain_menu_item.h"
+
 #include <device/device.h>
 #include <QMessageBox>
 #include <source/source.h>
@@ -10,7 +12,7 @@ namespace DplProbeMenu {
 
 FftMenu::FftMenu(QWidget *parent) :
     BaseMenu(parent),
-    m_gainItem(new SpinMenuItem(this, tr("Gain"), tr("dB"))),
+    m_gainItem(new GainMenuItem(this)),
     m_startItem(new SpinMenuItem(this, tr("Start"), "mm")),
     m_widthItem(new SpinMenuItem(this, tr("Width"), "mm")),
     m_switchItem(new ComboMenuItem(this, tr("Switch"))),
@@ -20,10 +22,6 @@ FftMenu::FftMenu(QWidget *parent) :
     m_layout1->addWidget(m_startItem);
     m_layout2->addWidget(m_widthItem);
     m_layout3->addWidget(m_switchItem);
-
-    /* Gain */
-    m_gainItem->set(0, 90, 1, 0.1);
-    m_gainItem->set_value(m_currentGroupPointer->sample()->gain());
 
     /* Start menu item */
     m_startItem->set(0, 16000, 2);
@@ -131,34 +129,8 @@ void FftMenu::do_widthItem_value_changed(double val)
             this, SLOT(do_width_changed(float)));
 }
 
-
-void FftMenu::do_gainItem_changed(double gain)
-{
-    disconnect(static_cast<DplUt::Sample *> (m_currentGroupPointer->sample().data()), SIGNAL(gain_changed(float)),
-            this, SLOT(do_gain_changed(float)));
-    m_currentGroupPointer->sample()->set_gain(gain);
-    connect(static_cast<DplUt::Sample *> (m_currentGroupPointer->sample().data()), SIGNAL(gain_changed(float)),
-            this, SLOT(do_gain_changed(float)));
-    emit gain_changed(gain);
-}
-
-
-void FftMenu::do_gain_changed(float val)
-{
-    disconnect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
-    m_gainItem->set(0, 90, 1, 0.1);
-    m_gainItem->set_value(m_currentGroupPointer->sample()->gain());
-    connect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
-}
-
-
 void FftMenu::init_connection()
 {
-    /* Gain item连接 */
-    connect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
-    connect(static_cast<DplUt::Sample *> (m_currentGroupPointer->sample().data()), SIGNAL(gain_changed(float)),
-            this, SLOT(do_gain_changed(float)));
-
     /* Gate start、end连接 */
     connect(static_cast<DplGate::Gate *>(m_currentGroupPointer->gate_a().data()), SIGNAL(width_changed(float)),
             this, SLOT(do_width_changed(float)));

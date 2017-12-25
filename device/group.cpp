@@ -63,6 +63,7 @@ void Group::set_mode(Group::Mode mode)
         m_fpgaGroup->set_mode(DplFpga::Group::UT2);
     }
     d->set_mode(mode);
+    set_current_beam(0);
 }
 
 Group::UtUnit Group::ut_unit()
