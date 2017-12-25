@@ -5,7 +5,11 @@ namespace DplReport {
 ReportEncoder::ReportEncoder(E_EncoderType encoderType)
     : BaseReport(),
       m_encoderType(encoderType),
-      m_enable(false)
+      m_enable(false),
+      m_name("-"),
+      m_type("-"),
+      m_resolution("-"),
+      m_polarity("-")
 {
 
 }

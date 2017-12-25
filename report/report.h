@@ -23,8 +23,6 @@ public:
 
     inline void set_template_file(const QString &templateFile) { m_templateFile = templateFile; }
 
-    void fill_data(const QString &fileName);
-
     const ReportHeaderPointer  &report_header() const { return m_reportHeader; }
     const ReportUsersPointer   &report_users() const { return m_reportUsers; }
     const ReportGroupsPointer  &report_groups() const { return m_reportGroups; }

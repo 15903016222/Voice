@@ -3,7 +3,18 @@
 namespace DplReport {
 
 ReportFFT::ReportFFT()
-    : BaseReport()
+    : BaseReport(),
+      m_peakFreq("-"),
+      m_lowerFreq6dB("-"),
+      m_higherFreq6dB("-"),
+      m_centerFreq6dB("-"),
+      m_bandwidth6dB("-"),
+      m_bandwidthPercent6dB("-"),
+      m_lowerFreq20dB("-"),
+      m_higherFreq20dB("-"),
+      m_centerFreq20dB("-"),
+      m_bandwidth20dB("-"),
+      m_bandwidthPercent20dB("-")
 {
 
 }

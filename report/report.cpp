@@ -15,7 +15,6 @@
 #include "report_users.h"
 #include "report_wedge.h"
 #include "report_scan.h"
-#include "report_data.h"
 
 namespace DplReport {
 
@@ -35,6 +34,7 @@ Report::~Report()
 {
 
 }
+
 
 bool Report::save(const QString &fileName)
 {
@@ -57,9 +57,6 @@ bool Report::save(const QString &fileName)
         return false;
     }
     ::lua_getglobal(m_lua, "output");
-
-    fill_data(fileName);
-
     ::lua_pushstring(m_lua, m_templateFile.toStdString().c_str());
     ::lua_pushstring(m_lua, fileName.toStdString().c_str());
     ::lua_createtable(m_lua, 0, 0);
@@ -74,12 +71,6 @@ bool Report::save(const QString &fileName)
 
     qDebug("[Report::%s] Save Success.", __FUNCTION__);
     return true;
-}
-
-void Report::fill_data(const QString &fileName)
-{
-    ReportData reportData(this);
-    reportData.fill(fileName);
 }
 
 }

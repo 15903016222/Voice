@@ -3,7 +3,10 @@
 namespace DplReport {
 
 ReportPart::ReportPart()
-    : BaseReport()
+    : BaseReport(),
+      m_material("-"),
+      m_geometry("-"),
+      m_thickness("-")
 {
 
 }

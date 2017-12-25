@@ -19,7 +19,6 @@ public:
         double centerFrequency20db;
         double peakFrequency;
         const unsigned char *data;
-
     };
 
     struct S_Complex

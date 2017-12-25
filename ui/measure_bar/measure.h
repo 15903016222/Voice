@@ -77,6 +77,7 @@ public:
         T_D_mr                                  //TOFD超声轴测量光标与参考光标间距
     };
 
+
     /**
      * @brief calculate 计算测量值
      * @param grp       组对象

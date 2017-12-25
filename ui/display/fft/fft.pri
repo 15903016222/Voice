@@ -6,11 +6,13 @@ HEADERS += \
     $$PWD/fft_display.h \
     $$PWD/fft_hdisplay.h \
     $$PWD/fft_item.h \
-    $$PWD/fft_scene.h
+    $$PWD/fft_scene.h \
+    $$PWD/fft_result.h
 
 SOURCES += \
     $$PWD/fft_calculator.cpp \
     $$PWD/fft_display.cpp \
     $$PWD/fft_hdisplay.cpp \
     $$PWD/fft_item.cpp \
-    $$PWD/fft_scene.cpp
+    $$PWD/fft_scene.cpp \
+    $$PWD/fft_result.cpp

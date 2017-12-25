@@ -4,7 +4,18 @@ namespace DplReport {
 
 ReportLaw::ReportLaw()
     : BaseReport(),
-      m_enable(false)
+      m_enable(false),
+      m_elementQty("-"),
+      m_firstTxElement("-"),
+      m_lastTxElement("-"),
+      m_firstRxElement("-"),
+      m_lastRxElement("-"),
+      m_elementResolution("-"),
+      m_startAngle("-"),
+      m_stopAngle("-"),
+      m_angleResolution("-"),
+      m_type("-"),
+      m_focalType("-")
 {
 
 }

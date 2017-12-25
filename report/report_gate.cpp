@@ -5,6 +5,10 @@ namespace DplReport {
 ReportGate::ReportGate(E_GateType type)
     : BaseReport(),
       m_type(type),
+      m_start("-"),
+      m_width("-"),
+      m_threshold("-"),
+      m_synchro("-"),
       m_enable(false)
 {
 

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include <QDebug>
+#include "fft_result.h"
 
 #define PI 3.1415926535897931
 
@@ -211,6 +212,8 @@ void FFTCalculator::calculate_result(int targetDataLen)
     m_fftResult.bandWidth20dbPercent    = (db20maxPoint > db20minPoint) ? peakPoint * 100.0 / (db20maxPoint - db20minPoint) : 0;
     m_fftResult.data                    = m_returnData;
     m_fftResult.MhzRatio                = m_MHzRatio;
+
+    FFTResult::instance()->set_result(m_fftResult);
 
 }
 

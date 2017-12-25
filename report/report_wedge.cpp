@@ -3,7 +3,9 @@
 namespace DplReport {
 
 ReportWedge::ReportWedge()
-    : BaseReport()
+    : BaseReport(),
+      m_model("-"),
+      m_angle("-")
 {
 
 }

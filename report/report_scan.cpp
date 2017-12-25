@@ -4,6 +4,14 @@ namespace DplReport {
 
 ReportScan::ReportScan()
     : BaseReport(),
+      m_scanStart("-"),
+      m_scanStop("-"),
+      m_scanResolution("-"),
+      m_indexStart("-"),
+      m_indexStop("-"),
+      m_indexResolution("-"),
+      m_scanSynchro("-"),
+      m_scanSpeed("-"),
       m_scanEncoder(new ReportEncoder(ReportEncoder::ScanEncoder)),
       m_indexEncoder(new ReportEncoder(ReportEncoder::IndexEncoder))
 {

@@ -3,7 +3,11 @@
 namespace DplReport {
 
 ReportProbe::ReportProbe()
-    : BaseReport()
+    : BaseReport(),
+      m_model("-"),
+      m_serial("-"),
+      m_freq("-"),
+      m_aperture("-")
 {
 
 }

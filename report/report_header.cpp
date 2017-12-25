@@ -7,7 +7,13 @@ namespace DplReport {
 #define INSPECTION_VERSION  ("1.0")
 
 ReportHeader::ReportHeader()
-    : BaseReport()
+    : BaseReport(),
+      m_setupFile("-"),
+      m_saveMode("-"),
+      m_deviceType("-"),
+      m_reportFile("-"),
+      m_reportDateTime("-"),
+      m_inspectionDateTime("-")
 {
 
 }

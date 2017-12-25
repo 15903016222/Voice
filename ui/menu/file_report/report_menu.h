@@ -19,7 +19,7 @@ private:
     LabelMenuItem *m_customerItem;
     LabelMenuItem *m_partNameItem;
     LabelMenuItem *m_partNumberItem;
-    LabelMenuItem *m_createItem;
+    LabelMenuItem *m_previewItem;
 
 private slots:
     void show_input_dialog();

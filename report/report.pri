@@ -14,8 +14,7 @@ HEADERS += \
     $$PWD/report_users.h \
     $$PWD/report_wedge.h \
     $$PWD/report_scan.h \
-    $$PWD/report_group.h \
-    $$PWD/report_data.h
+    $$PWD/report_group.h
 
 SOURCES += \
     $$PWD/report.cpp \
@@ -33,8 +32,7 @@ SOURCES += \
     $$PWD/report_setup.cpp \
     $$PWD/report_users.cpp \
     $$PWD/report_wedge.cpp \
-    $$PWD/report_group.cpp \
-    $$PWD/report_data.cpp
+    $$PWD/report_group.cpp
 
 INCLUDEPATH += $$PWD/lua5.1
 
