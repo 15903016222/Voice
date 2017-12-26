@@ -187,12 +187,12 @@ mode, which greatly improve the detection reliability.
     <message>
         <location filename="../dialog/datetimesetdialog.ui" line="255"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../dialog/datetimesetdialog.ui" line="271"/>
         <source>&amp;Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
@@ -205,52 +205,52 @@ mode, which greatly improve the detection reliability.
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="38"/>
         <source>Group Select</source>
-        <translation type="unfinished"></translation>
+        <translation>组选择</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="56"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>全选</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="78"/>
         <source>G1</source>
-        <translation type="unfinished"></translation>
+        <translation>组1</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="97"/>
         <source>G2</source>
-        <translation type="unfinished"></translation>
+        <translation>组2</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="116"/>
         <source>G3</source>
-        <translation type="unfinished"></translation>
+        <translation>组3</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="135"/>
         <source>G4</source>
-        <translation type="unfinished"></translation>
+        <translation>组4</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="154"/>
         <source>G5</source>
-        <translation type="unfinished"></translation>
+        <translation>组5</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="173"/>
         <source>G6</source>
-        <translation type="unfinished"></translation>
+        <translation>组6</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="192"/>
         <source>G7</source>
-        <translation type="unfinished"></translation>
+        <translation>组7</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="211"/>
         <source>G8</source>
-        <translation type="unfinished"></translation>
+        <translation>组8</translation>
     </message>
     <message>
         <location filename="../menu/display/display_select_dialog.ui" line="240"/>
@@ -263,17 +263,17 @@ mode, which greatly improve the detection reliability.
     <message>
         <location filename="../menu/display/color_setting_menu.cpp" line="15"/>
         <source>Amplitude</source>
-        <translation type="unfinished">幅度</translation>
+        <translation>幅度</translation>
     </message>
     <message>
         <location filename="../menu/display/color_setting_menu.cpp" line="16"/>
         <source>Depth</source>
-        <translation type="unfinished">深度</translation>
+        <translation>深度</translation>
     </message>
     <message>
         <location filename="../menu/display/color_setting_menu.cpp" line="17"/>
         <source>TOFD</source>
-        <translation type="unfinished"></translation>
+        <translation>TOFD</translation>
     </message>
 </context>
 <context>
@@ -281,17 +281,17 @@ mode, which greatly improve the detection reliability.
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="12"/>
         <source>Scan</source>
-        <translation type="unfinished">扫查</translation>
+        <translation>扫查</translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="13"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>颜色</translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="14"/>
         <source>Envelope</source>
-        <translation type="unfinished"></translation>
+        <translation>包络</translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="15"/>
@@ -1070,12 +1070,12 @@ Table</source>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="19"/>
         <source>Gate</source>
-        <translation type="unfinished">闸门</translation>
+        <translation>闸门</translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="20"/>
         <source>Switch</source>
-        <translation type="unfinished">开关</translation>
+        <translation>开关</translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="21"/>
@@ -1085,7 +1085,7 @@ Table</source>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="22"/>
         <source>Start</source>
-        <translation type="unfinished">开始</translation>
+        <translation>开始</translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="23"/>
@@ -1100,7 +1100,7 @@ Table</source>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="25"/>
         <source>Synchro</source>
-        <translation type="unfinished">同步</translation>
+        <translation>同步</translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="26"/>
@@ -1111,7 +1111,7 @@ Table</source>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="27"/>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="50"/>
         <source>Mode</source>
-        <translation type="unfinished">模式</translation>
+        <translation>模式</translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="39"/>
@@ -1131,7 +1131,7 @@ Table</source>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="49"/>
         <source>Position</source>
-        <translation type="unfinished">位置</translation>
+        <translation>位置</translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="66"/>
@@ -1358,12 +1358,12 @@ Calibration</source>
     <message>
         <location filename="../dialog/dpl_message_box.ui" line="161"/>
         <source>OK</source>
-        <translation type="unfinished">确定</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../dialog/dpl_message_box.ui" line="179"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -1371,36 +1371,36 @@ Calibration</source>
     <message>
         <location filename="../menu/preference/network_menu.cpp" line="19"/>
         <source>IP Address</source>
-        <translation type="unfinished">IP地址</translation>
+        <translation>IP地址</translation>
     </message>
     <message>
         <location filename="../menu/preference/network_menu.cpp" line="20"/>
         <source>Subnet Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>子网掩码</translation>
     </message>
     <message>
         <location filename="../menu/preference/network_menu.cpp" line="54"/>
         <location filename="../menu/preference/network_menu.cpp" line="79"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>提示</translation>
     </message>
     <message>
         <location filename="../menu/preference/network_menu.cpp" line="54"/>
         <location filename="../menu/preference/network_menu.cpp" line="79"/>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>成功！</translation>
     </message>
     <message>
         <location filename="../menu/preference/network_menu.cpp" line="58"/>
         <location filename="../menu/preference/network_menu.cpp" line="83"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../menu/preference/network_menu.cpp" line="58"/>
         <location filename="../menu/preference/network_menu.cpp" line="83"/>
         <source>Failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>失败！</translation>
     </message>
 </context>
 <context>
@@ -1457,36 +1457,36 @@ Calibration</source>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="35"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>日期</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="36"/>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>时间</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="37"/>
         <location filename="../menu/preference/system_menu.cpp" line="129"/>
         <source>Cert Import</source>
-        <translation type="unfinished"></translation>
+        <translation>证书导入</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="38"/>
         <location filename="../menu/preference/system_menu.cpp" line="151"/>
         <location filename="../menu/preference/system_menu.cpp" line="154"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>系统更新</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="39"/>
         <location filename="../menu/preference/system_menu.cpp" line="170"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>清除配置</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="40"/>
         <source>Infomation</source>
-        <translation type="unfinished"></translation>
+        <translation>系统信息</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="89"/>
@@ -1498,45 +1498,45 @@ Calibration</source>
         <location filename="../menu/preference/system_menu.cpp" line="92"/>
         <location filename="../menu/preference/system_menu.cpp" line="117"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>提示</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="92"/>
         <location filename="../menu/preference/system_menu.cpp" line="117"/>
         <location filename="../menu/preference/system_menu.cpp" line="139"/>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>成功！</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="95"/>
         <location filename="../menu/preference/system_menu.cpp" line="120"/>
         <location filename="../menu/preference/system_menu.cpp" line="142"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="95"/>
         <location filename="../menu/preference/system_menu.cpp" line="120"/>
         <location filename="../menu/preference/system_menu.cpp" line="142"/>
         <source>Failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>失败！</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="132"/>
         <location filename="../menu/preference/system_menu.cpp" line="139"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>导入</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="133"/>
         <location filename="../menu/preference/system_menu.cpp" line="155"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="170"/>
         <source>Reset Config ?</source>
-        <translation type="unfinished">清除设置？</translation>
+        <translation>清除设置？</translation>
     </message>
 </context>
 <context>
@@ -1863,17 +1863,17 @@ Calibration</source>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="8"/>
         <source>Encoder</source>
-        <translation type="unfinished">编码器</translation>
+        <translation>编码器</translation>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="9"/>
         <source>Type</source>
-        <translation type="unfinished">类型</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="10"/>
         <source>Resolution</source>
-        <translation type="unfinished">分辨率</translation>
+        <translation>分辨率</translation>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="10"/>
@@ -1883,7 +1883,7 @@ Calibration</source>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="11"/>
         <source>Polarity</source>
-        <translation type="unfinished">极性</translation>
+        <translation>极性</translation>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="12"/>
@@ -1941,12 +1941,12 @@ Calibration</source>
     <message>
         <location filename="../menu/scan/inspection_menu.cpp" line="8"/>
         <source>Type</source>
-        <translation type="unfinished">类型</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="../menu/scan/inspection_menu.cpp" line="9"/>
         <source>Scan</source>
-        <translation type="unfinished">扫查</translation>
+        <translation>扫查</translation>
     </message>
     <message>
         <location filename="../menu/scan/inspection_menu.cpp" line="10"/>
@@ -2007,12 +2007,12 @@ Calibration</source>
     <message>
         <location filename="../menu/scan/start_menu.cpp" line="8"/>
         <source>Start</source>
-        <translation type="unfinished">开始</translation>
+        <translation>开始</translation>
     </message>
     <message>
         <location filename="../menu/scan/start_menu.cpp" line="9"/>
         <source>Pause</source>
-        <translation type="unfinished">暂停</translation>
+        <translation>暂停</translation>
     </message>
 </context>
 <context>
@@ -2020,42 +2020,42 @@ Calibration</source>
     <message>
         <location filename="../menu/ut_setting/general_menu.cpp" line="21"/>
         <source>Start</source>
-        <translation type="unfinished">开始</translation>
+        <translation>开始</translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/general_menu.cpp" line="22"/>
         <source>Range</source>
-        <translation type="unfinished">范围</translation>
+        <translation>范围</translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/general_menu.cpp" line="23"/>
         <source>Velocity</source>
-        <translation type="unfinished">速度</translation>
+        <translation>声速</translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/general_menu.cpp" line="24"/>
         <source>Wedge Delay</source>
-        <translation type="unfinished">楔块延时</translation>
+        <translation>楔块延时</translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/general_menu.cpp" line="25"/>
         <source>UT Unit</source>
-        <translation type="unfinished">UT 单位</translation>
+        <translation>UT 单位</translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/general_menu.cpp" line="50"/>
         <source>Time</source>
-        <translation type="unfinished">时间</translation>
+        <translation>时间</translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/general_menu.cpp" line="51"/>
         <source>Sound Path</source>
-        <translation type="unfinished">声速</translation>
+        <translation>声程</translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/general_menu.cpp" line="52"/>
         <source>True Path</source>
-        <translation type="unfinished">真实深度</translation>
+        <translation>真实深度</translation>
     </message>
 </context>
 <context>
@@ -2783,7 +2783,7 @@ Calibration</source>
     <message>
         <location filename="../menu/menu_item/gain_menu_item.cpp" line="8"/>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>增益</translation>
     </message>
 </context>
 <context>
@@ -6047,7 +6047,7 @@ Part</source>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="44"/>
         <source>Select</source>
-        <translation type="unfinished">选择</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="54"/>
@@ -6061,12 +6061,12 @@ Part</source>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="78"/>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="204"/>
         <source>Wedge</source>
-        <translation type="unfinished">楔块</translation>
+        <translation>楔块</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="102"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>信息</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="135"/>
@@ -6077,23 +6077,23 @@ Part</source>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="173"/>
         <source>OK</source>
-        <translation type="unfinished">确定</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="186"/>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="578"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="196"/>
         <source>Define</source>
-        <translation type="unfinished">自定义</translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="248"/>
         <source>Delete</source>
-        <translation type="unfinished">删除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="263"/>

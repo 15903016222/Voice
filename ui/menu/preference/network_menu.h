@@ -32,6 +32,9 @@ private slots:
     void show_ip_address_dialog();
     void show_subnet_mask_dialog();
 
+protected:
+    void changeEvent(QEvent *event);
+
 private:
     NetworkManager  *m_networkManager;
 };
