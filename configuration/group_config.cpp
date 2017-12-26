@@ -540,7 +540,6 @@ void GroupConfig::unpack_group_item_config(int key, msgpack::object &item)
         default:
             break;
     }
-    qDebug();
 }
 
 void GroupConfig::unpack_group_general_config(msgpack::object &item)
