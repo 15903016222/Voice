@@ -83,8 +83,9 @@ void ReportMenu::do_createItem_clicked()
 
     if(report.save(m_reportNameItem->text() + s_html)) {
         ReportPreviewDialog preview(m_reportNameItem->text() + s_html);
-        if(preview.preview()) {
-            preview.exec();
+        if(preview.preview() && preview.exec() == QMessageBox::Accepted) {
+            DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Create Success!"));
+            messageBox.exec();
         }
     } else {
         DplMessageBox messageBox(QMessageBox::Warning, tr("Warning"), tr("Create Preview Failed!"));

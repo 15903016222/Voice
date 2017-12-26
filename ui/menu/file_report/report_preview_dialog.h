@@ -23,6 +23,11 @@ class ReportPreviewDialog : public QDialog
 public:
     explicit ReportPreviewDialog(const QString &previewFilePath, QWidget *parent = 0);
     ~ReportPreviewDialog();
+
+    /**
+     * @brief preview   生成报表预览
+     * @return          true：生成成功； false：生成失败
+     */
     bool preview();
 
 private slots:

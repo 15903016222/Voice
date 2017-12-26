@@ -34,8 +34,6 @@ bool ReportPreviewDialog::preview()
 
 void ReportPreviewDialog::on_savePushButton_clicked()
 {
-    DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Create Success!"));
-    messageBox.exec();
     accept();
 }
 

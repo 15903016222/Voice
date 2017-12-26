@@ -23,12 +23,33 @@ public:
     explicit FieldInfo(QObject *parent = 0);
     static FieldInfo *instance();
 
+    /**
+     * @brief add_field_names   添加域信息
+     * @param group             组
+     * @param nameMap           域名称键值对
+     * @return                  true：添加成功； false：添加失败
+     */
     bool add_field_names(const DplDevice::GroupPointer &group, const FieldNameMap &nameMap);
+
+    /**
+     * @brief field_names       获取指定组的域信息
+     * @param group             组
+     * @return                  返回域名列表
+     */
     QList<QString> field_names(const DplDevice::GroupPointer &group);
+
+    /**
+     * @brief set_field_name    设置域名称
+     * @param group             指定的组
+     * @param obj               保存域名的控件
+     * @param fieldName         域名称
+     * @return
+     */
     bool set_field_name(const DplDevice::GroupPointer &group, QObject *obj, const QString &fieldName);
 
 public slots:
     void do_group_qty_changed(int index);
+
 private:
     static FieldInfo *s_instance;
     QMap<int, FieldNameMap> m_fieldNamesMap;

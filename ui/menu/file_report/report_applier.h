@@ -31,7 +31,16 @@ class ReportApplier : public QObject
 public:
     explicit ReportApplier(DplReport::Report &report, QObject *parent = 0);
 
+    /**
+     * @brief fill          填充报表数据
+     * @param reportFile    待填充的报表文件路径
+     */
     void fill(const QString &reportFile);
+
+    /**
+     * @brief set_precision 设置报表数据的小数点位
+     * @param precision     小数点位数
+     */
     inline void set_precision(uint precision) { m_precision = precision; }
 
 private:
