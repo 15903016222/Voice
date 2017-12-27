@@ -9,7 +9,7 @@
 #define __ALARM_MENU_H__
 
 #include "../base_menu.h"
-#include "../menu_item/multi_combo_menu_item.h"
+#include "../menu_item/base/multi_combo_menu_item.h"
 #include <fpga/alarm_output.h>
 
 namespace DplGateCurvesMenu {

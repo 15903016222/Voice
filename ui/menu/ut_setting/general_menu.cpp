@@ -9,13 +9,15 @@
 #include <global.h>
 #include <ui/tool/tool.h>
 
+#include "../menu_item/gain_menu_item.h"
+
 #include <qmath.h>
 
 namespace DplUtSettingMenu {
 
 GeneralMenu::GeneralMenu(QWidget *parent) :
     BaseMenu(parent),
-    m_gainItem(new SpinMenuItem(this, tr("Gain"), "dB")),
+    m_gainItem(new GainMenuItem(this)),
     m_startItem(new SpinMenuItem(this, tr("Start"))),
     m_rangeItem(new SpinMenuItem(this, tr("Range"))),
     m_velocityItem(new SpinMenuItem(this, tr("Velocity"), "m/s")),
@@ -28,10 +30,6 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
     m_layout3->addWidget(m_velocityItem);
     m_layout4->addWidget(m_wedgeDelayItem);
     m_layout5->addWidget(m_utUnitItem);
-
-    /* Gain Item */
-    connect(m_gainItem, SIGNAL(value_changed(double)), this, SLOT(do_gainItem_changed(double)));
-    connect(m_gainItem, SIGNAL(value_changed(double)), this, SIGNAL(gain_changed(double)));
 
     /* Start Item */
     connect(m_startItem, SIGNAL(value_changed(double)), this, SLOT(do_startItem_changed(double)));
@@ -68,21 +66,8 @@ GeneralMenu::~GeneralMenu()
 
 void GeneralMenu::update(const DplDevice::GroupPointer &group)
 {
-    if (m_group) {
-        disconnect(static_cast<DplDevice::Group *>(group.data()),
-                   SIGNAL(mode_changed(DplDevice::Group::Mode)),
-                   this,
-                   SLOT(update_gain_item()));
-    }
-
     m_group = group;
 
-    connect(static_cast<DplDevice::Group *>(group.data()),
-            SIGNAL(mode_changed(DplDevice::Group::Mode)),
-            this,
-            SLOT(update_gain_item()));
-
-    update_gain_item();
     update_start_item();
     update_range_item();
 
@@ -92,11 +77,6 @@ void GeneralMenu::update(const DplDevice::GroupPointer &group)
     m_wedgeDelayItem->set_value(Dpl::ns_to_us(delay));
 
     m_utUnitItem->set_current_index(m_group->ut_unit());
-}
-
-void GeneralMenu::do_gainItem_changed(double gain)
-{
-    m_group->sample()->set_gain(gain);
 }
 
 void GeneralMenu::do_startItem_changed(double value)
@@ -124,17 +104,6 @@ void GeneralMenu::do_utUnitItem_changed(int index)
     m_group->set_ut_unit((DplDevice::Group::UtUnit)index);
     update_start_item();
     update_range_item();
-}
-
-void GeneralMenu::update_gain_item()
-{
-    if (m_group->mode() == DplDevice::Group::UT1
-            || m_group->mode() == DplDevice::Group::UT2) {
-        m_gainItem->set(0, 110, 1, 0.1);
-    } else {
-        m_gainItem->set(0, 80, 1, 0.1);
-    }
-    m_gainItem->set_value(m_group->sample()->gain());
 }
 
 void GeneralMenu::update_start_item()

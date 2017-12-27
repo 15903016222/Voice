@@ -34,7 +34,7 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
     update_title();
     update_value();
 
-    set_focus_out();
+    set_edit(false);
 
     connect(m_pushBtn, SIGNAL(clicked(bool)),
             this, SLOT(do_pushBtn_clicked()));
@@ -77,6 +77,20 @@ void SpinMenuItem::set_step(double step)
     update_title();
 }
 
+void SpinMenuItem::set_edit(bool flag)
+{
+    if ( flag ) {
+        m_lineEdit->setFocusPolicy(Qt::WheelFocus);
+        m_lineEdit->setFocus();
+        m_lineEdit->setReadOnly(false);
+    } else {
+        m_lineEdit->setFocusPolicy(Qt::NoFocus);
+        m_lineEdit->clearFocus();
+        m_lineEdit->setReadOnly(true);
+    }
+    update_title();
+}
+
 void SpinMenuItem::set_value(double value)
 {
     if (qFuzzyCompare(m_value, value)) {
@@ -110,7 +124,7 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         case Qt::Key_Return:
         {
             update_value();
-            set_focus_out();
+            set_edit(false);
             return true;
             break;
         }
@@ -125,7 +139,7 @@ bool SpinMenuItem::eventFilter(QObject *obj, QEvent *e)
         }
     } else if (e->type() == QEvent::FocusOut) {
         if(obj->objectName() == m_lineEdit->objectName()) {
-            set_focus_out();
+            set_edit(false);
         }
     } else if (e->type() == QEvent::Wheel) {
         QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(e);
@@ -168,23 +182,6 @@ void SpinMenuItem::update_spin_step()
 
     update_title();
 }
-
-void SpinMenuItem::set_focus()
-{
-    m_lineEdit->setFocusPolicy(Qt::WheelFocus);
-    m_lineEdit->setFocus();
-    m_lineEdit->setReadOnly(false);
-    update_title();
-}
-
-void SpinMenuItem::set_focus_out()
-{
-    m_lineEdit->setFocusPolicy(Qt::NoFocus);
-    m_lineEdit->clearFocus();
-    m_lineEdit->setReadOnly(true);
-    update_title();
-}
-
 
 void SpinMenuItem::update_value()
 {
@@ -241,6 +238,6 @@ void SpinMenuItem::do_pushBtn_clicked()
     if (m_lineEdit->hasFocus()) {
         update_spin_step();
     } else {
-        set_focus();
+        set_edit(true);
     }
 }

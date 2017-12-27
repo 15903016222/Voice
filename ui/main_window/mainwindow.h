@@ -24,20 +24,20 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-protected:
-    void load_style_sheet(const QString &fileName);
-
-    void mousePressEvent(QMouseEvent *e);
-    void keyPressEvent(QKeyEvent *event);
-
-signals:
-
 protected slots:
     void do_key_event(Mcu::KeyType type);
 
     void do_keyboard_event();
 
     void do_rotary_event(Mcu::RotaryType type);
+
+protected:
+    void load_style_sheet(const QString &fileName);
+
+    void mousePressEvent(QMouseEvent *e);
+    void keyPressEvent(QKeyEvent *event);
+
+    void show_hidden_Menu();
 
 private:
     Ui::MainWindow *ui;
@@ -47,8 +47,6 @@ private:
     MainMenu *m_mainMenu;
     SubMenu *m_subMenu;
     Wizard  *m_wizard;
-
-    void show_hidden_Menu();
 };
 
 #endif // MAINWINDOW_H

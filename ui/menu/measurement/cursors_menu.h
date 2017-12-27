@@ -4,6 +4,7 @@
 #include "../base_menu.h"
 #include <device/device.h>
 
+class VpaMenuItem;
 namespace DplMeasurementMenu {
 
 class CursorsMenu : public BaseMenu
@@ -34,7 +35,6 @@ protected slots:
     void update_umItem();
     void update_irItem();
     void update_imItem();
-    void update_beamItem();
 
 private slots:
     void update(const DplDevice::GroupPointer &grp);
@@ -88,7 +88,7 @@ private:
     SpinMenuItem *m_irItem;     /* I(r) */
     SpinMenuItem *m_imItem;     /* I(m) */
 
-    SpinMenuItem *m_angelItem;
+    VpaMenuItem *m_vpaItem;
 
     DplDevice::GroupPointer m_group;
     DplMeasure::CursorPointer m_cursor;
