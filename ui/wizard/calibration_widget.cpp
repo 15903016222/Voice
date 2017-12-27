@@ -89,22 +89,15 @@ void CalibrationWidget::do_utDetectSettingWidget_current_mode_changed(int index)
 
 void CalibrationWidget::initItem()
 {
-     /*
-      * comboBox默认item
-      * 0--Encoder
-      * 1--Sound Velocity
-      * 2--Delay
-      * 3--ACG
-      * 4--TCG
-      * 5--Angle
-      *
-      */
-
     if(WizardSetting::SINGLE_DETECT == m_type) {
-        /* 删除不需要的item */
-        ui->optionComboBox->removeItem(4);     /* 删除TCG项 */
-        ui->optionComboBox->removeItem(3);     /* 删除ACG项 */
-        ui->optionComboBox->removeItem(0);     /* 删除Encoder项 */
+
+        disconnect(ui->optionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(do_optionComboBox_current_index_changed(int)));
+        disconnect(ui->optionComboBox, SIGNAL(activated(int)), this, SLOT(do_optionComboBox_current_index_changed(int)));
+
+        ui->optionComboBox->clear();
+        ui->optionComboBox->addItem(tr("Sound Velocity"));
+        ui->optionComboBox->addItem(tr("Delay"));
+        ui->optionComboBox->addItem(tr("Angle"));
 
         m_widgetMap.insert(SINGLE_DETECT_SOUND_VELOVITY_PROPERTIES, new SoundVelocityPropertiesWidget(m_type, ui->propertiesWidget));
         m_widgetMap.insert(SINGLE_DETECT_DELAY_PROPERTIES, new DelayPropertiesWidget(m_type, ui->propertiesWidget));
@@ -130,8 +123,16 @@ void CalibrationWidget::initItem()
             return;
         }
     } else {
-        /* 删除不需要的item */
-        ui->optionComboBox->removeItem(ui->optionComboBox->count() - 1);  /* 删除Angel项 */
+
+        disconnect(ui->optionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(do_optionComboBox_current_index_changed(int)));
+        disconnect(ui->optionComboBox, SIGNAL(activated(int)), this, SLOT(do_optionComboBox_current_index_changed(int)));
+
+        ui->optionComboBox->clear();
+        ui->optionComboBox->addItem(tr("Encoder"));
+        ui->optionComboBox->addItem(tr("Sound Velocity"));
+        ui->optionComboBox->addItem(tr("Delay"));
+        ui->optionComboBox->addItem(tr("ACG"));
+        ui->optionComboBox->addItem(tr("TCG"));
 
         connect(ui->optionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(do_optionComboBox_current_index_changed(int)));
         connect(ui->optionComboBox, SIGNAL(activated(int)), this, SLOT(do_optionComboBox_current_index_changed(int)));

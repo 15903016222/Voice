@@ -73,36 +73,6 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <item>
-          <property name="text">
-           <string>Encoder</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Sound Velocity</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Delay</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>ACG</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>TCG</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Angle</string>
-          </property>
-         </item>
         </widget>
        </item>
       </layout>
@@ -136,7 +106,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>35</height>
+           <height>45</height>
           </size>
          </property>
          <property name="text">
@@ -155,7 +125,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>35</height>
+           <height>45</height>
           </size>
          </property>
          <property name="text">
@@ -174,7 +144,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>35</height>
+           <height>45</height>
           </size>
          </property>
          <property name="text">
@@ -193,7 +163,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>35</height>
+           <height>45</height>
           </size>
          </property>
          <property name="text">
@@ -212,7 +182,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>35</height>
+           <height>45</height>
           </size>
          </property>
          <property name="text">

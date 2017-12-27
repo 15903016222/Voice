@@ -22,6 +22,11 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="3">
     <widget class="QLabel" name="stateLabel1">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -32,6 +37,11 @@
    </item>
    <item row="1" column="2">
     <widget class="QPushButton" name="settingBtn1">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Setting</string>
      </property>
@@ -45,6 +55,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Gr3:</string>
      </property>
@@ -55,6 +70,11 @@
    </item>
    <item row="1" column="1">
     <widget class="QComboBox" name="settingComboBox1">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>NA</string>
@@ -79,6 +99,11 @@
    </item>
    <item row="2" column="2">
     <widget class="QPushButton" name="settingBtn2">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Setting</string>
      </property>
@@ -86,6 +111,11 @@
    </item>
    <item row="2" column="3">
     <widget class="QLabel" name="stateLabel2">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -102,6 +132,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Gr NO.</string>
      </property>
@@ -117,6 +152,11 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Gr1:</string>
@@ -137,6 +177,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Gr2:</string>
      </property>
@@ -153,6 +198,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Gr4:</string>
      </property>
@@ -163,6 +213,11 @@
    </item>
    <item row="3" column="2">
     <widget class="QPushButton" name="settingBtn3">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Setting</string>
      </property>
@@ -175,6 +230,11 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Gr5:</string>
@@ -192,6 +252,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Gr6:</string>
      </property>
@@ -202,6 +267,11 @@
    </item>
    <item row="3" column="3">
     <widget class="QLabel" name="stateLabel3">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -218,6 +288,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Gr7:</string>
      </property>
@@ -228,6 +303,11 @@
    </item>
    <item row="2" column="1">
     <widget class="QComboBox" name="settingComboBox2">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>NA</string>
@@ -258,6 +338,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Gr8:</string>
      </property>
@@ -268,6 +353,11 @@
    </item>
    <item row="4" column="1">
     <widget class="QComboBox" name="settingComboBox4">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>NA</string>
@@ -292,6 +382,11 @@
    </item>
    <item row="5" column="1">
     <widget class="QComboBox" name="settingComboBox5">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>NA</string>
@@ -316,6 +411,11 @@
    </item>
    <item row="6" column="1">
     <widget class="QComboBox" name="settingComboBox6">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>NA</string>
@@ -340,6 +440,11 @@
    </item>
    <item row="7" column="1">
     <widget class="QComboBox" name="settingComboBox7">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>NA</string>
@@ -364,6 +469,11 @@
    </item>
    <item row="8" column="1">
     <widget class="QComboBox" name="settingComboBox8">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>NA</string>
@@ -388,6 +498,11 @@
    </item>
    <item row="4" column="2">
     <widget class="QPushButton" name="settingBtn4">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Setting</string>
      </property>
@@ -395,6 +510,11 @@
    </item>
    <item row="5" column="2">
     <widget class="QPushButton" name="settingBtn5">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Setting</string>
      </property>
@@ -402,6 +522,11 @@
    </item>
    <item row="6" column="2">
     <widget class="QPushButton" name="settingBtn6">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Setting</string>
      </property>
@@ -409,6 +534,11 @@
    </item>
    <item row="7" column="2">
     <widget class="QPushButton" name="settingBtn7">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Setting</string>
      </property>
@@ -416,6 +546,11 @@
    </item>
    <item row="8" column="2">
     <widget class="QPushButton" name="settingBtn8">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Setting</string>
      </property>
@@ -423,6 +558,11 @@
    </item>
    <item row="4" column="3">
     <widget class="QLabel" name="stateLabel4">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -433,6 +573,11 @@
    </item>
    <item row="5" column="3">
     <widget class="QLabel" name="stateLabel5">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -443,6 +588,11 @@
    </item>
    <item row="6" column="3">
     <widget class="QLabel" name="stateLabel6">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -453,6 +603,11 @@
    </item>
    <item row="7" column="3">
     <widget class="QLabel" name="stateLabel7">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -463,6 +618,11 @@
    </item>
    <item row="8" column="3">
     <widget class="QLabel" name="stateLabel8">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -473,6 +633,11 @@
    </item>
    <item row="0" column="1">
     <widget class="QLabel" name="modelLabel">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Model</string>
      </property>
@@ -489,6 +654,11 @@
    </item>
    <item row="3" column="1">
     <widget class="QComboBox" name="settingComboBox3">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>NA</string>

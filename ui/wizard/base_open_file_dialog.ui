@@ -21,13 +21,24 @@
     <layout class="QHBoxLayout" name="horizontalLayout_top" stretch="0,1,0">
      <item>
       <widget class="QLabel" name="lookInLabel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Look in:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="pathComboBox"/>
+      <widget class="QComboBox" name="pathComboBox">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="backBtn">
@@ -36,6 +47,11 @@
          <width>0</width>
          <height>30</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>Back</string>
@@ -79,6 +95,11 @@
     <layout class="QHBoxLayout" name="horizontalLayout_bottom">
      <item>
       <widget class="QLabel" name="fileNameLabel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>File name:</string>
        </property>
@@ -86,6 +107,11 @@
      </item>
      <item>
       <widget class="QLineEdit" name="fileNameLineEdit">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -93,10 +119,16 @@
      </item>
      <item>
       <widget class="QPushButton" name="openBtn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>30</height>
+         <height>45</height>
         </size>
        </property>
        <property name="text">
@@ -106,10 +138,16 @@
      </item>
      <item>
       <widget class="QPushButton" name="cancleBtn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>30</height>
+         <height>45</height>
         </size>
        </property>
        <property name="text">

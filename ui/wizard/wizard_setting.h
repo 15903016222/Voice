@@ -36,7 +36,7 @@ public:
 
     enum E_STEP
     {
-        STEP_1 = 0,
+        STEP_1,
         STEP_2,
         STEP_3,
         STEP_4

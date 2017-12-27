@@ -225,9 +225,8 @@ void WizardSetting::update_step_widget(bool isBack, QWidget *currentWidget)
 
             ui->backBtn->setHidden(true);
             ui->nextBtn->setHidden(true);
-
-            QRect test = ui->horizontalSpacer->geometry();
-            ui->horizontalSpacer->changeSize(test.width(), 0);
+            ui->horizontalSpacer->changeSize(ui->horizontalSpacer->geometry().width(), 0);
+            ui->horizontalSpacer_2->changeSize(ui->horizontalSpacer_2->geometry().width(), 0);
 
             connect(currentWidget, SIGNAL(back_clicked()), this, SLOT(on_backBtn_clicked()));
             connect(currentWidget, SIGNAL(finished_clicked()), this, SLOT(on_nextBtn_clicked()));
