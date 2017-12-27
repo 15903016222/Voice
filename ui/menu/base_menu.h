@@ -9,9 +9,9 @@
 #ifndef __BASE_MENU_H__
 #define __BASE_MENU_H__
 
-#include "menu_item/base/spin_menu_item.h"
-#include "menu_item/base/combo_menu_item.h"
-#include "menu_item/base/label_menu_item.h"
+#include "menu_item/spin_menu_item.h"
+#include "menu_item/combo_menu_item.h"
+#include "menu_item/label_menu_item.h"
 
 #include <QWidget>
 #include <QLayout>

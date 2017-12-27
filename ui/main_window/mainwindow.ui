@@ -192,13 +192,13 @@
   <customwidget>
    <class>GainMenuItem</class>
    <extends>QWidget</extends>
-   <header>../menu/menu_item/gain_menu_item.h</header>
+   <header>../menu/ut_setting/gain_menu_item.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>VpaMenuItem</class>
    <extends>QWidget</extends>
-   <header>../menu/menu_item/vpa_menu_item.h</header>
+   <header>../menu/measurement/vpa_menu_item.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

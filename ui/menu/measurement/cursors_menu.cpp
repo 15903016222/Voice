@@ -1,5 +1,5 @@
 #include "cursors_menu.h"
-#include "../menu_item/vpa_menu_item.h"
+#include "vpa_menu_item.h"
 
 #include <global.h>
 #include <ui/tool/tool.h>

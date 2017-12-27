@@ -24,6 +24,8 @@ VirtualKeyboard::VirtualKeyboard(QWidget *parent) :
     }
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
+
+    hide();
 }
 
 VirtualKeyboard::~VirtualKeyboard()
