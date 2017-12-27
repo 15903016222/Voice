@@ -10,11 +10,9 @@
 ScanView::ScanView(QWidget *parent):
     QGraphicsView(parent)
 {
-    setStyleSheet("QGraphicsView {"
-                  "border: 0px;"
-                  "}");
-//    setWindowFlags(Qt::Window | Qt::CustomizeWindowHint
-//                        | Qt::WindowTitleHint | Qt::FramelessWindowHint);
+    setFocusPolicy(Qt::NoFocus);
+    clearFocus();
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 }
 
 ScanView::~ScanView()
@@ -23,7 +21,6 @@ ScanView::~ScanView()
 
 void ScanView::resizeEvent(QResizeEvent *event)
 {
-    emit size_changed(event->size());
-
     QGraphicsView::resizeEvent(event);
+    emit size_changed(event->size());
 }
