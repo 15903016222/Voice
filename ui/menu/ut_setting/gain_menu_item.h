@@ -1,7 +1,7 @@
 #ifndef __GAIN_MENU_ITEM_H__
 #define __GAIN_MENU_ITEM_H__
 
-#include "base/spin_menu_item.h"
+#include "../menu_item/spin_menu_item.h"
 #include <device/group.h>
 
 class GainMenuItem : public SpinMenuItem
