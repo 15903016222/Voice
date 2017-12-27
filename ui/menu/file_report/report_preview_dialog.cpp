@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QDebug>
 #include <QtWebKit/qwebview.h>
+#include <QKeyEvent>
 
 ReportPreviewDialog::ReportPreviewDialog(const QString &previewFilePath, QWidget *parent) :
     QDialog(parent),
@@ -41,6 +42,18 @@ void ReportPreviewDialog::on_savePushButton_clicked()
 
 void ReportPreviewDialog::on_cancelPushButton_clicked()
 {
-    m_file.remove();
     reject();
+}
+
+bool ReportPreviewDialog::event(QEvent *event)
+{
+    if(event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if(keyEvent->key() == Qt::Key_Return) {
+            on_savePushButton_clicked();
+            return true;
+        }
+    }
+
+    return QDialog::event(event);
 }

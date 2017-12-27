@@ -34,13 +34,15 @@ public:
 
 private slots:
     void on_savePushButton_clicked();
-
     void on_cancelPushButton_clicked();
+
+protected:
+    bool event(QEvent *event);
 
 private:
     Ui::ReportPreviewDialog *ui;
-    QFile   m_file;
-    QWebView    *m_webview;
+    QFile                   m_file;
+    QWebView                *m_webview;
 };
 
 #endif // __REPORT_PREVIEW_DIALOG_H__

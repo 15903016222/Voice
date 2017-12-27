@@ -339,6 +339,25 @@ QString EnumToStr::inspection_type(DplDevice::Group::Mode mode)
     return QString();
 }
 
+QString EnumToStr::part_geometry(DplFocallaw::Specimen::Type type)
+{
+    switch (type) {
+        case DplFocallaw::Specimen::FLAT:
+        {
+            return tr("FLAT");
+            break;
+        }
+        case DplFocallaw::Specimen::CYLINDER:
+        {
+            return tr("CYLINDER");
+            break;
+        }
+        default:
+            break;
+    }
+    return QString();
+}
+
 
 
 

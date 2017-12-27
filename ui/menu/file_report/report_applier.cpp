@@ -310,11 +310,11 @@ void ReportApplier::fill_report_group_part(DplReport::ReportGroup *group)
     DplReport::ReportPartPointer part = group->get_part();
     const DplFocallaw::SpecimenPointer &speciment =  m_currentGroup->focallawer()->specimen();
     if(speciment->type() == DplFocallaw::Specimen::CYLINDER) {
-        part->set_geometry(tr("TODO"));
+        part->set_geometry(EnumToStr::part_geometry(speciment->type()));
         part->set_material(tr("TODO"));
         part->set_thickness(tr("TODO"));
     } else if(speciment->type() == DplFocallaw::Specimen::FLAT) {
-        part->set_geometry(tr("TODO"));
+        part->set_geometry(EnumToStr::part_geometry(speciment->type()));
         part->set_material(tr("TODO"));
         part->set_thickness(tr("TODO"));
     }

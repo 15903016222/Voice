@@ -112,6 +112,12 @@ public:
      */
     static QString inspection_type(DplDevice::Group::Mode mode);
 
+    /**
+     * @brief part_geometry 获取工件形状字符串
+     * @return
+     */
+    static QString part_geometry(DplFocallaw::Specimen::Type type);
+
 };
 
 
