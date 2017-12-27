@@ -1,4 +1,5 @@
 
+include($$PWD/line/line.pri)
 include($$PWD/ruler/ruler.pri)
 include($$PWD/color_bar/color_bar.pri)
 

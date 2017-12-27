@@ -39,7 +39,6 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
 
     m_scene->addItem(m_tcgItem);
 
-
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
             this, SLOT(update_gates()));
@@ -51,6 +50,7 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
             Qt::DirectConnection);
 
     m_titleLabel->setText(QString("A-Scan|Grp")+QString::number(m_group->index()+1));
+    m_colorBar->set_palette(DplDevice::Device::instance()->display()->palette());
 }
 
 AscanDisplay::~AscanDisplay()
