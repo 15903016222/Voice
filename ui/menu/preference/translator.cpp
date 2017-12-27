@@ -25,6 +25,7 @@ Translator *Translator::instance()
     return s_instance;
 }
 
+
 void Translator::do_value_changed(int val)
 {
     if(NULL == m_translator) {

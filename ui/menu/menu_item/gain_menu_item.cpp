@@ -53,3 +53,12 @@ void GainMenuItem::do_value_changed(double val)
 {
     m_group->sample()->set_gain(val);
 }
+
+void GainMenuItem::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange) {
+        set_title(tr("Gain"));
+    }
+
+    SpinMenuItem::changeEvent(event);
+}

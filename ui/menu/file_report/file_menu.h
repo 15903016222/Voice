@@ -20,6 +20,11 @@ private:
     LabelMenuItem *m_openItem;
     LabelMenuItem *m_fileManagerItem;
 
+    void retranslate_ui();
+
+protected:
+    void changeEvent(QEvent *event);
+
 private slots:
     void do_fileManagerItem_clicked();
 };

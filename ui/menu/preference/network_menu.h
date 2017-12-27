@@ -37,6 +37,7 @@ protected:
 
 private:
     NetworkManager  *m_networkManager;
+    void retranslate_ui();
 };
 
 }

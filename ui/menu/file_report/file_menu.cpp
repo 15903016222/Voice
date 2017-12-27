@@ -20,6 +20,22 @@ FileMenu::~FileMenu()
 {
 }
 
+void FileMenu::retranslate_ui()
+{
+    m_saveSetupItem->set_title(tr("Save Setup"));
+    m_openItem->set_title(tr("Open"));
+    m_fileManagerItem->set_title(tr("File Manager"));
+}
+
+void FileMenu::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange) {
+        retranslate_ui();
+    }
+
+    BaseMenu::changeEvent(event);
+}
+
 void FileMenu::do_fileManagerItem_clicked()
 {
 //    FileManagerDialog fileManagerDialog;

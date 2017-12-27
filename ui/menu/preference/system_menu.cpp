@@ -20,10 +20,8 @@
 #include <QMessageBox>
 #include <QDateTime>
 #include <QCalendarWidget>
-#include <QEvent>
 
 namespace DplPreferenceMenu {
-
 
 static const QString s_usbPath =  "/opt/usbStorage/";
 static const QString s_fileType = "*.cert";
@@ -39,7 +37,7 @@ SystemMenu::SystemMenu(QWidget *parent) :
     m_updateItem(new LabelMenuItem(this, tr("Update"))),
     m_resetCfgItem(new LabelMenuItem(this, tr("Reset"))),
     m_infoItem(new LabelMenuItem(this, tr("Infomation"))),
-    m_timer(new QTimer)
+    m_timer(new QTimer(this))
 {
     m_layout0->addWidget(m_timeItem);
     m_layout1->addWidget(m_dateItem);
@@ -204,16 +202,22 @@ void SystemMenu::init_date_time()
     m_timeItem->set_text(currentDateTime.toString("hh:mm:ss"));
 }
 
+void SystemMenu::retranslate_ui()
+{
+    m_timeItem->set_title(tr("Time"));
+    m_dateItem->set_title(tr("Date"));
+    m_certItem->set_title(tr("Cert Import"));
+    m_updateItem->set_title(tr("Update"));
+    m_resetCfgItem->set_title(tr("Reset"));
+    m_infoItem->set_title(tr("Infomation"));
+}
+
 void SystemMenu::changeEvent(QEvent *event)
 {
     if(QEvent::LanguageChange == event->type()) {
-        m_timeItem->set_title(tr("Time"));
-        m_dateItem->set_title(tr("Date"));
-        m_certItem->set_title(tr("Cert Import"));
-        m_updateItem->set_title(tr("Update"));
-        m_resetCfgItem->set_title(tr("Reset"));
-        m_infoItem->set_title(tr("Infomation"));
+        retranslate_ui();
     }
+    BaseMenu::changeEvent(event);
 }
 
 }

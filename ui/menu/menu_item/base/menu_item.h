@@ -9,6 +9,7 @@
 #define __MENU_ITEM_H__
 
 #include <QWidget>
+#include <QEvent>
 
 class MenuItem : public QWidget
 {

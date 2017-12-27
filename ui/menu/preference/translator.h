@@ -3,7 +3,6 @@
 
 #include <QObject>
 
-class QApplication;
 class QTranslator;
 
 namespace DplTranslator {

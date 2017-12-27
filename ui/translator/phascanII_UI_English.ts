@@ -13,11 +13,13 @@
     <name>BaseMenu</name>
     <message>
         <location filename="../menu/base_menu.cpp" line="31"/>
+        <location filename="../menu/base_menu.cpp" line="51"/>
         <source>On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/base_menu.cpp" line="32"/>
+        <location filename="../menu/base_menu.cpp" line="52"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
@@ -308,16 +310,19 @@ Compression</source>
     <name>DplFileReportMenu::FileMenu</name>
     <message>
         <location filename="../menu/file_report/file_menu.cpp" line="8"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="25"/>
         <source>Save Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/file_report/file_menu.cpp" line="9"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="26"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/file_report/file_menu.cpp" line="10"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="27"/>
         <source>File Manager</source>
         <translation type="unfinished"></translation>
     </message>
@@ -325,32 +330,38 @@ Compression</source>
 <context>
     <name>DplFileReportMenu::FormatMenu</name>
     <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="8"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="7"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="46"/>
         <source>Probe/Wedge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="9"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="8"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="47"/>
         <source>Inspection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="10"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="9"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="48"/>
         <source>Scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="11"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="10"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="49"/>
         <source>Encoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="12"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="11"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="50"/>
         <source>DAC/TCG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="13"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="12"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="51"/>
         <source>Flaw Record
 Table</source>
         <translation type="unfinished"></translation>
@@ -1221,11 +1232,13 @@ Calibration</source>
     <name>DplPreferenceMenu::NetworkMenu</name>
     <message>
         <location filename="../menu/preference/network_menu.cpp" line="19"/>
+        <location filename="../menu/preference/network_menu.cpp" line="101"/>
         <source>IP Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/network_menu.cpp" line="20"/>
+        <location filename="../menu/preference/network_menu.cpp" line="102"/>
         <source>Subnet Mask</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1257,48 +1270,48 @@ Calibration</source>
 <context>
     <name>DplPreferenceMenu::PreferenceMenu</name>
     <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="21"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="117"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="20"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="120"/>
         <source>Bright</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="22"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="118"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="21"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="121"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="23"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="119"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="22"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="122"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="24"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="120"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="23"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="123"/>
         <source>Starting Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="25"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="121"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="24"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="124"/>
         <source>Gate Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="26"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="122"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="25"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="125"/>
         <source>Deploy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="50"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="49"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="51"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="50"/>
         <source>Chinese</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1306,86 +1319,92 @@ Calibration</source>
 <context>
     <name>DplPreferenceMenu::SystemMenu</name>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="35"/>
+        <location filename="../menu/preference/system_menu.cpp" line="34"/>
+        <location filename="../menu/preference/system_menu.cpp" line="208"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="36"/>
+        <location filename="../menu/preference/system_menu.cpp" line="35"/>
+        <location filename="../menu/preference/system_menu.cpp" line="207"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="37"/>
-        <location filename="../menu/preference/system_menu.cpp" line="129"/>
+        <location filename="../menu/preference/system_menu.cpp" line="36"/>
+        <location filename="../menu/preference/system_menu.cpp" line="128"/>
+        <location filename="../menu/preference/system_menu.cpp" line="209"/>
         <source>Cert Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="38"/>
-        <location filename="../menu/preference/system_menu.cpp" line="151"/>
-        <location filename="../menu/preference/system_menu.cpp" line="154"/>
+        <location filename="../menu/preference/system_menu.cpp" line="37"/>
+        <location filename="../menu/preference/system_menu.cpp" line="150"/>
+        <location filename="../menu/preference/system_menu.cpp" line="153"/>
+        <location filename="../menu/preference/system_menu.cpp" line="210"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="39"/>
-        <location filename="../menu/preference/system_menu.cpp" line="170"/>
+        <location filename="../menu/preference/system_menu.cpp" line="38"/>
+        <location filename="../menu/preference/system_menu.cpp" line="169"/>
+        <location filename="../menu/preference/system_menu.cpp" line="211"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="40"/>
+        <location filename="../menu/preference/system_menu.cpp" line="39"/>
+        <location filename="../menu/preference/system_menu.cpp" line="212"/>
         <source>Infomation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="89"/>
-        <location filename="../menu/preference/system_menu.cpp" line="113"/>
+        <location filename="../menu/preference/system_menu.cpp" line="88"/>
+        <location filename="../menu/preference/system_menu.cpp" line="112"/>
         <source> </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="92"/>
-        <location filename="../menu/preference/system_menu.cpp" line="117"/>
+        <location filename="../menu/preference/system_menu.cpp" line="91"/>
+        <location filename="../menu/preference/system_menu.cpp" line="116"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="92"/>
-        <location filename="../menu/preference/system_menu.cpp" line="117"/>
-        <location filename="../menu/preference/system_menu.cpp" line="139"/>
+        <location filename="../menu/preference/system_menu.cpp" line="91"/>
+        <location filename="../menu/preference/system_menu.cpp" line="116"/>
+        <location filename="../menu/preference/system_menu.cpp" line="138"/>
         <source>Done!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="95"/>
-        <location filename="../menu/preference/system_menu.cpp" line="120"/>
-        <location filename="../menu/preference/system_menu.cpp" line="142"/>
+        <location filename="../menu/preference/system_menu.cpp" line="94"/>
+        <location filename="../menu/preference/system_menu.cpp" line="119"/>
+        <location filename="../menu/preference/system_menu.cpp" line="141"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="95"/>
-        <location filename="../menu/preference/system_menu.cpp" line="120"/>
-        <location filename="../menu/preference/system_menu.cpp" line="142"/>
+        <location filename="../menu/preference/system_menu.cpp" line="94"/>
+        <location filename="../menu/preference/system_menu.cpp" line="119"/>
+        <location filename="../menu/preference/system_menu.cpp" line="141"/>
         <source>Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="132"/>
-        <location filename="../menu/preference/system_menu.cpp" line="139"/>
+        <location filename="../menu/preference/system_menu.cpp" line="131"/>
+        <location filename="../menu/preference/system_menu.cpp" line="138"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="133"/>
-        <location filename="../menu/preference/system_menu.cpp" line="155"/>
+        <location filename="../menu/preference/system_menu.cpp" line="132"/>
+        <location filename="../menu/preference/system_menu.cpp" line="154"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="170"/>
+        <location filename="../menu/preference/system_menu.cpp" line="169"/>
         <source>Reset Config ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2315,6 +2334,7 @@ Calibration</source>
     <name>GainMenuItem</name>
     <message>
         <location filename="../menu/menu_item/gain_menu_item.cpp" line="8"/>
+        <location filename="../menu/menu_item/gain_menu_item.cpp" line="60"/>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

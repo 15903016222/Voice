@@ -18,6 +18,11 @@ private:
     ComboMenuItem *m_encoderInfoItem;
     ComboMenuItem *m_dacTcgInfoItem;
     ComboMenuItem *m_flawRecordTableItem;
+
+    void retranslate_ui();
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 }

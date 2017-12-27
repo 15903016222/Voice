@@ -17,6 +17,9 @@ protected slots:
 
     void do_value_changed(double val);
 
+protected:
+    void changeEvent(QEvent *event);
+
 private:
     DplDevice::GroupPointer m_group;
 };

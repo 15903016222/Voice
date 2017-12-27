@@ -40,6 +40,8 @@ private slots:
 
 protected:
     void changeEvent(QEvent *event);
+private:
+    void retranslate_ui();
 
 };
 

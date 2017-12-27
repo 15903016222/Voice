@@ -42,4 +42,23 @@ FormatMenu::~FormatMenu()
 {
 }
 
+void FormatMenu::retranslate_ui()
+{
+    m_probeWedgeItem->set_title(tr("Probe/Wedge"));
+    m_inspectionInfoItem->set_title(tr("Inspection"));
+    m_scanInfoItem->set_title(tr("Scan"));
+    m_encoderInfoItem->set_title(tr("Encoder"));
+    m_dacTcgInfoItem->set_title(tr("DAC/TCG"));
+    m_flawRecordTableItem->set_title(tr("Flaw Record\nTable"));
+}
+
+void FormatMenu::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange) {
+        retranslate_ui();
+    }
+
+    BaseMenu::changeEvent(event);
+}
+
 }
