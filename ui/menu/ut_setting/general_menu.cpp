@@ -9,7 +9,7 @@
 #include <global.h>
 #include <ui/tool/tool.h>
 
-#include "../menu_item/gain_menu_item.h"
+#include "gain_menu_item.h"
 
 #include <qmath.h>
 

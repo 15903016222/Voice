@@ -1,10 +1,14 @@
 
-include($$PWD/base/base.pri)
-
 HEADERS += \
-    $$PWD/gain_menu_item.h \
-    $$PWD/vpa_menu_item.h
+    $$PWD/combo_menu_item.h \
+    $$PWD/label_menu_item.h \
+    $$PWD/menu_item.h \
+    $$PWD/spin_menu_item.h \
+    $$PWD/multi_combo_menu_item.h
 
 SOURCES += \
-    $$PWD/gain_menu_item.cpp \
-    $$PWD/vpa_menu_item.cpp
+    $$PWD/combo_menu_item.cpp \
+    $$PWD/label_menu_item.cpp \
+    $$PWD/menu_item.cpp \
+    $$PWD/spin_menu_item.cpp \
+    $$PWD/multi_combo_menu_item.cpp

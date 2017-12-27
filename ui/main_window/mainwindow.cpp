@@ -8,16 +8,13 @@
 #include "../menu/preference/preference_menu.h"
 #include "../menu/probe_part/fft_menu.h"
 
-#include <global.h>
-
-#include <QDebug>
-#include <QResizeEvent>
-#include <QFontDatabase>
+#include <QFile>
+#include <QMouseEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_virtualKeyboard(new VirtualKeyboard)
+    m_virtualKeyboard(new VirtualKeyboard(this))
 {
     load_style_sheet("/opt/mercury/qss/default.qss");
 
@@ -45,8 +42,8 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug("%s[%d]: ",__func__, __LINE__);
 
     /* virtual keyboard */
-    m_virtualKeyboard->hide();
-    connect(ui->iconsBarWidget, SIGNAL(keyboard_event()), this, SLOT(do_keyboard_event()));
+    connect(ui->iconsBarWidget, SIGNAL(keyboard_event()),
+            this, SLOT(do_keyboard_event()));
 
     ui->displayLayout->addWidget(new DplUi::DisplayWidget(DplDevice::Device::instance()->display(), this));
 }
