@@ -8,7 +8,6 @@
 
 #include <QMainWindow>
 #include <QTranslator>
-#include <QGraphicsOpacityEffect>
 
 namespace Ui {
 class MainWindow;
