@@ -35,6 +35,10 @@ protected:
     QLayout *m_bottomLayout;
     ScanView *m_view;
     ScanScene *m_scene;
+
+private:
+    QWidget *m_leftSpacerWidget;
+    QWidget *m_rightSpacerWidget;
 };
 
 #endif // __SCAN_DISPLAY_H__
