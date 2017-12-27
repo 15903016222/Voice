@@ -19,13 +19,10 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     m_view(new ScanView(this)),
     m_scene(new ScanScene(this))
 {
+    setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     clearFocus();
     setFocusPolicy(Qt::NoFocus);
-    m_view->setFocusPolicy(Qt::NoFocus);
-    m_view->clearFocus();
-    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    m_titleLabel->setStyleSheet("QLabel{background-color:rgb(0, 90, 130);\ncolor:white;}");
     m_titleLabel->setAlignment(Qt::AlignCenter);
 
     m_colorRuler->setMinimumWidth(20);
@@ -65,4 +62,48 @@ ScanDisplay::ScanDisplay(QWidget *parent) : QWidget(parent),
     m_view->setScene(m_scene);
     connect(m_view, SIGNAL(size_changed(QSize)),
             this, SLOT(resize_event(QSize)));
+}
+
+void ScanDisplay::hide_color_ruler()
+{
+    m_colorBar->hide();
+    m_colorRuler->hide();
+}
+
+void ScanDisplay::hide_bottom_ruler()
+{
+    QLayoutItem *it = m_bottomLayout->itemAt(0);
+    if (it) {
+        it->widget()->hide();
+    }
+}
+
+void ScanDisplay::hide_left_ruler()
+{
+    QLayoutItem *it = m_leftLayout->itemAt(0);
+    if (it) {
+        it->widget()->hide();
+    }
+}
+
+void ScanDisplay::show_color_ruler()
+{
+    m_colorBar->show();
+    m_colorRuler->show();
+}
+
+void ScanDisplay::show_bottom_ruler()
+{
+    QLayoutItem *it = m_bottomLayout->itemAt(0);
+    if (it) {
+        it->widget()->show();
+    }
+}
+
+void ScanDisplay::show_left_ruler()
+{
+    QLayoutItem *it = m_leftLayout->itemAt(0);
+    if (it) {
+        it->widget()->show();
+    }
 }
