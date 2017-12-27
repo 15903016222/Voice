@@ -16,6 +16,14 @@ class ScanDisplay : public QWidget
 public:
     explicit ScanDisplay(QWidget *parent = 0);
 
+    void hide_color_ruler();
+    void hide_bottom_ruler();
+    void hide_left_ruler();
+
+    void show_color_ruler();
+    void show_bottom_ruler();
+    void show_left_ruler();
+
 protected slots:
     virtual void resize_event(const QSize &size) = 0;
 
@@ -27,6 +35,10 @@ protected:
     QLayout *m_bottomLayout;
     ScanView *m_view;
     ScanScene *m_scene;
+
+private:
+    QWidget *m_leftSpacerWidget;
+    QWidget *m_rightSpacerWidget;
 };
 
 #endif // __SCAN_DISPLAY_H__

@@ -4,8 +4,7 @@
 #include <device/device.h>
 #include <QTimer>
 
-IconsBar::IconsBar(QWidget *parent) :
-    QWidget(parent),
+IconsBar::IconsBar(QWidget *parent) : QWidget(parent),
     ui(new Ui::IconsBar),
     m_timer(new QTimer)
 {

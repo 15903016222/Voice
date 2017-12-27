@@ -13,39 +13,20 @@
 #include "c_scan/c_scan_hdisplay.h"
 #include "c_scan/c_scan_vdisplay.h"
 #include "fft/fft_hdisplay.h"
+#include "line/line.h"
 
-#include <QVBoxLayout>
-#include <QHBoxLayout>
+#include <ui/common/hbox_layout.h>
+#include <ui/common/vbox_layout.h>
 
 namespace DplUi {
 
-class VLayout : public QVBoxLayout
-{
-public:
-    VLayout(QWidget *parent) : QVBoxLayout(parent)
-    {
-        setContentsMargins(0, 0, 0, 0);
-        setSpacing(0);
-    }
-};
-
-class HLayout : public QHBoxLayout
-{
-public:
-    HLayout(QWidget *parent) : QHBoxLayout(parent)
-    {
-        setContentsMargins(0, 0, 0, 0);
-        setSpacing(0);
-    }
-};
-
 template <typename ScanT>
-class SingleLayout : public VLayout
+class SingleLayout : public VBoxLayout
 {
 public:
-    explicit SingleLayout(int grp, QWidget *parent = 0) : VLayout (parent)
+    explicit SingleLayout(int grp, QWidget *parent=0) : VBoxLayout (parent)
     {
-        addWidget(new ScanT(DplDevice::Device::instance()->get_group(grp), parent));
+        addWidget(new ScanT(DplDevice::Device::instance()->get_group(grp)));
     }
 };
 
@@ -58,52 +39,70 @@ typedef SingleLayout<BscanVDisplay> BLayoutV;
 typedef SingleLayout<BscanHDisplay> BLayoutH;
 typedef SingleLayout<FFTHDisplay>   FFTLayoutH;
 
-class ASLayout : public HLayout
+class ASLayout : public HBoxLayout
 {
 public:
-    ASLayout(int grp, QWidget *parent = 0) : HLayout (parent)
+    ASLayout(int grp, QWidget *parent = 0) : HBoxLayout (parent)
     {
         addLayout(new ALayoutV(grp), 1);
-        addLayout(new SLayout(grp), 2);
+
+        addWidget(new Line(), 1);
+
+        SscanDisplay *s = new SscanDisplay(DplDevice::Device::instance()->get_group(grp));
+        s->hide_left_ruler();
+        addWidget(s, 2);
     }
 };
 
-class SCLayout : public HLayout
+class SCLayout : public HBoxLayout
 {
 public:
-    SCLayout(int grp, QWidget *parent) : HLayout(parent)
+    SCLayout(int grp, QWidget *parent) : HBoxLayout(parent)
     {
-        addLayout(new SLayout(grp), 1);
+        SscanDisplay *s = new SscanDisplay(DplDevice::Device::instance()->get_group(grp));
+        s->hide_color_ruler();
+        addWidget(s, 1);
+
         addLayout(new CLayoutV(grp), 2);
     }
 };
 
-class ABLayout : public HLayout
+class ABLayout : public HBoxLayout
 {
 public:
-    ABLayout(int grp, QWidget *parent) : HLayout(parent)
+    ABLayout(int grp, QWidget *parent) : HBoxLayout(parent)
     {
         addLayout(new ALayoutV(grp), 1);
-        addLayout(new BLayoutV(grp), 2);
+
+        addWidget(new Line(Qt::Vertical), 1);
+
+        BscanVDisplay *b = new BscanVDisplay(DplDevice::Device::instance()->get_group(grp));
+        b->hide_left_ruler();
+        addWidget(b, 2);
     }
 };
 
-class ABCLayout : public VLayout
+class ABCLayout : public VBoxLayout
 {
 public:
-    ABCLayout(int grp, QWidget *parent) : VLayout(parent)
+    ABCLayout(int grp, QWidget *parent) : VBoxLayout(parent)
     {
-        addLayout(new ALayoutH(grp), 1);
-        addLayout(new BLayoutH(grp), 2);
-        addLayout(new CLayoutV(grp), 3);
+        AscanHDisplay *a = new AscanHDisplay(DplDevice::Device::instance()->get_group(grp));
+        a->hide_bottom_ruler();
+        a->show_color_ruler();
+        addWidget(a, 3);
+
+        addLayout(new BLayoutH(grp), 4);
+
+        addLayout(new CLayoutV(grp), 5);
     }
 };
 
 
-class ASBLayout : public VLayout
+class ASBLayout : public VBoxLayout
 {
 public:
-    ASBLayout(int grp, QWidget *parent) : VLayout(parent)
+    ASBLayout(int grp, QWidget *parent) : VBoxLayout(parent)
     {
         addLayout(new ASLayout(grp), 1);
         addLayout(new BLayoutV(grp), 1);
@@ -111,10 +110,10 @@ public:
 };
 
 
-class ASCLayout : public VLayout
+class ASCLayout : public VBoxLayout
 {
 public:
-    ASCLayout(int grp, QWidget *parent) : VLayout(parent)
+    ASCLayout(int grp, QWidget *parent) : VBoxLayout(parent)
     {
         addLayout(new ASLayout(grp), 1);
         addLayout(new CLayoutV(grp), 1);
@@ -122,10 +121,10 @@ public:
 };
 
 
-class AFFTLayout : public VLayout
+class AFFTLayout : public VBoxLayout
 {
 public:
-    AFFTLayout(int grp, QWidget *parent) : VLayout(parent)
+    AFFTLayout(int grp, QWidget *parent) : VBoxLayout(parent)
     {
         addLayout(new ALayoutH(grp), 1);
         addLayout(new FFTLayoutH(grp), 1);
@@ -138,9 +137,7 @@ DisplayWidget::DisplayWidget(const DplDisplay::DisplayPointer &display,
     QWidget(parent),
     m_display(display)
 {
-    setStyleSheet(QString("background-color: rgb(0, 0, 0)"));
-
-    new VLayout(this);
+    new VBoxLayout(this);
 
     connect(static_cast<DplDisplay::Display *>(display.data()),
             SIGNAL(layout_changed(DplDisplay::Display::Layout,QVector<int>)),
