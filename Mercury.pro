@@ -36,7 +36,7 @@ DEFINES += $$upper($$DEVICE)
 target.path = /home/root
 INSTALLS += target
 
-QT       += core gui network
+QT       += core gui network webkit
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

@@ -49,6 +49,13 @@ void ReportApplier::fill_report_header(const QString &reportFile)
     header->set_setup_file(tr("default.cfg"));
     header->set_report_date_time(dateTime);
     header->set_inspection_date_time(dateTime);
+    /*
+     * Inspection Data
+     * Inspection Table
+     * Screen
+     * Report
+     * Setup
+     */
     header->set_save_mode(tr("TODO"));
 }
 
@@ -216,14 +223,7 @@ void ReportApplier::fill_report_group_setup(DplReport::ReportGroup *group)
     setup->set_sound_velocity(QString::number(m_currentGroup->focallawer()->specimen()->velocity()));
     setup->set_skew(QString::number(m_currentGroup->current_angle(), 'f', m_precision));
 
-    /*
-     * Inspection Data
-     * Inspection Table
-     * Screen
-     * Report
-     * Setup
-     */
-    setup->set_inspection_type(tr("TODO"));
+    setup->set_inspection_type(EnumToStr::inspection_type(m_currentGroup->mode()));
     /* LW/SW，未实现于probe类? */
     setup->set_wave_type(tr("TODO"));
     /* 在测量——光标，选择数据时，出现步进偏移、扫查偏移，但当前版本无数据扫查 */
@@ -235,25 +235,31 @@ void ReportApplier::fill_report_group_setup(DplReport::ReportGroup *group)
     const DplGate::GatePointer &gateAPointer = m_currentGroup->gate_a();
     DplReport::ReportGatePointer gateA = setup->get_gate(DplReport::ReportGate::Gate_A);
     gateA->set_enable(gateAPointer->is_visible());
-    gateA->set_start(QString::number(gateAPointer->start(), 'f', m_precision));
+    gateA->set_start(QString::number(Tool::cnf_to_display(DplDevice::Device::instance()->current_group(), gateAPointer->start()),
+                                     'f', m_precision));
     gateA->set_synchro(EnumToStr::gate_synchro_mode(gateAPointer->synchro_mode()));
-    gateA->set_width(QString::number(gateAPointer->width(), 'f', m_precision));
+    gateA->set_width(QString::number(Tool::cnf_to_display(DplDevice::Device::instance()->current_group(), gateAPointer->width()),
+                                     'f', m_precision));
     gateA->set_threshold(QString::number(gateAPointer->height()));
 
     const DplGate::GatePointer &gateBPointer = m_currentGroup->gate_b();
     DplReport::ReportGatePointer gateB = setup->get_gate(DplReport::ReportGate::Gate_B);
     gateB->set_enable(gateBPointer->is_visible());
-    gateB->set_start(QString::number(gateBPointer->start(), 'f', m_precision));
+    gateB->set_start(QString::number(Tool::cnf_to_display(DplDevice::Device::instance()->current_group(), gateBPointer->start()),
+                                     'f', m_precision));
     gateB->set_synchro(EnumToStr::gate_synchro_mode(gateBPointer->synchro_mode()));
-    gateB->set_width(QString::number(gateBPointer->width(), 'f', m_precision));
+    gateB->set_width(QString::number(Tool::cnf_to_display(DplDevice::Device::instance()->current_group(), gateBPointer->width()),
+                                     'f', m_precision));
     gateB->set_threshold(QString::number(gateBPointer->height()));
 
     const DplGate::GatePointer &gateIPointer = m_currentGroup->gate_i();
     DplReport::ReportGatePointer gateI = setup->get_gate(DplReport::ReportGate::Gate_I);
     gateI->set_enable(gateIPointer->is_visible());
-    gateI->set_start(QString::number(gateIPointer->start(), 'f', m_precision));
+    gateI->set_start(QString::number(Tool::cnf_to_display(DplDevice::Device::instance()->current_group(), gateIPointer->start()),
+                                     'f', m_precision));
     gateI->set_synchro(EnumToStr::gate_synchro_mode(gateIPointer->synchro_mode()));
-    gateI->set_width(QString::number(gateIPointer->width(), 'f', m_precision));
+    gateI->set_width(QString::number(Tool::cnf_to_display(DplDevice::Device::instance()->current_group(), gateIPointer->width()),
+                                     'f', m_precision));
     gateI->set_threshold(QString::number(gateIPointer->height()));
 }
 
@@ -329,7 +335,7 @@ void ReportApplier::fill_report_group_scan(DplReport::ReportGroup *group)
     scan->set_scan_speed(QString::number(DplSource::Scan::instance()->speed(), 'f', m_precision));
     scan->set_scan_start(QString::number(scanAxis->start(), 'f', m_precision));
     scan->set_scan_stop(QString::number(scanAxis->end(), 'f', m_precision));
-    scan->set_scan_synchro(tr("TODO"));
+    scan->set_scan_synchro(EnumToStr::encoder_name(scanAxis->driving()));
 
     fill_encoder(scan, DplReport::ReportEncoder::ScanEncoder);
     fill_encoder(scan, DplReport::ReportEncoder::IndexEncoder);
@@ -403,7 +409,6 @@ void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, Dpl
         }
         case DplFocallaw::FocusCnf::FOCAL_PLANE:
         {
-            /* TODO */
             law->set_focal_field_names(0, tr("BeginOffset"));
             law->set_focal_field_names(1, tr("EndOffset"));
             law->set_focal_field_names(2, tr("BeginDepth"));

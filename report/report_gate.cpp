@@ -16,9 +16,9 @@ ReportGate::ReportGate(E_GateType type)
 
 bool ReportGate::save(lua_State *lua)
 {
-    if(!m_enable) {
-        return true;
-    }
+//    if(!m_enable) {
+//        return true;
+//    }
 
     m_lua = lua;
     switch (m_type) {

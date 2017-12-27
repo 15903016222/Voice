@@ -16,6 +16,8 @@ namespace Ui {
 class ReportPreviewDialog;
 }
 
+class QWebView;
+
 class ReportPreviewDialog : public QDialog
 {
     Q_OBJECT
@@ -38,6 +40,7 @@ private slots:
 private:
     Ui::ReportPreviewDialog *ui;
     QFile   m_file;
+    QWebView    *m_webview;
 };
 
 #endif // __REPORT_PREVIEW_DIALOG_H__

@@ -69,7 +69,6 @@ bool Report::save(const QString &fileName)
     ::lua_pcall(m_lua, 3, 0, 0);
     ::lua_close(m_lua);
 
-    qDebug("[Report::%s] Save Success.", __FUNCTION__);
     return true;
 }
 

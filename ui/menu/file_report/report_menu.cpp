@@ -5,12 +5,15 @@
 #include <report/report.h>
 #include "report_applier.h"
 #include <QDir>
+#include <QTime>
 #include "report_preview_dialog.h"
 
 namespace DplFileReportMenu {
 
 static const QString s_templateFilePath = "/opt/mercury/template/report/";
+static const QString s_userRportFilePath = "/opt/mercury/usr/report/";
 static const QString s_html = ".html";
+static const QString s_tmpReportFile = "/tmp/report.tmp.html";
 
 ReportMenu::ReportMenu(QWidget *parent) :
     BaseMenu(parent),
@@ -28,9 +31,9 @@ ReportMenu::ReportMenu(QWidget *parent) :
     m_layout4->addWidget(m_partNumberItem);
     m_layout5->addWidget(m_previewItem);
 
-    QDir dir(s_templateFilePath);
-    QStringList stringList = dir.entryList(QStringList("*.html"));
-    m_templateItem->add_items(stringList);
+    m_reportNameItem->set_text(tr("Report"));
+
+    set_template_items();
 
     /* Report Name menu item */
     connect(m_reportNameItem, SIGNAL(clicked()), this, SLOT(show_input_dialog()));
@@ -75,24 +78,56 @@ void ReportMenu::do_createItem_clicked()
         return;
     }
 
+    QString dateTime = QDateTime::currentDateTime().toString("_yyyy-MM-dd_hh.mm.ss");
+
     DplReport::Report report;
-    report.set_template_file(s_templateFilePath + m_templateItem->current_text());
+    report.set_template_file(s_templateFilePath + m_templateItem->current_text() + s_html);
 
-    ReportApplier *reportApplier = new ReportApplier(report, this);
-    reportApplier->fill(s_templateFilePath + m_templateItem->current_text());
+    ReportApplier reportApplier(report);
+    reportApplier.fill(s_userRportFilePath + m_reportNameItem->text() + dateTime + s_html);
+    ReportPreviewDialog preview(s_tmpReportFile);
 
-    if(report.save(m_reportNameItem->text() + s_html)) {
-        ReportPreviewDialog preview(m_reportNameItem->text() + s_html);
-        if(preview.preview() && preview.exec() == QMessageBox::Accepted) {
-            DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Create Success!"));
-            messageBox.exec();
+    if(report.save(s_tmpReportFile) && preview.preview()) {
+
+        if((preview.exec() == QMessageBox::Accepted)) {
+            if(copy_file_to_target_path(s_tmpReportFile,
+                                        s_userRportFilePath + m_reportNameItem->text() + dateTime + s_html)) {
+                DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Create Success!"));
+                messageBox.exec();
+                return;
+            }
         }
-    } else {
-        DplMessageBox messageBox(QMessageBox::Warning, tr("Warning"), tr("Create Preview Failed!"));
-        messageBox.exec();
+
+        return;
     }
-    delete reportApplier;
-    reportApplier = NULL;
+
+    DplMessageBox messageBox(QMessageBox::Warning, tr("Warning"), tr("Create Preview Failed!"));
+    messageBox.exec();
+}
+
+void ReportMenu::set_template_items()
+{
+    QDir dir(s_templateFilePath);
+    QStringList stringList = dir.entryList(QStringList("*.html"));
+    for(int i = 0; i < stringList.size(); ++i) {
+        m_templateItem->add_item(stringList[i].remove(s_html));
+    }
+}
+
+bool ReportMenu::copy_file_to_target_path(const QString &src, const QString &dest)
+{
+    QFile file(dest);
+    if(file.exists()) {
+        if(!file.remove()) {
+            return false;
+        }
+    }
+
+    if(QFile::copy(src, dest)) {
+        return true;
+    }
+
+    return false;
 }
 
 }

@@ -13,22 +13,22 @@ QString EnumToStr::gate_synchro_mode(DplFpga::Group::SynchroMode mode)
     switch(mode) {
         case DplFpga::Group::SYNCHRO_PULSER:
         {
-            return tr("Synchro_Pulser");
+            return tr("Pulser");
             break;
         }
         case DplFpga::Group::SYNCHRO_I:
         {
-            return tr("Synchro_I");
+            return tr("I");
             break;
         }
         case DplFpga::Group::SYNCHRO_A:
         {
-            return tr("Synchro_A");
+            return tr("A");
             break;
         }
         case DplFpga::Group::SYNCHRO_B:
         {
-            return tr("Synchro_B");
+            return tr("B");
             break;
         }
         default:
@@ -305,6 +305,35 @@ QString EnumToStr::band_pass_filter(int index, bool isPa)
         }
         default:
             return tr("Auto");
+        break;
+    }
+    return QString();
+}
+
+QString EnumToStr::inspection_type(DplDevice::Group::Mode mode)
+{
+    switch (mode) {
+        case DplDevice::Group::UT:
+        {
+            return tr("UT");
+            break;
+        }
+        case DplDevice::Group::PA:
+        {
+            return tr("PA");
+            break;
+        }
+        case DplDevice::Group::UT1:
+        {
+            return tr("UT1");
+            break;
+        }
+        case DplDevice::Group::UT2:
+        {
+            return tr("UT2");
+            break;
+        }
+        default:
         break;
     }
     return QString();

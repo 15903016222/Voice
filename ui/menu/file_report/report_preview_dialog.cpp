@@ -2,8 +2,8 @@
 #include "ui_report_preview_dialog.h"
 #include <ui/dialog/dpl_message_box.h>
 #include <QFile>
-#include <QTextStream>
 #include <QDebug>
+#include <QtWebKit/qwebview.h>
 
 ReportPreviewDialog::ReportPreviewDialog(const QString &previewFilePath, QWidget *parent) :
     QDialog(parent),
@@ -12,6 +12,9 @@ ReportPreviewDialog::ReportPreviewDialog(const QString &previewFilePath, QWidget
     ui->setupUi(this);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     m_file.setFileName(previewFilePath);
+    ui->savePushButton->setFocus();
+    m_webview = new QWebView(this);
+    ui->verticalLayout_2->insertWidget(0, m_webview);
 }
 
 ReportPreviewDialog::~ReportPreviewDialog()
@@ -21,14 +24,13 @@ ReportPreviewDialog::~ReportPreviewDialog()
 
 bool ReportPreviewDialog::preview()
 {
-    if((!m_file.exists()) || (!m_file.open(QIODevice::ReadOnly | QIODevice::Text))) {
-        qDebug() << "[" << __FUNCTION__ << "]" << "false";
+    if((!m_file.exists()) || (!m_file.open(QIODevice::ReadOnly))) {
         return false;
     }
 
-    QTextStream textStream(&m_file);
-    ui->reportLabel->setText(QString::fromUtf8(textStream.readAll().toStdString().c_str()));
+    m_webview->setHtml(QString::fromUtf8(m_file.readAll().constData()),QUrl("www.cndoppler.cn"));
     m_file.close();
+
     return true;
 }
 
