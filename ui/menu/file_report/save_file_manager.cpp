@@ -93,7 +93,7 @@ bool SaveFileManager::is_legal(const QString &name)
             || ((m_storageMap.value(m_storage).length() + fileNameLen) > PATH_MAX)) {
         return false;
     }
-    /* 只判断 \ / : * ? " < > 八种特殊字符 */
+    /* 只判断 \ / : * | ? " < > 九种特殊字符 */
     QRegExp regExp(("[\\\\/:|*?\"<>]"));
     if(name.indexOf(regExp) >= 0) {
         return false;
