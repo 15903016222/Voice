@@ -26,9 +26,6 @@ public:
 Gate::Gate(const DplFpga::GroupPointer &fpgaGrp, DplFpga::Group::GateType type, const QColor &color) : QObject(),
     d(new GatePrivate(fpgaGrp, type, color))
 {
-    if(type == DplFpga::Group::GATE_A) {
-        set_color(QColor(123, 233, 111));
-    }
 }
 
 Gate::~Gate()
