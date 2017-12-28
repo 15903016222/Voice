@@ -94,7 +94,6 @@ void ReportMenu::do_createItem_clicked()
                                         s_userRportFilePath + m_reportNameItem->text() + dateTime + s_html)) {
                 DplMessageBox messageBox(QMessageBox::Information, tr("Info"), tr("Create Success!"));
                 messageBox.exec();
-                return;
             }
         }
 

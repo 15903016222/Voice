@@ -36,9 +36,4 @@ int ReportGroup::id()
     return m_id;
 }
 
-bool ReportGroup::ReportGroup::save_group()
-{
-    return true;
-}
-
 }

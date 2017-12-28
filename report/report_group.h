@@ -38,7 +38,6 @@ public:
     inline const ReportScanPointer & get_scan() const   { return m_scan; }
 
 private:
-    bool save_group();
     int  m_id;
 
     ReportProbePointer m_probe;

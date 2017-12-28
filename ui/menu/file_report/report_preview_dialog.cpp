@@ -8,13 +8,13 @@
 
 ReportPreviewDialog::ReportPreviewDialog(const QString &previewFilePath, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ReportPreviewDialog)
+    ui(new Ui::ReportPreviewDialog),
+    m_webview(new QWebView(this))
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     m_file.setFileName(previewFilePath);
     ui->savePushButton->setFocus();
-    m_webview = new QWebView(this);
     ui->verticalLayout_2->insertWidget(0, m_webview);
 }
 
