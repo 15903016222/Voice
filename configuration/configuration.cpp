@@ -12,8 +12,6 @@
 
 namespace Config {
 
-Configuration *Configuration::s_configuration = NULL;
-
 class ConfigurationPrivate {
 
 public:
@@ -54,11 +52,9 @@ Configuration::~Configuration()
 
 Configuration *Configuration::instance()
 {
-    if(NULL == s_configuration) {
-        s_configuration = new Configuration;
-    }
+    static Configuration *configuration = new Configuration;
 
-    return s_configuration;
+    return configuration;
 }
 
 

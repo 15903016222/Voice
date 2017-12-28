@@ -209,7 +209,6 @@ public:
 
 private:
     ConfigurationPrivate        *d;
-    static Configuration        *s_configuration;
 
     void deal_object(const msgpack::object &object);
 
