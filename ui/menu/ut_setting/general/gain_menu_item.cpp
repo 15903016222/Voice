@@ -3,10 +3,8 @@
 #include <device/device.h>
 
 GainMenuItem::GainMenuItem(QWidget *parent) :
-    SpinMenuItem(parent)
+    SpinMenuItem(parent, tr("Gain"), "dB")
 {
-    set_unit("dB");
-
     connect(this, SIGNAL(value_changed(double)),
             this, SLOT(do_value_changed(double)));
 

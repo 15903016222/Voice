@@ -3,7 +3,7 @@
 #include <device/device.h>
 
 UnitMenuItem::UnitMenuItem(QWidget *parent) :
-    ComboMenuItem(parent)
+    ComboMenuItem(parent, tr("Ut Unit"))
 {
     connect(this, SIGNAL(value_changed(int)),
             this, SLOT(do_value_changed(int)));
@@ -13,6 +13,7 @@ UnitMenuItem::UnitMenuItem(QWidget *parent) :
             this, SLOT(do_group_changed(DplDevice::GroupPointer)));
 
     do_group_changed(DplDevice::Device::instance()->current_group());
+    language_changed();
 }
 
 void UnitMenuItem::do_group_changed(const DplDevice::GroupPointer &group)

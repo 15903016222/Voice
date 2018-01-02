@@ -3,9 +3,8 @@
 #include <device/device.h>
 
 VelocityMenuItem::VelocityMenuItem(QWidget *parent) :
-    SpinMenuItem(parent)
+    SpinMenuItem(parent, tr("Velocity"), "m/s")
 {
-    set_unit("m/s");
     set(635, 12540, 0);
 
     connect(this, SIGNAL(value_changed(double)),

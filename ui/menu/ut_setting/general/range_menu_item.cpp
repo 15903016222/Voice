@@ -5,7 +5,7 @@
 #include <ui/tool/tool.h>
 
 RangeMenuItem::RangeMenuItem(QWidget *parent) :
-    SpinMenuItem(parent)
+    SpinMenuItem(parent, tr("Range"))
 {
     connect(this, SIGNAL(value_changed(double)),
             this, SLOT(do_value_changed(double)));

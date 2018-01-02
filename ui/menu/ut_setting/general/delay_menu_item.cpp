@@ -4,9 +4,8 @@
 #include <device/device.h>
 
 DelayMenuItem::DelayMenuItem(QWidget *parent) :
-    SpinMenuItem(parent)
+    SpinMenuItem(parent, tr("Wedge Delay"), US_STR)
 {
-    set_unit(US_STR);
     set(0, 1000, 2, 0.01);
 
     connect(this, SIGNAL(value_changed(double)),

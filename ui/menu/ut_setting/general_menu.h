@@ -17,6 +17,7 @@ class StartMenuItem;
 class RangeMenuItem;
 class VelocityMenuItem;
 class DelayMenuItem;
+class UnitMenuItem;
 
 namespace DplUtSettingMenu {
 
@@ -26,25 +27,13 @@ class GeneralMenu : public BaseMenu
 public:
     explicit GeneralMenu(QWidget *parent = 0);
 
-protected:
-
-protected slots:
-    void do_utUnitItem_changed(int index);
-
-    /**
-     * @brief update    更新菜单数据
-     */
-    void update(const DplDevice::GroupPointer &group);
-
 private:
     GainMenuItem *m_gainItem;
     StartMenuItem *m_startItem;
     RangeMenuItem *m_rangeItem;
     VelocityMenuItem *m_velocityItem;
     DelayMenuItem *m_wedgeDelayItem;
-    ComboMenuItem *m_utUnitItem;
-
-    DplDevice::GroupPointer m_group;
+    UnitMenuItem *m_utUnitItem;
 };
 
 }

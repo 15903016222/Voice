@@ -6,16 +6,13 @@
  * @date 2016-12-14
  */
 #include "general_menu.h"
-#include <global.h>
-#include <ui/tool/tool.h>
 
 #include "general/gain_menu_item.h"
 #include "general/start_menu_item.h"
 #include "general/range_menu_item.h"
 #include "general/velocity_menu_item.h"
 #include "general/delay_menu_item.h"
-
-#include <qmath.h>
+#include "general/unit_menu_item.h"
 
 namespace DplUtSettingMenu {
 
@@ -26,7 +23,7 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
     m_rangeItem(new RangeMenuItem(this)),
     m_velocityItem(new VelocityMenuItem(this)),
     m_wedgeDelayItem(new DelayMenuItem(this)),
-    m_utUnitItem(new ComboMenuItem(this, tr("UT Unit")))
+    m_utUnitItem(new UnitMenuItem(this))
 {
     m_layout0->addWidget(m_gainItem);
     m_layout1->addWidget(m_startItem);
@@ -34,26 +31,6 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
     m_layout3->addWidget(m_velocityItem);
     m_layout4->addWidget(m_wedgeDelayItem);
     m_layout5->addWidget(m_utUnitItem);
-
-    /* Ut Unit Item */
-    QStringList utUnitList;
-    m_utUnitItem->set(utUnitList);
-    connect(m_utUnitItem, SIGNAL(value_changed(int)),
-            this, SLOT(do_utUnitItem_changed(int)));
-
-}
-
-void GeneralMenu::update(const DplDevice::GroupPointer &group)
-{
-    m_group = group;
-
-
-    m_utUnitItem->set_current_index(m_group->ut_unit());
-}
-
-void GeneralMenu::do_utUnitItem_changed(int index)
-{
-    m_group->set_ut_unit((DplDevice::Group::UtUnit)index);
 }
 
 }
