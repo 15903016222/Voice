@@ -191,7 +191,7 @@ bool NetworkManager::set_config_file_by_tag(const QString &tag, const QString &i
             ret = true;
         }
 
-        if((i+1) == stringList.size()) {
+        if((i + 1) == stringList.size()) {
             textStream << line;
         } else {
             textStream << line << '\n';

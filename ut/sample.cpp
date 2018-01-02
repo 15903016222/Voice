@@ -28,12 +28,16 @@ void Sample::set_gain(float gain)
     }
 }
 
-float Sample::start() const
+double Sample::start() const
 {
     return d->m_fpgaGrp->sample_start() * DplFpga::Fpga::SAMPLE_PRECISION;
 }
 
-void Sample::set_start(float value)
+/**
+ * @brief set_start 设置采样起点
+ * @param value     起点值(ns)
+ */
+void Sample::set_start(double value)
 {
     if (d->m_fpgaGrp->sample_start() != static_cast<int>(value/DplFpga::Fpga::SAMPLE_PRECISION)) {
         d->m_fpgaGrp->set_sample_start(value/DplFpga::Fpga::SAMPLE_PRECISION);

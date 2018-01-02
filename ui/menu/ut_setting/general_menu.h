@@ -13,6 +13,11 @@
 #include <device/device.h>
 
 class GainMenuItem;
+class StartMenuItem;
+class RangeMenuItem;
+class VelocityMenuItem;
+class DelayMenuItem;
+class UnitMenuItem;
 
 namespace DplUtSettingMenu {
 
@@ -21,34 +26,14 @@ class GeneralMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit GeneralMenu(QWidget *parent = 0);
-    ~GeneralMenu();
-
-protected:
-
-protected slots:
-    void do_startItem_changed(double value);
-    void do_rangeItem_changed(double value);
-    void do_velocityItem_changed(double value);
-    void do_wedgeDelayItem_changed(double value);
-    void do_utUnitItem_changed(int index);
-
-    /**
-     * @brief update    更新菜单数据
-     */
-    void update(const DplDevice::GroupPointer &group);
-
-    void update_start_item();
-    void update_range_item();
 
 private:
     GainMenuItem *m_gainItem;
-    SpinMenuItem *m_startItem;
-    SpinMenuItem *m_rangeItem;
-    SpinMenuItem *m_velocityItem;
-    SpinMenuItem *m_wedgeDelayItem;
-    ComboMenuItem *m_utUnitItem;
-
-    DplDevice::GroupPointer m_group;
+    StartMenuItem *m_startItem;
+    RangeMenuItem *m_rangeItem;
+    VelocityMenuItem *m_velocityItem;
+    DelayMenuItem *m_wedgeDelayItem;
+    UnitMenuItem *m_utUnitItem;
 };
 
 }

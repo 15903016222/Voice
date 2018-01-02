@@ -1,6 +1,6 @@
 #include "fft_menu.h"
 
-#include "../ut_setting/gain_menu_item.h"
+#include "../ut_setting/general/gain_menu_item.h"
 
 #include <device/device.h>
 #include <QMessageBox>
