@@ -21,7 +21,8 @@ class FileDialog : public BaseDialog
 public:
     enum E_Operation {
         CertImport,
-        Update
+        Update,
+        Config
     };
 
     enum E_FileType {

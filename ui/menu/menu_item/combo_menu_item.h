@@ -19,7 +19,7 @@ class ComboMenuItem : public MenuItem
 {
     Q_OBJECT
 public:
-    explicit ComboMenuItem(QWidget *parent, const QString &title);
+    explicit ComboMenuItem(QWidget *parent, const QString &title="");
     ~ComboMenuItem();
 
     /**

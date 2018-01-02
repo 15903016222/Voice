@@ -53,7 +53,6 @@ public:
         Measurement_FlawRecord,
 
         FileReport_File,
-        FileReport_SaveMode,
         FileReport_Report,
         FileReport_Format,
         FileReport_UserField,

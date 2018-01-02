@@ -53,7 +53,6 @@
 #include "file_report/file_menu.h"
 #include "file_report/format_menu.h"
 #include "file_report/report_menu.h"
-#include "file_report/save_mode_menu.h"
 #include "file_report/user_field_menu.h"
 
 /* Preference */
@@ -145,7 +144,6 @@ void SubMenu::create_menus()
 
     /* File/Report */
     l->addWidget(new DplFileReportMenu::FileMenu(this));
-    l->addWidget(new DplFileReportMenu::SaveModeMenu(this));
     l->addWidget(new DplFileReportMenu::ReportMenu(this));
     l->addWidget(new DplFileReportMenu::FormatMenu(this));
     l->addWidget(new DplFileReportMenu::UserFieldMenu(this));

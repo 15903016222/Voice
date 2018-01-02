@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file flat.h
  * @brief 平板工件类
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
@@ -38,6 +38,7 @@ private:
     Q_DISABLE_COPY(Flat)
 };
 
+typedef QSharedPointer<Flat> FlatPointer;
 }
 
 #endif // __FLAT_H__

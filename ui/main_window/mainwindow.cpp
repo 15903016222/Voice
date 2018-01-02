@@ -74,6 +74,7 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     }
         break;
     case Mcu::KEY_START:
+        DplFpga::Fpga::instance()->reset_encoder();
         DplSource::Source::instance()->restart();
         break;
     case Mcu::KEY_DB:

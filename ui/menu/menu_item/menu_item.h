@@ -19,6 +19,8 @@ public:
 
 protected:
     void update_layout(QWidget *w1, QWidget *w2);
+    void changeEvent(QEvent *e);
+    virtual void language_changed();
 };
 
 #endif // __MENU_ITEM_H__

@@ -44,10 +44,6 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
             this, SLOT(check_number_validity(QString)));
 }
 
-SpinMenuItem::~SpinMenuItem()
-{
-}
-
 void SpinMenuItem::set_range(double min, double max)
 {
     m_min = min;
