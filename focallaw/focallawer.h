@@ -109,6 +109,8 @@ signals:
     void beam_qty_changed(int);
     void beams_changed(const QList<BeamPointer> &list);
     void focallawed();
+    void wedge_changed(const DplFocallaw::WedgePointer &wedge);
+    void specimen_changed(const DplFocallaw::SpecimenPointer &specimen);
 
 public slots:
     void focallaw();

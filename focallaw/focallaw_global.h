@@ -1,13 +1,21 @@
-#ifndef __FOCALLAW_GLOBAL_H__
+﻿#ifndef __FOCALLAW_GLOBAL_H__
 #define __FOCALLAW_GLOBAL_H__
 
 #include <QtCore/qglobal.h>
 #include <qmath.h>
 
+#ifdef WIN32
+
+#define FOCALLAWSHARED_EXPORT
+
+#else
+
 #if defined(FOCALLAW_LIBRARY)
 #  define FOCALLAWSHARED_EXPORT Q_DECL_EXPORT
 #else
 #  define FOCALLAWSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
 #endif
 
 namespace Dpl {
