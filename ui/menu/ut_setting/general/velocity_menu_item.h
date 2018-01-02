@@ -12,15 +12,18 @@ public:
     VelocityMenuItem(QWidget *parent);
 
 protected slots:
-    void update(const DplDevice::GroupPointer &group);
+    void do_group_changed(const DplDevice::GroupPointer &group);
+    void do_specimen_changed(const DplFocallaw::SpecimenPointer &specimen);
 
+    void update_value();
     void do_value_changed(double val);
 
 protected:
     void language_changed();
 
 private:
-    DplDevice::GroupPointer m_group;
+    DplFocallaw::FocallawerPointer m_focallawer;
+    DplFocallaw::SpecimenPointer m_specimen;
 };
 
 #endif // __VELOCITY_MENU_ITEM_H__

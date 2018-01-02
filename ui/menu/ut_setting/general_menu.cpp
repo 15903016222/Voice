@@ -37,17 +37,10 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
 
     /* Ut Unit Item */
     QStringList utUnitList;
-    utUnitList.append(tr("Time"));
-    utUnitList.append(tr("Sound Path"));
-    utUnitList.append(tr("True Path"));
     m_utUnitItem->set(utUnitList);
     connect(m_utUnitItem, SIGNAL(value_changed(int)),
             this, SLOT(do_utUnitItem_changed(int)));
 
-    connect(DplDevice::Device::instance(),
-            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(update(DplDevice::GroupPointer)));
-    update(DplDevice::Device::instance()->current_group());
 }
 
 void GeneralMenu::update(const DplDevice::GroupPointer &group)
