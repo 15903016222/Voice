@@ -13,6 +13,7 @@
 #include <device/device.h>
 
 class GainMenuItem;
+class StartMenuItem;
 
 namespace DplUtSettingMenu {
 
@@ -26,7 +27,6 @@ public:
 protected:
 
 protected slots:
-    void do_startItem_changed(double value);
     void do_rangeItem_changed(double value);
     void do_velocityItem_changed(double value);
     void do_wedgeDelayItem_changed(double value);
@@ -37,12 +37,11 @@ protected slots:
      */
     void update(const DplDevice::GroupPointer &group);
 
-    void update_start_item();
     void update_range_item();
 
 private:
     GainMenuItem *m_gainItem;
-    SpinMenuItem *m_startItem;
+    StartMenuItem *m_startItem;
     SpinMenuItem *m_rangeItem;
     SpinMenuItem *m_velocityItem;
     SpinMenuItem *m_wedgeDelayItem;

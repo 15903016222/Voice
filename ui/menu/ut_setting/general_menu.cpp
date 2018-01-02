@@ -9,7 +9,8 @@
 #include <global.h>
 #include <ui/tool/tool.h>
 
-#include "gain_menu_item.h"
+#include "general/gain_menu_item.h"
+#include "general/start_menu_item.h"
 
 #include <qmath.h>
 
@@ -18,7 +19,7 @@ namespace DplUtSettingMenu {
 GeneralMenu::GeneralMenu(QWidget *parent) :
     BaseMenu(parent),
     m_gainItem(new GainMenuItem(this)),
-    m_startItem(new SpinMenuItem(this, tr("Start"))),
+    m_startItem(new StartMenuItem(this)),
     m_rangeItem(new SpinMenuItem(this, tr("Range"))),
     m_velocityItem(new SpinMenuItem(this, tr("Velocity"), "m/s")),
     m_wedgeDelayItem(new SpinMenuItem(this, tr("Wedge Delay"), US_STR)),
@@ -32,7 +33,6 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
     m_layout5->addWidget(m_utUnitItem);
 
     /* Start Item */
-    connect(m_startItem, SIGNAL(value_changed(double)), this, SLOT(do_startItem_changed(double)));
 
     /* Range Item */
     connect(m_rangeItem, SIGNAL(value_changed(double)), this, SLOT(do_rangeItem_changed(double)));
@@ -51,7 +51,8 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
     utUnitList.append(tr("Sound Path"));
     utUnitList.append(tr("True Path"));
     m_utUnitItem->set(utUnitList);
-    connect(m_utUnitItem, SIGNAL(value_changed(int)), this, SLOT(do_utUnitItem_changed(int)));
+    connect(m_utUnitItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_utUnitItem_changed(int)));
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
@@ -68,7 +69,6 @@ void GeneralMenu::update(const DplDevice::GroupPointer &group)
 {
     m_group = group;
 
-    update_start_item();
     update_range_item();
 
     m_velocityItem->set_value(m_group->focallawer()->specimen()->velocity());
@@ -77,11 +77,6 @@ void GeneralMenu::update(const DplDevice::GroupPointer &group)
     m_wedgeDelayItem->set_value(Dpl::ns_to_us(delay));
 
     m_utUnitItem->set_current_index(m_group->ut_unit());
-}
-
-void GeneralMenu::do_startItem_changed(double value)
-{
-    m_group->sample()->set_start(Tool::display_to_cnf(m_group, value));
 }
 
 void GeneralMenu::do_rangeItem_changed(double value)
@@ -102,24 +97,7 @@ void GeneralMenu::do_wedgeDelayItem_changed(double value)
 void GeneralMenu::do_utUnitItem_changed(int index)
 {
     m_group->set_ut_unit((DplDevice::Group::UtUnit)index);
-    update_start_item();
     update_range_item();
-}
-
-void GeneralMenu::update_start_item()
-{
-    if (m_group->ut_unit() == DplDevice::Group::Time) {
-        m_startItem->set_unit(US_STR);
-    } else {
-        m_startItem->set_unit(MM_STR);
-    }
-
-    m_startItem->set(0,
-                     Tool::cnf_to_display(m_group, m_group->max_start()),
-                     2,
-                     Tool::cnf_to_display(m_group, m_group->sample()->precision()));
-
-    m_startItem->set_value(Tool::cnf_to_display(m_group, m_group->sample()->start()));
 }
 
 void GeneralMenu::update_range_item()

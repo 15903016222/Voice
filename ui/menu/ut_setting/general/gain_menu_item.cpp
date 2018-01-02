@@ -22,25 +22,25 @@ void GainMenuItem::update(const DplDevice::GroupPointer &group)
     if (m_group) {
         disconnect(static_cast<DplDevice::Group *>(m_group.data()),
                 SIGNAL(mode_changed(DplDevice::Group::Mode)),
-                this, SLOT(do_mode_changed(DplDevice::Group::Mode)));
+                this, SLOT(update_range(DplDevice::Group::Mode)));
         disconnect(static_cast<DplUt::Sample *>(m_group->sample().data()),
                    SIGNAL(gain_changed(float)),
-                   this, SLOT(do_gain_changed(float)));
+                   this, SLOT(update_value(float)));
     }
 
     m_group = group;
 
-    do_mode_changed(m_group->mode());
+    update_range(m_group->mode());
 
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(mode_changed(DplDevice::Group::Mode)),
-            this, SLOT(do_mode_changed(DplDevice::Group::Mode)));
+            this, SLOT(update_range(DplDevice::Group::Mode)));
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(gain_changed(float)),
-            this, SLOT(do_gain_changed(float)));
+            this, SLOT(update_value(float)));
 }
 
-void GainMenuItem::do_mode_changed(DplDevice::Group::Mode mode)
+void GainMenuItem::update_range(DplDevice::Group::Mode mode)
 {
     if (DplDevice::Group::UT1 == mode
             || DplDevice::Group::UT2 == mode) {
@@ -48,10 +48,10 @@ void GainMenuItem::do_mode_changed(DplDevice::Group::Mode mode)
     } else {
         set(0, 80, 1, 0.1);
     }
-    do_gain_changed(m_group->sample()->gain());
+    update_value(m_group->sample()->gain());
 }
 
-void GainMenuItem::do_gain_changed(float val)
+void GainMenuItem::update_value(float val)
 {
     set_value(val);
 }
