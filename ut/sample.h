@@ -34,13 +34,7 @@ public:
      * @brief start 获取采样起点
      * @return      起点值(ns)
      */
-    float start() const;
-
-    /**
-     * @brief set_start 设置采样起点
-     * @param value     起点值(ns)
-     */
-    void set_start(float value);
+    double start() const;
 
     /**
      * @brief range 获取采样范围
@@ -90,6 +84,9 @@ public:
      * @return              设置成功返回true， 失败返回false
      */
     bool set_point_qty(int qty, bool autoset=false);
+
+public slots:
+    void set_start(double value);
 
 signals:
     void gain_changed(float gain);
