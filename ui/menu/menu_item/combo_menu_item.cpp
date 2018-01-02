@@ -60,7 +60,7 @@ void ComboMenuItem::add_items(const QStringList &texts)
 
 void ComboMenuItem::set_current_index(int index)
 {
-    QAction *action = m_menu->actions().at(index);
+    QAction *action = m_menu->actions().value(index);
     if (action) {
         m_action = action;
         m_label->setText(m_action->text());
