@@ -8,6 +8,7 @@
 #include "menu_item.h"
 
 #include <QVBoxLayout>
+#include <QEvent>
 
 MenuItem::MenuItem(QWidget *parent) : QWidget(parent)
 {}
@@ -22,4 +23,17 @@ void MenuItem::update_layout(QWidget *w1, QWidget *w2)
     vbox->setSpacing(0);
     vbox->addWidget(w1, 2);
     vbox->addWidget(w2, 1);
+}
+
+void MenuItem::changeEvent(QEvent *e)
+{
+    if (e->type() == QEvent::LanguageChange) {
+        language_changed();
+    }
+    QWidget::changeEvent(e);
+}
+
+void MenuItem::language_changed()
+{
+
 }
