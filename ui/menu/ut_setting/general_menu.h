@@ -15,6 +15,7 @@
 class GainMenuItem;
 class StartMenuItem;
 class RangeMenuItem;
+class VelocityMenuItem;
 
 namespace DplUtSettingMenu {
 
@@ -23,12 +24,10 @@ class GeneralMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit GeneralMenu(QWidget *parent = 0);
-    ~GeneralMenu();
 
 protected:
 
 protected slots:
-    void do_velocityItem_changed(double value);
     void do_wedgeDelayItem_changed(double value);
     void do_utUnitItem_changed(int index);
 
@@ -41,7 +40,7 @@ private:
     GainMenuItem *m_gainItem;
     StartMenuItem *m_startItem;
     RangeMenuItem *m_rangeItem;
-    SpinMenuItem *m_velocityItem;
+    VelocityMenuItem *m_velocityItem;
     SpinMenuItem *m_wedgeDelayItem;
     ComboMenuItem *m_utUnitItem;
 
