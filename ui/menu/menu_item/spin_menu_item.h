@@ -18,7 +18,6 @@ class SpinMenuItem : public MenuItem
     Q_OBJECT
 public:
     explicit SpinMenuItem(QWidget *parent, const QString &title = "", const QString &unit = "");
-    ~SpinMenuItem();
 
     /**
      * @brief set_title 设置标题

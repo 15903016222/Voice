@@ -147,6 +147,11 @@ public:
     bool set_encoder_y_mode(EncoderMode type);
 
     /**
+     * @brief reset_encoder 编码器计数复位
+     */
+    void reset_encoder();
+
+    /**
      * @brief ut1_twin  获取UT1通道的双晶状态
      * @return          开启返回true，关闭返回false
      */

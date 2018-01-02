@@ -209,6 +209,7 @@ public:
 
 private:
     ConfigurationPrivate        *d;
+
     void deal_object(const msgpack::object &object);
 
     Q_DISABLE_COPY(Configuration)
