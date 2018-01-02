@@ -16,6 +16,7 @@ class GainMenuItem;
 class StartMenuItem;
 class RangeMenuItem;
 class VelocityMenuItem;
+class DelayMenuItem;
 
 namespace DplUtSettingMenu {
 
@@ -28,7 +29,6 @@ public:
 protected:
 
 protected slots:
-    void do_wedgeDelayItem_changed(double value);
     void do_utUnitItem_changed(int index);
 
     /**
@@ -41,7 +41,7 @@ private:
     StartMenuItem *m_startItem;
     RangeMenuItem *m_rangeItem;
     VelocityMenuItem *m_velocityItem;
-    SpinMenuItem *m_wedgeDelayItem;
+    DelayMenuItem *m_wedgeDelayItem;
     ComboMenuItem *m_utUnitItem;
 
     DplDevice::GroupPointer m_group;

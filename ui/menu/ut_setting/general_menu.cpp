@@ -13,6 +13,7 @@
 #include "general/start_menu_item.h"
 #include "general/range_menu_item.h"
 #include "general/velocity_menu_item.h"
+#include "general/delay_menu_item.h"
 
 #include <qmath.h>
 
@@ -24,7 +25,7 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
     m_startItem(new StartMenuItem(this)),
     m_rangeItem(new RangeMenuItem(this)),
     m_velocityItem(new VelocityMenuItem(this)),
-    m_wedgeDelayItem(new SpinMenuItem(this, tr("Wedge Delay"), US_STR)),
+    m_wedgeDelayItem(new DelayMenuItem(this)),
     m_utUnitItem(new ComboMenuItem(this, tr("UT Unit")))
 {
     m_layout0->addWidget(m_gainItem);
@@ -33,10 +34,6 @@ GeneralMenu::GeneralMenu(QWidget *parent) :
     m_layout3->addWidget(m_velocityItem);
     m_layout4->addWidget(m_wedgeDelayItem);
     m_layout5->addWidget(m_utUnitItem);
-
-    /* Wedge Delay Item */
-    m_wedgeDelayItem->set(0, 1000, 2);
-    connect(m_wedgeDelayItem, SIGNAL(value_changed(double)), this, SLOT(do_wedgeDelayItem_changed(double)));
 
     /* Ut Unit Item */
     QStringList utUnitList;
@@ -57,15 +54,8 @@ void GeneralMenu::update(const DplDevice::GroupPointer &group)
 {
     m_group = group;
 
-    double delay = m_group->focallawer()->wedge()->delay();
-    m_wedgeDelayItem->set_value(Dpl::ns_to_us(delay));
 
     m_utUnitItem->set_current_index(m_group->ut_unit());
-}
-
-void GeneralMenu::do_wedgeDelayItem_changed(double value)
-{
-    m_group->focallawer()->wedge()->set_delay(Dpl::us_to_ns(value));
 }
 
 void GeneralMenu::do_utUnitItem_changed(int index)
