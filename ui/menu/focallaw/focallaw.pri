@@ -1,3 +1,6 @@
+
+include($$PWD/apeture/apeture.pri)
+
 HEADERS += \
     $$PWD/law_config_menu.h \
     $$PWD/angle_menu.h \

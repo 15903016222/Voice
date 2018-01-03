@@ -1,11 +1,12 @@
 #include "apeture_menu.h"
 
+#include "apeture/apeture_menu_item.h"
 
 namespace DplFocalLawMenu {
 
 ApetureMenu::ApetureMenu(QWidget *parent) :
     BaseMenu(parent),
-    m_apetureItem(new SpinMenuItem(this, tr("Apeture"))),
+    m_apetureItem(new ApetureMenuItem(this)),
     m_firstElementItem(new SpinMenuItem(this, tr("First Element"))),
     m_lastElementItem(new SpinMenuItem(this, tr("Last Element"))),
     m_elementStep(new SpinMenuItem(this, tr("Element Step")))
@@ -14,12 +15,6 @@ ApetureMenu::ApetureMenu(QWidget *parent) :
     m_layout1->addWidget(m_firstElementItem);
     m_layout2->addWidget(m_lastElementItem);
     m_layout3->addWidget(m_elementStep);
-
-    /* Apeture Menu Item */
-    m_apetureItem->set_decimals(0);
-    m_apetureItem->set_step(1);
-    connect(m_apetureItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_apetureitem_changed(double)));
 
     /* First Element menu item */
     m_firstElementItem->set_decimals(0);
@@ -38,13 +33,6 @@ ApetureMenu::ApetureMenu(QWidget *parent) :
 
 ApetureMenu::~ApetureMenu()
 {
-}
-
-void ApetureMenu::update_apetureItem(const DplFocallaw::ScanCnfPointer &scanCnf)
-{
-    m_apetureItem->show();
-    m_apetureItem->set_range(1, scanCnf->element_qty());
-    m_apetureItem->set_value(scanCnf->aperture());
 }
 
 void ApetureMenu::update_firstElementItem(const DplFocallaw::ScanCnfPointer &scanCnf)
@@ -71,31 +59,17 @@ void ApetureMenu::update(const DplDevice::GroupPointer &group)
 {
     m_focallawer = group->focallawer();
 
-    m_apetureItem->hide();
     m_firstElementItem->hide();
     m_lastElementItem->hide();
     m_elementStep->hide();
 
     DplFocallaw::ScanCnfPointer scanCnf = m_focallawer->probe().staticCast<DplFocallaw::PaProbe>()->scan_configure();
-    update_apetureItem(scanCnf);
     update_firstElementItem(scanCnf);
 
     if (scanCnf->mode() == DplFocallaw::ScanCnf::Linear) {
         update_lastElementItem(scanCnf.staticCast<DplFocallaw::LinearScanCnf>());
         update_elementStep(scanCnf.staticCast<DplFocallaw::LinearScanCnf>());
     }
-}
-
-void ApetureMenu::do_apetureitem_changed(double val)
-{
-    DplFocallaw::ScanCnfPointer scanCnf = m_focallawer->probe().staticCast<DplFocallaw::PaProbe>()->scan_configure();
-    if (scanCnf->aperture() == (uint)val) {
-        return;
-    }
-
-    scanCnf->set_aperture(val);
-
-    m_focallawer->focallaw();
 }
 
 }
