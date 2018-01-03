@@ -192,7 +192,7 @@
   <customwidget>
    <class>GainMenuItem</class>
    <extends>QWidget</extends>
-   <header>../menu/ut_setting/gain_menu_item.h</header>
+   <header>../menu/ut_setting/general/gain_menu_item.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

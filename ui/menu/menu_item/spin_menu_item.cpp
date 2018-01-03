@@ -23,6 +23,7 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
     m_min(0),
     m_max(100),
     m_step(1),
+    m_baseStep(1),
     m_decimals(0)
 {
     m_pushBtn->setFocusPolicy(Qt::NoFocus);
@@ -40,10 +41,6 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
             this, SLOT(do_pushBtn_clicked()));
     connect(m_lineEdit, SIGNAL(textEdited(QString)),
             this, SLOT(check_number_validity(QString)));
-}
-
-SpinMenuItem::~SpinMenuItem()
-{
 }
 
 void SpinMenuItem::set_range(double min, double max)

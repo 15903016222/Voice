@@ -33,10 +33,10 @@
 #include "probe_part/advanced_menu.h"
 
 /* Focal Law */
-#include "focal_law/law_config_menu.h"
-#include "focal_law/angle_menu.h"
-#include "focal_law/apeture_menu.h"
-#include "focal_law/focal_point_menu.h"
+#include "focallaw/law_config_menu.h"
+#include "focallaw/angle_menu.h"
+#include "focallaw/aperture_menu.h"
+#include "focallaw/focal_point_menu.h"
 
 /* Scan */
 #include "scan/inspection_menu.h"
@@ -53,7 +53,6 @@
 #include "file_report/file_menu.h"
 #include "file_report/format_menu.h"
 #include "file_report/report_menu.h"
-#include "file_report/save_mode_menu.h"
 #include "file_report/user_field_menu.h"
 
 /* Preference */
@@ -129,7 +128,7 @@ void SubMenu::create_menus()
     /* Focal Law */
     l->addWidget(new DplFocalLawMenu::LawConfigMenu(this));
     l->addWidget(new DplFocalLawMenu::AngleMenu(this));
-    l->addWidget(new DplFocalLawMenu::ApetureMenu(this));
+    l->addWidget(new DplFocalLawMenu::ApertureMenu(this));
     l->addWidget(new DplFocalLawMenu::FocalPointMenu(this));
 
     /* Scan */
@@ -145,7 +144,6 @@ void SubMenu::create_menus()
 
     /* File/Report */
     l->addWidget(new DplFileReportMenu::FileMenu(this));
-    l->addWidget(new DplFileReportMenu::SaveModeMenu(this));
     l->addWidget(new DplFileReportMenu::ReportMenu(this));
     l->addWidget(new DplFileReportMenu::FormatMenu(this));
     l->addWidget(new DplFileReportMenu::UserFieldMenu(this));

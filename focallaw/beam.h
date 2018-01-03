@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file beam.h
  * @brief 光束
  * @author Jake Yang <yanghuanjie@cndoppler.cn>
@@ -8,6 +8,7 @@
 #define __FOCALLAW_BEAM_H__
 
 #include "focallaw_global.h"
+#include "point.h"
 #include <QSharedPointer>
 
 namespace DplFocallaw {
@@ -80,6 +81,18 @@ public:
      * @return          中心阵元的声束在样块的入射点到楔块的前边缘下边的距离，曲面的是圆弧聚离
      */
     float field_distance();
+
+    /**
+     * @brief       get_incident_point
+     * @return          获取声束的入射点坐标
+     */
+    const QList<Point<float> > & get_incident_point();
+
+    /**
+     * @brief     get_focus_point
+     * @return          获取声束的聚焦点坐标
+     */
+    const Point<float> & get_focus_point();
 
 protected:
     friend class FocallawerPrivate;

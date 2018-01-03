@@ -161,7 +161,7 @@ void MainMenuPrivate::init_focallawMenu()
     m_focallawMenu->hide();
     new QListWidgetItem(tr("Law Config"), m_focallawMenu, MainMenu::FocalLaw_LawConfig);
     new QListWidgetItem(tr("Angle"), m_focallawMenu, MainMenu::FocalLaw_Angle);
-    new QListWidgetItem(tr("Apeture"), m_focallawMenu, MainMenu::FocalLaw_Apeture);
+    new QListWidgetItem(tr("Aperture"), m_focallawMenu, MainMenu::FocalLaw_Aperture);
     new QListWidgetItem(tr("Focal Point"), m_focallawMenu, MainMenu::FocalLaw_FocalPoint);
 
     connect(m_focallawMenu, SIGNAL(pressed(QModelIndex)),
@@ -198,7 +198,6 @@ void MainMenuPrivate::init_fileReportMenu()
     set_common(m_fileReportMenu);
     m_fileReportMenu->hide();
     new QListWidgetItem(tr("File"), m_fileReportMenu, MainMenu::FileReport_File);
-    new QListWidgetItem(tr("Save Mode"), m_fileReportMenu, MainMenu::FileReport_SaveMode);
     new QListWidgetItem(tr("Report"), m_fileReportMenu, MainMenu::FileReport_Report);
     new QListWidgetItem(tr("Format"), m_fileReportMenu, MainMenu::FileReport_Format);
     new QListWidgetItem(tr("User Field"), m_fileReportMenu, MainMenu::FileReport_UserField);

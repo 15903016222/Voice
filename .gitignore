@@ -10,4 +10,4 @@ build
 /Source
 /Focallaw
 /Mcu
-build*
+/build*

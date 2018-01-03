@@ -40,7 +40,7 @@ public:
 
         FocalLaw_LawConfig,
         FocalLaw_Angle,
-        FocalLaw_Apeture,
+        FocalLaw_Aperture,
         FocalLaw_FocalPoint,
 
         Scan_Inspection,
@@ -53,7 +53,6 @@ public:
         Measurement_FlawRecord,
 
         FileReport_File,
-        FileReport_SaveMode,
         FileReport_Report,
         FileReport_Format,
         FileReport_UserField,
