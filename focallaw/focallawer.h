@@ -109,6 +109,7 @@ signals:
     void beam_qty_changed(int);
     void beams_changed(const QList<BeamPointer> &list);
     void focallawed();
+    void probe_changed(const DplFocallaw::ProbePointer &probe);
     void wedge_changed(const DplFocallaw::WedgePointer &wedge);
     void specimen_changed(const DplFocallaw::SpecimenPointer &specimen);
 
