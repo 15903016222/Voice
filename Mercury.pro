@@ -78,4 +78,6 @@ include(source/source.pri)
 
 include(focallaw/focallaw.pri)
 
+include(configuration/configuration.pri)
+
 include(report/report.pri)
