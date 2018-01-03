@@ -67,11 +67,6 @@ void ApertureMenu::do_probe_changed(const DplFocallaw::ProbePointer &probe)
                    this, SLOT(do_scan_changed(DplFocallaw::ScanCnfPointer)));
     }
 
-    m_apertureItem->setDisabled(true);
-    m_firstElementItem->setDisabled(true);
-    m_lastElementItem->setDisabled(true);
-    m_stepmenuItem->setDisabled(true);
-
     if (!probe->is_pa()) {
         m_probe.clear();
         m_scan.clear();
@@ -106,6 +101,7 @@ void ApertureMenu::do_scan_changed(const DplFocallaw::ScanCnfPointer &scan)
     }
 
     m_scan = scan;
+
     update_apertureItem();
     update_firstElementItem();
     update_lastElementItem();
@@ -144,9 +140,10 @@ void ApertureMenu::update_firstElementItem()
 void ApertureMenu::update_lastElementItem()
 {
     if (m_scan->mode() == DplFocallaw::ScanCnf::Sectorial) {
+        m_lastElementItem->hide();
         return;
     }
-    m_lastElementItem->setDisabled(false);
+    m_lastElementItem->show();
     m_lastElementItem->set_range(1, m_scan->element_qty());
     m_lastElementItem->set_value(m_scan.staticCast<DplFocallaw::LinearScanCnf>()->last_element()+1);
 }
@@ -154,10 +151,11 @@ void ApertureMenu::update_lastElementItem()
 void ApertureMenu::update_stepMenuItem()
 {
     if (m_scan->mode() == DplFocallaw::ScanCnf::Sectorial) {
+        m_stepmenuItem->hide();
         return;
     }
 
-    m_stepmenuItem->setDisabled(false);
+    m_stepmenuItem->show();
     m_stepmenuItem->set_range(1, m_scan->element_qty());
     m_stepmenuItem->set_value(m_scan.staticCast<DplFocallaw::LinearScanCnf>()->element_step());
 }

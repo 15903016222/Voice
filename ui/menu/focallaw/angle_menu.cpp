@@ -23,9 +23,13 @@ AngleMenu::AngleMenu(QWidget *parent) :
 
     /* Max.Angle Menu Item */
     m_maxAngleItem->set(-89, 89, 0);
+    connect(m_maxAngleItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_maxAngleItem_changed(double)));
 
     /* Angle Step Menu Item */
     m_angleStepItem->set(1, 10, 0);
+    connect(m_angleStepItem, SIGNAL(value_changed(double)),
+            this, SLOT(do_angleStepItem_changed(double)));
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
@@ -57,21 +61,15 @@ void AngleMenu::do_probe_changed(const DplFocallaw::ProbePointer &probe)
                    this, SLOT(do_scan_changed(DplFocallaw::ScanCnfPointer)));
     }
 
-    m_minAngleItem->setDisabled(true);
-    m_maxAngleItem->setDisabled(true);
-    m_angleStepItem->setDisabled(true);
-
     if (!probe->is_pa()) {
         m_probe.clear();
         m_scan.clear();
         return;
     }
 
-    qDebug("%s(%s[%d]): ", __FILE__, __func__, __LINE__);
-
     m_probe = probe.staticCast<DplFocallaw::PaProbe>();
     do_scan_changed(m_probe->scan_configure());
-    qDebug("%s(%s[%d]): ", __FILE__, __func__, __LINE__);
+
     connect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
             SIGNAL(scan_configure_changed(DplFocallaw::ScanCnfPointer)),
             this, SLOT(do_scan_changed(DplFocallaw::ScanCnfPointer)));
@@ -134,19 +132,21 @@ void AngleMenu::update_minAngleItem()
 void AngleMenu::update_maxAngleItem()
 {
     if (m_scan->mode() != DplFocallaw::ScanCnf::Sectorial) {
+        m_maxAngleItem->hide();
         return;
     }
 
-    m_maxAngleItem->setDisabled(false);
+    m_maxAngleItem->show();
     m_maxAngleItem->set_value(m_scan.staticCast<DplFocallaw::SectorialScanCnf>()->last_angle());
 }
 
 void AngleMenu::update_angleStepItem()
 {
     if (m_scan->mode() != DplFocallaw::ScanCnf::Sectorial) {
+        m_angleStepItem->hide();
         return;
     }
-    m_angleStepItem->setDisabled(false);
+    m_angleStepItem->show();
     m_angleStepItem->set_value(m_scan.staticCast<DplFocallaw::SectorialScanCnf>()->angle_step());
 }
 
