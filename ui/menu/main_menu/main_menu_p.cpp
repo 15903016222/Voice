@@ -161,7 +161,7 @@ void MainMenuPrivate::init_focallawMenu()
     m_focallawMenu->hide();
     new QListWidgetItem(tr("Law Config"), m_focallawMenu, MainMenu::FocalLaw_LawConfig);
     new QListWidgetItem(tr("Angle"), m_focallawMenu, MainMenu::FocalLaw_Angle);
-    new QListWidgetItem(tr("Apeture"), m_focallawMenu, MainMenu::FocalLaw_Apeture);
+    new QListWidgetItem(tr("Aperture"), m_focallawMenu, MainMenu::FocalLaw_Aperture);
     new QListWidgetItem(tr("Focal Point"), m_focallawMenu, MainMenu::FocalLaw_FocalPoint);
 
     connect(m_focallawMenu, SIGNAL(pressed(QModelIndex)),

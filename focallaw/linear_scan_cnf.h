@@ -85,6 +85,11 @@ public:
      */
     virtual void set_element_qty(uint qty);
 
+signals:
+    void last_element_changed(uint pos);
+    void element_step_changed(uint step);
+    void angle_changed(float angle);
+
 private:
     LinearScanCnfPrivate *d_ptr;
 };
