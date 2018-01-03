@@ -40,7 +40,7 @@ public:
 
         FocalLaw_LawConfig,
         FocalLaw_Angle,
-        FocalLaw_Apeture,
+        FocalLaw_Aperture,
         FocalLaw_FocalPoint,
 
         Scan_Inspection,

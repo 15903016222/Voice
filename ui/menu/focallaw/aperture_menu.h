@@ -1,35 +1,45 @@
-#ifndef __APETURE_MENU_H__
-#define __APETURE_MENU_H__
+#ifndef __aperture_MENU_H__
+#define __aperture_MENU_H__
 
 #include "../base_menu.h"
 #include <device/device.h>
 
-class ApetureMenuItem;
-
 namespace DplFocalLawMenu {
 
-class ApetureMenu : public BaseMenu
+class ApertureMenu : public BaseMenu
 {
     Q_OBJECT
 public:
-    explicit ApetureMenu(QWidget *parent);
-    ~ApetureMenu();
-
-protected:
-    void update_firstElementItem(const DplFocallaw::ScanCnfPointer &scanCnf);
-    void update_lastElementItem(const DplFocallaw::LinearScanCnfPointer &scanCnf);
-    void update_elementStep(const DplFocallaw::LinearScanCnfPointer &scanCnf);
+    explicit ApertureMenu(QWidget *parent);
 
 protected slots:
-    void update(const DplDevice::GroupPointer &group);
+    void do_group_changed(const DplDevice::GroupPointer &group);
+    void do_probe_changed(const DplFocallaw::ProbePointer &probe);
+    void do_scan_changed(const DplFocallaw::ScanCnfPointer &scan);
+
+    void update_apertureItem();
+    void update_firstElementItem();
+    void update_lastElementItem();
+    void update_stepMenuItem();
+
+    void do_apertureItem_changed(double val);
+    void do_firstElementItem_changed(double val);
+    void do_lastElementItem_changed(double val);
+    void do_stepItem(double val);
+
+protected:
+    void changeEvent(QEvent *e);
 
 private:
-    ApetureMenuItem *m_apetureItem;
+    SpinMenuItem *m_apertureItem;
     SpinMenuItem *m_firstElementItem;
     SpinMenuItem *m_lastElementItem;
-    SpinMenuItem *m_elementStep;
+    SpinMenuItem *m_stepmenuItem;
+
     DplFocallaw::FocallawerPointer m_focallawer;
+    DplFocallaw::PaProbePointer m_probe;
+    DplFocallaw::ScanCnfPointer m_scan;
 };
 
 }
-#endif // __APETURE_MENU_H__
+#endif // __aperture_MENU_H__

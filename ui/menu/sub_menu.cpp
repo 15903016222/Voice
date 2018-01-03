@@ -35,7 +35,7 @@
 /* Focal Law */
 #include "focallaw/law_config_menu.h"
 #include "focallaw/angle_menu.h"
-#include "focallaw/apeture_menu.h"
+#include "focallaw/aperture_menu.h"
 #include "focallaw/focal_point_menu.h"
 
 /* Scan */
@@ -128,7 +128,7 @@ void SubMenu::create_menus()
     /* Focal Law */
     l->addWidget(new DplFocalLawMenu::LawConfigMenu(this));
     l->addWidget(new DplFocalLawMenu::AngleMenu(this));
-    l->addWidget(new DplFocalLawMenu::ApetureMenu(this));
+    l->addWidget(new DplFocalLawMenu::ApertureMenu(this));
     l->addWidget(new DplFocalLawMenu::FocalPointMenu(this));
 
     /* Scan */
