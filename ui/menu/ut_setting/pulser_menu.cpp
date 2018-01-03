@@ -75,7 +75,7 @@ void PulserMenu::do_txrxModeItem_changed(int index)
 void PulserMenu::do_pulserItem_changed(double val)
 {
     DplFocallaw::PaProbePointer probe = m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
-    probe->set_pulser_index(val);
+    probe->set_pulser_index(val-1);
 }
 
 void PulserMenu::do_voltageItem_changed(int index)

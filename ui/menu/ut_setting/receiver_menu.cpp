@@ -73,7 +73,7 @@ void ReceiverMenu::do_receiverItem_changed(double val)
 {
     DplFocallaw::ProbePointer probe = m_group->focallawer()->probe();
     if (!probe.isNull() && probe->is_pa()) {
-        probe.staticCast<DplFocallaw::PaProbe>()->set_receiver_index(val);
+        probe.staticCast<DplFocallaw::PaProbe>()->set_receiver_index(val-1);
     }
 }
 

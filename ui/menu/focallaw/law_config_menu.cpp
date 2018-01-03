@@ -41,42 +41,94 @@ LawConfigMenu::LawConfigMenu(QWidget *parent) :
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(update(DplDevice::GroupPointer)));
+            this, SLOT(do_group_changed(DplDevice::GroupPointer)));
 
-    update(DplDevice::Device::instance()->current_group());
+    do_group_changed(DplDevice::Device::instance()->current_group());
 }
 
-LawConfigMenu::~LawConfigMenu()
+void LawConfigMenu::do_group_changed(const DplDevice::GroupPointer &group)
 {
+    if (m_focallawer) {
+        disconnect(static_cast<DplFocallaw::Focallawer *>(m_focallawer.data()),
+                   SIGNAL(probe_changed(DplFocallaw::ProbePointer)),
+                   this, SLOT(do_probe_changed(DplFocallaw::ProbePointer)));
+    }
+
+    m_focallawer = group->focallawer();
+    do_probe_changed(m_focallawer->probe());
+
+    connect(static_cast<DplFocallaw::Focallawer *>(m_focallawer.data()),
+            SIGNAL(probe_changed(DplFocallaw::ProbePointer)),
+            this, SLOT(do_probe_changed(DplFocallaw::ProbePointer)));
+}
+
+void LawConfigMenu::do_probe_changed(const DplFocallaw::ProbePointer &probe)
+{
+    if (m_probe) {
+        disconnect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
+                   SIGNAL(scan_configure_changed(DplFocallaw::ScanCnfPointer)),
+                   this, SLOT(update_lawTypeItem(DplFocallaw::ScanCnfPointer)));
+        disconnect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
+                   SIGNAL(pulser_index_changed(uint)),
+                   this, SLOT(update_pulserItem(uint)));
+        disconnect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
+                   SIGNAL(receiver_index_changed(uint)),
+                   this, SLOT(update_receiverItem(uint)));
+    }
+
+    if (!probe->is_pa()) {
+        m_probe.clear();
+        return;
+    }
+
+    m_probe = probe.staticCast<DplFocallaw::PaProbe>();
+    update_lawTypeItem();
+    update_pulserItem();
+    update_receiverItem();
+
+    connect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
+            SIGNAL(scan_configure_changed(DplFocallaw::ScanCnfPointer)),
+            this, SLOT(update_lawTypeItem()));
+    connect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
+            SIGNAL(pulser_index_changed(uint)),
+            this, SLOT(update_pulserItem()));
+    connect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
+            SIGNAL(receiver_index_changed(uint)),
+            this, SLOT(update_receiverItem()));
+}
+
+void LawConfigMenu::update_lawTypeItem()
+{
+    m_lawTypeItem->set_current_index(m_probe->scan_configure()->mode());
+}
+
+void LawConfigMenu::update_pulserItem()
+{
+    m_pulseItem->set_value(m_probe->pulser_index()+1);
+}
+
+void LawConfigMenu::update_receiverItem()
+{
+    m_receiverItem->set_value(m_probe->receiver_index()+1);
 }
 
 void LawConfigMenu::do_lawTypeItem_changed(int index)
 {
     if (index == DplFocallaw::ScanCnf::Linear) {
-        m_probePtr->set_scan_configure(DplFocallaw::ScanCnfPointer(new DplFocallaw::LinearScanCnf(m_probePtr->element_qty())));
+        m_probe->set_scan_configure(DplFocallaw::ScanCnfPointer(new DplFocallaw::LinearScanCnf(m_probe->element_qty())));
     } else if( index == DplFocallaw::ScanCnf::Sectorial) {
-        m_probePtr->set_scan_configure(DplFocallaw::ScanCnfPointer(new DplFocallaw::SectorialScanCnf(m_probePtr->element_qty())));
+        m_probe->set_scan_configure(DplFocallaw::ScanCnfPointer(new DplFocallaw::SectorialScanCnf(m_probe->element_qty())));
     }
 }
 
 void LawConfigMenu::do_pulseItem_changed(double val)
 {
-    m_probePtr->set_pulser_index(val);
+    m_probe->set_pulser_index(val-1);
 }
 
 void LawConfigMenu::do_receiverItem_changed(double val)
 {
-    m_probePtr->set_receiver_index(val);
-}
-
-void LawConfigMenu::update(const DplDevice::GroupPointer &group)
-{
-    m_probePtr = group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
-    m_scanScnPtr = m_probePtr->scan_configure().staticCast<DplFocallaw::ScanCnf>();
-
-    m_lawTypeItem->set_current_index(m_scanScnPtr->mode());
-    m_pulseItem->set_value(m_probePtr->pulser_index());
-    m_receiverItem->set_value(m_probePtr->receiver_index());
+    m_probe->set_receiver_index(val-1);
 }
 
 }
