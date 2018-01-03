@@ -23,6 +23,7 @@ SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString 
     m_min(0),
     m_max(100),
     m_step(1),
+    m_baseStep(1),
     m_decimals(0)
 {
     m_pushBtn->setFocusPolicy(Qt::NoFocus);
