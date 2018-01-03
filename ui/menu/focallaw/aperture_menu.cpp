@@ -164,22 +164,32 @@ void ApertureMenu::update_stepMenuItem()
 
 void ApertureMenu::do_apertureItem_changed(double val)
 {
-    m_scan->set_aperture(val);
+    if ( !m_scan->set_aperture(val) ) {
+        m_apertureItem->set_value(m_scan->aperture());
+    }
 }
 
 void ApertureMenu::do_firstElementItem_changed(double val)
 {
-    m_scan->set_first_element(val);
+    if ( !m_scan->set_first_element(val-1) ) {
+        m_firstElementItem->set_value(m_scan->first_element() + 1);
+    }
 }
 
 void ApertureMenu::do_lastElementItem_changed(double val)
 {
-    m_scan.staticCast<DplFocallaw::LinearScanCnf>()->set_last_element(val);
+    DplFocallaw::LinearScanCnfPointer cnf = m_scan.staticCast<DplFocallaw::LinearScanCnf>();
+    if ( !cnf->set_last_element(val-1) ) {
+        m_lastElementItem->set_value(cnf->last_element() + 1);
+    }
 }
 
 void ApertureMenu::do_stepItem(double val)
 {
-    m_scan.staticCast<DplFocallaw::LinearScanCnf>()->set_element_step(val);
+    DplFocallaw::LinearScanCnfPointer cnf = m_scan.staticCast<DplFocallaw::LinearScanCnf>();
+    if ( !cnf->set_element_step(val) ) {
+        m_stepmenuItem->set_value(cnf->element_step());
+    }
 }
 
 void ApertureMenu::changeEvent(QEvent *e)
