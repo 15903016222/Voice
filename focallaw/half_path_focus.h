@@ -17,7 +17,7 @@ class FOCALLAWSHARED_EXPORT HalfPathFocus : public Focus
     Q_OBJECT
     Q_DECLARE_PRIVATE(HalfPathFocus)
 public:
-    explicit HalfPathFocus(QObject *parent);
+    explicit HalfPathFocus(QObject *parent = 0);
     ~HalfPathFocus();
 
     /**
