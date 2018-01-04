@@ -6,6 +6,8 @@
 
 #include <device/group.h>
 
+class PulserMenuItem;
+
 namespace DplFocalLawMenu {
 
 class LawConfigMenu : public BaseMenu
@@ -19,12 +21,10 @@ protected slots:
     void do_probe_changed(const DplFocallaw::ProbePointer &probe);
 
     void update_lawTypeItem();
-    void update_pulserItem();
     void update_receiverItem();
     void update_waveTypeItem();
 
     void do_lawTypeItem_changed(int index);
-    void do_pulseItem_changed(double val);
     void do_receiverItem_changed(double val);
 
 protected:
@@ -32,7 +32,7 @@ protected:
 
 private:
     ComboMenuItem *m_lawTypeItem;
-    SpinMenuItem *m_pulseItem;
+    PulserMenuItem *m_pulseItem;
     SpinMenuItem *m_receiverItem;
     ComboMenuItem *m_waveTypeItem;
 

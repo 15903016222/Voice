@@ -9,12 +9,14 @@
 
 #include <ut/global_transceiver.h>
 
+#include "pulser/pulser_menu_item.h"
+
 namespace DplUtSettingMenu {
 
 PulserMenu::PulserMenu(QWidget *parent) :
     BaseMenu(parent),
     m_txrxModeItem(new ComboMenuItem(this, tr("Tx/Rx Mode"))),
-    m_pulserItem(new SpinMenuItem(this, tr("Pulser"))),
+    m_pulserItem(new PulserMenuItem(this)),
     m_voltageItem(new ComboMenuItem(this, tr("Voltage"))),
     m_pwItem(new SpinMenuItem(this, tr("PW"), "ns")),
     m_prfItem(new ComboMenuItem(this, tr("PRF"))),
@@ -37,12 +39,6 @@ PulserMenu::PulserMenu(QWidget *parent) :
             SIGNAL(value_changed(int)),
             this,
             SLOT(do_prfItem_changed(int)));
-
-    m_pulserItem->set(1, 113, 0);
-    connect(m_pulserItem,
-            SIGNAL(value_changed(double)),
-            this,
-            SLOT(do_pulserItem_changed(double)));
 
     m_pwItem->set(30, 1000, 1, 2.5);
     connect(m_pwItem,
@@ -70,12 +66,6 @@ PulserMenu::PulserMenu(QWidget *parent) :
 void PulserMenu::do_txrxModeItem_changed(int index)
 {
     m_group->transceiver()->set_mode(static_cast<DplUt::Transceiver::Mode>(index));
-}
-
-void PulserMenu::do_pulserItem_changed(double val)
-{
-    DplFocallaw::PaProbePointer probe = m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
-    probe->set_pulser_index(val-1);
 }
 
 void PulserMenu::do_voltageItem_changed(int index)
@@ -136,7 +126,6 @@ void PulserMenu::update(const DplDevice::GroupPointer &group)
             this, SLOT(update_voltageItem()));
 
     update_txrxModeItem();
-    m_pulserItem->set_value(m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>()->pulser_index());
     update_voltageItem();
     m_pwItem->set_value(m_group->transceiver()->pw());
     m_prfItem->set_current_index(DplUt::GlobalTransceiver::instance()->prf_mode());
