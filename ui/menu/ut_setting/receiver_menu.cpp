@@ -219,7 +219,7 @@ void ReceiverMenu::update_rectifierItem()
                this,
                SLOT(do_rectifierItem_changed(int)));
 
-    m_rectifierItem->set(QStringList());
+    m_rectifierItem->clear();
     if ( m_group->transceiver()->mode() == DplUt::Transceiver::TOFD ) {
         m_rectifierItem->add_item(tr("RF"));
     }

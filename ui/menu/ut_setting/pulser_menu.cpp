@@ -156,7 +156,7 @@ void PulserMenu::update_txrxModeItem()
             this,
             SLOT(do_txrxModeItem_changed(int)));
 
-    m_txrxModeItem->set(QStringList());
+    m_txrxModeItem->clear();
     m_txrxModeItem->add_item(tr("PE"));
     m_txrxModeItem->add_item(tr("PC"));
     m_txrxModeItem->add_item(tr("TT"));
@@ -179,7 +179,7 @@ void PulserMenu::update_voltageItem()
                this,
                SLOT(do_voltageItem_changed(int)));
 
-    m_voltageItem->set(QStringList());
+    m_voltageItem->clear();
 
     if (m_group->mode() == DplDevice::Group::UT
             || m_group->mode() == DplDevice::Group::PA) {

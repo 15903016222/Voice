@@ -21,10 +21,14 @@ protected slots:
     void update_lawTypeItem();
     void update_pulserItem();
     void update_receiverItem();
+    void update_waveTypeItem();
 
     void do_lawTypeItem_changed(int index);
     void do_pulseItem_changed(double val);
     void do_receiverItem_changed(double val);
+
+protected:
+    void changeEvent(QEvent *e);
 
 private:
     ComboMenuItem *m_lawTypeItem;
