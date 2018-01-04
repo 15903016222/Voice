@@ -78,17 +78,17 @@ public:
     bool set_specimen(const SpecimenPointer &s);
 
     /**
-     * @brief focus_configure   获取焦点配置对象
-     * @return                  焦点配置对象
+     * @brief focus     获取焦点配置对象
+     * @return          焦点配置对象
      */
-    const FocusPointer &focus_configure() const;
+    const FocusPointer &focus() const;
 
     /**
-     * @brief set_focus_configure   设置焦点配置对象
-     * @param focus                 焦点配置对象
-     * @return                      设置成功返回true,失败返回false
+     * @brief set_focus     设置焦点配置对象
+     * @param focus         焦点配置对象
+     * @return              设置成功返回true,失败返回false
      */
-    bool set_focus_configure(const FocusPointer &focus);
+    bool set_focus(const FocusPointer &focus);
 
     /**
      * @brief beams     获取聚焦后声束延迟信息
