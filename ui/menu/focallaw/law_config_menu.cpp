@@ -5,25 +5,21 @@
 #include <QEvent>
 
 #include "../ut_setting/pulser/pulser_menu_item.h"
+#include "../ut_setting/receiver/receiver_menu_item.h"
 
 namespace DplFocalLawMenu {
 
 LawConfigMenu::LawConfigMenu(QWidget *parent) :
     BaseMenu(parent),
     m_lawTypeItem(new ComboMenuItem(this, tr("Law Type"))),
-    m_pulseItem(new PulserMenuItem(this)),
-    m_receiverItem(new SpinMenuItem(this, tr("Receiver"), "1-113")),
+    m_pulserItem(new PulserMenuItem(this)),
+    m_receiverItem(new ReceiverMenuItem(this)),
     m_waveTypeItem(new ComboMenuItem(this, tr("Wave Type")))
 {
     m_layout0->addWidget(m_lawTypeItem);
-    m_layout1->addWidget(m_pulseItem);
+    m_layout1->addWidget(m_pulserItem);
     m_layout2->addWidget(m_receiverItem);
     m_layout3->addWidget(m_waveTypeItem);
-
-    /* Receiver Connection menu item */
-    m_receiverItem->set(1, 113, 0);
-    connect(m_receiverItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_receiverItem_changed(double)));
 
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
@@ -54,9 +50,6 @@ void LawConfigMenu::do_probe_changed(const DplFocallaw::ProbePointer &probe)
         disconnect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
                    SIGNAL(scan_configure_changed(DplFocallaw::ScanCnfPointer)),
                    this, SLOT(update_lawTypeItem(DplFocallaw::ScanCnfPointer)));
-        disconnect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
-                   SIGNAL(receiver_index_changed(uint)),
-                   this, SLOT(update_receiverItem(uint)));
     }
 
     if (!probe->is_pa()) {
@@ -66,15 +59,11 @@ void LawConfigMenu::do_probe_changed(const DplFocallaw::ProbePointer &probe)
 
     m_probe = probe.staticCast<DplFocallaw::PaProbe>();
     update_lawTypeItem();
-    update_receiverItem();
     update_waveTypeItem();
 
     connect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
             SIGNAL(scan_configure_changed(DplFocallaw::ScanCnfPointer)),
             this, SLOT(update_lawTypeItem()));
-    connect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
-            SIGNAL(receiver_index_changed(uint)),
-            this, SLOT(update_receiverItem()));
 }
 
 void LawConfigMenu::update_lawTypeItem()
@@ -89,11 +78,6 @@ void LawConfigMenu::update_lawTypeItem()
 
     connect(m_lawTypeItem, SIGNAL(value_changed(int)),
             this, SLOT(do_lawTypeItem_changed(int)));
-}
-
-void LawConfigMenu::update_receiverItem()
-{
-    m_receiverItem->set_value(m_probe->receiver_index()+1);
 }
 
 void LawConfigMenu::update_waveTypeItem()
@@ -112,16 +96,10 @@ void LawConfigMenu::do_lawTypeItem_changed(int index)
     }
 }
 
-void LawConfigMenu::do_receiverItem_changed(double val)
-{
-    m_probe->set_receiver_index(val-1);
-}
-
 void LawConfigMenu::changeEvent(QEvent *e)
 {
     if (e->type() == QEvent::LanguageChange) {
         m_lawTypeItem->set_title(tr("Law Type"));
-        m_receiverItem->set_title(tr("Receiver"));
         update_lawTypeItem();
         return;
     }
