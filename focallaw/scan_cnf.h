@@ -85,6 +85,9 @@ public:
 
 signals:
     void changed();
+    void aperture_changed(uint val);
+    void first_element_changed(uint pos);
+    void element_qty_changed(uint qty);
 
 private:
     ScanCnfPrivate *d_ptr;

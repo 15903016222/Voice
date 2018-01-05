@@ -6,7 +6,7 @@
  * @date 2016-12-16
  */
 #include "receiver_menu.h"
-
+#include "receiver/receiver_menu_item.h"
 
 #include <ut/global_transceiver.h>
 
@@ -14,7 +14,7 @@ namespace DplUtSettingMenu {
 
 ReceiverMenu::ReceiverMenu(QWidget *parent) :
     BaseMenu(parent),
-    m_receiverItem(new SpinMenuItem(this, tr("Receiver"))),
+    m_receiverItem(new ReceiverMenuItem(this)),
     m_filterItem(new ComboMenuItem(this, tr("Filter"))),
     m_rectifierItem(new ComboMenuItem(this, tr("Rectifier"))),
     m_videoFilterItem(new ComboMenuItem(this, tr("Video Filter"))),
@@ -27,12 +27,6 @@ ReceiverMenu::ReceiverMenu(QWidget *parent) :
     m_layout3->addWidget(m_videoFilterItem);
     m_layout4->addWidget(m_averagingItem);
     m_layout5->addWidget(m_dampingItem);
-
-    m_receiverItem->set(1, 113, 0);
-    connect(m_receiverItem,
-            SIGNAL(value_changed(double)),
-            this,
-            SLOT(do_receiverItem_changed(double)));
 
     connect(m_filterItem,
             SIGNAL(value_changed(int)),
@@ -67,14 +61,6 @@ ReceiverMenu::ReceiverMenu(QWidget *parent) :
             this,
             SLOT(update(DplDevice::GroupPointer)));
     update(DplDevice::Device::instance()->current_group());
-}
-
-void ReceiverMenu::do_receiverItem_changed(double val)
-{
-    DplFocallaw::ProbePointer probe = m_group->focallawer()->probe();
-    if (!probe.isNull() && probe->is_pa()) {
-        probe.staticCast<DplFocallaw::PaProbe>()->set_receiver_index(val);
-    }
 }
 
 void ReceiverMenu::do_filterItem_changed(int index)
@@ -162,7 +148,6 @@ void ReceiverMenu::update(const DplDevice::GroupPointer &grp)
 
     m_group = grp;
     update_filterItem();
-    update_receiverItem();
 
     connect(static_cast<DplUt::Transceiver *>(m_group->transceiver().data()),
             SIGNAL(mode_changed(DplUt::Transceiver::Mode)),
@@ -202,16 +187,6 @@ void ReceiverMenu::update_filterItem()
     m_filterItem->set_current_index(1);
 }
 
-void ReceiverMenu::update_receiverItem()
-{
-    DplFocallaw::ProbePointer probe = m_group->focallawer()->probe();
-    if (!probe.isNull() && probe->is_pa()) {
-        m_receiverItem->set_value(probe.staticCast<DplFocallaw::PaProbe>()->receiver_index());
-    } else {
-        m_receiverItem->set_value(1);
-    }
-}
-
 void ReceiverMenu::update_rectifierItem()
 {
     disconnect(m_rectifierItem,
@@ -219,7 +194,7 @@ void ReceiverMenu::update_rectifierItem()
                this,
                SLOT(do_rectifierItem_changed(int)));
 
-    m_rectifierItem->set(QStringList());
+    m_rectifierItem->clear();
     if ( m_group->transceiver()->mode() == DplUt::Transceiver::TOFD ) {
         m_rectifierItem->add_item(tr("RF"));
     }

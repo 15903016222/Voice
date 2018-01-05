@@ -46,7 +46,7 @@ void UnitMenuItem::language_changed()
 {
     set_title(tr("Ut Unit"));
 
-    set(QStringList());
+    clear();
     add_item(tr("Time"));
     add_item(tr("Sound Path"));
     add_item(tr("True Path"));

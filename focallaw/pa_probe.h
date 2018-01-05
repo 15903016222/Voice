@@ -127,6 +127,9 @@ public:
      */
     void set_scan_configure(const ScanCnfPointer &cnf);
 
+signals:
+    void scan_configure_changed(const DplFocallaw::ScanCnfPointer &cnf);
+
 private:
     PaProbePrivate *d_ptr;
 };

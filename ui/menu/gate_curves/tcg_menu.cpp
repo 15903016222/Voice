@@ -213,7 +213,7 @@ void TcgMenu::update_pointItem()
                this,
                SLOT(do_pointItem_changed(int)));
 
-    m_pointItem->set(QStringList());
+    m_pointItem->clear();
     for (int i = 1; i <= m_group->tcgs()->point_count(); ++i) {
         m_pointItem->add_item(QString::number(i));
     }
