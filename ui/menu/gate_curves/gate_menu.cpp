@@ -130,7 +130,7 @@ void GateMenu::update_synchroItem()
                this,
                SLOT(do_synchroItem_changed(int)));
 
-    m_synchroItem->set(QStringList());
+    m_synchroItem->clear();
     m_synchroItem->add_item(tr("Pulser"));
     m_synchroItem->add_item("I/");
     if (m_gate->type() == DplFpga::Group::GATE_B) {

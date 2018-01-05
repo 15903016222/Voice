@@ -11,6 +11,8 @@
 #include "../base_menu.h"
 #include <device/device.h>
 
+class PulserMenuItem;
+
 namespace DplUtSettingMenu {
 
 class PulserMenu : public BaseMenu
@@ -21,7 +23,6 @@ public:
 
 protected slots:
     void do_txrxModeItem_changed(int index);
-    void do_pulserItem_changed(double val);
     void do_voltageItem_changed(int index);
     void do_pwItem_changed(double val);
     void do_prfItem_changed(int index);
@@ -34,7 +35,7 @@ protected slots:
 
 private:
     ComboMenuItem *m_txrxModeItem;
-    SpinMenuItem *m_pulserItem;
+    PulserMenuItem *m_pulserItem;
     ComboMenuItem *m_voltageItem;
     SpinMenuItem *m_pwItem;
     ComboMenuItem *m_prfItem;

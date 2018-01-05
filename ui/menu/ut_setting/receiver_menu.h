@@ -11,6 +11,8 @@
 #include "../base_menu.h"
 #include <device/device.h>
 
+class ReceiverMenuItem;
+
 namespace DplUtSettingMenu {
 
 class ReceiverMenu : public BaseMenu
@@ -20,7 +22,6 @@ public:
     explicit ReceiverMenu(QWidget *parent = 0);
 
 protected slots:
-    void do_receiverItem_changed(double val);
     void do_filterItem_changed(int index);
     void do_rectifierItem_changed(int index);
     void do_videoFilterItem_changed(int index);
@@ -29,12 +30,11 @@ protected slots:
 
     void update(const DplDevice::GroupPointer &grp);
     void update_filterItem();
-    void update_receiverItem();
     void update_rectifierItem();
     void update_dampingItem();
 
 private:
-    SpinMenuItem *m_receiverItem;
+    ReceiverMenuItem *m_receiverItem;
     ComboMenuItem *m_filterItem;
     ComboMenuItem *m_rectifierItem;
     ComboMenuItem *m_videoFilterItem;
