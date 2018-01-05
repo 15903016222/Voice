@@ -6,6 +6,9 @@
 
 #include <device/group.h>
 
+class PulserMenuItem;
+class ReceiverMenuItem;
+
 namespace DplFocalLawMenu {
 
 class LawConfigMenu : public BaseMenu
@@ -13,28 +16,27 @@ class LawConfigMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit LawConfigMenu(QWidget *parent);
-    ~LawConfigMenu();
 
-    void show();
-    void hide();
+protected slots:
+    void do_group_changed(const DplDevice::GroupPointer &group);
+    void do_probe_changed(const DplFocallaw::ProbePointer &probe);
+
+    void update_lawTypeItem();
+    void update_waveTypeItem();
+
+    void do_lawTypeItem_changed(int index);
+
+protected:
+    void changeEvent(QEvent *e);
 
 private:
-    bool m_updateFlga;
-
     ComboMenuItem *m_lawTypeItem;
-    SpinMenuItem *m_pulseItem;
-    SpinMenuItem *m_receiverItem;
+    PulserMenuItem *m_pulserItem;
+    ReceiverMenuItem *m_receiverItem;
     ComboMenuItem *m_waveTypeItem;
 
-    DplFocallaw::PaProbePointer m_probePtr;
-    DplFocallaw::ScanCnfPointer m_scanScnPtr;
-
-private slots:
-    void do_lawTypeItem_changed(int index);
-    void do_pulseItem_changed(double val);
-    void do_receiverItem_changed(double val);
-
-    void update(const DplDevice::GroupPointer &group);
+    DplFocallaw::FocallawerPointer m_focallawer;
+    DplFocallaw::PaProbePointer m_probe;
 };
 
 }

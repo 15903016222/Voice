@@ -125,6 +125,8 @@ signals:
     void pulser_index_changed(uint index);
     void receiver_index_changed(uint index);
 
+    void changed();
+
 private:
     ProbePrivate *d_ptr;
 };

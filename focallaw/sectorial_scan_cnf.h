@@ -65,6 +65,11 @@ public:
      */
     bool set_angle_step(float step);
 
+signals:
+    void first_angle_changed(float val);
+    void last_angle_changed(float val);
+    void angle_step_changed(float val);
+
 private:
     SectorialScanCnfPrivate *d_ptr;
 };

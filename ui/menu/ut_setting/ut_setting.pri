@@ -1,5 +1,7 @@
 
 include($$PWD/general/general.pri)
+include($$PWD/pulser/pulser.pri)
+include($$PWD/receiver/receiver.pri)
 
 HEADERS += \
     $$PWD/general_menu.h \

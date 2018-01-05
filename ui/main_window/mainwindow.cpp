@@ -91,6 +91,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
         m_subMenu->set_menu(MainMenu::GateCurves_Gate);
         m_subMenu->setFocus();
         break;
+    case Mcu::KEY_FULLSCREEN:
+        change_screen();
+        break;
     default:
         break;
     }
@@ -151,4 +154,16 @@ void MainWindow::show_hidden_Menu()
     } else {
         m_mainMenu->hide();
     }
+}
+
+void MainWindow::change_screen()
+{
+    static bool flag = false;
+    ui->measureBar->setVisible(flag);
+    ui->iconsBarWidget->setVisible(flag);
+    ui->gainMenuItem->setVisible(flag);
+    ui->vpaMenuItem->setVisible(flag);
+    ui->statusBar->setVisible(flag);
+    m_subMenu->setVisible(flag);
+    flag = !flag;
 }
