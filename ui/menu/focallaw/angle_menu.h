@@ -11,22 +11,32 @@ class AngleMenu : public BaseMenu
     Q_OBJECT
 public:
     explicit AngleMenu(QWidget *parent);
-    ~AngleMenu();
-
-protected:
-    void update_minAngleItem(const DplFocallaw::ScanCnfPointer &scanCnf);
-    void update_maxAngleItem(const DplFocallaw::SectorialScanCnfPointer &scanCnf);
-    void update_angleStepItem(const DplFocallaw::SectorialScanCnfPointer &scanCnf);
 
 protected slots:
-    void update(const DplDevice::GroupPointer &group);
+    void do_group_changed(const DplDevice::GroupPointer &group);
+    void do_probe_changed(const DplFocallaw::ProbePointer &probe);
+    void do_scan_changed(const DplFocallaw::ScanCnfPointer &scan);
+
+    void update_minAngleItem();
+    void update_maxAngleItem();
+    void update_angleStepItem();
+
     void do_minAngleItem_changed(double val);
+    void do_maxAngleItem_changed(double val);
+    void do_angleStepItem_changed(double val);
+
+protected:
+    void changeEvent(QEvent *e);
 
 private:
     SpinMenuItem *m_minAngleItem;
     SpinMenuItem *m_maxAngleItem;
     SpinMenuItem *m_angleStepItem;
     DplDevice::GroupPointer m_group;
+
+    DplFocallaw::FocallawerPointer m_focallawer;
+    DplFocallaw::PaProbePointer m_probe;
+    DplFocallaw::ScanCnfPointer m_scan;
 };
 
 }

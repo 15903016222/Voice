@@ -26,6 +26,7 @@ public:
         KEY_BACK,
         KEY_80_PERCENT,
         KEY_DISPLAY,
+        KEY_FULLSCREEN,
         KEY_START,
         KEY_STOP,
         KEY_SAVE,
