@@ -42,20 +42,24 @@ FormatMenu::~FormatMenu()
 {
 }
 
-void FormatMenu::retranslate_ui()
-{
-    m_probeWedgeItem->set_title(tr("Probe/Wedge"));
-    m_inspectionInfoItem->set_title(tr("Inspection"));
-    m_scanInfoItem->set_title(tr("Scan"));
-    m_encoderInfoItem->set_title(tr("Encoder"));
-    m_dacTcgInfoItem->set_title(tr("DAC/TCG"));
-    m_flawRecordTableItem->set_title(tr("Flaw Record\nTable"));
-}
-
 void FormatMenu::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::LanguageChange) {
-        retranslate_ui();
+        m_probeWedgeItem->set_title(tr("Probe/Wedge"));
+        m_inspectionInfoItem->set_title(tr("Inspection"));
+        m_scanInfoItem->set_title(tr("Scan"));
+        m_encoderInfoItem->set_title(tr("Encoder"));
+        m_dacTcgInfoItem->set_title(tr("DAC/TCG"));
+        m_flawRecordTableItem->set_title(tr("Flaw Record\nTable"));
+        s_onOff.clear();
+        s_onOff << tr("On") << tr("Off");
+        m_probeWedgeItem->retranslate_items(s_onOff);
+        m_inspectionInfoItem->retranslate_items(s_onOff);
+        m_scanInfoItem->retranslate_items(s_onOff);
+        m_encoderInfoItem->retranslate_items(s_onOff);
+        m_dacTcgInfoItem->retranslate_items(s_onOff);
+        m_flawRecordTableItem->retranslate_items(s_onOff);
+        return;
     }
 
     BaseMenu::changeEvent(event);

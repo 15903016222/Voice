@@ -82,6 +82,12 @@ public:
      */
     void clear();
 
+    /**
+     * @brief retranslate_items 重新翻译项目列表
+     * @param list              子项名称列表
+     */
+    void retranslate_items(const QStringList &list);
+
 signals:    
     void value_changed(int index);
 

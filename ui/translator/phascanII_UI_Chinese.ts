@@ -42,13 +42,11 @@ mode, which greatly improve the detection reliability.
     <name>BaseMenu</name>
     <message>
         <location filename="../menu/base_menu.cpp" line="31"/>
-        <location filename="../menu/base_menu.cpp" line="51"/>
         <source>On</source>
         <translation>开</translation>
     </message>
     <message>
         <location filename="../menu/base_menu.cpp" line="32"/>
-        <location filename="../menu/base_menu.cpp" line="52"/>
         <source>Off</source>
         <translation>关</translation>
     </message>
@@ -195,6 +193,15 @@ mode, which greatly improve the detection reliability.
         <location filename="../dialog/datetimesetdialog.ui" line="271"/>
         <source>&amp;Ok</source>
         <translation>确定</translation>
+    </message>
+</context>
+<context>
+    <name>DelayMenuItem</name>
+    <message>
+        <location filename="../menu/ut_setting/general/delay_menu_item.cpp" line="7"/>
+        <location filename="../menu/ut_setting/general/delay_menu_item.cpp" line="65"/>
+        <source>Wedge Delay</source>
+        <translation type="unfinished">楔块延时</translation>
     </message>
 </context>
 <context>
@@ -458,286 +465,434 @@ Compression</source>
 <context>
     <name>DplFileReportMenu::FileMenu</name>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="8"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="25"/>
-        <source>Save Setup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="9"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="26"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="18"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="69"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="137"/>
         <source>Open</source>
-        <translation type="unfinished">打开</translation>
+        <translation>打开</translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="10"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="27"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="19"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="138"/>
+        <source>Storage</source>
+        <translation>存储</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="20"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="139"/>
+        <source>Save Mode</source>
+        <translation>保存模式</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="21"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="140"/>
+        <source>Save Data</source>
+        <translation>保存数据</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="22"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="141"/>
+        <source>File Name</source>
+        <translation>文件名</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="23"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="142"/>
         <source>File Manager</source>
-        <translation type="unfinished">文件管理</translation>
+        <translation>文件管理</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="35"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="146"/>
+        <source>SD</source>
+        <translation>SD卡</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="36"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="147"/>
+        <source>SSD</source>
+        <translation>固态硬盘</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="37"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="148"/>
+        <source>U Storage</source>
+        <translation>U盘</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="42"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="153"/>
+        <source>Inspection Data</source>
+        <translation>检测信息</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="43"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="154"/>
+        <source>Inspection Table</source>
+        <translation>检测表格</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="44"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="155"/>
+        <source>Screen</source>
+        <translation>屏幕</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="45"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="156"/>
+        <source>Report</source>
+        <translation>报告</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="46"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="157"/>
+        <source>Setup</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="66"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="77"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="80"/>
+        <source>Open Setup</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="70"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="77"/>
+        <source>Open Success!</source>
+        <translation>打开成功！</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="80"/>
+        <source>Open Failed!</source>
+        <translation>打开失败！</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="101"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="107"/>
+        <source>Save </source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="101"/>
+        <source>Save Success!</source>
+        <translation>保存成功！</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="104"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="104"/>
+        <source>Include unsupported character, Please reedit</source>
+        <translation>包含非法字符，请重新编辑。</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/file_menu.cpp" line="107"/>
+        <source>Save Failed!</source>
+        <translation>保存失败！</translation>
     </message>
 </context>
 <context>
     <name>DplFileReportMenu::FormatMenu</name>
     <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="7"/>
-        <location filename="../menu/file_report/format_menu.cpp" line="46"/>
-        <source>Probe/Wedge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menu/file_report/format_menu.cpp" line="8"/>
-        <location filename="../menu/file_report/format_menu.cpp" line="47"/>
-        <source>Inspection</source>
-        <translation type="unfinished">扫查设置</translation>
+        <location filename="../menu/file_report/format_menu.cpp" line="48"/>
+        <source>Probe/Wedge</source>
+        <translation>工件/楔块</translation>
     </message>
     <message>
         <location filename="../menu/file_report/format_menu.cpp" line="9"/>
-        <location filename="../menu/file_report/format_menu.cpp" line="48"/>
-        <source>Scan</source>
-        <translation type="unfinished">扫查</translation>
+        <location filename="../menu/file_report/format_menu.cpp" line="49"/>
+        <source>Inspection</source>
+        <translation>检测信息</translation>
     </message>
     <message>
         <location filename="../menu/file_report/format_menu.cpp" line="10"/>
-        <location filename="../menu/file_report/format_menu.cpp" line="49"/>
-        <source>Encoder</source>
-        <translation type="unfinished">编码器</translation>
+        <location filename="../menu/file_report/format_menu.cpp" line="50"/>
+        <source>Scan</source>
+        <translation>扫查</translation>
     </message>
     <message>
         <location filename="../menu/file_report/format_menu.cpp" line="11"/>
-        <location filename="../menu/file_report/format_menu.cpp" line="50"/>
-        <source>DAC/TCG</source>
-        <translation type="unfinished"></translation>
+        <location filename="../menu/file_report/format_menu.cpp" line="51"/>
+        <source>Encoder</source>
+        <translation>编码器</translation>
     </message>
     <message>
         <location filename="../menu/file_report/format_menu.cpp" line="12"/>
-        <location filename="../menu/file_report/format_menu.cpp" line="51"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="52"/>
+        <source>DAC/TCG</source>
+        <translation>DAC/TCG</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/format_menu.cpp" line="13"/>
+        <location filename="../menu/file_report/format_menu.cpp" line="53"/>
         <source>Flaw Record
 Table</source>
-        <translation type="unfinished">缺陷报表</translation>
+        <translation>缺陷报表</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/format_menu.cpp" line="55"/>
+        <source>On</source>
+        <translation type="unfinished">开</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/format_menu.cpp" line="55"/>
+        <source>Off</source>
+        <translation type="unfinished">关</translation>
     </message>
 </context>
 <context>
     <name>DplFileReportMenu::ReportMenu</name>
     <message>
         <location filename="../menu/file_report/report_menu.cpp" line="9"/>
+        <location filename="../menu/file_report/report_menu.cpp" line="58"/>
         <source>Template</source>
-        <translation type="unfinished">模板</translation>
+        <translation>模板</translation>
     </message>
     <message>
         <location filename="../menu/file_report/report_menu.cpp" line="10"/>
+        <location filename="../menu/file_report/report_menu.cpp" line="59"/>
         <source>Report Name</source>
-        <translation type="unfinished">报告名</translation>
+        <translation>报告名</translation>
     </message>
     <message>
         <location filename="../menu/file_report/report_menu.cpp" line="11"/>
+        <location filename="../menu/file_report/report_menu.cpp" line="60"/>
         <source>Customer</source>
-        <translation type="unfinished">用户栏</translation>
+        <translation>用户栏</translation>
     </message>
     <message>
         <location filename="../menu/file_report/report_menu.cpp" line="12"/>
+        <location filename="../menu/file_report/report_menu.cpp" line="61"/>
         <source>Part Name</source>
-        <translation type="unfinished">工件名</translation>
+        <translation>工件名</translation>
     </message>
     <message>
         <location filename="../menu/file_report/report_menu.cpp" line="13"/>
+        <location filename="../menu/file_report/report_menu.cpp" line="62"/>
         <source>Part Number</source>
-        <translation type="unfinished">工件编号</translation>
+        <translation>工件编号</translation>
     </message>
     <message>
         <location filename="../menu/file_report/report_menu.cpp" line="14"/>
+        <location filename="../menu/file_report/report_menu.cpp" line="63"/>
         <source>Create</source>
-        <translation type="unfinished">创建</translation>
+        <translation>创建</translation>
+    </message>
+</context>
+<context>
+    <name>DplFileReportMenu::SaveFileManager</name>
+    <message>
+        <location filename="../menu/file_report/save_file_manager.cpp" line="35"/>
+        <source>.data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/save_file_manager.cpp" line="35"/>
+        <source>.table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/save_file_manager.cpp" line="35"/>
+        <source>.jpg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/save_file_manager.cpp" line="35"/>
+        <source>.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/save_file_manager.cpp" line="35"/>
+        <source>.cfg</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DplFileReportMenu::SaveModeMenu</name>
     <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="9"/>
         <source>Storage</source>
-        <translation type="unfinished">存储</translation>
+        <translation type="obsolete">存储</translation>
     </message>
     <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="10"/>
         <source>Save Mode</source>
-        <translation type="unfinished">保存模式</translation>
+        <translation type="obsolete">保存模式</translation>
     </message>
     <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="11"/>
         <source>Save Data</source>
-        <translation type="unfinished">保存数据</translation>
+        <translation type="obsolete">保存数据</translation>
     </message>
     <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="12"/>
         <source>File Name</source>
-        <translation type="unfinished">文件名</translation>
+        <translation type="obsolete">文件名</translation>
     </message>
     <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="21"/>
-        <source>SD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="22"/>
-        <source>SSD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="23"/>
         <source>U Storage</source>
-        <translation type="unfinished">U盘存储</translation>
+        <translation type="obsolete">U盘存储</translation>
     </message>
     <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="28"/>
-        <source>Inspection Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="29"/>
-        <source>Inspection Table</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="30"/>
-        <source>Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/save_mode_menu.cpp" line="31"/>
         <source>Report</source>
-        <translation type="unfinished">报告</translation>
+        <translation type="obsolete">报告</translation>
     </message>
 </context>
 <context>
     <name>DplFileReportMenu::UserFieldMenu</name>
     <message>
         <location filename="../menu/file_report/user_field_menu.cpp" line="9"/>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="68"/>
         <source>Select</source>
-        <translation type="unfinished">选择</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <location filename="../menu/file_report/user_field_menu.cpp" line="10"/>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="69"/>
         <source>Enable</source>
-        <translation type="unfinished">使能</translation>
+        <translation>开关</translation>
     </message>
     <message>
         <location filename="../menu/file_report/user_field_menu.cpp" line="11"/>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="70"/>
         <source>Label</source>
-        <translation type="unfinished">标签</translation>
+        <translation>标签</translation>
     </message>
     <message>
         <location filename="../menu/file_report/user_field_menu.cpp" line="12"/>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="71"/>
         <source>Content</source>
-        <translation type="unfinished">注释</translation>
+        <translation>注释</translation>
     </message>
     <message>
         <location filename="../menu/file_report/user_field_menu.cpp" line="13"/>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="72"/>
         <source>Edit Note</source>
-        <translation type="unfinished">编辑注释</translation>
+        <translation>编辑注释</translation>
     </message>
     <message>
         <location filename="../menu/file_report/user_field_menu.cpp" line="14"/>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="73"/>
         <source>Print</source>
-        <translation type="unfinished">打印</translation>
+        <translation>打印</translation>
     </message>
 </context>
 <context>
     <name>DplFocalLawMenu::AngleMenu</name>
     <message>
-        <location filename="../menu/focal_law/angle_menu.cpp" line="10"/>
+        <location filename="../menu/focallaw/angle_menu.cpp" line="11"/>
+        <location filename="../menu/focallaw/angle_menu.cpp" line="187"/>
         <source>Min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/angle_menu.cpp" line="11"/>
+        <location filename="../menu/focallaw/angle_menu.cpp" line="12"/>
+        <location filename="../menu/focallaw/angle_menu.cpp" line="188"/>
         <source>Max</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/angle_menu.cpp" line="12"/>
+        <location filename="../menu/focallaw/angle_menu.cpp" line="13"/>
+        <location filename="../menu/focallaw/angle_menu.cpp" line="189"/>
         <source>Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>DplFocalLawMenu::ApetureMenu</name>
+    <name>DplFocalLawMenu::ApertureMenu</name>
     <message>
-        <location filename="../menu/focal_law/apeture_menu.cpp" line="8"/>
-        <source>Apeture</source>
-        <translation type="unfinished"></translation>
+        <location filename="../menu/focallaw/aperture_menu.cpp" line="9"/>
+        <location filename="../menu/focallaw/aperture_menu.cpp" line="196"/>
+        <source>Aperture</source>
+        <translation type="unfinished">孔径</translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/apeture_menu.cpp" line="9"/>
+        <location filename="../menu/focallaw/aperture_menu.cpp" line="10"/>
+        <location filename="../menu/focallaw/aperture_menu.cpp" line="197"/>
         <source>First Element</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/apeture_menu.cpp" line="10"/>
+        <location filename="../menu/focallaw/aperture_menu.cpp" line="11"/>
+        <location filename="../menu/focallaw/aperture_menu.cpp" line="198"/>
         <source>Last Element</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/apeture_menu.cpp" line="11"/>
+        <location filename="../menu/focallaw/aperture_menu.cpp" line="12"/>
+        <location filename="../menu/focallaw/aperture_menu.cpp" line="199"/>
         <source>Element Step</source>
         <translation type="unfinished">阵元步进</translation>
     </message>
 </context>
 <context>
+    <name>DplFocalLawMenu::ApetureMenu</name>
+    <message>
+        <source>Element Step</source>
+        <translation type="obsolete">阵元步进</translation>
+    </message>
+</context>
+<context>
     <name>DplFocalLawMenu::FocalPointMenu</name>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="8"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="8"/>
         <source>Type</source>
         <translation type="unfinished">类型</translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="9"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="9"/>
         <source>Position Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="9"/>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="10"/>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="11"/>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="12"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="9"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="10"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="11"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="12"/>
         <source>mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="10"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="10"/>
         <source>Position End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="11"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="11"/>
         <source>Offset Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="12"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="12"/>
         <source>Offset End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="22"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="22"/>
         <source>True Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="23"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="23"/>
         <source>Half Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="24"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="24"/>
         <source>Projection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="25"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="25"/>
         <source>Focal Plane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/focal_point_menu.cpp" line="26"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="26"/>
         <source>DDF</source>
         <translation type="unfinished"></translation>
     </message>
@@ -745,42 +900,37 @@ Table</source>
 <context>
     <name>DplFocalLawMenu::LawConfigMenu</name>
     <message>
-        <location filename="../menu/focal_law/law_config_menu.cpp" line="10"/>
+        <location filename="../menu/focallaw/law_config_menu.cpp" line="14"/>
+        <location filename="../menu/focallaw/law_config_menu.cpp" line="102"/>
         <source>Law Type</source>
         <translation type="unfinished">聚焦法则类型</translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/law_config_menu.cpp" line="11"/>
-        <source>Pulse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/focal_law/law_config_menu.cpp" line="12"/>
         <source>Receiver</source>
-        <translation type="unfinished">接收</translation>
+        <translation type="obsolete">接收</translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/law_config_menu.cpp" line="13"/>
+        <location filename="../menu/focallaw/law_config_menu.cpp" line="17"/>
         <source>Wave Type</source>
         <translation type="unfinished">波形</translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/law_config_menu.cpp" line="22"/>
+        <location filename="../menu/focallaw/law_config_menu.cpp" line="75"/>
         <source>Linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/law_config_menu.cpp" line="23"/>
+        <location filename="../menu/focallaw/law_config_menu.cpp" line="76"/>
         <source>Azimuthal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/law_config_menu.cpp" line="39"/>
+        <location filename="../menu/focallaw/law_config_menu.cpp" line="86"/>
         <source>LW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focal_law/law_config_menu.cpp" line="40"/>
+        <location filename="../menu/focallaw/law_config_menu.cpp" line="87"/>
         <source>SW</source>
         <translation type="unfinished"></translation>
     </message>
@@ -835,7 +985,7 @@ Table</source>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="27"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">延时</translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="28"/>
@@ -1476,94 +1626,106 @@ Calibration</source>
 <context>
     <name>DplPreferenceMenu::SystemMenu</name>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="34"/>
-        <location filename="../menu/preference/system_menu.cpp" line="208"/>
+        <location filename="../menu/preference/system_menu.cpp" line="36"/>
+        <location filename="../menu/preference/system_menu.cpp" line="217"/>
         <source>Date</source>
         <translation>日期</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="35"/>
-        <location filename="../menu/preference/system_menu.cpp" line="207"/>
+        <location filename="../menu/preference/system_menu.cpp" line="37"/>
+        <location filename="../menu/preference/system_menu.cpp" line="216"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="36"/>
-        <location filename="../menu/preference/system_menu.cpp" line="128"/>
-        <location filename="../menu/preference/system_menu.cpp" line="209"/>
+        <location filename="../menu/preference/system_menu.cpp" line="38"/>
+        <location filename="../menu/preference/system_menu.cpp" line="130"/>
+        <location filename="../menu/preference/system_menu.cpp" line="218"/>
         <source>Cert Import</source>
         <translation>证书导入</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="37"/>
-        <location filename="../menu/preference/system_menu.cpp" line="150"/>
-        <location filename="../menu/preference/system_menu.cpp" line="153"/>
-        <location filename="../menu/preference/system_menu.cpp" line="210"/>
+        <location filename="../menu/preference/system_menu.cpp" line="39"/>
+        <location filename="../menu/preference/system_menu.cpp" line="152"/>
+        <location filename="../menu/preference/system_menu.cpp" line="155"/>
+        <location filename="../menu/preference/system_menu.cpp" line="219"/>
         <source>Update</source>
         <translation>系统更新</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="38"/>
-        <location filename="../menu/preference/system_menu.cpp" line="169"/>
-        <location filename="../menu/preference/system_menu.cpp" line="211"/>
+        <location filename="../menu/preference/system_menu.cpp" line="40"/>
+        <location filename="../menu/preference/system_menu.cpp" line="171"/>
+        <location filename="../menu/preference/system_menu.cpp" line="175"/>
+        <location filename="../menu/preference/system_menu.cpp" line="178"/>
+        <location filename="../menu/preference/system_menu.cpp" line="220"/>
         <source>Reset</source>
         <translation>清除配置</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="39"/>
-        <location filename="../menu/preference/system_menu.cpp" line="212"/>
+        <location filename="../menu/preference/system_menu.cpp" line="41"/>
+        <location filename="../menu/preference/system_menu.cpp" line="221"/>
         <source>Infomation</source>
         <translation>系统信息</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="88"/>
-        <location filename="../menu/preference/system_menu.cpp" line="112"/>
+        <location filename="../menu/preference/system_menu.cpp" line="90"/>
+        <location filename="../menu/preference/system_menu.cpp" line="114"/>
         <source> </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="91"/>
-        <location filename="../menu/preference/system_menu.cpp" line="116"/>
+        <location filename="../menu/preference/system_menu.cpp" line="93"/>
+        <location filename="../menu/preference/system_menu.cpp" line="118"/>
         <source>Info</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="91"/>
-        <location filename="../menu/preference/system_menu.cpp" line="116"/>
-        <location filename="../menu/preference/system_menu.cpp" line="138"/>
+        <location filename="../menu/preference/system_menu.cpp" line="93"/>
+        <location filename="../menu/preference/system_menu.cpp" line="118"/>
+        <location filename="../menu/preference/system_menu.cpp" line="140"/>
         <source>Done!</source>
         <translation>成功！</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="94"/>
-        <location filename="../menu/preference/system_menu.cpp" line="119"/>
-        <location filename="../menu/preference/system_menu.cpp" line="141"/>
+        <location filename="../menu/preference/system_menu.cpp" line="96"/>
+        <location filename="../menu/preference/system_menu.cpp" line="121"/>
+        <location filename="../menu/preference/system_menu.cpp" line="143"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="94"/>
-        <location filename="../menu/preference/system_menu.cpp" line="119"/>
-        <location filename="../menu/preference/system_menu.cpp" line="141"/>
+        <location filename="../menu/preference/system_menu.cpp" line="96"/>
+        <location filename="../menu/preference/system_menu.cpp" line="121"/>
+        <location filename="../menu/preference/system_menu.cpp" line="143"/>
         <source>Failed!</source>
         <translation>失败！</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="131"/>
-        <location filename="../menu/preference/system_menu.cpp" line="138"/>
+        <location filename="../menu/preference/system_menu.cpp" line="133"/>
+        <location filename="../menu/preference/system_menu.cpp" line="140"/>
         <source>Import</source>
         <translation>导入</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="132"/>
-        <location filename="../menu/preference/system_menu.cpp" line="154"/>
+        <location filename="../menu/preference/system_menu.cpp" line="134"/>
+        <location filename="../menu/preference/system_menu.cpp" line="156"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../menu/preference/system_menu.cpp" line="169"/>
+        <location filename="../menu/preference/system_menu.cpp" line="171"/>
         <source>Reset Config ?</source>
         <translation>清除设置？</translation>
+    </message>
+    <message>
+        <location filename="../menu/preference/system_menu.cpp" line="175"/>
+        <source>Reset Success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/preference/system_menu.cpp" line="178"/>
+        <source>Reset Failed!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2032,12 +2194,12 @@ Calibration</source>
 <context>
     <name>DplScanMenu::StartMenu</name>
     <message>
-        <location filename="../menu/scan/start_menu.cpp" line="8"/>
+        <location filename="../menu/scan/start_menu.cpp" line="11"/>
         <source>Start</source>
         <translation>开始</translation>
     </message>
     <message>
-        <location filename="../menu/scan/start_menu.cpp" line="9"/>
+        <location filename="../menu/scan/start_menu.cpp" line="12"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
@@ -2045,115 +2207,106 @@ Calibration</source>
 <context>
     <name>DplUtSettingMenu::GeneralMenu</name>
     <message>
-        <location filename="../menu/ut_setting/general_menu.cpp" line="21"/>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation type="vanished">开始</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/general_menu.cpp" line="22"/>
         <source>Range</source>
-        <translation>范围</translation>
+        <translation type="vanished">范围</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/general_menu.cpp" line="23"/>
         <source>Velocity</source>
-        <translation>声速</translation>
+        <translation type="vanished">声速</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/general_menu.cpp" line="24"/>
         <source>Wedge Delay</source>
-        <translation>楔块延时</translation>
+        <translation type="vanished">楔块延时</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/general_menu.cpp" line="25"/>
         <source>UT Unit</source>
-        <translation>UT 单位</translation>
+        <translation type="vanished">UT 单位</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/general_menu.cpp" line="50"/>
         <source>Time</source>
-        <translation>时间</translation>
+        <translation type="vanished">时间</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/general_menu.cpp" line="51"/>
         <source>Sound Path</source>
-        <translation>声程</translation>
+        <translation type="vanished">声程</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/general_menu.cpp" line="52"/>
         <source>True Path</source>
-        <translation>真实深度</translation>
+        <translation type="vanished">真实深度</translation>
     </message>
 </context>
 <context>
     <name>DplUtSettingMenu::PulserMenu</name>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="16"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="18"/>
         <source>Tx/Rx Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="17"/>
         <source>Pulser</source>
-        <translation type="unfinished">脉冲发射</translation>
+        <translation type="obsolete">脉冲发射</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="18"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="20"/>
         <source>Voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="19"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="21"/>
         <source>PW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="20"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="22"/>
         <source>PRF</source>
         <translation type="unfinished">脉冲重复频率</translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="21"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="23"/>
         <source>User Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="32"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="34"/>
         <source>Auto Max</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="33"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="35"/>
         <source>Max/2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="34"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="36"/>
         <source>Optimum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="35"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="37"/>
         <source>UserDef</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="160"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="149"/>
         <source>PE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="161"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="150"/>
         <source>PC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="162"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="151"/>
         <source>TT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/pulser_menu.cpp" line="164"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="153"/>
         <source>TOFD</source>
         <translation type="unfinished">TOFD</translation>
     </message>
@@ -2161,9 +2314,8 @@ Calibration</source>
 <context>
     <name>DplUtSettingMenu::ReceiverMenu</name>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="17"/>
         <source>Receiver</source>
-        <translation type="unfinished">接收</translation>
+        <translation type="obsolete">接收</translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/receiver_menu.cpp" line="18"/>
@@ -2191,67 +2343,67 @@ Calibration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="48"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="42"/>
         <source>1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="49"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="43"/>
         <source>2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="50"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="44"/>
         <source>4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="51"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="45"/>
         <source>8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="52"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="46"/>
         <source>16</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="58"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="52"/>
         <source>50Ω</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="59"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="53"/>
         <source>200Ω</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="187"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="172"/>
         <source>none</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="188"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="173"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="224"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="199"/>
         <source>RF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="226"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="201"/>
         <source>HW+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="227"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="202"/>
         <source>HW-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/ut_setting/receiver_menu.cpp" line="228"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="203"/>
         <source>FW</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2334,32 +2486,32 @@ Calibration</source>
     <message>
         <location filename="../dialog/file_dialog.ui" line="50"/>
         <source>FileType:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">文件类型:</translation>
     </message>
     <message>
         <location filename="../dialog/file_dialog.ui" line="63"/>
         <source>FPGA</source>
-        <translation type="unfinished"></translation>
+        <translation>FPGA</translation>
     </message>
     <message>
         <location filename="../dialog/file_dialog.ui" line="68"/>
         <source>System</source>
-        <translation type="unfinished">系统</translation>
+        <translation>系统</translation>
     </message>
     <message>
         <location filename="../dialog/file_dialog.ui" line="112"/>
         <source>FileName:</source>
-        <translation type="unfinished"></translation>
+        <translation>文件名:</translation>
     </message>
     <message>
         <location filename="../dialog/file_dialog.ui" line="161"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../dialog/file_dialog.ui" line="185"/>
         <source>Ok</source>
-        <translation type="unfinished">确定</translation>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
@@ -2808,8 +2960,8 @@ Calibration</source>
 <context>
     <name>GainMenuItem</name>
     <message>
-        <location filename="../menu/menu_item/gain_menu_item.cpp" line="8"/>
-        <location filename="../menu/menu_item/gain_menu_item.cpp" line="60"/>
+        <location filename="../menu/ut_setting/general/gain_menu_item.cpp" line="6"/>
+        <location filename="../menu/ut_setting/general/gain_menu_item.cpp" line="64"/>
         <source>Gain</source>
         <translation>增益</translation>
     </message>
@@ -3280,7 +3432,7 @@ Calibration</source>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="99"/>
-        <location filename="../menu/main_menu/main_menu_p.cpp" line="214"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="213"/>
         <source>Preference</source>
         <translation type="unfinished">设置</translation>
     </message>
@@ -3362,8 +3514,8 @@ Calibration</source>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="164"/>
-        <source>Apeture</source>
-        <translation type="unfinished"></translation>
+        <source>Aperture</source>
+        <translation type="unfinished">孔径</translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="165"/>
@@ -3406,32 +3558,31 @@ Calibration</source>
         <translation type="unfinished">文件</translation>
     </message>
     <message>
-        <location filename="../menu/main_menu/main_menu_p.cpp" line="201"/>
         <source>Save Mode</source>
-        <translation type="unfinished">保存模式</translation>
+        <translation type="obsolete">保存模式</translation>
     </message>
     <message>
-        <location filename="../menu/main_menu/main_menu_p.cpp" line="202"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="201"/>
         <source>Report</source>
         <translation type="unfinished">报告</translation>
     </message>
     <message>
-        <location filename="../menu/main_menu/main_menu_p.cpp" line="203"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="202"/>
         <source>Format</source>
         <translation type="unfinished">格式</translation>
     </message>
     <message>
-        <location filename="../menu/main_menu/main_menu_p.cpp" line="204"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="203"/>
         <source>User Field</source>
         <translation type="unfinished">用户栏</translation>
     </message>
     <message>
-        <location filename="../menu/main_menu/main_menu_p.cpp" line="215"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="214"/>
         <source>System</source>
         <translation type="unfinished">系统</translation>
     </message>
     <message>
-        <location filename="../menu/main_menu/main_menu_p.cpp" line="216"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="215"/>
         <source>Network</source>
         <translation type="unfinished">网络</translation>
     </message>
@@ -4772,12 +4923,12 @@ Calibration</source>
     <message>
         <location filename="../dialog/networkdialog.ui" line="400"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../dialog/networkdialog.ui" line="416"/>
         <source>&amp;Ok</source>
-        <translation type="unfinished">确定</translation>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
@@ -4797,7 +4948,7 @@ Calibration</source>
         <location filename="../menu/probe_part/probe_dialog.ui" line="248"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="130"/>
         <source>Serial</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">系列</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/probe_dialog.ui" line="78"/>
@@ -4845,7 +4996,7 @@ Calibration</source>
         <location filename="../menu/probe_part/probe_dialog.ui" line="241"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="134"/>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">型号</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/probe_dialog.ui" line="255"/>
@@ -4897,7 +5048,7 @@ Calibration</source>
         <location filename="../menu/probe_part/probe_dialog.ui" line="331"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="150"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">延时</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/probe_dialog.ui" line="336"/>
@@ -4926,7 +5077,7 @@ Calibration</source>
     <message>
         <location filename="../menu/probe_part/probe_dialog.ui" line="454"/>
         <source>Save &amp;&amp; Apply</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存 &amp; 应用</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/probe_dialog.ui" line="473"/>
@@ -5067,6 +5218,15 @@ Pitch: 0.500 mm    Ref.Point: -18.25 mm</source>
     </message>
 </context>
 <context>
+    <name>PulserMenuItem</name>
+    <message>
+        <location filename="../menu/ut_setting/pulser/pulser_menu_item.cpp" line="6"/>
+        <location filename="../menu/ut_setting/pulser/pulser_menu_item.cpp" line="70"/>
+        <source>Pulser</source>
+        <translation type="unfinished">脉冲发射</translation>
+    </message>
+</context>
+<context>
     <name>PushButtonDelegate</name>
     <message>
         <source>On</source>
@@ -5081,6 +5241,24 @@ Pitch: 0.500 mm    Ref.Point: -18.25 mm</source>
     </message>
 </context>
 <context>
+    <name>RangeMenuItem</name>
+    <message>
+        <location filename="../menu/ut_setting/general/range_menu_item.cpp" line="8"/>
+        <location filename="../menu/ut_setting/general/range_menu_item.cpp" line="91"/>
+        <source>Range</source>
+        <translation>范围</translation>
+    </message>
+</context>
+<context>
+    <name>ReceiverMenuItem</name>
+    <message>
+        <location filename="../menu/ut_setting/receiver/receiver_menu_item.cpp" line="6"/>
+        <location filename="../menu/ut_setting/receiver/receiver_menu_item.cpp" line="70"/>
+        <source>Receiver</source>
+        <translation>接收</translation>
+    </message>
+</context>
+<context>
     <name>ResetConfigDialog</name>
     <message>
         <location filename="../dialog/resetconfigdialog.ui" line="14"/>
@@ -5091,6 +5269,15 @@ Pitch: 0.500 mm    Ref.Point: -18.25 mm</source>
         <location filename="../dialog/resetconfigdialog.ui" line="70"/>
         <source>Reset Config ?</source>
         <translation>清除设置？</translation>
+    </message>
+</context>
+<context>
+    <name>StartMenuItem</name>
+    <message>
+        <location filename="../menu/ut_setting/general/start_menu_item.cpp" line="8"/>
+        <location filename="../menu/ut_setting/general/start_menu_item.cpp" line="75"/>
+        <source>Start</source>
+        <translation>开始</translation>
     </message>
 </context>
 <context>
@@ -5957,6 +6144,39 @@ Part</source>
     </message>
 </context>
 <context>
+    <name>UnitMenuItem</name>
+    <message>
+        <location filename="../menu/ut_setting/general/unit_menu_item.cpp" line="6"/>
+        <location filename="../menu/ut_setting/general/unit_menu_item.cpp" line="47"/>
+        <source>Ut Unit</source>
+        <translation>UT 单位</translation>
+    </message>
+    <message>
+        <location filename="../menu/ut_setting/general/unit_menu_item.cpp" line="50"/>
+        <source>Time</source>
+        <translation>时间</translation>
+    </message>
+    <message>
+        <location filename="../menu/ut_setting/general/unit_menu_item.cpp" line="51"/>
+        <source>Sound Path</source>
+        <translation>声程</translation>
+    </message>
+    <message>
+        <location filename="../menu/ut_setting/general/unit_menu_item.cpp" line="52"/>
+        <source>True Path</source>
+        <translation>真实深度</translation>
+    </message>
+</context>
+<context>
+    <name>VelocityMenuItem</name>
+    <message>
+        <location filename="../menu/ut_setting/general/velocity_menu_item.cpp" line="6"/>
+        <location filename="../menu/ut_setting/general/velocity_menu_item.cpp" line="65"/>
+        <source>Velocity</source>
+        <translation>声速</translation>
+    </message>
+</context>
+<context>
     <name>VerticalSliderDialog</name>
     <message>
         <source>Close</source>
@@ -6059,10 +6279,10 @@ Part</source>
 <context>
     <name>VpaMenuItem</name>
     <message>
-        <location filename="../menu/menu_item/vpa_menu_item.cpp" line="58"/>
-        <location filename="../menu/menu_item/vpa_menu_item.cpp" line="76"/>
+        <location filename="../menu/measurement/vpa_menu_item.cpp" line="58"/>
+        <location filename="../menu/measurement/vpa_menu_item.cpp" line="76"/>
         <source>Angle</source>
-        <translation type="unfinished">声束角度</translation>
+        <translation>角度</translation>
     </message>
 </context>
 <context>
@@ -6083,7 +6303,7 @@ Part</source>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="135"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="215"/>
         <source>Serial</source>
-        <translation type="unfinished"></translation>
+        <translation>系列</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="78"/>
@@ -6128,25 +6348,25 @@ Part</source>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="139"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="219"/>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>型号</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="277"/>
         <source>Wave Type</source>
-        <translation type="unfinished">波形</translation>
+        <translation>波形</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="284"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="143"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="223"/>
         <source>Angle</source>
-        <translation type="unfinished">声束角度</translation>
+        <translation>角度</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="291"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="228"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>延时</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="298"/>
@@ -6158,7 +6378,7 @@ Part</source>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="305"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="157"/>
         <source>Velocity</source>
-        <translation type="unfinished">速度</translation>
+        <translation>速度</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="312"/>
@@ -6233,12 +6453,12 @@ Part</source>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="540"/>
         <source>Save &amp;&amp; Apply</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存 &amp; 应用</translation>
     </message>
     <message>
         <location filename="../menu/probe_part/wedge_dialog.ui" line="559"/>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Model: SB10-N0L    Angle: 0.0°

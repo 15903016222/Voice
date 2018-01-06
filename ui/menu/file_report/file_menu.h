@@ -35,6 +35,9 @@ private slots:
     void do_fileNameItem_clicked();
     void do_fileManagerItem_clicked();
 
+protected:
+    void changeEvent(QEvent *e);
+
 };
 
 }
