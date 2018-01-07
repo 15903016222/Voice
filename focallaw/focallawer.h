@@ -21,7 +21,6 @@
 #include "focal_plane_focus.h"
 
 #include "flat.h"
-#include "cylinder.h"
 #include "cylinder_cod.h"
 #include "cylinder_cid.h"
 
