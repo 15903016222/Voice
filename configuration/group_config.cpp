@@ -485,7 +485,7 @@ void GroupConfig::pack_focallawer_specimen_config(const DplDevice::GroupPointer 
 
 void GroupConfig::pack_focallawer_focusCnf_config(const DplDevice::GroupPointer &groupPointer)
 {
-    const DplFocallaw::FocusCnfPointer &pointer = groupPointer->focallawer()->focus_configure();
+    const DplFocallaw::FocusPointer &pointer = groupPointer->focallawer()->focus();
 
     m_packer->pack((int)Config_Group::FocusCnf);
     m_packer->pack_map((int)Config_Group::FocusCnf_ItemNum);
@@ -969,7 +969,7 @@ void GroupConfig::unpack_focallawer_focusCnf_config(const msgpack::v2::object &o
 
     try {
         obj.convert(focusCnfItem);
-        DplFocallaw::FocusCnfPointer focusCnfPointer = m_groupPointer->focallawer()->focus_configure();
+        DplFocallaw::FocusPointer focusCnfPointer = m_groupPointer->focallawer()->focus();
         //focusCnfPointer->set_mode((DplFocallaw::FocusCnf::Mode) focusCnfItem.at(Config_Group::FocusCnf_Mode).as<int>());
     } catch(...) {
         qDebug() << "[" << __FUNCTION__ << "]" << " convert focusCnf item catch exception!";

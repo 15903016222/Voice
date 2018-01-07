@@ -31,14 +31,18 @@ Sscan::Sscan(const DplFocallaw::FocallawerPointer &focallawer,
 
 void Sscan::update_xy()
 {
+    QList<DplFocallaw::BeamPointer> beams = m_focallawer->beams();
+    if (beams.isEmpty()) {
+        return;
+    }
+    float fstInPoint = beams.first()->field_distance();
+    float lstInPoint = beams.last()->field_distance();
+
     if (!m_focallawer->probe()->is_pa()) {
         return;
     }
-
     DplFocallaw::PaProbePointer probe = m_focallawer->probe().staticCast<DplFocallaw::PaProbe>();
-    QList<DplFocallaw::BeamPointer> beams = m_focallawer->beams();
-    float fstInPoint = beams.first()->field_distance();
-    float lstInPoint = beams.last()->field_distance();
+
 
     if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
         m_startX = fstInPoint;
