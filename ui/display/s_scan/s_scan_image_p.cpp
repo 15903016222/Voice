@@ -6,20 +6,24 @@
 #include <QtConcurrentRun>
 #endif
 
-SscanImagePrivate::SscanImagePrivate(SscanImage *parent, const DplDevice::GroupPointer &group, const DplDisplay::PaletteColorPointer palette) :
+SscanImagePrivate::SscanImagePrivate(SscanImage *parent,
+                                     const DplDevice::GroupPointer &group,
+                                     const DplDisplay::PaletteColorPointer palette) :
     m_group(group),
     m_pointSet(new PointInfo[parent->width()*parent->height()]),
     m_drawPointQty(0),
     m_palette(palette),
     q(parent)
 {
+    do_init_matrix();
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(point_qty_changed(int)),
             this, SLOT(do_init_matrix()));
     connect(static_cast<DplDisplay::Sscan *>(m_group->s_scan().data()),
             SIGNAL(xy_changed()),
             this, SLOT(do_init_matrix()));
-    init_matrix();
+    connect(this, SIGNAL(matrix_changed()),
+            this, SLOT(do_init_matrix_changed()), Qt::QueuedConnection);
 }
 
 SscanImagePrivate::~SscanImagePrivate()
@@ -34,6 +38,11 @@ SscanImagePrivate::~SscanImagePrivate()
 void SscanImagePrivate::do_init_matrix()
 {
     QtConcurrent::run(this,&SscanImagePrivate::init_matrix);
+}
+
+void SscanImagePrivate::do_init_matrix_changed()
+{
+    q->fill(Qt::black);
 }
 
 void SscanImagePrivate::init_matrix()
@@ -53,6 +62,7 @@ void SscanImagePrivate::init_matrix()
                               m_group->sample()->point_qty() + DplSource::Beam::MEASURE_SIZE,
                               q->width(), q->height());
     }
+    emit matrix_changed();
 }
 
 void SscanImagePrivate::init_linear_matrix(int srcWidth, int srcHeight, int srcBytesPerColumn, int destWidth, int destHeight)
