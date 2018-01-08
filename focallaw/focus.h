@@ -13,11 +13,12 @@
 
 namespace DplFocallaw {
 
-class FOCALLAWSHARED_EXPORT FocusCnf
+class FOCALLAWSHARED_EXPORT Focus : public QObject
 {
+    Q_OBJECT
 public:
-    explicit FocusCnf() {}
-    virtual ~FocusCnf() {}
+    explicit Focus(QObject *parent) : QObject(parent) {}
+    virtual ~Focus() {}
 
     enum Mode {
         HALF_PATH,  /* 半声程 */
@@ -33,11 +34,11 @@ public:
      */
     virtual Mode mode() const = 0;
 
-private:
-    Q_DISABLE_COPY(FocusCnf)
+signals:
+    void changed();
 };
 
-typedef QSharedPointer<FocusCnf> FocusCnfPointer;
+typedef QSharedPointer<Focus> FocusPointer;
 
 }
 

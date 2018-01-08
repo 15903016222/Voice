@@ -7,16 +7,17 @@
 #ifndef __PROJECTIONFOCUS_H__
 #define __PROJECTIONFOCUS_H__
 
-#include "focus_cnf.h"
+#include "focus.h"
 
 namespace DplFocallaw {
 
 class ProjectionFocusPrivate;
-class FOCALLAWSHARED_EXPORT ProjectionFocus : public FocusCnf
+class FOCALLAWSHARED_EXPORT ProjectionFocus : public Focus
 {
+    Q_OBJECT
     Q_DECLARE_PRIVATE(ProjectionFocus)
 public:
-    explicit  ProjectionFocus();
+    explicit  ProjectionFocus(QObject *parent = 0);
     ~ProjectionFocus();
 
     /**
@@ -27,15 +28,19 @@ public:
 
     /**
      * @brief offset    获取离楔块前表面的偏移量
-     * @return             偏移量(mm)
+     * @return          偏移量(mm)
      */
     float offset() const;
 
     /**
      * @brief set_offset    设置离楔块前表面的偏移量
      * @param offset        偏移量(mm)
+     * @return              设置成功返回true,失败返回false
      */
-    void set_offset(float offset);
+    bool set_offset(float offset);
+
+signals:
+    void offset_changed(float val);
 
 private:
     ProjectionFocusPrivate *d_ptr;

@@ -7,16 +7,17 @@
 #ifndef __FOCALPLANEFOCUS_H__
 #define __FOCALPLANEFOCUS_H__
 
-#include "focus_cnf.h"
+#include "focus.h"
 
 namespace DplFocallaw {
 
 class FocalPlaneFocusPrivate;
-class FOCALLAWSHARED_EXPORT FocalPlaneFocus: public FocusCnf
+class FOCALLAWSHARED_EXPORT FocalPlaneFocus: public Focus
 {
+    Q_OBJECT
     Q_DECLARE_PRIVATE(FocalPlaneFocus)
 public:
-    explicit FocalPlaneFocus();
+    explicit FocalPlaneFocus(QObject *parent = 0);
     ~FocalPlaneFocus();
 
     /**
@@ -32,10 +33,11 @@ public:
     float begin_offset() const;
 
     /**
-     * @brief set_begin_offset    设置离楔块前表面的开始偏移量
-     * @param beginOffset      开始偏移量 (mm)
+     * @brief set_begin_offset  设置离楔块前表面的开始偏移量
+     * @param val               开始偏移量 (mm)
+     * @return                  设置成功返回true,失败返回false
      */
-    void set_begin_offset(float beginOffset);
+    bool set_begin_offset(float val);
 
     /**
      * @brief end_offset    获取离楔块前表面的结束偏移量
@@ -45,33 +47,42 @@ public:
 
     /**
      * @brief set_end_offset    设置离楔块前表面的结束偏移量
-     * @param endOffset      结束偏移量 (mm)
+     * @param val               结束偏移量(mm)
+     * @return                  成功返回true,失败返回false
      */
-    void set_end_offset(float endOffset);
+    bool set_end_offset(float val);
 
     /**
-     * @brief begin_depth    获取开始聚焦深度
-     * @return             开始聚焦深度(mm)
+     * @brief begin_depth   获取开始聚焦深度
+     * @return              开始聚焦深度(mm)
      */
     float begin_depth() const;
 
     /**
      * @brief set_begin_depth   设置开始聚焦深度
-     * @param beginDepth      开始聚焦深度 (mm)
+     * @param val               开始聚焦深度(mm)
+     * @return                  成功返回true,失败返回false
      */
-    void set_begin_depth(float beginDepth);
+    bool set_begin_depth(float val);
 
     /**
-     * @brief end_depth    获取结束聚焦深度
-     * @return              结束聚焦深度(mm)
+     * @brief end_depth 获取结束聚焦深度
+     * @return          结束聚焦深度(mm)
      */
     float end_depth() const;
 
     /**
-     * @brief set_end_depth    设置结束聚焦深度
-     * @param endDepth      结束聚焦深度 (mm)
+     * @brief set_end_depth 设置结束聚焦深度
+     * @param val           结束聚焦深度(mm)
+     * @return              成功返回true,失败返回false
      */
-    void set_end_depth(float endDepth);
+    bool set_end_depth(float val);
+
+signals:
+    void begin_offset_changed(float);
+    void end_offset_changed(float);
+    void begin_depth_changed(float);
+    void end_depth_changed(float);
 
 private:
     FocalPlaneFocusPrivate *d_ptr;
