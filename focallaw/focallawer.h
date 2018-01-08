@@ -21,7 +21,6 @@
 #include "focal_plane_focus.h"
 
 #include "flat.h"
-#include "cylinder.h"
 #include "cylinder_cod.h"
 #include "cylinder_cid.h"
 
@@ -47,8 +46,9 @@ public:
     /**
      * @brief set_probe 设置探头
      * @param probe     探头对象
+     * @return          设置成功返回true,失败为false
      */
-    void set_probe(const ProbePointer &probe);
+    bool set_probe(const ProbePointer &probe);
 
     /**
      * @brief wedge 获取锲块
@@ -72,20 +72,22 @@ public:
     /**
      * @brief set_specimen  设置工件
      * @param s             工件对象
+     * @return              设置成功返回true,失败返回false
      */
-    void set_specimen(const SpecimenPointer &s);
+    bool set_specimen(const SpecimenPointer &s);
 
     /**
-     * @brief focus_configure   获取焦点配置对象
-     * @return                  焦点配置对象
+     * @brief focus     获取焦点配置对象
+     * @return          焦点配置对象
      */
-    const FocusCnfPointer &focus_configure() const;
+    const FocusPointer &focus() const;
 
     /**
-     * @brief set_focus_configure   设置焦点配置对象
-     * @param cnf                   焦点配置对象
+     * @brief set_focus     设置焦点配置对象
+     * @param focus         焦点配置对象
+     * @return              设置成功返回true,失败返回false
      */
-    void set_focus_configure(const FocusCnfPointer &cnf);
+    bool set_focus(const FocusPointer &focus);
 
     /**
      * @brief beams     获取聚焦后声束延迟信息
@@ -112,6 +114,7 @@ signals:
     void probe_changed(const DplFocallaw::ProbePointer &probe);
     void wedge_changed(const DplFocallaw::WedgePointer &wedge);
     void specimen_changed(const DplFocallaw::SpecimenPointer &specimen);
+    void focus_changed(const DplFocallaw::FocusPointer &focus);
 
 public slots:
     void focallaw();

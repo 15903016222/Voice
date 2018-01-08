@@ -7,16 +7,17 @@
 #ifndef __HALF_PATH_FOCUS_H__
 #define __HALF_PATH_FOCUS_H__
 
-#include "focus_cnf.h"
+#include "focus.h"
 
 namespace DplFocallaw {
 
 class HalfPathFocusPrivate;
-class FOCALLAWSHARED_EXPORT HalfPathFocus : public FocusCnf
+class FOCALLAWSHARED_EXPORT HalfPathFocus : public Focus
 {
+    Q_OBJECT
     Q_DECLARE_PRIVATE(HalfPathFocus)
 public:
-    explicit HalfPathFocus();
+    explicit HalfPathFocus(QObject *parent = 0);
     ~HalfPathFocus();
 
     /**
@@ -34,8 +35,12 @@ public:
     /**
      * @brief set_radius    设置聚焦半径
      * @param radius        半径(mm)
+     * @return              成功返回true,失败返回false
      */
-    void set_radius(float radius);
+    bool set_radius(float radius);
+
+signals:
+    void radius_changed(float);
 
 private:
     HalfPathFocusPrivate *d_ptr;
