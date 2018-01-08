@@ -604,6 +604,16 @@ Table</source>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="76"/>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="76"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DplFocalLawMenu::AngleMenu</name>
@@ -1383,48 +1393,60 @@ Calibration</source>
     <name>DplPreferenceMenu::PreferenceMenu</name>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="20"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="120"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="121"/>
         <source>Bright</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="21"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="121"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="122"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="22"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="122"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="123"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="23"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="123"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="124"/>
         <source>Starting Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="24"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="124"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="125"/>
         <source>Gate Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="25"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="125"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="126"/>
         <source>Deploy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="49"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="129"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="50"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="129"/>
         <source>Chinese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/preference/preference_menu.cpp" line="133"/>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/preference/preference_menu.cpp" line="133"/>
+        <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

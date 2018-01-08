@@ -780,6 +780,16 @@ Table</source>
         <source>Print</source>
         <translation>打印</translation>
     </message>
+    <message>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="76"/>
+        <source>On</source>
+        <translation>开</translation>
+    </message>
+    <message>
+        <location filename="../menu/file_report/user_field_menu.cpp" line="76"/>
+        <source>Off</source>
+        <translation>关</translation>
+    </message>
 </context>
 <context>
     <name>DplFocalLawMenu::AngleMenu</name>
@@ -1570,57 +1580,61 @@ Calibration</source>
     <name>DplPreferenceMenu::PreferenceMenu</name>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="20"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="120"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="121"/>
         <source>Bright</source>
         <translation>亮度</translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="21"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="121"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="122"/>
         <source>Opacity</source>
         <translation>透明度</translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="22"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="122"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="123"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="23"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="123"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="124"/>
         <source>Starting Page</source>
         <translation>启动页</translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="24"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="124"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="125"/>
         <source>Gate Mode</source>
         <translation>闸门模式</translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="25"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="125"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="126"/>
         <source>Deploy</source>
         <translation>部署</translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="49"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="129"/>
         <source>English</source>
         <translation>英文</translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="50"/>
+        <location filename="../menu/preference/preference_menu.cpp" line="129"/>
         <source>Chinese</source>
         <translation>中文</translation>
     </message>
     <message>
+        <location filename="../menu/preference/preference_menu.cpp" line="133"/>
         <source>On</source>
-        <translation type="vanished">开</translation>
+        <translation>开</translation>
     </message>
     <message>
+        <location filename="../menu/preference/preference_menu.cpp" line="133"/>
         <source>Off</source>
-        <translation type="vanished">关</translation>
+        <translation>关</translation>
     </message>
 </context>
 <context>
@@ -1720,12 +1734,12 @@ Calibration</source>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="175"/>
         <source>Reset Success!</source>
-        <translation type="unfinished"></translation>
+        <translation>恢复设置成功！</translation>
     </message>
     <message>
         <location filename="../menu/preference/system_menu.cpp" line="178"/>
         <source>Reset Failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>恢复设置失败！</translation>
     </message>
 </context>
 <context>
