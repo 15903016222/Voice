@@ -7,16 +7,17 @@
 #ifndef __TRUE_DEPTH_FOCUS_H__
 #define __TRUE_DEPTH_FOCUS_H__
 
-#include "focus_cnf.h"
+#include "focus.h"
 
 namespace DplFocallaw {
 
 class TrueDepthFocusPrivate;
-class FOCALLAWSHARED_EXPORT TrueDepthFocus : public FocusCnf
+class FOCALLAWSHARED_EXPORT TrueDepthFocus : public Focus
 {
+    Q_OBJECT
     Q_DECLARE_PRIVATE(TrueDepthFocus)
 public:
-    explicit TrueDepthFocus();
+    explicit TrueDepthFocus(QObject *parent=0);
     ~TrueDepthFocus();
 
     /**
@@ -34,8 +35,12 @@ public:
     /**
      * @brief set_depth 设置聚焦深度
      * @param depth     深度(mm)
+     * @return          成功返回true, 失败返回false
      */
-    void set_depth(float depth);
+    bool set_depth(float depth);
+
+signals:
+    void depth_changed(float depth);
 
 private:
     TrueDepthFocusPrivate *d_ptr;

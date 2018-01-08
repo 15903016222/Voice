@@ -45,8 +45,9 @@ public:
     /**
      * @brief set_wave_type 设置在试块传播的波类型
      * @param type          波类型
+     * @return              设置成功返回false,失败返回false
      */
-    void set_wave_type(WaveType type);
+    bool set_wave_type(WaveType type);
 
     /**
      * @brief velocity  获取对应波类型的声速
@@ -61,6 +62,8 @@ public:
     void set_velocity(uint v);
 
 signals:
+    void changed();
+    void wave_type_changed(DplFocallaw::Specimen::WaveType);
     void velocity_changed(uint val);
 
 private:
