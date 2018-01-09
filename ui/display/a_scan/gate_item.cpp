@@ -47,7 +47,6 @@ GateItem::GateItem(const DplUt::SamplePointer &sample, const DplGate::GatePointe
 
 QRectF GateItem::boundingRect() const
 {
-//    qreal adjust = 0.5;
     return QRectF(0, -GATE_HEIGHT/2 - 10,
                   m_gate->width() * ratio(), GATE_HEIGHT + 20);
 }

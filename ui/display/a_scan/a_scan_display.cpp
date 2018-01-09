@@ -13,6 +13,7 @@
 #include "../base/scan_scene.h"
 #include "../ruler/ruler.h"
 #include "../color_bar/color_bar.h"
+#include "../cursor/amp_ref_cursor_item.h"
 
 #include <global.h>
 
@@ -26,7 +27,8 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
     m_gateAItem(new GateItem(group->sample(), group->gate_a())),
     m_gateBItem(new GateItem(group->sample(), group->gate_b())),
     m_gateIItem(new GateItem(group->sample(), group->gate_i())),
-    m_tcgItem(new TcgItem(group->tcgs(), group->sample()))
+    m_tcgItem(new TcgItem(group->tcgs(), group->sample())),
+    m_ampRefCursorItem(new AmpRefCursorItem(m_group->cursor(), Qt::Horizontal))
 {  
     m_colorBar->hide();
     m_colorRuler->hide();
@@ -38,6 +40,8 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
     m_scene->addItem(m_gateIItem);
 
     m_scene->addItem(m_tcgItem);
+
+    m_scene->addItem(m_ampRefCursorItem);
 
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
@@ -84,6 +88,7 @@ void AscanDisplay::do_data_event()
 void AscanDisplay::resize_event(const QSize &size)
 {
     Q_UNUSED(size);
+    m_ampRefCursorItem->set_size(size);
     update_gates();
 }
 
