@@ -21,8 +21,6 @@ class FOCALLAWSHARED_EXPORT Wedge : public QObject
     Q_OBJECT
 public:
     explicit Wedge(QObject *parent=0);
-    explicit Wedge(const Wedge &w, QObject *parent=0);
-
     ~Wedge();
 
     /**
@@ -206,7 +204,18 @@ public:
     Wedge &operator=(const Wedge &w);
 
 signals:
-    void delay_changed(int val);
+    void changed();
+    void angle_changed(float);
+    void roof_angle_changed(float);
+    void velocity_changed(quint32);
+    void primary_offset_changed(float);
+    void secondary_offset_changed(float);
+    void first_element_hight_changed(float);
+    void orientation_changed(DplFocallaw::Wedge::Orientation);
+    void length_changed(float);
+    void width_changed(float);
+    void height_changed(float);
+    void delay_changed(int);
 
 private:
     WedgePrivate *d_ptr;

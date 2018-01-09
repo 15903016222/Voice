@@ -48,9 +48,11 @@ SelectionMenu::SelectionMenu(QWidget *parent) :
     connect(m_modeItem, SIGNAL(value_changed(int)),
             this, SLOT(do_groupModeItem_changed(int)));
 
-    connect(m_probeItem, SIGNAL(clicked()), this, SLOT(do_probeItem_clicked()));
+    connect(m_probeItem, SIGNAL(clicked()),
+            this, SLOT(do_probeItem_clicked()));
 
-    connect(m_wedgeItem, SIGNAL(clicked()), this, SLOT(do_wedgeItem_clicked()));
+    connect(m_wedgeItem, SIGNAL(clicked()),
+            this, SLOT(do_wedgeItem_clicked()));
 
     m_autoDetectItem->set(s_onOff);
 
