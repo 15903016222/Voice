@@ -170,7 +170,7 @@ void InputPanelContext::on_pushButton_cancel_clicked()
 
 void InputPanelContext::on_pushButton_symbol_clicked()
 {
-    if(ui->pushButton_symbol->text() == "Symbol") {
+    if(ui->pushButton_symbol->text() == tr("Symbol")) {
         ui->widget_2->hide();
         ui->widget_3->hide();
         ui->widget_4->hide();
@@ -178,7 +178,7 @@ void InputPanelContext::on_pushButton_symbol_clicked()
         ui->widget_6->show();
         ui->widget_7->show();
         ui->widget_8->show();
-        ui->pushButton_symbol->setText("Eng");
+        ui->pushButton_symbol->setText(tr("Eng"));
     } else {
         ui->widget_2->show();
         ui->widget_3->show();
@@ -187,7 +187,7 @@ void InputPanelContext::on_pushButton_symbol_clicked()
         ui->widget_6->hide();
         ui->widget_7->hide();
         ui->widget_8->hide();
-        ui->pushButton_symbol->setText("Symbol");
+        ui->pushButton_symbol->setText(tr("Symbol"));
     }
 }
 

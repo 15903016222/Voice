@@ -666,19 +666,19 @@ Table</source>
     <name>DplFocalLawMenu::FocalPointMenu</name>
     <message>
         <location filename="../menu/focallaw/focal_point_menu.cpp" line="11"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="133"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/focallaw/focal_point_menu.cpp" line="12"/>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="14"/>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="150"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="151"/>
         <source>Offset Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/focallaw/focal_point_menu.cpp" line="13"/>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="15"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="163"/>
         <source>Offset End</source>
         <translation type="unfinished"></translation>
     </message>
@@ -690,6 +690,18 @@ Table</source>
     <message>
         <location filename="../menu/focallaw/focal_point_menu.cpp" line="127"/>
         <source>Half Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="14"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="175"/>
+        <source>Depth Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="15"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="187"/>
+        <source>Depth End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -708,17 +720,17 @@ Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="141"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="142"/>
         <source>Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="144"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="145"/>
         <source>Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="147"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="148"/>
         <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -733,6 +745,7 @@ Table</source>
     </message>
     <message>
         <location filename="../menu/focallaw/law_config_menu.cpp" line="17"/>
+        <location filename="../menu/focallaw/law_config_menu.cpp" line="103"/>
         <source>Wave Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2570,6 +2583,8 @@ Calibration</source>
     </message>
     <message>
         <location filename="../dialog/inputpanelcontext.ui" line="2405"/>
+        <location filename="../dialog/inputpanelcontext.cpp" line="173"/>
+        <location filename="../dialog/inputpanelcontext.cpp" line="190"/>
         <source>Symbol</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2897,6 +2912,11 @@ Calibration</source>
     <message>
         <location filename="../dialog/inputpanelcontext.ui" line="487"/>
         <source>Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialog/inputpanelcontext.cpp" line="181"/>
+        <source>Eng</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3813,148 +3833,148 @@ Calibration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="44"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="42"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="54"/>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="248"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="52"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="246"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="130"/>
         <source>Serial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="78"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="76"/>
         <source>Probe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="102"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="100"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="132"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="130"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="245"/>
         <source>Ultrasonic phased array probe family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="170"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="168"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="183"/>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="492"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="181"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="490"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="193"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="191"/>
         <source>Define</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="201"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="199"/>
         <source>Probe Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="226"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="224"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="241"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="239"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="134"/>
         <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="255"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="253"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="138"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="262"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="260"/>
         <source>Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="269"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="267"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="197"/>
         <source>Pri Element Qty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="276"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="274"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="202"/>
         <source>Sec Element Qty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="283"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="281"/>
         <source>Ref Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="290"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="288"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="207"/>
         <source>Pri Pitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="297"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="295"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="212"/>
         <source>Sec Pitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="326"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="324"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="144"/>
         <source>Contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="331"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="329"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="150"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="336"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="334"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="147"/>
         <source>Immersion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="341"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="339"/>
         <location filename="../menu/probe_part/probe_dialog.cpp" line="141"/>
         <source>Angle Beam</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="355"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="353"/>
         <source> MHz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="403"/>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="416"/>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="429"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="401"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="414"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="427"/>
         <source> mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="454"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="452"/>
         <source>Save &amp;&amp; Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/probe_dialog.ui" line="473"/>
+        <location filename="../menu/probe_part/probe_dialog.ui" line="471"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4280,170 +4300,170 @@ Calibration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="44"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="42"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="54"/>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="270"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="52"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="268"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="135"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="215"/>
         <source>Serial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="78"/>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="204"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="76"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="202"/>
         <source>Wedge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="102"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="100"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="135"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="133"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="258"/>
         <source>Ultrasonic phased array wedge family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="173"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="171"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="186"/>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="578"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="184"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="576"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="196"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="194"/>
         <source>Define</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="248"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="246"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="263"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="261"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="139"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="219"/>
         <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="277"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="275"/>
         <source>Wave Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="284"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="282"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="143"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="223"/>
         <source>Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="291"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="289"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="228"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="298"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="296"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="148"/>
         <source>Orientation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="305"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="303"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="157"/>
         <source>Velocity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="312"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="310"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="162"/>
         <source>Primary Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="319"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="317"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="167"/>
         <source>Secondary Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="326"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="324"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="172"/>
         <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="333"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="331"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="177"/>
         <source>Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="340"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="338"/>
         <source>Ref Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="366"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="364"/>
         <source>L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="371"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="369"/>
         <source>S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="385"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="383"/>
         <source> °</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="407"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="405"/>
         <source> us</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="421"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="419"/>
         <location filename="../menu/probe_part/wedge_dialog.cpp" line="150"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="426"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="424"/>
         <source>Revesal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="440"/>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="453"/>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="466"/>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="476"/>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="489"/>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="502"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="438"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="451"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="464"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="474"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="487"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="500"/>
         <source> mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="540"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="538"/>
         <source>Save &amp;&amp; Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/probe_part/wedge_dialog.ui" line="559"/>
+        <location filename="../menu/probe_part/wedge_dialog.ui" line="557"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
