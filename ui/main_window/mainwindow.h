@@ -38,6 +38,8 @@ protected:
 
     void change_screen();
 
+    void change_sub_menu();
+
 private:
     Ui::MainWindow *ui;
 

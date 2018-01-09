@@ -88,6 +88,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_FULLSCREEN:
         change_screen();
         break;
+    case Mcu::KEY_SUBMENU:
+        change_sub_menu();
+        break;
     default:
         break;
     }
@@ -158,6 +161,13 @@ void MainWindow::change_screen()
     ui->gainMenuItem->setVisible(flag);
     ui->vpaMenuItem->setVisible(flag);
     ui->statusBar->setVisible(flag);
+    m_subMenu->setVisible(flag);
+    flag = !flag;
+}
+
+void MainWindow::change_sub_menu()
+{
+    static bool flag = false;
     m_subMenu->setVisible(flag);
     flag = !flag;
 }
