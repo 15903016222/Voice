@@ -28,13 +28,13 @@ QPainterPath WaveItem::draw(const QByteArray &wave, bool rf, int w, int h)
     if (rf) {
         for (int i = 0; i < drawPoints; ++i) {
             path.lineTo( i*xRatio,
-                         h - (qAbs(wave.at(i)-128)) * yRatio);
+                         - (qAbs(wave.at(i)-128)) * yRatio);
 
         }
     } else {
         for (int i = 0; i < drawPoints; ++i) {
             path.lineTo( i*xRatio,
-                         h - static_cast<quint8>(wave.at(i)) * yRatio);
+                         - static_cast<quint8>(wave.at(i)) * yRatio);
         }
     }
 
@@ -48,10 +48,10 @@ void WaveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    painter->translate(boundingRect().topLeft());
+    painter->translate(boundingRect().bottomLeft());
+
     painter->setPen(m_ascan->color());
     painter->drawPath(m_path);
-
 }
 
 void WaveItem::set_wave(const QByteArray &beam, bool rf)

@@ -67,6 +67,9 @@ void SscanDisplay::resize_event(const QSize &size)
     if (m_image) {
         delete m_image;
     }
-    m_image = new SscanImage(m_group, size, DplDevice::Device::instance()->display()->palette());
+    m_image = new SscanImage(
+                m_group,
+                size,
+                DplDevice::Device::instance()->display()->palette());
 }
 
