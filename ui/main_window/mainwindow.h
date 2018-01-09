@@ -40,6 +40,8 @@ protected:
 
     void change_sub_menu();
 
+    void change_cursor();
+
 private:
     Ui::MainWindow *ui;
 

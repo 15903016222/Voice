@@ -91,6 +91,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_SUBMENU:
         change_sub_menu();
         break;
+    case Mcu::KEY_CURSOR:
+        change_cursor();
+        break;
     default:
         break;
     }
@@ -170,4 +173,17 @@ void MainWindow::change_sub_menu()
     static bool flag = false;
     m_subMenu->setVisible(flag);
     flag = !flag;
+}
+
+void MainWindow::change_cursor()
+{
+    DplDevice::Device *dev = DplDevice::Device::instance();
+    DplDevice::GroupPointer group;
+
+    m_subMenu->set_menu(MainMenu::Measurement_Cursors);
+
+    for (int i = 0; i < dev->group_qty(); ++i) {
+        group = dev->get_group(i);
+        group->cursor()->set_visible(!group->cursor()->is_visible());
+    }
 }
