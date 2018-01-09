@@ -10,7 +10,6 @@ SscanImage::SscanImage(const DplDevice::GroupPointer &group, const QSize &size, 
     QImage(size, QImage::Format_RGB32),
     d(new SscanImagePrivate(this, group, palette))
 {
-
 }
 
 SscanImage::~SscanImage()

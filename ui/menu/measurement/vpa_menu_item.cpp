@@ -76,7 +76,7 @@ void VpaMenuItem::update_for_pa()
         set_title(tr("Angle"));
         set_unit(DEGREE_STR);
         set_decimals(1);
-        set_step(0.1);
+        set_step(cnf->angle_step());
         set_range(cnf->first_angle(), cnf->last_angle());
     }
     update_value();
