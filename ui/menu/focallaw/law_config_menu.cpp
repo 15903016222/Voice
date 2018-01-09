@@ -49,7 +49,7 @@ void LawConfigMenu::do_probe_changed(const DplFocallaw::ProbePointer &probe)
     if (m_probe) {
         disconnect(static_cast<DplFocallaw::PaProbe *>(m_probe.data()),
                    SIGNAL(scan_configure_changed(DplFocallaw::ScanCnfPointer)),
-                   this, SLOT(update_lawTypeItem(DplFocallaw::ScanCnfPointer)));
+                   this, SLOT(update_lawTypeItem()));
     }
 
     if (!probe->is_pa()) {

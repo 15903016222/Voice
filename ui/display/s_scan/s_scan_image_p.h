@@ -34,13 +34,17 @@ public:
 
 public slots:
     void do_init_matrix();
+    void do_init_matrix_changed();
 
+signals:
+    void matrix_changed();
+
+protected:
     /**
      * @brief init_matrix   初始化插值表
      */
     void init_matrix();
 
-protected:
     /**
      * @brief init_linear_matrix    初始化线扫插值表
      * @param srcWidth              原图像宽度
