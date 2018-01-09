@@ -14,7 +14,7 @@
 #include <source/axis.h>
 #include <source/encoder.h>
 #include <fpga/group.h>
-#include <focallaw/focus_cnf.h>
+#include <focallaw/focus.h>
 #include <focallaw/scan_cnf.h>
 #include <ut/global_transceiver.h>
 
@@ -58,7 +58,7 @@ public:
      * @param mode                  聚焦模式枚举
      * @return
      */
-    static QString focallawer_focal_type(DplFocallaw::FocusCnf::Mode mode);
+    static QString focallawer_focal_type(DplFocallaw::Focus::Mode mode);
 
     /**
      * @brief focallawer_law_type   扫查方式字符串

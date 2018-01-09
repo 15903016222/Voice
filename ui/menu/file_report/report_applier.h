@@ -12,7 +12,7 @@
 #include <QObject>
 #include <report/report_scan.h>
 #include <report/report_law.h>
-#include <focallaw/focus_cnf.h>
+#include <focallaw/focus.h>
 
 namespace DplDevice {
 class Group;
@@ -63,7 +63,7 @@ private:
     void fill_report_group_scan(DplReport::ReportGroup *group);
 
     void fill_encoder(DplReport::ReportScanPointer &scan, int type);
-    void fill_focal_field_names(DplReport::ReportLawPointer &law, DplFocallaw::FocusCnf::Mode mode);
+    void fill_focal_field_names(DplReport::ReportLawPointer &law, DplFocallaw::Focus::Mode mode);
 
 };
 

@@ -108,30 +108,30 @@ QString EnumToStr::encoder_mode(DplSource::Encoder::Mode mode)
     return QString();
 }
 
-QString EnumToStr::focallawer_focal_type(DplFocallaw::FocusCnf::Mode mode)
+QString EnumToStr::focallawer_focal_type(DplFocallaw::Focus::Mode mode)
 {
     switch(mode) {
-        case DplFocallaw::FocusCnf::HALF_PATH:
+        case DplFocallaw::Focus::HALF_PATH:
         {
             return tr("Half_Path");
             break;
         }
-        case DplFocallaw::FocusCnf::TRUE_DEPTH:
+        case DplFocallaw::Focus::TRUE_DEPTH:
         {
             return tr("True_Depth");
             break;
         }
-        case DplFocallaw::FocusCnf::PROJECTION:
+        case DplFocallaw::Focus::PROJECTION:
         {
             return tr("Projection");
             break;
         }
-        case DplFocallaw::FocusCnf::FOCAL_PLANE:
+        case DplFocallaw::Focus::FOCAL_PLANE:
         {
             return tr("Focal_Plane");
             break;
         }
-        case DplFocallaw::FocusCnf::DDF:
+        case DplFocallaw::Focus::DDF:
         {
             return tr("DDF");
             break;

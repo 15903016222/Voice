@@ -298,11 +298,11 @@ void ReportApplier::fill_report_group_law(DplReport::ReportGroup *group)
 
     /* focal type */
     law->set_focal_type(EnumToStr::focallawer_focal_type(
-                            focallawer->focus_configure()->mode()));
+                            focallawer->focus()->mode()));
     /* law type */
     law->set_type(EnumToStr::focallawer_law_type(probe->scan_configure()->mode()));
 
-    fill_focal_field_names(law, focallawer->focus_configure()->mode());
+    fill_focal_field_names(law, focallawer->focus()->mode());
 }
 
 void ReportApplier::fill_report_group_part(DplReport::ReportGroup *group)
@@ -375,12 +375,12 @@ void ReportApplier::fill_encoder(DplReport::ReportScanPointer &scan, int type)
     reportEncoder->set_type(EnumToStr::encoder_mode(encoder->mode()));
 }
 
-void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, DplFocallaw::FocusCnf::Mode mode)
+void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, DplFocallaw::Focus::Mode mode)
 {
-    const DplFocallaw::FocusCnfPointer &focusCnf =  m_currentGroup->focallawer()->focus_configure();
+    const DplFocallaw::FocusPointer &focusCnf =  m_currentGroup->focallawer()->focus();
 
     switch(mode){
-        case DplFocallaw::FocusCnf::HALF_PATH:
+        case DplFocallaw::Focus::HALF_PATH:
         {
             law->set_focal_field_names(0, tr("Radius"));
             DplFocallaw::HalfPathFocusPointer halfPath = focusCnf.staticCast<DplFocallaw::HalfPathFocus>();
@@ -389,7 +389,7 @@ void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, Dpl
             }
             break;
         }
-        case DplFocallaw::FocusCnf::TRUE_DEPTH:
+        case DplFocallaw::Focus::TRUE_DEPTH:
         {
             law->set_focal_field_names(0, tr("BeginDepth"));
             DplFocallaw::TrueDepthFocusPointer trueDepth = focusCnf.staticCast<DplFocallaw::TrueDepthFocus>();
@@ -398,7 +398,7 @@ void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, Dpl
             }
             break;
         }
-        case DplFocallaw::FocusCnf::PROJECTION:
+        case DplFocallaw::Focus::PROJECTION:
         {
             law->set_focal_field_names(0, tr("BeginOffset"));
             DplFocallaw::ProjectionFocusPointer projection = focusCnf.staticCast<DplFocallaw::ProjectionFocus>();
@@ -407,7 +407,7 @@ void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, Dpl
             }
             break;
         }
-        case DplFocallaw::FocusCnf::FOCAL_PLANE:
+        case DplFocallaw::Focus::FOCAL_PLANE:
         {
             law->set_focal_field_names(0, tr("BeginOffset"));
             law->set_focal_field_names(1, tr("EndOffset"));
@@ -423,7 +423,7 @@ void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, Dpl
             }
             break;
         }
-        case DplFocallaw::FocusCnf::DDF:
+        case DplFocallaw::Focus::DDF:
         {
             /* TODO */
             break;
