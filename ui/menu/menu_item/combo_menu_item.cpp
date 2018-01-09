@@ -86,22 +86,6 @@ void ComboMenuItem::clear()
     }
 }
 
-void ComboMenuItem::retranslate_items(const QStringList &list)
-{
-    QList<QAction *> actions = m_menu->actions();
-    int i = 0;
-    foreach (QAction *act, actions) {
-        if(i >= list.size()) {
-            break;
-        }
-
-        act->setText(list.at(i));
-        ++i;
-    }
-
-    m_label->setText(m_action->text());
-}
-
 void ComboMenuItem::do_pushBtn_clicked(bool checked)
 {
     Q_UNUSED(checked);

@@ -149,6 +149,24 @@ void GateMenu::update_measureModeItem()
     m_measureModeItem->set_current_index(m_gate->measure_mode());
 }
 
+void GateMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_gateItem->set_title(tr("Gate"));
+        m_switchItem->set_title(tr("Switch"));
+        m_paramsItem->set_title(tr("Parameters"));
+        m_startItem->set_title(tr("Start"));
+        m_widthItem->set_title(tr("Width"));
+        m_thresholdItem->set_title(tr("Threshold"));
+        m_synchroItem->set_title(tr("Synchro"));
+        m_measureModeItem->set_title(tr("Measure"));
+        m_modeItem->set_title(tr("Mode"));
+        return;
+    }
+
+    BaseMenu::changeEvent(e);
+}
+
 void GateMenu::update_thresholdItem()
 {
     m_thresholdItem->set_value(m_gate->height());

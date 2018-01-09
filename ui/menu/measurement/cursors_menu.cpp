@@ -252,6 +252,16 @@ void CursorsMenu::hide_s_scan()
     m_imItem->hide();
 }
 
+void CursorsMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_selectionItem->set_title(tr("Selection"));
+        return;
+    }
+
+    BaseMenu::changeEvent(e);
+}
+
 void CursorsMenu::update_srItem()
 {
     DplSource::Scan *scan = DplSource::Scan::instance();

@@ -107,3 +107,22 @@ void VpaMenuItem::do_value_changed(double val)
         m_group->set_current_angle(val);
     }
 }
+
+void VpaMenuItem::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        if (m_group->mode() == DplDevice::Group::PA) {
+            DplFocallaw::PaProbePointer probe =
+                    m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
+            if (probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Linear) {
+                set_title("VPA");
+            } else if(probe->scan_configure()->mode() == DplFocallaw::ScanCnf::Sectorial) {
+                set_title(tr("Angle"));
+            }
+        } else {
+            set_title(tr("Angle"));
+        }
+        return;
+    }
+    SpinMenuItem::changeEvent(e);
+}

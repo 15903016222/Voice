@@ -28,6 +28,8 @@ protected:
     void show_s_scan();
     void hide_s_scan();
 
+    void changeEvent(QEvent *e);
+
 protected slots:
     void update_srItem();
     void update_smItem();

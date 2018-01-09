@@ -33,6 +33,9 @@ private:
     DplSource::AxisPointer m_indexAxis;
     DplSource::EncoderPointer m_encX;
     DplSource::EncoderPointer m_encY;
+
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

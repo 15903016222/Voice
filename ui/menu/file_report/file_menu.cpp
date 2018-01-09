@@ -141,21 +141,6 @@ void FileMenu::changeEvent(QEvent *e)
         m_fileNameItem->set_title(tr("File Name"));
         m_fileManagerItem->set_title(tr("File Manager"));
 
-        /* Storage Menu Item */
-        QStringList storageList;
-        storageList.append(tr("SD"));
-        storageList.append(tr("SSD"));
-        storageList.append(tr("U Storage"));
-        m_storageItem->retranslate_items(storageList);
-
-        /* Save Mode menu item */
-        QStringList saveModeList;
-        saveModeList.append(tr("Inspection Data"));
-        saveModeList.append(tr("Inspection Table"));
-        saveModeList.append(tr("Screen"));
-        saveModeList.append(tr("Report"));
-        saveModeList.append(tr("Setup"));
-        m_saveModeItem->retranslate_items(saveModeList);
         return;
     }
 

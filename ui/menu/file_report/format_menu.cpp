@@ -51,14 +51,6 @@ void FormatMenu::changeEvent(QEvent *event)
         m_encoderInfoItem->set_title(tr("Encoder"));
         m_dacTcgInfoItem->set_title(tr("DAC/TCG"));
         m_flawRecordTableItem->set_title(tr("Flaw Record\nTable"));
-        s_onOff.clear();
-        s_onOff << tr("On") << tr("Off");
-        m_probeWedgeItem->retranslate_items(s_onOff);
-        m_inspectionInfoItem->retranslate_items(s_onOff);
-        m_scanInfoItem->retranslate_items(s_onOff);
-        m_encoderInfoItem->retranslate_items(s_onOff);
-        m_dacTcgInfoItem->retranslate_items(s_onOff);
-        m_flawRecordTableItem->retranslate_items(s_onOff);
         return;
     }
 

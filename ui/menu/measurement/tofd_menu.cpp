@@ -79,4 +79,22 @@ void TofdMenu::do_selectItem_changed(int index)
     m_depthCalibrationItem->setVisible(!!index);
 }
 
+void TofdMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_selectItem->set_title(tr("Select"));
+        m_wedgeItem->set_title(tr("Wedge Sep."));
+        m_layerDepthItem->set_title(tr("Layer Depth"));
+        m_tofdCalItem->set_title(tr("TOFD Calculator"));
+        m_startItem->set_title(tr("Start"));
+        m_rangeItem->set_title(tr("Range"));
+        m_straighteningItem->set_title(tr("Straightening"));
+        m_removeLateralItem->set_title(tr("Remove Lateral"));
+        m_refPositionItem->set_title(tr("Ref.Position"));
+        m_depthCalibrationItem->set_title(tr("Depth\nCalibration"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

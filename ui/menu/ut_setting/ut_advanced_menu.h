@@ -29,6 +29,9 @@ protected slots:
     void do_dbRefItem_changed(int index);
     void do_pointQtyItem(int index);
 
+protected:
+    void changeEvent(QEvent *e);
+
 private:
     LabelMenuItem *m_eightPercentItem;
     ComboMenuItem *m_dbRefItem;

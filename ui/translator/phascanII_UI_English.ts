@@ -117,21 +117,34 @@
         <source>Layout Select</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../menu/display/display_select_dialog.cpp" line="28"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/display/display_select_dialog.cpp" line="29"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DplDisplayMenu::ColorSettingMenu</name>
     <message>
         <location filename="../menu/display/color_setting_menu.cpp" line="15"/>
+        <location filename="../menu/display/color_setting_menu.cpp" line="32"/>
         <source>Amplitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/color_setting_menu.cpp" line="16"/>
+        <location filename="../menu/display/color_setting_menu.cpp" line="33"/>
         <source>Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/color_setting_menu.cpp" line="17"/>
+        <location filename="../menu/display/color_setting_menu.cpp" line="34"/>
         <source>TOFD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -140,42 +153,50 @@
     <name>DplDisplayMenu::PropertiesMenu</name>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="12"/>
+        <location filename="../menu/display/properties_menu.cpp" line="116"/>
         <source>Scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="13"/>
+        <location filename="../menu/display/properties_menu.cpp" line="117"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="14"/>
+        <location filename="../menu/display/properties_menu.cpp" line="118"/>
         <source>Envelope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="15"/>
+        <location filename="../menu/display/properties_menu.cpp" line="119"/>
         <source>Peak Holding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="16"/>
+        <location filename="../menu/display/properties_menu.cpp" line="120"/>
         <source>Reference
 Holding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="17"/>
+        <location filename="../menu/display/properties_menu.cpp" line="121"/>
         <source>Compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="18"/>
+        <location filename="../menu/display/properties_menu.cpp" line="122"/>
         <source>Ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/properties_menu.cpp" line="19"/>
+        <location filename="../menu/display/properties_menu.cpp" line="123"/>
         <source>C-Scan
 Mode</source>
         <translation type="unfinished"></translation>
@@ -220,33 +241,39 @@ Mode</source>
     <name>DplDisplayMenu::SelectionMenu</name>
     <message>
         <location filename="../menu/display/display_selection_menu.cpp" line="18"/>
+        <location filename="../menu/display/display_selection_menu.cpp" line="118"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/display_selection_menu.cpp" line="19"/>
+        <location filename="../menu/display/display_selection_menu.cpp" line="119"/>
         <source>C Scan
 Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/display_selection_menu.cpp" line="20"/>
+        <location filename="../menu/display/display_selection_menu.cpp" line="120"/>
         <source>Thickness
 Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/display_selection_menu.cpp" line="21"/>
+        <location filename="../menu/display/display_selection_menu.cpp" line="121"/>
         <source>Min.Thickness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/display_selection_menu.cpp" line="22"/>
+        <location filename="../menu/display/display_selection_menu.cpp" line="122"/>
         <source>Max.Thickness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/display/display_selection_menu.cpp" line="23"/>
+        <location filename="../menu/display/display_selection_menu.cpp" line="123"/>
         <source>Data
 Compression</source>
         <translation type="unfinished"></translation>
@@ -317,7 +344,7 @@ Compression</source>
     <name>DplFileReportMenu::FileMenu</name>
     <message>
         <location filename="../menu/file_report/file_menu.cpp" line="18"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="69"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="68"/>
         <location filename="../menu/file_report/file_menu.cpp" line="137"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
@@ -354,97 +381,89 @@ Compression</source>
     </message>
     <message>
         <location filename="../menu/file_report/file_menu.cpp" line="35"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="146"/>
         <source>SD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/file_report/file_menu.cpp" line="36"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="147"/>
         <source>SSD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/file_report/file_menu.cpp" line="37"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="148"/>
         <source>U Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="42"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="153"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="41"/>
         <source>Inspection Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="43"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="154"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="42"/>
         <source>Inspection Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="44"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="155"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="43"/>
         <source>Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="45"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="156"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="44"/>
         <source>Report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="46"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="157"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="45"/>
         <source>Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="66"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="77"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="80"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="65"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="76"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="79"/>
         <source>Open Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="70"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="69"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="77"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="76"/>
         <source>Open Success!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="80"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="79"/>
         <source>Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="101"/>
-        <location filename="../menu/file_report/file_menu.cpp" line="107"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="100"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="106"/>
         <source>Save </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="101"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="100"/>
         <source>Save Success!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="104"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="103"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="104"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="103"/>
         <source>Include unsupported character, Please reedit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/file_report/file_menu.cpp" line="107"/>
+        <location filename="../menu/file_report/file_menu.cpp" line="106"/>
         <source>Save Failed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -486,16 +505,6 @@ Compression</source>
         <location filename="../menu/file_report/format_menu.cpp" line="53"/>
         <source>Flaw Record
 Table</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="55"/>
-        <source>On</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/format_menu.cpp" line="55"/>
-        <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -604,16 +613,6 @@ Table</source>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../menu/file_report/user_field_menu.cpp" line="76"/>
-        <source>On</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/file_report/user_field_menu.cpp" line="76"/>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DplFocalLawMenu::AngleMenu</name>
@@ -666,61 +665,61 @@ Table</source>
 <context>
     <name>DplFocalLawMenu::FocalPointMenu</name>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="8"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="11"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="9"/>
-        <source>Position Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="9"/>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="10"/>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="11"/>
         <location filename="../menu/focallaw/focal_point_menu.cpp" line="12"/>
-        <source>mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="10"/>
-        <source>Position End</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="11"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="14"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="150"/>
         <source>Offset Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="12"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="13"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="15"/>
         <source>Offset End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="22"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="128"/>
         <source>True Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="23"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="127"/>
         <source>Half Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="24"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="129"/>
         <source>Projection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="25"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="130"/>
         <source>Focal Plane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu/focallaw/focal_point_menu.cpp" line="26"/>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="131"/>
         <source>DDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="141"/>
+        <source>Depth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="144"/>
+        <source>Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu/focallaw/focal_point_menu.cpp" line="147"/>
+        <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -762,16 +761,19 @@ Table</source>
     <name>DplGateCurvesMenu::AlarmMenu</name>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="18"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="351"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="19"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="352"/>
         <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="20"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="353"/>
         <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -782,36 +784,43 @@ Table</source>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="22"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="354"/>
         <source>Condition1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="23"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="355"/>
         <source>Operator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="24"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="356"/>
         <source>Condition2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="25"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="357"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="26"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="358"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="27"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="359"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/alarm_menu.cpp" line="28"/>
+        <location filename="../menu/gate_curves/alarm_menu.cpp" line="360"/>
         <source>Hold Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -931,21 +940,25 @@ Table</source>
     <name>DplGateCurvesMenu::AnalogMenu</name>
     <message>
         <location filename="../menu/gate_curves/analog_menu.cpp" line="15"/>
+        <location filename="../menu/gate_curves/analog_menu.cpp" line="99"/>
         <source>Analog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/analog_menu.cpp" line="16"/>
+        <location filename="../menu/gate_curves/analog_menu.cpp" line="100"/>
         <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/analog_menu.cpp" line="17"/>
+        <location filename="../menu/gate_curves/analog_menu.cpp" line="101"/>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/analog_menu.cpp" line="18"/>
+        <location filename="../menu/gate_curves/analog_menu.cpp" line="102"/>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1053,47 +1066,56 @@ Table</source>
     <name>DplGateCurvesMenu::GateMenu</name>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="19"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="155"/>
         <source>Gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="20"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="156"/>
         <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="21"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="157"/>
         <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="22"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="158"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="23"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="159"/>
         <source>Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="24"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="160"/>
         <source>Threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="25"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="161"/>
         <source>Synchro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="26"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="162"/>
         <source>Measure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="27"/>
         <location filename="../menu/gate_curves/gate_menu.cpp" line="50"/>
+        <location filename="../menu/gate_curves/gate_menu.cpp" line="163"/>
         <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1216,6 +1238,7 @@ Table</source>
     <name>DplMeasurementMenu::CursorsMenu</name>
     <message>
         <location filename="../menu/measurement/cursors_menu.cpp" line="12"/>
+        <location filename="../menu/measurement/cursors_menu.cpp" line="258"/>
         <source>Selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1244,26 +1267,31 @@ Table</source>
     <name>DplMeasurementMenu::FlawRecordMenu</name>
     <message>
         <location filename="../menu/measurement/flaw_record_menu.cpp" line="8"/>
+        <location filename="../menu/measurement/flaw_record_menu.cpp" line="45"/>
         <source>Add/Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/flaw_record_menu.cpp" line="9"/>
+        <location filename="../menu/measurement/flaw_record_menu.cpp" line="46"/>
         <source>Flaw Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/flaw_record_menu.cpp" line="10"/>
+        <location filename="../menu/measurement/flaw_record_menu.cpp" line="47"/>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/flaw_record_menu.cpp" line="11"/>
+        <location filename="../menu/measurement/flaw_record_menu.cpp" line="48"/>
         <source>Display Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/flaw_record_menu.cpp" line="12"/>
+        <location filename="../menu/measurement/flaw_record_menu.cpp" line="49"/>
         <source>Export Record</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1272,51 +1300,61 @@ Table</source>
     <name>DplMeasurementMenu::TofdMenu</name>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="8"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="85"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="9"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="86"/>
         <source>Wedge Sep.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="10"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="87"/>
         <source>Layer Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="11"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="88"/>
         <source>TOFD Calculator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="12"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="89"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="13"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="90"/>
         <source>Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="14"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="91"/>
         <source>Straightening</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="15"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="92"/>
         <source>Remove Lateral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="16"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="93"/>
         <source>Ref.Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/measurement/tofd_menu.cpp" line="17"/>
+        <location filename="../menu/measurement/tofd_menu.cpp" line="94"/>
         <source>Depth
 Calibration</source>
         <translation type="unfinished"></translation>
@@ -1429,24 +1467,12 @@ Calibration</source>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="49"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="129"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/preference/preference_menu.cpp" line="50"/>
-        <location filename="../menu/preference/preference_menu.cpp" line="129"/>
         <source>Chinese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="133"/>
-        <source>On</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menu/preference/preference_menu.cpp" line="133"/>
-        <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1835,6 +1861,7 @@ Calibration</source>
     <name>DplScanMenu::AreaMenu</name>
     <message>
         <location filename="../menu/scan/area_menu.cpp" line="8"/>
+        <location filename="../menu/scan/area_menu.cpp" line="114"/>
         <source>Scan Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1850,26 +1877,31 @@ Calibration</source>
     </message>
     <message>
         <location filename="../menu/scan/area_menu.cpp" line="9"/>
+        <location filename="../menu/scan/area_menu.cpp" line="115"/>
         <source>Scan End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/area_menu.cpp" line="10"/>
+        <location filename="../menu/scan/area_menu.cpp" line="116"/>
         <source>Scan Res.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/area_menu.cpp" line="11"/>
+        <location filename="../menu/scan/area_menu.cpp" line="117"/>
         <source>Index Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/area_menu.cpp" line="12"/>
+        <location filename="../menu/scan/area_menu.cpp" line="118"/>
         <source>Index End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/area_menu.cpp" line="13"/>
+        <location filename="../menu/scan/area_menu.cpp" line="119"/>
         <source>Index Res.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1878,16 +1910,19 @@ Calibration</source>
     <name>DplScanMenu::EncoderMenu</name>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="8"/>
+        <location filename="../menu/scan/encoder_menu.cpp" line="96"/>
         <source>Encoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="9"/>
+        <location filename="../menu/scan/encoder_menu.cpp" line="97"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="10"/>
+        <location filename="../menu/scan/encoder_menu.cpp" line="98"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1898,11 +1933,13 @@ Calibration</source>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="11"/>
+        <location filename="../menu/scan/encoder_menu.cpp" line="99"/>
         <source>Polarity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="12"/>
+        <location filename="../menu/scan/encoder_menu.cpp" line="100"/>
         <source>Origin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1913,6 +1950,7 @@ Calibration</source>
     </message>
     <message>
         <location filename="../menu/scan/encoder_menu.cpp" line="13"/>
+        <location filename="../menu/scan/encoder_menu.cpp" line="101"/>
         <source>Preset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1956,21 +1994,25 @@ Calibration</source>
     <name>DplScanMenu::InspectionMenu</name>
     <message>
         <location filename="../menu/scan/inspection_menu.cpp" line="8"/>
+        <location filename="../menu/scan/inspection_menu.cpp" line="125"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/inspection_menu.cpp" line="9"/>
+        <location filename="../menu/scan/inspection_menu.cpp" line="126"/>
         <source>Scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/inspection_menu.cpp" line="10"/>
+        <location filename="../menu/scan/inspection_menu.cpp" line="127"/>
         <source>Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/inspection_menu.cpp" line="11"/>
+        <location filename="../menu/scan/inspection_menu.cpp" line="128"/>
         <source>Scan Speed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1982,6 +2024,7 @@ Calibration</source>
     </message>
     <message>
         <location filename="../menu/scan/inspection_menu.cpp" line="12"/>
+        <location filename="../menu/scan/inspection_menu.cpp" line="129"/>
         <source>Scan Speed(rpm)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2022,11 +2065,13 @@ Calibration</source>
     <name>DplScanMenu::StartMenu</name>
     <message>
         <location filename="../menu/scan/start_menu.cpp" line="11"/>
+        <location filename="../menu/scan/start_menu.cpp" line="44"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/scan/start_menu.cpp" line="12"/>
+        <location filename="../menu/scan/start_menu.cpp" line="45"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2035,26 +2080,31 @@ Calibration</source>
     <name>DplUtSettingMenu::PulserMenu</name>
     <message>
         <location filename="../menu/ut_setting/pulser_menu.cpp" line="18"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="204"/>
         <source>Tx/Rx Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/pulser_menu.cpp" line="20"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="205"/>
         <source>Voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/pulser_menu.cpp" line="21"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="206"/>
         <source>PW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/pulser_menu.cpp" line="22"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="207"/>
         <source>PRF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/pulser_menu.cpp" line="23"/>
+        <location filename="../menu/ut_setting/pulser_menu.cpp" line="208"/>
         <source>User Def.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2103,26 +2153,31 @@ Calibration</source>
     <name>DplUtSettingMenu::ReceiverMenu</name>
     <message>
         <location filename="../menu/ut_setting/receiver_menu.cpp" line="18"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="244"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/receiver_menu.cpp" line="19"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="245"/>
         <source>Rectifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/receiver_menu.cpp" line="20"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="246"/>
         <source>Video Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/receiver_menu.cpp" line="21"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="247"/>
         <source>Averaging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/receiver_menu.cpp" line="22"/>
+        <location filename="../menu/ut_setting/receiver_menu.cpp" line="248"/>
         <source>Damping</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2196,32 +2251,38 @@ Calibration</source>
     <name>DplUtSettingMenu::UtAdvancedMenu</name>
     <message>
         <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="16"/>
+        <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="120"/>
         <source>Set 80%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="17"/>
+        <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="121"/>
         <source>dB Ref.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="18"/>
+        <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="122"/>
         <source>Scale Factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="19"/>
+        <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="123"/>
         <source>Sum Gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="20"/>
+        <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="124"/>
         <source>Point Qty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="21"/>
         <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="46"/>
+        <location filename="../menu/ut_setting/ut_advanced_menu.cpp" line="125"/>
         <source>User Def.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2843,193 +2904,233 @@ Calibration</source>
     <name>MainMenuPrivate</name>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="91"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="225"/>
         <source>Ut Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="92"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="226"/>
         <source>Gate/Curves</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="93"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="227"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="94"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="228"/>
         <source>Probe/Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="95"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="229"/>
         <source>Focallaw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="96"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="230"/>
         <source>Scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="97"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="231"/>
         <source>Measurement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="98"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="232"/>
         <source>File/Report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="99"/>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="213"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="233"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="311"/>
         <source>Preference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="109"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="239"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="110"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="240"/>
         <source>Pulser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="111"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="241"/>
         <source>Receiver</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="112"/>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="152"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="242"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="270"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="122"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="248"/>
         <source>Gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="123"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="249"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="124"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="250"/>
         <source>Analog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="136"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="258"/>
         <source>Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="137"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="259"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="138"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="260"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="148"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="266"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="149"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="267"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="151"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="269"/>
         <source>Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="162"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="276"/>
         <source>Law Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="163"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="277"/>
         <source>Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="164"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="278"/>
         <source>Aperture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="165"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="279"/>
         <source>Focal Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="175"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="285"/>
         <source>Inspection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="176"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="286"/>
         <source>Encoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="177"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="287"/>
         <source>Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="178"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="288"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="188"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="294"/>
         <source>Cursors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="190"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="296"/>
         <source>Flaw Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="200"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="302"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="201"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="303"/>
         <source>Report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="202"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="304"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="203"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="305"/>
         <source>User Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="214"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="312"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu/main_menu/main_menu_p.cpp" line="215"/>
+        <location filename="../menu/main_menu/main_menu_p.cpp" line="313"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4015,6 +4116,11 @@ Calibration</source>
         <source>&lt;html&gt;&lt;head&gt;&lt;title&gt;System Infomation&lt;/title&gt;&lt;style&gt;body {background-color: #CCCCCC;}table, th, td {padding:5px;border: 1px solid black;border-collapse: collapse;}table {margin:5px;}th {text-align:left;background:#ffffff;}td {text-align:left;background:#ffffff;}h3 {text-align:center;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;table border=1 cellspacing=1 cellpadding=0 &gt;&lt;tr&gt;&lt;th&gt;Serial Number&lt;/th&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Device Type&lt;/th&gt;&lt;td&gt;%2&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Device Version&lt;/th&gt;&lt;td&gt;%3&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Hardware Version&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Software Version&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Software Commit&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;Cert Info&lt;/th&gt;&lt;td&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../dialog/sysinfo_dialog.cpp" line="80"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui::Dialog::AboutDialog</name>
@@ -4160,6 +4266,8 @@ Calibration</source>
     <message>
         <location filename="../menu/measurement/vpa_menu_item.cpp" line="58"/>
         <location filename="../menu/measurement/vpa_menu_item.cpp" line="76"/>
+        <location filename="../menu/measurement/vpa_menu_item.cpp" line="120"/>
+        <location filename="../menu/measurement/vpa_menu_item.cpp" line="123"/>
         <source>Angle</source>
         <translation type="unfinished"></translation>
     </message>

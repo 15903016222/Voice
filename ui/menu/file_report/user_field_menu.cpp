@@ -71,11 +71,6 @@ void UserFieldMenu::changeEvent(QEvent *e)
         m_contentItem->set_title(tr("Content"));
         m_editNoteItem->set_title(tr("Edit Note"));
         m_printItem->set_title(tr("Print"));
-
-        s_onOff.clear();
-        s_onOff << tr("On") << tr("Off");
-        m_enableItem->retranslate_items(s_onOff);
-
         return;
     }
     BaseMenu::changeEvent(e);

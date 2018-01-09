@@ -124,15 +124,6 @@ void PreferenceMenu::retranslate_ui()
     m_startingPageItem->set_title(tr("Starting Page"));
     m_gatemodeItem->set_title(tr("Gate Mode"));
     m_deployItem->set_title(tr("Deploy"));
-
-    QStringList list;
-    list << tr("English") << tr("Chinese");
-    m_languageItem->retranslate_items(list);
-
-    s_onOff.clear();
-    s_onOff << tr("On") << tr("Off");
-    m_startingPageItem->retranslate_items(s_onOff);
-    m_gatemodeItem->retranslate_items(s_onOff);
 }
 
 }

@@ -31,6 +31,8 @@ protected:
     void update_groupItem();
     void update_dataItem();
 
+    void changeEvent(QEvent *e);
+
 private:
     ComboMenuItem *m_analogItem;
     ComboMenuItem *m_switchItem;

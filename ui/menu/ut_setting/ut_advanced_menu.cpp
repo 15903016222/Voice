@@ -114,4 +114,18 @@ void UtAdvancedMenu::do_pointQtyItem(int index)
     }
 }
 
+void UtAdvancedMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_eightPercentItem->set_title(tr("Set 80%"));
+        m_dbRefItem->set_title(tr("dB Ref."));
+        m_scaleFactorItem->set_title(tr("Scale Factor"));
+        m_sumGainItem->set_title(tr("Sum Gain"));
+        m_pointQtyItem->set_title(tr("Point Qty."));
+        m_userDefItem->set_title(tr("User Def."));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }
