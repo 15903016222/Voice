@@ -13,10 +13,12 @@ public:
     static FFTResult *instance();
     void set_result(const FFTCalculator::S_FFT_result &result);
     const FFTCalculator::S_FFT_result &result();
+    inline void set_enable(bool flag) { m_enable = flag; }
+    inline bool enable() { return m_enable; }
 
 private:
-    static FFTResult   *s_instance;
     FFTCalculator::S_FFT_result m_result;
+    bool m_enable;
 
 };
 

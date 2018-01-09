@@ -172,9 +172,7 @@ void ReportApplier::fill_report_group_wedge(DplReport::ReportGroup *group)
 void ReportApplier::fill_report_group_fft(DplReport::ReportGroup *group)
 {
     DplReport::ReportFFTPointer fft = group->get_fft();
-    /* TODO: FFT需提供是否开启选项 */
-    bool enable = false;
-    if(enable) {
+    if(FFTResult::instance()->enable()) {
         const FFTCalculator::S_FFT_result &result = FFTResult::instance()->result();
 
         fft->set_peak_freq(QString::number(result.peakFrequency, 'f', m_precision));
@@ -391,7 +389,7 @@ void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, Dpl
         }
         case DplFocallaw::Focus::TRUE_DEPTH:
         {
-            law->set_focal_field_names(0, tr("BeginDepth"));
+            law->set_focal_field_names(0, tr("Depth"));
             DplFocallaw::TrueDepthFocusPointer trueDepth = focusCnf.staticCast<DplFocallaw::TrueDepthFocus>();
             if(!trueDepth.isNull()) {
                 law->set_focal_field_values(0, QString::number(trueDepth->depth(), 'f', m_precision));
@@ -400,7 +398,7 @@ void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, Dpl
         }
         case DplFocallaw::Focus::PROJECTION:
         {
-            law->set_focal_field_names(0, tr("BeginOffset"));
+            law->set_focal_field_names(0, tr("Offset Start"));
             DplFocallaw::ProjectionFocusPointer projection = focusCnf.staticCast<DplFocallaw::ProjectionFocus>();
             if(!projection.isNull()) {
                 law->set_focal_field_values(0, QString::number(projection->offset(), 'f', m_precision));
@@ -409,10 +407,10 @@ void ReportApplier::fill_focal_field_names(DplReport::ReportLawPointer &law, Dpl
         }
         case DplFocallaw::Focus::FOCAL_PLANE:
         {
-            law->set_focal_field_names(0, tr("BeginOffset"));
-            law->set_focal_field_names(1, tr("EndOffset"));
-            law->set_focal_field_names(2, tr("BeginDepth"));
-            law->set_focal_field_names(3, tr("EndDepth"));
+            law->set_focal_field_names(0, tr("Offset Start"));
+            law->set_focal_field_names(1, tr("Offset End"));
+            law->set_focal_field_names(2, tr("Depth Start"));
+            law->set_focal_field_names(3, tr("Depth End"));
 
             DplFocallaw::FocalPlaneFocusPointer focalPlane = focusCnf.staticCast<DplFocallaw::FocalPlaneFocus>();
             if(!focalPlane.isNull()) {

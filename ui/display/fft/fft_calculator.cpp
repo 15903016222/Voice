@@ -30,7 +30,7 @@ FFTCalculator::FFTCalculator():
 
 FFTCalculator::~FFTCalculator()
 {
-
+    FFTResult::instance()->set_enable(false);
 }
 
 bool FFTCalculator::execute(int len, unsigned char *data, int targetDataLen, double dataMHz)
@@ -214,7 +214,7 @@ void FFTCalculator::calculate_result(int targetDataLen)
     m_fftResult.MhzRatio                = m_MHzRatio;
 
     FFTResult::instance()->set_result(m_fftResult);
-
+    FFTResult::instance()->set_enable(true);
 }
 
 void FFTCalculator::fft_mul(const FFTCalculator::S_Complex &a, const FFTCalculator::S_Complex &b, FFTCalculator::S_Complex &c)
