@@ -1,5 +1,6 @@
 #include "cursor_item.h"
 
+#include "../base/scan_view.h"
 #include <QGraphicsScene>
 #include <QPainter>
 
@@ -55,19 +56,38 @@ void CursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
     if (Qt::Horizontal == m_orientation) {
         painter->drawLine(0, 0, m_size.width(), 0);
+
+    } else {
+        painter->drawLine(0, 0, 0, m_size.height());
+    }
+
+    Qt::Orientation viewOrientation = Qt::Horizontal;
+    if (scene() && !scene()->views().isEmpty()) {
+        ScanView *view = static_cast<ScanView *>(scene()->views().at(0));
+        viewOrientation = view->orientation();
+    }
+
+    painter->setPen(Qt::black);
+
+    if (m_orientation == Qt::Horizontal) {
+        if (viewOrientation == Qt::Vertical) {
+            painter->rotate(-90);
+            painter->translate(0, DEFAULT_TEXT_HEIGHT);
+        }
         painter->fillRect(0, -DEFAULT_TEXT_HEIGHT,
                           DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
                           m_bgColor);
-        painter->setPen(Qt::black);
         painter->drawText(0, -DEFAULT_TEXT_HEIGHT,
                           DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
                           Qt::AlignCenter,
                           m_text);
     } else {
-        painter->drawLine(0, 0, 0, m_size.height());
+        if (viewOrientation == Qt::Vertical) {
+            painter->rotate(-90);
+            painter->translate(-DEFAULT_TEXT_WIDTH, 0);
+        }
         painter->fillRect(0, 0, DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
                           m_bgColor);
-        painter->setPen(Qt::black);
         painter->drawText(0, 0,
                           DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
                           Qt::AlignCenter,
