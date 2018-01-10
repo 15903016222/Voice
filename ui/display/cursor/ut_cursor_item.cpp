@@ -17,12 +17,22 @@ UtCursorItem::UtCursorItem(const DplDevice::GroupPointer &group,
             this, SLOT(update_position()));
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
-            this, SLOT(update_position()));
+            this, SLOT(update_background_color(DplDevice::Group::UtUnit)));
+    update_background_color(group->ut_unit());
 }
 
 void UtCursorItem::set_text(double val)
 {
     CursorItem::set_text(QString::number(Tool::cnf_to_display(m_group, val),'f', 2));
+}
+
+void UtCursorItem::update_background_color(DplDevice::Group::UtUnit unit)
+{
+    if (DplDevice::Group::Time == unit) {
+        set_background_color(PalePinkColor);
+    } else {
+        set_background_color(PinkColor);
+    }
 }
 
 double UtCursorItem::value() const

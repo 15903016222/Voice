@@ -19,6 +19,9 @@ public:
 public slots:
     void set_text(double val);
 
+protected slots:
+    void update_background_color(DplDevice::Group::UtUnit unit);
+
 protected:
     double value() const;
 
