@@ -33,13 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_mainMenu->hide();
     ui->subMenuLayout->addWidget(m_subMenu);
     connect(m_mainMenu, SIGNAL(type_changed(MainMenu::Type)),
-            m_subMenu, SLOT(set_menu(MainMenu::Type)));
-
-    qDebug("%s[%d]: ",__func__, __LINE__);
-//    DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
-//    connect(preferenceMenu, SIGNAL(opacity_changed(double)),
-//            m_mainMenu, SLOT(set_opacity(double)));
-    qDebug("%s[%d]: ",__func__, __LINE__);
+            this, SLOT(do_type_changed(MainMenu::Type)));
 
     /* virtual keyboard */
     connect(ui->iconsBarWidget, SIGNAL(keyboard_event()),
@@ -51,6 +45,15 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::do_type_changed(MainMenu::Type type)
+{
+    m_mainMenu->hide();
+    if (m_subMenu->isHidden()) {
+        m_subMenu->show();
+    }
+    m_subMenu->set_menu(type);
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)

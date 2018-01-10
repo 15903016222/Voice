@@ -22,6 +22,8 @@ public:
     ~MainWindow();
 
 protected slots:
+    void do_type_changed(MainMenu::Type type);
+
     void do_key_event(Mcu::KeyType type);
 
     void do_keyboard_event();
