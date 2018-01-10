@@ -198,4 +198,17 @@ void PulserMenu::update_voltageItem()
             SLOT(do_voltageItem_changed(int)));
 }
 
+void PulserMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_txrxModeItem->set_title(tr("Tx/Rx Mode"));
+        m_voltageItem->set_title(tr("Voltage"));
+        m_pwItem->set_title(tr("PW"));
+        m_prfItem->set_title(tr("PRF"));
+        m_userDefItem->set_title(tr("User Def."));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

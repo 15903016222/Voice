@@ -27,6 +27,8 @@ public:
     QListWidget *m_curSubMenu;
     QSpacerItem *m_topSpaceItem;
 
+    void retranslate_ui();
+
 public slots:
     void do_subMenu_pressed();
 
@@ -46,6 +48,7 @@ protected:
     void init_measureMenu();
     void init_fileReportMenu();
     void init_preferenceMenu();
+
 };
 
 inline void MainMenuPrivate::set_common(QListWidget *menu)

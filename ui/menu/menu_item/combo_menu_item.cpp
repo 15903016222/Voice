@@ -11,6 +11,7 @@
 #include <QMenu>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QDebug>
 
 ComboMenuItem::ComboMenuItem(QWidget *parent, const QString &title) :
     MenuItem(parent),

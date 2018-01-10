@@ -52,4 +52,18 @@ void ReportMenu::show_input_dialog()
     }
 }
 
+void ReportMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_templateItem->set_title(tr("Template"));
+        m_reportNameItem->set_title(tr("Report Name"));
+        m_customerItem->set_title(tr("Customer"));
+        m_partNameItem->set_title(tr("Part Name"));
+        m_partNumberItem->set_title(tr("Part Number"));
+        m_createItem->set_title(tr("Create"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

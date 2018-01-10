@@ -10,6 +10,8 @@
 #include <device/device.h>
 #include <QDebug>
 #include <QSettings>
+#include <QTranslator>
+#include <ui/menu/preference/translator.h>
 
 namespace DplPreferenceMenu {
 
@@ -47,6 +49,8 @@ PreferenceMenu::PreferenceMenu(QWidget *parent) :
     m_languageItem->add_item(tr("English"));
     m_languageItem->add_item(tr("Chinese"));
 
+    connect(m_languageItem, SIGNAL(value_changed(int)), DplTranslator::Translator::instance(), SLOT(do_value_changed(int)));
+
     /* Starting Page Menu Item */
     m_startingPageItem->set(s_onOff);
 
@@ -77,8 +81,6 @@ void PreferenceMenu::do_deployItem_changed()
 
 void PreferenceMenu::do_gatemodeItem_value_changed(int val)
 {
-    qDebug() << "[PreferenceMenu::do_gatemodeItem_value_changed] " << val;
-
     bool flag = true;
     if(val) {
         flag = false;
@@ -102,8 +104,26 @@ void PreferenceMenu::do_gatemodeItem_value_changed(int val)
         gateA->set_visible(flag);
         gateB->set_visible(flag);
         gateI->set_visible(flag);
-
     }
+}
+
+void PreferenceMenu::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange) {
+        retranslate_ui();
+        return;
+    }
+    BaseMenu::changeEvent(event);
+}
+
+void PreferenceMenu::retranslate_ui()
+{
+    m_brightItem->set_title(tr("Bright"));
+    m_opacityItem->set_title(tr("Opacity"));
+    m_languageItem->set_title(tr("Language"));
+    m_startingPageItem->set_title(tr("Starting Page"));
+    m_gatemodeItem->set_title(tr("Gate Mode"));
+    m_deployItem->set_title(tr("Deploy"));
 }
 
 }

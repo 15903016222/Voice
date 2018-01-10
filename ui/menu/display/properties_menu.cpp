@@ -110,6 +110,22 @@ void PropertiesMenu::show_c_scan()
     m_cScanModeItem->show();
 }
 
+void PropertiesMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_scanItem->set_title(tr("Scan"));
+        m_colorItem->set_title(tr("Color"));
+        m_envelopItem->set_title(tr("Envelope"));
+        m_peakHoldingItem->set_title(tr("Peak Holding"));
+        m_referenceholdingItem->set_title(tr("Reference\nHolding"));
+        m_compressionItem->set_title(tr("Compression"));
+        m_ratioItem->set_title(tr("Ratio"));
+        m_cScanModeItem->set_title(tr("C-Scan\nMode"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 void PropertiesMenu::do_scanItem_changed(int i)
 {
     hide_scan();

@@ -10,8 +10,11 @@
 
 namespace DplFileReportMenu {
 
+static const QString NUM_STR("###");
+
 FileMenu::FileMenu(QWidget *parent) :
     BaseMenu(parent),
+
     m_openItem(new LabelMenuItem(this, tr("Open"))),
     m_storageItem(new ComboMenuItem(this, tr("Storage"))),
     m_saveModeItem(new ComboMenuItem(this, tr("Save Mode"))),
@@ -35,13 +38,12 @@ FileMenu::FileMenu(QWidget *parent) :
     m_storageItem->set(storageList);
 
     /* Save Mode menu item */
-    QStringList saveModeList;
-    saveModeList.append(tr("Inspection Data"));
-    saveModeList.append(tr("Inspection Table"));
-    saveModeList.append(tr("Screen"));
-    saveModeList.append(tr("Report"));
-    saveModeList.append(tr("Setup"));
-    m_saveModeItem->set(saveModeList);
+    m_saveModeNameList.append(tr("Inspection Data"));
+    m_saveModeNameList.append(tr("Inspection Table"));
+    m_saveModeNameList.append(tr("Screen"));
+    m_saveModeNameList.append(tr("Report"));
+    m_saveModeNameList.append(tr("Setup"));
+    m_saveModeItem->set(m_saveModeNameList);
 
     connect(m_openItem, SIGNAL(clicked()), this, SLOT(do_openItem_clicked()));
     connect(m_saveModeItem, SIGNAL(value_changed(int)), this, SLOT(do_saveModeItem_value_changed(int)));
@@ -50,7 +52,6 @@ FileMenu::FileMenu(QWidget *parent) :
     connect(m_fileManagerItem, SIGNAL(clicked()), this, SLOT(do_fileManagerItem_clicked()));
 
     do_saveModeItem_value_changed(0);
-
 }
 
 FileMenu::~FileMenu()
@@ -84,13 +85,13 @@ void FileMenu::do_openItem_clicked()
 void FileMenu::do_saveModeItem_value_changed(int index)
 {
     Q_UNUSED(index);
-    m_fileNameItem->set_text(m_saveModeItem->current_text() + tr("###"));
+    m_fileNameItem->set_text(m_saveModeNameList.at(m_saveModeItem->current_index()) + NUM_STR);
 }
 
 
 void FileMenu::do_saveDataItem_clicked()
 {
-    QString fileName = m_fileNameItem->text().remove(tr("###"));
+    QString fileName = m_fileNameItem->text().remove(NUM_STR);
     SaveFileManager::E_ResultType type = m_saveFileManager->save((SaveFileManager::E_SaveMode)m_saveModeItem->current_index(),
                                                                  (SaveFileManager::E_StorageType)m_storageItem->current_index(),
                                                                  fileName);
@@ -111,13 +112,14 @@ void FileMenu::do_fileNameItem_clicked()
 {
     InputPanelContext inputPanel;
     LabelMenuItem *menu = qobject_cast<LabelMenuItem*>(sender());
-    QString text = menu->text().remove(tr("###"));
+    QString text = menu->text().remove(NUM_STR);
 
     inputPanel.set_item_current_text(text);
     if (inputPanel.exec() == InputPanelContext::Accepted) {
-        menu->set_text(inputPanel.get_text() + tr("###"));
+        menu->set_text(inputPanel.get_text() + NUM_STR);
+        m_saveModeNameList.replace(m_saveModeItem->current_index(), inputPanel.get_text());
     } else {
-        menu->set_text(text + tr("###"));
+        menu->set_text(text + NUM_STR);
     }
 }
 
@@ -126,7 +128,23 @@ void FileMenu::do_fileManagerItem_clicked()
 {
 //    FileManagerDialog fileManagerDialog;
 //    fileManagerDialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-//    fileManagerDialog.exec();
+    //    fileManagerDialog.exec();
+}
+
+void FileMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_openItem->set_title(tr("Open"));
+        m_storageItem->set_title(tr("Storage"));
+        m_saveModeItem->set_title(tr("Save Mode"));
+        m_saveDataItem->set_title(tr("Save Data"));
+        m_fileNameItem->set_title(tr("File Name"));
+        m_fileManagerItem->set_title(tr("File Manager"));
+
+        return;
+    }
+
+    BaseMenu::changeEvent(e);
 }
 
 }

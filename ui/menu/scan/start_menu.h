@@ -19,6 +19,9 @@ protected slots:
 private:
     LabelMenuItem *m_startItem;
     LabelMenuItem *m_pauseItem;
+
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

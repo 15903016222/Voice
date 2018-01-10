@@ -27,6 +27,8 @@ private:
     ComboMenuItem *m_depthCalibrationItem;
 private slots:
     void do_selectItem_changed(int index);
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

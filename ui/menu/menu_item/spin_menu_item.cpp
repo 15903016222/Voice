@@ -13,6 +13,8 @@
 #include <QLineEdit>
 #include <QDoubleValidator>
 #include <QTextCodec>
+#include <ui/menu/preference/translator.h>
+#include <QDebug>
 
 SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) : MenuItem(parent),
     m_pushBtn(new QPushButton(this)),

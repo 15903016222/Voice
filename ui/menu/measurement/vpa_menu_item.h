@@ -26,6 +26,10 @@ protected slots:
 
 private:
     DplDevice::GroupPointer m_group;
+
+protected:
+    void changeEvent(QEvent *e);
+
 };
 
 #endif // __VPA_MENU_ITEM_H__

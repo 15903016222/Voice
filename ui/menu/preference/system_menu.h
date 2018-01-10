@@ -45,6 +45,10 @@ private:
     QTimer  *m_timer;
     bool set_date_time(const QDateTime &dateTime);
     void init_date_time();
+    void retranslate_ui();
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 }

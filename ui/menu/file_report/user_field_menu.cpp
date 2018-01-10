@@ -62,4 +62,18 @@ void UserFieldMenu::show_input_dialog()
     }
 }
 
+void UserFieldMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_selectItem->set_title(tr("Select"));
+        m_enableItem->set_title(tr("Enable"));
+        m_labelItem->set_title(tr("Label"));
+        m_contentItem->set_title(tr("Content"));
+        m_editNoteItem->set_title(tr("Edit Note"));
+        m_printItem->set_title(tr("Print"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

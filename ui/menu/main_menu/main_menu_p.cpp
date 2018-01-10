@@ -217,3 +217,101 @@ void MainMenuPrivate::init_preferenceMenu()
     connect(m_preferenceMenu, SIGNAL(pressed(QModelIndex)),
             this, SLOT(do_subMenu_pressed()));
 }
+
+void MainMenuPrivate::retranslate_ui()
+{
+    QStringList list;
+    list.clear();
+    list << tr("Ut Settings")
+         << tr("Gate/Curves")
+         << tr("Display")
+         << tr("Probe/Part")
+         << tr("Focallaw")
+         << tr("Scan")
+         << tr("Measurement")
+         << tr("File/Report")
+         << tr("Preference");
+    for(int i = 0; i < list.size(); ++i) {
+        m_mainMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("General")
+         << tr("Pulser")
+         << tr("Receiver")
+         << tr("Advanced");
+    for(int i = 0; i < list.size(); ++i) {
+        m_utSettingMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("Gate")
+         << tr("Alarm")
+         << tr("Analog")
+         << "DAC"
+         << "TCG";
+    for(int i = 0; i < list.size(); ++i) {
+        m_gateCurvesMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("Selection")
+         << tr("Color")
+         << tr("Properties");
+    for(int i = 0; i < list.size(); ++i) {
+        m_displayMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("Select")
+         << tr("Position")
+         << "FFT"
+         << tr("Part")
+         << tr("Advanced");
+    for(int i = 0; i < list.size(); ++i) {
+        m_probePartMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("Law Config")
+         << tr("Angle")
+         << tr("Aperture")
+         << tr("Focal Point");
+    for(int i = 0; i < list.size(); ++i) {
+        m_focallawMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("Inspection")
+         << tr("Encoder")
+         << tr("Area")
+         << tr("Start");
+    for(int i = 0; i < list.size(); ++i) {
+        m_scanMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("Cursors")
+         << "TOFD"
+         << tr("Flaw Record");
+    for(int i = 0; i < list.size(); ++i) {
+        m_measureMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("File")
+         << tr("Report")
+         << tr("Format")
+         << tr("User Field");
+    for(int i = 0; i < list.size(); ++i) {
+        m_fileReportMenu->item(i)->setText(list.at(i));
+    }
+
+    list.clear();
+    list << tr("Preference")
+         << tr("System")
+         << tr("Network");
+    for(int i = 0; i < list.size(); ++i) {
+        m_preferenceMenu->item(i)->setText(list.at(i));
+    }
+}

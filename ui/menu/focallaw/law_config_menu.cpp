@@ -100,6 +100,7 @@ void LawConfigMenu::changeEvent(QEvent *e)
 {
     if (e->type() == QEvent::LanguageChange) {
         m_lawTypeItem->set_title(tr("Law Type"));
+        m_waveTypeItem->set_title(tr("Wave Type"));
         update_lawTypeItem();
         return;
     }

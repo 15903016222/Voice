@@ -119,4 +119,17 @@ void InspectionMenu::do_indexAxis_driving_changed(DplSource::Axis::Driving drivi
     m_indexItem->set_current_index(driving - 1);
 }
 
+void InspectionMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_typeItem->set_title(tr("Type"));
+        m_scanItem->set_title(tr("Scan"));
+        m_indexItem->set_title(tr("Index"));
+        m_maxScanSpeedItem->set_title(tr("Scan Speed"));
+        m_maxScanSpeedRPMItem->set_title(tr("Scan Speed(rpm)"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

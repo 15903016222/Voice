@@ -108,4 +108,19 @@ void AreaMenu::do_scan_mode_changed(DplSource::Scan::Mode mode)
     m_indexResolutionItem->setDisabled(flag);
 }
 
+void AreaMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_scanStartItem->set_title(tr("Scan Start"));
+        m_scanEndItem->set_title(tr("Scan End"));
+        m_scanResolutionItem->set_title(tr("Scan Res."));
+        m_indexStartItem->set_title(tr("Index Start"));
+        m_indexEndItem->set_title(tr("Index End"));
+        m_indexResolutionItem->set_title(tr("Index Res."));
+        return;
+    }
+
+    BaseMenu::changeEvent(e);
+}
+
 }
