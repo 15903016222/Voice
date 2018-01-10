@@ -20,6 +20,14 @@ CursorItem::CursorItem(const DplMeasure::CursorPointer &cursor,
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
     setZValue(1);
+
+    connect(this, SIGNAL(xChanged()),
+            this, SLOT(position_event()));
+    connect(this, SIGNAL(yChanged()),
+            this, SLOT(position_event()));
+    connect(this, SIGNAL(size_changed()),
+            this, SLOT(update_position()));
+
     connect(static_cast<DplMeasure::Cursor *>(cursor.data()),
             SIGNAL(visible_changed(bool)),
             this, SLOT(setVisible(bool)));
@@ -70,6 +78,25 @@ void CursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 void CursorItem::setVisible(bool flag)
 {
     QGraphicsObject::setVisible(flag);
+}
+
+void CursorItem::update_position()
+{
+    if (moving()
+            || !scene()
+            || scene()->views().isEmpty()) {
+        return;
+    }
+
+    if (orientation() == Qt::Horizontal) {
+        setPos(scene()->sceneRect().left(),
+               scene()->sceneRect().bottom()
+               - scene()->sceneRect().height() * ratio());
+    } else {
+        setPos(scene()->sceneRect().left()
+               + scene()->sceneRect().width() * ratio(),
+               scene()->sceneRect().top());
+    }
 }
 
 void CursorItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

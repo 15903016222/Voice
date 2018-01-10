@@ -12,7 +12,7 @@ class CursorItem : public QGraphicsObject
 public:
     explicit CursorItem(const DplMeasure::CursorPointer &cursor,
                         Qt::Orientation orientation,
-                        QColor color = Qt::darkRed,
+                        QColor color,
                         QColor bgColor = YellowColor);
 
     QRectF boundingRect() const;
@@ -29,6 +29,7 @@ public:
 
     bool moving() const;
 
+    void set_background_color(const QColor &color);
 
 signals:
     void size_changed();
@@ -37,10 +38,15 @@ public slots:
     void setVisible(bool flag);
     void set_text(const QString &text);
 
+protected slots:
+    void update_position();
+    virtual void position_event() = 0;
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    virtual double ratio() const = 0;
 
 private:
     DplMeasure::CursorPointer m_cursor;
@@ -78,6 +84,11 @@ inline Qt::Orientation CursorItem::orientation() const
 inline bool CursorItem::moving() const
 {
     return m_movingFlag;
+}
+
+inline void CursorItem::set_background_color(const QColor &color)
+{
+    m_bgColor = color;
 }
 
 inline void CursorItem::set_text(const QString &text)
