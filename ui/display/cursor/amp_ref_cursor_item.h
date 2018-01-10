@@ -13,6 +13,7 @@ public:
 public slots:
     void update_position();
     void do_position_changed();
+    void set_text(double val);
 };
 
 #endif // __AMP_REF_CURSOR_ITEM_H__
