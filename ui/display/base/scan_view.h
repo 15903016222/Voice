@@ -16,11 +16,18 @@ public:
     explicit ScanView(QWidget *parent = 0);
     ~ScanView();
 
+    void set_orientation(Qt::Orientation orientation);
+
+    Qt::Orientation orientation();
+
 signals:
     void size_changed(const QSize &size);
 
 protected:
     void resizeEvent(QResizeEvent *event);
+
+private:
+    Qt::Orientation m_orientation;
 };
 
 #endif // __SCAN_VIEW_H__

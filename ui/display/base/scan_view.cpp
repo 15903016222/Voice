@@ -8,7 +8,8 @@
 #include <QResizeEvent>
 #include <QDebug>
 ScanView::ScanView(QWidget *parent):
-    QGraphicsView(parent)
+    QGraphicsView(parent),
+    m_orientation(Qt::Horizontal)
 {
     setFocusPolicy(Qt::NoFocus);
     clearFocus();
@@ -17,6 +18,21 @@ ScanView::ScanView(QWidget *parent):
 
 ScanView::~ScanView()
 {
+}
+
+void ScanView::set_orientation(Qt::Orientation orientation)
+{
+    if (m_orientation == orientation) {
+        return;
+    }
+
+    if (orientation == Qt::Vertical) {
+        rotate(90);
+    } else {
+        rotate(-90);
+    }
+
+    m_orientation = orientation;
 }
 
 void ScanView::resizeEvent(QResizeEvent *event)
