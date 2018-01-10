@@ -6,11 +6,7 @@
  */
 #include "a_scan_vdisplay.h"
 
-#include "wave_item.h"
-#include "tcg_item.h"
-
 #include "../base/scan_view.h"
-#include "../base/scan_scene.h"
 #include "../ruler/amp_ruler.h"
 #include "../ruler/ut_ruler.h"
 
@@ -19,18 +15,7 @@ AscanVDisplay::AscanVDisplay(const DplDevice::GroupPointer &group, QWidget *pare
     m_ampRuler(new AmpRuler(Ruler::TOP, this)),
     m_utRuler(new UtRuler(group, Ruler::RIGHT, this))
 {  
-    m_view->rotate(90);
+    m_view->set_orientation(Qt::Vertical);
     m_leftLayout->addWidget(m_utRuler);
     m_bottomLayout->addWidget(m_ampRuler);
-}
-
-void AscanVDisplay::resize_event(const QSize &size)
-{
-    m_scene->setSceneRect(-size.height()/2, -size.width()/2 + 1,
-                               size.height(), size.width());
-
-    m_waveItem->set_size(QSize(size.height(), size.width()));
-    m_tcgItem->set_size(QSize(size.height(), size.width()));
-
-    AscanDisplay::resize_event(size);
 }

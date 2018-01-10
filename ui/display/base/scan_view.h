@@ -30,4 +30,9 @@ private:
     Qt::Orientation m_orientation;
 };
 
+inline Qt::Orientation ScanView::orientation()
+{
+    return m_orientation;
+}
+
 #endif // __SCAN_VIEW_H__

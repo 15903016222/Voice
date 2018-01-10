@@ -10,10 +10,14 @@
 #include "gate_item.h"
 #include "tcg_item.h"
 
+#include "../base/scan_view.h"
 #include "../base/scan_scene.h"
 #include "../ruler/ruler.h"
 #include "../color_bar/color_bar.h"
 #include "../cursor/amp_ref_cursor_item.h"
+#include "../cursor/amp_meas_cursor_item.h"
+#include "../cursor/ut_ref_cursor_item.h"
+#include "../cursor/ut_meas_cursor_item.h"
 
 #include <global.h>
 
@@ -28,7 +32,10 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
     m_gateBItem(new GateItem(group->sample(), group->gate_b())),
     m_gateIItem(new GateItem(group->sample(), group->gate_i())),
     m_tcgItem(new TcgItem(group->tcgs(), group->sample())),
-    m_ampRefCursorItem(new AmpRefCursorItem(m_group->cursor(), Qt::Horizontal))
+    m_ampRefCursorItem(new AmpRefCursorItem(m_group->cursor(), Qt::Horizontal)),
+    m_ampMeasCursorItem(new AmpMeasCursorItem(m_group->cursor(), Qt::Horizontal)),
+    m_utRefCursorItem(new UtRefCursorItem(m_group, Qt::Vertical)),
+    m_utMeasCursorItem(new UtMeasCursorItem(m_group, Qt::Vertical))
 {  
     m_colorBar->hide();
     m_colorRuler->hide();
@@ -42,6 +49,9 @@ AscanDisplay::AscanDisplay(const DplDevice::GroupPointer &group, QWidget *parent
     m_scene->addItem(m_tcgItem);
 
     m_scene->addItem(m_ampRefCursorItem);
+    m_scene->addItem(m_ampMeasCursorItem);
+    m_scene->addItem(m_utRefCursorItem);
+    m_scene->addItem(m_utMeasCursorItem);
 
     connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
             SIGNAL(range_changed(float)),
@@ -87,8 +97,21 @@ void AscanDisplay::do_data_event()
 
 void AscanDisplay::resize_event(const QSize &size)
 {
-    Q_UNUSED(size);
-    m_ampRefCursorItem->set_size(size);
+    QSize s;
+    if (m_view->orientation() == Qt::Vertical) {
+        s.setHeight(size.width());
+        s.setWidth(size.height());
+    } else {
+        s = size;
+    }
+    m_scene->setSceneRect(-s.width()/2, -s.height()/2 + 1,
+                          s.width(), s.height());
+    m_waveItem->set_size(s);
+    m_tcgItem->set_size(s);
+    m_ampRefCursorItem->set_size(s);
+    m_ampMeasCursorItem->set_size(s);
+    m_utRefCursorItem->set_size(s);
+    m_utMeasCursorItem->set_size(s);
     update_gates();
 }
 
