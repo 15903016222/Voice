@@ -29,11 +29,13 @@ public:
 
     bool moving() const;
 
+
 signals:
     void size_changed();
 
 public slots:
     void setVisible(bool flag);
+    void set_text(const QString &text);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -47,6 +49,7 @@ private:
     QColor m_color;
     QColor m_bgColor;
     bool m_movingFlag;
+    QString m_text;
 };
 
 inline void CursorItem::set_size(const QSize size)
@@ -75,6 +78,11 @@ inline Qt::Orientation CursorItem::orientation() const
 inline bool CursorItem::moving() const
 {
     return m_movingFlag;
+}
+
+inline void CursorItem::set_text(const QString &text)
+{
+    m_text = text;
 }
 
 #endif // __CURSOR_ITEM_H__

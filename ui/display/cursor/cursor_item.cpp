@@ -5,10 +5,11 @@
 
 static const int DEFAULT_WIDTH = 4;
 static const int DEFAULT_TEXT_HEIGHT = 13;
-static const int DEFAULT_TEXT_WIDTH = 30;
+static const int DEFAULT_TEXT_WIDTH = 34;
 
 CursorItem::CursorItem(const DplMeasure::CursorPointer &cursor,
-                       Qt::Orientation cursorOrientation, QColor color, QColor bgColor) :
+                       Qt::Orientation cursorOrientation,
+                       QColor color, QColor bgColor) :
     QGraphicsObject(),
     m_cursor(cursor),
     m_orientation(cursorOrientation),
@@ -46,17 +47,23 @@ void CursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
     if (Qt::Horizontal == m_orientation) {
         painter->drawLine(0, 0, m_size.width(), 0);
-
-        painter->setBrush(QBrush(m_bgColor));
         painter->fillRect(0, -DEFAULT_TEXT_HEIGHT,
                           DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
-                          Qt::yellow);
+                          m_bgColor);
         painter->setPen(Qt::black);
-        painter->drawText(QRectF(0, -DEFAULT_TEXT_HEIGHT,
-                                 DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT),
-                          "Test");
+        painter->drawText(0, -DEFAULT_TEXT_HEIGHT,
+                          DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                          Qt::AlignCenter,
+                          m_text);
     } else {
         painter->drawLine(0, 0, 0, m_size.height());
+        painter->fillRect(0, 0, DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                          m_bgColor);
+        painter->setPen(Qt::black);
+        painter->drawText(0, 0,
+                          DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                          Qt::AlignCenter,
+                          m_text);
     }
 }
 
