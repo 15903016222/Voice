@@ -11,7 +11,6 @@
 #include <QDebug>
 #include <QSettings>
 #include <QTranslator>
-#include <ui/menu/preference/translator.h>
 
 namespace DplPreferenceMenu {
 
@@ -49,7 +48,8 @@ PreferenceMenu::PreferenceMenu(QWidget *parent) :
     m_languageItem->add_item(tr("English"));
     m_languageItem->add_item(tr("Chinese"));
 
-    connect(m_languageItem, SIGNAL(value_changed(int)), DplTranslator::Translator::instance(), SLOT(do_value_changed(int)));
+    connect(m_languageItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_languageItem_changed(int)));
 
     /* Starting Page Menu Item */
     m_startingPageItem->set(s_onOff);
@@ -72,6 +72,12 @@ PreferenceMenu::~PreferenceMenu()
 void PreferenceMenu::set_brightness(double value)
 {
     m_mcu->set_brightness((char)value);
+}
+
+void PreferenceMenu::do_languageItem_changed(int val)
+{
+    DplDevice::Device::instance()->display()->set_language(
+                static_cast<DplDisplay::Display::Language>(val));
 }
 
 void PreferenceMenu::do_deployItem_changed()

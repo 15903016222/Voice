@@ -101,6 +101,20 @@ public:
      */
     const PaletteColorPointer &palette() const;
 
+    enum Language {
+        ENGLISH,
+        CHINESE,
+        RUSSIAN,
+        FRENCH,
+        GERMAN,
+        JAPANESE
+    };
+    void set_language(Language lang);
+
+    Language language() const;
+
+    QString language_string() const;
+
 signals:
     void layout_changed(DplDisplay::Display::Layout layout, const QVector<int> grps);
 
@@ -111,6 +125,7 @@ private:
     QVector<int> m_grps;
     AscanPointer m_ascan;
     PaletteColorPointer m_palette;
+    Language m_language;
 };
 
 typedef QSharedPointer<Display> DisplayPointer;
@@ -143,6 +158,11 @@ inline const AscanPointer &Display::ascan() const
 inline const PaletteColorPointer &Display::palette() const
 {
     return m_palette;
+}
+
+inline Display::Language Display::language() const
+{
+    return m_language;
 }
 
 }

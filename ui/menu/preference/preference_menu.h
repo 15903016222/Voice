@@ -33,8 +33,9 @@ private:
 signals:
     void opacity_changed(double value);
 
-private slots:
+protected slots:
     void set_brightness(double value);
+    void do_languageItem_changed(int val);
     void do_deployItem_changed();
     void do_gatemodeItem_value_changed(int val);
 

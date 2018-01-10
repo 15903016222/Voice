@@ -3,6 +3,13 @@
 
 namespace Dpl {
 
+/* Directions */
+#define TOP_PATH        "/opt/mercury"
+#define FONT_PATH       TOP_PATH"/font"
+#define LANGUAGE_PATH   TOP_PATH"/language"
+#define QSS_PATH        TOP_PATH"/qss"
+
+/* Colors */
 #define CyanColor       "#249292"
 #define DarkBlueColor   "#1D6765"
 #define BlueColor       "#1F6E6C"
@@ -17,6 +24,7 @@ namespace Dpl {
 #define PaleGreyColor   "#C7CCCA"
 #define DarkGreyColor   "#6B6B6E"
 
+/* Convert */
 #define US_STR      QString::fromUtf8("μs")
 #define MM_STR      ("mm")
 #define DEGREE_STR  QString::fromUtf8("°")

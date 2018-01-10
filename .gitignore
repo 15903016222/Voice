@@ -4,6 +4,7 @@
 *.LOCAL.*
 *.BASE.*
 *.REMOTE.*
+*.qm
 build
 *.orig
 /Fpga
