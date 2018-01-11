@@ -1,5 +1,7 @@
 #include "icons_bar.h"
 #include "ui_icons_bar.h"
+
+#include <global.h>
 #include <source/scan.h>
 #include <device/device.h>
 #include <QTimer>
@@ -62,9 +64,7 @@ void IconsBar::do_group_changed(const DplDevice::GroupPointer &group)
 void IconsBar::do_temperature_event(Mcu::TemperatureType type, int value)
 {
     if (type == Mcu::TEMPERATURE_CPU) {
-        QString temp_cpu;
-        temp_cpu.sprintf("%d\260C", value);
-        ui->tempLabel->setText(temp_cpu);
+        ui->tempLabel->setText(QString::number(value)+DEGREE_STR+"C");
     } /*else if (type == Mcu::TEMPERATURE_FPGA) {
         ui->label_2->setNum(value);
     } else if (type == Mcu::TEMPERATURE_MCU) {

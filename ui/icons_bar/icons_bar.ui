@@ -243,10 +243,10 @@
             </property>
             <property name="font">
              <font>
-              <family>Times New Roman</family>
+              <family>Source Han Serif SC</family>
               <pointsize>9</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -298,10 +298,10 @@
             </property>
             <property name="font">
              <font>
-              <family>Times New Roman</family>
+              <family>Source Han Serif SC</family>
               <pointsize>9</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -353,10 +353,10 @@
             </property>
             <property name="font">
              <font>
-              <family>Times New Roman</family>
+              <family>Source Han Serif SC</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -412,8 +412,9 @@
             </property>
             <property name="font">
              <font>
-              <weight>75</weight>
-              <bold>true</bold>
+              <family>Source Han Serif SC</family>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -465,8 +466,9 @@
             </property>
             <property name="font">
              <font>
-              <weight>75</weight>
-              <bold>true</bold>
+              <family>Source Han Serif SC</family>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -518,8 +520,9 @@
             </property>
             <property name="font">
              <font>
-              <weight>75</weight>
-              <bold>true</bold>
+              <family>Source Han Serif SC</family>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -571,10 +574,10 @@
             </property>
             <property name="font">
              <font>
-              <family>Times New Roman</family>
+              <family>Source Han Serif SC</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
