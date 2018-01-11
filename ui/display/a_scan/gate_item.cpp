@@ -47,8 +47,8 @@ GateItem::GateItem(const DplUt::SamplePointer &sample, const DplGate::GatePointe
 
 QRectF GateItem::boundingRect() const
 {
-    return QRectF(0, -GATE_HEIGHT/2 - 10,
-                  m_gate->width() * ratio(), GATE_HEIGHT + 20);
+    return QRectF(0, -GATE_HEIGHT/2 - 20,
+                  m_gate->width() * ratio(), GATE_HEIGHT + 40);
 }
 
 void GateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
