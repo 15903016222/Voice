@@ -4,7 +4,7 @@
 #include <QGraphicsScene>
 #include <QPainter>
 
-static const int DEFAULT_WIDTH = 4;
+static const int DEFAULT_WIDTH = 40;
 static const int DEFAULT_TEXT_HEIGHT = 13;
 static const int DEFAULT_TEXT_WIDTH = 34;
 
@@ -38,11 +38,11 @@ CursorItem::CursorItem(const DplMeasure::CursorPointer &cursor,
 QRectF CursorItem::boundingRect() const
 {
     if(Qt::Horizontal == m_orientation) {
-        return QRectF(0, -DEFAULT_WIDTH/2 - 10,
-                      m_size.width(), DEFAULT_WIDTH + 20);
+        return QRectF(0, -DEFAULT_WIDTH/2,
+                      m_size.width(), DEFAULT_WIDTH);
     } else {
-        return QRectF(-DEFAULT_WIDTH/2 - 10, 0,
-                      DEFAULT_WIDTH + 20, m_size.height());
+        return QRectF(-DEFAULT_WIDTH/2, 0,
+                      DEFAULT_WIDTH, m_size.height());
     }
 }
 
