@@ -60,7 +60,7 @@ void DelayMenuItem::do_value_changed(double val)
     m_wedge->set_delay(Dpl::us_to_ns(val));
 }
 
-void DelayMenuItem::language_changed()
+void DelayMenuItem::translate()
 {
     set_title(tr("Wedge Delay"));
 }

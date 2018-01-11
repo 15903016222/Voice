@@ -13,7 +13,7 @@ UnitMenuItem::UnitMenuItem(QWidget *parent) :
             this, SLOT(do_group_changed(DplDevice::GroupPointer)));
 
     do_group_changed(DplDevice::Device::instance()->current_group());
-    language_changed();
+    translate();
 }
 
 void UnitMenuItem::do_group_changed(const DplDevice::GroupPointer &group)
@@ -42,7 +42,7 @@ void UnitMenuItem::do_value_changed(int index)
     m_group->set_ut_unit(static_cast<DplDevice::Group::UtUnit>(index));
 }
 
-void UnitMenuItem::language_changed()
+void UnitMenuItem::translate()
 {
     set_title(tr("Ut Unit"));
 

@@ -60,7 +60,7 @@ void VelocityMenuItem::do_value_changed(double val)
     }
 }
 
-void VelocityMenuItem::language_changed()
+void VelocityMenuItem::translate()
 {
     set_title(tr("Velocity"));
 }
