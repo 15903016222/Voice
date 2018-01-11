@@ -26,22 +26,10 @@ public:
     double amplitude_reference() const;
 
     /**
-     * @brief set_amplitude_reference   设置参考光标位置的波幅值 %(r)
-     * @param val                       波幅值(%)
-     */
-    void set_amplitude_reference(double val);
-
-    /**
      * @brief amplitude_measurement 获取测量光标位置的波幅值 %(m)
      * @return                      波幅值(%)
      */
     double amplitude_measurement() const;
-
-    /**
-     * @brief set_amplitude_measurement 设置测量光标位置的波幅值 %(m)
-     * @param val                       波幅值(%)
-     */
-    void set_amplitude_measurement(double val);
 
     /**
      * @brief ultrasound_reference  获取参考光标在超声轴上的位置 U(r)
@@ -126,6 +114,10 @@ public:
      * @param flag          true为显示，false为不显示
      */
     void set_visible(bool flag);
+
+public slots:
+    void set_amplitude_reference(double val);
+    void set_amplitude_measurement(double val);
 
 signals:
     void amplitude_reference_changed(double val);

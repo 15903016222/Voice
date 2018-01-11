@@ -51,6 +51,10 @@ double Cursor::amplitude_reference() const
     return d->m_r;
 }
 
+/**
+ * @brief set_amplitude_reference   设置参考光标位置的波幅值 %(r)
+ * @param val                       波幅值(%)
+ */
 void Cursor::set_amplitude_reference(double val)
 {
     if ( !qFuzzyCompare(val, d->m_r) ) {
@@ -64,6 +68,10 @@ double Cursor::amplitude_measurement() const
     return d->m_m;
 }
 
+/**
+ * @brief set_amplitude_measurement 设置测量光标位置的波幅值 %(m)
+ * @param val                       波幅值(%)
+ */
 void Cursor::set_amplitude_measurement(double val)
 {
     if ( !qFuzzyCompare(val, d->m_m) ) {
