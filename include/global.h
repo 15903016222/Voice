@@ -5,7 +5,7 @@ namespace Dpl {
 
 /* Directions */
 #define TOP_PATH        "/opt/mercury"
-#define FONT_PATH       TOP_PATH"/font"
+#define IMAGE_PATH      TOP_PATH"/image"
 #define LANGUAGE_PATH   TOP_PATH"/language"
 #define QSS_PATH        TOP_PATH"/qss"
 

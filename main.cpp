@@ -1,17 +1,10 @@
 #include "mainwindow.h"
+#include <global.h>
 #include <device/device.h>
 #include <QApplication>
-#include <QTextCodec>
-#include <QFontDatabase>
 #include <QSplashScreen>
+#include <QTextCodec>
 #include <QTime>
-
-#if (PHASCAN | PHASCAN_II)
-static const char *FONT_FILE = "/opt/mercury/font/Arial.ttf";
-#endif
-#if (PC_UNIX | PC_WIN)
-static const char *FONT_FILE = "Arial.ttf";
-#endif
 
 int main(int argc, char *argv[])
 {
@@ -19,36 +12,26 @@ int main(int argc, char *argv[])
     a.setApplicationName(QLatin1String("Mercury"));
 //    a.setApplicationVersion();
 
+    QTime time;
+    time.restart();
+
 #if QT_VERSION < QT_VERSION_CHECK(5,0,0)
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
 #else
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf-8"));
 #endif
 
-    QSplashScreen splash(QPixmap("/opt/mercury/image/splash.png"));
+    QSplashScreen splash(QPixmap(IMAGE_PATH"/splash.png"));
     splash.show();
     a.processEvents();
 
-    QTime time;
-    time.restart();
     DplDevice::Device::instance()->add_group();
     qDebug("Mercury Starting");
 
     MainWindow w;
 
-    int fontId = QFontDatabase::addApplicationFont(FONT_FILE);
-    QStringList list = QFontDatabase::applicationFontFamilies(fontId);
-    if (list.isEmpty()) {
-        qWarning("font families is empty");
-    } else {
-        QFont font(list.at(0), 16);
-        w.setFont(font);
-    }
-
-#if PHASCAN
+#if PHASCAN || PHASCAN_II
 //    w.setCursor(Qt::BlankCursor);                           // 隐藏鼠标
-    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-#elif PHASCAN_II
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 #endif
 
