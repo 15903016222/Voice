@@ -7,16 +7,18 @@
 
 #include "cursors/amp_ref_menu_item.h"
 #include "cursors/amp_meas_menu_item.h"
+#include "cursors/ut_ref_menu_item.h"
+#include "cursors/ut_meas_menu_item.h"
 
 namespace DplMeasurementMenu {
 
 CursorsMenu::CursorsMenu(QWidget *parent) :
     BaseMenu(parent),
     m_selectionItem(new ComboMenuItem(this, tr("Selection"))),
-    m_ampRefItem(new AmpRefMenuItem(this)),
-    m_ampMeasItem(new AmpMeasMenuItem(this)),
-    m_urItem(new SpinMenuItem(this, "U(r)", "mm")),
-    m_umItem(new SpinMenuItem(this, "U(m)", "mm")),
+    m_afItem(new AmpRefMenuItem(this)),
+    m_amItem(new AmpMeasMenuItem(this)),
+    m_urItem(new UtRefMenuItem(this)),
+    m_umItem(new UtMeasMenuItem(this)),
     m_srItem(new SpinMenuItem(this, "S(r)", "s")),
     m_smItem(new SpinMenuItem(this, "S(m)", "s")),
     m_irItem(new SpinMenuItem(this, "I(r)", "mm")),
@@ -31,14 +33,6 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
     m_selectionItem->add_item(tr("S-Scan"));
     connect(m_selectionItem, SIGNAL(value_changed(int)),
             this, SLOT(do_selectionItem_changed(int)));
-
-    /* U(r) menu item */
-    connect(m_urItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_urItem_changed(double)));
-
-    /* U(m) menu item */
-    connect(m_umItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_umItem_changed(double)));
 
     DplSource::Scan *scan = DplSource::Scan::instance();
     DplSource::AxisPointer scanAxis = scan->scan_axis();
@@ -110,23 +104,17 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
 
         connect(cursor, SIGNAL(scan_reference_changed(double)),
                 this, SLOT(do_scan_reference_changed(double)));
-
-        connect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
-                this, SLOT(do_ultrasound_measurement_changed(double)));
-
-        connect(cursor, SIGNAL(ultrasound_reference_changed(double)),
-                this, SLOT(do_ultrasound_reference_changed(double)));
     }
 }
 
 void CursorsMenu::show_a_scan()
 {
-    m_layout1->addWidget(m_ampRefItem);
-    m_layout2->addWidget(m_ampMeasItem);
+    m_layout1->addWidget(m_afItem);
+    m_layout2->addWidget(m_amItem);
     m_layout3->addWidget(m_urItem);
     m_layout4->addWidget(m_umItem);
-    m_ampRefItem->show();
-    m_ampMeasItem->show();
+    m_afItem->show();
+    m_amItem->show();
     m_urItem->show();
     m_umItem->show();
 }
@@ -215,34 +203,6 @@ void CursorsMenu::update_smItem()
     }
 }
 
-void CursorsMenu::update_urItem()
-{
-    if (m_group->ut_unit() == DplDevice::Group::Time) {
-        m_urItem->set_unit(US_STR);
-    } else {
-        m_urItem->set_unit(MM_STR);
-    }
-
-    m_urItem->set(Tool::cnf_to_display(m_group, m_group->sample()->start()),
-                  Tool::cnf_to_display(m_group, m_group->sample()->start() + m_group->sample()->range()),
-                  1, 0.1);
-    m_urItem->set_value(Tool::cnf_to_display(m_group, m_cursor->ultrasound_reference()));
-}
-
-void CursorsMenu::update_umItem()
-{
-    if (m_group->ut_unit() == DplDevice::Group::Time) {
-        m_umItem->set_unit(US_STR);
-    } else {
-        m_umItem->set_unit(MM_STR);
-    }
-
-    m_umItem->set(Tool::cnf_to_display(m_group, m_group->sample()->start()),
-                  Tool::cnf_to_display(m_group, m_group->sample()->start() + m_group->sample()->range()),
-                  1, 0.1);
-    m_umItem->set_value(Tool::cnf_to_display(m_group, m_cursor->ultrasound_measurement()));
-}
-
 void CursorsMenu::update_irItem()
 {
     DplSource::AxisPointer indexAxis = DplSource::Scan::instance()->index_axis();
@@ -292,12 +252,6 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
 
             disconnect(cursor, SIGNAL(scan_reference_changed(double)),
                     this, SLOT(do_scan_reference_changed(double)));
-
-            disconnect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
-                    this, SLOT(do_ultrasound_measurement_changed(double)));
-
-            disconnect(cursor, SIGNAL(ultrasound_reference_changed(double)),
-                    this, SLOT(do_ultrasound_reference_changed(double)));
         }
     }
 
@@ -306,31 +260,10 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
 
     do_selectionItem_changed(0);
 
-    update_urItem();
-    update_umItem();
     update_srItem();
     update_smItem();
     update_irItem();
     update_imItem();
-
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
-            SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
-            this, SLOT(update_urItem()));
-    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
-            SIGNAL(start_changed(float)),
-            this, SLOT(update_urItem()));
-    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
-            SIGNAL(range_changed(float)),
-            this, SLOT(update_urItem()));
-    connect(static_cast<DplDevice::Group *>(m_group.data()),
-            SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
-            this, SLOT(update_umItem()));
-    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
-            SIGNAL(start_changed(float)),
-            this, SLOT(update_umItem()));
-    connect(static_cast<DplUt::Sample *>(m_group->sample().data()),
-            SIGNAL(range_changed(float)),
-            this, SLOT(update_umItem()));
 
     DplMeasure::CursorPointer cursorPointer = m_group->cursor();
     DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(cursorPointer.data());
@@ -341,19 +274,13 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
 
         connect(cursor, SIGNAL(scan_reference_changed(double)),
                 this, SLOT(do_scan_reference_changed(double)));
-
-        connect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
-                this, SLOT(do_ultrasound_measurement_changed(double)));
-
-        connect(cursor, SIGNAL(ultrasound_reference_changed(double)),
-                this, SLOT(do_ultrasound_reference_changed(double)));
     }
 }
 
 void CursorsMenu::do_selectionItem_changed(int index)
 {
-    m_ampRefItem->hide();
-    m_ampMeasItem->hide();
+    m_afItem->hide();
+    m_amItem->hide();
     m_urItem->hide();
     m_umItem->hide();
     m_srItem->hide();
@@ -393,26 +320,6 @@ void CursorsMenu::do_smItem_changed(double val)
             this, SLOT(do_scan_measurement_changed(double)));
 }
 
-void CursorsMenu::do_urItem_changed(double val)
-{
-    DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(m_cursor.data());
-    disconnect(cursor, SIGNAL(ultrasound_reference_changed(double)),
-            this, SLOT(do_ultrasound_reference_changed(double)));
-    m_cursor->set_ultrasound_reference(Tool::display_to_cnf(m_group, val));
-    connect(cursor, SIGNAL(ultrasound_reference_changed(double)),
-            this, SLOT(do_ultrasound_reference_changed(double)));
-}
-
-void CursorsMenu::do_umItem_changed(double val)
-{
-    DplMeasure::Cursor *cursor = static_cast<DplMeasure::Cursor*>(m_cursor.data());
-    disconnect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
-            this, SLOT(do_ultrasound_measurement_changed(double)));
-    m_cursor->set_ultrasound_measurement(Tool::display_to_cnf(m_group, val));
-    connect(cursor, SIGNAL(ultrasound_measurement_changed(double)),
-            this, SLOT(do_ultrasound_measurement_changed(double)));
-}
-
 void CursorsMenu::do_irItem_changed(double val)
 {
     m_cursor->set_index_reference(val);
@@ -426,31 +333,6 @@ void CursorsMenu::do_imItem_changed(double val)
 void CursorsMenu::do_angleItem_changed(double val)
 {
     m_group->set_current_beam(val);
-}
-
-void CursorsMenu::do_ultrasound_reference_changed(double value)
-{
-    /* U(r) menu item */
-    disconnect(m_urItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_urItem_changed(double)));
-
-    m_urItem->set_value(Tool::cnf_to_display(m_group, value));
-
-    connect(m_urItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_urItem_changed(double)));
-
-}
-
-void CursorsMenu::do_ultrasound_measurement_changed(double value)
-{
-    /* U(m) menu item */
-    disconnect(m_umItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_umItem_changed(double)));
-
-    m_umItem->set_value(Tool::cnf_to_display(m_group, value));
-
-    connect(m_umItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_umItem_changed(double)));
 }
 
 void CursorsMenu::do_scan_reference_changed(double value)

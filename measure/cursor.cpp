@@ -85,6 +85,10 @@ double Cursor::ultrasound_reference() const
     return d->m_ur;
 }
 
+/**
+ * @brief set_ultrasound_reference  设置参考光标在超声轴上的位置 U(r)
+ * @param val                       位置(ns)
+ */
 void Cursor::set_ultrasound_reference(double val)
 {
     if ( !qFuzzyCompare(val, d->m_ur) ) {
@@ -98,6 +102,10 @@ double Cursor::ultrasound_measurement() const
     return d->m_um;
 }
 
+/**
+ * @brief set_ultrasound_measurement    设置测量光标在超声轴上的位置 U(m)
+ * @param val                           位置(ns)
+ */
 void Cursor::set_ultrasound_measurement(double val)
 {
     if ( !qFuzzyCompare(val, d->m_um )) {

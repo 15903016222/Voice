@@ -38,22 +38,10 @@ public:
     double ultrasound_reference() const;
 
     /**
-     * @brief set_ultrasound_reference  设置参考光标在超声轴上的位置 U(r)
-     * @param val                       位置(ns)
-     */
-    void set_ultrasound_reference(double val);
-
-    /**
      * @brief ultrasound_measurement    获取测量光标在超声轴上的位置 U(m)
      * @return                          位置(ns)
      */
     double ultrasound_measurement() const;
-
-    /**
-     * @brief set_ultrasound_measurement    设置测量光标在超声轴上的位置 U(m)
-     * @param val                           位置(ns)
-     */
-    void set_ultrasound_measurement(double val);
 
     /**
      * @brief scan_reference    获取扫查轴上参考光标的位置
@@ -118,6 +106,8 @@ public:
 public slots:
     void set_amplitude_reference(double val);
     void set_amplitude_measurement(double val);
+    void set_ultrasound_reference(double val);
+    void set_ultrasound_measurement(double val);
 
 signals:
     void amplitude_reference_changed(double val);

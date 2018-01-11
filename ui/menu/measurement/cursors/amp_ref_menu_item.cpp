@@ -8,7 +8,7 @@
 #include <device/device.h>
 
 AmpRefMenuItem::AmpRefMenuItem(QWidget *parent) :
-    SpinMenuItem(parent, "%(r)", "%")
+    SpinMenuItem(parent, "%(r)")
 {
     set(0, 100, 1);
 
