@@ -39,7 +39,6 @@ private slots:
     void do_smItem_changed(double val);
     void do_irItem_changed(double val);
     void do_imItem_changed(double val);
-    void do_angleItem_changed(double val);
 
     /**
      * @brief do_scan_reference_changed 处理引用光标在扫查轴位置变化

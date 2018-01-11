@@ -9,6 +9,8 @@
 
 class UtRuler;
 class ScanRuler;
+class UtRefCursorItem;
+class UtMeasCursorItem;
 
 class BscanDisplay : public ScanDisplay
 {
@@ -20,11 +22,11 @@ public:
 protected slots:
     void resize_event(const QSize &size);
 
-protected:
-    BscanItem *m_bscanItem;
-
 private:
     DplDevice::GroupPointer m_group;
+    BscanItem *m_bscanItem;
+    UtRefCursorItem *m_utRefCursorItem;
+    UtMeasCursorItem *m_utMeasCursorItem;
 };
 
 #endif // __B_SCAN_DISPLAY_H_

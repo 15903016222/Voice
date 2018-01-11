@@ -330,11 +330,6 @@ void CursorsMenu::do_imItem_changed(double val)
     m_cursor->set_index_measurement(val);
 }
 
-void CursorsMenu::do_angleItem_changed(double val)
-{
-    m_group->set_current_beam(val);
-}
-
 void CursorsMenu::do_scan_reference_changed(double value)
 {
     /* S(r) menu item */
