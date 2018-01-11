@@ -5,14 +5,17 @@
 #include <ui/tool/tool.h>
 #include <source/scan.h>
 
+#include "cursors/amp_ref_menu_item.h"
+#include "cursors/amp_meas_menu_item.h"
+
 namespace DplMeasurementMenu {
 
 CursorsMenu::CursorsMenu(QWidget *parent) :
     BaseMenu(parent),
     m_selectionItem(new ComboMenuItem(this, tr("Selection"))),
-    m_rItem(new SpinMenuItem(this, ("%(r)"), "%")),
-    m_mItem(new SpinMenuItem(this, "%(m)", "%")),
-    m_urItem(new SpinMenuItem(this, ("U(r)"), "mm")),
+    m_ampRefItem(new AmpRefMenuItem(this)),
+    m_ampMeasItem(new AmpMeasMenuItem(this)),
+    m_urItem(new SpinMenuItem(this, "U(r)", "mm")),
     m_umItem(new SpinMenuItem(this, "U(m)", "mm")),
     m_srItem(new SpinMenuItem(this, "S(r)", "s")),
     m_smItem(new SpinMenuItem(this, "S(m)", "s")),
@@ -28,16 +31,6 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
     m_selectionItem->add_item(tr("S-Scan"));
     connect(m_selectionItem, SIGNAL(value_changed(int)),
             this, SLOT(do_selectionItem_changed(int)));
-
-    /* %(r) menu item */
-    m_rItem->set(0, 100, 1);
-    connect(m_rItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_rItem_changed(double)));
-
-    /* %(m) menu item */
-    m_mItem->set(0, 100, 1);
-    connect(m_mItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_mItem_changed(double)));
 
     /* U(r) menu item */
     connect(m_urItem, SIGNAL(value_changed(double)),
@@ -126,54 +119,16 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
     }
 }
 
-void CursorsMenu::show_scan()
-{
-    m_layout0->addWidget(m_selectionItem);
-    m_selectionItem->show();
-    switch (m_selectionItem->current_index()) {
-    case 0:
-        /* A-Scan */
-        show_a_scan();
-        break;
-    case 1:
-        /* B-Scan */
-        show_b_scan();
-        break;
-    case 2:
-        /* C-Scan */
-        show_c_scan();
-        break;
-    case 3:
-        /* S-Scan */
-        show_s_scan();
-        break;
-    default:
-        break;
-    }
-}
-
 void CursorsMenu::show_a_scan()
 {
-    m_layout1->addWidget(m_rItem);
-    m_layout2->addWidget(m_mItem);
+    m_layout1->addWidget(m_ampRefItem);
+    m_layout2->addWidget(m_ampMeasItem);
     m_layout3->addWidget(m_urItem);
     m_layout4->addWidget(m_umItem);
-    m_rItem->show();
-    m_mItem->show();
+    m_ampRefItem->show();
+    m_ampMeasItem->show();
     m_urItem->show();
     m_umItem->show();
-}
-
-void CursorsMenu::hide_a_scan()
-{
-    m_layout1->removeWidget(m_rItem);
-    m_layout2->removeWidget(m_mItem);
-    m_layout3->removeWidget(m_urItem);
-    m_layout4->removeWidget(m_umItem);
-    m_rItem->hide();
-    m_mItem->hide();
-    m_urItem->hide();
-    m_umItem->hide();
 }
 
 void CursorsMenu::show_b_scan()
@@ -188,18 +143,6 @@ void CursorsMenu::show_b_scan()
     m_umItem->show();
 }
 
-void CursorsMenu::hide_b_scan()
-{
-    m_layout1->removeWidget(m_srItem);
-    m_layout2->removeWidget(m_smItem);
-    m_layout3->removeWidget(m_urItem);
-    m_layout4->removeWidget(m_umItem);
-    m_srItem->hide();
-    m_smItem->hide();
-    m_urItem->hide();
-    m_umItem->hide();
-}
-
 void CursorsMenu::show_c_scan()
 {
     m_layout1->addWidget(m_srItem);
@@ -210,18 +153,6 @@ void CursorsMenu::show_c_scan()
     m_smItem->show();
     m_irItem->show();
     m_imItem->show();
-}
-
-void CursorsMenu::hide_c_scan()
-{
-    m_layout1->removeWidget(m_srItem);
-    m_layout2->removeWidget(m_smItem);
-    m_layout3->removeWidget(m_irItem);
-    m_layout4->removeWidget(m_imItem);
-    m_srItem->hide();
-    m_smItem->hide();
-    m_irItem->hide();
-    m_imItem->hide();
 }
 
 void CursorsMenu::show_s_scan()
@@ -236,20 +167,6 @@ void CursorsMenu::show_s_scan()
     m_umItem->show();
     m_irItem->show();
     m_imItem->show();
-}
-
-void CursorsMenu::hide_s_scan()
-{
-    m_layout1->removeWidget(m_vpaItem);
-    m_layout2->removeWidget(m_urItem);
-    m_layout3->removeWidget(m_umItem);
-    m_layout4->removeWidget(m_irItem);
-    m_layout5->removeWidget(m_imItem);
-    m_vpaItem->hide();
-    m_urItem->hide();
-    m_umItem->hide();
-    m_irItem->hide();
-    m_imItem->hide();
 }
 
 void CursorsMenu::changeEvent(QEvent *e)
@@ -389,8 +306,6 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
 
     do_selectionItem_changed(0);
 
-    m_rItem->set_value(m_cursor->amplitude_reference());
-    m_mItem->set_value(m_cursor->amplitude_measurement());
     update_urItem();
     update_umItem();
     update_srItem();
@@ -437,35 +352,25 @@ void CursorsMenu::update(const DplDevice::GroupPointer &grp)
 
 void CursorsMenu::do_selectionItem_changed(int index)
 {
-    hide_a_scan();
-    hide_b_scan();
-    hide_c_scan();
-    hide_s_scan();
+    m_ampRefItem->hide();
+    m_ampMeasItem->hide();
+    m_urItem->hide();
+    m_umItem->hide();
+    m_srItem->hide();
+    m_smItem->hide();
+    m_irItem->hide();
+    m_imItem->hide();
+    m_vpaItem->hide();
 
     if ( 0 == index ) {
-        /* A-Scan */
         show_a_scan();
     } else if ( 1 == index ) {
-        /* B-Scan */
         show_b_scan();
     } else if ( 2 == index ) {
-        /* C-Scan */
         show_c_scan();
     } else if ( 3 == index ) {
-        /* S-Scan */
         show_s_scan();
     }
-
-}
-
-void CursorsMenu::do_rItem_changed(double val)
-{
-    m_cursor->set_amplitude_reference(val);
-}
-
-void CursorsMenu::do_mItem_changed(double val)
-{
-    m_cursor->set_amplitude_measurement(val);
 }
 
 void CursorsMenu::do_srItem_changed(double val)

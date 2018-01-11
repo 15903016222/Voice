@@ -4,7 +4,10 @@
 #include "../base_menu.h"
 #include <device/device.h>
 
+class AmpRefMenuItem;
+class AmpMeasMenuItem;
 class VpaMenuItem;
+
 namespace DplMeasurementMenu {
 
 class CursorsMenu : public BaseMenu
@@ -14,19 +17,10 @@ public:
     explicit CursorsMenu(QWidget *parent);
 
 protected:
-    void show_scan();
-
     void show_a_scan();
-    void hide_a_scan();
-
     void show_b_scan();
-    void hide_b_scan();
-
     void show_c_scan();
-    void hide_c_scan();
-
     void show_s_scan();
-    void hide_s_scan();
 
     void changeEvent(QEvent *e);
 
@@ -41,8 +35,6 @@ protected slots:
 private slots:
     void update(const DplDevice::GroupPointer &grp);
     void do_selectionItem_changed(int index);
-    void do_rItem_changed(double val);
-    void do_mItem_changed(double val);
     void do_srItem_changed(double val);
     void do_smItem_changed(double val);
     void do_urItem_changed(double val);
@@ -78,8 +70,8 @@ private slots:
 private:
     ComboMenuItem *m_selectionItem;
 
-    SpinMenuItem *m_rItem;      /* %(r) */
-    SpinMenuItem *m_mItem;      /* %(m) */
+    AmpRefMenuItem *m_ampRefItem;
+    AmpMeasMenuItem *m_ampMeasItem;
 
     SpinMenuItem *m_urItem;     /* U(r) */
     SpinMenuItem *m_umItem;     /* U(m) */

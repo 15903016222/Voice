@@ -1,3 +1,6 @@
+
+include($$PWD/cursors/cursors.pri)
+
 HEADERS += \
     $$PWD/cursors_menu.h \
     $$PWD/tofd_menu.h \
