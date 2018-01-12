@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "workpiece_probe_widget.h"
+#include "probe_part_widget.h"
 #include "focallaw_widget.h"
 #include "pa_detect_setting_widget.h"
 #include "calibration_widget.h"
@@ -37,15 +37,15 @@ QWidget *Selector::get_current_widget(WizardSetting::E_WIZARD_TYPE type)
     {
         case WizardSetting::WELD_PA_DETECT:
         {
-            m_widgetList << new WorkpieceProbeWidget(type);
+            m_widgetList << new ProbePartWidget(type);
             m_widgetList << new FocallawWidget(type);
             m_widgetList << new PADetectSettingWidget(type);
             m_widgetList << new CalibrationWidget(type, false);
             break;
         }
-        case WizardSetting::CURRENT_PA_DETECT:
+        case WizardSetting::COMMON_PA_DETECT:
         {
-            m_widgetList << new WorkpieceProbeWidget(type);
+            m_widgetList << new ProbePartWidget(type);
             m_widgetList << new FocallawWidget(type);
             m_widgetList << new PADetectSettingWidget(type);
             m_widgetList << new CalibrationWidget(type, false);
@@ -56,7 +56,7 @@ QWidget *Selector::get_current_widget(WizardSetting::E_WIZARD_TYPE type)
             m_widgetList << new MultiGroupWidget(type);
             break;
         }
-        case WizardSetting::SINGLE_DETECT:
+        case WizardSetting::UT_DETECT:
         {
             UTDetectSettingWidget *utDetectSettingWidget    = new UTDetectSettingWidget(type);
             CalibrationWidget     *calibrationWidget        = new CalibrationWidget(type);
@@ -69,13 +69,13 @@ QWidget *Selector::get_current_widget(WizardSetting::E_WIZARD_TYPE type)
         }
         case WizardSetting::SUB_WELD_PA_DETECT:
         {
-            m_widgetList << new WorkpieceProbeWidget(type);
+            m_widgetList << new ProbePartWidget(type);
             m_widgetList << new FocallawWidget(type);
             m_widgetList << new PADetectSettingWidget(type);
             m_widgetList << new CalibrationWidget(type, true);
             break;
         }
-        case WizardSetting::SUB_SINGLE_DETECT:
+        case WizardSetting::SUB_UT_DETECT:
         {
             UTDetectSettingWidget *utDetectSettingWidget    = new UTDetectSettingWidget(type);
             CalibrationWidget     *calibrationWidget        = new CalibrationWidget(type, true);

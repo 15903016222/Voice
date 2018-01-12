@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -20,11 +20,108 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QWidget:focus{outline: none;}
+
+QPushButton#commonPADetectPushButton{
+background-color:rgb(0, 130, 195);
+color: white;   
+font: 26pt;
+font-weight:bold;
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;
+}
+QPushButton#commonPADetectPushButton:focus{outline: none;
+background-color:rgb(0, 130, 195);
+color: rgb(170, 255, 0);   
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;}
+
+QPushButton#multiGroupDetectPushButton{
+background-color:rgb(55, 170, 255);
+color: white;   
+font: 26pt;
+font-weight:bold;
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;
+}
+QPushButton#multiGroupDetectPushButton:focus{outline: none;
+background-color:rgb(55, 170, 255);
+color: rgb(170, 255, 0);
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;}
+
+QPushButton#weldPADetectPushButton{
+background-color:rgb(55, 170, 255);
+color: white;   
+font: 26pt;
+font-weight:bold;
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;
+}
+QPushButton#weldPADetectPushButton:focus{outline: none;
+background-color:rgb(55, 170, 255);
+color: rgb(170, 255, 0);
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;}
+
+QPushButton#openConfigPushButton{
+background-color:rgb(55, 170, 255);
+color: white;   
+font: 26pt;
+font-weight:bold;
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;
+}
+QPushButton#openConfigPushButton:focus{outline: none;
+background-color:rgb(55, 170, 255);
+color: rgb(170, 255, 0);
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;}
+
+QPushButton#openDataPushButton{
+background-color:rgb(55, 170, 255);
+color: white;   
+font: 26pt;
+font-weight:bold;
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;
+}
+QPushButton#openDataPushButton:focus{outline: none;
+background-color:rgb(55, 170, 255);
+color: rgb(170, 255, 0);
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;}
+
+QPushButton#utDetectPushButton{
+background-color:rgb(55, 170, 255);
+color: white;   
+font: 26pt;
+font-weight:bold;
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;
+}
+QPushButton#utDetectPushButton:focus{outline: none;
+background-color:rgb(55, 170, 255);
+color: rgb(170, 255, 0);
+border-radius: 0px; 
+border: 1px groove white;
+border-style: outset;}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -41,44 +138,52 @@
    <item>
     <layout class="QHBoxLayout" name="topHorizontalLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>1</number>
      </property>
      <item>
-      <widget class="QPushButton" name="weldPADetectBtn">
+      <widget class="QPushButton" name="weldPADetectPushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>26</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>Weld PA Detect</string>
+        <string>Weld PA</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="currentPADetectBtn">
+      <widget class="QPushButton" name="commonPADetectPushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Current PA Detect</string>
+        <string>Common PA</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="multiGroupDetectBtn">
+      <widget class="QPushButton" name="multiGroupDetectPushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Multi Group Detect</string>
+        <string>Multi Group</string>
        </property>
       </widget>
      </item>
@@ -87,25 +192,25 @@
    <item>
     <layout class="QHBoxLayout" name="bottomHorizontalLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>1</number>
      </property>
      <item>
-      <widget class="QPushButton" name="singleDetectBtn">
+      <widget class="QPushButton" name="utDetectPushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Single Detect</string>
+        <string>UT</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="openDataBtn">
+      <widget class="QPushButton" name="openDataPushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -116,15 +221,15 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="openConfigFileBtn">
+      <widget class="QPushButton" name="openConfigPushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Open Config File</string>
+        <string>Open Config</string>
        </property>
       </widget>
      </item>
@@ -132,14 +237,6 @@
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>weldPADetectBtn</tabstop>
-  <tabstop>currentPADetectBtn</tabstop>
-  <tabstop>multiGroupDetectBtn</tabstop>
-  <tabstop>singleDetectBtn</tabstop>
-  <tabstop>openDataBtn</tabstop>
-  <tabstop>openConfigFileBtn</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

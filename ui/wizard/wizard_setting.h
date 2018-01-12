@@ -25,13 +25,13 @@ public:
     enum E_WIZARD_TYPE
     {
         WELD_PA_DETECT,
-        CURRENT_PA_DETECT,
+        COMMON_PA_DETECT,
         MULTI_GROUP_DETECT,
-        SINGLE_DETECT,
+        UT_DETECT,
         OPEN_DATA,
         OPEN_CONFIG_FILE,
         SUB_WELD_PA_DETECT,
-        SUB_SINGLE_DETECT
+        SUB_UT_DETECT
     };
 
     enum E_STEP

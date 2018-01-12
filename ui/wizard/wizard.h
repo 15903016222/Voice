@@ -9,7 +9,6 @@
 #include <QWidget>
 #include "wizard_setting.h"
 
-
 namespace Ui {
 class Wizard;
 }
@@ -22,27 +21,27 @@ public:
     explicit Wizard(QWidget *mainWindow, QWidget *parent = 0);
     ~Wizard();
 
-public slots:
+private slots:
+    void on_weldPADetectPushButton_clicked();
+
+    void on_commonPADetectPushButton_clicked();
+
+    void on_multiGroupDetectPushButton_clicked();
+
+    void on_utDetectPushButton_clicked();
+
+    void on_openDataPushButton_clicked();
+
+    void on_openConfigPushButton_clicked();
 
     void slot_finished_wizard_setting(WizardSetting::E_WIZARD_TYPE type);
 
-protected slots:
-
-    void on_weldPADetectBtn_clicked();
-    void on_currentPADetectBtn_clicked();
-    void on_multiGroupDetectBtn_clicked();
-    void on_singleDetectBtn_clicked();
-    void on_openDataBtn_clicked();
-    void on_openConfigFileBtn_clicked();
-
 private:
-
-    Ui::Wizard      *ui;
-    QWidget         *m_mainWindow;
-    WizardSetting   *m_wizardSetting;
+    Ui::Wizard *ui;
+    QWidget *m_mainWindow;
+    WizardSetting *m_wizardSetting;
 
     void keyPressEvent(QKeyEvent *event);
-
 };
 
 #endif // ___WIZARD_WINDOW_H__

@@ -14,7 +14,7 @@ FileDialog::FileDialog(const S_FileDialogParameters &dialogParameters, QWidget *
 {
     ui->setupUi(this);
 
-    ui->titleLabel->setStyleSheet("QLabel{color: white;}");
+    ui->titleLabel->setStyleSheet("");
     ui->titleLabel->setText(dialogParameters.title);
     ui->okPushButton->setText(dialogParameters.okButtonText);
 

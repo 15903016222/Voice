@@ -40,18 +40,14 @@ void WizardSetting::on_backBtn_clicked()
     QWidget *backWidget = m_widgetSelector->get_back_widget();
 
     if(NULL == backWidget) {
-
         emit cancle_wizard_setting();
         ui->settingVerticalLayout->removeWidget(currentWidget);
         hide();
-
     } else {
-
         ui->settingVerticalLayout->insertWidget(0, backWidget);
         ui->settingVerticalLayout->removeWidget(currentWidget);
         currentWidget->hide();
         backWidget->show();
-
         update_step_widget(true, currentWidget);
     }
 }
@@ -137,7 +133,7 @@ void WizardSetting::init_widget()
 
             break;
         }
-        case CURRENT_PA_DETECT:
+        case COMMON_PA_DETECT:
         {
             ui->firstWidget->set_widget(StepWidget::WORKPIECE_PROBE, StepWidget::SELECTED);
             ui->secondWidget->set_widget(StepWidget::FOCALLAW, StepWidget::UNSELECTED);
@@ -170,8 +166,8 @@ void WizardSetting::init_widget()
 
             break;
         }
-        case SINGLE_DETECT:
-        case SUB_SINGLE_DETECT:
+        case UT_DETECT:
+        case SUB_UT_DETECT:
         {
             ui->firstWidget->set_widget(StepWidget::DETECT_SETTING, StepWidget::SELECTED);
             ui->secondWidget->set_widget(StepWidget::CALIBRATION, StepWidget::UNSELECTED);
@@ -205,8 +201,8 @@ void WizardSetting::update_step_widget(bool isBack, QWidget *currentWidget)
 
     if(isBack) {
 
-        if(((WELD_PA_DETECT == m_type || CURRENT_PA_DETECT == m_type || SUB_WELD_PA_DETECT) && (STEP_3 == index))
-                || ((SINGLE_DETECT == m_type || SUB_SINGLE_DETECT == m_type) && STEP_1 == index)) {
+        if(((WELD_PA_DETECT == m_type || COMMON_PA_DETECT == m_type || SUB_WELD_PA_DETECT) && (STEP_3 == index))
+                || ((UT_DETECT == m_type || SUB_UT_DETECT == m_type) && STEP_1 == index)) {
 
             ui->backBtn->setHidden(false);
             ui->nextBtn->setHidden(false);
@@ -220,13 +216,12 @@ void WizardSetting::update_step_widget(bool isBack, QWidget *currentWidget)
 
     } else {
 
-        if(((WELD_PA_DETECT == m_type || CURRENT_PA_DETECT == m_type || SUB_WELD_PA_DETECT) && (STEP_4 == index))
-                || ((SINGLE_DETECT == m_type || SUB_SINGLE_DETECT == m_type) && STEP_2 == index)) {
+        if(((WELD_PA_DETECT == m_type || COMMON_PA_DETECT == m_type || SUB_WELD_PA_DETECT) && (STEP_4 == index))
+                || ((UT_DETECT == m_type || SUB_UT_DETECT == m_type) && STEP_2 == index)) {
 
             ui->backBtn->setHidden(true);
             ui->nextBtn->setHidden(true);
             ui->horizontalSpacer->changeSize(ui->horizontalSpacer->geometry().width(), 0);
-            ui->horizontalSpacer_2->changeSize(ui->horizontalSpacer_2->geometry().width(), 0);
 
             connect(currentWidget, SIGNAL(back_clicked()), this, SLOT(on_backBtn_clicked()));
             connect(currentWidget, SIGNAL(finished_clicked()), this, SLOT(on_nextBtn_clicked()));

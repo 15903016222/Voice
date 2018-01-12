@@ -29,6 +29,9 @@
        <pointsize>18</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel{color: white;}</string>
+     </property>
      <property name="text">
       <string>title</string>
      </property>

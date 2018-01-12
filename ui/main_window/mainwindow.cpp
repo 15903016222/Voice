@@ -68,9 +68,9 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_BACK:
         VInput::instance()->send(VInput::Key_Esc);
         break;
-    case Mcu::KEY_CURSOR:
+    case Mcu::KEY_CURSOR:{
         m_wizard->show();
-        break;
+        break;}
     case Mcu::KEY_FREEZE: {
         if (DplDevice::Device::instance()->is_running()) {
             DplDevice::Device::instance()->stop();

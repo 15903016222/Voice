@@ -4,16 +4,16 @@
 #include <QPainter>
 #include <QDebug>
 
-static QString g_workPieceOn        = ":/resources/wizard/workpiece_probe_selected.png";
-static QString g_workPieceOff       = ":/resources/wizard/workpiece_probe_unselected.png";
-static QString g_focallawOn         = ":/resources/wizard/focallow_selected.png";
-static QString g_focallawOff        = ":/resources/wizard/focallow_unselected.png";
-static QString g_calibrationOn      = ":/resources/wizard/caribation_selected.png";
-static QString g_calibrationOff     = ":/resources/wizard/calibration_unselected.png";
-static QString g_detectSettingOn    = ":/resources/wizard/detect_setting_selected.png";
-static QString g_detectSettingOff   = ":/resources/wizard/detect_setting_unselected.png";
-static QString g_multiGroupOn       = ":/resources/wizard/multi_group_selected.png";
-static QString g_multiGroupOff      = ":/resources/wizard/multi_group_unselected.png";
+static QString g_workPieceOn        = ":/resource/wizard/workpiece_probe_selected.png";
+static QString g_workPieceOff       = ":/resource/wizard/workpiece_probe_unselected.png";
+static QString g_focallawOn         = ":/resource/wizard/focallow_selected.png";
+static QString g_focallawOff        = ":/resource/wizard/focallow_unselected.png";
+static QString g_calibrationOn      = ":/resource/wizard/caribation_selected.png";
+static QString g_calibrationOff     = ":/resource/wizard/calibration_unselected.png";
+static QString g_detectSettingOn    = ":/resource/wizard/detect_setting_selected.png";
+static QString g_detectSettingOff   = ":/resource/wizard/detect_setting_unselected.png";
+static QString g_multiGroupOn       = ":/resource/wizard/multi_group_selected.png";
+static QString g_multiGroupOff      = ":/resource/wizard/multi_group_unselected.png";
 
 StepWidget::StepWidget(QWidget *parent) :
     QWidget(parent),
@@ -61,7 +61,6 @@ void StepWidget::paintEvent(QPaintEvent *event)
     } else {
         setStyleSheet("background-color: rgb(0, 127, 255)");
     }
-
 }
 
 void StepWidget::select_pic(StepWidget::E_STEP_TYPE type)
