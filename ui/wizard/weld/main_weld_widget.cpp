@@ -63,11 +63,7 @@ void MainWeldWidget::show_widget(int weldType, double thickness)
 
 void MainWeldWidget::do_weldProperties_weld_info_changed(int type, const QMap<QString, double> &valueList)
 {
-    /*
-     * get weld information
-    */
     QMap<QString, double>  tmpValueList = valueList;
-
     /* 增加额外信息 */
     append_value(type, tmpValueList);
 
@@ -93,7 +89,7 @@ void MainWeldWidget::do_weldProperties_weld_info_changed(int type, const QMap<QS
 
         QString picPath;
         m_pbaseWeldInformation->get_pic_path(picPath);
-        ui->staticWeld->slotWeldTypeChanged(picPath);
+        ui->staticWeld->slot_weld_type_changed(picPath);
 
     } else {
         m_pbaseWeldInformation = DplWeld::WeldInformationFactory::create_weld_information(type, tmpValueList);
@@ -137,8 +133,8 @@ void MainWeldWidget::config_ruler()
         ui->bottomRuler->set_range(-m_horizontalSize.currentSize, m_horizontalSize.currentSize);
     }
 
-    ui->leftRuler->repaint();
-    ui->bottomRuler->repaint();
+    ui->leftRuler->update();
+    ui->bottomRuler->update();
 }
 
 

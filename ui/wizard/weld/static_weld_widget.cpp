@@ -28,12 +28,11 @@ void StaticWeldWidget::paintEvent(QPaintEvent *event)
 }
 
 
-void StaticWeldWidget::slotWeldTypeChanged(const QString &path)
+void StaticWeldWidget::slot_weld_type_changed(const QString &path)
 {
     if(!path.isEmpty()) {
         m_picPath = path;
-        /* TODO:判读路径是否正确及文件是否正确 */
-        repaint();
+        update();
     }
 }
 

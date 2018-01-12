@@ -20,10 +20,15 @@ FORMS += \
     $$PWD/wizard_setting.ui \
     $$PWD/step_widget.ui
 
-include(weld/weld.pri)
-include(calibration/calibration.pri)
-include(focallaw/focallaw.pri)
-include(multi_group/multi_group.pri)
-include(probe_part/probe_part.pri)
-include(setting/setting.pri)
+include($$PWD/weld/weld.pri)
+
+include($$PWD/calibration/calibration.pri)
+
+include($$PWD/focallaw/focallaw.pri)
+
+include($$PWD/multi_group/multi_group.pri)
+
+include($$PWD/probe_part/probe_part.pri)
+
+include($$PWD/setting/setting.pri)
 

@@ -38,8 +38,12 @@ public:
     void set_widget(E_STEP_TYPE type, StepWidget::E_SELECT_TYPE selectType = UNSELECTED);
     void set_selected(E_SELECT_TYPE type);
 
+signals:
+    void clicked();
+
 protected:
     void paintEvent(QPaintEvent *event);
+    bool eventFilter(QObject *obj, QEvent *e);
 
 private:
     Ui::StepWidget *ui;
@@ -47,7 +51,6 @@ private:
     E_SELECT_TYPE   m_type;
 
     void select_pic(E_STEP_TYPE type);
-
 };
 
 

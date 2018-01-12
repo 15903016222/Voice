@@ -51,7 +51,6 @@ bool BaseWeldInformation::insert_value_list(const QMap<QString, double> &valueLi
 
     while(it != valueList.end()) {
         m_dataMap.insert(it.key(), it.value());
-
         ++it;
     }
 

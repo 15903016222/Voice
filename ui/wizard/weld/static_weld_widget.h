@@ -16,7 +16,7 @@ public:
     ~StaticWeldWidget();
 
 public slots:
-    void slotWeldTypeChanged(const QString &path);
+    void slot_weld_type_changed(const QString &path);
 
 protected:
     void paintEvent(QPaintEvent *event);

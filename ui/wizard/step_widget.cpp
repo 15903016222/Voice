@@ -20,7 +20,7 @@ StepWidget::StepWidget(QWidget *parent) :
     ui(new Ui::StepWidget)
 {
     ui->setupUi(this);
-
+    installEventFilter(this);
     m_type = UNSELECTED;
     select_pic(WORKPIECE_PROBE);
 }
@@ -34,7 +34,7 @@ void StepWidget::set_widget(StepWidget::E_STEP_TYPE stepType, StepWidget::E_SELE
 {
     select_pic(stepType);
     m_type = selectType;
-    repaint();
+    update();
     show();
 }
 
@@ -46,7 +46,7 @@ void StepWidget::set_selected(StepWidget::E_SELECT_TYPE type)
     }
 
     m_type = type;
-    repaint();
+    update();
 }
 
 
@@ -61,6 +61,16 @@ void StepWidget::paintEvent(QPaintEvent *event)
     } else {
         setStyleSheet("background-color: rgb(0, 127, 255)");
     }
+}
+
+bool StepWidget::eventFilter(QObject *obj, QEvent *e)
+{
+    if(e->type() == QEvent::MouseButtonRelease) {
+        emit clicked();
+        return true;
+    }
+
+    return QWidget::eventFilter(obj, e);
 }
 
 void StepWidget::select_pic(StepWidget::E_STEP_TYPE type)

@@ -29,5 +29,5 @@ include($$PWD/display/display.pri)
 
 include($$PWD/tool/tool.pri)
 
-include(wizard/wizard.pri)
+include($$PWD/wizard/wizard.pri)
 

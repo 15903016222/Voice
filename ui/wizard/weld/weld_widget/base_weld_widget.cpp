@@ -11,7 +11,7 @@ BaseWeldWidget::BaseWeldWidget(QSharedPointer<BaseWeldInformation> &weldInfo, QW
 void BaseWeldWidget::update_weld_information(QSharedPointer<BaseWeldInformation> &weldInfo)
 {
     m_weldInfo = weldInfo;
-    repaint();
+    update();
 }
 
 int BaseWeldWidget::get_weld_type()

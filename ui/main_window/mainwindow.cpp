@@ -71,9 +71,6 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_BACK:
         VInput::instance()->send(VInput::Key_Esc);
         break;
-    case Mcu::KEY_CURSOR:{
-        m_wizard->show();
-        break;}
     case Mcu::KEY_FREEZE: {
         if (DplDevice::Device::instance()->is_running()) {
             DplDevice::Device::instance()->stop();
@@ -103,6 +100,15 @@ void MainWindow::do_key_event(Mcu::KeyType type)
     case Mcu::KEY_CURSOR:
         change_cursor();
         break;
+    case Mcu::KEY_OPEN:{
+        if(m_wizard->isHidden()) {
+            m_wizard->show();
+            hide();
+        } else {
+            m_wizard->hide();
+            show();
+        }
+        break;}
     default:
         break;
     }
