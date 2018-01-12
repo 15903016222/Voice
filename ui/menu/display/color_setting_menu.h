@@ -23,6 +23,9 @@ private:
     LabelMenuItem *m_amplitudeItem;
     LabelMenuItem *m_depthItem;
     LabelMenuItem *m_tofdItem;
+
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

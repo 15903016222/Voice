@@ -29,6 +29,9 @@ private:
     LabelMenuItem *m_presetItem;
 
     DplSource::EncoderPointer m_enc;
+
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

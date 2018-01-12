@@ -37,6 +37,9 @@ private:
     void show_a_scan();
     void show_b_scan();
     void show_c_scan();
+
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

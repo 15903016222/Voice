@@ -28,12 +28,12 @@ void MenuItem::update_layout(QWidget *w1, QWidget *w2)
 void MenuItem::changeEvent(QEvent *e)
 {
     if (e->type() == QEvent::LanguageChange) {
-        language_changed();
+        translate();
     }
     QWidget::changeEvent(e);
 }
 
-void MenuItem::language_changed()
+void MenuItem::translate()
 {
 
 }

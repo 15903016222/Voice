@@ -21,6 +21,9 @@ private:
     LabelMenuItem *m_commentItem;
     LabelMenuItem *m_displayTableItem;
     LabelMenuItem *m_exportRecordItem;
+
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

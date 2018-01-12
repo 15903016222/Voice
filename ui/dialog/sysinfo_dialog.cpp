@@ -77,6 +77,7 @@ SysInfoDialog::SysInfoDialog(QWidget *parent) :
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     QPushButton *closeButton = buttonBox->button(QDialogButtonBox::Close);
+    closeButton->setText(tr("Close"));
     closeButton->setMinimumHeight(35);
 
     buttonBox->addButton(closeButton, QDialogButtonBox::ButtonRole(QDialogButtonBox::RejectRole | QDialogButtonBox::AcceptRole));

@@ -39,4 +39,19 @@ void FlawRecordMenu::do_commentItem_clicked()
     //    widget->set_label_text(inputPanel.get_text());
 }
 
+void FlawRecordMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_addDeleteItem->set_title(tr("Add/Delete"));
+        m_flawImageItem->set_title(tr("Flaw Image"));
+        m_commentItem->set_title(tr("Comment"));
+        m_displayTableItem->set_title(tr("Display Table"));
+        m_exportRecordItem->set_title(tr("Export Record"));
+
+        return;
+    }
+
+    BaseMenu::changeEvent(e);
+}
+
 }

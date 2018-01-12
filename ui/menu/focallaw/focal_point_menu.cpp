@@ -11,8 +11,8 @@ FocalPointMenu::FocalPointMenu(QWidget *parent) :
     m_typeItem(new ComboMenuItem(this, tr("Type"))),
     m_offsetStartItem(new SpinMenuItem(this, tr("Offset Start"), "mm")),
     m_offsetEndItem(new SpinMenuItem(this, tr("Offset End"), "mm")),
-    m_depthStartItem(new SpinMenuItem(this, tr("Offset Start"), "mm")),
-    m_depthEndItem(new SpinMenuItem(this, tr("Offset End"), "mm"))
+    m_depthStartItem(new SpinMenuItem(this, tr("Depth Start"), "mm")),
+    m_depthEndItem(new SpinMenuItem(this, tr("Depth End"), "mm"))
 {
     m_layout0->addWidget(m_typeItem);
     m_layout1->addWidget(m_offsetStartItem);
@@ -130,6 +130,7 @@ void FocalPointMenu::update_typeItem()
     m_typeItem->add_item(tr("Focal Plane"));
     m_typeItem->add_item(tr("DDF"));
     m_typeItem->set_current_index(m_focus->mode());
+    m_typeItem->set_title(tr("Type"));
 
     connect(m_typeItem, SIGNAL(value_changed(int)),
             this, SLOT(do_typeItem_changed(int)));
@@ -158,6 +159,8 @@ void FocalPointMenu::update_offsetEndItem()
         m_offsetEndItem->hide();
         return;
     }
+
+    m_offsetEndItem->set_title(tr("Offset End"));
     m_offsetEndItem->show();
     m_offsetEndItem->set_value(m_focus.staticCast<DplFocallaw::FocalPlaneFocus>()->end_offset());
 }
@@ -169,6 +172,7 @@ void FocalPointMenu::update_depthStartItem()
         return;
     }
 
+    m_depthStartItem->set_title(tr("Depth Start"));
     m_depthStartItem->show();
     m_depthStartItem->set_value(m_focus.staticCast<DplFocallaw::FocalPlaneFocus>()->begin_depth());
 }
@@ -180,6 +184,7 @@ void FocalPointMenu::update_depthEndItem()
         return;
     }
 
+    m_depthEndItem->set_title(tr("Depth End"));
     m_depthEndItem->show();
     m_depthEndItem->set_value(m_focus.staticCast<DplFocallaw::FocalPlaneFocus>()->end_depth());
 }

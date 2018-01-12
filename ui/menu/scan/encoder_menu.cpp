@@ -90,4 +90,18 @@ void EncoderMenu::do_originItem_changed(double val)
     m_enc->set_origin(val);
 }
 
+void EncoderMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_encoderItem->set_title(tr("Encoder"));
+        m_encoderTypeItem->set_title(tr("Type"));
+        m_resolutionItem->set_title(tr("Resolution"));
+        m_polarityItem->set_title(tr("Polarity"));
+        m_originItem->set_title(tr("Origin"));
+        m_presetItem->set_title(tr("Preset"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

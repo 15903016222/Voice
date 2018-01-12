@@ -93,4 +93,16 @@ void AnalogMenu::update_dataItem()
     m_dataItem->set_current_index(m_analog->type());
 }
 
+void AnalogMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_analogItem->set_title(tr("Analog"));
+        m_switchItem->set_title(tr("Switch"));
+        m_groupItem->set_title(tr("Group"));
+        m_dataItem->set_title(tr("Data"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

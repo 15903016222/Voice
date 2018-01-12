@@ -33,6 +33,9 @@ private:
 
     DplSource::AxisPointer m_scanAxis;
     DplSource::AxisPointer m_indexAxis;
+
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

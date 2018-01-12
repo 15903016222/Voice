@@ -16,6 +16,10 @@ class ScanScene;
 class WaveItem;
 class GateItem;
 class TcgItem;
+class AmpRefCursorItem;
+class AmpMeasCursorItem;
+class UtRefCursorItem;
+class UtMeasCursorItem;
 
 class AscanDisplay : public ScanDisplay
 {
@@ -38,6 +42,10 @@ protected:
     GateItem *m_gateBItem;
     GateItem *m_gateIItem;
     TcgItem *m_tcgItem;
+    AmpRefCursorItem *m_ampRefCursorItem;
+    AmpMeasCursorItem *m_ampMeasCursorItem;
+    UtRefCursorItem *m_utRefCursorItem;
+    UtMeasCursorItem *m_utMeasCursorItem;
 };
 
 #endif // __A_SCAN_DISPLAY_H__

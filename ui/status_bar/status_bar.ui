@@ -52,7 +52,6 @@
 QLabel {    
 	color: rgb(255, 255, 255);
 	background-color: rgb(210, 150, 0);    
-	font:  bold 10pt &quot;Ubuntu&quot;;
 }
 
 #versionLabel
@@ -263,11 +262,11 @@ QLabel {
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>
+       <family>Source Han Serif SC</family>
        <pointsize>10</pointsize>
-       <weight>75</weight>
+       <weight>50</weight>
        <italic>false</italic>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -457,11 +456,11 @@ QLabel {
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>
+       <family>Source Han Serif SC</family>
        <pointsize>10</pointsize>
-       <weight>75</weight>
+       <weight>50</weight>
        <italic>false</italic>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -477,6 +476,15 @@ QLabel {
    </item>
    <item>
     <widget class="QLabel" name="indexEncLabel">
+     <property name="font">
+      <font>
+       <family>Source Han Serif SC</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="text">
       <string>Index:0.00 mm</string>
      </property>
@@ -661,11 +669,11 @@ QLabel {
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>
+       <family>Source Han Serif SC</family>
        <pointsize>10</pointsize>
-       <weight>75</weight>
+       <weight>50</weight>
        <italic>false</italic>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -855,11 +863,11 @@ QLabel {
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>
+       <family>Source Han Serif SC</family>
        <pointsize>10</pointsize>
-       <weight>75</weight>
+       <weight>50</weight>
        <italic>false</italic>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -1049,11 +1057,11 @@ QLabel {
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>
+       <family>Source Han Serif SC</family>
        <pointsize>10</pointsize>
-       <weight>75</weight>
+       <weight>50</weight>
        <italic>false</italic>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
@@ -1246,11 +1254,11 @@ QLabel {
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>
+       <family>Source Han Serif SC</family>
        <pointsize>10</pointsize>
-       <weight>75</weight>
+       <weight>50</weight>
        <italic>false</italic>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">

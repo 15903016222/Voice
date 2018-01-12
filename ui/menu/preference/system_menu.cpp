@@ -24,7 +24,6 @@
 
 namespace DplPreferenceMenu {
 
-
 static const QString s_usbPath =  "/opt/usbStorage/";
 static const QString s_fileType = "*.cert";
 
@@ -210,6 +209,24 @@ void SystemMenu::init_date_time()
     QDateTime currentDateTime = QDateTime::fromTime_t(dateTime);
     m_dateItem->set_text(currentDateTime.toString("yyyy-MM-dd"));
     m_timeItem->set_text(currentDateTime.toString("hh:mm:ss"));
+}
+
+void SystemMenu::retranslate_ui()
+{
+    m_timeItem->set_title(tr("Time"));
+    m_dateItem->set_title(tr("Date"));
+    m_certItem->set_title(tr("Cert Import"));
+    m_updateItem->set_title(tr("Update"));
+    m_resetCfgItem->set_title(tr("Reset"));
+    m_infoItem->set_title(tr("Infomation"));
+}
+
+void SystemMenu::changeEvent(QEvent *event)
+{
+    if(QEvent::LanguageChange == event->type()) {
+        retranslate_ui();
+    }
+    BaseMenu::changeEvent(event);
 }
 
 }

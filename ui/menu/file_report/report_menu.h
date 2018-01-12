@@ -25,6 +25,9 @@ private slots:
     void show_input_dialog();
     void do_createItem_clicked();
 
+protected:
+    void changeEvent(QEvent *e);
+
 private:
     void set_template_items();
     bool copy_file_to_target_path(const QString &src, const QString &dest);

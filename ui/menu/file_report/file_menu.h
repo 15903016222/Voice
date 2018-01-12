@@ -27,6 +27,7 @@ private:
     LabelMenuItem *m_fileManagerItem;
 
     SaveFileManager *m_saveFileManager;
+    QStringList    m_saveModeNameList;
 
 private slots:
     void do_openItem_clicked();
@@ -34,6 +35,9 @@ private slots:
     void do_saveDataItem_clicked();
     void do_fileNameItem_clicked();
     void do_fileManagerItem_clicked();
+
+protected:
+    void changeEvent(QEvent *e);
 
 };
 

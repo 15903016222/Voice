@@ -19,7 +19,7 @@ protected slots:
     void do_value_changed(int index);
 
 protected:
-    void language_changed();
+    void translate();
 
 private:
     DplDevice::GroupPointer m_group;

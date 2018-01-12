@@ -14,7 +14,8 @@
 #include <QDoubleValidator>
 #include <QTextCodec>
 
-SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title, const QString &unit) : MenuItem(parent),
+SpinMenuItem::SpinMenuItem(QWidget *parent, const QString &title,
+                           const QString &unit) : MenuItem(parent),
     m_pushBtn(new QPushButton(this)),
     m_lineEdit(new QLineEdit(this)),
     m_title(title),

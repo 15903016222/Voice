@@ -71,6 +71,7 @@ void ScanRuler::set_range(double start, double stop)
 void ScanRuler::update()
 {
     if (m_axis->driving() == DplSource::Axis::TIMER) {
+        set_unit("(s)");
         set_range(0, range());
     } else {
         set_unit("(mm)");

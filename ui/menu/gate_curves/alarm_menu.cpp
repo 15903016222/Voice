@@ -345,5 +345,23 @@ int AlarmMenu::get_group_qty(int groupflags)
     return ret;
 }
 
+void AlarmMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_alarmItem->set_title(tr("Alarm"));
+        m_switchItem->set_title(tr("Switch"));
+        m_modeItem->set_title(tr("Mode"));
+        m_fstConditionItem->set_title(tr("Condition1"));
+        m_operatorItem->set_title(tr("Operator"));
+        m_sndConditionItem->set_title(tr("Condition2"));
+        m_countItem->set_title(tr("Count"));
+        m_soundItem->set_title(tr("Sound"));
+        m_delayItem->set_title(tr("Delay"));
+        m_holdTimeItem->set_title(tr("Hold Time"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 
 }

@@ -4,7 +4,12 @@
 #include "../base_menu.h"
 #include <device/device.h>
 
+class AmpRefMenuItem;
+class AmpMeasMenuItem;
+class UtRefMenuItem;
+class UtMeasMenuItem;
 class VpaMenuItem;
+
 namespace DplMeasurementMenu {
 
 class CursorsMenu : public BaseMenu
@@ -14,52 +19,26 @@ public:
     explicit CursorsMenu(QWidget *parent);
 
 protected:
-    void show_scan();
-
     void show_a_scan();
-    void hide_a_scan();
-
     void show_b_scan();
-    void hide_b_scan();
-
     void show_c_scan();
-    void hide_c_scan();
-
     void show_s_scan();
-    void hide_s_scan();
+
+    void changeEvent(QEvent *e);
 
 protected slots:
     void update_srItem();
     void update_smItem();
-    void update_urItem();
-    void update_umItem();
     void update_irItem();
     void update_imItem();
 
 private slots:
     void update(const DplDevice::GroupPointer &grp);
     void do_selectionItem_changed(int index);
-    void do_rItem_changed(double val);
-    void do_mItem_changed(double val);
     void do_srItem_changed(double val);
     void do_smItem_changed(double val);
-    void do_urItem_changed(double val);
-    void do_umItem_changed(double val);
     void do_irItem_changed(double val);
     void do_imItem_changed(double val);
-    void do_angleItem_changed(double val);
-
-    /**
-     * @brief do_ultrasound_reference_changed 处理引用光标在超声轴位置变化
-     * @param value         位置值（ns）
-     */
-    void do_ultrasound_reference_changed(double value);
-
-    /**
-     * @brief do_ultrasound_measurement_changed 处理测量光标在超声轴位置变化
-     * @param value         位置值（ns）
-     */
-    void do_ultrasound_measurement_changed(double value);
 
     /**
      * @brief do_scan_reference_changed 处理引用光标在扫查轴位置变化
@@ -76,11 +55,11 @@ private slots:
 private:
     ComboMenuItem *m_selectionItem;
 
-    SpinMenuItem *m_rItem;      /* %(r) */
-    SpinMenuItem *m_mItem;      /* %(m) */
+    AmpRefMenuItem *m_afItem;
+    AmpMeasMenuItem *m_amItem;
 
-    SpinMenuItem *m_urItem;     /* U(r) */
-    SpinMenuItem *m_umItem;     /* U(m) */
+    UtRefMenuItem *m_urItem;
+    UtMeasMenuItem *m_umItem;
 
     SpinMenuItem *m_srItem;     /* S(r) */
     SpinMenuItem *m_smItem;     /* S(m) */

@@ -88,4 +88,18 @@ void NetworkMenu::show_subnet_mask_dialog()
     }
 }
 
+void NetworkMenu::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange) {
+        retranslate_ui();
+    }
+    BaseMenu::changeEvent(event);
+}
+
+void NetworkMenu::retranslate_ui()
+{
+    m_ipItem->set_title(tr("IP Address"));
+    m_maskItem->set_title(tr("Subnet Mask"));
+}
+
 }

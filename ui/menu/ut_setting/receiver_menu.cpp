@@ -238,4 +238,17 @@ void ReceiverMenu::update_dampingItem()
     m_dampingItem->show();
 }
 
+void ReceiverMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_filterItem->set_title(tr("Filter"));
+        m_rectifierItem->set_title(tr("Rectifier"));
+        m_videoFilterItem->set_title(tr("Video Filter"));
+        m_averagingItem->set_title(tr("Averaging"));
+        m_dampingItem->set_title(tr("Damping"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

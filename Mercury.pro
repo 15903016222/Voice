@@ -44,11 +44,6 @@ equals(QT_MAJOR_VERSION, 4) {
     QMAKE_CXXFLAGS += -Wno-psabi
 }
 
-
-TRANSLATIONS += \
-    ui/translator/phascanII_UI_Chinese.ts \
-    ui/translator/phascanII_UI_English.ts
-
 TARGET = Mercury
 TEMPLATE = app
 

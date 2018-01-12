@@ -7,6 +7,7 @@ namespace DplFileReportMenu {
 
 class FormatMenu : public BaseMenu
 {
+    Q_OBJECT
 public:
     explicit FormatMenu(QWidget *parent);
     ~FormatMenu();
@@ -18,6 +19,9 @@ private:
     ComboMenuItem *m_encoderInfoItem;
     ComboMenuItem *m_dacTcgInfoItem;
     ComboMenuItem *m_flawRecordTableItem;
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 }

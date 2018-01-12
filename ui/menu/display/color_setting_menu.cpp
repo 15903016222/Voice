@@ -26,4 +26,15 @@ ColorSettingMenu::~ColorSettingMenu()
 
 }
 
+void ColorSettingMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_amplitudeItem->set_title(tr("Amplitude"));
+        m_depthItem->set_title(tr("Depth"));
+        m_tofdItem->set_title(tr("TOFD"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

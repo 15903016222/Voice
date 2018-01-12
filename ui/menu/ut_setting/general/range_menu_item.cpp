@@ -86,7 +86,7 @@ void RangeMenuItem::do_value_changed(double val)
     m_group->sample()->set_range(Tool::display_to_cnf(m_group, val));
 }
 
-void RangeMenuItem::language_changed()
+void RangeMenuItem::translate()
 {
     set_title(tr("Range"));
 }
