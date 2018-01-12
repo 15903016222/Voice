@@ -78,7 +78,7 @@ void ReportMenu::changeEvent(QEvent *e)
         m_customerItem->set_title(tr("Customer"));
         m_partNameItem->set_title(tr("Part Name"));
         m_partNumberItem->set_title(tr("Part Number"));
-        m_createItem->set_title(tr("Create"));
+        m_previewItem->set_title(tr("Preview"));
         return;
     }
     BaseMenu::changeEvent(e);
