@@ -19,6 +19,8 @@ public:
 
     void set_focus();
 
+    void set_state(bool flag);
+
 signals:
     void setting_clicked(int model, int index);
 

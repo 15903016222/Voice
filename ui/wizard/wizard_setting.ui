@@ -19,6 +19,33 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton#backBtn{
+background-color:rgb(55, 170, 255);
+color: white;   
+font: 15pt;
+border-radius: 5px; 
+border-style: outset;
+}
+QPushButton#backBtn:focus{outline: none;
+background-color:rgb(55, 170, 255);
+color: rgb(170, 255, 0);
+border-radius: 5px; 
+border-style: outset;}
+
+QPushButton#nextBtn{
+background-color:rgb(55, 170, 255);
+color: white;   
+font: 15pt;
+border-radius: 5px; 
+border-style: outset;
+}
+QPushButton#nextBtn:focus{outline: none;
+background-color:rgb(55, 170, 255);
+color: rgb(170, 255, 0);
+border-radius: 5px; 
+border-style: outset;}</string>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>

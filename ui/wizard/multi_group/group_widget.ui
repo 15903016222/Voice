@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>GroupWidget</class>
  <widget class="QWidget" name="GroupWidget">
+  <property name="enabled">
+   <bool>false</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -142,7 +145,7 @@ border-style: none;
         </font>
        </property>
        <property name="text">
-        <string>OK</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

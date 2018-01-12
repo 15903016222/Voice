@@ -36,13 +36,6 @@ QWidget *Selector::get_current_widget(WizardSetting::E_WIZARD_TYPE type)
     switch (type)
     {
         case WizardSetting::WELD_PA_DETECT:
-        {
-            m_widgetList << new ProbePartWidget(type);
-            m_widgetList << new FocallawWidget(type);
-            m_widgetList << new PADetectSettingWidget(type);
-            m_widgetList << new CalibrationWidget(type, false);
-            break;
-        }
         case WizardSetting::COMMON_PA_DETECT:
         {
             m_widgetList << new ProbePartWidget(type);
@@ -61,7 +54,8 @@ QWidget *Selector::get_current_widget(WizardSetting::E_WIZARD_TYPE type)
             UTDetectSettingWidget *utDetectSettingWidget    = new UTDetectSettingWidget(type);
             CalibrationWidget     *calibrationWidget        = new CalibrationWidget(type);
 
-            connect(utDetectSettingWidget, SIGNAL(current_mode_changed(int)), calibrationWidget, SLOT(do_utDetectSettingWidget_current_mode_changed(int)));
+            connect(utDetectSettingWidget, SIGNAL(current_mode_changed(int)),
+                    calibrationWidget, SLOT(do_utDetectSettingWidget_current_mode_changed(int)));
 
             m_widgetList << (QWidget*)utDetectSettingWidget ;
             m_widgetList << (QWidget*)calibrationWidget;
@@ -80,7 +74,8 @@ QWidget *Selector::get_current_widget(WizardSetting::E_WIZARD_TYPE type)
             UTDetectSettingWidget *utDetectSettingWidget    = new UTDetectSettingWidget(type);
             CalibrationWidget     *calibrationWidget        = new CalibrationWidget(type, true);
 
-            connect(utDetectSettingWidget, SIGNAL(current_mode_changed(int)), calibrationWidget, SLOT(do_utDetectSettingWidget_current_mode_changed(int)));
+            connect(utDetectSettingWidget, SIGNAL(current_mode_changed(int)),
+                    calibrationWidget, SLOT(do_utDetectSettingWidget_current_mode_changed(int)));
 
             m_widgetList << (QWidget*)utDetectSettingWidget ;
             m_widgetList << (QWidget*)calibrationWidget;
@@ -134,18 +129,18 @@ bool Selector::is_last_widget()
 
     if(m_currentIndex == (m_widgetList.count() - 1)) {
         return true;
-    }else {
-        return false;
     }
+
+    return false;
 }
 
 bool Selector::is_first_widget()
 {
     if(m_currentIndex == 0) {
         return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 

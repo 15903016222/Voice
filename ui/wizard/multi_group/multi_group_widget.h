@@ -54,6 +54,7 @@ signals:
 protected slots:
     void do_settingBtn_clicked(int model, int index);
     void do_sub_wizard_setting_next_group();
+    void do_finished_setting();
 
 private:
     Ui::MultiGroupWidget *ui;

@@ -54,14 +54,13 @@ signals:
    void cancle_wizard_setting();
    void next_group();
 
-
 protected slots:
-
     virtual void on_backBtn_clicked();
     virtual void on_nextBtn_clicked();
     virtual void do_next_group();
 
    void hide_step_widget();
+   void do_step_widget_clicked();
 
 protected:
    QSharedPointer<Selector>           m_widgetSelector;

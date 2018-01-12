@@ -4,6 +4,8 @@
 #include "step_widget.h"
 #include "selector.h"
 
+#include <QDebug>
+
 WizardSetting::WizardSetting(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WizardSetting)
@@ -56,7 +58,6 @@ void WizardSetting::on_backBtn_clicked()
 void WizardSetting::on_nextBtn_clicked()
 {
     if(m_widgetSelector->is_last_widget()) {
-        /* 配置完成 */
         emit finished_wizard_setting(m_type);
         m_widgetSelector->get_current_widget(m_type)->hide();
         ui->settingVerticalLayout->removeWidget(m_widgetSelector->get_current_widget(m_type));
@@ -93,6 +94,15 @@ void WizardSetting::hide_step_widget()
     ui->fourthWidget->hide();
 }
 
+void WizardSetting::do_step_widget_clicked()
+{
+    StepWidget *senderWidget = qobject_cast<StepWidget*>(sender());
+    if(NULL == senderWidget) {
+        return;
+    }
+    qDebug() << "[" << __FUNCTION__ << "]" << " widget Name = " << senderWidget->objectName();
+}
+
 
 void WizardSetting::init_widget()
 {
@@ -103,7 +113,6 @@ void WizardSetting::init_widget()
     if(m_widgetSelector->get_current_index() == 0) {
         current = m_widgetSelector->get_current_widget(m_type);
     } else {
-
         m_widgetSelector->set_current_index(0);
         current = m_widgetSelector->get_current_widget(m_type);
     }

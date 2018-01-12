@@ -48,6 +48,13 @@ void GroupWidget::set_focus()
     ui->comboBox->setFocus();
 }
 
+void GroupWidget::set_state(bool flag)
+{
+    if(flag) {
+        ui->stateLabel->setText(tr("OK"));
+    }
+}
+
 void GroupWidget::on_settingPushButton_clicked()
 {
     if(ui->comboBox->currentIndex() == 0) {
