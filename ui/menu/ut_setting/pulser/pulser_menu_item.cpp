@@ -65,7 +65,7 @@ void PulserMenuItem::do_value_changed(double val)
     m_probe->set_pulser_index(val-1);
 }
 
-void PulserMenuItem::language_changed()
+void PulserMenuItem::translate()
 {
     set_title(tr("Pulser"));
 }

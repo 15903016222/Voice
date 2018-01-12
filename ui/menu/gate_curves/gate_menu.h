@@ -26,6 +26,8 @@ protected:
     void update_synchroItem();
     void update_measureModeItem();
 
+    void changeEvent(QEvent *e);
+
 protected slots:
     void do_gateItem_changed(int val);
 

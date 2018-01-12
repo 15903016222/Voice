@@ -33,6 +33,9 @@ protected slots:
     void update_rectifierItem();
     void update_dampingItem();
 
+protected:
+    void changeEvent(QEvent *e);
+
 private:
     ReceiverMenuItem *m_receiverItem;
     ComboMenuItem *m_filterItem;

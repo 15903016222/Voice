@@ -38,6 +38,10 @@ private:
     SpinMenuItem  *m_minThicknessItem;
     SpinMenuItem  *m_maxThicknessItem;
     ComboMenuItem *m_dataCompressionItem;
+
+protected:
+    void changeEvent(QEvent *e);
+
 };
 
 }

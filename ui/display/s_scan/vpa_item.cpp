@@ -14,7 +14,6 @@
 #include <QDebug>
 
 static const int DEFAULT_WIDTH  = 4;
-static const int DEFAULT_HEIGHT = 4;
 
 VpaItem::VpaItem(const DplDevice::GroupPointer &group) : QGraphicsObject(),
     m_movingFlag(false),

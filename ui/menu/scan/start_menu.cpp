@@ -38,4 +38,14 @@ void StartMenu::do_pauseItem_clicked()
     }
 }
 
+void StartMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_startItem->set_title(tr("Start"));
+        m_pauseItem->set_title(tr("Pause"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

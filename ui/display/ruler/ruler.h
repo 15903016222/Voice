@@ -3,20 +3,7 @@
 
 #include <QWidget>
 #include <QReadWriteLock>
-
-#define CyanColor       "#249292"
-#define DarkBlueColor   "#1D6765"
-#define BlueColor       "#1F6E6C"
-#define PaleGreenColor  "#A8D493"
-#define GreenColor      "#239167"
-#define YellowColor     "#D4DD46"
-#define PalePinkColor   "#EAC8DF"
-#define PinkColor       "#C174B0"
-#define DarkPinkColor   "#EE2180"
-#define PurpleColor     "#976594"
-#define GreyColor       "#999B9E"
-#define PaleGreyColor   "#C7CCCA"
-#define DarkGreyColor   "#6B6B6E"
+#include <global.h>
 
 class Ruler : public QWidget
 {

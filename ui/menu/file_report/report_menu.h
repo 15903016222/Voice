@@ -22,6 +22,9 @@ private:
 
 private slots:
     void show_input_dialog();
+
+protected:
+    void changeEvent(QEvent *e);
 };
 
 }

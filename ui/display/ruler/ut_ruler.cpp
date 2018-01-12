@@ -2,7 +2,8 @@
 
 #include <global.h>
 
-UtRuler::UtRuler(const DplDevice::GroupPointer &group, MarkPostion position, QWidget *parent) :
+UtRuler::UtRuler(const DplDevice::GroupPointer &group,
+                 MarkPostion position, QWidget *parent) :
     Ruler(position, "(mm)", parent),
     m_group(group)
 {

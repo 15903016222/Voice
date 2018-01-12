@@ -58,6 +58,8 @@ protected:
 
     int get_group_qty(int groupflags);
 
+    void changeEvent(QEvent *e);
+
 private:
     ComboMenuItem *m_alarmItem;
     ComboMenuItem *m_switchItem;

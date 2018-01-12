@@ -33,6 +33,9 @@ protected slots:
     void update_txrxModeItem();
     void update_voltageItem();
 
+protected:
+    void changeEvent(QEvent *e);
+
 private:
     ComboMenuItem *m_txrxModeItem;
     PulserMenuItem *m_pulserItem;

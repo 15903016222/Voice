@@ -17,8 +17,8 @@ class ConfigurationPrivate {
 public:
     ConfigurationPrivate(){}
 
-    QFile                       m_configFile;
-    UnpackerMap                 m_unpackerMap;
+    QFile m_configFile;
+    UnpackerMap m_unpackerMap;
 };
 
 Configuration::Configuration()

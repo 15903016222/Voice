@@ -1,3 +1,11 @@
+
+TRANSLATIONS += \
+    $$PWD/resource/translate/Chinese.ts \
+    $$PWD/resource/translate/Russian.ts \
+    $$PWD/resource/translate/Japanese.ts \
+    $$PWD/resource/translate/German.ts \
+    $$PWD/resource/translate/Franch.ts
+
 RESOURCES += \
     $$PWD/main_window.qrc
 

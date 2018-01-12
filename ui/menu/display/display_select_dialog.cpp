@@ -4,6 +4,7 @@
 
 #include <device/device.h>
 #include "../display/display_widget.h"
+#include <QPushButton>
 
 DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
     QDialog(parent),
@@ -23,6 +24,9 @@ DisplaySelectDialog::DisplaySelectDialog(QWidget *parent) :
             checkBox->hide();
         }
     }
+
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 
     connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(update_widget()));
 }

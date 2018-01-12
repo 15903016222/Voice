@@ -8,9 +8,6 @@ class BscanHDisplay : public BscanDisplay
 public:
     BscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
 
-protected slots:
-   void resize_event(const QSize &size);
-
 private:
    UtRuler *m_utRuler;
    ScanRuler *m_scanRuler;

@@ -112,4 +112,18 @@ void SelectionMenu::do_mcu_key_event(Mcu::KeyType type)
     }
 }
 
+void SelectionMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        m_displayItem->set_title(tr("Display"));
+        m_cSourceItem->set_title(tr("C Scan\nSource"));
+        m_thicknessSourceItem->set_title(tr("Thickness\nSource"));
+        m_minThicknessItem->set_title(tr("Min.Thickness"));
+        m_maxThicknessItem->set_title(tr("Max.Thickness"));
+        m_dataCompressionItem->set_title(tr("Data\nCompression"));
+        return;
+    }
+    BaseMenu::changeEvent(e);
+}
+
 }

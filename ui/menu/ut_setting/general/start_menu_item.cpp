@@ -70,7 +70,7 @@ void StartMenuItem::do_value_changed(double val)
     m_group->sample()->set_start(Tool::display_to_cnf(m_group, val));
 }
 
-void StartMenuItem::language_changed()
+void StartMenuItem::translate()
 {
     set_title(tr("Start"));
 }

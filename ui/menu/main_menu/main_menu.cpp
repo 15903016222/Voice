@@ -78,3 +78,12 @@ void MainMenu::keyPressEvent(QKeyEvent *e)
     QWidget::keyPressEvent(e);
 }
 
+void MainMenu::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        d->retranslate_ui();
+        return;
+    }
+    QWidget::changeEvent(e);
+}
+

@@ -81,6 +81,7 @@ signals:
 
 protected:
     void keyPressEvent(QKeyEvent *e);
+    void changeEvent(QEvent *e);
 
 private:
     MainMenuPrivate *d;

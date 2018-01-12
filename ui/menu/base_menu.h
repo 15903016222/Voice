@@ -15,6 +15,7 @@
 
 #include <QWidget>
 #include <QLayout>
+#include <QEvent>
 
 class QVBoxLayout;
 

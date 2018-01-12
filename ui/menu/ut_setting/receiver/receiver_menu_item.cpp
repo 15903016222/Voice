@@ -65,7 +65,7 @@ void ReceiverMenuItem::do_value_changed(double val)
     m_probe->set_receiver_index(val-1);
 }
 
-void ReceiverMenuItem::language_changed()
+void ReceiverMenuItem::translate()
 {
     set_title(tr("Receiver"));
 }

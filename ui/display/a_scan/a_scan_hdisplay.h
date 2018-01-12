@@ -19,9 +19,6 @@ public:
     explicit AscanHDisplay(const DplDevice::GroupPointer &group,
                            QWidget *parent = 0);
 
-protected slots:
-    void resize_event(const QSize &size);
-
 private:
     AmpRuler *m_ampRuler;
     UtRuler *m_utRuler;

@@ -59,7 +59,7 @@ void GainMenuItem::do_value_changed(double val)
     m_group->sample()->set_gain(val);
 }
 
-void GainMenuItem::language_changed()
+void GainMenuItem::translate()
 {
     set_title(tr("Gain"));
 }

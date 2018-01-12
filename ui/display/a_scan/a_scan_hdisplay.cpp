@@ -6,10 +6,7 @@
  */
 
 #include "a_scan_hdisplay.h"
-#include "tcg_item.h"
-#include "wave_item.h"
 
-#include "../base/scan_scene.h"
 #include "../ruler/amp_ruler.h"
 #include "../ruler/ut_ruler.h"
 
@@ -21,15 +18,4 @@ AscanHDisplay::AscanHDisplay(const DplDevice::GroupPointer &group, QWidget *pare
     m_ampRuler->set_range(100, 0);
     m_leftLayout->addWidget(m_ampRuler);
     m_bottomLayout->addWidget(m_utRuler);
-}
-
-void AscanHDisplay::resize_event(const QSize &size)
-{    
-    m_scene->setSceneRect(-size.width()/2, -size.height()/2,
-                          size.width(), size.height());
-
-    m_waveItem->set_size(size);
-    m_tcgItem->set_size(size);
-
-    AscanDisplay::resize_event(size);
 }

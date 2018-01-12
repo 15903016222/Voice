@@ -34,13 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_mainMenu->hide();
     ui->subMenuLayout->addWidget(m_subMenu);
     connect(m_mainMenu, SIGNAL(type_changed(MainMenu::Type)),
-            m_subMenu, SLOT(set_menu(MainMenu::Type)));
-
-    qDebug("%s[%d]: ",__func__, __LINE__);
-//    DplPreferenceMenu::PreferenceMenu *preferenceMenu = dynamic_cast<DplPreferenceMenu::PreferenceMenu *>(m_subMenu->get_menu(MainMenu::Preference_Preference));
-//    connect(preferenceMenu, SIGNAL(opacity_changed(double)),
-//            m_mainMenu, SLOT(set_opacity(double)));
-    qDebug("%s[%d]: ",__func__, __LINE__);
+            this, SLOT(do_type_changed(MainMenu::Type)));
 
     /* virtual keyboard */
     connect(ui->iconsBarWidget, SIGNAL(keyboard_event()),
@@ -54,6 +48,15 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::do_type_changed(MainMenu::Type type)
+{
+    m_mainMenu->hide();
+    if (m_subMenu->isHidden()) {
+        m_subMenu->show();
+    }
+    m_subMenu->set_menu(type);
 }
 
 void MainWindow::do_key_event(Mcu::KeyType type)
@@ -93,6 +96,12 @@ void MainWindow::do_key_event(Mcu::KeyType type)
         break;
     case Mcu::KEY_FULLSCREEN:
         change_screen();
+        break;
+    case Mcu::KEY_SUBMENU:
+        change_sub_menu();
+        break;
+    case Mcu::KEY_CURSOR:
+        change_cursor();
         break;
     default:
         break;
@@ -166,4 +175,24 @@ void MainWindow::change_screen()
     ui->statusBar->setVisible(flag);
     m_subMenu->setVisible(flag);
     flag = !flag;
+}
+
+void MainWindow::change_sub_menu()
+{
+    static bool flag = false;
+    m_subMenu->setVisible(flag);
+    flag = !flag;
+}
+
+void MainWindow::change_cursor()
+{
+    DplDevice::Device *dev = DplDevice::Device::instance();
+    DplDevice::GroupPointer group;
+
+    m_subMenu->set_menu(MainMenu::Measurement_Cursors);
+
+    for (int i = 0; i < dev->group_qty(); ++i) {
+        group = dev->get_group(i);
+        group->cursor()->set_visible(!group->cursor()->is_visible());
+    }
 }

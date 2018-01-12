@@ -27,6 +27,7 @@ public:
         KEY_80_PERCENT,
         KEY_DISPLAY,
         KEY_FULLSCREEN,
+        KEY_SUBMENU,
         KEY_START,
         KEY_STOP,
         KEY_SAVE,
@@ -57,8 +58,8 @@ public:
         DISCHARGE,
         CHARGE,
         NO_BATTERY,
-        BATTERY_FULL,
-        BATTERY_NO_WORK
+        BATTERY_NO_WORK,
+        BATTERY_FULL
     };
 
     enum TemperatureType {

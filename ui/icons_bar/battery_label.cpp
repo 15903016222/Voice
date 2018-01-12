@@ -14,6 +14,7 @@ void BatteryLabel::set_status(Mcu::BatteryStatus status)
     m_status = status;
     QString image;
     switch (m_status) {
+    case Mcu::BATTERY_NO_WORK:
     case Mcu::DISCHARGE:
         image.sprintf("://resource/battery/b%d.png", m_quantity/10);
         break;

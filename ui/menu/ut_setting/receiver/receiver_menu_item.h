@@ -20,7 +20,7 @@ protected slots:
     void do_value_changed(double val);
 
 protected:
-    void language_changed();
+    void translate();
 
 private:
     DplFocallaw::FocallawerPointer m_focallawer;
