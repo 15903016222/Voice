@@ -45,13 +45,13 @@ public:
 
     /**
      * @brief scan_reference    获取扫查轴上参考光标的位置
-     * @return                  位置(mm)
+     * @return                  位置(mm或s)
      */
     double scan_reference() const;
 
     /**
      * @brief set_scan_reference    设置扫查轴上参考光标的位置
-     * @param val                   位置(mm)
+     * @param val                   位置(mm或s)
      */
     void set_scan_reference(double val);
 

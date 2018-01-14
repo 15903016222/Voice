@@ -8,6 +8,8 @@
 #include "../ruler/ruler.h"
 #include "../cursor/ut_ref_cursor_item.h"
 #include "../cursor/ut_meas_cursor_item.h"
+#include "../cursor/scan_ref_cursor_item.h"
+#include "../cursor/scan_meas_cursor_item.h"
 
 #include <QLabel>
 
@@ -16,11 +18,15 @@ BscanDisplay::BscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     m_group(grp),
     m_bscanItem(new BscanItem(grp)),
     m_utRefCursorItem(new UtRefCursorItem(grp, Qt::Vertical)),
-    m_utMeasCursorItem(new UtMeasCursorItem(grp, Qt::Vertical))
+    m_utMeasCursorItem(new UtMeasCursorItem(grp, Qt::Vertical)),
+    m_scanRefCursorItem(new ScanRefCursorItem(grp->cursor(), Qt::Horizontal)),
+    m_scanMeasCursorItem(new ScanMeasCursorItem(grp->cursor(), Qt::Horizontal))
 {
     m_scene->addItem(m_bscanItem);
     m_scene->addItem(m_utRefCursorItem);
     m_scene->addItem(m_utMeasCursorItem);
+    m_scene->addItem(m_scanRefCursorItem);
+    m_scene->addItem(m_scanMeasCursorItem);
 
     m_colorBar->set_palette(DplDevice::Device::instance()->display()->palette());
     m_titleLabel->setText(QString("B-Scan|Grp") + QString::number(m_group->index() + 1));
@@ -44,5 +50,7 @@ void BscanDisplay::resize_event(const QSize &size)
     m_bscanItem->set_size(s);
     m_utRefCursorItem->set_size(s);
     m_utMeasCursorItem->set_size(s);
+    m_scanRefCursorItem->set_size(s);
+    m_scanMeasCursorItem->set_size(s);
 }
 

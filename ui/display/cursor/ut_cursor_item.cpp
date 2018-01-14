@@ -1,7 +1,7 @@
 #include "ut_cursor_item.h"
 #include "../../tool/tool.h"
 
-#include <QGraphicsView>
+#include <QGraphicsScene>
 
 UtCursorItem::UtCursorItem(const DplDevice::GroupPointer &group,
                            Qt::Orientation orientation,

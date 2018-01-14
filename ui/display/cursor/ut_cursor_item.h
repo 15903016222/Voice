@@ -13,7 +13,6 @@ public:
                  Qt::Orientation orientation,
                  QColor color);
 
-public:
     const DplDevice::GroupPointer &group() const;
 
 public slots:
