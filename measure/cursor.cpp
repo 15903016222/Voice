@@ -119,6 +119,10 @@ double Cursor::scan_reference() const
     return d->m_sr;
 }
 
+/**
+ * @brief set_scan_reference    设置扫查轴上参考光标的位置
+ * @param val                   位置(mm或s)
+ */
 void Cursor::set_scan_reference(double val)
 {
     if ( !qFuzzyCompare(val, d->m_sr) ) {
@@ -132,6 +136,10 @@ double Cursor::scan_measurement() const
     return d->m_sm;
 }
 
+/**
+ * @brief set_scan_measurement  设置扫查轴上测量光标的位置
+ * @param val                   位置(mm)
+ */
 void Cursor::set_scan_measurement(double val)
 {
     if ( !qFuzzyCompare(val, d->m_sm) ) {

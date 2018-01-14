@@ -10,8 +10,7 @@ UtMenuItem::UtMenuItem(QWidget *parent, const QString &title) :
     set_step(0.01);
     connect(DplDevice::Device::instance(),
             SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this,
-            SLOT(update_group()));
+            this, SLOT(update_group()));
 }
 
 void UtMenuItem::update_group()
