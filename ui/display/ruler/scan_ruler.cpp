@@ -106,8 +106,11 @@ void ScanRuler::do_data_event(const DplSource::BeamsPointer &beams)
 
     if (val < start()) {
         set_range(val, val + range());
+        emit start_changed(val, range());
     } else if (val > stop()) {
-        set_range(val - range(), val);    }
+        set_range(val - range(), val);
+        emit start_changed(val-range(), range());
+    }
 }
 
 double ScanRuler::range() const
@@ -147,5 +150,6 @@ double ScanRuler::encoder_range() const
 void ScanRuler::resizeEvent(QResizeEvent *e)
 {
     update();
+    emit start_changed(start(), range());
     Ruler::resizeEvent(e);
 }
