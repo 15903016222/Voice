@@ -3,6 +3,7 @@
 
 #include <QComboBox>
 #include <QPushButton>
+#include <QDebug>
 #include "sub_wizard_setting.h"
 #include "group_widget.h"
 
@@ -71,17 +72,14 @@ void MultiGroupWidget::do_settingBtn_clicked(int model, int index)
 
 void MultiGroupWidget::do_sub_wizard_setting_next_group()
 {
-     m_subWizardSetting->hide();
-
+    m_subWizardSetting->hide();
     do_finished_setting();
-    if(m_currentGroup >= GROUP_8) {
-        return;
-    }
-    m_groupVect.at(m_currentGroup + 1)->setEnabled(true);
-    m_groupVect.at(m_currentGroup + 1)->set_focus();
+
+    m_groupVect.at(m_currentGroup)->setEnabled(true);
+    m_groupVect.at(m_currentGroup)->set_focus();
 }
 
 void MultiGroupWidget::do_finished_setting()
 {
-    m_groupVect.at(m_currentGroup)->set_state(true);
+    m_groupVect.at(m_currentGroup - 1)->set_state(true);
 }

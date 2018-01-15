@@ -1,5 +1,5 @@
 #include "sub_wizard_setting.h"
-
+#include "ui_wizard_setting.h"
 #include <QSharedPointer>
 #include "selector.h"
 
@@ -26,11 +26,14 @@ void SubWizardSetting::on_backBtn_clicked()
 
 void SubWizardSetting::on_nextBtn_clicked()
 {
+    if(m_widgetSelector->is_last_widget()) {
+        emit next_group();
+        return;
+    }
     WizardSetting::on_nextBtn_clicked();
 }
 
 void SubWizardSetting::do_next_group()
 {
-    hide_step_widget();
     emit next_group();
 }

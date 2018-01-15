@@ -57,10 +57,8 @@ signals:
 protected slots:
     virtual void on_backBtn_clicked();
     virtual void on_nextBtn_clicked();
-    virtual void do_next_group();
 
-   void hide_step_widget();
-   void do_step_widget_clicked();
+   void do_step_widget_clicked(int step);
 
 protected:
    QSharedPointer<Selector>           m_widgetSelector;
@@ -68,11 +66,9 @@ protected:
 
 private:
     Ui::WizardSetting                   *ui;
-    QList<StepWidget *>                m_stepWidgetList;
-
 
     void init_widget();
-    void update_step_widget(bool isBack, QWidget *currentWidget);
+    void update_step_widget();
 };
 
 #endif // __WIZARD_SETTING_H__

@@ -4,25 +4,18 @@
 #include <QPainter>
 #include <QDebug>
 
-static QString g_workPieceOn        = ":/resource/wizard/workpiece_probe_selected.png";
-static QString g_workPieceOff       = ":/resource/wizard/workpiece_probe_unselected.png";
-static QString g_focallawOn         = ":/resource/wizard/focallow_selected.png";
-static QString g_focallawOff        = ":/resource/wizard/focallow_unselected.png";
-static QString g_calibrationOn      = ":/resource/wizard/caribation_selected.png";
-static QString g_calibrationOff     = ":/resource/wizard/calibration_unselected.png";
-static QString g_detectSettingOn    = ":/resource/wizard/detect_setting_selected.png";
-static QString g_detectSettingOff   = ":/resource/wizard/detect_setting_unselected.png";
-static QString g_multiGroupOn       = ":/resource/wizard/multi_group_selected.png";
-static QString g_multiGroupOff      = ":/resource/wizard/multi_group_unselected.png";
+static const QString SELECTED("rgb(170, 255, 0)");
+static const QString UNSELECTED("white");
 
 StepWidget::StepWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::StepWidget)
+    ui(new Ui::StepWidget),
+    m_selected(false)
 {
     ui->setupUi(this);
-    installEventFilter(this);
-    m_type = UNSELECTED;
-    select_pic(WORKPIECE_PROBE);
+
+    set_selected(m_selected);
+
 }
 
 StepWidget::~StepWidget()
@@ -30,83 +23,33 @@ StepWidget::~StepWidget()
     delete ui;
 }
 
-void StepWidget::set_widget(StepWidget::E_STEP_TYPE stepType, StepWidget::E_SELECT_TYPE selectType)
+void StepWidget::set_title(const QString &title)
 {
-    select_pic(stepType);
-    m_type = selectType;
-    update();
-    show();
+    ui->titleLabel->setText(title);
 }
 
-void StepWidget::set_selected(StepWidget::E_SELECT_TYPE type)
+void StepWidget::set_back_ground(const QStringList &list)
 {
-    if(type == m_type)
-    {
-        return;
-    }
-
-    m_type = type;
-    update();
+    m_backGroundPath = list;
 }
 
-
-void StepWidget::paintEvent(QPaintEvent *event)
+void StepWidget::set_selected(bool flag)
 {
-    Q_UNUSED(event);
-    QPainter painter(this);
-
-    if(!m_pic.isEmpty()) {
-        painter.setRenderHint(QPainter::Antialiasing, true);
-        painter.drawPixmap(rect(), QPixmap(m_pic.at(m_type)));
+    if(flag) {
+        setStyleSheet(QString("QLabel#titleLabel{ \
+                                background-color:rgb(0, 130, 195); \
+                                color: %1;   \
+                                font: 26pt; \
+                                font-weight:bold; \
+                                border-style: outset; \
+                                }").arg(SELECTED));
     } else {
-        setStyleSheet("background-color: rgb(0, 127, 255)");
+        setStyleSheet(QString("QLabel#titleLabel{ \
+                                background-color:rgb(0, 130, 195); \
+                                color: %1;   \
+                                font: 26pt; \
+                                font-weight:bold; \
+                                border-style: outset; \
+                                }").arg(UNSELECTED));
     }
 }
-
-bool StepWidget::eventFilter(QObject *obj, QEvent *e)
-{
-    if(e->type() == QEvent::MouseButtonRelease) {
-        emit clicked();
-        return true;
-    }
-
-    return QWidget::eventFilter(obj, e);
-}
-
-void StepWidget::select_pic(StepWidget::E_STEP_TYPE type)
-{
-    m_pic.clear();
-
-    switch (type) {
-        case WORKPIECE_PROBE:
-        {
-            m_pic << g_workPieceOff << g_workPieceOn;
-            break;
-        }
-        case FOCALLAW:
-        {
-            m_pic << g_focallawOff << g_focallawOn;
-            break;
-        }
-        case CALIBRATION:
-        {
-            m_pic << g_calibrationOff << g_calibrationOn;
-            break;
-        }
-        case DETECT_SETTING:
-        {
-            m_pic << g_detectSettingOff << g_detectSettingOn;
-            break;
-        }
-        case MULTI_GROUP:
-        {
-            m_pic << g_multiGroupOff << g_multiGroupOn;
-            break;
-        }
-        default:
-             m_pic << g_workPieceOff << g_workPieceOn;
-            break;
-    }
-}
-
-

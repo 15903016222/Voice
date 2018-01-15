@@ -6,19 +6,22 @@ SOURCES += \
     $$PWD/wizard_setting.cpp \
     $$PWD/step_widget.cpp \
     $$PWD/selector.cpp \
-    $$PWD/sub_wizard_setting.cpp
+    $$PWD/sub_wizard_setting.cpp \
+    $$PWD/title_widget.cpp
 
 HEADERS += \
     $$PWD/wizard.h \
     $$PWD/wizard_setting.h \
     $$PWD/step_widget.h \
     $$PWD/selector.h \
-    $$PWD/sub_wizard_setting.h
+    $$PWD/sub_wizard_setting.h \
+    $$PWD/title_widget.h
 
 FORMS += \
     $$PWD/wizard.ui \
     $$PWD/wizard_setting.ui \
-    $$PWD/step_widget.ui
+    $$PWD/step_widget.ui \
+    $$PWD/title_widget.ui
 
 include($$PWD/weld/weld.pri)
 

@@ -18,6 +18,7 @@ public:
 
 
     QWidget*    get_current_widget(WizardSetting::E_WIZARD_TYPE type);
+    QWidget*    get_widget(int index);
     QWidget*    get_pre_widget();
     QWidget*    get_back_widget();
     QWidget*    get_last_widget();

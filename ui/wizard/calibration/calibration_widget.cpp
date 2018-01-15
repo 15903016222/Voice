@@ -30,14 +30,10 @@ CalibrationWidget::~CalibrationWidget()
     delete ui;
 }
 
-void CalibrationWidget::on_backBtn_clicked()
-{
-    emit back_clicked();
-}
 
-void CalibrationWidget::on_finishedBtn_clicked()
+void CalibrationWidget::do_next_group_clicked()
 {
-    emit finished_clicked();
+    emit next_group_clicked();
 }
 
 
@@ -51,11 +47,6 @@ void CalibrationWidget::do_optionComboBox_current_index_changed(int index)
 
     m_currentIndex = index;
 
-}
-
-void CalibrationWidget::do_nextGroupBtn_clicked()
-{
-    emit next_group_clicked();
 }
 
 
@@ -143,8 +134,8 @@ void CalibrationWidget::initItem()
     if(m_isSubWidget) {
         QPushButton *newGroupBtn = new QPushButton(tr("Next Group"), this);
         newGroupBtn->setSizePolicy(ui->acceptBtn->sizePolicy());
-        ui->btnHorizontalLayout->addWidget(newGroupBtn);
-        connect(newGroupBtn, SIGNAL(clicked(bool)), this, SLOT(do_nextGroupBtn_clicked()));
+        ui->horizontalLayout->addWidget(newGroupBtn);
+        connect(newGroupBtn, SIGNAL(clicked(bool)), this, SLOT(do_next_group_clicked()));
     }
 
     m_widgetMap.value(m_currentIndex)->show();

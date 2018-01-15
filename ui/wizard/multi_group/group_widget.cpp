@@ -6,7 +6,8 @@ static const QString SPILT_COLOR = "rgb(235, 231, 237)";
 
 GroupWidget::GroupWidget(int groupIndex, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::GroupWidget)
+    ui(new Ui::GroupWidget),
+    m_groupIndex(groupIndex)
 {
     ui->setupUi(this);
     ui->groupLabel->setText(tr("Gr") + QString::number(groupIndex) + ":");

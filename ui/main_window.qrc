@@ -85,23 +85,12 @@
         <file>resource/messageBox/alert.png</file>
         <file>resource/messageBox/info.png</file>
         <file>resource/messageBox/question.png</file>
-        <file>resource/wizard/calibration_unselected.png</file>
-        <file>resource/wizard/caribation_selected.png</file>
-        <file>resource/wizard/common_pa.png</file>
-        <file>resource/wizard/detect_setting_selected.png</file>
-        <file>resource/wizard/detect_setting_unselected.png</file>
-        <file>resource/wizard/docs.png</file>
-        <file>resource/wizard/floder.png</file>
-        <file>resource/wizard/focallow_selected.png</file>
-        <file>resource/wizard/focallow_unselected.png</file>
-        <file>resource/wizard/multi_group_selected.png</file>
-        <file>resource/wizard/multi_group_unselected.png</file>
+        <file>resource/wizard/first_step.png</file>
+        <file>resource/wizard/fourth_step.png</file>
         <file>resource/wizard/multi_group.png</file>
-        <file>resource/wizard/open_config.png</file>
-        <file>resource/wizard/open_data.png</file>
-        <file>resource/wizard/ut.png</file>
-        <file>resource/wizard/weld_pa.png</file>
-        <file>resource/wizard/workpiece_probe_selected.png</file>
-        <file>resource/wizard/workpiece_probe_unselected.png</file>
+        <file>resource/wizard/second_step.png</file>
+        <file>resource/wizard/third_step.png</file>
+        <file>resource/wizard/ut_first_step.png</file>
+        <file>resource/wizard/ut_second_step.png</file>
     </qresource>
 </RCC>

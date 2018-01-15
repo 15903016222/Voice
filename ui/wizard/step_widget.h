@@ -15,42 +15,18 @@ class StepWidget;
 class StepWidget : public QWidget
 {
     Q_OBJECT
-
-public:
-
-    enum E_STEP_TYPE {
-        WORKPIECE_PROBE = 1,
-        FOCALLAW,
-        CALIBRATION,
-        DETECT_SETTING,
-        MULTI_GROUP
-    };
-
-    enum E_SELECT_TYPE {
-        UNSELECTED = 0,
-        SELECTED = 1
-    };
-
 public:
     explicit StepWidget(QWidget *parent = 0);
     ~StepWidget();
 
-    void set_widget(E_STEP_TYPE type, StepWidget::E_SELECT_TYPE selectType = UNSELECTED);
-    void set_selected(E_SELECT_TYPE type);
-
-signals:
-    void clicked();
-
-protected:
-    void paintEvent(QPaintEvent *event);
-    bool eventFilter(QObject *obj, QEvent *e);
+    void set_title(const QString &title);
+    void set_back_ground(const QStringList &list);
+    void set_selected(bool flag);
 
 private:
     Ui::StepWidget *ui;
-    QStringList     m_pic;
-    E_SELECT_TYPE   m_type;
-
-    void select_pic(E_STEP_TYPE type);
+    QStringList m_backGroundPath;
+    bool m_selected;
 };
 
 

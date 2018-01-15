@@ -11,15 +11,15 @@
 
 class SubWizardSetting : public WizardSetting
 {
-
+    Q_OBJECT
 public:
-    SubWizardSetting(QWidget *parent = 0);
+    explicit SubWizardSetting(QWidget *parent = 0);
     void show(WizardSetting::E_WIZARD_TYPE type);
 
 protected slots:
     virtual void on_backBtn_clicked();
     virtual void on_nextBtn_clicked();
-    virtual void do_next_group();
+    void do_next_group();
 
 };
 

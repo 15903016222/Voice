@@ -89,6 +89,18 @@ QWidget *Selector::get_current_widget(WizardSetting::E_WIZARD_TYPE type)
     return m_widgetList.at(m_currentIndex);
 }
 
+QWidget *Selector::get_widget(int index)
+{
+    if((m_widgetList.size() == 0)
+            || (index >= m_widgetList.size())
+            || (index < 0)) {
+        return NULL;
+    }
+
+    m_currentIndex = index;
+    return m_widgetList.at(m_currentIndex);
+}
+
 
 QWidget *Selector::get_pre_widget()
 {

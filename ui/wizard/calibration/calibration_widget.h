@@ -48,10 +48,7 @@ signals:
 
 protected slots:
 
-    void on_backBtn_clicked();
-    void on_finishedBtn_clicked();
-
-    void do_nextGroupBtn_clicked();
+    void do_next_group_clicked();
     void do_utDetectSettingWidget_current_mode_changed(int index);
     void do_optionComboBox_current_index_changed(int index);
 

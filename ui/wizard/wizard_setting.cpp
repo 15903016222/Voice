@@ -18,6 +18,8 @@ WizardSetting::WizardSetting(QWidget *parent) :
     ui->settingWidget->hide();
 
     m_widgetSelector = QSharedPointer<Selector>(new Selector);
+
+    connect(ui->titleWidget, SIGNAL(clicked(int)), this, SLOT(do_step_widget_clicked(int)));
 }
 
 
@@ -50,7 +52,7 @@ void WizardSetting::on_backBtn_clicked()
         ui->settingVerticalLayout->removeWidget(currentWidget);
         currentWidget->hide();
         backWidget->show();
-        update_step_widget(true, currentWidget);
+        update_step_widget();
     }
 }
 
@@ -76,38 +78,32 @@ void WizardSetting::on_nextBtn_clicked()
             ui->settingVerticalLayout->insertWidget(0, preWidget);
             preWidget->show();
             currentWidget->hide();
-            update_step_widget(false, preWidget);
+            update_step_widget();
         }
     }
 }
 
-void WizardSetting::do_next_group()
+void WizardSetting::do_step_widget_clicked(int step)
 {
-
-}
-
-void WizardSetting::hide_step_widget()
-{
-    ui->firstWidget->hide();
-    ui->secondWidget->hide();
-    ui->thirdWidget->hide();
-    ui->fourthWidget->hide();
-}
-
-void WizardSetting::do_step_widget_clicked()
-{
-    StepWidget *senderWidget = qobject_cast<StepWidget*>(sender());
-    if(NULL == senderWidget) {
+    int currentIndex = m_widgetSelector->get_current_index();
+    if(currentIndex == step) {
         return;
     }
-    qDebug() << "[" << __FUNCTION__ << "]" << " widget Name = " << senderWidget->objectName();
+
+    QWidget *currentWidget = m_widgetSelector->get_current_widget(m_type);
+    QWidget *targetWidget = m_widgetSelector->get_widget(step);
+
+    ui->settingVerticalLayout->removeWidget(currentWidget);
+    ui->settingVerticalLayout->insertWidget(0, targetWidget);
+
+    targetWidget->show();
+    currentWidget->hide();
+    update_step_widget();
 }
 
 
 void WizardSetting::init_widget()
 {
-    m_stepWidgetList.clear();
-
     QWidget *current = NULL;
 
     if(m_widgetSelector->get_current_index() == 0) {
@@ -120,120 +116,30 @@ void WizardSetting::init_widget()
     ui->nextBtn->show();
     ui->backBtn->show();
 
-    /* 配置步骤显示 */
-    switch (m_type)
-    {
-        case WELD_PA_DETECT:
-        case SUB_WELD_PA_DETECT:
-        {
-            ui->firstWidget->set_widget(StepWidget::WORKPIECE_PROBE, StepWidget::SELECTED);
-            ui->secondWidget->set_widget(StepWidget::FOCALLAW, StepWidget::UNSELECTED);
-            ui->thirdWidget->set_widget(StepWidget::DETECT_SETTING, StepWidget::UNSELECTED);
-            ui->fourthWidget->set_widget(StepWidget::CALIBRATION, StepWidget::UNSELECTED);
+    ui->titleWidget->set_type(m_type);
+    ui->titleWidget->set_step(STEP_1);
 
-            ui->nextBtn->setText(tr("Next"));
-
-            ui->firstWidget->show();
-            ui->secondWidget->show();
-            ui->thirdWidget->show();
-            ui->fourthWidget->show();
-
-            m_stepWidgetList << ui->firstWidget << ui->secondWidget << ui->thirdWidget << ui->fourthWidget;
-
-            break;
-        }
-        case COMMON_PA_DETECT:
-        {
-            ui->firstWidget->set_widget(StepWidget::WORKPIECE_PROBE, StepWidget::SELECTED);
-            ui->secondWidget->set_widget(StepWidget::FOCALLAW, StepWidget::UNSELECTED);
-            ui->thirdWidget->set_widget(StepWidget::DETECT_SETTING, StepWidget::UNSELECTED);
-            ui->fourthWidget->set_widget(StepWidget::CALIBRATION, StepWidget::UNSELECTED);
-
-            ui->firstWidget->show();
-            ui->secondWidget->show();
-            ui->thirdWidget->show();
-            ui->fourthWidget->show();
-
-            ui->nextBtn->setText(tr("Next"));
-
-            m_stepWidgetList << ui->firstWidget << ui->secondWidget << ui->thirdWidget << ui->fourthWidget;
-
-            break;
-        }
-        case MULTI_GROUP_DETECT:
-        {
-            ui->firstWidget->set_widget(StepWidget::MULTI_GROUP, StepWidget::SELECTED);
-
-            ui->firstWidget->show();
-            ui->secondWidget->hide();
-            ui->thirdWidget->hide();
-            ui->fourthWidget->hide();
-
-            ui->nextBtn->setText(tr("Finished"));
-
-            m_stepWidgetList << ui->firstWidget;
-
-            break;
-        }
-        case UT_DETECT:
-        case SUB_UT_DETECT:
-        {
-            ui->firstWidget->set_widget(StepWidget::DETECT_SETTING, StepWidget::SELECTED);
-            ui->secondWidget->set_widget(StepWidget::CALIBRATION, StepWidget::UNSELECTED);
-
-            ui->firstWidget->show();
-            ui->secondWidget->show();
-            ui->thirdWidget->hide();
-            ui->fourthWidget->hide();
-
-            ui->nextBtn->setText(tr("Next"));
-
-            m_stepWidgetList << ui->firstWidget << ui->secondWidget;
-
-            break;
-        }
-        default:
-            return;
-            break;
+    if(m_type == MULTI_GROUP_DETECT) {
+        ui->nextBtn->setText(tr("Finished"));
+    } else {
+        ui->nextBtn->setText(tr("Next"));
     }
-
 
     current->show();
     ui->settingVerticalLayout->insertWidget(0, current);
 }
 
 
-void WizardSetting::update_step_widget(bool isBack, QWidget *currentWidget)
+void WizardSetting::update_step_widget()
 {
     int index = m_widgetSelector->get_current_index();
-    m_stepWidgetList.at(index)->set_selected(StepWidget::SELECTED);
+    ui->titleWidget->set_step(index);
 
-    if(isBack) {
+    if(((WELD_PA_DETECT == m_type || COMMON_PA_DETECT == m_type || SUB_WELD_PA_DETECT) && (STEP_4 == index))
+            || ((UT_DETECT == m_type || SUB_UT_DETECT == m_type) && STEP_2 == index)) {
 
-        if(((WELD_PA_DETECT == m_type || COMMON_PA_DETECT == m_type || SUB_WELD_PA_DETECT) && (STEP_3 == index))
-                || ((UT_DETECT == m_type || SUB_UT_DETECT == m_type) && STEP_1 == index)) {
-
-            ui->backBtn->setHidden(false);
-            ui->nextBtn->setHidden(false);
-
-            disconnect(currentWidget, SIGNAL(back_clicked()), this, SLOT(on_backBtn_clicked()));
-            disconnect(currentWidget, SIGNAL(finished_clicked()), this, SLOT(on_nextBtn_clicked()));
-        }
-
-        m_stepWidgetList.at(++index)->set_selected(StepWidget::UNSELECTED);
-        ui->nextBtn->setText(tr("Next"));
-
+        ui->nextBtn->setText(tr("Finished"));
     } else {
-
-        if(((WELD_PA_DETECT == m_type || COMMON_PA_DETECT == m_type || SUB_WELD_PA_DETECT) && (STEP_4 == index))
-                || ((UT_DETECT == m_type || SUB_UT_DETECT == m_type) && STEP_2 == index)) {
-
-            ui->backBtn->setHidden(true);
-            ui->nextBtn->setHidden(true);
-            ui->horizontalSpacer->changeSize(ui->horizontalSpacer->geometry().width(), 0);
-
-            connect(currentWidget, SIGNAL(back_clicked()), this, SLOT(on_backBtn_clicked()));
-            connect(currentWidget, SIGNAL(finished_clicked()), this, SLOT(on_nextBtn_clicked()));
-        }
+        ui->nextBtn->setText(tr("Next"));
     }
 }
