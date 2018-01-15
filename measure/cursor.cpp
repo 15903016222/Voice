@@ -153,6 +153,10 @@ double Cursor::index_reference() const
     return d->m_ir;
 }
 
+/**
+ * @brief set_index_reference   设置步进轴参考光标的位置
+ * @param val                   位置(mm)
+ */
 void Cursor::set_index_reference(double val)
 {
     if ( !qFuzzyCompare(val, d->m_ir)) {
@@ -166,6 +170,10 @@ double Cursor::index_measurement() const
     return d->m_im;
 }
 
+/**
+ * @brief set_index_measurement 设置步进轴上测量光标的益
+ * @param val                   位置(mm)
+ */
 void Cursor::set_index_measurement(double val)
 {
     if ( !qFuzzyCompare(val, d->m_im) ) {
