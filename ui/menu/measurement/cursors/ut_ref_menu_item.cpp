@@ -7,34 +7,34 @@
 UtRefMenuItem::UtRefMenuItem(QWidget *parent) :
     UtMenuItem(parent, "U(r)")
 {
+    connect(this, SIGNAL(value_changed(double)),
+            this, SLOT(do_value_changed(double)));
+
     update_group();
 }
 
 void UtRefMenuItem::update_value()
 {
-    set_value(Tool::cnf_to_display(group(), m_cursor->ultrasound_reference()));
+    set_value(Tool::cnf_to_display(group(),
+                                   group()->cursor()->ultrasound_reference()));
 }
 
 void UtRefMenuItem::do_value_changed(double val)
 {
-    m_cursor->set_ultrasound_reference(Tool::display_to_cnf(group(), val));
+    group()->cursor()->set_ultrasound_reference(Tool::display_to_cnf(group(),
+                                                                     val));
 }
 
-void UtRefMenuItem::cursor_change_event(const DplMeasure::CursorPointer &cursor)
+void UtRefMenuItem::disconnect_cursor(const DplMeasure::CursorPointer &cursor)
 {
-    if (m_cursor) {
-        disconnect(static_cast<DplMeasure::Cursor *>(m_cursor.data()),
-                       SIGNAL(ultrasound_reference_changed(double)),
-                       this, SLOT(update_value()));
-        disconnect(this, SIGNAL(value_changed(double)),
-                   this, SLOT(do_value_changed(double)));
-    }
+    disconnect(static_cast<DplMeasure::Cursor *>(cursor.data()),
+                   SIGNAL(ultrasound_reference_changed(double)),
+               this, SLOT(update_value()));
+}
 
-    m_cursor = cursor;
-
-    connect(this, SIGNAL(value_changed(double)),
-            this, SLOT(do_value_changed(double)));
-    connect(static_cast<DplMeasure::Cursor *>(m_cursor.data()),
+void UtRefMenuItem::connect_cursor(const DplMeasure::CursorPointer &cursor)
+{
+    connect(static_cast<DplMeasure::Cursor *>(cursor.data()),
             SIGNAL(ultrasound_reference_changed(double)),
             this, SLOT(update_value()));
 }

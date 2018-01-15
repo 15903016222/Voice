@@ -13,11 +13,11 @@ public:
                  Qt::Orientation orientation,
                  QColor color);
 
-public:
     const DplDevice::GroupPointer &group() const;
 
 public slots:
     void set_text(double val);
+    void update_text();
 
 protected slots:
     void update_background_color(DplDevice::Group::UtUnit unit);

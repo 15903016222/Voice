@@ -8,6 +8,10 @@ class AmpRefMenuItem;
 class AmpMeasMenuItem;
 class UtRefMenuItem;
 class UtMeasMenuItem;
+class ScanRefMenuItem;
+class ScanMeasMenuItem;
+class IndexRefMenuItem;
+class IndexMeasMenuItem;
 class VpaMenuItem;
 
 namespace DplMeasurementMenu {
@@ -26,31 +30,8 @@ protected:
 
     void changeEvent(QEvent *e);
 
-protected slots:
-    void update_srItem();
-    void update_smItem();
-    void update_irItem();
-    void update_imItem();
-
 private slots:
-    void update(const DplDevice::GroupPointer &grp);
     void do_selectionItem_changed(int index);
-    void do_srItem_changed(double val);
-    void do_smItem_changed(double val);
-    void do_irItem_changed(double val);
-    void do_imItem_changed(double val);
-
-    /**
-     * @brief do_scan_reference_changed 处理引用光标在扫查轴位置变化
-     * @param value         位置（mm）
-     */
-    void do_scan_reference_changed(double value);
-
-    /**
-     * @brief do_scan_measurement_changed   处理测量光标在扫擦轴位置变化
-     * @param value     位置（mm）
-     */
-    void do_scan_measurement_changed(double value);
 
 private:
     ComboMenuItem *m_selectionItem;
@@ -61,16 +42,13 @@ private:
     UtRefMenuItem *m_urItem;
     UtMeasMenuItem *m_umItem;
 
-    SpinMenuItem *m_srItem;     /* S(r) */
-    SpinMenuItem *m_smItem;     /* S(m) */
+    ScanRefMenuItem *m_srItem;
+    ScanMeasMenuItem *m_smItem;
 
-    SpinMenuItem *m_irItem;     /* I(r) */
-    SpinMenuItem *m_imItem;     /* I(m) */
+    IndexRefMenuItem *m_irItem;
+    IndexMeasMenuItem *m_imItem;
 
     VpaMenuItem *m_vpaItem;
-
-    DplDevice::GroupPointer m_group;
-    DplMeasure::CursorPointer m_cursor;
 };
 
 }
