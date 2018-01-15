@@ -11,6 +11,8 @@
 #include "cursors/ut_meas_menu_item.h"
 #include "cursors/scan_ref_menu_item.h"
 #include "cursors/scan_meas_menu_item.h"
+#include "cursors/index_ref_menu_item.h"
+#include "cursors/index_meas_menu_item.h"
 
 namespace DplMeasurementMenu {
 
@@ -23,11 +25,12 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
     m_umItem(new UtMeasMenuItem(this)),
     m_srItem(new ScanRefMenuItem(this)),
     m_smItem(new ScanMeasMenuItem(this)),
-    m_irItem(new SpinMenuItem(this, "I(r)", "mm")),
-    m_imItem(new SpinMenuItem(this, "I(m)", "mm")),
+    m_irItem(new IndexRefMenuItem(this)),
+    m_imItem(new IndexMeasMenuItem(this)),
     m_vpaItem(new VpaMenuItem(this))
 {
     m_layout0->addWidget(m_selectionItem);
+
     /* Selection menu item */
     m_selectionItem->add_item(tr("A-Scan"));
     m_selectionItem->add_item(tr("B-Scan"));
@@ -35,37 +38,7 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
     m_selectionItem->add_item(tr("S-Scan"));
     connect(m_selectionItem, SIGNAL(value_changed(int)),
             this, SLOT(do_selectionItem_changed(int)));
-
-    DplSource::Scan *scan = DplSource::Scan::instance();
-    DplSource::AxisPointer indexAxis = scan->index_axis();
-
-    /* I(r) menu item */
-    connect(m_irItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_irItem_changed(double)));
-    connect(static_cast<DplSource::Axis *>(indexAxis.data()),
-            SIGNAL(start_changed(float)),
-            this, SLOT(update_irItem()));
-    connect(static_cast<DplSource::Axis *>(indexAxis.data()),
-            SIGNAL(end_changed(float)),
-            this, SLOT(update_irItem()));
-
-    /* I(m) menu item */
-    connect(m_imItem, SIGNAL(value_changed(double)),
-            this, SLOT(do_imItem_changed(double)));
-    connect(static_cast<DplSource::Axis *>(indexAxis.data()),
-            SIGNAL(start_changed(float)),
-            this, SLOT(update_imItem()));
-    connect(static_cast<DplSource::Axis *>(indexAxis.data()),
-            SIGNAL(end_changed(float)),
-            this, SLOT(update_imItem()));
-
-    connect(DplDevice::Device::instance(),
-            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this,
-            SLOT(update(DplDevice::GroupPointer)));
-
-    update(DplDevice::Device::instance()->current_group());
-
+    do_selectionItem_changed(0);
 }
 
 void CursorsMenu::show_a_scan()
@@ -128,35 +101,6 @@ void CursorsMenu::changeEvent(QEvent *e)
     BaseMenu::changeEvent(e);
 }
 
-void CursorsMenu::update_irItem()
-{
-    DplSource::AxisPointer indexAxis = DplSource::Scan::instance()->index_axis();
-    m_irItem->set(indexAxis->start(),
-                  indexAxis->end(),
-                  1, 0.1);
-    m_irItem->set_value(m_cursor->index_reference());
-}
-
-void CursorsMenu::update_imItem()
-{
-    DplSource::AxisPointer indexAxis = DplSource::Scan::instance()->index_axis();
-    m_imItem->set(indexAxis->start(),
-                  indexAxis->end(),
-                  1, 0.1);
-    m_imItem->set_value(m_cursor->index_measurement());
-}
-
-void CursorsMenu::update(const DplDevice::GroupPointer &grp)
-{
-    m_group = grp;
-    m_cursor = m_group->cursor();
-
-    do_selectionItem_changed(0);
-
-    update_irItem();
-    update_imItem();
-}
-
 void CursorsMenu::do_selectionItem_changed(int index)
 {
     m_afItem->hide();
@@ -178,16 +122,6 @@ void CursorsMenu::do_selectionItem_changed(int index)
     } else if ( 3 == index ) {
         show_s_scan();
     }
-}
-
-void CursorsMenu::do_irItem_changed(double val)
-{
-    m_cursor->set_index_reference(val);
-}
-
-void CursorsMenu::do_imItem_changed(double val)
-{
-    m_cursor->set_index_measurement(val);
 }
 
 }

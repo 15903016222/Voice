@@ -7,7 +7,10 @@ HEADERS += \
     $$PWD/ut_meas_menu_item.h \
     $$PWD/scan_menu_item.h \
     $$PWD/scan_ref_menu_item.h \
-    $$PWD/scan_meas_menu_item.h
+    $$PWD/scan_meas_menu_item.h \
+    $$PWD/index_menu_item.h \
+    $$PWD/index_ref_menu_item.h \
+    $$PWD/index_meas_menu_item.h
 
 SOURCES += \
     $$PWD/cursor_menu_item.cpp \
@@ -18,4 +21,7 @@ SOURCES += \
     $$PWD/ut_meas_menu_item.cpp \
     $$PWD/scan_menu_item.cpp \
     $$PWD/scan_ref_menu_item.cpp \
-    $$PWD/scan_meas_menu_item.cpp
+    $$PWD/scan_meas_menu_item.cpp \
+    $$PWD/index_menu_item.cpp \
+    $$PWD/index_ref_menu_item.cpp \
+    $$PWD/index_meas_menu_item.cpp

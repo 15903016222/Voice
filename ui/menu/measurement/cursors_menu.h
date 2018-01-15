@@ -10,6 +10,8 @@ class UtRefMenuItem;
 class UtMeasMenuItem;
 class ScanRefMenuItem;
 class ScanMeasMenuItem;
+class IndexRefMenuItem;
+class IndexMeasMenuItem;
 class VpaMenuItem;
 
 namespace DplMeasurementMenu {
@@ -28,15 +30,8 @@ protected:
 
     void changeEvent(QEvent *e);
 
-protected slots:
-    void update_irItem();
-    void update_imItem();
-
 private slots:
-    void update(const DplDevice::GroupPointer &grp);
     void do_selectionItem_changed(int index);
-    void do_irItem_changed(double val);
-    void do_imItem_changed(double val);
 
 private:
     ComboMenuItem *m_selectionItem;
@@ -50,13 +45,10 @@ private:
     ScanRefMenuItem *m_srItem;
     ScanMeasMenuItem *m_smItem;
 
-    SpinMenuItem *m_irItem;     /* I(r) */
-    SpinMenuItem *m_imItem;     /* I(m) */
+    IndexRefMenuItem *m_irItem;
+    IndexMeasMenuItem *m_imItem;
 
     VpaMenuItem *m_vpaItem;
-
-    DplDevice::GroupPointer m_group;
-    DplMeasure::CursorPointer m_cursor;
 };
 
 }
