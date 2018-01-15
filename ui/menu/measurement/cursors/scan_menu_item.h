@@ -11,7 +11,7 @@ public:
 
 protected:
 //    void disconnect_group(const DplDevice::GroupPointer &group);
-//    void connect_group(const DplDevice::GroupPointer &group);
+    void connect_group(const DplDevice::GroupPointer &group);
 
 protected slots:
     void update_unit();

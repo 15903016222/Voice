@@ -19,6 +19,13 @@ ScanMenuItem::ScanMenuItem(QWidget *parent, const QString &title) :
             this, SLOT(update_range()));
 }
 
+void ScanMenuItem::connect_group(const DplDevice::GroupPointer &group)
+{
+    update_unit();
+    update_range();
+    CursorMenuItem::connect_group(group);
+}
+
 void ScanMenuItem::update_unit()
 {
     if (DplSource::Scan::instance()->scan_axis()->driving()
