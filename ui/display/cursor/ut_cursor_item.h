@@ -17,6 +17,7 @@ public:
 
 public slots:
     void set_text(double val);
+    void update_text();
 
 protected slots:
     void update_background_color(DplDevice::Group::UtUnit unit);
