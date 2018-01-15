@@ -10,6 +10,8 @@ class CursorMenuItem : public SpinMenuItem
 public:
     CursorMenuItem(QWidget *parent, const QString &title);
 
+    const DplDevice::GroupPointer &group() const;
+
 protected:
     virtual void disconnect_group(const DplDevice::GroupPointer &group);
     virtual void connect_group(const DplDevice::GroupPointer &group);
@@ -22,5 +24,10 @@ protected slots:
 private:
     DplDevice::GroupPointer m_group;
 };
+
+inline const DplDevice::GroupPointer &CursorMenuItem::group() const
+{
+    return m_group;
+}
 
 #endif // __CURSOR_MENU_ITEM_H__
