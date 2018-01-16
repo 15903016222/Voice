@@ -51,8 +51,7 @@ CscanItem::~CscanItem()
 
 QRectF CscanItem::boundingRect() const
 {
-    return QRectF(-m_size.width()/2, -m_size.height()/2,
-                  m_size.width(), m_size.height());
+    return QRectF(0, 0, m_size.width(), m_size.height());
 }
 
 void CscanItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -64,7 +63,7 @@ void CscanItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     if (!m_image) {
         return;
     }
-    painter->drawPixmap(-m_size.width()/2, -m_size.height()/2, m_pixmap);
+    painter->drawPixmap(0, 0, m_pixmap);
 }
 
 void CscanItem::set_size(const QSize &size)

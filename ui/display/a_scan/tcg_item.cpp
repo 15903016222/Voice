@@ -29,16 +29,17 @@ TcgItem::TcgItem(const DplSizing::TcgsPointer &tcgs, const DplUt::SamplePointer 
 
 QRectF TcgItem::boundingRect() const
 {
-    return QRectF(-m_size.width()/2, -m_size.height()/2,
-                  m_size.width(), m_size.height());
+    return QRectF(0, 0, m_size.width(), m_size.height());
 }
 
-void TcgItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void TcgItem::paint(QPainter *painter,
+                    const QStyleOptionGraphicsItem *option,
+                    QWidget *widget)
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    painter->translate(boundingRect().topLeft());
+    painter->translate(0, m_size.height());
 
     /* draw lines */
     painter->setPen(Qt::darkGreen);
@@ -49,11 +50,11 @@ void TcgItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setBrush(Qt::gray);
     painter->drawPath(m_pointsPath);
 
+    /* current point */
     painter->setBrush(Qt::red);
     painter->drawRect(QRectF(x_ratio() * (m_tcgs->position()-m_sample->start()),
-                      m_size.height() - y_ration() * m_tcgs->amplitude() - 5,
-                      6,
-                      6));
+                      - y_ration() * m_tcgs->amplitude() - 5,
+                      6, 6));
 }
 
 void TcgItem::set_visible(bool flag)
@@ -71,16 +72,15 @@ QPainterPath TcgItem::lines_path(const DplSizing::TcgPointer &tcg) const
 {
     QPainterPath path;
 
-    path.moveTo( x_ratio() * (tcg->position(0)-m_sample->start()) + 3,
-                m_size.height() - 3);
+    path.moveTo( x_ratio() * (tcg->position(0)-m_sample->start()) + 3, -3);
     for (int i = 1; i < m_tcgs->point_count(); ++i) {
         path.lineTo( x_ratio() * (tcg->position(i)-m_sample->start()) + 3,
-                    m_size.height() - y_ration() * tcg->amplitude(i) - 3);
+                    - y_ration() * tcg->amplitude(i) - 3);
     }
 
     if (m_tcgs->point_count() > 1) {
         path.lineTo(m_size.width(),
-                    m_size.height() - y_ration() * tcg->amplitude(m_tcgs->point_count()-1) - 3);
+                    - y_ration() * tcg->amplitude(m_tcgs->point_count()-1) - 3);
     }
 
     return path;
@@ -91,7 +91,7 @@ QPainterPath TcgItem::points_path(const DplSizing::TcgPointer &tcg) const
     QPainterPath path;
     for (int i = 0; i < m_tcgs->point_count(); ++i) {
         path.addRect( x_ratio() * (tcg->position(i)-m_sample->start()),
-                     m_size.height() - (y_ration() * tcg->amplitude(i)) - 5,
+                     - (y_ration() * tcg->amplitude(i)) - 5,
                      6, 6);
     }
     return path;

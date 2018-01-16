@@ -39,8 +39,7 @@ void CscanDisplay::resize_event(const QSize &size)
     } else {
         s = size;
     }
-    m_scene->setSceneRect(-s.width()/2, -s.height()/2,
-                          s.width(), s.height());
+    m_scene->setSceneRect(0, 0, s.width(), s.height());
     m_cscanItem->set_size(s);
     m_scanRefCursorItem->set_size(s);
     m_scanMeasCursorItem->set_size(s);

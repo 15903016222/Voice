@@ -1,7 +1,8 @@
 #include "wave_item.h"
 #include <QPainter>
 
-WaveItem::WaveItem(const DplDisplay::AscanPointer &ascan, QGraphicsItem *parent) :
+WaveItem::WaveItem(const DplDisplay::AscanPointer &ascan,
+                   QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_ascan(ascan),
     m_size(400, 200)
@@ -12,16 +13,15 @@ WaveItem::WaveItem(const DplDisplay::AscanPointer &ascan, QGraphicsItem *parent)
 
 QRectF WaveItem::boundingRect() const
 {
-    return QRectF(-m_size.width()/2, -m_size.height()/2,
-                  m_size.width(), m_size.height());
+    return QRectF(0, 0, m_size.width(), m_size.height());
 }
 
-QPainterPath WaveItem::draw(const QByteArray &wave, bool rf, int w, int h)
+QPainterPath WaveItem::draw(const QByteArray &wave, bool rf)
 {
     QPainterPath path;
 
-    double xRatio = static_cast<double>(w) / ( wave.size() - 1);     // n个点，分为n-1段
-    double yRatio = (h+1) / 255.0;
+    double xRatio = static_cast<double>(m_size.width()) / ( wave.size() - 1);//n个点，分为n-1段
+    double yRatio = m_size.height() / 255.0;
 
     int drawPoints = wave.size();
 
@@ -41,15 +41,16 @@ QPainterPath WaveItem::draw(const QByteArray &wave, bool rf, int w, int h)
     return path;
 }
 
-void WaveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    QMutexLocker l(&m_mutex);
-
+void WaveItem::paint(QPainter *painter,
+                     const QStyleOptionGraphicsItem *option,
+                     QWidget *widget)
+{    
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    painter->translate(boundingRect().bottomLeft());
+    QMutexLocker l(&m_mutex);
 
+    painter->translate(0, m_size.height()-1);
     painter->setPen(m_ascan->color());
     painter->drawPath(m_path);
 }
@@ -58,7 +59,7 @@ void WaveItem::set_wave(const QByteArray &beam, bool rf)
 {
     QMutexLocker l(&m_mutex);
     if (!beam.isEmpty()) {
-        m_path = draw(beam, rf, boundingRect().width(), boundingRect().height());
+        m_path = draw(beam, rf);
         emit painter_path_changed();
     }
 }
