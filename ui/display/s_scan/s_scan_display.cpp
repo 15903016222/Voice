@@ -60,8 +60,7 @@ void SscanDisplay::resize_event(const QSize &size)
 {
     m_vpaItem->update_pos();
 
-    m_scene->setSceneRect(-size.width()/2, -size.height()/2,
-                          size.width(), size.height());
+    m_scene->setSceneRect(0, 0, size.width(), size.height());
 
     QMutexLocker l(&m_imageMutex);
     if (m_image) {
