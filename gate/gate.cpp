@@ -45,7 +45,7 @@ float Gate::start() const
 
 void Gate::set_start(float val)
 {
-    if (!qFuzzyCompare(val, d->m_start)) {
+    if (!qFuzzyIsNull(val - d->m_start)) {
         d->m_start = val;
         emit start_changed(val);
     }
@@ -58,7 +58,7 @@ float Gate::width() const
 
 void Gate::set_width(float val)
 {
-    if (!qFuzzyCompare(val, d->m_width)) {
+    if (!qFuzzyIsNull(val - d->m_width)) {
         d->m_width = val;
         emit width_changed(val);
     }

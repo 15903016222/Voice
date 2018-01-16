@@ -22,10 +22,11 @@ float Sample::gain() const
 
 void Sample::set_gain(float gain)
 {
-    if (!qFuzzyCompare(gain, d->m_fpgaGrp->gain())) {
-        d->m_fpgaGrp->set_gain(gain);
-        emit gain_changed(gain);
+    if (qFuzzyIsNull(gain - d->m_fpgaGrp->gain())) {
+        return;
     }
+    d->m_fpgaGrp->set_gain(gain);
+    emit gain_changed(gain);
 }
 
 double Sample::start() const

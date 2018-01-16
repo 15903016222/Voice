@@ -96,7 +96,7 @@ inline bool GateItem::is_moving() const
 
 inline void GateItem::set_offset(qreal offset)
 {
-    if (!qFuzzyCompare(m_offset, offset)) {
+    if (qFuzzyIsNull(m_offset - offset)) {
         m_offset = offset;
         emit pos_changed();
     }

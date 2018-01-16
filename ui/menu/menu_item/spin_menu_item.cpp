@@ -91,7 +91,7 @@ void SpinMenuItem::set_edit(bool flag)
 
 void SpinMenuItem::set_value(double value)
 {
-    if (qFuzzyCompare(m_value, value)) {
+    if (qFuzzyIsNull(m_value - value)) {
         return;
     }
 

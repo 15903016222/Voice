@@ -78,7 +78,7 @@ float Dacs::reference_gain() const
 
 bool Dacs::set_reference_gain(float gain)
 {
-    if (qFuzzyCompare(d->m_gain, gain)) {
+    if (qFuzzyIsNull(d->m_gain - gain)) {
         return false;
     }
 
@@ -93,7 +93,7 @@ float Dacs::step() const
 
 bool Dacs::set_step(float val) const
 {
-    if (qFuzzyCompare(d->m_step, val)) {
+    if (qFuzzyIsNull(d->m_step - val)) {
         return false;
     }
     d->m_step = val;
