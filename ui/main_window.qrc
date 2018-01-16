@@ -85,12 +85,16 @@
         <file>resource/messageBox/alert.png</file>
         <file>resource/messageBox/info.png</file>
         <file>resource/messageBox/question.png</file>
-        <file>resource/wizard/first_step.png</file>
-        <file>resource/wizard/fourth_step.png</file>
-        <file>resource/wizard/multi_group.png</file>
-        <file>resource/wizard/second_step.png</file>
-        <file>resource/wizard/third_step.png</file>
-        <file>resource/wizard/ut_first_step.png</file>
-        <file>resource/wizard/ut_second_step.png</file>
+        <file>resource/wizard/first_selected.png</file>
+        <file>resource/wizard/fourth_selected.png</file>
+        <file>resource/wizard/fourth_unselected.png</file>
+        <file>resource/wizard/second_selected.png</file>
+        <file>resource/wizard/second_unselected.png</file>
+        <file>resource/wizard/third_selected.png</file>
+        <file>resource/wizard/third_unselected.png</file>
+        <file>resource/wizard/ut_second_selected.png</file>
+        <file>resource/wizard/ut_second_unselected.png</file>
+        <file>resource/wizard/multi_group_selected.png</file>
+        <file>resource/wizard/ut_first_selected.png</file>
     </qresource>
 </RCC>

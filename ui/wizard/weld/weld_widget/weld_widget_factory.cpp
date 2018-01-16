@@ -24,42 +24,42 @@ DplWeld::BaseWeldWidget* WeldWidgetFactory::create_weld_widget(QSharedPointer<Ba
 {
     switch (weldInfo->get_type())
     {
-        case I_Weld:
+        case I:
         {
             return new IWeldWidget(weldInfo);
             break;
         }
-        case V_Weld:
+        case V:
         {
             return new VWeldWidget(weldInfo);
             break;
         }
-        case U_Weld:
+        case U:
         {
             return new UWeldWidget(weldInfo);
             break;
         }
-        case VY_Weld:
+        case VY:
         {
             return new VYWeldWidget(weldInfo);
             break;
         }
-        case VV_Weld:
+        case VV:
         {
             return new VVWeldWidget(weldInfo);
             break;
         }
-        case UU_Weld:
+        case UU:
         {
             return new UUWeldWidget(weldInfo);
             break;
         }
-        case UV_Weld:
+        case UV:
         {
             return new UVWeldWidget(weldInfo);
             break;
         }
-        case TKY_Weld:
+        case TKY:
         {
             return new TKYWeldWidget(weldInfo);
             break;

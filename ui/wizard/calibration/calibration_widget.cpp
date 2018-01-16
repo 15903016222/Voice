@@ -101,8 +101,7 @@ void CalibrationWidget::initItem()
         if(CommonSettingWidget::TOFD == m_mode) {
             ui->optionLabel->hide();
             ui->optionComboBox->hide();
-            m_currentIndex = SINGLE_DETECT_TOFD_PROPERTIES; /* TOFD */
-
+            m_currentIndex = SINGLE_DETECT_TOFD_PROPERTIES;
         } else if(CommonSettingWidget::PE == m_mode) {
             ui->optionLabel->setHidden(false);
             ui->optionComboBox->setHidden(false);

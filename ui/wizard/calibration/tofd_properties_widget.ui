@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>235</width>
-    <height>257</height>
+    <width>229</width>
+    <height>262</height>
    </rect>
   </property>
   <property name="font">
    <font>
-    <pointsize>15</pointsize>
+    <pointsize>10</pointsize>
    </font>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
@@ -46,14 +46,14 @@
    <item row="0" column="1">
     <widget class="QDoubleSpinBox" name="gainDoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="buttonSymbols">
@@ -74,7 +74,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
@@ -85,14 +85,14 @@
    <item row="1" column="1">
     <widget class="QDoubleSpinBox" name="startDoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="buttonSymbols">
@@ -113,7 +113,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
@@ -124,14 +124,14 @@
    <item row="2" column="1">
     <widget class="QDoubleSpinBox" name="rangeDoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="buttonSymbols">
@@ -152,7 +152,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
@@ -163,14 +163,14 @@
    <item row="3" column="1">
     <widget class="QDoubleSpinBox" name="urDoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="buttonSymbols">
@@ -191,7 +191,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
@@ -202,14 +202,14 @@
    <item row="4" column="1">
     <widget class="QDoubleSpinBox" name="umDoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="buttonSymbols">
@@ -223,7 +223,7 @@
    <item row="5" column="1">
     <widget class="QPushButton" name="getPositionBtn">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -236,7 +236,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">

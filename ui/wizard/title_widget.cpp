@@ -1,15 +1,19 @@
 #include "title_widget.h"
 #include "ui_title_widget.h"
 
-static QString FIRST_STEP = "://resource/wizard/first_step.png";
-static QString SECOND_STEP = "://resource/wizard/second_step.png";
-static QString THIRD_STEP = "://resource/wizard/third_step.png";
-static QString FOURTH_STEP = "://resource/wizard/fourth_step.png";
+static QString FIRST_SELECTED = "://resource/wizard/first_selected.png";
+static QString SECOND_SELECTED = "://resource/wizard/second_selected.png";
+static QString SECOND_UNSELECTED = "://resource/wizard/second_unselected.png";
+static QString THIRD_SELECTED = "://resource/wizard/third_selected.png";
+static QString THIRD_UNSELECTED = "://resource/wizard/third_unselected.png";
+static QString FOURTH_SELECTED = "://resource/wizard/fourth_selected.png";
+static QString FOURTH_UNSELECTED = "://resource/wizard/fourth_unselected.png";
 
-static QString UT_FIRST_STEP = "://resource/wizard/ut_first_step.png";
-static QString UT_SECOND_STEP = "://resource/wizard/ut_second_step.png";
+static QString UT_FIRST_SELECTED = "://resource/wizard/ut_first_selected.png";
+static QString UT_SECOND_SELECTED = "://resource/wizard/ut_second_selected.png";
+static QString UT_SECOND_UNSELECTED = "://resource/wizard/ut_second_unselected.png";
 
-static QString MULTI_GROUP = "://resource/wizard/multi_group.png";
+static QString MULTI_GROUP_SELECTED = "://resource/wizard/multi_group_selected.png";
 
 TitleWidget::TitleWidget(QWidget *parent) :
     QWidget(parent),
@@ -57,10 +61,24 @@ void TitleWidget::set_type(WizardSetting::E_WIZARD_TYPE type)
             ui->fourthWidget->show();
             m_stepWidgetVect.clear();
             m_stepWidgetVect << ui->firstWidget << ui->secondWidget << ui->thirdWidget << ui->fourthWidget;
+            QStringList list;
+            list << FIRST_SELECTED << FIRST_SELECTED;
+            ui->firstWidget->set_back_ground(list);
+            list.clear();
+            list << SECOND_UNSELECTED << SECOND_SELECTED;
+            ui->secondWidget->set_back_ground(list);
+            list.clear();
+            list << THIRD_UNSELECTED << THIRD_SELECTED;
+            ui->thirdWidget->set_back_ground(list);
+            list.clear();
+            list << FOURTH_UNSELECTED << FOURTH_SELECTED;
+            ui->fourthWidget->set_back_ground(list);
+
             ui->firstWidget->set_title(tr("Probe/Part"));
             ui->secondWidget->set_title(tr("Focallaw"));
             ui->thirdWidget->set_title(tr("Setting"));
             ui->fourthWidget->set_title(tr("Calibration"));
+
             set_step(WizardSetting::STEP_1);
             break;
         }
@@ -73,6 +91,9 @@ void TitleWidget::set_type(WizardSetting::E_WIZARD_TYPE type)
             m_stepWidgetVect.clear();
             m_stepWidgetVect << ui->firstWidget;
             ui->firstWidget->set_title(tr("Multi Group"));
+            QStringList list;
+            list << MULTI_GROUP_SELECTED << MULTI_GROUP_SELECTED;
+            ui->firstWidget->set_back_ground(list);
             set_step(WizardSetting::STEP_1);
             break;
         }
@@ -87,6 +108,12 @@ void TitleWidget::set_type(WizardSetting::E_WIZARD_TYPE type)
             m_stepWidgetVect << ui->firstWidget << ui->secondWidget;
             ui->firstWidget->set_title(tr("Setting"));
             ui->secondWidget->set_title(tr("Calibration"));
+            QStringList list;
+            list << UT_FIRST_SELECTED << UT_FIRST_SELECTED;
+            ui->firstWidget->set_back_ground(list);
+            list.clear();
+            list << UT_SECOND_UNSELECTED << UT_SECOND_SELECTED;
+            ui->secondWidget->set_back_ground(list);
             set_step(WizardSetting::STEP_1);
             break;
         }

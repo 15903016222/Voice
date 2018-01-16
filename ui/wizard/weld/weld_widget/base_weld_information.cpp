@@ -6,26 +6,26 @@
 
 namespace DplWeld {
 
-static const QString I_Weld_IMG_PATH("./img/IWeld.png");
-static const QString V_Weld_IMG_PATH("./img/VWeld.png");
-static const QString U_Weld_IMG_PATH("./img/UWeld.png");
-static const QString VY_Weld_IMG_PATH("./img/VYWeld.png");
-static const QString VV_Weld_IMG_PATH("./img/VVWeld.png");
-static const QString UU_Weld_IMG_PATH("./img/UUWeld.png");
-static const QString UV_Weld_IMG_PATH("./img/UVWeld.png");
-static const QString TKY_Weld_IMG_PATH("./img/TKYWeld.png");
+static const QString I_IMG_PATH("./img/IWeld.png");
+static const QString V_IMG_PATH("./img/VWeld.png");
+static const QString U_IMG_PATH("./img/UWeld.png");
+static const QString VY_IMG_PATH("./img/VYWeld.png");
+static const QString VV_IMG_PATH("./img/VVWeld.png");
+static const QString UU_IMG_PATH("./img/UUWeld.png");
+static const QString UV_IMG_PATH("./img/UVWeld.png");
+static const QString TKY_IMG_PATH("./img/TKYWeld.png");
 
 BaseWeldInformation::BaseWeldInformation(const QMap<QString, double> &valueList):
     m_dataMap(valueList)
 {
-    m_pixMap.insert(I_Weld, I_Weld_IMG_PATH);
-    m_pixMap.insert(V_Weld, V_Weld_IMG_PATH);
-    m_pixMap.insert(U_Weld, U_Weld_IMG_PATH);
-    m_pixMap.insert(VY_Weld, VY_Weld_IMG_PATH);
-    m_pixMap.insert(VV_Weld, VV_Weld_IMG_PATH);
-    m_pixMap.insert(UU_Weld, UU_Weld_IMG_PATH);
-    m_pixMap.insert(UV_Weld, UV_Weld_IMG_PATH);
-    m_pixMap.insert(TKY_Weld, TKY_Weld_IMG_PATH);
+    m_pixMap.insert(I, I_IMG_PATH);
+    m_pixMap.insert(V, V_IMG_PATH);
+    m_pixMap.insert(U, U_IMG_PATH);
+    m_pixMap.insert(VY, VY_IMG_PATH);
+    m_pixMap.insert(VV, VV_IMG_PATH);
+    m_pixMap.insert(UU, UU_IMG_PATH);
+    m_pixMap.insert(UV, UV_IMG_PATH);
+    m_pixMap.insert(TKY, TKY_IMG_PATH);
 }
 
 

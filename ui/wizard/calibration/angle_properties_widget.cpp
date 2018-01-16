@@ -9,10 +9,6 @@ AnglePropertiesWidget::AnglePropertiesWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     hide();
-    if(parent != NULL) {
-        ui->startLabel->setFont(QFont(this->font().family(), 15));
-        ui->startLabel->setMinimumHeight(30);
-    }
 }
 
 AnglePropertiesWidget::~AnglePropertiesWidget()

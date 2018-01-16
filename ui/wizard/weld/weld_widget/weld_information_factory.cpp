@@ -23,42 +23,42 @@ QSharedPointer<DplWeld::BaseWeldInformation> WeldInformationFactory::create_weld
 {
     switch (type)
     {
-        case DplWeld::I_Weld:
+        case DplWeld::I:
         {
             return QSharedPointer<BaseWeldInformation>(new IWeldInformation(valueList));
             break;
         }
-        case DplWeld::V_Weld:
+        case DplWeld::V:
         {
             return QSharedPointer<BaseWeldInformation>(new VWeldInformation(valueList));
             break;
         }
-        case DplWeld::U_Weld:
+        case DplWeld::U:
         {
             return QSharedPointer<BaseWeldInformation>(new UWeldInformation(valueList));
             break;
         }
-        case DplWeld::VY_Weld:
+        case DplWeld::VY:
         {
             return QSharedPointer<BaseWeldInformation>(new VYWeldInformation(valueList));
             break;
         }
-        case DplWeld::VV_Weld:
+        case DplWeld::VV:
         {
             return QSharedPointer<BaseWeldInformation>(new VVWeldInformation(valueList));
             break;
         }
-        case DplWeld::UU_Weld:
+        case DplWeld::UU:
         {
             return QSharedPointer<BaseWeldInformation>(new UUWeldInformation(valueList));
             break;
         }
-        case DplWeld::UV_Weld:
+        case DplWeld::UV:
         {
             return QSharedPointer<BaseWeldInformation>(new UVWeldInformation(valueList));
             break;
         }
-        case DplWeld::TKY_Weld:
+        case DplWeld::TKY:
         {
             return QSharedPointer<BaseWeldInformation>(new TKYWeldInformation(valueList));
             break;

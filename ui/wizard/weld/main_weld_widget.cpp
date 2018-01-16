@@ -116,7 +116,7 @@ void MainWeldWidget::do_btn_clicked()
 
 void MainWeldWidget::config_ruler()
 {
-    if(m_pbaseWeldInformation->get_type() == DplWeld::TKY_Weld) {
+    if(m_pbaseWeldInformation->get_type() == DplWeld::TKY) {
         /* 占比为10% */
         double totalSize = m_verticalSize.currentSize / ((100 - DplWeld::TKYTopScale - DplWeld::TKYBottomScale) / 100.0);
 
@@ -142,7 +142,7 @@ void MainWeldWidget::connect_signals(int type)
 {
     switch (type)\
     {
-        case DplWeld::U_Weld:
+        case DplWeld::U:
         {
             connect(m_pbaseWeldWidget, SIGNAL(max_W1(double)), ui->weldProperties, SLOT(slot_max_W1(double)));
             connect(m_pbaseWeldWidget, SIGNAL(max_W2(double)), ui->weldProperties, SLOT(slot_max_W2(double)));
@@ -150,7 +150,7 @@ void MainWeldWidget::connect_signals(int type)
             connect(m_pbaseWeldWidget, SIGNAL(min_R1(double)), ui->weldProperties, SLOT(slot_min_R1(double)));
             break;
         }
-        case DplWeld::UU_Weld:
+        case DplWeld::UU:
         {
             connect(m_pbaseWeldWidget, SIGNAL(max_W1(double)), ui->weldProperties, SLOT(slot_max_W1(double)));
             connect(m_pbaseWeldWidget, SIGNAL(max_W2(double)), ui->weldProperties, SLOT(slot_max_W2(double)));
@@ -163,7 +163,7 @@ void MainWeldWidget::connect_signals(int type)
 
             break;
         }
-        case DplWeld::UV_Weld:
+        case DplWeld::UV:
         {
             connect(m_pbaseWeldWidget, SIGNAL(max_W1(double)), ui->weldProperties, SLOT(slot_max_W1(double)));
             connect(m_pbaseWeldWidget, SIGNAL(max_W2(double)), ui->weldProperties, SLOT(slot_max_W2(double)));
@@ -172,7 +172,7 @@ void MainWeldWidget::connect_signals(int type)
 
             break;
         }
-        case DplWeld::TKY_Weld:
+        case DplWeld::TKY:
         {
             connect(m_pbaseWeldWidget, SIGNAL(min_X1(double)), ui->weldProperties, SLOT(slot_min_X1(double)));
             connect(m_pbaseWeldWidget, SIGNAL(max_Y1(double)), ui->weldProperties, SLOT(slot_max_Y1(double)));
@@ -191,20 +191,19 @@ void MainWeldWidget::connect_signals(int type)
 void MainWeldWidget::set_default_value(int weldType, QMap<QString, double> &valueList)
 {
     switch (weldType) {
-        case DplWeld::I_Weld:
+        case DplWeld::I:
         {
             valueList.insert(TAG_W1, 0.0);
-
             break;
         }
-        case DplWeld::V_Weld:
+        case DplWeld::V:
         {
             valueList.insert(TAG_W1, 2.0);
             valueList.insert(TAG_W2, 1.0);
             valueList.insert(TAG_H1, 3.0);
             break;
         }
-        case DplWeld::U_Weld:
+        case DplWeld::U:
         {
             valueList.insert(TAG_W1, 2.0);
             valueList.insert(TAG_W2, 1.0);
@@ -212,7 +211,7 @@ void MainWeldWidget::set_default_value(int weldType, QMap<QString, double> &valu
             valueList.insert(TAG_R1, 2.0);
             break;
         }
-        case DplWeld::VY_Weld:
+        case DplWeld::VY:
         {
             valueList.insert(TAG_W1, 5.0);
             valueList.insert(TAG_W2, 2.0);
@@ -221,7 +220,7 @@ void MainWeldWidget::set_default_value(int weldType, QMap<QString, double> &valu
             valueList.insert(TAG_H2, 2.0);
             break;
         }
-        case DplWeld::VV_Weld:
+        case DplWeld::VV:
         {
             valueList.insert(TAG_W1, 2.0);
             valueList.insert(TAG_W2, 1.0);
@@ -230,7 +229,7 @@ void MainWeldWidget::set_default_value(int weldType, QMap<QString, double> &valu
             valueList.insert(TAG_H2, 3.0);
             break;
         }
-        case DplWeld::UU_Weld:
+        case DplWeld::UU:
         {
             valueList.insert(TAG_W1, 2.0);
             valueList.insert(TAG_W2, 1.0);
@@ -241,7 +240,7 @@ void MainWeldWidget::set_default_value(int weldType, QMap<QString, double> &valu
             valueList.insert(TAG_R2, 2.0);
             break;
         }
-        case DplWeld::UV_Weld:
+        case DplWeld::UV:
         {
             valueList.insert(TAG_W1, 2.0);
             valueList.insert(TAG_W2, 1.0);
@@ -251,7 +250,7 @@ void MainWeldWidget::set_default_value(int weldType, QMap<QString, double> &valu
             valueList.insert(TAG_R1, 2.0);
             break;
         }
-        case DplWeld::TKY_Weld:
+        case DplWeld::TKY:
         {
             valueList.insert(TAG_T1, 30.0);
             valueList.insert(TAG_T2, 20.0);
@@ -280,8 +279,10 @@ void MainWeldWidget::init()
     /* 厚度占左标尺的60% */
     double leftRulerSize = m_verticalSize.currentSize / (DplWeld::WeldScale / 100.0);
 
+    ui->leftRuler->set_mark_position(Ruler::LEFT);
     ui->leftRuler->set_range(-leftRulerSize * (DplWeld::BottomScale / 100.0),
                              leftRulerSize * ((100 - DplWeld::BottomScale) / 100.0));
+
 
     ui->bottomRuler->set_range(-m_horizontalSize.currentSize, m_horizontalSize.currentSize);
 
@@ -293,13 +294,13 @@ void MainWeldWidget::init()
     /* 默认显示I型焊缝 */
     QMap<QString, double> valueList;
     valueList.insert(TAG_W1, 0.0);
-    do_weldProperties_weld_info_changed(DplWeld::I_Weld, valueList);
+    do_weldProperties_weld_info_changed(DplWeld::I, valueList);
 }
 
 
 void MainWeldWidget::append_value(int type, QMap<QString, double> &valueList)
 {
-    if(type == DplWeld::TKY_Weld) {
+    if(type == DplWeld::TKY) {
         append_value_tky(type, valueList);
     } else {
         append_value_other(type, valueList);
@@ -418,7 +419,7 @@ void MainWeldWidget::append_value_other(int type, QMap<QString, double> &valueLi
 
         double tmpWidth;
 
-        if(type == DplWeld::VV_Weld) {
+        if(type == DplWeld::VV) {
             tmpWidth = MAX(valueList.value(TAG_W1), valueList.value(TAG_W3));
         } else {
             tmpWidth = valueList.value(TAG_W1);
@@ -442,7 +443,7 @@ bool MainWeldWidget::event(QEvent *event)
 {
     if(event->type() == QEvent::Resize) {
 
-        if(m_pbaseWeldInformation->get_type() == DplWeld::TKY_Weld) {
+        if(m_pbaseWeldInformation->get_type() == DplWeld::TKY) {
 
             m_pbaseWeldInformation->insert_value(TAG_WIDTH_SCALE,
                                                  ui->bottomRuler->width() / (2 * m_horizontalSize.currentSize));

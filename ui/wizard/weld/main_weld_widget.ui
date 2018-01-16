@@ -16,6 +16,15 @@
   <property name="windowTitle">
    <string>MainWeldWidget</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QLabel#weldLabel{
+background-color:rgb(0, 130, 195);
+color: white;   
+font: 26pt;
+font-weight:bold;
+border-style: outset;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -42,7 +51,10 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>20</pointsize>
+       <pointsize>26</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -111,7 +123,19 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="WeldPropertiesWidget" name="weldProperties" native="true"/>
+        <widget class="WeldPropertiesWidget" name="weldProperties" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="StaticWeldWidget" name="staticWeld" native="true"/>
@@ -122,8 +146,8 @@
           <widget class="QPushButton" name="backBtn">
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>30</height>
+             <width>100</width>
+             <height>40</height>
             </size>
            </property>
            <property name="font">
@@ -140,8 +164,8 @@
           <widget class="QPushButton" name="finishedBtn">
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>30</height>
+             <width>100</width>
+             <height>40</height>
             </size>
            </property>
            <property name="font">

@@ -12,14 +12,14 @@ namespace DplWeld {
 
 enum WeldType
 {
-    I_Weld,
-    V_Weld,
-    U_Weld,
-    VY_Weld,
-    VV_Weld,
-    UU_Weld,
-    UV_Weld,
-    TKY_Weld
+    I,
+    V,
+    U,
+    VY,
+    VV,
+    UU,
+    UV,
+    TKY
 };
 
 enum E_ShowScale

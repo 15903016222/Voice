@@ -63,13 +63,13 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
 
     switch (ui->weldTypeComboBox->currentIndex())
     {
-        case DplWeld::I_Weld:
+        case DplWeld::I:
         {
             valueList.insert(TAG_W1, ui->W1DoubleSpinBox->value());
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
             break;
         }
-        case DplWeld::V_Weld:
+        case DplWeld::V:
         {
             if(current->objectName() == ui->W1DoubleSpinBox->objectName()) {
                 ui->W2DoubleSpinBox->setMaximum(value);
@@ -84,7 +84,7 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
             break;
         }
-        case DplWeld::U_Weld:
+        case DplWeld::U:
         {
             check_u_weld_properties_limit(current, value);
 
@@ -95,7 +95,7 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
             break;
         }
-        case DplWeld::VY_Weld:
+        case DplWeld::VY:
         {
             if(current->objectName() == ui->W1DoubleSpinBox->objectName()) {
                 ui->W2DoubleSpinBox->setMaximum(value);
@@ -118,7 +118,7 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
             break;
         }
-        case DplWeld::VV_Weld:
+        case DplWeld::VV:
         {
             check_vv_weld_properties_limit(current, value);
 
@@ -130,7 +130,7 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
             break;
         }
-        case DplWeld::UU_Weld:
+        case DplWeld::UU:
         {
             check_u_weld_properties_limit(current, value);
 
@@ -144,7 +144,7 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
             break;
         }
-        case DplWeld::UV_Weld:
+        case DplWeld::UV:
         {
             check_u_weld_properties_limit(current, value);
 
@@ -157,7 +157,7 @@ void WeldPropertiesWidget::slot_weld_info_changed(double value)
             valueList.insert(TAG_TYPE, ui->weldTypeComboBox->currentIndex());
             break;
         }
-        case DplWeld::TKY_Weld:
+        case DplWeld::TKY:
         {
             valueList.insert(TAG_T1, ui->T1DoubleSpinBox->value());
             valueList.insert(TAG_T2, ui->T2DoubleSpinBox->value());
@@ -185,42 +185,42 @@ void WeldPropertiesWidget::set_weld_info(const QMap<QString, double> &valueList)
 
     switch ((int)valueList.value(TAG_TYPE))
     {
-        case DplWeld::I_Weld:
+        case DplWeld::I:
         {
             show_i_weld_item(m_valueList);
             break;
         }
-        case DplWeld::V_Weld:
+        case DplWeld::V:
         {
             show_v_weld_item(m_valueList);
             break;
         }
-        case DplWeld::U_Weld:
+        case DplWeld::U:
         {
             show_u_weld_item(m_valueList);
             break;
         }
-        case DplWeld::VY_Weld:
+        case DplWeld::VY:
         {
             show_vy_weld_item(m_valueList);
             break;
         }
-        case DplWeld::VV_Weld:
+        case DplWeld::VV:
         {
             show_vv_weld_item(m_valueList);
             break;
         }
-        case DplWeld::UU_Weld:
+        case DplWeld::UU:
         {
             show_uu_weld_item(m_valueList);
             break;
         }
-        case DplWeld::UV_Weld:
+        case DplWeld::UV:
         {
             show_uv_weld_item(m_valueList);
             break;
         }
-        case DplWeld::TKY_Weld:
+        case DplWeld::TKY:
         {
             show_tky_weld_item(m_valueList);
             break;
@@ -372,42 +372,42 @@ void WeldPropertiesWidget::show_item()
 
     switch (ui->weldTypeComboBox->currentIndex())
     {
-        case DplWeld::I_Weld:
+        case DplWeld::I:
         {
             show_i_weld_item(m_valueList);
             break;
         }
-        case DplWeld::V_Weld:
+        case DplWeld::V:
         {
             show_v_weld_item(m_valueList);
             break;
         }
-        case DplWeld::U_Weld:
+        case DplWeld::U:
         {
             show_u_weld_item(m_valueList);
             break;
         }
-        case DplWeld::VY_Weld:
+        case DplWeld::VY:
         {
             show_vy_weld_item(m_valueList);
             break;
         }
-        case DplWeld::VV_Weld:
+        case DplWeld::VV:
         {
             show_vv_weld_item(m_valueList);
             break;
         }
-        case DplWeld::UU_Weld:
+        case DplWeld::UU:
         {
             show_uu_weld_item(m_valueList);
             break;
         }
-        case DplWeld::UV_Weld:
+        case DplWeld::UV:
         {
             show_uv_weld_item(m_valueList);
             break;
         }
-        case DplWeld::TKY_Weld:
+        case DplWeld::TKY:
         {
             show_tky_weld_item(m_valueList);
             break;
@@ -892,12 +892,12 @@ void WeldPropertiesWidget::reset_value()
     ui->H2DoubleSpinBox->setMaximum(m_thickness);
     ui->H3DoubleSpinBox->setMaximum(m_thickness);
 
-    if(ui->weldTypeComboBox->currentIndex() == DplWeld::U_Weld) {
+    if(ui->weldTypeComboBox->currentIndex() == DplWeld::U) {
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
         ui->H1DoubleSpinBox->setValue(3.0);
         ui->R1DoubleSpinBox->setValue(2.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::UV_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::UV) {
 
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
@@ -908,7 +908,7 @@ void WeldPropertiesWidget::reset_value()
 
         ui->W3DoubleSpinBox->setMinimum(ui->W3DoubleSpinBox->value());
 
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::UU_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::UU) {
 
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
@@ -922,23 +922,23 @@ void WeldPropertiesWidget::reset_value()
         ui->W3DoubleSpinBox->setMinimum(1.0);
         ui->R1DoubleSpinBox->setMaximum(2.0);
         ui->R2DoubleSpinBox->setMaximum(2.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::VV_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::VV) {
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
         ui->W3DoubleSpinBox->setValue(2.0);
         ui->H1DoubleSpinBox->setValue(3.0);
         ui->H2DoubleSpinBox->setValue(3.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::VY_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::VY) {
         ui->W1DoubleSpinBox->setValue(5.0);
         ui->W2DoubleSpinBox->setValue(2.0);
         ui->W3DoubleSpinBox->setValue(1.0);
         ui->H1DoubleSpinBox->setValue(2.0);
         ui->H2DoubleSpinBox->setValue(2.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::V_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::V) {
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
         ui->H1DoubleSpinBox->setValue(3.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::TKY_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::TKY) {
         ui->T1DoubleSpinBox->setValue(30.0);
         ui->T2DoubleSpinBox->setValue(20.0);
         ui->X1DoubleSpinBox->setValue(5.0);
@@ -1023,12 +1023,12 @@ void WeldPropertiesWidget::set_value(const QMap<QString, double> &valueList)
 
     m_thickness = valueList.value(TAG_THICKNESS);
 
-    if(ui->weldTypeComboBox->currentIndex() == DplWeld::U_Weld) {
+    if(ui->weldTypeComboBox->currentIndex() == DplWeld::U) {
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
         ui->H1DoubleSpinBox->setValue(3.0);
         ui->R1DoubleSpinBox->setValue(2.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::UV_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::UV) {
 
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
@@ -1039,7 +1039,7 @@ void WeldPropertiesWidget::set_value(const QMap<QString, double> &valueList)
 
         ui->W3DoubleSpinBox->setMinimum(ui->W3DoubleSpinBox->value());
 
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::UU_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::UU) {
 
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
@@ -1053,23 +1053,23 @@ void WeldPropertiesWidget::set_value(const QMap<QString, double> &valueList)
         ui->W3DoubleSpinBox->setMinimum(1.0);
         ui->R1DoubleSpinBox->setMaximum(2.0);
         ui->R2DoubleSpinBox->setMaximum(2.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::VV_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::VV) {
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
         ui->W3DoubleSpinBox->setValue(2.0);
         ui->H1DoubleSpinBox->setValue(3.0);
         ui->H2DoubleSpinBox->setValue(3.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::VY_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::VY) {
         ui->W1DoubleSpinBox->setValue(5.0);
         ui->W2DoubleSpinBox->setValue(2.0);
         ui->W3DoubleSpinBox->setValue(1.0);
         ui->H1DoubleSpinBox->setValue(2.0);
         ui->H2DoubleSpinBox->setValue(2.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::V_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::V) {
         ui->W1DoubleSpinBox->setValue(2.0);
         ui->W2DoubleSpinBox->setValue(1.0);
         ui->H1DoubleSpinBox->setValue(3.0);
-    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::TKY_Weld) {
+    } else if(ui->weldTypeComboBox->currentIndex() == DplWeld::TKY) {
         ui->T1DoubleSpinBox->setValue(30.0);
         ui->T2DoubleSpinBox->setValue(20.0);
         ui->X1DoubleSpinBox->setValue(5.0);
@@ -1134,12 +1134,12 @@ void WeldPropertiesWidget::check_u_weld_properties_limit(const QDoubleSpinBox *c
 {
     if(current->objectName() == ui->W1DoubleSpinBox->objectName()) {
 
-        if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::U_Weld
-                || (DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UV_Weld) {
+        if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::U
+                || (DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UV) {
 
             ui->W2DoubleSpinBox->setMaximum(value - 0.01);
 
-        } else if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UU_Weld) {
+        } else if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UU) {
 
             /* 计算 W1与W3哪个比较小，用于设置W2的最大值 */
             double tmpValue = MIN(ui->W1DoubleSpinBox->value(), ui->W3DoubleSpinBox->value());
@@ -1167,7 +1167,7 @@ void WeldPropertiesWidget::check_u_weld_properties_limit(const QDoubleSpinBox *c
             ui->R1DoubleSpinBox->setMaximum(ui->W1DoubleSpinBox->value());
         }
 
-        if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UU_Weld) {
+        if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UU) {
 
             ui->W3DoubleSpinBox->setMinimum(value + 0.01); /* W3 永远要大于 W2，当前精度为两位，故减0.01 */
 
@@ -1182,12 +1182,12 @@ void WeldPropertiesWidget::check_u_weld_properties_limit(const QDoubleSpinBox *c
     }
     else if(current->objectName() == ui->R1DoubleSpinBox->objectName()) {
 
-        if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::U_Weld) {
+        if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::U) {
 
             ui->W2DoubleSpinBox->setMaximum(value - 0.01);
             ui->W1DoubleSpinBox->setMinimum(value);
 
-        } else if ((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UU_Weld) {
+        } else if ((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UU) {
 
             ui->W1DoubleSpinBox->setMinimum(value);
 
@@ -1195,7 +1195,7 @@ void WeldPropertiesWidget::check_u_weld_properties_limit(const QDoubleSpinBox *c
                 ui->W2DoubleSpinBox->setMaximum(value - 0.01);
             }
 
-        } else if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UV_Weld) {
+        } else if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UV) {
 
             ui->W2DoubleSpinBox->setMaximum(value - 0.01);
             ui->W1DoubleSpinBox->setMinimum(value);
@@ -1211,7 +1211,7 @@ void WeldPropertiesWidget::check_u_weld_properties_limit(const QDoubleSpinBox *c
             ui->R1DoubleSpinBox->setMaximum(ui->W1DoubleSpinBox->value());
         }
 
-        if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UU_Weld) {
+        if((DplWeld::WeldType)ui->weldTypeComboBox->currentIndex() == DplWeld::UU) {
 
             hypotenuse = sqrt(pow(ui->W2DoubleSpinBox->value(), 2) + pow(ui->H2DoubleSpinBox->value(), 2));
 

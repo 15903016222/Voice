@@ -13,9 +13,6 @@ StepWidget::StepWidget(QWidget *parent) :
     m_selected(false)
 {
     ui->setupUi(this);
-
-    set_selected(m_selected);
-
 }
 
 StepWidget::~StepWidget()
@@ -35,21 +32,20 @@ void StepWidget::set_back_ground(const QStringList &list)
 
 void StepWidget::set_selected(bool flag)
 {
+//                                    font-weight:bold;
     if(flag) {
         setStyleSheet(QString("QLabel#titleLabel{ \
-                                background-color:rgb(0, 130, 195); \
-                                color: %1;   \
-                                font: 26pt; \
-                                font-weight:bold; \
+                                background-image: url(%1); \
+                                color: %2;   \
+                                font: 25pt; \
                                 border-style: outset; \
-                                }").arg(SELECTED));
+                                }").arg(m_backGroundPath.at((int)flag)).arg(SELECTED));
     } else {
         setStyleSheet(QString("QLabel#titleLabel{ \
-                                background-color:rgb(0, 130, 195); \
-                                color: %1;   \
-                                font: 26pt; \
-                                font-weight:bold; \
+                                background-image: url(%1); \
+                                color: %2;   \
+                                font: 25pt; \
                                 border-style: outset; \
-                                }").arg(UNSELECTED));
+                                }").arg(m_backGroundPath.at((int)flag)).arg(UNSELECTED));
     }
 }

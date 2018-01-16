@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>248</width>
-    <height>635</height>
+    <height>617</height>
    </rect>
   </property>
   <property name="font">
@@ -23,10 +23,19 @@
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
    <property name="verticalSpacing">
-    <number>6</number>
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
    </property>
    <item row="0" column="0">
     <widget class="QLabel" name="weldTypeLabel">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>WeldType：</string>
      </property>
@@ -35,7 +44,7 @@
    <item row="0" column="1">
     <widget class="QComboBox" name="weldTypeComboBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -84,6 +93,12 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="W1Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>W1</string>
      </property>
@@ -91,6 +106,12 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="W2Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>W2</string>
      </property>
@@ -98,6 +119,12 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="W3Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>W3</string>
      </property>
@@ -105,6 +132,12 @@
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="H1Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>H1</string>
      </property>
@@ -112,6 +145,12 @@
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="H2Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>H2</string>
      </property>
@@ -119,6 +158,12 @@
    </item>
    <item row="6" column="0">
     <widget class="QLabel" name="H3Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>H3</string>
      </property>
@@ -126,6 +171,12 @@
    </item>
    <item row="7" column="0">
     <widget class="QLabel" name="R1Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>R1</string>
      </property>
@@ -133,6 +184,12 @@
    </item>
    <item row="8" column="0">
     <widget class="QLabel" name="R2Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>R2</string>
      </property>
@@ -141,7 +198,7 @@
    <item row="1" column="1">
     <widget class="QDoubleSpinBox" name="W1DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -166,7 +223,7 @@
    <item row="2" column="1">
     <widget class="QDoubleSpinBox" name="W2DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -185,7 +242,7 @@
    <item row="3" column="1">
     <widget class="QDoubleSpinBox" name="W3DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -204,7 +261,7 @@
    <item row="4" column="1">
     <widget class="QDoubleSpinBox" name="H1DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -223,7 +280,7 @@
    <item row="5" column="1">
     <widget class="QDoubleSpinBox" name="H2DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -242,7 +299,7 @@
    <item row="6" column="1">
     <widget class="QDoubleSpinBox" name="H3DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -261,7 +318,7 @@
    <item row="7" column="1">
     <widget class="QDoubleSpinBox" name="R1DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -280,7 +337,7 @@
    <item row="8" column="1">
     <widget class="QDoubleSpinBox" name="R2DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -313,6 +370,12 @@
    </item>
    <item row="9" column="0">
     <widget class="QLabel" name="T1Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>T1</string>
      </property>
@@ -320,6 +383,12 @@
    </item>
    <item row="10" column="0">
     <widget class="QLabel" name="T2Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>T2</string>
      </property>
@@ -327,6 +396,12 @@
    </item>
    <item row="11" column="0">
     <widget class="QLabel" name="X1Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>X1</string>
      </property>
@@ -334,6 +409,12 @@
    </item>
    <item row="12" column="0">
     <widget class="QLabel" name="Y1Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>Y1</string>
      </property>
@@ -341,6 +422,12 @@
    </item>
    <item row="13" column="0">
     <widget class="QLabel" name="X2Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>X2</string>
      </property>
@@ -348,6 +435,12 @@
    </item>
    <item row="14" column="0">
     <widget class="QLabel" name="Y2Label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>Y2</string>
      </property>
@@ -355,6 +448,12 @@
    </item>
    <item row="15" column="0">
     <widget class="QLabel" name="angleLabel">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>Angle</string>
      </property>
@@ -363,7 +462,7 @@
    <item row="9" column="1">
     <widget class="QDoubleSpinBox" name="T1DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -388,7 +487,7 @@
    <item row="10" column="1">
     <widget class="QDoubleSpinBox" name="T2DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -407,7 +506,7 @@
    <item row="11" column="1">
     <widget class="QDoubleSpinBox" name="X1DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -426,7 +525,7 @@
    <item row="12" column="1">
     <widget class="QDoubleSpinBox" name="Y1DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -445,7 +544,7 @@
    <item row="13" column="1">
     <widget class="QDoubleSpinBox" name="X2DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -464,7 +563,7 @@
    <item row="14" column="1">
     <widget class="QDoubleSpinBox" name="Y2DoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -483,7 +582,7 @@
    <item row="15" column="1">
     <widget class="QDoubleSpinBox" name="angleDoubleSpinBox">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
