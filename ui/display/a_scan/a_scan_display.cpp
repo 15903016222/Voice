@@ -104,8 +104,7 @@ void AscanDisplay::resize_event(const QSize &size)
     } else {
         s = size;
     }
-    m_scene->setSceneRect(-s.width()/2, -s.height()/2 + 1,
-                          s.width(), s.height());
+    m_scene->setSceneRect(0, 0, s.width(), s.height());
     m_waveItem->set_size(s);
     m_tcgItem->set_size(s);
     m_ampRefCursorItem->set_size(s);

@@ -40,7 +40,7 @@ public slots:
     void update();
 
 protected:
-    QPainterPath draw(const QByteArray &wave, bool rf, int w, int h);
+    QPainterPath draw(const QByteArray &wave, bool rf);
 
 private:
     DplDisplay::AscanPointer m_ascan;

@@ -9,11 +9,15 @@ class TcgItem : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    explicit TcgItem(const DplSizing::TcgsPointer &tcgs, const DplUt::SamplePointer &sample, QGraphicsItem *parent = 0);
+    explicit TcgItem(const DplSizing::TcgsPointer &tcgs,
+                     const DplUt::SamplePointer &sample,
+                     QGraphicsItem *parent = 0);
 
     QRectF boundingRect() const;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *widget);
 
     /**
      * @brief size  获取显示大小

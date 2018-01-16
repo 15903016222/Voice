@@ -102,20 +102,14 @@ void CursorItem::setVisible(bool flag)
 
 void CursorItem::update_position()
 {
-    if (moving()
-            || !scene()
-            || scene()->views().isEmpty()) {
+    if (moving()) {
         return;
     }
 
     if (orientation() == Qt::Horizontal) {
-        setPos(scene()->sceneRect().left(),
-               scene()->sceneRect().bottom()
-               - scene()->sceneRect().height() * ratio());
+        setPos(0, m_size.height() - m_size.height() * ratio());
     } else {
-        setPos(scene()->sceneRect().left()
-               + scene()->sceneRect().width() * ratio(),
-               scene()->sceneRect().top());
+        setPos(m_size.width() * ratio(), 0);
     }
 }
 
@@ -134,28 +128,25 @@ void CursorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 QVariant CursorItem::itemChange(QGraphicsItem::GraphicsItemChange change,
                                 const QVariant &value)
 {
-    if (change == ItemPositionChange
-            && scene()
-            && moving()) {
+    if (change == ItemPositionChange && moving()) {
         QPointF newPos = value.toPointF();
-        QRectF rect = scene()->sceneRect();
 
         if (Qt::Horizontal == m_orientation) {
-            newPos.setX(rect.left());
+            newPos.setX(0);
         } else {
-            newPos.setY(rect.top());
+            newPos.setY(0);
         }
 
-        if (newPos.x() < rect.left()) {
-            newPos.setX(rect.left());
-        } else if (newPos.x() > rect.right()) {
-            newPos.setX(rect.right());
+        if (newPos.x() < 0) {
+            newPos.setX(0);
+        } else if (newPos.x() > m_size.width()) {
+            newPos.setX(m_size.width());
         }
 
-        if (newPos.y() < rect.top()) {
-            newPos.setY(rect.top());
-        } else if (newPos.y() > rect.bottom()) {
-            newPos.setY(rect.bottom());
+        if (newPos.y() < 0) {
+            newPos.setY(0);
+        } else if (newPos.y() > m_size.height()) {
+            newPos.setY(m_size.height());
         }
 
         return newPos;
