@@ -51,11 +51,12 @@ BscanItem::~BscanItem()
 
 QRectF BscanItem::boundingRect() const
 {
-    return QRectF(-m_size.width()/2, -m_size.height()/2,
-                  m_size.width(), m_size.height());
+    return QRectF(0, 0, m_size.width(), m_size.height());
 }
 
-void BscanItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void BscanItem::paint(QPainter *painter,
+                      const QStyleOptionGraphicsItem *option,
+                      QWidget *widget)
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -64,7 +65,7 @@ void BscanItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     if (!m_image) {
         return;
     }
-    painter->drawPixmap(-m_size.width()/2, -m_size.height()/2, m_pixmap);
+    painter->drawPixmap(0, 0, m_pixmap);
 }
 
 void BscanItem::set_size(const QSize &size)

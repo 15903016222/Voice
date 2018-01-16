@@ -45,8 +45,7 @@ void BscanDisplay::resize_event(const QSize &size)
     } else {
         s = size;
     }
-    m_scene->setSceneRect(-s.width()/2, -s.height()/2,
-                          s.width(), s.height());
+    m_scene->setSceneRect(0, 0, s.width(), s.height());
     m_bscanItem->set_size(s);
     m_utRefCursorItem->set_size(s);
     m_utMeasCursorItem->set_size(s);
