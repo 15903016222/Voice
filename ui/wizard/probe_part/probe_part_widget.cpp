@@ -4,9 +4,10 @@
 #include <QLineEdit>
 
 #include "ui_probe_part_widget.h"
-#include "ui/wizard/weld/main_weld_widget.h"
+#include <ui/wizard/weld/main_weld_widget.h>
 #include <ui/menu/probe_part/probe_dialog.h>    /* 探头 */
-#include "ui/menu/probe_part/wedge_dialog.h"   /* 楔块 */
+#include <ui/menu/probe_part/wedge_dialog.h>   /* 楔块 */
+#include <device/device.h>
 
 static const int DEFAULT_WELD_INDEX = 4;  /* VV_Weld */
 
@@ -67,7 +68,8 @@ void ProbePartWidget::on_probeModelDefineBtn_clicked()
 {
     ProbeDialog probeDialog(this);
     if(probeDialog.exec() == QDialog::Accepted) {
-        ui->probeModelLineEdit->setText("");
+        DplFocallaw::ProbePointer probe = probeDialog.get_probe();
+        ui->probeModelLineEdit->setText(probe->model());
     }
 }
 
@@ -76,7 +78,11 @@ void ProbePartWidget::on_wedgeModelDefineBtn_clicked()
 {
     WedgeDialog wedgeDialog(this);
     if(wedgeDialog.exec() == QDialog::Accepted) {
-        ui->wedgeModelLineEdit->setText("");
+        DplDevice::GroupPointer group = DplDevice::Device::instance()->current_group();
+        DplFocallaw::WedgePointer wedge = group->focallawer()->wedge();
+        if(wedge->load(wedgeDialog.get_path())) {
+            ui->wedgeModelLineEdit->setText(wedge->model());
+        }
     }
 }
 

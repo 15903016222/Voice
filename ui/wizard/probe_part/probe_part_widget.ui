@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>948</width>
+    <width>1177</width>
     <height>511</height>
    </rect>
   </property>
@@ -110,12 +110,12 @@ border-style: outset;
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="propertiesHorizontalLayout" stretch="1,1,1">
+    <layout class="QHBoxLayout" name="propertiesHorizontalLayout" stretch="0,0,0">
      <property name="spacing">
       <number>10</number>
      </property>
      <item>
-      <layout class="QFormLayout" name="workpiectFormLayout1">
+      <layout class="QFormLayout" name="partFormLayout1">
        <property name="horizontalSpacing">
         <number>3</number>
        </property>
@@ -149,7 +149,7 @@ border-style: outset;
        <item row="0" column="1">
         <widget class="QComboBox" name="materialsComboBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -161,7 +161,117 @@ border-style: outset;
          </property>
          <item>
           <property name="text">
-           <string>Steel</string>
+           <string>Aluminum</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Steel Common</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Steel Stainless</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Brass</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Copper</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Iron</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Lead</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Nylon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Silver</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Gold</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Zinc</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Titanium</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tin</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Ice</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Nickel</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Plexiglass</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Polystyrene</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Orcelain</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>PVC</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Quartz Glass</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Rubber Vulcanized</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Teflon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Water</string>
           </property>
          </item>
         </widget>
@@ -396,7 +506,7 @@ border-style: outset;
       </layout>
      </item>
      <item>
-      <layout class="QFormLayout" name="workpiectFormLayout2">
+      <layout class="QFormLayout" name="partFormLayout2">
        <property name="horizontalSpacing">
         <number>3</number>
        </property>
@@ -424,7 +534,7 @@ border-style: outset;
        <item row="0" column="1">
         <widget class="QSpinBox" name="soundVelocitySpinBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -603,50 +713,7 @@ border-style: outset;
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <layout class="QHBoxLayout" name="proeModelHorizontalLayout" stretch="0,0">
-         <property name="spacing">
-          <number>2</number>
-         </property>
-         <item>
-          <widget class="QLineEdit" name="probeModelLineEdit">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>15</pointsize>
-            </font>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="probeModelDefineBtn">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>15</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Define</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="moduleModelLabel">
          <property name="minimumSize">
           <size>
@@ -664,8 +731,8 @@ border-style: outset;
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <layout class="QHBoxLayout" name="wedgeModelHorizontalLayout" stretch="0,0">
+       <item row="2" column="1">
+        <layout class="QHBoxLayout" name="wedgeModelHorizontalLayout" stretch="0">
          <property name="spacing">
           <number>2</number>
          </property>
@@ -684,27 +751,9 @@ border-style: outset;
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="wedgeModelDefineBtn">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>15</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Define</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
-       <item row="2" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="autoIdentifyProbeLabel">
          <property name="minimumSize">
           <size>
@@ -722,10 +771,10 @@ border-style: outset;
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="4" column="1">
         <widget class="QComboBox" name="comboBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -747,6 +796,60 @@ border-style: outset;
          </item>
         </widget>
        </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="wedgeModelDefineBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Define</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="probeModelDefineBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Define</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="probeModelLineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>
@@ -764,10 +867,7 @@ border-style: outset;
   <tabstop>soundVelocitySpinBox</tabstop>
   <tabstop>thicknessDoubleSpinBox</tabstop>
   <tabstop>innerDiameterDoubleSpinBox</tabstop>
-  <tabstop>probeModelLineEdit</tabstop>
-  <tabstop>probeModelDefineBtn</tabstop>
   <tabstop>wedgeModelLineEdit</tabstop>
-  <tabstop>wedgeModelDefineBtn</tabstop>
  </tabstops>
  <resources/>
  <connections/>

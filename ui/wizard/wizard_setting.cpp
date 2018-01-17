@@ -3,7 +3,7 @@
 #include "ui_wizard_setting.h"
 #include "step_widget.h"
 #include "selector.h"
-
+#include <device/device.h>
 #include <QDebug>
 
 WizardSetting::WizardSetting(QWidget *parent) :
@@ -32,6 +32,8 @@ WizardSetting::~WizardSetting()
 
 void WizardSetting::show(WizardSetting::E_WIZARD_TYPE type)
 {
+    m_currentGroup = DplDevice::Device::instance()->current_group();
+    ui->groupLabel->setText(tr("Group ") + QString::number(m_currentGroup->index() + 1));
     m_type = type;
     init_widget();
     QWidget::show();
@@ -121,8 +123,10 @@ void WizardSetting::init_widget()
 
     if(m_type == MULTI_GROUP_DETECT) {
         ui->nextBtn->setText(tr("Finished"));
+        ui->groupLabel->setHidden(true);
     } else {
         ui->nextBtn->setText(tr("Next"));
+        ui->groupLabel->setHidden(false);
     }
 
     current->show();

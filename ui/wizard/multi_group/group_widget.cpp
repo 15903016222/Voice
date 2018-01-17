@@ -10,8 +10,8 @@ GroupWidget::GroupWidget(int groupIndex, QWidget *parent) :
     m_groupIndex(groupIndex)
 {
     ui->setupUi(this);
-    ui->groupLabel->setText(tr("Gr") + QString::number(groupIndex) + ":");
-    if(groupIndex % 2 == 0) {
+    ui->groupLabel->setText(tr("Gr") + QString::number(groupIndex + 1) + ":");
+    if(groupIndex % 2 == 1) {
     QString qss = QString("QWidget{ \
                           background-color: %1; \
                           font-size: 15pt; \

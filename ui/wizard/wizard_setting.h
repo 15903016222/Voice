@@ -8,6 +8,7 @@
 
 #include <QDialog>
 #include <QSharedPointer>
+#include "device/group.h"
 
 class StepWidget;
 class Selector;
@@ -61,11 +62,12 @@ protected slots:
    void do_step_widget_clicked(int step);
 
 protected:
-   QSharedPointer<Selector>           m_widgetSelector;
-   WizardSetting::E_WIZARD_TYPE       m_type;
+   QSharedPointer<Selector> m_widgetSelector;
+   WizardSetting::E_WIZARD_TYPE m_type;
+   DplDevice::GroupPointer m_currentGroup;
 
 private:
-    Ui::WizardSetting                   *ui;
+    Ui::WizardSetting *ui;
 
     void init_widget();
     void update_step_widget();

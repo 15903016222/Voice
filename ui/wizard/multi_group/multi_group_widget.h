@@ -25,8 +25,8 @@ class MultiGroupWidget : public QWidget
 {
     Q_OBJECT
 
-    enum E_GROUP_NO{
-        GROUP_1 = 1,
+    enum E_GROUP_NUM{
+        GROUP_1,
         GROUP_2,
         GROUP_3,
         GROUP_4,
@@ -60,7 +60,7 @@ private:
     Ui::MultiGroupWidget *ui;
     QSharedPointer<SubWizardSetting> m_subWizardSetting;
     QMap<QPushButton*, QComboBox*> m_pushButtonComboBoxMap;
-    QMap<E_GROUP_NO, QComboBox*> m_groupNOComboBoxMap;
+    QMap<E_GROUP_NUM, QComboBox*> m_groupNOComboBoxMap;
     int m_currentGroup;
     QVector<GroupWidget*> m_groupVect;
 };

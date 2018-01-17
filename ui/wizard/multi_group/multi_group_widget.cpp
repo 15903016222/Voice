@@ -6,7 +6,9 @@
 #include <QDebug>
 #include "sub_wizard_setting.h"
 #include "group_widget.h"
-
+#include <device/device.h>
+#include <device/group.h>
+#include <ui/dialog/dpl_message_box.h>
 
 MultiGroupWidget::MultiGroupWidget(WizardSetting::E_WIZARD_TYPE type, QWidget *parent) :
     QWidget(parent),
@@ -40,6 +42,15 @@ MultiGroupWidget::~MultiGroupWidget()
 
 void MultiGroupWidget::do_settingBtn_clicked(int model, int index)
 {
+
+    if(index != 0) {
+        if(!DplDevice::Device::instance()->add_group()) {
+            DplMessageBox box(QMessageBox::Warning, tr("Error"), tr("Create The Group Failed!"));
+            box.exec();
+            return;
+        }
+    }
+
     if(m_subWizardSetting.isNull()) {
         m_subWizardSetting = QSharedPointer<SubWizardSetting>(new SubWizardSetting());
         connect(m_subWizardSetting.data(), SIGNAL(next_group()), this, SLOT(do_sub_wizard_setting_next_group()));
@@ -75,11 +86,11 @@ void MultiGroupWidget::do_sub_wizard_setting_next_group()
     m_subWizardSetting->hide();
     do_finished_setting();
 
-    m_groupVect.at(m_currentGroup)->setEnabled(true);
-    m_groupVect.at(m_currentGroup)->set_focus();
+    m_groupVect.at(m_currentGroup + 1)->setEnabled(true);
+    m_groupVect.at(m_currentGroup + 1)->set_focus();
 }
 
 void MultiGroupWidget::do_finished_setting()
 {
-    m_groupVect.at(m_currentGroup - 1)->set_state(true);
+    m_groupVect.at(m_currentGroup)->set_state(true);
 }
