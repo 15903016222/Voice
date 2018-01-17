@@ -57,7 +57,7 @@ double Cursor::amplitude_reference() const
  */
 void Cursor::set_amplitude_reference(double val)
 {
-    if ( !qFuzzyCompare(val, d->m_r) ) {
+    if ( !qFuzzyIsNull(val - d->m_r) ) {
         d->m_r = val;
         emit amplitude_reference_changed(val);
     }
@@ -74,7 +74,7 @@ double Cursor::amplitude_measurement() const
  */
 void Cursor::set_amplitude_measurement(double val)
 {
-    if ( !qFuzzyCompare(val, d->m_m) ) {
+    if ( !qFuzzyIsNull(val - d->m_m) ) {
         d->m_m = val;
         emit amplitude_measurement_changed(val);
     }
@@ -91,7 +91,7 @@ double Cursor::ultrasound_reference() const
  */
 void Cursor::set_ultrasound_reference(double val)
 {
-    if ( !qFuzzyCompare(val, d->m_ur) ) {
+    if ( !qFuzzyIsNull(val - d->m_ur) ) {
         d->m_ur = val;
         emit ultrasound_reference_changed(val);
     }
@@ -108,7 +108,7 @@ double Cursor::ultrasound_measurement() const
  */
 void Cursor::set_ultrasound_measurement(double val)
 {
-    if ( !qFuzzyCompare(val, d->m_um )) {
+    if ( !qFuzzyIsNull(val - d->m_um )) {
         d->m_um = val;
         emit ultrasound_measurement_changed(val);
     }
@@ -125,7 +125,7 @@ double Cursor::scan_reference() const
  */
 void Cursor::set_scan_reference(double val)
 {
-    if ( !qFuzzyCompare(val, d->m_sr) ) {
+    if ( !qFuzzyIsNull(val - d->m_sr) ) {
         d->m_sr = val;
         emit scan_reference_changed(val);
     }
@@ -142,7 +142,7 @@ double Cursor::scan_measurement() const
  */
 void Cursor::set_scan_measurement(double val)
 {
-    if ( !qFuzzyCompare(val, d->m_sm) ) {
+    if ( !qFuzzyIsNull(val - d->m_sm) ) {
         d->m_sm = val;
         emit scan_measurement_changed(val);
     }
@@ -159,7 +159,7 @@ double Cursor::index_reference() const
  */
 void Cursor::set_index_reference(double val)
 {
-    if ( !qFuzzyCompare(val, d->m_ir)) {
+    if ( !qFuzzyIsNull(val - d->m_ir)) {
         d->m_ir = val;
         emit index_reference_changed(val);
     }
@@ -176,7 +176,7 @@ double Cursor::index_measurement() const
  */
 void Cursor::set_index_measurement(double val)
 {
-    if ( !qFuzzyCompare(val, d->m_im) ) {
+    if ( !qFuzzyIsNull(val - d->m_im) ) {
         d->m_im = val;
         emit index_measurement_changed(val);
     }

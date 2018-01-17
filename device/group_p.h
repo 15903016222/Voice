@@ -80,7 +80,7 @@ inline double GroupPrivate::current_angle() const
 
 inline void GroupPrivate::set_current_angle(double angle)
 {
-    if (!qFuzzyCompare(m_currentAngle, angle)) {
+    if (!qFuzzyIsNull(m_currentAngle - angle)) {
         m_currentAngle = angle;
         emit q->current_angle_changed(angle);
     }

@@ -87,11 +87,12 @@ float Transceiver::pw() const
 
 void Transceiver::set_pw(float w)
 {
-    if (!qFuzzyIsNull(w) && !qFuzzyCompare(d->m_pw, w)) {
-        d->m_pw = w;
-        d->m_fpgaGrp->set_tx_end(w/2.5, true);
-        emit pw_changed(w);
+    if (qFuzzyIsNull(d->m_pw - w)) {
+        return;
     }
+    d->m_pw = w;
+    d->m_fpgaGrp->set_tx_end(w/2.5, true);
+    emit pw_changed(w);
 }
 
 int Transceiver::filter() const

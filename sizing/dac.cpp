@@ -39,7 +39,7 @@ float Dac::position(int point)
 bool Dac::set_position(int point, float pos)
 {
     if (point >= MAX_POINT_QTY
-            || qFuzzyCompare(d->m_pos[point], pos)) {
+            || qFuzzyIsNull(d->m_pos[point] - pos)) {
         return false;
     }
     d->m_pos[point] = pos;
@@ -57,7 +57,7 @@ float Dac::amplitude(int point) const
 bool Dac::set_amplitude(int point, float val)
 {
     if (point >= MAX_POINT_QTY
-            || qFuzzyCompare(d->m_amplitude[point], val)) {
+            || qFuzzyIsNull(d->m_amplitude[point] - val)) {
         return false;
     }
     d->m_amplitude[point] = val;

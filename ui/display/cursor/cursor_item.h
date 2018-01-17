@@ -31,6 +31,13 @@ public:
 
     void set_background_color(const QColor &color);
 
+    enum Direction {
+        NORMAL,
+        REVERSE
+    };
+    Direction direction() const;
+    void set_direction(Direction dir);
+
 signals:
     void size_changed();
 
@@ -56,6 +63,7 @@ private:
     QColor m_bgColor;
     bool m_movingFlag;
     QString m_text;
+    Direction m_direction;
 };
 
 inline void CursorItem::set_size(const QSize size)
@@ -89,6 +97,16 @@ inline bool CursorItem::moving() const
 inline void CursorItem::set_background_color(const QColor &color)
 {
     m_bgColor = color;
+}
+
+inline CursorItem::Direction CursorItem::direction() const
+{
+    return m_direction;
+}
+
+inline void CursorItem::set_direction(CursorItem::Direction dir)
+{
+    m_direction = dir;
 }
 
 inline void CursorItem::set_text(const QString &text)

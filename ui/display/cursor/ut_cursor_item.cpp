@@ -46,14 +46,26 @@ void UtCursorItem::update_background_color(DplDevice::Group::UtUnit unit)
 double UtCursorItem::value() const
 {
     if (orientation() == Qt::Horizontal) {
-        return (scene()->sceneRect().bottom() - pos().y())
-                / scene()->sceneRect().height()
-                * group()->sample()->range()
-                + group()->sample()->start();
+        if (direction() == NORMAL) {
+            return (size().height() - pos().y())
+                    / size().height()
+                    * group()->sample()->range()
+                    + group()->sample()->start();
+        } else {
+            return pos().y() / size().height()
+                    * group()->sample()->range()
+                    + group()->sample()->start();
+        }
     } else {
-        return (pos().x() - scene()->sceneRect().left())
-                / scene()->sceneRect().width()
-                * group()->sample()->range()
-                + group()->sample()->start();
+        if (direction() == NORMAL) {
+            return pos().x() / size().width()
+                    * group()->sample()->range()
+                    + group()->sample()->start();
+        } else {
+            return (size().width() - pos().x())
+                    / size().width()
+                    * group()->sample()->range()
+                    + group()->sample()->start();
+        }
     }
 }

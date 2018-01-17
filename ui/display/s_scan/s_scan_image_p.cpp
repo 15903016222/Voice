@@ -45,6 +45,9 @@ void SscanImagePrivate::do_init_matrix_changed()
     q->fill(Qt::black);
 }
 
+/**
+ * @brief init_matrix   初始化插值表
+ */
 void SscanImagePrivate::init_matrix()
 {
     QWriteLocker l(&m_rwLock);
@@ -65,7 +68,17 @@ void SscanImagePrivate::init_matrix()
     emit matrix_changed();
 }
 
-void SscanImagePrivate::init_linear_matrix(int srcWidth, int srcHeight, int srcBytesPerColumn, int destWidth, int destHeight)
+/**
+ * @brief init_linear_matrix    初始化线扫插值表
+ * @param srcWidth              原图像宽度
+ * @param srcHeight             原图像高度
+ * @param srcBytesPerColumn     原图每列字节数
+ * @param destWidth             目标图像宽度
+ * @param destHeight            目标图像高度
+ */
+void SscanImagePrivate::init_linear_matrix(int srcWidth, int srcHeight,
+                                           int srcBytesPerColumn, int destWidth,
+                                           int destHeight)
 {
     /**
      * formula
@@ -123,7 +136,17 @@ void SscanImagePrivate::init_linear_matrix(int srcWidth, int srcHeight, int srcB
     }
 }
 
-void SscanImagePrivate::init_sectorial_matrix(int srcWidth, int srcHeight, int srcBytesPerColumn, int destWidth, int destHeight)
+/**
+ * @brief init_linear_matrix    初始化扇扫插值表
+ * @param srcWidth              原图像宽度
+ * @param srcHeight             原图像高度
+ * @param srcBytesPerColumn     原图每列字节数
+ * @param destWidth             目标图像宽度
+ * @param destHeight            目标图像高度
+ */
+void SscanImagePrivate::init_sectorial_matrix(int srcWidth, int srcHeight,
+                                              int srcBytesPerColumn,
+                                              int destWidth, int destHeight)
 {
     DplFocallaw::PaProbePointer probe = m_group->focallawer()->probe().staticCast<DplFocallaw::PaProbe>();
     DplFocallaw::SectorialScanCnfPointer scanCnf = probe->scan_configure().staticCast<DplFocallaw::SectorialScanCnf>();
