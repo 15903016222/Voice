@@ -21,15 +21,7 @@ void AmpRefCursorItem::position_event()
         return;
     }
 
-    if (orientation() == Qt::Horizontal) {
-        cursor()->set_amplitude_reference(
-                    (scene()->sceneRect().bottom() - pos().y())
-                    /scene()->sceneRect().height() * 100);
-    } else {
-        cursor()->set_amplitude_reference(
-                    (pos().x() - scene()->sceneRect().left())
-                    /scene()->sceneRect().width() * 100);
-    }
+    cursor()->set_amplitude_reference(value());
 }
 
 double AmpRefCursorItem::ratio() const

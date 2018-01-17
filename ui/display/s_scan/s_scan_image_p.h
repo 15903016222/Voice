@@ -6,20 +6,12 @@
 
 struct PointInfo
 {
-    int beam;
-    int point;
-    quint8 rate;
-    float u;
-    float v;
-    int srcX;
-    int srcY;
-
-    int pos;
+    int pos;        // bits位置
     float rate1;
     float rate2;
     float rate3;
     float rate4;
-    int index1;
+    int index1;     // 数据索引值1,2,3,4
     int index2;
     int index3;
     int index4;
@@ -29,7 +21,9 @@ class SscanImagePrivate : public QObject
 {
     Q_OBJECT
 public:
-    explicit SscanImagePrivate(SscanImage *parent, const DplDevice::GroupPointer &group, const DplDisplay::PaletteColorPointer palette);
+    explicit SscanImagePrivate(SscanImage *parent,
+                               const DplDevice::GroupPointer &group,
+                               const DplDisplay::PaletteColorPointer palette);
     ~SscanImagePrivate();
 
 public slots:
@@ -40,30 +34,13 @@ signals:
     void matrix_changed();
 
 protected:
-    /**
-     * @brief init_matrix   初始化插值表
-     */
     void init_matrix();
-
-    /**
-     * @brief init_linear_matrix    初始化线扫插值表
-     * @param srcWidth              原图像宽度
-     * @param srcHeight             原图像高度
-     * @param srcBytesPerColumn     原图每列字节数
-     * @param destWidth             目标图像宽度
-     * @param destHeight            目标图像高度
-     */
-    void init_linear_matrix(int srcWidth, int srcHeight, int srcBytesPerColumn, int destWidth, int destHeight);
-
-    /**
-     * @brief init_linear_matrix    初始化扇扫插值表
-     * @param srcWidth              原图像宽度
-     * @param srcHeight             原图像高度
-     * @param srcBytesPerColumn     原图每列字节数
-     * @param destWidth             目标图像宽度
-     * @param destHeight            目标图像高度
-     */
-    void init_sectorial_matrix(int srcWidth, int srcHeight, int srcBytesPerColumn, int destWidth, int destHeight);
+    void init_linear_matrix(int srcWidth, int srcHeight,
+                            int srcBytesPerColumn, int destWidth,
+                            int destHeight);
+    void init_sectorial_matrix(int srcWidth, int srcHeight,
+                               int srcBytesPerColumn, int destWidth,
+                               int destHeight);
 
 public:
     /* attributions */

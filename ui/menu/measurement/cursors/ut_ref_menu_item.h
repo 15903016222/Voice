@@ -14,10 +14,8 @@ protected slots:
     void do_value_changed(double val);
 
 protected:
-    void cursor_change_event(const DplMeasure::CursorPointer &cursor);
-
-private:
-    DplMeasure::CursorPointer m_cursor;
+    void disconnect_cursor(const DplMeasure::CursorPointer &cursor);
+    void connect_cursor(const DplMeasure::CursorPointer &cursor);
 };
 
 #endif // __UT_REF_MENU_ITEM_H__

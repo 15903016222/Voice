@@ -21,15 +21,7 @@ void AmpMeasCursorItem::position_event()
         return;
     }
 
-    if (orientation() == Qt::Horizontal) {
-        cursor()->set_amplitude_measurement(
-                    (scene()->sceneRect().bottom() - pos().y())
-                    /scene()->sceneRect().height() * 100);
-    } else {
-        cursor()->set_amplitude_measurement(
-                    (pos().x() - scene()->sceneRect().left())
-                    /scene()->sceneRect().width() * 100);
-    }
+    cursor()->set_amplitude_measurement(value());
 }
 
 double AmpMeasCursorItem::ratio() const

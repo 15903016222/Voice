@@ -10,12 +10,15 @@ class UtRuler;
 
 class VpaItem;
 class SscanImage;
+class UtRefCursorItem;
+class UtMeasCursorItem;
 
 class SscanDisplay : public ScanDisplay
 {
     Q_OBJECT
 public:
-    explicit SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent = 0);
+    explicit SscanDisplay(const DplDevice::GroupPointer &grp,
+                          QWidget *parent = 0);
     ~SscanDisplay();
 
 protected slots:
@@ -30,6 +33,8 @@ private:
     IndexRuler *m_indexRuler;
     UtRuler *m_utRuler;
 
+    UtRefCursorItem *m_utRefCursorItem;
+    UtMeasCursorItem *m_utMeasCursorItem;
     VpaItem *m_vpaItem;
     DplDisplay::SscanPointer m_sScan;
 

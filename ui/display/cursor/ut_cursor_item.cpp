@@ -1,7 +1,7 @@
 #include "ut_cursor_item.h"
 #include "../../tool/tool.h"
 
-#include <QGraphicsView>
+#include <QGraphicsScene>
 
 UtCursorItem::UtCursorItem(const DplDevice::GroupPointer &group,
                            Qt::Orientation orientation,
@@ -18,12 +18,20 @@ UtCursorItem::UtCursorItem(const DplDevice::GroupPointer &group,
     connect(static_cast<DplDevice::Group *>(m_group.data()),
             SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
             this, SLOT(update_background_color(DplDevice::Group::UtUnit)));
+    connect(static_cast<DplDevice::Group *>(m_group.data()),
+            SIGNAL(ut_unit_changed(DplDevice::Group::UtUnit)),
+            this, SLOT(update_text()));
     update_background_color(group->ut_unit());
 }
 
 void UtCursorItem::set_text(double val)
 {
     CursorItem::set_text(QString::number(Tool::cnf_to_display(m_group, val),'f', 2));
+}
+
+void UtCursorItem::update_text()
+{
+    set_text(value());
 }
 
 void UtCursorItem::update_background_color(DplDevice::Group::UtUnit unit)
@@ -38,14 +46,26 @@ void UtCursorItem::update_background_color(DplDevice::Group::UtUnit unit)
 double UtCursorItem::value() const
 {
     if (orientation() == Qt::Horizontal) {
-        return (scene()->sceneRect().bottom() - pos().y())
-                / scene()->sceneRect().height()
-                * group()->sample()->range()
-                + group()->sample()->start();
+        if (direction() == NORMAL) {
+            return (size().height() - pos().y())
+                    / size().height()
+                    * group()->sample()->range()
+                    + group()->sample()->start();
+        } else {
+            return pos().y() / size().height()
+                    * group()->sample()->range()
+                    + group()->sample()->start();
+        }
     } else {
-        return (pos().x() - scene()->sceneRect().left())
-                / scene()->sceneRect().width()
-                * group()->sample()->range()
-                + group()->sample()->start();
+        if (direction() == NORMAL) {
+            return pos().x() / size().width()
+                    * group()->sample()->range()
+                    + group()->sample()->start();
+        } else {
+            return (size().width() - pos().x())
+                    / size().width()
+                    * group()->sample()->range()
+                    + group()->sample()->start();
+        }
     }
 }

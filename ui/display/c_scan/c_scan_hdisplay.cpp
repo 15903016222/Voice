@@ -1,26 +1,25 @@
 #include "c_scan_hdisplay.h"
-#include "c_scan_item.h"
 
-#include "../base/scan_scene.h"
 #include "../ruler/scan_ruler.h"
 #include "../ruler/index_ruler.h"
+#include "../cursor/scan_ref_cursor_item.h"
+#include "../cursor/scan_meas_cursor_item.h"
 
 CscanHDisplay::CscanHDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) :
     CscanDisplay(grp, parent),
     m_scanRuler(new ScanRuler(grp, Ruler::RIGHT, this)),
     m_indexRuler(new IndexRuler(grp, Ruler::TOP, this))
 {
-    m_leftLayout->addWidget(m_indexRuler);
-    m_bottomLayout->addWidget(m_scanRuler);
-}
+    m_bottomLayout->addWidget(m_indexRuler);
+    m_leftLayout->addWidget(m_scanRuler);
 
-void CscanHDisplay::resize_event(const QSize &size)
-{
-    m_scene->setSceneRect(-size.width()/2.0, -size.height()/2.0,
-                               size.width(), size.height());
-
-    m_cscanItem->set_size(size);
-
-    CscanDisplay::resize_event(size);
+    connect(m_scanRuler, SIGNAL(start_changed(double, double)),
+            scan_reference_cursor_item(),
+            SLOT(set_visual_range(double,double)),
+            Qt::QueuedConnection);
+    connect(m_scanRuler, SIGNAL(start_changed(double,double)),
+            scan_measurement_cursor_item(),
+            SLOT(set_visual_range(double,double)),
+            Qt::QueuedConnection);
 }
 

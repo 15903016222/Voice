@@ -65,6 +65,8 @@ include(measure/measure.pri)
 
 include(ui/ui.pri)
 
+### libs ###
+
 include(mcu/mcu.pri)
 
 include(fpga/fpga.pri)

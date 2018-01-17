@@ -45,15 +45,9 @@ public:
 
     /**
      * @brief scan_reference    获取扫查轴上参考光标的位置
-     * @return                  位置(mm)
+     * @return                  位置(mm或s)
      */
     double scan_reference() const;
-
-    /**
-     * @brief set_scan_reference    设置扫查轴上参考光标的位置
-     * @param val                   位置(mm)
-     */
-    void set_scan_reference(double val);
 
     /**
      * @brief scan_measurement  获取扫查轴上测量光标的位置
@@ -62,34 +56,16 @@ public:
     double scan_measurement() const;
 
     /**
-     * @brief set_scan_measurement  设置扫查轴上测量光标的位置
-     * @param val                   位置(mm)
-     */
-    void set_scan_measurement(double val);
-
-    /**
      * @brief index_reference   获取步进轴上参考光标的位置
      * @return                  位置(mm)
      */
     double index_reference() const;
 
     /**
-     * @brief set_index_reference   设置步进轴参考光标的位置
-     * @param val                   位置(mm)
-     */
-    void set_index_reference(double val);
-
-    /**
      * @brief index_measurement 获取步进轴上测量光标的位置
      * @return                  位置(mm)
      */
     double index_measurement() const;
-
-    /**
-     * @brief set_index_measurement 设置步进轴上测量光标的益
-     * @param val                   位置(mm)
-     */
-    void set_index_measurement(double val);
 
     /**
      * @brief is_visible    获取光标显示状态
@@ -108,6 +84,10 @@ public slots:
     void set_amplitude_measurement(double val);
     void set_ultrasound_reference(double val);
     void set_ultrasound_measurement(double val);
+    void set_scan_reference(double val);
+    void set_scan_measurement(double val);
+    void set_index_reference(double val);
+    void set_index_measurement(double val);
 
 signals:
     void amplitude_reference_changed(double val);

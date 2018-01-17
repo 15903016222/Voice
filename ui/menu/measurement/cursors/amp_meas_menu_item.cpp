@@ -5,38 +5,33 @@
  * @date 2018-01-11
  */
 #include "amp_meas_menu_item.h"
-#include <device/device.h>
 
 AmpMeasMenuItem::AmpMeasMenuItem(QWidget *parent) :
-    SpinMenuItem(parent, "%(m)")
+    CursorMenuItem(parent, "%(m)")
 {
-    set(0, 100, 1);
+    set(0, 100, 1, 0.1);
 
-    connect(DplDevice::Device::instance(),
-            SIGNAL(current_group_changed(DplDevice::GroupPointer)),
-            this, SLOT(do_group_changed(DplDevice::GroupPointer)));
-
-    do_group_changed(DplDevice::Device::instance()->current_group());
+    update_group();
 }
 
-void AmpMeasMenuItem::do_group_changed(const DplDevice::GroupPointer &group)
+void AmpMeasMenuItem::disconnect_cursor(const DplMeasure::CursorPointer &cursor)
 {
-    if (m_cursor) {
-        disconnect(static_cast<DplMeasure::Cursor *>(m_cursor.data()),
-                   SIGNAL(amplitude_measurement_changed(double)),
-                   this, SLOT(set_value(double)));
-        disconnect(this, SIGNAL(value_changed(double)),
-                   static_cast<DplMeasure::Cursor *>(m_cursor.data()),
-                   SLOT(set_amplitude_measurement(double)));
-    }
+    disconnect(static_cast<DplMeasure::Cursor *>(cursor.data()),
+               SIGNAL(amplitude_measurement_changed(double)),
+               this, SLOT(set_value(double)));
+    disconnect(this, SIGNAL(value_changed(double)),
+               static_cast<DplMeasure::Cursor *>(cursor.data()),
+               SLOT(set_amplitude_measurement(double)));
+}
 
-    m_cursor = group->cursor();
-    set_value(m_cursor->amplitude_reference());
+void AmpMeasMenuItem::connect_cursor(const DplMeasure::CursorPointer &cursor)
+{
+    set_value(cursor->amplitude_reference());
 
-    connect(static_cast<DplMeasure::Cursor *>(m_cursor.data()),
+    connect(static_cast<DplMeasure::Cursor *>(cursor.data()),
             SIGNAL(amplitude_measurement_changed(double)),
             this, SLOT(set_value(double)));
     connect(this, SIGNAL(value_changed(double)),
-            static_cast<DplMeasure::Cursor *>(m_cursor.data()),
+            static_cast<DplMeasure::Cursor *>(cursor.data()),
             SLOT(set_amplitude_measurement(double)));
 }

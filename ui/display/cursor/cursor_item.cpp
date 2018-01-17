@@ -16,7 +16,8 @@ CursorItem::CursorItem(const DplMeasure::CursorPointer &cursor,
     m_orientation(cursorOrientation),
     m_color(color),
     m_bgColor(bgColor),
-    m_movingFlag(false)
+    m_movingFlag(false),
+    m_direction(NORMAL)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
@@ -74,13 +75,23 @@ void CursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             painter->rotate(-90);
             painter->translate(0, DEFAULT_TEXT_HEIGHT);
         }
-        painter->fillRect(0, -DEFAULT_TEXT_HEIGHT,
-                          DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
-                          m_bgColor);
-        painter->drawText(0, -DEFAULT_TEXT_HEIGHT,
-                          DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
-                          Qt::AlignCenter,
-                          m_text);
+        if (m_direction == NORMAL) {
+            painter->fillRect(0, -DEFAULT_TEXT_HEIGHT,
+                              DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                              m_bgColor);
+            painter->drawText(0, -DEFAULT_TEXT_HEIGHT,
+                              DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                              Qt::AlignCenter,
+                              m_text);
+        } else {
+            painter->fillRect(m_size.width()-DEFAULT_TEXT_WIDTH, 0,
+                              DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                              m_bgColor);
+            painter->drawText(m_size.width()-DEFAULT_TEXT_WIDTH, 0,
+                              DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                              Qt::AlignCenter,
+                              m_text);
+        }
     } else {
         if (viewOrientation == Qt::Vertical) {
             painter->rotate(-90);
@@ -102,20 +113,22 @@ void CursorItem::setVisible(bool flag)
 
 void CursorItem::update_position()
 {
-    if (moving()
-            || !scene()
-            || scene()->views().isEmpty()) {
+    if (moving()) {
         return;
     }
 
     if (orientation() == Qt::Horizontal) {
-        setPos(scene()->sceneRect().left(),
-               scene()->sceneRect().bottom()
-               - scene()->sceneRect().height() * ratio());
+        if (m_direction == NORMAL) {
+            setPos(0, m_size.height() - m_size.height() * ratio());
+        } else {
+            setPos(0, m_size.height() * ratio());
+        }
     } else {
-        setPos(scene()->sceneRect().left()
-               + scene()->sceneRect().width() * ratio(),
-               scene()->sceneRect().top());
+        if (m_direction == NORMAL) {
+            setPos(m_size.width() * ratio(), 0);
+        } else {
+            setPos(m_size.width() - m_size.width() * ratio(), 0);
+        }
     }
 }
 
@@ -134,28 +147,25 @@ void CursorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 QVariant CursorItem::itemChange(QGraphicsItem::GraphicsItemChange change,
                                 const QVariant &value)
 {
-    if (change == ItemPositionChange
-            && scene()
-            && moving()) {
+    if (change == ItemPositionChange && moving()) {
         QPointF newPos = value.toPointF();
-        QRectF rect = scene()->sceneRect();
 
         if (Qt::Horizontal == m_orientation) {
-            newPos.setX(rect.left());
+            newPos.setX(0);
         } else {
-            newPos.setY(rect.top());
+            newPos.setY(0);
         }
 
-        if (newPos.x() < rect.left()) {
-            newPos.setX(rect.left());
-        } else if (newPos.x() > rect.right()) {
-            newPos.setX(rect.right());
+        if (newPos.x() < 0) {
+            newPos.setX(0);
+        } else if (newPos.x() > m_size.width()) {
+            newPos.setX(m_size.width());
         }
 
-        if (newPos.y() < rect.top()) {
-            newPos.setY(rect.top());
-        } else if (newPos.y() > rect.bottom()) {
-            newPos.setY(rect.bottom());
+        if (newPos.y() < 0) {
+            newPos.setY(0);
+        } else if (newPos.y() > m_size.height()) {
+            newPos.setY(m_size.height());
         }
 
         return newPos;

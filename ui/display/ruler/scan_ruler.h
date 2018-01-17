@@ -18,6 +18,9 @@ public:
 
     void set_range(double start, double stop);
 
+signals:
+    void start_changed(double, double);
+
 public slots:
     void update();
 

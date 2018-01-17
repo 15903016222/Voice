@@ -7,21 +7,17 @@
 #ifndef __AMP_REF_MENU_ITEM_H__
 #define __AMP_REF_MENU_ITEM_H__
 
-#include "../../menu_item/spin_menu_item.h"
+#include "cursor_menu_item.h"
 
-#include <device/group.h>
-
-class AmpRefMenuItem : public SpinMenuItem
+class AmpRefMenuItem : public CursorMenuItem
 {
     Q_OBJECT
 public:
     AmpRefMenuItem(QWidget *parent);
 
-protected slots:
-    void do_group_changed(const DplDevice::GroupPointer &group);
-
-private:
-    DplMeasure::CursorPointer m_cursor;
+protected:
+    void disconnect_cursor(const DplMeasure::CursorPointer &cursor);
+    void connect_cursor(const DplMeasure::CursorPointer &cursor);
 };
 
 #endif // __AMP_REF_MENU_ITEM_H__
