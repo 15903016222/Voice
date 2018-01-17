@@ -42,7 +42,6 @@ MultiGroupWidget::~MultiGroupWidget()
 
 void MultiGroupWidget::do_settingBtn_clicked(int model, int index)
 {
-
     if(index != 0) {
         if(!DplDevice::Device::instance()->add_group()) {
             DplMessageBox box(QMessageBox::Warning, tr("Error"), tr("Create The Group Failed!"));

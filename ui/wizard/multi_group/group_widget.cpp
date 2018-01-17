@@ -29,9 +29,10 @@ GroupWidget::GroupWidget(int groupIndex, QWidget *parent) :
                           border: 0px solid gray; \
                           } \
                           QPushButton#settingPushButton{ \
-                          background-color: %4; \
+                          background-color: rgb(55, 170, 255); \
                           color: rgb(0, 63, 111); \
-                          border-style: none; \
+                          border: 10px solid %4; \
+                          border-radius:5px; \
                           }").arg(SPILT_COLOR).arg(SPILT_COLOR).arg(SPILT_COLOR).arg(SPILT_COLOR);
 
     setStyleSheet(qss);
@@ -63,5 +64,6 @@ void GroupWidget::on_settingPushButton_clicked()
         megBox.exec();
         return;
     }
+
     emit setting_clicked(ui->comboBox->currentIndex(), m_groupIndex);
 }
