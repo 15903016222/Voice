@@ -13,6 +13,9 @@ public:
 
 public slots:
     void set_text(double val);
+
+protected:
+    double value() const;
 };
 
 #endif // __AMP_CURSOR_ITEM_H__

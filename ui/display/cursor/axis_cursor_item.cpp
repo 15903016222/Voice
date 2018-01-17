@@ -40,12 +40,26 @@ void AxisCursorItem::set_text(double val)
 double AxisCursorItem::value() const
 {
     if (orientation() == Qt::Horizontal) {
-        return (scene()->sceneRect().bottom() - pos().y())
-                / scene()->sceneRect().height()
-                * m_visualRange + m_visualStart;
+        if (direction() == NORMAL) {
+            return (size().height() - pos().y())
+                    / size().height()
+                    * m_visualRange
+                    + m_visualStart;
+        } else {
+            return pos().y() / size().height()
+                    * m_visualRange
+                    + m_visualStart;
+        }
     } else {
-        return (pos().x() -  scene()->sceneRect().left())
-                / scene()->sceneRect().width()
-                * m_visualRange + m_visualStart;
+        if (direction() == NORMAL) {
+            return pos().x() / size().width()
+                    * m_visualRange
+                    + m_visualStart;
+        } else {
+            return (size().width() - pos().x())
+                    / size().width()
+                    * m_visualRange
+                    + m_visualStart;
+        }
     }
 }
