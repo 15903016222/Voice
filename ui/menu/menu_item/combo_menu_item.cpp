@@ -80,10 +80,7 @@ QString ComboMenuItem::current_text() const
 
 void ComboMenuItem::clear()
 {
-    QList<QAction *> actions = m_menu->actions();
-    foreach (QAction *act, actions) {
-        delete act;
-    }
+    qDeleteAll(m_menu->actions());
 }
 
 void ComboMenuItem::do_pushBtn_clicked(bool checked)

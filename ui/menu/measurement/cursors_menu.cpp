@@ -1,9 +1,4 @@
 #include "cursors_menu.h"
-#include "vpa_menu_item.h"
-
-#include <global.h>
-#include <ui/tool/tool.h>
-#include <source/scan.h>
 
 #include "cursors/amp_ref_menu_item.h"
 #include "cursors/amp_meas_menu_item.h"
@@ -13,12 +8,13 @@
 #include "cursors/scan_meas_menu_item.h"
 #include "cursors/index_ref_menu_item.h"
 #include "cursors/index_meas_menu_item.h"
+#include "vpa_menu_item.h"
 
 namespace DplMeasurementMenu {
 
 CursorsMenu::CursorsMenu(QWidget *parent) :
     BaseMenu(parent),
-    m_selectionItem(new ComboMenuItem(this, tr("Selection"))),
+    m_selectionItem(new ComboMenuItem(this)),
     m_afItem(new AmpRefMenuItem(this)),
     m_amItem(new AmpMeasMenuItem(this)),
     m_urItem(new UtRefMenuItem(this)),
@@ -31,14 +27,7 @@ CursorsMenu::CursorsMenu(QWidget *parent) :
 {
     m_layout0->addWidget(m_selectionItem);
 
-    /* Selection menu item */
-    m_selectionItem->add_item(tr("A-Scan"));
-    m_selectionItem->add_item(tr("B-Scan"));
-    m_selectionItem->add_item(tr("C-Scan"));
-    m_selectionItem->add_item(tr("S-Scan"));
-    connect(m_selectionItem, SIGNAL(value_changed(int)),
-            this, SLOT(do_selectionItem_changed(int)));
-    do_selectionItem_changed(0);
+    update_selectionItem();
 }
 
 void CursorsMenu::show_a_scan()
@@ -91,10 +80,31 @@ void CursorsMenu::show_s_scan()
     m_imItem->show();
 }
 
+void CursorsMenu::update_selectionItem()
+{
+    disconnect(m_selectionItem, SIGNAL(value_changed(int)),
+               this, SLOT(do_selectionItem_changed(int)));
+    int i = m_selectionItem->current_index();
+    if (i < 0) {
+        i = 0;
+    }
+
+    m_selectionItem->clear();
+    m_selectionItem->set_title(tr("Selection"));
+    m_selectionItem->add_item(tr("A-Scan"));
+    m_selectionItem->add_item(tr("B-Scan"));
+    m_selectionItem->add_item(tr("C-Scan"));
+    m_selectionItem->add_item(tr("S-Scan"));
+    m_selectionItem->set_current_index(i);
+    do_selectionItem_changed(i);
+    connect(m_selectionItem, SIGNAL(value_changed(int)),
+            this, SLOT(do_selectionItem_changed(int)));
+}
+
 void CursorsMenu::changeEvent(QEvent *e)
 {
     if(e->type() == QEvent::LanguageChange) {
-        m_selectionItem->set_title(tr("Selection"));
+        update_selectionItem();
         return;
     }
 

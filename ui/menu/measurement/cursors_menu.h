@@ -2,7 +2,6 @@
 #define __CURSORS_MENU_H__
 
 #include "../base_menu.h"
-#include <device/device.h>
 
 class AmpRefMenuItem;
 class AmpMeasMenuItem;
@@ -27,6 +26,8 @@ protected:
     void show_b_scan();
     void show_c_scan();
     void show_s_scan();
+
+    void update_selectionItem();
 
     void changeEvent(QEvent *e);
 
