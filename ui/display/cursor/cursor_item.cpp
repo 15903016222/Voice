@@ -16,7 +16,8 @@ CursorItem::CursorItem(const DplMeasure::CursorPointer &cursor,
     m_orientation(cursorOrientation),
     m_color(color),
     m_bgColor(bgColor),
-    m_movingFlag(false)
+    m_movingFlag(false),
+    m_direction(NORMAL)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
@@ -74,13 +75,23 @@ void CursorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             painter->rotate(-90);
             painter->translate(0, DEFAULT_TEXT_HEIGHT);
         }
-        painter->fillRect(0, -DEFAULT_TEXT_HEIGHT,
-                          DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
-                          m_bgColor);
-        painter->drawText(0, -DEFAULT_TEXT_HEIGHT,
-                          DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
-                          Qt::AlignCenter,
-                          m_text);
+        if (m_direction == NORMAL) {
+            painter->fillRect(0, -DEFAULT_TEXT_HEIGHT,
+                              DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                              m_bgColor);
+            painter->drawText(0, -DEFAULT_TEXT_HEIGHT,
+                              DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                              Qt::AlignCenter,
+                              m_text);
+        } else {
+            painter->fillRect(m_size.width()-DEFAULT_TEXT_WIDTH, 0,
+                              DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                              m_bgColor);
+            painter->drawText(m_size.width()-DEFAULT_TEXT_WIDTH, 0,
+                              DEFAULT_TEXT_WIDTH, DEFAULT_TEXT_HEIGHT,
+                              Qt::AlignCenter,
+                              m_text);
+        }
     } else {
         if (viewOrientation == Qt::Vertical) {
             painter->rotate(-90);
@@ -107,9 +118,17 @@ void CursorItem::update_position()
     }
 
     if (orientation() == Qt::Horizontal) {
-        setPos(0, m_size.height() - m_size.height() * ratio());
+        if (m_direction == NORMAL) {
+            setPos(0, m_size.height() - m_size.height() * ratio());
+        } else {
+            setPos(0, m_size.height() * ratio());
+        }
     } else {
-        setPos(m_size.width() * ratio(), 0);
+        if (m_direction == NORMAL) {
+            setPos(m_size.width() * ratio(), 0);
+        } else {
+            setPos(m_size.width() - m_size.width() * ratio(), 0);
+        }
     }
 }
 

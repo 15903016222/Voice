@@ -7,6 +7,8 @@
 #include "../color_bar/color_bar.h"
 #include "../ruler/index_ruler.h"
 #include "../ruler/ut_ruler.h"
+#include "../cursor/ut_ref_cursor_item.h"
+#include "../cursor/ut_meas_cursor_item.h"
 
 #include <global.h>
 #include <device/device.h>
@@ -17,6 +19,8 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     m_group(grp),
     m_indexRuler(new IndexRuler(grp, Ruler::TOP, this)),
     m_utRuler(new UtRuler(grp, Ruler::RIGHT, this)),
+    m_utRefCursorItem(new UtRefCursorItem(m_group, Qt::Horizontal)),
+    m_utMeasCursorItem(new UtMeasCursorItem(m_group, Qt::Horizontal)),
     m_vpaItem(new VpaItem(grp)),
     m_sScan(grp->s_scan()),
     m_image(NULL)
@@ -24,6 +28,10 @@ SscanDisplay::SscanDisplay(const DplDevice::GroupPointer &grp, QWidget *parent) 
     m_leftLayout->addWidget(m_utRuler);
     m_bottomLayout->addWidget(m_indexRuler);
 
+    m_utRefCursorItem->set_direction(CursorItem::REVERSE);
+    m_utMeasCursorItem->set_direction(CursorItem::REVERSE);
+    m_scene->addItem(m_utRefCursorItem);
+    m_scene->addItem(m_utMeasCursorItem);
     m_scene->addItem(m_vpaItem);
     m_vpaItem->update_pos();
 
@@ -61,6 +69,8 @@ void SscanDisplay::resize_event(const QSize &size)
     m_vpaItem->update_pos();
 
     m_scene->setSceneRect(0, 0, size.width(), size.height());
+    m_utRefCursorItem->set_size(size);
+    m_utMeasCursorItem->set_size(size);
 
     QMutexLocker l(&m_imageMutex);
     if (m_image) {

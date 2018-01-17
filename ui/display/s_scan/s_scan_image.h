@@ -15,7 +15,9 @@ class SscanImagePrivate;
 class SscanImage : public QImage
 {
 public:
-    explicit SscanImage(const DplDevice::GroupPointer &group, const QSize &size, const DplDisplay::PaletteColorPointer palette);
+    explicit SscanImage(const DplDevice::GroupPointer &group,
+                        const QSize &size,
+                        const DplDisplay::PaletteColorPointer palette);
     ~SscanImage();
 
     void draw_beams(const DplSource::BeamsPointer &beams);
